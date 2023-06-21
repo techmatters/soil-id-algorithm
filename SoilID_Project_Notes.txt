@@ -1,0 +1,10 @@
+SoilID Project Box Folder:
+•	This folder contains the data schema and processed soil database tables that are ingested into the mySQL database. 
+•	https://nrcs.app.box.com/s/vs999nq9ruyetb9b4l7okmssdggh8okn
+
+SSURGO/STATSGO2 Metadata:
+•	https://www.nrcs.usda.gov/resources/data-and-reports/ssurgo/stats2go-metadata
+
+
+SSURGO/STATSGO data link:
+•	https://nrcs.app.box.com/v/soils/folder/17971946225

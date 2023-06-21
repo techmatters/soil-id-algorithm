@@ -1,0 +1,441 @@
+
+CREATE TABLE wise_soil_data (
+NEWSUID VARCHAR(20) NOT NULL,
+SCID INT(10) NOT NULL,
+PROP INT(10) NOT NULL,
+CLAF VARCHAR(20) NOT NULL,
+PRID VARCHAR(20) NOT NULL,
+Drain VARCHAR(20),
+DrainNum INT(10),
+Layer VARCHAR(20) NOT NULL,
+TopDep INT(10) NOT NULL,
+BotDep INT(10) NOT NULL,
+CFRAG INT(10),
+CFRAG_std FLOAT(5,2),
+SDTO INT(10),
+SDTO_std FLOAT(5,2),
+STPC INT(10),
+STPC_std FLOAT(5,2),
+CLPC INT(10),
+CLPC_std FLOAT(5,2),
+PSCL VARCHAR(20),
+PSCL_ID INT(10),
+BULK FLOAT(5,2),
+BULK_std FLOAT(5,2),
+TAWC INT(10),
+TAWC_std FLOAT(5,2),
+ORGC FLOAT(5,2) ,
+ORGC_std FLOAT(5,2),
+TOTN FLOAT(5,2),
+TOTN_std FLOAT(5,2),
+CNrt FLOAT(5,2),
+CNrt_std FLOAT(5,2),
+CECS INT(10),
+CECS_std FLOAT(5,2),
+CECc FLOAT(5,2),
+CECc_std FLOAT(5,2),
+ECEC FLOAT(5,2),
+ECEC_std FLOAT(5,2),
+TEB FLOAT(5,2),
+TEB_std FLOAT(5,2),
+BSAT INT(10),
+BSAT_std FLOAT(5,2),
+ALSA INT(10),
+ALSA_std FLOAT(5,2),
+ESP FLOAT(5,2),
+ESP_std FLOAT(5,2),
+PHAQ FLOAT(5,2),
+PHAQ_std FLOAT(5,2),
+TCEQ FLOAT(5,2),
+TCEQ_std FLOAT(5,2),
+GYPS FLOAT(5,2),
+GYPS_std FLOAT(5,2),
+ELCO INT(10),
+ELCO_std FLOAT(5,2),
+id INT(20) NOT NULL,
+MUGLB_NEW INT(10) NOT NULL,
+MU_GLOBAL INT(10) NOT NULL,
+SU_name VARCHAR(50) NOT NULL,
+COMPID INT(20) NOT NULL,
+PHASE1 INT(10) NOT NULL,
+PHASE2 INT(10) NOT NULL,
+ROOTS INT(10) NOT NULL,
+IL INT(10) NOT NULL,
+SWR INT(10) NOT NULL,
+ADD_PROP INT(10) NOT NULL,
+T_DC FLOAT(5,2),
+S_DC FLOAT(5,2),
+T_BULK_DEN FLOAT(5,2),
+T_REF_BULK FLOAT(5,2),
+S_BULK_DEN FLOAT(5,2),
+S_REF_BULK FLOAT(5,2),
+text_class VARCHAR(50) NOT NULL,
+text_class_id INT(10) NOT NULL,
+FAO_SYS VARCHAR(20) NOT NULL,
+REF_DEPTH INT(10) NOT NULL,
+PRIMARY KEY (id));
+
+LOAD DATA LOCAL INFILE '/mnt/c/LandPKS_API_SoilID-master/global/wise_full_soil.csv'
+INTO TABLE wise_soil_data
+FIELDS 
+  TERMINATED BY ','
+  ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(NEWSUID, SCID, PROP, CLAF, PRID, Drain, DrainNum, Layer, TopDep, BotDep, CFRAG, CFRAG_std, SDTO, SDTO_std, STPC, STPC_std, CLPC, CLPC_std, PSCL, PSCL_ID, BULK, BULK_std, TAWC, TAWC_std, ORGC, ORGC_std, TOTN, TOTN_std, CNrt, CNrt_std, CECS, CECS_std, CECc, CECc_std, ECEC, ECEC_std, TEB, TEB_std, BSAT, BSAT_std, ALSA, ALSA_std, ESP, ESP_std, PHAQ, PHAQ_std, TCEQ, TCEQ_std, GYPS, GYPS_std, ELCO, ELCO_std, id, MUGLB_NEW, MU_GLOBAL, SU_name, COMPID, PHASE1, PHASE2, ROOTS, IL, SWR, ADD_PROP, T_DC, S_DC, T_BULK_DEN, T_REF_BULK, S_BULK_DEN, S_REF_BULK, text_class, text_class_id, FAO_SYS, REF_DEPTH);
+
+
+CREATE TABLE wrb_fao90_desc (
+WRB_tax VARCHAR(30) NOT NULL,
+WRB_tax_en VARCHAR(30) NOT NULL,
+Description_en VARCHAR(2000) NOT NULL,
+Management_en VARCHAR(2000) NOT NULL,
+WRB_tax_es VARCHAR(30) NOT NULL,
+Description_es VARCHAR(2000) NOT NULL,
+Management_es VARCHAR(2000) NOT NULL,
+WRB_tax_ks VARCHAR(30) NOT NULL,
+Description_ks VARCHAR(2000) NOT NULL,
+Management_ks VARCHAR(2000) NOT NULL,
+WRB_tax_fr VARCHAR(30) NOT NULL,
+Description_fr VARCHAR(2000) NOT NULL,
+Management_fr VARCHAR(2000) NOT NULL,
+PRIMARY KEY (WRB_tax));
+
+LOAD DATA LOCAL INFILE '/mnt/c/LandPKS_API_SoilID-master/global/LPKS_WRB_Descriptions_v2_encoded.txt'
+INTO TABLE wrb_fao90_desc
+FIELDS 
+  TERMINATED BY ','
+  ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS
+(WRB_tax, WRB_tax_en, Description_en, Management_en, WRB_tax_es, Description_es, Management_es, WRB_tax_ks, Description_ks, Management_ks, WRB_tax_fr, Description_fr, Management_fr);
+
+#ALTER TABLE wrb_fao90_desc CONVERT TO  CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+
+
+CREATE TABLE soil_taxonomy_desc (
+Suborder VARCHAR(30) NOT NULL,
+Description_en VARCHAR(1000) NOT NULL,
+Management_en VARCHAR(1000) NOT NULL,
+Description_es VARCHAR(1000) NOT NULL,
+Management_es VARCHAR(1000) NOT NULL,
+Description_ks VARCHAR(1000) NOT NULL,
+Management_ks VARCHAR(1000) NOT NULL,
+Description_fr VARCHAR(1000) NOT NULL,
+Management_fr VARCHAR(1000) NOT NULL,
+PRIMARY KEY (Suborder));
+
+LOAD DATA LOCAL INFILE '/mnt/c/LandPKS_API_SoilID-master/global/Soil_Taxonomy_Suborder_LPKS.csv'
+INTO TABLE soil_taxonomy_desc
+FIELDS 
+  TERMINATED BY ','
+  ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS
+(Suborder, Description_en, Management_en, Description_es, Management_es, Description_ks, Management_ks, Description_fr, Management_fr);
+
+
+CREATE TABLE wrb2006_to_fao90 (
+WRB_1984_Full VARCHAR(30) NOT NULL,
+WRB_2006_Full VARCHAR(30) NOT NULL,
+PRIMARY KEY (WRB_2006_Full));
+
+LOAD DATA LOCAL INFILE '/mnt/c/LandPKS_API_SoilID-master/global/WRB2006_to_FAO90_lookup_SGv2.csv'
+INTO TABLE wrb2006_to_fao90
+FIELDS 
+  TERMINATED BY ','
+  ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS
+(WRB_1984_Full, WRB_2006_Full);
+
+
+CREATE TABLE ssurgo_cokey_ranges_farmOS (
+cokey INT(20) NOT NULL,
+top INT(3) NOT NULL,
+bottom INT(3) NOT NULL,
+claytotal_r FLOAT(5) NOT NULL,
+sandtotal_r FLOAT(5) NOT NULL,
+silttotal_r FLOAT(5) NOT NULL,
+fragvol_r FLOAT(5) NOT NULL,
+ph1to1h2o_r FLOAT(5) NOT NULL,
+om_r FLOAT(5) NOT NULL,
+awc_r FLOAT(5) NOT NULL,
+dbovendry_r FLOAT(5) NOT NULL,
+claytotal_l FLOAT(5) NOT NULL,
+sandtotal_l FLOAT(5) NOT NULL,
+silttotal_l FLOAT(5) NOT NULL,
+fragvol_l FLOAT(5) NOT NULL,
+ph1to1h2o_l FLOAT(5) NOT NULL,
+om_l FLOAT(5) NOT NULL,
+awc_l FLOAT(5) NOT NULL,
+dbovendry_l FLOAT(5) NOT NULL,
+claytotal_h FLOAT(5) NOT NULL,
+sandtotal_h FLOAT(5) NOT NULL,
+silttotal_h FLOAT(5) NOT NULL,
+fragvol_h FLOAT(5) NOT NULL,
+ph1to1h2o_h FLOAT(5) NOT NULL,
+om_h FLOAT(5) NOT NULL,
+awc_h FLOAT(5) NOT NULL,
+dbovendry_h FLOAT(5) NOT NULL,
+compname VARCHAR(50) NOT NULL,
+taxsubgrp VARCHAR(50) NOT NULL,
+restLyr INT(3),
+comppct_r INT(3),
+PRIMARY KEY (cokey, top));
+
+LOAD DATA LOCAL INFILE '/mnt/c/LandPKS_API_SoilID-master/global/ssurgo_cokey_ranges_final_infill.csv'
+INTO TABLE ssurgo_cokey_ranges_farmOS
+FIELDS 
+  TERMINATED BY ','
+  ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS
+(cokey, top, bottom, claytotal_r, sandtotal_r, silttotal_r, fragvol_r, ph1to1h2o_r, om_r, awc_r, dbovendry_r, claytotal_l, sandtotal_l, silttotal_l, fragvol_l, ph1to1h2o_l, om_l, awc_l, dbovendry_l,claytotal_h, sandtotal_h, silttotal_h, fragvol_h, ph1to1h2o_h, om_h, awc_h, dbovendry_h, compname, taxsubgrp, restLyr, comppct_r);
+
+#
+CREATE TABLE ssurgo_cokey_ranges_farmOS (
+cokey INT(20) NOT NULL,
+top INT(3) NOT NULL,
+bottom INT(3) NOT NULL,
+claytotal_r FLOAT(5) NOT NULL,
+sandtotal_r FLOAT(5) NOT NULL,
+silttotal_r FLOAT(5) NOT NULL,
+fragvol_r FLOAT(5) NOT NULL,
+ph1to1h2o_r FLOAT(5) NOT NULL,
+om_r FLOAT(5) NOT NULL,
+awc_r FLOAT(5) NOT NULL,
+dbovendry_r FLOAT(5) NOT NULL,
+claytotal_l FLOAT(5) NOT NULL,
+sandtotal_l FLOAT(5) NOT NULL,
+silttotal_l FLOAT(5) NOT NULL,
+fragvol_l FLOAT(5) NOT NULL,
+ph1to1h2o_l FLOAT(5) NOT NULL,
+om_l FLOAT(5) NOT NULL,
+awc_l FLOAT(5) NOT NULL,
+dbovendry_l FLOAT(5) NOT NULL,
+claytotal_h FLOAT(5) NOT NULL,
+sandtotal_h FLOAT(5) NOT NULL,
+silttotal_h FLOAT(5) NOT NULL,
+fragvol_h FLOAT(5) NOT NULL,
+ph1to1h2o_h FLOAT(5) NOT NULL,
+om_h FLOAT(5) NOT NULL,
+awc_h FLOAT(5) NOT NULL,
+dbovendry_h FLOAT(5) NOT NULL,
+compname VARCHAR(50) NOT NULL,
+taxsubgrp VARCHAR(50) NOT NULL,
+restLyr INT(3),
+comppct_r INT(3),
+PRIMARY KEY (cokey, top));
+
+LOAD DATA LOCAL INFILE '/mnt/c/LandPKS_API_SoilID-master/global/ssurgo_cokey_ranges_final_infill_farmOS.csv'
+INTO TABLE ssurgo_cokey_ranges_farmOS
+FIELDS 
+  TERMINATED BY ','
+  ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS
+(cokey, top, bottom, claytotal_r, sandtotal_r, silttotal_r, fragvol_r, ph1to1h2o_r, om_r, awc_r, dbovendry_r, claytotal_l, sandtotal_l, silttotal_l, fragvol_l, ph1to1h2o_l, om_l, awc_l, dbovendry_l,claytotal_h, sandtotal_h, silttotal_h, fragvol_h, ph1to1h2o_h, om_h, awc_h, dbovendry_h, compname, taxsubgrp, restLyr, comppct_r);
+
+#
+CREATE TABLE ssurgo_cokey_ranges_LPKS (
+cokey INT(20) NOT NULL,
+top INT(3) NOT NULL,
+bottom INT(3) NOT NULL,
+claytotal_r FLOAT(5) NOT NULL,
+sandtotal_r FLOAT(5) NOT NULL,
+silttotal_r FLOAT(5) NOT NULL,
+fragvol_r FLOAT(5) NOT NULL,
+ph1to1h2o_r FLOAT(5) NOT NULL,
+om_r FLOAT(5) NOT NULL,
+awc_r FLOAT(5) NOT NULL,
+dbovendry_r FLOAT(5) NOT NULL,
+claytotal_l FLOAT(5) NOT NULL,
+sandtotal_l FLOAT(5) NOT NULL,
+silttotal_l FLOAT(5) NOT NULL,
+fragvol_l FLOAT(5) NOT NULL,
+ph1to1h2o_l FLOAT(5) NOT NULL,
+om_l FLOAT(5) NOT NULL,
+awc_l FLOAT(5) NOT NULL,
+dbovendry_l FLOAT(5) NOT NULL,
+claytotal_h FLOAT(5) NOT NULL,
+sandtotal_h FLOAT(5) NOT NULL,
+silttotal_h FLOAT(5) NOT NULL,
+fragvol_h FLOAT(5) NOT NULL,
+ph1to1h2o_h FLOAT(5) NOT NULL,
+om_h FLOAT(5) NOT NULL,
+awc_h FLOAT(5) NOT NULL,
+dbovendry_h FLOAT(5) NOT NULL,
+compname VARCHAR(50) NOT NULL,
+taxsubgrp VARCHAR(50) NOT NULL,
+restLyr INT(3),
+comppct_r INT(3),
+PRIMARY KEY (cokey, top));
+
+LOAD DATA LOCAL INFILE '/mnt/c/LandPKS_API_SoilID-master/global/ssurgo_cokey_ranges_final_infill_LPKS.csv'
+INTO TABLE ssurgo_cokey_ranges_LPKS
+FIELDS 
+  TERMINATED BY ','
+  ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS
+(cokey, top, bottom, claytotal_r, sandtotal_r, silttotal_r, fragvol_r, ph1to1h2o_r, om_r, awc_r, dbovendry_r, claytotal_l, sandtotal_l, silttotal_l, fragvol_l, ph1to1h2o_l, om_l, awc_l, dbovendry_l,claytotal_h, sandtotal_h, silttotal_h, fragvol_h, ph1to1h2o_h, om_h, awc_h, dbovendry_h, compname, taxsubgrp, restLyr, comppct_r);
+
+CREATE TABLE ESD_class_synonym_list ( 
+MLRA VARCHAR(4) NOT NULL, 
+ES_ID VARCHAR(20) NOT NULL, 
+ES_legacy_ID VARCHAR(20) NOT NULL, 
+Synonym VARCHAR(20) NOT NULL, 
+Legacy VARCHAR(3) NOT NULL, 
+Date DATE NOT NULL);
+LOAD DATA LOCAL INFILE '/mnt/c/LandPKS_API_SoilID-master/global/class-synonym-list.csv'  
+INTO TABLE ESD_class_synonym_list
+FIELDS 
+  TERMINATED BY ','
+  ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS
+(MLRA, ES_ID, ES_legacy_ID, Synonym, Legacy, Date);
+
+
+#`````````````````````````````````````````````````````````````````````````````````````````````````````````````````````
+# Tables for Global Agro-ecological Zone work
+
+CREATE TABLE GAEZ_profile_req_rf (
+id INT(20) NOT NULL,
+CROP_ID VARCHAR(30) NOT NULL,
+CROP VARCHAR(30) NOT NULL,
+input_level INT(10) NOT NULL,
+SQI_code INT(10) NOT NULL,
+score INT(10) NOT NULL,
+property_value  FLOAT(5,2),
+property VARCHAR(30) NOT NULL,
+unit VARCHAR(30) NOT NULL,
+property_id VARCHAR(30) NOT NULL,
+property_text VARCHAR(30) NOT NULL,
+PRIMARY KEY (id));
+
+LOAD DATA LOCAL INFILE '/mnt/c/LandPKS_API_SoilID-master/global/GAEZ_profile_req_rf.csv'
+INTO TABLE GAEZ_profile_req_rf
+FIELDS 
+  TERMINATED BY ','
+  ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS
+(id, CROP_ID, CROP, input_level, SQI_code, score, property_value, property, unit, property_id, property_text);
+
+
+CREATE TABLE GAEZ_phase_req_rf (
+id INT(20) NOT NULL,
+CROP_ID VARCHAR(30) NOT NULL,
+CROP VARCHAR(30) NOT NULL,
+input_level INT(10) NOT NULL,
+SQI_code INT(10) NOT NULL,
+property VARCHAR(30) NOT NULL,
+phase_id INT(10) NOT NULL,
+phase VARCHAR(30) NOT NULL,
+score INT(10) NOT NULL,
+property_id VARCHAR(30) NOT NULL,
+PRIMARY KEY (id));
+
+LOAD DATA LOCAL INFILE '/mnt/c/LandPKS_API_SoilID-master/global/GAEZ_phase_req_rf.csv'
+INTO TABLE GAEZ_phase_req_rf
+FIELDS 
+  TERMINATED BY ','
+  ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS
+(id, CROP_ID, CROP, input_level, SQI_code, property, phase_id, phase, score, property_id);
+
+
+CREATE TABLE GAEZ_drainage_req_rf (
+id INT(20) NOT NULL,
+CROP_ID VARCHAR(30) NOT NULL,
+CROP VARCHAR(30) NOT NULL,
+input_level INT(10) NOT NULL,
+SQI_code INT(10) NOT NULL,
+PSCL VARCHAR(30) NOT NULL,
+PSCL_ID VARCHAR(30) NOT NULL,
+DrainNum INT(10) NOT NULL,
+Drain VARCHAR(30) NOT NULL,
+score INT(10) NOT NULL,
+drainage_id VARCHAR(30) NOT NULL,
+drainage_req_text VARCHAR(30) NOT NULL,
+PRIMARY KEY (id));
+
+LOAD DATA LOCAL INFILE '/mnt/c/LandPKS_API_SoilID-master/global/GAEZ_drainage_req_rf.csv'
+INTO TABLE GAEZ_drainage_req_rf
+FIELDS 
+  TERMINATED BY ','
+  ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS
+(id, CROP_ID, CROP, input_level, SQI_code, PSCL, PSCL_ID, DrainNum, Drain, score, drainage_id, drainage_req_text);
+
+
+CREATE TABLE GAEZ_terrain_req_rf (
+id INT(20) NOT NULL,
+CROP_ID VARCHAR(30) NOT NULL,
+CROP VARCHAR(30) NOT NULL,
+crop_group VARCHAR(30) NOT NULL,
+input_level INT(10) NOT NULL,
+FM_class VARCHAR(30) NOT NULL,
+slope_class VARCHAR(30) NOT NULL,
+slope_class_id INT(10) NOT NULL,
+rating VARCHAR(30) NOT NULL,
+rating_text VARCHAR(30) NOT NULL,
+rating_description VARCHAR(30) NOT NULL,
+PRIMARY KEY (id));
+
+LOAD DATA LOCAL INFILE '/mnt/c/LandPKS_API_SoilID-master/global/GAEZ_terrain_req_rf.csv'
+INTO TABLE GAEZ_terrain_req_rf
+FIELDS 
+  TERMINATED BY ','
+  ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS
+(id, CROP_ID, CROP, crop_group, input_level, FM_class, slope_class, slope_class_id, rating, rating_text, rating_description);
+
+CREATE TABLE GAEZ_text_req_rf (
+id INT(20) NOT NULL,
+CROP_ID VARCHAR(30) NOT NULL,
+CROP VARCHAR(30) NOT NULL,
+input_level INT(10) NOT NULL,
+SQI_code INT(10) NOT NULL,
+score INT(10) NOT NULL,
+text_class VARCHAR(30) NOT NULL,
+text_class_id INT(10) NOT NULL,
+PRIMARY KEY (id));
+
+LOAD DATA LOCAL INFILE '/mnt/c/LandPKS_API_SoilID-master/global/GAEZ_text_req_rf.csv'
+INTO TABLE GAEZ_text_req_rf
+FIELDS 
+  TERMINATED BY ','
+  ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS
+(id, CROP_ID, CROP, input_level, SQI_code, score, text_class, text_class_id);
+
+CREATE TABLE soil_drainage_class_requirements (
+id INT(20) NOT NULL,
+PSCL_ID INT(10) NOT NULL,
+Slope_l FLOAT(5,2) NOT NULL,
+Slope_h FLOAT(5,2) NOT NULL,
+Saturation VARCHAR(30) NOT NULL,
+Shallow VARCHAR(30) NOT NULL,
+Hardpan VARCHAR(30) NOT NULL,
+Vertic VARCHAR(30) NOT NULL,
+Histic VARCHAR(30) NOT NULL,
+Drain VARCHAR(30) NOT NULL,
+DrainNum INT(10) NOT NULL,
+PRIMARY KEY (id));
+
+LOAD DATA LOCAL INFILE '/mnt/c/LandPKS_API_SoilID-master/global/soil_drainage_class_requirements.csv'
+INTO TABLE soil_drainage_class_requirements
+FIELDS 
+  TERMINATED BY ','
+  ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS
+(id, PSCL_ID, Slope_l, Slope_h, Saturation, Shallow, Hardpan, Vertic, Histic, Drain, DrainNum);

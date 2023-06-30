@@ -90,7 +90,7 @@ function(lon, lat,intervals=c(0,10,20,50,70,100,120)){
   comp_data <- comp_data |> dplyr::mutate(loc_score_sum = sum(loc_score)) |> dplyr::group_by(compname) |> dplyr::mutate(loc_score_comp = sum(loc_score)/loc_score_sum) |> dplyr::ungroup() |> dplyr::mutate(loc_score = loc_score/loc_score_sum) |> dplyr::mutate(loc_score_comp = loc_score_comp/max(loc_score_comp)) |> dplyr::distinct() |> as.data.frame()
   comp_data <- comp_data |> dplyr::group_by(compname) |> dplyr::mutate(loc_score_max = max(loc_score)) |> dplyr::ungroup() |> dplyr::distinct() |> as.data.frame() |> dplyr::select(-loc_score_sum)
 
-  #Limit number of components to top 12
+  #Limit number of series to top 12
   if(length(unique(comp_data$compname)) > 12) {
     top_comp <- comp_data |> dplyr::select(compname, loc_score_comp) |> dplyr::distinct() |> dplyr::slice_max(order_by = loc_score_comp, n = 12) |> dplyr::select(compname) |> dplyr::pull()
     comp_data <- comp_data |> dplyr::filter(compname %in% top_comp)

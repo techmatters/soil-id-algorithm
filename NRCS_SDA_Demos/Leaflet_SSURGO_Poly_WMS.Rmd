@@ -1,12 +1,15 @@
 ---
 title: "Rendering SSURGO Polygons using SDA WMS and leaflet package"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
  
 
 ```{r}
 library(leaflet)
+library(leaflet.extras2)
 
 wms_nrcs <- 'https://SDMDataAccess.sc.egov.usda.gov/Spatial/SDM.wms'
 

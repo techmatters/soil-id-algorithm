@@ -1,8 +1,39 @@
 #####################################################################################################
 #                                       Database and API Functions                                  #
 #####################################################################################################
+# Standard libraries
+import collections
+import csv
+import json
+import math
+import os
+import random
+import re
+import struct
+import sys
+import requests
 
-def get_datastore_connection():
+# Third-party libraries
+import colour
+import geopandas as gpd
+import MySQLdb
+import numpy as np
+import pandas as pd
+import scipy.stats
+from osgeo import gdal, ogr
+from scipy.interpolate import CubicSpline
+from scipy.spatial import distance
+from scipy.stats import norm
+from scipy.sparse import issparse
+import shapely
+from shapely.geometry import Point, Polygon, shape, LinearRing
+from sklearn.metrics import pairwise
+from sklearn.metrics.pairwise import euclidean_distances
+from sklearn.utils import validation
+from numpy.linalg import cholesky
+
+
+def getDataStore_Connection():
     """
     Establish a connection to the datastore using app configurations.
     
@@ -21,51 +52,6 @@ def get_datastore_connection():
         print(err)
         sys.exit(str(err))
 
-def find_soil_location(lon, lat):
-    """
-    Determines the location type (US, Global, or None) of the given longitude and latitude based on soil datasets.
-
-    Args:
-    - lon (float): Longitude of the point.
-    - lat (float): Latitude of the point.
-
-    Returns:
-    - str or None: 'US' if point is in US soil dataset, 'Global' if in global dataset, None otherwise.
-    """
-    # Open the datasets
-    def open_dataset(filename):
-        driver = ogr.GetDriverByName("ESRI Shapefile")
-        dataset_path = f"{current_app.config['DATA_BACKEND']}/{filename}"
-        dataset = driver.Open(dataset_path, 0)
-        return dataset.GetLayer(0)
-
-    layer_global = open_dataset("HWSD_global_noWater_no_country.shp")
-    layer_us = open_dataset("SoilID_US_Areas.shp")
-
-    # Setup coordinate transformation
-    geo_ref = layer_global.GetSpatialRef()
-    pt_ref = ogr.osr.SpatialReference()
-    pt_ref.ImportFromEPSG(4326)
-    coord_transform = ogr.osr.CoordinateTransformation(pt_ref, geo_ref)
-
-    # Transform the coordinate system of the input point
-    lon, lat, _ = coord_transform.TransformPoint(lon, lat)
-
-    # Create a point geometry
-    pt = ogr.Geometry(ogr.wkbPoint)
-    pt.SetPoint_2D(0, lon, lat)
-
-    # Filter layers using the point
-    layer_global.SetSpatialFilter(pt)
-    layer_us.SetSpatialFilter(pt)
-
-    # Determine location type
-    if not (len(layer_global) or len(layer_us)):
-        return None
-    elif len(layer_us):
-        return 'US'
-    else:
-        return "Global"
 
 def save_model_output(plot_id, model_version, result_blob, soilIDRank_output_pd, mucompdata_cond_prob):
     """
@@ -314,9 +300,9 @@ def silt_calc(row):
     return silt
       
 def getTexture(row, sand=None, silt=None, clay=None):
-    sand = sand if sand is not None else row.get('sandtotal_r')
-    silt = silt if silt is not None else row.get('silttotal_r')
-    clay = clay if clay is not None else row.get('claytotal_r')
+    sand = sand if sand is not None else row.get('sandtotal_r') or row.get('sand')
+    silt = silt if silt is not None else row.get('silttotal_r') or row.get('silt')
+    clay = clay if clay is not None else row.get('claytotal_r') or row.get('clay')
 
     silt_clay = silt + 1.5 * clay
     silt_2x_clay = silt + 2.0 * clay
@@ -377,7 +363,7 @@ def getCF_fromClass(cf):
     
     return cf_to_value.get(cf, np.nan)
 
-def get_osdcf(cf):
+def getOSDCF(cf):
     frag_vol_35 = ['gravelly', 'fine gravelly', 'medium gravelly', 'coarse gravelly', 
                    'cobbly', 'stony', 'bouldery', 'channery', 'flaggy']
     frag_vol_35_list = [re.compile(pattern) for pattern in frag_vol_35]
@@ -429,73 +415,316 @@ def agg_data_layer(data, bottom, sd=2, depth=False):
             return (data_d, d_lyrs) if depth else data_d
 
 
-
 def getProfile(data, variable, c_bot=False):
-  
-    '''
-    The getProfile function is set up to segment any soil property at 1cm increments.
-    This fucntion returns two types of depth interpolated values for clay, sand, and rock fragments:
-        (1) interpolated values based on median texture class values (_grp) used in the soilIDRank and 
-        (2) actual interpolated values returned by the soilIDList function. 
-    Other properties only return interpolated values.
-    '''
-    
-    def fill_var_and_var_grp(variable, data, get_func):
-        for i in range(len(data)):
-            if data["texture"].iloc[i] is None:
-                var.append(data[variable].iloc[i])
-                var_grp.append(np.nan)
-            else:
-                var.append(data[variable].iloc[i])
-                var_grp.append(get_func(data["texture"].iloc[i]))
-        return var, var_grp
-
-    def fill_var(variable, data):
-        for i in range(len(data)):
-            var.append(data[variable].iloc[i] if data[variable].iloc[i] is not None else np.nan)
-        return var
-
-    def compute_final_values(var, depths):
-        if len(depths) == 1:
-            return [var[0]] * (depths[0] - 0)
-        else:
-            values = []
-            for i in range(len(depths)):
-                values.extend([var[i]] * (depths[i] - (depths[i - 1] if i != 0 else 0)))
-            return values
-
     var = []
     var_grp = []
-    
-    if variable in ["sandtotal_r", "claytotal_r"]:
-        fill_func = getSand if variable == "sandtotal_r" else getClay
-        var, var_grp = fill_var_and_var_grp(variable, data, fill_func)
-    elif variable == "total_frag_volume":
-        var, var_grp = fill_var_and_var_grp(variable, data, getCF)
+    var_pct_intpl = []
+    var_pct_intpl_grp = []
+    if variable == "sandtotal_r":
+        for i in range(len(data)):
+            if data["texture"].iloc[i] is None:
+                var.append(data["sandtotal_r"].iloc[i])
+                var_grp.append(np.nan)
+            else:
+                var.append(data["sandtotal_r"].iloc[i])
+                var_grp.append(getSand(data["texture"].iloc[i]))
+    if variable == "claytotal_r":
+        for i in range(len(data)):
+            if data["texture"].iloc[i] is None:
+                var.append(data["claytotal_r"].iloc[i])
+                var_grp.append(np.nan)
+            else:
+                var.append(data["claytotal_r"].iloc[i])
+                var_grp.append(getClay(data["texture"].iloc[i]))
+    if variable == "total_frag_volume":
+        for i in range(len(data)):
+            if data["total_frag_volume"].iloc[i] is None:
+                var.append(np.nan)
+                var_grp.append(np.nan)
+            else:
+                var.append(data["total_frag_volume"].iloc[i])
+                var_grp.append(getCF(data["total_frag_volume"].iloc[i]))
+    if variable == "CEC":
+        for i in range(len(data)):
+            if data["CEC"].iloc[i] is None:
+                var.append(np.nan)
+            else:
+                var.append(data["CEC"].iloc[i])
+    if variable == "pH":
+        for i in range(len(data)):
+            if data["pH"].iloc[i] is None:
+                var.append(np.nan)
+            else:
+                var.append(data["pH"].iloc[i])
+    if variable == "EC":
+        for i in range(len(data)):
+            if data["EC"].iloc[i] is None:
+                var.append(np.nan)
+            else:
+                var.append(data["EC"].iloc[i])
+                
+    #Return empty fields when there is no depth data or the top depth is not 0
+    if variable == "sandtotal_r" or variable == "claytotal_r" or variable == "total_frag_volume":
+        if (pd.isnull(data["hzdept_r"]).any() or pd.isnull(data["hzdepb_r"]).any()):
+            var_pct_intpl_final = pd.DataFrame(np.nan, index = np.arange(120), columns = np.arange(2))
+            var_pct_intpl_final.columns = ['var_pct_intpl', 'var_pct_intpl_grp']
+            return var_pct_intpl_final
+
+        if data["hzdept_r"].iloc[0] != 0:
+            var_pct_intpl_final = pd.DataFrame(np.nan, index = np.arange(120), columns = np.arange(2))
+            var_pct_intpl_final.columns = ['var_pct_intpl', 'var_pct_intpl_grp']
+            return var_pct_intpl_final
+
+        MisHrz = 0
+        for i in range(len(data["hzdept_r"])):
+            if i == len(data["hzdept_r"]) - 1:
+                break
+
+            if (data["hzdept_r"].iloc[i + 1] > data["hzdepb_r"].iloc[i]):
+                MisHrz = 1
+            elif (data["hzdept_r"].iloc[i + 1] < data["hzdepb_r"].iloc[i]):
+                data["hzdept_r"].iloc[i + 1] == data["hzdepb_r"].iloc[i]
+
+        if MisHrz == 1:
+            var_pct_intpl_final = pd.DataFrame(np.nan, index = np.arange(120), columns = np.arange(2))
+            var_pct_intpl_final.columns = ['var_pct_intpl', 'var_pct_intpl_grp']
+            return var_pct_intpl_final
+
+        if len(data["hzdept_r"]) == 1:
+            for i in range(int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])):
+                var_pct_intpl.append(var[0])
+                var_pct_intpl_grp.append(var_grp[0])
+        else:
+            for i in range(len(data["hzdepb_r"])):
+                for j in range(int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])):
+                    var_pct_intpl.append(var[i])
+                    var_pct_intpl_grp.append(var_grp[i])
+
+        var_pct_intpl_final = pd.DataFrame([var_pct_intpl, var_pct_intpl_grp])
+        var_pct_intpl_final = var_pct_intpl_final.T
+        var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
+        var_pct_intpl_final.columns = ['var_pct_intpl', 'var_pct_intpl_grp']
+
+        if len(var_pct_intpl_final.index) > 120:
+            var_pct_intpl_final = var_pct_intpl_final.iloc[0:120]
+            var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
+        else:
+            Na_add = 120 - len(var_pct_intpl_final.index)
+            pd_add = pd.DataFrame(np.nan, index = np.arange(Na_add), columns = np.arange(2))
+            pd_add.columns = ['var_pct_intpl', 'var_pct_intpl_grp']
+            var_pct_intpl_final = pd.concat([var_pct_intpl_final, pd_add], axis=0)
+            var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
     else:
-        var = fill_var(variable, data)
+        if (pd.isnull(data["hzdept_r"]).any() or pd.isnull(data["hzdepb_r"]).any()):
+            var_pct_intpl_final = pd.DataFrame(np.nan, index = np.arange(120), columns = np.arange(1))
+            var_pct_intpl_final.columns = ['var_pct_intpl']
+            return var_pct_intpl_final
 
-    if pd.isnull(data["hzdept_r"]).any() or pd.isnull(data["hzdepb_r"]).any() or data["hzdept_r"].iloc[0] != 0:
-        empty_data = pd.DataFrame(np.nan, index=np.arange(120), columns=['var_pct_intpl', 'var_pct_intpl_grp'])
-        return empty_data if variable in ["sandtotal_r", "claytotal_r", "total_frag_volume"] else empty_data.drop(columns=['var_pct_intpl_grp'])
-    
-    for i in range(1, len(data["hzdept_r"])):
-        if data["hzdept_r"].iloc[i] > data["hzdepb_r"].iloc[i - 1]:
-            empty_data = pd.DataFrame(np.nan, index=np.arange(120), columns=['var_pct_intpl', 'var_pct_intpl_grp'])
-            return empty_data if variable in ["sandtotal_r", "claytotal_r", "total_frag_volume"] else empty_data.drop(columns=['var_pct_intpl_grp'])
-        data["hzdept_r"].iloc[i] = data["hzdepb_r"].iloc[i - 1]
+        if data["hzdept_r"].iloc[0] != 0:
+            var_pct_intpl_final = pd.DataFrame(np.nan, index = np.arange(120), columns = np.arange(1))
+            var_pct_intpl_final.columns = ['var_pct_intpl']
+            return var_pct_intpl_final
 
-    var_pct_intpl = compute_final_values(var, data["hzdepb_r"].tolist())
-    var_pct_intpl_grp = compute_final_values(var_grp, data["hzdepb_r"].tolist())
+        MisHrz = 0
+        for i in range(len(data["hzdept_r"])):
+            if i == len(data["hzdept_r"]) - 1:
+                break
 
-    var_df = pd.DataFrame({'var_pct_intpl': var_pct_intpl, 'var_pct_intpl_grp': var_pct_intpl_grp})
-    var_df = var_df.head(120).append(pd.DataFrame(np.nan, index=np.arange(120 - len(var_df)), columns=['var_pct_intpl', 'var_pct_intpl_grp']))
+            if (data["hzdept_r"].iloc[i + 1] > data["hzdepb_r"].iloc[i]):
+                MisHrz = 1
+            elif (data["hzdept_r"].iloc[i + 1] < data["hzdepb_r"].iloc[i]):
+                data["hzdept_r"].iloc[i + 1] == data["hzdepb_r"].iloc[i]
 
-    if c_bot:
-        c_very_bottom = data["hzdepb_r"].iloc[-1]
-        return c_very_bottom, var_df
+        if MisHrz == 1:
+            var_pct_intpl_final = pd.DataFrame(np.nan, index = np.arange(120), columns = np.arange(1))
+            var_pct_intpl_final.columns = ['var_pct_intpl']
+            return var_pct_intpl_final
+
+        if len(data["hzdept_r"]) == 1:
+            for i in range(int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])):
+                var_pct_intpl.append(var[0])
+        else:
+            for i in range(len(data["hzdepb_r"])):
+                for j in range(int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])):
+                    var_pct_intpl.append(var[i])
+
+        var_pct_intpl_final = pd.DataFrame([var_pct_intpl])
+        var_pct_intpl_final = var_pct_intpl_final.T
+        var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
+        var_pct_intpl_final.columns = ['var_pct_intpl']
+
+        if len(var_pct_intpl_final.index) > 120:
+            var_pct_intpl_final = var_pct_intpl_final.iloc[0:120]
+            var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
+        else:
+            Na_add = 120 - len(var_pct_intpl_final.index)
+            pd_add = pd.DataFrame(np.nan, index = np.arange(Na_add), columns = np.arange(1))
+            pd_add.columns = ['var_pct_intpl']
+            var_pct_intpl_final = pd.concat([var_pct_intpl_final, pd_add], axis=0)
+            var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
+    if c_bot == True:
+        if len(data["hzdept_r"]) == 1:
+            c_very_bottom = data["hzdepb_r"].iloc[0]
+        else:
+            c_very_bottom = data["hzdepb_r"].values[-1]
+        return c_very_bottom, var_pct_intpl_final
     else:
-        return var_df.drop(columns=['var_pct_intpl_grp']) if variable not in ["sandtotal_r", "claytotal_r", "total_frag_volume"] else var_df
+        return var_pct_intpl_final
+
+
+def getProfile_SG(data, variable, c_bot=False):
+        var = []
+        var_grp = []
+        var_pct_intpl = []
+        var_pct_intpl_grp = []
+        if variable == "sand":
+            for i in range(len(data)):
+                if data["texture"].iloc[i] is None:
+                    var.append(data["sand"].iloc[i])
+                    var_grp.append(np.nan)
+                else:
+                    var.append(data["sand"].iloc[i])
+                    var_grp.append(getSand(data["texture"].iloc[i]))
+        if variable == "clay":
+            for i in range(len(data)):
+                if data["texture"].iloc[i] is None:
+                    var.append(data["clay"].iloc[i])
+                    var_grp.append(np.nan)
+                else:
+                    var.append(data["clay"].iloc[i])
+                    var_grp.append(getClay(data["texture"].iloc[i]))
+        if variable == "cfvo":
+            for i in range(len(data)):
+                if data["cfvo"].iloc[i] is None:
+                    var.append(np.nan)
+                    var_grp.append(np.nan)
+                else:
+                    var.append(data["cfvo"].iloc[i])
+                    var_grp.append(getCF(data["cfvo"].iloc[i]))
+        if variable == "cec":
+            for i in range(len(data)):
+                if data["cec"].iloc[i] is None:
+                    var.append(np.nan)
+                    var_grp.append(np.nan)
+                else:
+                    var.append(data["cec"].iloc[i])
+                    var_grp.append(getCF(data["cec"].iloc[i]))
+        if variable == "phh2o":
+            for i in range(len(data)):
+                if data["phh2o"].iloc[i] is None:
+                    var.append(np.nan)
+                    var_grp.append(np.nan)
+                else:
+                    var.append(data["phh2o"].iloc[i])
+                    var_grp.append(getCF(data["phh2o"].iloc[i]))
+
+        #Return empty fields when there is no depth data or the top depth is not 0
+        if variable == "sand" or variable == "clay" or variable == "cfvo" or variable == "cec" or variable == "phh2o":
+            if (pd.isnull(data["hzdept_r"]).any() or pd.isnull(data["hzdepb_r"]).any()):
+                var_pct_intpl_final = pd.DataFrame(np.nan, index = np.arange(120), columns = np.arange(2))
+                var_pct_intpl_final.columns = ['var_pct_intpl', 'var_pct_intpl_grp']
+                return var_pct_intpl_final
+    
+            if data["hzdept_r"].iloc[0] != 0:
+                var_pct_intpl_final = pd.DataFrame(np.nan, index = np.arange(120), columns = np.arange(2))
+                var_pct_intpl_final.columns = ['var_pct_intpl', 'var_pct_intpl_grp']
+                return var_pct_intpl_final
+    
+            MisHrz = 0
+            for i in range(len(data["hzdept_r"])):
+                if i == len(data["hzdept_r"]) - 1:
+                    break
+    
+                if (data["hzdept_r"].iloc[i + 1] > data["hzdepb_r"].iloc[i]):
+                    MisHrz = 1
+                elif (data["hzdept_r"].iloc[i + 1] < data["hzdepb_r"].iloc[i]):
+                    data["hzdept_r"].iloc[i + 1] == data["hzdepb_r"].iloc[i]
+    
+            if MisHrz == 1:
+                var_pct_intpl_final = pd.DataFrame(np.nan, index = np.arange(120), columns = np.arange(2))
+                var_pct_intpl_final.columns = ['var_pct_intpl', 'var_pct_intpl_grp']
+                return var_pct_intpl_final
+    
+            if len(data["hzdept_r"]) == 1:
+                for i in range(int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])):
+                    var_pct_intpl.append(var[0])
+                    var_pct_intpl_grp.append(var_grp[0])
+            else:
+                for i in range(len(data["hzdepb_r"])):
+                    for j in range(int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])):
+                        var_pct_intpl.append(var[i])
+                        var_pct_intpl_grp.append(var_grp[i])
+    
+            var_pct_intpl_final = pd.DataFrame([var_pct_intpl, var_pct_intpl_grp])
+            var_pct_intpl_final = var_pct_intpl_final.T
+            var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
+            var_pct_intpl_final.columns = ['var_pct_intpl', 'var_pct_intpl_grp']
+    
+            if len(var_pct_intpl_final.index) > 120:
+                var_pct_intpl_final = var_pct_intpl_final.iloc[0:120]
+                var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
+            else:
+                Na_add = 100 - len(var_pct_intpl_final.index)
+                pd_add = pd.DataFrame(np.nan, index = np.arange(Na_add), columns = np.arange(2))
+                pd_add.columns = ['var_pct_intpl', 'var_pct_intpl_grp']
+                var_pct_intpl_final = pd.concat([var_pct_intpl_final, pd_add], axis=0)
+                var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
+        else:
+            if (pd.isnull(data["hzdept_r"]).any() or pd.isnull(data["hzdepb_r"]).any()):
+                var_pct_intpl_final = pd.DataFrame(np.nan, index = np.arange(120), columns = np.arange(1))
+                var_pct_intpl_final.columns = ['var_pct_intpl']
+                return var_pct_intpl_final
+    
+            if data["hzdept_r"].iloc[0] != 0:
+                var_pct_intpl_final = pd.DataFrame(np.nan, index = np.arange(120), columns = np.arange(1))
+                var_pct_intpl_final.columns = ['var_pct_intpl']
+                return var_pct_intpl_final
+    
+            MisHrz = 0
+            for i in range(len(data["hzdept_r"])):
+                if i == len(data["hzdept_r"]) - 1:
+                    break
+    
+                if (data["hzdept_r"].iloc[i + 1] > data["hzdepb_r"].iloc[i]):
+                    MisHrz = 1
+                elif (data["hzdept_r"].iloc[i + 1] < data["hzdepb_r"].iloc[i]):
+                    data["hzdept_r"].iloc[i + 1] == data["hzdepb_r"].iloc[i]
+    
+            if MisHrz == 1:
+                var_pct_intpl_final = pd.DataFrame(np.nan, index = np.arange(120), columns = np.arange(1))
+                var_pct_intpl_final.columns = ['var_pct_intpl']
+                return var_pct_intpl_final
+    
+            if len(data["hzdept_r"]) == 1:
+                for i in range(int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])):
+                    var_pct_intpl.append(var[0])
+            else:
+                for i in range(len(data["hzdepb_r"])):
+                    for j in range(int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])):
+                        var_pct_intpl.append(var[i])
+    
+            var_pct_intpl_final = pd.DataFrame([var_pct_intpl])
+            var_pct_intpl_final = var_pct_intpl_final.T
+            var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
+            var_pct_intpl_final.columns = ['var_pct_intpl']
+    
+            if len(var_pct_intpl_final.index) > 120:
+                var_pct_intpl_final = var_pct_intpl_final.iloc[0:120]
+                var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
+            else:
+                Na_add = 100 - len(var_pct_intpl_final.index)
+                pd_add = pd.DataFrame(np.nan, index = np.arange(Na_add), columns = np.arange(1))
+                pd_add.columns = ['var_pct_intpl']
+                var_pct_intpl_final = pd.concat([var_pct_intpl_final, pd_add], axis=0)
+                var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
+        if c_bot == True:
+            if len(data["hzdept_r"]) == 1:
+                c_very_bottom = data["hzdepb_r"].iloc[0]
+            else:
+                c_very_bottom = data["hzdepb_r"].values[-1]
+            return c_very_bottom, var_pct_intpl_final
+        else:
+            return var_pct_intpl_final
 
 
 def drop_cokey_horz(df):
@@ -1004,7 +1233,7 @@ def pt2polyDist(poly, point):
     dist_m = haversine(point.x, point.y, *closest_point_coords) * 1000
     return round(dist_m, 0)
 
-def calculate_distance_score(row):
+def calculate_distance_score(row, ExpCoeff):
     """
     Calculate distance score based on the conditions provided.
     """
@@ -1122,7 +1351,7 @@ def extract_statsgo_mucompdata(lon, lat):
     return mucompdata_pd
   
   
-  def fill_missing_comppct_r(mucompdata_pd):
+def fill_missing_comppct_r(mucompdata_pd):
     """
     Fills missing or zero values in the 'comppct_r' column based on the difference 
     between the sum of all components in the map unit subtracted from 100.
@@ -1164,7 +1393,7 @@ def extract_statsgo_mucompdata(lon, lat):
     return mucompdata_pd
 
 
-def process_distance_scores(mucompdata_pd):
+def process_distance_scores(mucompdata_pd, ExpCoeff):
     """
     Process distance scores and perform group-wise aggregations.
 
@@ -1179,8 +1408,8 @@ def process_distance_scores(mucompdata_pd):
     """
 
     # Calculate distance score for each group
-    mucompdata_pd['distance_score'] = mucompdata_pd.apply(calculate_distance_score, axis=1)
-    
+    mucompdata_pd['distance_score'] = mucompdata_pd.apply(lambda row: calculate_distance_score(row, ExpCoeff), axis=1)
+
     # Group by cokey and mukey and aggregate required values
     grouped_data = mucompdata_pd.groupby(['cokey', 'mukey']).agg(
         distance_score=('distance_score', 'sum'),
@@ -1320,10 +1549,13 @@ def rgb2lab(color_ref, rgb_ref, rgb):
     idx = pd.DataFrame(euclidean_distances([rgb], rgb_ref)).idxmin(axis=1).iloc[0]
     return [color_ref.at[idx, col] for col in ['L', 'A', 'B']]
   
-def getProfileLAB(data_osd):
+def getProfileLAB(data_osd, color_ref):
     """
     The function processes the given data_osd DataFrame and computes LAB values for soil profiles.
     """
+    LAB_ref  =  color_ref[['L', 'A', 'B']]
+    rgb_ref  =  color_ref[['r', 'g', 'b']]
+    munsell_ref = color_ref[['hue', 'value', 'chroma']]
     
     # Convert the specific columns to numeric
     data_osd[['top', 'bottom', 'r', 'g', 'b']] = data_osd[['top', 'bottom', 'r', 'g', 'b']].apply(pd.to_numeric)
@@ -1367,8 +1599,26 @@ def getProfileLAB(data_osd):
         """
         if pd.isnull(row['r']) or pd.isnull(row['g']) or pd.isnull(row['b']):
             return np.nan, np.nan, np.nan
+      
         LAB = rgb2lab(color_ref, rgb_ref, [row['r'], row['g'], row['b']])
-        return LAB[0][0], LAB[1][0], LAB[2][0]
+      
+        # Check the structure of LAB and extract values accordingly
+        try:
+            if isinstance(LAB, list) and all(isinstance(x, np.ndarray) for x in LAB):
+                # Assuming LAB is a list of arrays
+                return LAB[0][0], LAB[1][0], LAB[2][0]
+            elif isinstance(LAB, np.ndarray) and LAB.ndim == 1:
+                # Assuming LAB is a 1D array
+                return LAB[0], LAB[1], LAB[2]
+            else:
+                # Handle other cases or unknown structures
+                print(f"Unexpected structure of LAB: {LAB}")
+                return np.nan, np.nan, np.nan
+        except IndexError as e:
+            # Handle indexing errors
+            print(f"Indexing error in LAB: {e}")
+            return np.nan, np.nan, np.nan
+
     
     if not validate_data(data_osd):
         return pd.DataFrame(np.nan, index=np.arange(120), columns=['L', 'A', 'B'])

@@ -10,7 +10,7 @@ http://127.0.0.1:5000/api/v2/soilidlist
 ```
 
 ### Required Inputs
-1. **longitude**: Longitude value. 
+1. **longitude**: Longitude value.
    - Type: Float.
    - This input is mandatory, specifying the longitudinal coordinate for soil data retrieval.
 2. **latitude**: Latitude value.
@@ -44,9 +44,9 @@ http://127.0.0.1:5000/api/v2/soilidrank
 ```
 
 ### Required Inputs
-1. **longitude**: Longitude value. 
+1. **longitude**: Longitude value.
    - Type: Float.
-2. **latitude**: Latitude value. 
+2. **latitude**: Latitude value.
    - Type: Float.
 
 ### Optional Inputs

@@ -6,7 +6,7 @@ from skbio.stats.composition import ilr_inv
 def simulate_correlated_triangular(n, params, correlation_matrix):
     """
     Simulate correlated triangular distributed variables.
-    
+
     Parameters:
     - n: Number of samples.
     - params: List of tuples, where each tuple contains three parameters (a, b, c) for the triangular distribution.
@@ -15,31 +15,31 @@ def simulate_correlated_triangular(n, params, correlation_matrix):
     Returns:
     - samples: 2D numpy array with n rows and as many columns as there are sets of parameters in params.
     """
-    
+
     # Generate uncorrelated standard normal variables
     uncorrelated_normal = np.random.normal(size=(n, len(params)))
-    
+
     # Cholesky decomposition of the correlation matrix
     L = cholesky(correlation_matrix)
-    
+
     # Compute correlated variables using Cholesky decomposition
     correlated_normal = uncorrelated_normal @ L
-    
+
     # Transform standard normal variables to match triangular marginal distributions
     samples = np.zeros((n, len(params)))
-    
+
     for i, (a, b, c) in enumerate(params):
         normal_var = correlated_normal[:, i]
         u = norm.cdf(normal_var)  # Transform to uniform [0, 1] range
-        
+
         # Transform the uniform values into triangularly distributed values
         condition = u <= (b - a) / (c - a)
         samples[condition, i] = a + np.sqrt(u[condition] * (c - a) * (b - a))
         samples[~condition, i] = c - np.sqrt((1 - u[~condition]) * (c - a) * (c - b))
-    
+
     return samples
-  
-  
+
+
 
 
 
@@ -53,7 +53,7 @@ use 'ilr' and 'ilr_inv' functions from the skbio.stats.composition package
 #     """
 #     gm = np.exp(np.mean(np.log(x)))  # Geometric mean
 #     return np.log(x / gm)
-# 
+#
 # def ilr(x, basis=None):
 #     """
 #     Compute the isometric log-ratio transformation.
@@ -68,7 +68,7 @@ use 'ilr' and 'ilr_inv' functions from the skbio.stats.composition package
 #         ])
 #     clr_values = clr(x)
 #     return clr_values @ basis.T
-  
+
 
 
 def acomp(X, parts=None, total=1):
@@ -76,7 +76,7 @@ def acomp(X, parts=None, total=1):
         parts = list(range(X.shape[1]))
 
     parts = list(set(parts))
-    
+
     if isinstance(X, pd.DataFrame):
         Xn = X.iloc[:, parts].to_numpy()
     else:
@@ -95,7 +95,7 @@ def gsi_simshape(x, oldx):
 """
 Modeling Steps:
   Step 1. Calculate a local soil property correlation matrix uisng the representative values from SSURGO.
-  
+
   Step 2. Steps performed on each row:
     a. Simulate sand/silt/clay percentages using the 'simulate_correlated_triangular' function, using the global correlation matrix
        and the local l,r,h values for each particle fraction. Format as a composition using 'acomp'
@@ -103,11 +103,11 @@ Modeling Steps:
     c. Extract l,r,h values (min, median, max for ilr1 and ilr2) and format into a params object for simiulation.
     d. Simulate all properties and then permorm inverse transform on ilr1 and ilr2 to obtain sand, silt, and clay values.
     e. Append simulated values to dataframe
-    
+
   Step 3. Run Rosetta and other Van Genuchten equations to calcuate AWS in top 50 cm using simulated dataframe.
 """
 
-# Step 1. Calculate a local soil property correlation matrix 
+# Step 1. Calculate a local soil property correlation matrix
 
 # Extract columns with names ending in '_r'
 df_r = df[[col for col in df.columns if col.endswith('_r')]]
@@ -147,14 +147,14 @@ for _, row in df.iterrows():
     # Convert simulated data using the acomp function and then compute the isometric log-ratio transformation.
     simulated_txt = acomp(simulate_correlated_triangular(row['comppct_r']*10, params_txt, texture_correlation_matrix))
     simulated_txt_ilr = irl(simulated_txt)
-    
+
     # Extract min, median, and max for the first two ilr transformed columns.
     ilr1_values = simulated_txt_ilr[:, 0]
     ilr2_values = simulated_txt_ilr[:, 1]
-    
+
     ilr1_l, ilr1_r, ilr1_h = ilr1_values.min(), np.median(ilr1_values), ilr1_values.max()
     ilr2_l, ilr2_r, ilr2_h = ilr2_values.min(), np.median(ilr2_values), ilr2_values.max()
-    
+
     # Create the list of parameters.
     params = [
         [ilr1_l, ilr1_r, ilr1_h],
@@ -167,7 +167,7 @@ for _, row in df.iterrows():
     sim_data = simulate_correlated_triangular(row['comppct_r']*10, params, local_correlation_matrix)
     sim_txt = ilr_inv(sim_data[['ilr1', 'ilr2']])
     multi_sim = pd.concat([sim_data.drop(columns=['ilr1', 'ilr2']), sim_txt], axis=1)
-    
+
     results.append(multi_sim)
 
 
@@ -234,7 +234,7 @@ def gsi_plain(x):
     Returns:
     - A numpy array representing the plain form of the input.
     """
-    
+
     if isinstance(x, pd.DataFrame):
         return x.values
     else:
@@ -243,20 +243,20 @@ def gsi_plain(x):
 def oneOrDataset(W, B=None):
     """
     Convert input W to a proper dataset format.
-    
+
     Parameters:
     - W: Input data which can be a 1D or 2D numpy array.
     - B: An optional 2D numpy array. If provided, it influences the shape of the output.
-    
+
     Returns:
     - A numpy array representing the dataset.
     """
-    
-    # Convert W to its "plain" form. 
-    # Note: The actual functionality of gsi.plain() is not provided, 
+
+    # Convert W to its "plain" form.
+    # Note: The actual functionality of gsi.plain() is not provided,
     # so this is a placeholder and might need adjustment.
     W = gsi_plain(W)
-    
+
     # If B is missing or not a 2D array
     if B is None or len(B.shape) != 2:
         if len(W.shape) == 2:
@@ -283,7 +283,7 @@ def acomp(X, parts=None, total=1):
         parts = list(range(X.shape[1]))
 
     parts = list(set(parts))
-    
+
     if isinstance(X, pd.DataFrame):
         Xn = X.iloc[:, parts].to_numpy()
     else:
@@ -305,7 +305,7 @@ def gsi_plain(x):
     return x.to_numpy() if isinstance(x, pd.DataFrame) else x
 
 def oneOrDataset(W, B=None):
-    W = gsi_plain(W) 
+    W = gsi_plain(W)
 
     if B is None or B.ndim != 2:
         return np.array([W]).reshape(1, -1) if W.ndim == 1 else W

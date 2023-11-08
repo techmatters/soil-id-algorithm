@@ -43,9 +43,9 @@ def simulate_correlated_triangular(n, params, correlation_matrix):
 
 
 
-""""
+"""
 use 'ilr' and 'ilr_inv' functions from the skbio.stats.composition package
-""""
+"""
 
 # def clr(x):
 #     """

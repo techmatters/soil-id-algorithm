@@ -1295,7 +1295,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     # soilweb_url = f"https://casoilresource.lawr.ucdavis.edu/api/landPKS.php?q=spn&lon={lon}&lat={lat}&r=1000" # noqa: E501
 
     # testing API
-    soilweb_url = f"https://soilmap2-1.lawr.ucdavis.edu/dylan/soilweb/api/landPKS.php?q=spn&lon={lon}&lat={lat}&r=1000" # noqa: E501
+    soilweb_url = f"https://soilmap2-1.lawr.ucdavis.edu/dylan/soilweb/api/landPKS.php?q=spn&lon={lon}&lat={lat}&r=1000"  # noqa: E501
     try:
         response = requests.get(soilweb_url, timeout=8)
         out = response.json()
@@ -1898,7 +1898,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 series_join = ",".join(series_name)
 
                 # Fetch data from URL using requests
-                series_url = f"https://casoilresource.lawr.ucdavis.edu/api/soil-series.php?q=site_hz&s={series_join}" # noqa: E501
+                series_url = f"https://casoilresource.lawr.ucdavis.edu/api/soil-series.php?q=site_hz&s={series_join}"  # noqa: E501
                 response = requests.get(series_url, timeout=3)
                 seriesDict = response.json()
 
@@ -2697,7 +2697,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 ecosite_edit_id = ESD_list_pd[
                     ESD_list_pd.apply(lambda r: r.str.contains(eco_id, case=False).any(), axis=1)
                 ]["id"].values[0]
-                ES_URL_t = f"https://edit.jornada.nmsu.edu/catalogs/esd/{ecosite_edit_id[1:5]}/{ecosite_edit_id}" # noqa: E501
+                ES_URL_t = f"https://edit.jornada.nmsu.edu/catalogs/esd/{ecosite_edit_id[1:5]}/{ecosite_edit_id}"  # noqa: E501
                 ESD_URL.append(ES_URL_t)
             else:
                 ESD_URL.append("")
@@ -2787,7 +2787,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     #       component horizons are missing texture data and the OSD bottom depth is shallower
     #       than the component bottom depth, indicating a shallower profile. But the horizon
     #       designations are generic, e.g.,  H1, H2, H3; thus not allowing their use in
-    #.      identifying bedrock.
+    # .      identifying bedrock.
 
     # ---------------------------------------------------------------------------------------------
     # SoilIDList output
@@ -3400,7 +3400,7 @@ def rankPredictionUS(
 
         # i should be an index of p_hz_data depth slices, e.g. if user only enters 100-120cm data,
         # then i = 100:120
-        for ( i ) in ( soil_matrix.index ):
+        for i in soil_matrix.index:
             slice_data = [horz.loc[i] for horz in horz_vars]
             sliceT = pd.concat(slice_data, axis=1).T
             """
@@ -3871,7 +3871,7 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
 
     ########### SoilGrids250  ############################################
     # Construct the SoilGrids API v2 URL
-    sg_api = f"https://rest.isric.org/soilgrids/v2.0/properties/query?lon={lon}&lat={lat}&property=cfvo&property=cec&property=clay&property=phh2o&property=sand&value=mean" # noqa: E501
+    sg_api = f"https://rest.isric.org/soilgrids/v2.0/properties/query?lon={lon}&lat={lat}&property=cfvo&property=cec&property=clay&property=phh2o&property=sand&value=mean"  # noqa: E501
 
     try:
         # Make the API request using the requests library
@@ -3928,7 +3928,7 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
 
         # Fetch SG wRB Taxonomy
         # Construct the API URL for fetching soil data
-        api_url = f"https://rest.isric.org/soilgrids/v2.0/classification/query?lon={lon}&lat={lat}&number_classes=3" # noqa: E501
+        api_url = f"https://rest.isric.org/soilgrids/v2.0/classification/query?lon={lon}&lat={lat}&number_classes=3"  # noqa: E501
 
         # Fetch data from the API
         try:
@@ -4096,7 +4096,7 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
 def getSoilGridsUS(lon, lat, plot_id=None):
     ########### SoilGrids250  ############################################
     # Construct the SoilGrids API v2 URL
-    sg_api = f"https://rest.isric.org/soilgrids/v2.0/properties/query?lon={lon}&lat={lat}&property=cfvo&property=cec&property=clay&property=phh2o&property=sand&value=mean" # noqa: E501
+    sg_api = f"https://rest.isric.org/soilgrids/v2.0/properties/query?lon={lon}&lat={lat}&property=cfvo&property=cec&property=clay&property=phh2o&property=sand&value=mean"  # noqa: E501
 
     try:
         # Make the API request using the requests library

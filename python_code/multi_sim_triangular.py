@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
 from numpy.linalg import cholesky
-from skbio.stats.composition import ilr_inv
 from scipy.stats import spearmanr
+from skbio.stats.composition import ilr_inv
 
 
 def simulate_correlated_triangular(n, params, correlation_matrix):
@@ -244,6 +244,7 @@ def gsi_mul(x, y):
 
 
 # acomp function and helper functions
+
 
 def gsi_plain(x):
     """

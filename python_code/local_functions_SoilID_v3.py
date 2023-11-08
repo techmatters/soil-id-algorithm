@@ -1,33 +1,22 @@
-#####################################################################################################
-#                                       Database and API Functions                                  #
-#####################################################################################################
+###################################################################################################
+#                                       Database and API Functions                                #
+###################################################################################################
 # Standard libraries
-import collections
-import csv
-import json
 import math
-import os
-import random
 import re
-import struct
 import sys
 
 # Third-party libraries
-import colour
 import geopandas as gpd
 import MySQLdb
 import numpy as np
 import pandas as pd
 import requests
-import scipy.stats
 import shapely
 from numpy.linalg import cholesky
-from osgeo import gdal, ogr
-from scipy.interpolate import CubicSpline
 from scipy.sparse import issparse
-from scipy.spatial import distance
 from scipy.stats import norm
-from shapely.geometry import LinearRing, Point, Polygon, shape
+from shapely.geometry import LinearRing, Point
 from sklearn.metrics import pairwise
 from sklearn.metrics.pairwise import euclidean_distances
 from sklearn.utils import validation
@@ -144,7 +133,10 @@ def load_model_output(plot_id):
         conn = get_datastore_connection()
         cur = conn.cursor()
         model_version = 2
-        sql = f"SELECT ID, result_blob, soilIDRank_output_pd, mucompdata_cond_prob FROM  landpks_soil_model WHERE plot_id = {plot_id} AND model_version = {model_version} order by ID desc LIMIT 1"
+        sql = f"""SELECT ID, result_blob, soilIDRank_output_pd, mucompdata_cond_prob
+                  FROM landpks_soil_model
+                  WHERE plot_id = {plot_id} AND model_version = {model_version}
+                  ORDER BY ID DESC LIMIT 1"""
         cur.execute(sql)
         results = cur.fetchall()
         for row in results:
@@ -165,7 +157,11 @@ def get_WISE30sec_data(MUGLB_NEW_Select):
         conn = get_datastore_connection()
         cur = conn.cursor()
         placeholders = ", ".join(["%s"] * len(MUGLB_NEW_Select))
-        sql = f"SELECT MUGLB_NEW, COMPID, id, MU_GLOBAL, NEWSUID, SCID, PROP, CLAF,  PRID, Layer, TopDep, BotDep,  CFRAG,  SDTO,  STPC,  CLPC, CECS, PHAQ, ELCO, SU_name, FAO_SYS FROM  wise_soil_data WHERE MUGLB_NEW IN ({placeholders})"
+        sql = f"""SELECT MUGLB_NEW, COMPID, id, MU_GLOBAL, NEWSUID, SCID, PROP, CLAF,
+                         PRID, Layer, TopDep, BotDep, CFRAG, SDTO, STPC, CLPC, CECS,
+                         PHAQ, ELCO, SU_name, FAO_SYS
+                  FROM   wise_soil_data
+                  WHERE MUGLB_NEW IN ({placeholders})"""
         cur.execute(sql, MUGLB_NEW_Select)
         results = cur.fetchall()
         data = pd.DataFrame(
@@ -248,7 +244,10 @@ def get_WRB_descriptions(WRB_Comp_List):
         conn = get_datastore_connection()
         cur = conn.cursor()
         placeholders = ", ".join(["%s"] * len(WRB_Comp_List))
-        sql = f"SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es, Description_ks, Management_ks, Description_fr, Management_fr FROM wrb_fao90_desc WHERE WRB_tax IN ({placeholders})"
+        sql = f"""SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es,
+                         Description_ks, Management_ks, Description_fr, Management_fr
+                  FROM wrb_fao90_desc
+                  WHERE WRB_tax IN ({placeholders})"""
         cur.execute(sql, WRB_Comp_List)
         results = cur.fetchall()
         data = pd.DataFrame(
@@ -275,7 +274,8 @@ def get_WRB_descriptions(WRB_Comp_List):
 
 def sda_return(propQry):
     """
-    Queries data from the USDA's Soil Data Mart (SDM) Tabular Service and returns it as a pandas DataFrame.
+    Queries data from the USDA's Soil Data Mart (SDM) Tabular Service and returns it
+    as a pandas DataFrame.
     """
     base_url = "https://sdmdataaccess.nrcs.usda.gov/Tabular/SDMTabularService/post.rest"
     request_data = {"format": "JSON+COLUMNNAME", "query": propQry}
@@ -306,9 +306,9 @@ def sda_return(propQry):
         return None
 
 
-#####################################################################################################
-#                                       Utility Functions                                           #
-#####################################################################################################
+###################################################################################################
+#                                       Utility Functions                                         #
+###################################################################################################
 
 
 def getSand(field):
@@ -471,13 +471,9 @@ def getOSDCF(cf):
 def agg_data_layer(data, bottom, sd=2, depth=False):
     # Handle edge cases
     if np.isnan(bottom):
-        return (
-            (pd.Series([np.nan]), pd.Series([np.nan])) if depth else pd.Series([np.nan])
-        )
+        return (pd.Series([np.nan]), pd.Series([np.nan])) if depth else pd.Series([np.nan])
     if bottom == 0:
-        return (
-            (pd.Series([np.nan]), pd.Series([np.nan])) if depth else pd.Series([np.nan])
-        )
+        return (pd.Series([np.nan]), pd.Series([np.nan])) if depth else pd.Series([np.nan])
 
     # Define depth ranges
     ranges = [
@@ -557,22 +553,14 @@ def getProfile(data, variable, c_bot=False):
                 var.append(data["EC"].iloc[i])
 
     # Return empty fields when there is no depth data or the top depth is not 0
-    if (
-        variable == "sandtotal_r"
-        or variable == "claytotal_r"
-        or variable == "total_frag_volume"
-    ):
+    if variable == "sandtotal_r" or variable == "claytotal_r" or variable == "total_frag_volume":
         if pd.isnull(data["hzdept_r"]).any() or pd.isnull(data["hzdepb_r"]).any():
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(120), columns=np.arange(2)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(120), columns=np.arange(2))
             var_pct_intpl_final.columns = ["var_pct_intpl", "var_pct_intpl_grp"]
             return var_pct_intpl_final
 
         if data["hzdept_r"].iloc[0] != 0:
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(120), columns=np.arange(2)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(120), columns=np.arange(2))
             var_pct_intpl_final.columns = ["var_pct_intpl", "var_pct_intpl_grp"]
             return var_pct_intpl_final
 
@@ -587,23 +575,17 @@ def getProfile(data, variable, c_bot=False):
                 data["hzdept_r"].iloc[i + 1] == data["hzdepb_r"].iloc[i]
 
         if MisHrz == 1:
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(120), columns=np.arange(2)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(120), columns=np.arange(2))
             var_pct_intpl_final.columns = ["var_pct_intpl", "var_pct_intpl_grp"]
             return var_pct_intpl_final
 
         if len(data["hzdept_r"]) == 1:
-            for i in range(
-                int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])
-            ):
+            for i in range(int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])):
                 var_pct_intpl.append(var[0])
                 var_pct_intpl_grp.append(var_grp[0])
         else:
             for i in range(len(data["hzdepb_r"])):
-                for j in range(
-                    int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])
-                ):
+                for j in range(int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])):
                     var_pct_intpl.append(var[i])
                     var_pct_intpl_grp.append(var_grp[i])
 
@@ -623,16 +605,12 @@ def getProfile(data, variable, c_bot=False):
             var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
     else:
         if pd.isnull(data["hzdept_r"]).any() or pd.isnull(data["hzdepb_r"]).any():
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(120), columns=np.arange(1)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(120), columns=np.arange(1))
             var_pct_intpl_final.columns = ["var_pct_intpl"]
             return var_pct_intpl_final
 
         if data["hzdept_r"].iloc[0] != 0:
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(120), columns=np.arange(1)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(120), columns=np.arange(1))
             var_pct_intpl_final.columns = ["var_pct_intpl"]
             return var_pct_intpl_final
 
@@ -647,22 +625,16 @@ def getProfile(data, variable, c_bot=False):
                 data["hzdept_r"].iloc[i + 1] == data["hzdepb_r"].iloc[i]
 
         if MisHrz == 1:
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(120), columns=np.arange(1)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(120), columns=np.arange(1))
             var_pct_intpl_final.columns = ["var_pct_intpl"]
             return var_pct_intpl_final
 
         if len(data["hzdept_r"]) == 1:
-            for i in range(
-                int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])
-            ):
+            for i in range(int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])):
                 var_pct_intpl.append(var[0])
         else:
             for i in range(len(data["hzdepb_r"])):
-                for j in range(
-                    int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])
-                ):
+                for j in range(int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])):
                     var_pct_intpl.append(var[i])
 
         var_pct_intpl_final = pd.DataFrame([var_pct_intpl])
@@ -744,16 +716,12 @@ def getProfile_SG(data, variable, c_bot=False):
         or variable == "phh2o"
     ):
         if pd.isnull(data["hzdept_r"]).any() or pd.isnull(data["hzdepb_r"]).any():
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(120), columns=np.arange(2)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(120), columns=np.arange(2))
             var_pct_intpl_final.columns = ["var_pct_intpl", "var_pct_intpl_grp"]
             return var_pct_intpl_final
 
         if data["hzdept_r"].iloc[0] != 0:
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(120), columns=np.arange(2)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(120), columns=np.arange(2))
             var_pct_intpl_final.columns = ["var_pct_intpl", "var_pct_intpl_grp"]
             return var_pct_intpl_final
 
@@ -768,23 +736,17 @@ def getProfile_SG(data, variable, c_bot=False):
                 data["hzdept_r"].iloc[i + 1] == data["hzdepb_r"].iloc[i]
 
         if MisHrz == 1:
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(120), columns=np.arange(2)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(120), columns=np.arange(2))
             var_pct_intpl_final.columns = ["var_pct_intpl", "var_pct_intpl_grp"]
             return var_pct_intpl_final
 
         if len(data["hzdept_r"]) == 1:
-            for i in range(
-                int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])
-            ):
+            for i in range(int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])):
                 var_pct_intpl.append(var[0])
                 var_pct_intpl_grp.append(var_grp[0])
         else:
             for i in range(len(data["hzdepb_r"])):
-                for j in range(
-                    int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])
-                ):
+                for j in range(int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])):
                     var_pct_intpl.append(var[i])
                     var_pct_intpl_grp.append(var_grp[i])
 
@@ -804,16 +766,12 @@ def getProfile_SG(data, variable, c_bot=False):
             var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
     else:
         if pd.isnull(data["hzdept_r"]).any() or pd.isnull(data["hzdepb_r"]).any():
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(120), columns=np.arange(1)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(120), columns=np.arange(1))
             var_pct_intpl_final.columns = ["var_pct_intpl"]
             return var_pct_intpl_final
 
         if data["hzdept_r"].iloc[0] != 0:
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(120), columns=np.arange(1)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(120), columns=np.arange(1))
             var_pct_intpl_final.columns = ["var_pct_intpl"]
             return var_pct_intpl_final
 
@@ -828,22 +786,16 @@ def getProfile_SG(data, variable, c_bot=False):
                 data["hzdept_r"].iloc[i + 1] == data["hzdepb_r"].iloc[i]
 
         if MisHrz == 1:
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(120), columns=np.arange(1)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(120), columns=np.arange(1))
             var_pct_intpl_final.columns = ["var_pct_intpl"]
             return var_pct_intpl_final
 
         if len(data["hzdept_r"]) == 1:
-            for i in range(
-                int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])
-            ):
+            for i in range(int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])):
                 var_pct_intpl.append(var[0])
         else:
             for i in range(len(data["hzdepb_r"])):
-                for j in range(
-                    int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])
-                ):
+                for j in range(int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])):
                     var_pct_intpl.append(var[i])
 
         var_pct_intpl_final = pd.DataFrame([var_pct_intpl])
@@ -872,7 +824,9 @@ def getProfile_SG(data, variable, c_bot=False):
 
 def drop_cokey_horz(df):
     """
-    Function to drop duplicate rows of component horizon data when more than one instance of a component are duplicates.
+    Function to drop duplicate rows of component horizon data when more than one instance
+    of a component are duplicates.
+
     Function assumes that the dataframe contains:
       (1) unique cokey identifier ('cokey')
       (2) generic compname identifier ('compname')
@@ -898,9 +852,7 @@ def drop_cokey_horz(df):
     # Group by 'compname'
     for _, comp_group in df.groupby("compname", sort=False):
         # Group the component group by 'cokey'
-        grouped_by_cokey = [
-            group for _, group in comp_group.groupby("cokey", sort=False)
-        ]
+        grouped_by_cokey = [group for _, group in comp_group.groupby("cokey", sort=False)]
 
         # Iterate over combinations of the component instances
         for j, group_j in enumerate(grouped_by_cokey):
@@ -919,9 +871,7 @@ def drop_cokey_horz(df):
     # Drop duplicates and reset index
     if drop_instances:
         drop_instances = (
-            pd.concat(drop_instances)
-            .drop_duplicates(keep="first")
-            .reset_index(drop=True)
+            pd.concat(drop_instances).drop_duplicates(keep="first").reset_index(drop=True)
         )
     else:
         drop_instances = None
@@ -931,7 +881,8 @@ def drop_cokey_horz(df):
 
 def haversine(lon1, lat1, lon2, lat2):
     """
-    Calculate the great circle distance between two points on the earth specified in decimal degrees.
+    Calculate the great circle distance between two points on the earth specified
+    in decimal degrees.
 
     Args:
     - lon1, lat1: Longitude and latitude of the first point.
@@ -946,10 +897,7 @@ def haversine(lon1, lat1, lon2, lat2):
     # Haversine formula
     dlon = lon2 - lon1
     dlat = lat2 - lat1
-    a = (
-        math.sin(dlat / 2) ** 2
-        + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
-    )
+    a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
     c = 2 * math.asin(math.sqrt(a))
     r = 6371  # Radius of the earth in kilometers. Use 3956 for miles.
 
@@ -972,8 +920,7 @@ def pt2polyDist(poly, point):
     p = pol_ext.interpolate(d)
     closest_point_coords = list(p.coords)[0]
     dist_m = (
-        haversine(point.x, point.y, closest_point_coords[0], closest_point_coords[1])
-        * 1000
+        haversine(point.x, point.y, closest_point_coords[0], closest_point_coords[1]) * 1000
     )  # Convert to meters
 
     return round(dist_m, 0)
@@ -985,25 +932,20 @@ def calculate_location_score(group, ExpCoeff):
 
     Parameters:
     - group (DataFrame): A group of data containing 'distance' and 'share' columns.
-    - ExpCoeff (float): Exponential coefficient to adjust sensitivity of the score to distance values.
+    - ExpCoeff (float): Exponential coefficient to adjust sensitivity of the score
+      to distance values.
 
     Returns:
     - float: Calculated location score.
 
-    The score is adjusted based on the provided exponential coefficient (ExpCoeff). The function provides
-    a way to compute a normalized score for locations, giving preference to locations with a closer distance
-    (smaller distance values) and higher share values.
+    The score is adjusted based on the provided exponential coefficient (ExpCoeff). The function
+    provides a way to compute a normalized score for locations, giving preference to locations
+    with a closer distance (smaller distance values) and higher share values.
     """
 
     # Parameter validation
-    if (
-        not isinstance(group, pd.DataFrame)
-        or "distance" not in group
-        or "share" not in group
-    ):
-        raise ValueError(
-            "Group should be a DataFrame containing 'distance' and 'share' columns."
-        )
+    if not isinstance(group, pd.DataFrame) or "distance" not in group or "share" not in group:
+        raise ValueError("Group should be a DataFrame containing 'distance' and 'share' columns.")
     if not isinstance(ExpCoeff, (int, float)):
         raise ValueError("ExpCoeff should be a numeric value.")
 
@@ -1018,11 +960,7 @@ def calculate_location_score(group, ExpCoeff):
     distance_multiplier = max(math.exp(ExpCoeff * group.distance.min()), 0.25)
 
     # Calculate and return the score
-    return (
-        distance_multiplier
-        if total_share > 100.0
-        else (total_share / 100) * distance_multiplier
-    )
+    return distance_multiplier if total_share > 100.0 else (total_share / 100) * distance_multiplier
 
 
 def assign_max_distance_scores(group):
@@ -1079,18 +1017,18 @@ def check_pairwise_arrays(X, Y, precomputed=False, dtype=None):
     if Y is X or Y is None:
         Y = X
     else:
-        Y = validation.check_array(
-            Y, accept_sparse="csr", dtype=dtype, estimator=estimator
-        )
+        Y = validation.check_array(Y, accept_sparse="csr", dtype=dtype, estimator=estimator)
 
     # Check for valid shapes based on whether distances are precomputed
     if precomputed and X.shape[1] != Y.shape[0]:
         raise ValueError(
-            f"Precomputed metric requires shape (n_queries, n_indexed). Got ({X.shape[0]}, {X.shape[1]}) for {Y.shape[0]} indexed."
+            f"""Precomputed metric requires shape (n_queries, n_indexed).
+                Got ({X.shape[0]}, {X.shape[1]}) for {Y.shape[0]} indexed."""
         )
     elif X.shape[1] != Y.shape[1]:
         raise ValueError(
-            f"Incompatible dimension for X and Y matrices: X.shape[1] == {X.shape[1]} while Y.shape[1] == {Y.shape[1]}"
+            f"""Incompatible dimension for X and Y matrices:
+                X.shape[1] == {X.shape[1]} while Y.shape[1] == {Y.shape[1]}"""
         )
 
     return X, Y
@@ -1427,7 +1365,8 @@ def trim_fraction(text):
 
 def haversine(lon1, lat1, lon2, lat2):
     """
-    Calculate the great circle distance between two points on the earth specified in decimal degrees.
+    Calculate the great circle distance between two points on the earth specified
+    in decimal degrees.
 
     Parameters:
     - lon1, lat1, lon2, lat2 (float): Longitude and latitude of the two points.
@@ -1500,9 +1439,12 @@ def extract_muhorzdata_STATSGO(mucompdata_pd):
     ]
 
     # Form the muhorzdata query
-    muhorzdataQry = "SELECT cokey, chorizon.chkey, hzdept_r, hzdepb_r, hzname, sandtotal_r, silttotal_r, claytotal_r, cec7_r, ecec_r, ph1to1h2o_r, ec_r,lep_r, chfrags.fragvol_r FROM chorizon LEFT OUTER JOIN chfrags ON chfrags.chkey = chorizon.chkey WHERE cokey IN ({})".format(
-        ",".join(cokey_list)
-    )
+    muhorzdataQry = f"""SELECT cokey, chorizon.chkey, hzdept_r, hzdepb_r, hzname, sandtotal_r,
+                              silttotal_r, claytotal_r, cec7_r, ecec_r, ph1to1h2o_r, ec_r,lep_r,
+                              chfrags.fragvol_r
+                      FROM chorizon
+                      LEFT OUTER JOIN chfrags ON chfrags.chkey = chorizon.chkey
+                      WHERE cokey IN ({",".join(cokey_list)})"""
 
     # Execute the query
     muhorzdata_out = sda_return(propQry=muhorzdataQry)
@@ -1576,7 +1518,14 @@ def extract_statsgo_mucompdata(lon, lat):
 
     # Build the mucompdata query
     mukey_list = mukey_dist_final["MUKEY"].tolist()
-    mucompdataQry = f"SELECT component.mukey, component.cokey, component.compname, component.comppct_r, component.compkind, component.majcompflag, component.slope_r, component.elev_r, component.nirrcapcl, component.nirrcapscl, component.nirrcapunit, component.irrcapcl, component.irrcapscl, component.irrcapunit, component.taxorder, component.taxsubgrp FROM component WHERE mukey IN ({','.join(map(str, mukey_list))})"
+    mucompdataQry = f"""SELECT component.mukey, component.cokey, component.compname,
+                               component.comppct_r, component.compkind, component.majcompflag,
+                               component.slope_r, component.elev_r, component.nirrcapcl,
+                               component.nirrcapscl, component.nirrcapunit, component.irrcapcl,
+                               component.irrcapscl, component.irrcapunit, component.taxorder,
+                               component.taxsubgrp
+                        FROM component
+                        WHERE mukey IN ({','.join(map(str, mukey_list))})"""
     mucompdata_out = sda_return(propQry=mucompdataQry)
 
     # Process the mucompdata results
@@ -1585,9 +1534,9 @@ def extract_statsgo_mucompdata(lon, lat):
     else:
         mucompdata = mucompdata_out["Table"]
         mucompdata_pd = pd.DataFrame(mucompdata[1:], columns=mucompdata[0])
-        mucompdata_pd = pd.merge(
-            mucompdata_pd, mukey_dist_final, on="mukey"
-        ).sort_values(["distance", "cokey"])
+        mucompdata_pd = pd.merge(mucompdata_pd, mukey_dist_final, on="mukey").sort_values(
+            ["distance", "cokey"]
+        )
         mucompdata_pd.replace("NULL", np.nan, inplace=True)
         mucompdata_pd[["slope_r", "elev_r", "distance"]] = mucompdata_pd[
             ["slope_r", "elev_r", "distance"]
@@ -1618,9 +1567,7 @@ def fill_missing_comppct_r(mucompdata_pd):
     ].drop_duplicates()
 
     if not mukeys_with_missing_data.empty:
-        subset_data = mucompdata_pd[
-            mucompdata_pd["mukey"].isin(mukeys_with_missing_data)
-        ]
+        subset_data = mucompdata_pd[mucompdata_pd["mukey"].isin(mukeys_with_missing_data)]
 
         aggregated_data = subset_data.groupby("mukey").agg(
             total_pct=("comppct_r", "sum"),
@@ -1645,9 +1592,7 @@ def fill_missing_comppct_r(mucompdata_pd):
 
     # Clean up the dataframe
     mucompdata_pd = (
-        mucompdata_pd.drop_duplicates()
-        .sort_values(by="distance")
-        .reset_index(drop=True)
+        mucompdata_pd.drop_duplicates().sort_values(by="distance").reset_index(drop=True)
     )
 
     # Handle minor components that are either 0 or NaN
@@ -1701,16 +1646,12 @@ def process_distance_scores(mucompdata_pd, ExpCoeff):
     mucompdata_pd["distance_score_norm"] = (
         mucompdata_pd["distance_score"] / mucompdata_pd["distance_score"].max()
     ) * 0.25
-    mucompdata_pd = mucompdata_pd[
-        ~mucompdata_pd["compkind"].str.contains("Miscellaneous area")
-    ]
+    mucompdata_pd = mucompdata_pd[~mucompdata_pd["compkind"].str.contains("Miscellaneous area")]
 
     mucompdata_pd = mucompdata_pd.reset_index(drop=True)
 
     # Create a list of component groups
-    mucompdata_comp_grps = [
-        g for _, g in mucompdata_pd.groupby(["compname"], sort=False)
-    ]
+    mucompdata_comp_grps = [g for _, g in mucompdata_pd.groupby(["compname"], sort=False)]
     mucompdata_comp_grps = mucompdata_comp_grps[: min(12, len(mucompdata_comp_grps))]
 
     # Assign max within-group location-based score to all members of the group
@@ -1727,9 +1668,9 @@ def process_distance_scores(mucompdata_pd, ExpCoeff):
     return mucompdata_pd
 
 
-#####################################################################################################
-#                                       Soil Color Functions                                        #
-#####################################################################################################
+###################################################################################################
+#                                       Soil Color Functions                                      #
+###################################################################################################
 
 
 def pedon_color(lab_Color, horizonDepth):
@@ -1751,9 +1692,7 @@ def pedon_color(lab_Color, horizonDepth):
         return np.nan
 
     # Check for missing horizons
-    pedon_MisHrz = any(
-        pedon_top[i + 1] != pedon_bottom[i] for i in range(len(pedon_top) - 1)
-    )
+    pedon_MisHrz = any(pedon_top[i + 1] != pedon_bottom[i] for i in range(len(pedon_top) - 1))
     if pedon_MisHrz:
         return np.nan
 
@@ -1789,7 +1728,8 @@ def pedon_color(lab_Color, horizonDepth):
 
 def lab2munsell(color_ref, LAB_ref, LAB):
     """
-    Converts LAB color values to Munsell notation using the closest match from a reference dataframe.
+    Converts LAB color values to Munsell notation using the closest match from
+    a reference dataframe.
 
     Parameters:
     - color_ref (pd.DataFrame): Reference dataframe with LAB and Munsell values.
@@ -1800,8 +1740,9 @@ def lab2munsell(color_ref, LAB_ref, LAB):
     - str: Munsell color notation.
     """
     idx = pd.DataFrame(euclidean_distances([LAB], LAB_ref)).idxmin(axis=1).iloc[0]
-    munsell_color = f"{color_ref.at[idx, 'hue']} {int(color_ref.at[idx, 'value'])}/{int(color_ref.at[idx, 'chroma'])}"
-    return munsell_color
+    munsell_color = f"{color_ref.at[idx, 'hue']}"
+    munsell_color_suffix = f"{int(color_ref.at[idx, 'value'])}/{int(color_ref.at[idx, 'chroma'])}"
+    return f"{munsell_color} {munsell_color_suffix}"
 
 
 def munsell2rgb(color_ref, munsell_ref, munsell):
@@ -1847,9 +1788,9 @@ def getProfileLAB(data_osd, color_ref):
     munsell_ref = color_ref[["hue", "value", "chroma"]]
 
     # Convert the specific columns to numeric
-    data_osd[["top", "bottom", "r", "g", "b"]] = data_osd[
-        ["top", "bottom", "r", "g", "b"]
-    ].apply(pd.to_numeric)
+    data_osd[["top", "bottom", "r", "g", "b"]] = data_osd[["top", "bottom", "r", "g", "b"]].apply(
+        pd.to_numeric
+    )
 
     def validate_data(data):
         """
@@ -1917,9 +1858,7 @@ def getProfileLAB(data_osd, color_ref):
         return pd.DataFrame(np.nan, index=np.arange(120), columns=["L", "A", "B"])
 
     data_osd = correct_depth_discrepancies(data_osd)
-    data_osd["L"], data_osd["A"], data_osd["B"] = zip(
-        *data_osd.apply(convert_rgb_to_lab, axis=1)
-    )
+    data_osd["L"], data_osd["A"], data_osd["B"] = zip(*data_osd.apply(convert_rgb_to_lab, axis=1))
 
     l_intpl, a_intpl, b_intpl = [], [], []
 
@@ -1932,9 +1871,7 @@ def getProfileLAB(data_osd, color_ref):
 
     if len(lab_intpl) < 120:
         lab_intpl = lab_intpl.append(
-            pd.DataFrame(
-                np.nan, index=np.arange(120 - len(lab_intpl)), columns=["L", "A", "B"]
-            )
+            pd.DataFrame(np.nan, index=np.arange(120 - len(lab_intpl)), columns=["L", "A", "B"])
         )
 
     return lab_intpl
@@ -2004,9 +1941,7 @@ def calculate_deltaE2000(LAB1, LAB2):
 
     deltatheta = 30.0 * math.exp(-(math.pow((hprimbar - 275.0) / 25.0, 2.0)))
     RC = 2.0 * math.sqrt(Cprimbar**7 / (Cprimbar**7 + 25**7))
-    SL = 1.0 + (0.015 * (Lprimbar - 50.0) ** 2) / math.sqrt(
-        20.0 + (Lprimbar - 50.0) ** 2
-    )
+    SL = 1.0 + (0.015 * (Lprimbar - 50.0) ** 2) / math.sqrt(20.0 + (Lprimbar - 50.0) ** 2)
     SC = 1.0 + 0.045 * Cprimbar
     SH = 1.0 + 0.015 * Cprimbar * T
     RT = -math.sin(2.0 * deltatheta) * RC
@@ -2087,14 +2022,10 @@ def getColor_deltaE2000_OSD_pedon(data_osd, data_pedon):
 
     # Convert RGB values to LAB for OSD
     osd_colors_rgb = interpolate_color_values(top, bottom, list(zip(r, g, b)))
-    osd_colors_lab = [
-        color.rgb2lab([[color_val]])[0][0] for color_val in osd_colors_rgb
-    ]
+    osd_colors_lab = [color.rgb2lab([[color_val]])[0][0] for color_val in osd_colors_rgb]
 
     # Calculate average LAB for OSD at 31-37 cm depth
-    osd_avg_lab = (
-        np.mean(osd_colors_lab[31:37], axis=0) if len(osd_colors_lab) > 31 else np.nan
-    )
+    osd_avg_lab = np.mean(osd_colors_lab[31:37], axis=0) if len(osd_colors_lab) > 31 else np.nan
     if np.isnan(osd_avg_lab).any():
         return np.nan
 
@@ -2107,9 +2038,7 @@ def getColor_deltaE2000_OSD_pedon(data_osd, data_pedon):
 
     # Calculate average LAB for pedon at 31-37 cm depth
     pedon_avg_lab = (
-        np.mean(pedon_colors_lab[31:37], axis=0)
-        if len(pedon_colors_lab) > 31
-        else np.nan
+        np.mean(pedon_colors_lab[31:37], axis=0) if len(pedon_colors_lab) > 31 else np.nan
     )
     if np.isnan(pedon_avg_lab).any():
         return np.nan
@@ -2124,11 +2053,14 @@ def simulate_correlated_triangular(n, params, correlation_matrix):
 
     Parameters:
     - n: Number of samples.
-    - params: List of tuples, where each tuple contains three parameters (a, b, c) for the triangular distribution.
-    - correlation_matrix: 2D numpy array representing the desired correlations between the variables.
+    - params: List of tuples, where each tuple contains three parameters (a, b, c)
+      for the triangular distribution.
+    - correlation_matrix: 2D numpy array representing the desired correlations between
+      the variables.
 
     Returns:
-    - samples: 2D numpy array with n rows and as many columns as there are sets of parameters in params.
+    - samples: 2D numpy array with n rows and as many columns as there are sets of
+      parameters in params.
     """
 
     # Generate uncorrelated standard normal variables

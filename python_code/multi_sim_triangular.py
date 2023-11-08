@@ -1,6 +1,8 @@
 import numpy as np
-from scipy.linalg import sqrtm
-from skbio.stats.composition import ilr, ilr_inv
+import pandas as pd
+from numpy.linalg import cholesky
+from scipy.stats import spearmanr
+from skbio.stats.composition import ilr_inv
 
 
 def simulate_correlated_triangular(n, params, correlation_matrix):
@@ -9,11 +11,14 @@ def simulate_correlated_triangular(n, params, correlation_matrix):
 
     Parameters:
     - n: Number of samples.
-    - params: List of tuples, where each tuple contains three parameters (a, b, c) for the triangular distribution.
-    - correlation_matrix: 2D numpy array representing the desired correlations between the variables.
+    - params: List of tuples, where each tuple contains three parameters (a, b, c) for
+      the triangular distribution.
+    - correlation_matrix: 2D numpy array representing the desired correlations between
+      the variables.
 
     Returns:
-    - samples: 2D numpy array with n rows and as many columns as there are sets of parameters in params.
+    - samples: 2D numpy array with n rows and as many columns as there are sets of
+      parameters in params.
     """
 
     # Generate uncorrelated standard normal variables
@@ -91,17 +96,22 @@ def gsi_simshape(x, oldx):
 
 """
 Modeling Steps:
-  Step 1. Calculate a local soil property correlation matrix uisng the representative values from SSURGO.
+  Step 1. Calculate a local soil property correlation matrix uisng the representative values
+          from SSURGO.
 
   Step 2. Steps performed on each row:
-    a. Simulate sand/silt/clay percentages using the 'simulate_correlated_triangular' function, using the global correlation matrix
-       and the local l,r,h values for each particle fraction. Format as a composition using 'acomp'
+    a. Simulate sand/silt/clay percentages using the 'simulate_correlated_triangular' function,
+       using the global correlation matrix and the local l,r,h values for each particle fraction.
+       Format as a composition using 'acomp'
     b. Perform the isometric log-ratio transformation.
-    c. Extract l,r,h values (min, median, max for ilr1 and ilr2) and format into a params object for simiulation.
-    d. Simulate all properties and then permorm inverse transform on ilr1 and ilr2 to obtain sand, silt, and clay values.
+    c. Extract l,r,h values (min, median, max for ilr1 and ilr2) and format into a params object
+       for simiulation.
+    d. Simulate all properties and then permorm inverse transform on ilr1 and ilr2 to obtain sand,
+       silt, and clay values.
     e. Append simulated values to dataframe
 
-  Step 3. Run Rosetta and other Van Genuchten equations to calcuate AWS in top 50 cm using simulated dataframe.
+  Step 3. Run Rosetta and other Van Genuchten equations to calcuate AWS in top 50 cm using
+          simulated dataframe.
 """
 
 # Step 1. Calculate a local soil property correlation matrix
@@ -154,7 +164,8 @@ for _, row in df.iterrows():
     params_txt = list[sand_params, silt_params, clay_params]
 
     # 2. Perform processing steps on data
-    # Convert simulated data using the acomp function and then compute the isometric log-ratio transformation.
+    # Convert simulated data using the acomp function and then compute the
+    # isometric log-ratio transformation.
     simulated_txt = acomp(
         simulate_correlated_triangular(
             row["comppct_r"] * 10, params_txt, texture_correlation_matrix
@@ -233,8 +244,6 @@ def gsi_mul(x, y):
 
 
 # acomp function and helper functions
-
-import numpy as np
 
 
 def gsi_plain(x):

@@ -30,9 +30,13 @@ from sklearn.utils import validation
 from numpy.linalg import cholesky
 from pandas.io.json import json_normalize
 
+from scipy.linalg import sqrtm
+from skbio.stats.composition import ilr
+from skbio.stats.composition import ilr_inv
+
 # Flask
-from flask import Flask, jsonify
-from flask import current_app
+from flask import Flask, jsonify, current_app
+
 
 # Import local fucntions
 from model.local_functions_SoilID_v3 import *
@@ -942,7 +946,10 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     #Load in LAB to Munsell conversion look-up table
     color_ref = pd.read_csv("%s/LandPKS_munsell_rgb_lab.csv"%current_app.config['DATA_BACKEND'])
-
+    LAB_ref  =  color_ref[['L', 'A', 'B']]
+    rgb_ref  =  color_ref[['r', 'g', 'b']]
+    munsell_ref = color_ref[['hue', 'value', 'chroma']]
+    
     # Load in SSURGO data from SoilWeb
     # soilweb_url = f"https://casoilresource.lawr.ucdavis.edu/api/landPKS.php?q=spn&lon={lon}&lat={lat}&r=1000" # current production API
     soilweb_url = f"https://soilmap2-1.lawr.ucdavis.edu/dylan/soilweb/api/landPKS.php?q=spn&lon={lon}&lat={lat}&r=1000" # testing API
@@ -1069,9 +1076,12 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     if data_source == 'SSURGO':
         # Convert JSON data to DataFrame
         muhorzdata_pd = pd.json_normalize(out['hz'])[
-            ['cokey', 'hzdept_r', 'hzdepb_r', 'chkey', 'hzname', 'sandtotal_r', 'silttotal_r', 'claytotal_r', 'total_frag_volume', 'cec7_r', 'ecec_r', 'ph1to1h2o_r', 'ec_r', 'lep_r']
+            ['cokey', 'hzdept_r', 'hzdepb_r', 'chkey', 'hzname', 'sandtotal_l', 'sandtotal_r', 'sandtotal_h',
+        'silttotal_l', 'silttotal_r', 'silttotal_h', 'claytotal_l', 'claytotal_r',
+        'claytotal_h', 'dbovendry_l', 'dbovendry_r', 'dbovendry_h',
+        'wthirdbar_l', 'wthirdbar_r', 'wthirdbar_h', 'wfifteenbar_l',
+        'wfifteenbar_r', 'wfifteenbar_h', 'total_frag_volume', 'cec7_r', 'ecec_r', 'ph1to1h2o_r', 'ec_r', 'lep_r']
         ]
-        
         # Convert specific columns to appropriate data types
         numeric_columns = ['total_frag_volume', 'sandtotal_r', 'silttotal_r', 'claytotal_r', 'cec7_r', 'ecec_r', 'ph1to1h2o_r', 'ec_r', 'lep_r']
         muhorzdata_pd[numeric_columns] = muhorzdata_pd[numeric_columns].apply(pd.to_numeric)
@@ -1131,13 +1141,13 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     elif data_source == 'STATSGO':
         # STATSGO Horizon Data Query
         muhorzdata_pd = extract_muhorzdata_STATSGO(mucompdata_pd)
-
+    
     # Merge muhorzdata_pd with selected columns from mucompdata_pd
-    muhorzdata_pd = pd.merge(muhorzdata_pd, mucompdata_pd[['cokey', 'comppct_r', 'compname', 'slope_r']], on='cokey', how='left')
+    muhorzdata_pd = pd.merge(muhorzdata_pd, mucompdata_pd[['cokey', 'comppct_r', 'compname', 'distance_score', 'slope_r']], on='cokey', how='left')
     
     # Replace "NULL" strings with numpy NaN
     muhorzdata_pd.replace("NULL", np.nan, inplace=True)
-    
+
     # Filter out components with missing horizon depth data that aren't either a Series, Variant, or Family
     filter_condition = muhorzdata_pd['cokey'].isin(cokey_series) | (pd.notnull(muhorzdata_pd['hzdept_r']) & pd.notnull(muhorzdata_pd['hzdepb_r']))
     muhorzdata_pd = muhorzdata_pd[filter_condition]
@@ -1203,6 +1213,10 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     muhorzdata_pd.rename(columns={'compname': 'compname_grp'}, inplace=True)
     # Merge the modified component names from mucompdata_pd to muhorzdata_pd
     muhorzdata_pd = muhorzdata_pd.merge(mucompdata_pd[['cokey', 'compname']], on='cokey', how='left')
+    
+    # Remove bedrock by filtering out 'R|r' in hzname
+    muhorzdata_pd = muhorzdata_pd[~muhorzdata_pd['hzname'].str.contains('R', case=False, na=False)]
+        
     # Group data by cokey
     muhorzdata_group_cokey = [group for _, group in muhorzdata_pd.groupby('cokey', sort=False)]
     
@@ -1306,19 +1320,16 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         clay_texture_temp.columns = ["compname", "clay"]
         clay_texture.append(clay_texture_temp)       
 
-        # calculate LPKS depth aggregated data based on original depth sliced horizons
-        snd_d, hz_depb = agg_data_layer(data=sand_pct_intpl["c_sandpct_intpl"], bottom = c_bottom_depths_temp["c_very_bottom"].iloc[0], depth=True)
-        cly_d = agg_data_layer(data=clay_pct_intpl["c_claypct_intpl"], bottom = c_bottom_depths_temp["c_very_bottom"].iloc[0])
-        txt_d = []
-        for l in range(len(snd_d)):
-            text_T = getTexture(row=None, sand = snd_d[l],silt = (100-(snd_d[l]+cly_d[l])), clay = cly_d[l])
-            txt_d.append(text_T)
-        txt_d = pd.Series(txt_d)
-        txt_d.index = snd_d.index
-        rf_d = agg_data_layer(data=cf_pct_intpl["c_cfpct_intpl"], bottom = c_bottom_depths_temp["c_very_bottom"].iloc[0])
-        cec_d = agg_data_layer(data=cec_intpl["c_cec_intpl"], bottom = c_bottom_depths_temp["c_very_bottom"].iloc[0])
-        ph_d = agg_data_layer(data=ph_intpl["c_ph_intpl"], bottom = c_bottom_depths_temp["c_very_bottom"].iloc[0])
-        ec_d = agg_data_layer(data=ec_intpl["c_ec_intpl"], bottom = c_bottom_depths_temp["c_very_bottom"].iloc[0])
+        # extract horizon data
+        hz_depb = group_sorted['hzdepb_r']
+        snd_d = group_sorted["sandtotal_r"]
+        cly_d = group_sorted["claytotal_r"]
+        txt_d = group_sorted['texture']
+        rf_d = group_sorted['total_frag_volume']
+        cec_d = group_sorted['CEC']
+        ec_d =group_sorted['EC']
+        ph_d =group_sorted['pH']
+        
         hz_depb  = hz_depb.fillna('')
         snd_d = snd_d.fillna('')
         cly_d = cly_d.fillna('')
@@ -1356,6 +1367,120 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     comp_key = mucompdata_pd['cokey'].unique().tolist()
     cokey_Index = {key: index for index, key in enumerate(comp_key)}
 
+    
+    
+    #-------------------------------------------------------------------------------------------------------------
+      
+    """
+    Simulation modeling Steps:
+      Step 1. Calculate a local soil property correlation matrix uisng the representative values from SSURGO.
+      
+      Step 2. Steps performed on each row:
+        a. Simulate sand/silt/clay percentages using the 'simulate_correlated_triangular' function, using the global correlation matrix
+           and the local l,r,h values for each particle fraction. Format as a composition using 'acomp'
+        b. Perform the isometric log-ratio transformation.
+        c. Extract l,r,h values (min, median, max for ilr1 and ilr2) and format into a params object for simiulation.
+        d. Simulate all properties and then permorm inverse transform on ilr1 and ilr2 to obtain sand, silt, and clay values.
+        e. Append simulated values to dataframe
+        
+      Step 3. Run Rosetta and other Van Genuchten equations to calcuate AWS in top 50 cm using simulated dataframe.
+    """
+    
+    # Step 1. Calculate a local soil property correlation matrix 
+    
+    # Subset data based on required soil inputs
+    sim_columns = [
+        'compname', 'distance_score', 'hzdept_r', 'hzdepb_r', 'sandtotal_l', 'sandtotal_r', 'sandtotal_h',
+        'silttotal_l', 'silttotal_r', 'silttotal_h', 'claytotal_l', 'claytotal_r',
+        'claytotal_h', 'dbovendry_l', 'dbovendry_r', 'dbovendry_h',
+        'wthirdbar_l', 'wthirdbar_r', 'wthirdbar_h', 'wfifteenbar_l',
+        'wfifteenbar_r', 'wfifteenbar_h'
+    ]
+    
+    sim = muhorzdata_pd[sim_columns]
+    
+    # infill missing data
+    sim = infill_soil_data(sim)
+    return(jsonify(sim.to_dict(orient='records')))
+    # Group data by compname
+    sim_group_compname = [group for _, group in sim.groupby('compname', sort=False)]
+    sim_data = []
+    for group in sim_group_compname:
+        # aggregate data into 0-30 and 3-100 or bottom depth
+        group_ag = aggregate_data_vi(group, max_depth=group['hzdepb_r'].max())
+    
+        # Extract columns with names ending in '_r'
+        group_ag_r = group_ag[[col for col in group_ag.columns if col.endswith('_r')]]
+    
+        # Compute the local correlation matrix (Spearman correlation matrix)
+        rep_columns = group_ag_r.drop(columns=['sandtotal_r', 'silttotal_r', 'claytotal_r'])
+        #correlation_matrix, _ = spearmanr(selected_columns, axis=0)
+        
+        ilr_site_txt = irl(group_ag[['sandtotal_r', 'silttotal_r', 'claytotal_r']])
+    
+        rep_columns['ilr1'] = ilr_site_txt[:, 0]
+        rep_columns['ilr2'] = ilr_site_txt[:, 1]
+    
+        correlation_matrix_data = rep_columns[['ilr1', 'ilr2', 'sandtotal_r', 'silttotal_r', 'claytotal_r', 'dbovendry_r', 'wthirdbar_r','wfifteenbar_r']]
+        local_correlation_matrix, _ = spearmanr(correlation_matrix_data, axis=0)
+    
+        # Step 2. Simulate data for each row, with the number of simulations equal to the (distance_score*100)*10
+        
+        # Global soil texture correlation matrix (used for initial simulation)
+        texture_correlation_matrix = np.array([
+            [ 1.0000000, -0.76231798, -0.67370589],
+            [-0.7623180,  1.00000000,  0.03617498],
+            [-0.6737059,  0.03617498,  1.00000000]
+        ])
+    
+        results = []
+        
+        for _, row in rep_columns.iterrows():
+            # 2a. Simulate sand/silt/clay percentages
+            # 1. Extract and format data params
+            sand_params = [row['sandtotal_l'], row['sandtotal_r'], row['sandtotal_h']]
+            silt_params = [row['silttotal_l'], row['silttotal_r'], row['silttotal_h']]
+            clay_params = [row['claytotal_l'], row['claytotal_r'], row['claytotal_h']]
+        
+            params_txt = list[sand_params, silt_params, clay_params]
+        
+            # 2. Perform processing steps on data
+            # Convert simulated data using the acomp function and then compute the isometric log-ratio transformation.
+            simulated_txt = acomp(simulate_correlated_triangular(row['distance_score']*1000, params_txt, texture_correlation_matrix))
+            simulated_txt_ilr = irl(simulated_txt)
+            
+            # Extract min, median, and max for the first two ilr transformed columns.
+            ilr1_values = simulated_txt_ilr[:, 0]
+            ilr2_values = simulated_txt_ilr[:, 1]
+            
+            ilr1_l, ilr1_r, ilr1_h = ilr1_values.min(), np.median(ilr1_values), ilr1_values.max()
+            ilr2_l, ilr2_r, ilr2_h = ilr2_values.min(), np.median(ilr2_values), ilr2_values.max()
+            
+            # Create the list of parameters.
+            params = [
+                [ilr1_l, ilr1_r, ilr1_h],
+                [ilr2_l, ilr2_r, ilr2_h],
+                [row["dbovendry_l"], row["dbovendry_r"], row["dbovendry_h"]],
+                [row["wthirdbar_l"], row["wthirdbar_r"], row["wthirdbar_h"]],
+                [row["wfifteenbar_l"], row["wfifteenbar_r"], row["wfifteenbar_h"]]
+            ]
+        
+            sim_data = simulate_correlated_triangular(row['distance_score']*1000, params, local_correlation_matrix)
+            sim_txt = ilr_inv(sim_data[['ilr1', 'ilr2']])
+            multi_sim = pd.concat([sim_data.drop(columns=['ilr1', 'ilr2']), sim_txt], axis=1)
+            multi_sim['depth']
+            results.append(multi_sim)
+        sim_data.append(results)
+    
+    # Extract the relevant columns
+    rossetta_vars <- c('sand_total', 'silt_total', 'clay_total', 'bulk_density_third_bar', 'water_retention_third_bar', 'water_retention_15_bar')
+    filtered_sim = sim[rossetta_vars ]
+    
+    # Convert NaN values to None
+    filtered_sim = filtered_sim.where(pd.notna(filtered_sim), None)
+    
+    # Convert the DataFrame to the desired format
+    rossetta_input_data = filtered_sim.values.tolist()
 
     #-------------------------------------------------------------------------------------------------------------
     #This extracts OSD color, texture, and CF data
@@ -1377,7 +1502,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 OSDhorzdata_pd = pd.json_normalize(seriesDict['hz'])[['series', 'top', 'bottom', 'hzname', 'matrix_dry_color_hue', 'matrix_dry_color_value', 'matrix_dry_color_chroma', 'texture_class', 'cf_class']]
                 OSDhorzdata_pd['texture_class'] = OSDhorzdata_pd['texture_class'].str.lower().str.replace(r'(fine|medium|coarse) ', '')
                 OSDhorzdata_pd.loc[OSDhorzdata_pd['matrix_dry_color_hue'] == 'N', 'matrix_dry_color_value'] = 1
-        
+                
                 # Color conversion
                 munsell_RGB = []
                 for hue, value, chroma in zip(OSDhorzdata_pd['matrix_dry_color_hue'], OSDhorzdata_pd['matrix_dry_color_value'], OSDhorzdata_pd['matrix_dry_color_chroma']):
@@ -1388,7 +1513,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         RGB = munsell2rgb(color_ref, munsell_ref, munsell)
                         munsell_RGB.append(RGB)
                 
-                munsell_RGB_df = pd.DataFrame(munsell_RGB, columns=['r', 'g', 'b'])
+                munsell_RGB_sim = pd.DataFrame(munsell_RGB, columns=['r', 'g', 'b'])
                 OSDhorzdata_pd = pd.concat([OSDhorzdata_pd, munsell_RGB_df], axis=1)
         
                 # Merge with another dataframe
@@ -1417,7 +1542,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         else:
             # Normalize the data
             OSDhorzdata_pd = pd.json_normalize(out['OSD_morph'])
-        
+            
             # Prepare for merge
             mucompdata_pd_merge = mucompdata_pd[['mukey', 'cokey', 'compname', 'compkind']]
             mucompdata_pd_merge['series'] = mucompdata_pd_merge['compname'].str.replace('\d+', '')
@@ -1468,6 +1593,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         # Sort dataframe based on a ranking provided by cokey_Index for 'cokey' and then by 'top'
         OSDhorzdata_pd.sort_values(by=['cokey', 'top'], key=lambda col: col.map(cokey_Index) if col.name == 'cokey' else col, inplace=True)
 
+        # Remove bedrock by filtering out 'R|r' in hzname
+        OSDhorzdata_pd = OSDhorzdata_pd[~OSDhorzdata_pd['hzname'].str.contains('R', case=False, na=False)]
+        
         if mucompdata_pd["compkind"].isin(OSD_compkind).any():
             # Group data by cokey
             OSDhorzdata_group_cokey = [group for _, group in OSDhorzdata_pd.groupby('cokey', sort=False)]
@@ -1476,7 +1604,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             lab_lyrs = []
             munsell_lyrs = []
             lab_intpl_lyrs = []
-            osd_hz_lyrs = []
 
             # Define helper functions outside the loop
             def create_new_layer(row, top, bottom):
@@ -1489,14 +1616,13 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 for col in ['r', 'g', 'b', 'total_frag_volume', 'claytotal_r', 'sandtotal_r']:
                     new_row[col] = np.nan
                 return new_row
-            
-            for group in OSDhorzdata_group_cokey:
-                
+
+            for index, group in enumerate(OSDhorzdata_group_cokey):    
                 group_sorted = group.sort_values(by='top').drop_duplicates().reset_index(drop=True)
                 
                 # Remove invalid horizons where top depth is greater than bottom depth
                 group_sorted = group_sorted[group_sorted['top'] <= group_sorted['bottom']].reset_index(drop=True)
-                
+ 
                 if group_sorted['compkind'].isin(OSD_compkind).any() and group_sorted['bottom'].iloc[-1] != 0:
                     # Check for missing surface horizon
                     if group_sorted['top'].iloc[0] != 0:
@@ -1523,19 +1649,21 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                     
                     # subset c_bottom_depth by cokey
                     c_bottom_depths_group = c_bottom_depths[c_bottom_depths['cokey'].isin(group_sorted['cokey'])]
-                    #return(jsonify(c_bottom_depths_group.to_dict(orient='records')))
+                    muhorzdata_pd_group = muhorzdata_pd[muhorzdata_pd['cokey'].isin(group_sorted['cokey'])]
+
                     # Check if OSD depth adjustment is needed
-                    if OSD_very_bottom < c_bottom_depths_group['c_very_bottom'].iloc[0] and OSD_very_bottom < 120:
+                    if OSD_very_bottom < c_bottom_depths_group['c_very_bottom'].iloc[0]:
                         OSD_depth_add = True
                         depth_difference = c_bottom_depths_group['c_very_bottom'].iloc[0] - OSD_very_bottom
                         lab_values = [lab_intpl.loc[OSD_very_bottom - 1].values.tolist()] * depth_difference
+                        
                         pd_add = pd.DataFrame(lab_values, columns=["l", "a", "b"])
                         
                         # Adjust LAB values for the OSD depth
                         lab_intpl = pd.concat([lab_intpl.loc[:OSD_very_bottom - 1], pd_add], axis=0).reset_index(drop=True)
                         OSD_very_bottom = c_bottom_depths_group['c_very_bottom'].iloc[0]
-                    
-                    elif 0 < c_bottom_depths_group['c_very_bottom'].iloc[0] < 120 < OSD_very_bottom:
+                        
+                    elif 0 < c_bottom_depths_group['c_very_bottom'].iloc[0] < OSD_very_bottom:
                         OSD_depth_remove = True
                         
                         # Adjust LAB values for the component depth
@@ -1545,22 +1673,20 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                     # Set column names for lab_intpl
                     lab_intpl.columns = ['l', 'a', 'b']
                     lab_intpl_lyrs.append(lab_intpl)
-                    
+
                     # If all values in lab_intpl are null, append default values to lists
                     if lab_intpl.isnull().values.all():
                         lab_lyrs.append(["", "", ""])
-                        osd_hz_lyrs.append("")
                         munsell_lyrs.append("")
                     else:
                         # Aggregate data for each color dimension
-                        l_d, osd_hz_d = agg_data_layer(data=lab_intpl['l'], bottom=OSD_very_bottom, sd=4, depth=True)
-                        a_d = agg_data_layer(data=lab_intpl['a'], bottom=OSD_very_bottom, sd=4).fillna('')
-                        b_d = agg_data_layer(data=lab_intpl['b'], bottom=OSD_very_bottom, sd=4).fillna('')
-                        
+                        l_d = aggregate_data(data=lab_intpl['l'], bottom_depths=muhorzdata_pd_group['hzdepb_r'].tolist(), sd=2).fillna('')
+                        a_d = aggregate_data(data=lab_intpl['a'], bottom_depths=muhorzdata_pd_group['hzdepb_r'].tolist(), sd=2).fillna('')
+                        b_d = aggregate_data(data=lab_intpl['b'], bottom_depths=muhorzdata_pd_group['hzdepb_r'].tolist(), sd=2).fillna('')
+
                         # Convert LAB values to a list of triplets
                         lab_parse = [[l, a, b] for l, a, b in zip(l_d, a_d, b_d)]
                         lab_lyrs.append(dict(zip(l_d.index, lab_parse)))
-                        osd_hz_lyrs.append(dict(zip(osd_hz_d.index, osd_hz_d)))
                         
                         # Convert LAB triplets to Munsell values
                         munsell_values = [
@@ -1568,12 +1694,11 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                             for lab in lab_parse
                         ]
                         munsell_lyrs.append(dict(zip(l_d.index, munsell_values)))
-
-
+                    #return(jsonify(OSD_text_int  = str(OSD_text_int[index] )))
+                    #return(jsonify(group_sorted.to_dict(orient='records')))
                     # Extract OSD Texture and Rock Fragment Data
-                    if OSD_text_int[i] == 'Yes' or OSD_rfv_int[i] == 'Yes':
+                    if OSD_text_int[index] == 'Yes' or OSD_rfv_int[index] == 'Yes':
                         group_sorted[['hzdept_r', 'hzdepb_r', 'texture']] = group_sorted[['top', 'bottom', 'texture_class']]
-                    
                         OSD_very_bottom_int, OSD_clay_intpl = getProfile(group_sorted, 'claytotal_r', c_bot=True)
                         OSD_clay_intpl.columns = ['c_claypct_intpl', 'c_claypct_intpl_grp']
                         OSD_sand_intpl = getProfile(group_sorted, 'sandtotal_r')
@@ -1604,9 +1729,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         # If OSD bottom depth is greater than component depth and component depth is <120cm
                         if OSD_depth_remove:
                             # Remove data based on c_bottom_depths
-                            OSD_sand_intpl = OSD_sand_intpl.loc[:c_bottom_depths.iloc[i, 2]]
-                            OSD_clay_intpl = OSD_clay_intpl.loc[:c_bottom_depths.iloc[i, 2]]
-                            OSD_rfv_intpl = OSD_rfv_intpl.loc[:c_bottom_depths.iloc[i, 2]]
+                            OSD_sand_intpl = OSD_sand_intpl.loc[:c_bottom_depths.iloc[index, 2]]
+                            OSD_clay_intpl = OSD_clay_intpl.loc[:c_bottom_depths.iloc[index, 2]]
+                            OSD_rfv_intpl = OSD_rfv_intpl.loc[:c_bottom_depths.iloc[index, 2]]
                         
                         # Create the compname and cokey dataframes
                         compname_df = pd.DataFrame([group_sorted.compname.unique()] * len(OSD_sand_intpl))
@@ -1623,17 +1748,17 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         group_sorted2.columns = ['c_sandpct_intpl', 'c_claypct_intpl', 'c_cfpct_intpl', 'compname', 'cokey']
                         
                         # Update getProfile_mod based on conditions
-                        getProfile_mod = getProfile_cokey[i]
+                        getProfile_mod = getProfile_cokey[index]
                         compname_check = getProfile_mod['compname'].isin(group_sorted2[["compname"]].iloc[0]).any()
                         
-                        if compname_check and OSD_text_int[i] == 'Yes' and not group_sorted2["c_sandpct_intpl"].isnull().all():
+                        if compname_check and OSD_text_int[index] == 'Yes' and not group_sorted2["c_sandpct_intpl"].isnull().all():
                             getProfile_mod['sandpct_intpl'] = group_sorted2["c_sandpct_intpl"]
                             getProfile_mod['claypct_intpl'] = group_sorted2["c_claypct_intpl"]
                         
-                        if compname_check and OSD_rfv_int[i] == 'Yes' and not group_sorted2["c_cfpct_intpl"].isnull().all():
+                        if compname_check and OSD_rfv_int[index] == 'Yes' and not group_sorted2["c_cfpct_intpl"].isnull().all():
                             getProfile_mod['rfv_intpl'] = group_sorted2["c_cfpct_intpl"]
                         
-                        getProfile_cokey[i] = getProfile_mod
+                        getProfile_cokey[index] = getProfile_mod
 
                         
                         # Aggregate sand data
@@ -1657,41 +1782,38 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         hz_depb_osd.fillna('', inplace=True)
                         
                         # Store aggregated data in dictionaries based on conditions
-                        if OSD_text_int[i] == 'Yes':
-                            snd_lyrs[i] = snd_d_osd.to_dict()
-                            cly_lyrs[i] = cly_d_osd.to_dict()
-                            txt_lyrs[i] = txt_d_osd.to_dict()
+                        if OSD_text_int[index] == 'Yes':
+                            snd_lyrs[index] = snd_d_osd.to_dict()
+                            cly_lyrs[index] = cly_d_osd.to_dict()
+                            txt_lyrs[index] = txt_d_osd.to_dict()
                         
-                        if OSD_rfv_int[i] == 'Yes':
-                            rf_lyrs[i] = rf_d_osd.to_dict()
+                        if OSD_rfv_int[index] == 'Yes':
+                            rf_lyrs[index] = rf_d_osd.to_dict()
                         
                         # Update horizon layers if bottom depth is zero
-                        if c_bottom_depths.iloc[i, 2] == 0:
-                            hz_lyrs[i] = hz_depb_osd.to_dict()
-                            mucompdata_pd.loc[i, 'c_very_bottom'] = OSD_very_bottom
+                        if c_bottom_depths.iloc[index, 2] == 0:
+                            hz_lyrs[index] = hz_depb_osd.to_dict()
+                            mucompdata_pd.loc[index, 'c_very_bottom'] = OSD_very_bottom
                         
                         # Update cec, ph, and ec layers if they contain only a single empty string
                         for lyr in [cec_lyrs, ph_lyrs, ec_lyrs]:
-                            if len(lyr[i]) == 1 and lyr[i][0] == "":
-                                lyr[i] = dict(zip(hz_depb_osd.index, [''] * len(hz_depb_osd)))
+                            if len(lyr[index]) == 1 and lyr[index][0] == "":
+                                lyr[index] = dict(zip(hz_depb_osd.index, [''] * len(hz_depb_osd)))
 
                 else:
-                    OSDhorzdata_group_cokey[i] = group_sorted
+                    OSDhorzdata_group_cokey[index] = group_sorted
                     
                     # Create an empty dataframe with NaNs for lab_intpl
-                    lab_intpl = pd.DataFrame(np.nan, index=np.arange(c_bottom_depths.iloc[i, 2]), columns=['l', 'a', 'b'])
+                    lab_intpl = pd.DataFrame(np.nan, index=np.arange(c_bottom_depths.iloc[index, 2]), columns=['l', 'a', 'b'])
                     lab_intpl_lyrs.append(lab_intpl)
                     
                     # Create dummy data for lab_lyrs
-                    lab_dummy = [["", "", ""] for _ in range(len(hz_lyrs[i]))]
-                    lab_lyrs.append(dict(zip(hz_lyrs[i].keys(), lab_dummy)))
-                    
-                    # Empty osd_hz_lyrs entry
-                    osd_hz_lyrs.append("")
+                    lab_dummy = [["", "", ""] for _ in range(len(hz_lyrs[index]))]
+                    lab_lyrs.append(dict(zip(hz_lyrs[index].keys(), lab_dummy)))
                     
                     # Create dummy data for munsell_lyrs
-                    munsell_dummy = [""] * len(hz_lyrs[i])
-                    munsell_lyrs.append(dict(zip(hz_lyrs[i].keys(), munsell_dummy)))
+                    munsell_dummy = [""] * len(hz_lyrs[index])
+                    munsell_lyrs.append(dict(zip(hz_lyrs[index].keys(), munsell_dummy)))
 
 
             # Series URL Generation
@@ -1702,9 +1824,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             # Group data by 'cokey'
             OSDhorzdata_group_cokey = [g for _, g in OSDhorzdata_pd.groupby('cokey', sort=False)]
             
-            for group in OSDhorzdata_group_cokey:
+            for index, group in enumerate(OSDhorzdata_group_cokey):
                 # Check if compkind is not in OSD_compkind or if series contains any null values
-                if mucompdata_pd.loc[i]['compkind'] not in OSD_compkind or group["series"].isnull().any():
+                if mucompdata_pd.loc[index]['compkind'] not in OSD_compkind or group["series"].isnull().any():
                     SDE_URL.append("")
                     SEE_URL.append("")
                 else:
@@ -1722,7 +1844,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             # Initialize lists to store data layers and URLs
             lab_lyrs = []
             lab_intpl_lyrs = []
-            osd_hz_lyrs = []
             munsell_lyrs = []
             SDE_URL = []
             SEE_URL = []
@@ -1740,7 +1861,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 
                 # Append dummy data to lists
                 lab_lyrs.append(dict(zip(keys, lab_dummy)))
-                osd_hz_lyrs.append("")
                 munsell_lyrs.append(dict(zip(keys, munsell_dummy)))
                 
                 # Append empty URLs
@@ -1751,7 +1871,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         # Initialize lists to store data layers and URLs
         lab_lyrs = []
         lab_intpl_lyrs = []
-        osd_hz_lyrs = []
         munsell_lyrs = []
         SDE_URL = []
         SEE_URL = []
@@ -1769,7 +1888,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             
             # Append dummy data to lists
             lab_lyrs.append(dict(zip(keys, lab_dummy)))
-            osd_hz_lyrs.append("")
             munsell_lyrs.append(dict(zip(keys, munsell_dummy)))
             
             # Append empty URLs
@@ -1847,8 +1965,8 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             else:
                 ESDcompdata_pd = None
 
- 
     if ESDcompdata_pd is not None:
+
         # Clean and process the dataframe
         ESDcompdata_pd = ESDcompdata_pd.replace("NULL", np.nan)
         ESDcompdata_pd = ESDcompdata_pd.drop_duplicates(keep='first').reset_index(drop=True)
@@ -1860,113 +1978,84 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         # Update ecoclassid based on MLRA update by querying 'ESD_class_synonym_list' table
         ecositeID = ESDcompdata_pd["ecoclassid"].dropna().tolist()
         
-        conn = getDataStore_Connection()
-        cur = conn.cursor()
-        sql1 = 'SELECT lu.ES_ID, lu.Synonym FROM ESD_class_synonym_list AS lu WHERE lu.Synonym IN (%s)' % ', '.join(map(str, ecositeID))
-        cur.execute(sql1)
-        results = cur.fetchall()
-    
-        if not results:
-            ESDcompdata_pd['ecoclassid_update'] = ESDcompdata_pd['ecoclassid']
-        else:
-            esd_lookup = pd.DataFrame(results, columns=['ecoclassid_update', 'ecoclassid'])
-            ESDcompdata_pd = pd.merge(ESDcompdata_pd, esd_lookup, on='ecoclassid', how='left')
-            ESDcompdata_pd["ecoclassid_update"].fillna(ESDcompdata_pd["ecoclassid"], inplace=True)
+        # old code
+        ESD_geo = []
+        ESD_geo.extend(ecositeID)
+        ESD_geo = [ESD_geo for ESD_geo in ESD_geo if str(ESD_geo) != 'nan']
+        ESD_geo = ESD_geo[0][1:5]
         
-        ecositeID = ESDcompdata_pd["ecoclassid_update"].tolist()
-        ESD_geo = [ecosite[:4] for ecosite in ESDcompdata_pd["ecoclassid_update"].unique()]
-
-        # Filter out 'nan' from ESD_geo
-        ESD_geo = [geo for geo in ESD_geo if str(geo) != 'nan']
+        class_url = "https://edit.jornada.nmsu.edu/services/downloads/esd/%s/class-list.json" % (ESD_geo)
         
-        # Extract class URL data
-        class_url_list = []
-        for geo in ESD_geo:
-            class_url = f"https://edit.jornada.nmsu.edu/services/downloads/esd/{geo}/class-list.json"
-            try:
-                with urllib.request.urlopen(class_url, timeout=4) as response:
-                    class_data = json.load(response)
-                    class_url_list.append(pd.json_normalize(class_data['ecoclasses'])[['id', 'legacyId']])
-            except:
-                pass
+        try:
+            response = requests.get(class_url, timeout=4)
+            response.raise_for_status()  # Raise an exception for any HTTP error
         
-        # Concatenate all the class URL data into a single dataframe
-        ESD_list_pd = pd.concat(class_url_list) if class_url_list else pd.DataFrame(columns=['id', 'legacyID'])
+            ESD_list = response.json()
+            ESD_list_pd = json_normalize(ESD_list['ecoclasses'])[['id', 'legacyId']]
+            ESD_id = []
+            ESD_name = []
+            ESD_URL = []
         
-        # Extract ESD URL data
-        ESD_URL = []
-        for eco_id in ecositeID:
-            if eco_id in ESD_list_pd["id"].tolist() or eco_id in ESD_list_pd["legacyId"].tolist():
-                ecosite_edit_id = ESD_list_pd[ESD_list_pd.apply(lambda r: r.str.contains(eco_id, case=False).any(), axis=1)]['id'].values[0]
-                ES_URL_t = f"https://edit.jornada.nmsu.edu/catalogs/esd/{ecosite_edit_id[1:5]}/{ecosite_edit_id}"
-                ESD_URL.append(ES_URL_t)
-            else:
+            if isinstance(ESD_list, list):
                 ESD_URL.append("")
-        
-        ESDcompdata_pd['esd_url'] = ESD_URL
-
-        #Assign missing ESD for components that have other instances with an assinged ESD
-        if ESDcompdata_pd is not None:
-            if ESDcompdata_pd.ecoclassid_update.isnull().any() or ESDcompdata_pd.ecoclassname.isnull().any():
-                
-                ESDcompdata_pd['compname_grp'] = ESDcompdata_pd.compname.str.replace(r'[0-9]+', '')
-                
-                # Group by component name without numbers
-                ESDcompdata_pd_comp_grps = [group for _, group in ESDcompdata_pd.groupby('compname_grp', sort=False)]
-                
-                ecoList_out = []
-                for group in ESDcompdata_pd_comp_grps:
-                    if len(group) == 1 or group.ecoclassid_update.isnull().all() or group.ecoclassname.isnull().all():
-                        ecoList_out.append(group)
-                    elif (group.ecoclassid_update.isnull().any() and len(group.ecoclassid_update.dropna().unique()) == 1) and (group.ecoclassname.isnull().any() and len(group.ecoclassname.dropna().unique()) == 1):
-                        unique_ecoclassid = group.ecoclassid_update.dropna().unique()[0]
-                        unique_ecoclassname = group.ecoclassname.dropna().unique()[0]
-                        unique_url = next((url for url in group.esd_url.unique() if url), "")
-                        
-                        group['ecoclassid_update'] = unique_ecoclassid
-                        group['ecoclassname'] = unique_ecoclassname
-                        group['esd_url'] = unique_url
-                        
-                        ecoList_out.append(group)
+            else:
+                for i in range(len(ecositeID)):
+                    if ecositeID[i] in ESD_list_pd["id"].tolist() or ecositeID[i] in ESD_list_pd["legacyId"].tolist():
+                        ecosite_edit_id = ESD_list_pd[ESD_list_pd.apply(lambda r: r.str.contains(ecositeID[i], case=False).any(), axis=1)]['id'].values[0]
+                        ES_URL_t = "https://edit.jornada.nmsu.edu/catalogs/esd/%s/%s" % (ESD_geo, ecosite_edit_id)
+                        ESD_URL.append(ES_URL_t)
                     else:
-                        ecoList_out.append(group)
-                        
+                        ESD_URL.append("")
+        
+            ESDcompdata_pd = ESDcompdata_pd.assign(esd_url=ESD_URL)
+        except requests.exceptions.RequestException as err:
+            ESDcompdata_pd['esd_url'] = pd.Series(np.repeat("", len(ecositeID))).values
+
+        # Assign missing ESD for components that have other instances with an assigned ESD
+        if ESDcompdata_pd is not None:
+            if ESDcompdata_pd.ecoclassid.isnull().any() or ESDcompdata_pd.ecoclassname.isnull().any():
+                ESDcompdata_pd['compname_grp'] = ESDcompdata_pd.compname.str.replace(r'[0-9]+', '')
+                ESDcompdata_pd_comp_grps = [g for _, g in ESDcompdata_pd.groupby(['compname_grp'], sort=False)]
+                ecoList_out = []
+                for i in range(len(ESDcompdata_pd_comp_grps)):
+                    comp_grps_temp = ESDcompdata_pd_comp_grps[i]
+                    if len(comp_grps_temp) == 1:
+                        ecoList_out.append(comp_grps_temp)
+                    elif comp_grps_temp.ecoclassid.isnull().all() or comp_grps_temp.ecoclassname.isnull().all():
+                        ecoList_out.append(comp_grps_temp)
+                    elif (comp_grps_temp.ecoclassid.isnull().any() and len(comp_grps_temp.ecoclassid.dropna().unique()) == 1) and \
+                         (comp_grps_temp.ecoclassname.isnull().any() and len(comp_grps_temp.ecoclassname.dropna().unique()) == 1):
+                        comp_grps_temp['ecoclassid'] = pd.Series(np.tile(comp_grps_temp.ecoclassid.dropna().unique().tolist(), len(comp_grps_temp))).values
+                        comp_grps_temp['ecoclassname'] = pd.Series(np.tile(comp_grps_temp.ecoclassname.dropna().unique().tolist(), len(comp_grps_temp))).values
+                        url = comp_grps_temp.esd_url.unique().tolist()
+                        url = [x for x in url if x != ""]
+                        if not url:
+                            comp_grps_temp['esd_url'] = pd.Series(np.tile("", len(comp_grps_temp))).values
+                        else:
+                            comp_grps_temp['esd_url'] = pd.Series(np.tile(url, len(comp_grps_temp))).values
+                        ecoList_out.append(comp_grps_temp)
+                    else:
+                        ecoList_out.append(comp_grps_temp)
                 ESDcompdata_pd = pd.concat(ecoList_out)
         
-            ESDcompdata_pd = ESDcompdata_pd.drop_duplicates(subset="cokey", keep='first')
-            
+        ESDcompdata_group_cokey = [g for _, g in ESDcompdata_pd.groupby(['cokey'], sort=False)]
+        esd_comp_list = []
+        for i in range(len(ESDcompdata_group_cokey)):
+            if ESDcompdata_group_cokey[i]["ecoclassname"].isnull().values.any():
+                esd_comp_list.append({"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}})
+            else:
+                esd_comp_list.append({"ESD": {"ecoclassid": ESDcompdata_group_cokey[i]['ecoclassid'].tolist(), "ecoclassname": ESDcompdata_group_cokey[i]['ecoclassname'].tolist(), "esd_url": ESDcompdata_group_cokey[i]['esd_url'].tolist()}})
+        else:
             esd_comp_list = []
-            for _, group in ESDcompdata_pd.groupby('cokey', sort=False):
-                if group["ecoclassname"].isnull().values.any():
-                    esd_comp_list.append({"ecoclassid": "", "ecoclassname": "", "esd_url": ""})
-                else:
-                    esd_comp_list.append({
-                        "ecoclassid": group['ecoclassid_update'].tolist()[0],
-                        "ecoclassname": group['ecoclassname'].tolist()[0],
-                        "esd_url": group['esd_url'].tolist()[0]
-                    })
-
-    else:
-        # Initialize the ecosite data list
-        esd_comp_list = [{"ecoclassid": "", "ecoclassname": "", "esd_url": ""} for _ in range(len(mucompdata_pd))]
+            for i in range(len(mucompdata_pd)):
+                esd_comp_list.append({"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}})
         
-    # Add ecosite data to mucompdata_pd for testing output. 
-    # In cases with multiple ESDs per component, only take the first.
-    if ESDcompdata_pd is None:
-        mucompdata_pd["ecoclassid_update"] = np.nan
-        mucompdata_pd["ecoclassname"] = np.nan
-    else:
-        # Merge data with the first unique ecosite data per component
-        mucompdata_pd = mucompdata_pd.merge(
-            ESDcompdata_pd[["cokey", "ecoclassid_update", "ecoclassname"]].drop_duplicates("cokey", keep='first'),
-            on='cokey',
-            how='left'
-        )
-
-    #Note: Need to devise a way to improve the identification of bedrock or restrictive layers using both comp data and OSD.
-    #      There are many instances where the last one or two component horizons are missing texture data and the OSD bottom depth
-    #      is shallower than the component bottom depth, indicating a shallower profile. But the horizon designations are generic, e.g.,
-    #      H1, H2, H3; thus not allowing their use in indentifying bedrock.
+        # Add ecosite data to mucompdata_pd for testing output. In cases with multiple ESDs per component, only take the first.
+        if ESDcompdata_pd is None:
+            mucompdata_pd["ecoclassid"] = pd.Series(np.tile(np.nan, len(mucompdata_pd))).values
+            mucompdata_pd["ecoclassname"] = pd.Series(np.tile(np.nan, len(mucompdata_pd))).values
+        else:
+            mucompdata_pd = pd.merge(mucompdata_pd, ESDcompdata_pd[["cokey", "ecoclassid", "ecoclassname"]].drop_duplicates("cokey", keep='first').reset_index(drop=True), on='cokey', how='left')
 
     #--------------------------------------------------------------------------------------------------------------------------
     # SoilIDList output
@@ -2052,12 +2141,12 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     # Reordering lists using list comprehension and mucomp_index
     lists_to_reorder = [esd_comp_list, hz_lyrs, snd_lyrs, cly_lyrs, txt_lyrs, rf_lyrs, cec_lyrs, 
-                        ph_lyrs, ec_lyrs, osd_hz_lyrs, lab_lyrs, munsell_lyrs]
+                        ph_lyrs, ec_lyrs, lab_lyrs, munsell_lyrs]
     reordered_lists = [[lst[i] for i in mucomp_index] for lst in lists_to_reorder]
     
     # Destructuring reordered lists for clarity
     esd_comp_list, hz_lyrs, snd_lyrs, cly_lyrs, txt_lyrs, rf_lyrs, cec_lyrs, \
-    ph_lyrs, ec_lyrs, osd_hz_lyrs, lab_lyrs, munsell_lyrs = reordered_lists
+    ph_lyrs, ec_lyrs, lab_lyrs, munsell_lyrs = reordered_lists
     
     # Generating output_SoilList
     output_SoilList = [
@@ -2068,6 +2157,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                        rf_lyrs, cec_lyrs, ph_lyrs, ec_lyrs, lab_lyrs, munsell_lyrs)
     ]
     
+
     # Writing out list of data needed for soilIDRank
     if plot_id is None:
         soilIDRank_output_pd.to_csv("%s/soilIDRank_ofile1.csv" % current_app.config['DATA_BACKEND'], index=None, header=True)

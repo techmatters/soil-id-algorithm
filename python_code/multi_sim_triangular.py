@@ -40,9 +40,6 @@ def simulate_correlated_triangular(n, params, correlation_matrix):
     return samples
 
 
-
-
-
 """
 use 'ilr' and 'ilr_inv' functions from the skbio.stats.composition package
 """
@@ -70,7 +67,6 @@ use 'ilr' and 'ilr_inv' functions from the skbio.stats.composition package
 #     return clr_values @ basis.T
 
 
-
 def acomp(X, parts=None, total=1):
     if parts is None:
         parts = list(range(X.shape[1]))
@@ -85,6 +81,7 @@ def acomp(X, parts=None, total=1):
     Xn /= Xn.sum(axis=1)[:, np.newaxis] / total
 
     return gsi_simshape(Xn, X)
+
 
 def gsi_simshape(x, oldx):
     if oldx.ndim >= 2:
@@ -110,50 +107,75 @@ Modeling Steps:
 # Step 1. Calculate a local soil property correlation matrix
 
 # Extract columns with names ending in '_r'
-df_r = df[[col for col in df.columns if col.endswith('_r')]]
+df_r = df[[col for col in df.columns if col.endswith("_r")]]
 
 # Compute the local correlation matrix (Spearman correlation matrix)
-selected_columns = df.drop(columns=['sandtotal_r', 'silttotal_r', 'claytotal_r'])
+selected_columns = df.drop(columns=["sandtotal_r", "silttotal_r", "claytotal_r"])
 correlation_matrix, _ = spearmanr(selected_columns, axis=0)
 
-ilr_site_txt = irl(df[['sandtotal_r', 'silttotal_r', 'claytotal_r']])
+ilr_site_txt = irl(df[["sandtotal_r", "silttotal_r", "claytotal_r"]])
 
-selected_columns['ilr1'] = ilr_site_txt[:, 0]
-selected_columns['ilr2'] = ilr_site_txt[:, 1]
+selected_columns["ilr1"] = ilr_site_txt[:, 0]
+selected_columns["ilr2"] = ilr_site_txt[:, 1]
 
-correlation_matrix_data = selected_columns[['ilr1', 'ilr2', 'sandtotal_r', 'silttotal_r', 'claytotal_r', 'dbthirdbar_r', 'wthirdbar_r','wfifteenbar_r']]
+correlation_matrix_data = selected_columns[
+    [
+        "ilr1",
+        "ilr2",
+        "sandtotal_r",
+        "silttotal_r",
+        "claytotal_r",
+        "dbthirdbar_r",
+        "wthirdbar_r",
+        "wfifteenbar_r",
+    ]
+]
 local_correlation_matrix, _ = spearmanr(correlation_matrix_data, axis=0)
 
 # Step 2. Simulate data for each row, with the number of simulations equal to the comppct_r*10
 
 # Global soil texture correlation matrix (used for initial simulation)
-texture_correlation_matrix = np.array([
-    [ 1.0000000, -0.76231798, -0.67370589],
-    [-0.7623180,  1.00000000,  0.03617498],
-    [-0.6737059,  0.03617498,  1.00000000]
-])
+texture_correlation_matrix = np.array(
+    [
+        [1.0000000, -0.76231798, -0.67370589],
+        [-0.7623180, 1.00000000, 0.03617498],
+        [-0.6737059, 0.03617498, 1.00000000],
+    ]
+)
 
 results = []
 for _, row in df.iterrows():
     # 2a. Simulate sand/silt/clay percentages
     # 1. Extract and format data params
-    sand_params = [row['sandtotal_l'], row['sandtotal_r'], row['sandtotal_h']]
-    silt_params = [row['silttotal_l'], row['silttotal_r'], row['silttotal_h']]
-    clay_params = [row['claytotal_l'], row['claytotal_r'], row['claytotal_h']]
+    sand_params = [row["sandtotal_l"], row["sandtotal_r"], row["sandtotal_h"]]
+    silt_params = [row["silttotal_l"], row["silttotal_r"], row["silttotal_h"]]
+    clay_params = [row["claytotal_l"], row["claytotal_r"], row["claytotal_h"]]
 
     params_txt = list[sand_params, silt_params, clay_params]
 
     # 2. Perform processing steps on data
     # Convert simulated data using the acomp function and then compute the isometric log-ratio transformation.
-    simulated_txt = acomp(simulate_correlated_triangular(row['comppct_r']*10, params_txt, texture_correlation_matrix))
+    simulated_txt = acomp(
+        simulate_correlated_triangular(
+            row["comppct_r"] * 10, params_txt, texture_correlation_matrix
+        )
+    )
     simulated_txt_ilr = irl(simulated_txt)
 
     # Extract min, median, and max for the first two ilr transformed columns.
     ilr1_values = simulated_txt_ilr[:, 0]
     ilr2_values = simulated_txt_ilr[:, 1]
 
-    ilr1_l, ilr1_r, ilr1_h = ilr1_values.min(), np.median(ilr1_values), ilr1_values.max()
-    ilr2_l, ilr2_r, ilr2_h = ilr2_values.min(), np.median(ilr2_values), ilr2_values.max()
+    ilr1_l, ilr1_r, ilr1_h = (
+        ilr1_values.min(),
+        np.median(ilr1_values),
+        ilr1_values.max(),
+    )
+    ilr2_l, ilr2_r, ilr2_h = (
+        ilr2_values.min(),
+        np.median(ilr2_values),
+        ilr2_values.max(),
+    )
 
     # Create the list of parameters.
     params = [
@@ -161,25 +183,21 @@ for _, row in df.iterrows():
         [ilr2_l, ilr2_r, ilr2_h],
         [row["dbthirdbar_l"], row["dbthirdbar_r"], row["dbthirdbar_h"]],
         [row["wthirdbar_l"], row["wthirdbar_r"], row["wthirdbar_h"]],
-        [row["wfifteenbar_l"], row["wfifteenbar_r"], row["wfifteenbar_h"]]
+        [row["wfifteenbar_l"], row["wfifteenbar_r"], row["wfifteenbar_h"]],
     ]
 
-    sim_data = simulate_correlated_triangular(row['comppct_r']*10, params, local_correlation_matrix)
-    sim_txt = ilr_inv(sim_data[['ilr1', 'ilr2']])
-    multi_sim = pd.concat([sim_data.drop(columns=['ilr1', 'ilr2']), sim_txt], axis=1)
+    sim_data = simulate_correlated_triangular(
+        row["comppct_r"] * 10, params, local_correlation_matrix
+    )
+    sim_txt = ilr_inv(sim_data[["ilr1", "ilr2"]])
+    multi_sim = pd.concat([sim_data.drop(columns=["ilr1", "ilr2"]), sim_txt], axis=1)
 
     results.append(multi_sim)
 
 
-
-
-
-
-
-
-
 def perturbe(x, y):
     return acomp(gsi_mul(x, y))
+
 
 def gsi_mul(x, y):
     if x.shape[0] > 1 and len(x.shape) == 2 and y.shape[0] > 1 and len(y.shape) == 2:
@@ -190,7 +208,6 @@ def gsi_mul(x, y):
         return y * np.tile(x, (y.shape[0], 1))
     else:
         return x * y
-
 
 
 def gsi_mul(x, y):
@@ -215,8 +232,6 @@ def gsi_mul(x, y):
         return x * y
 
 
-
-
 # acomp function and helper functions
 
 import numpy as np
@@ -237,6 +252,7 @@ def gsi_plain(x):
         return x.values
     else:
         return np.array(x)
+
 
 def oneOrDataset(W, B=None):
     """
@@ -270,12 +286,13 @@ def oneOrDataset(W, B=None):
             return np.tile(W, (len(B), 1))
 
 
-
 #############################################################
 """
 'acomp' function:
 
 """
+
+
 def acomp(X, parts=None, total=1):
     if parts is None:
         parts = list(range(X.shape[1]))
@@ -291,16 +308,17 @@ def acomp(X, parts=None, total=1):
 
     return gsi_simshape(Xn, X)
 
+
 def gsi_simshape(x, oldx):
     if oldx.ndim >= 2:
         return x
     return x.flatten() if oldx.ndim == 0 else x.reshape(-1)
 
 
-
-#no longer necessary in acomp function
+# no longer necessary in acomp function
 def gsi_plain(x):
     return x.to_numpy() if isinstance(x, pd.DataFrame) else x
+
 
 def oneOrDataset(W, B=None):
     W = gsi_plain(W)

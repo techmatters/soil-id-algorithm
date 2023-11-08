@@ -1393,7 +1393,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
                 # Merge with another dataframe
                 mucompdata_pd_merge = mucompdata_pd[['mukey', 'cokey', 'compname', 'compkind']]
-                mucompdata_pd_merge['series'] = mucompdata_pd_merge['compname'].str.replace('\d+', '')
+                mucompdata_pd_merge['series'] = mucompdata_pd_merge['compname'].str.replace(r'\d+', '')
                 OSDhorzdata_pd['series'] = OSDhorzdata_pd['series'].str.lower().str.capitalize()
                 OSDhorzdata_pd = pd.merge(mucompdata_pd_merge, OSDhorzdata_pd, on='series', how='left')
 
@@ -1420,7 +1420,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
             # Prepare for merge
             mucompdata_pd_merge = mucompdata_pd[['mukey', 'cokey', 'compname', 'compkind']]
-            mucompdata_pd_merge['series'] = mucompdata_pd_merge['compname'].str.replace('\d+', '')
+            mucompdata_pd_merge['series'] = mucompdata_pd_merge['compname'].str.replace(r'\d+', '')
 
             # Filter and merge the dataframes
             OSDhorzdata_pd = OSDhorzdata_pd[['series', 'top', 'bottom', 'hzname', 'texture_class', 'cf_class', 'matrix_dry_color_hue', 'matrix_dry_color_value', 'matrix_dry_color_chroma', 'r', 'g', 'b']]
@@ -1452,7 +1452,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     else:
         OSDnarrative_pd = json_normalize(out['OSD_narrative'])
         mucompdata_pd_merge = base_df.copy()
-        mucompdata_pd_merge['series'] = mucompdata_pd_merge['compname'].str.replace('\d+', '')
+        mucompdata_pd_merge['series'] = mucompdata_pd_merge['compname'].str.replace(r'\d+', '')
         OSDnarrative_pd = pd.merge(mucompdata_pd_merge, OSDnarrative_pd, on='series', how='left')
 
     # Merge with the main dataframe

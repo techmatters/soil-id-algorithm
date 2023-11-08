@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.linalg import sqrtm
-from skbio.stats.composition import ilr
-from skbio.stats.composition import ilr_inv
+from skbio.stats.composition import ilr, ilr_inv
+
 
 def simulate_correlated_triangular(n, params, correlation_matrix):
     """
@@ -220,8 +220,6 @@ def gsi_mul(x, y):
 # acomp function and helper functions
 
 import numpy as np
-
-
 
 
 def gsi_plain(x):

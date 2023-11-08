@@ -11,7 +11,6 @@ import random
 import re
 import struct
 import sys
-import requests
 
 # Third-party libraries
 import colour
@@ -19,18 +18,19 @@ import geopandas as gpd
 import MySQLdb
 import numpy as np
 import pandas as pd
+import requests
 import scipy.stats
+import shapely
+from numpy.linalg import cholesky
 from osgeo import gdal, ogr
 from scipy.interpolate import CubicSpline
+from scipy.sparse import issparse
 from scipy.spatial import distance
 from scipy.stats import norm
-from scipy.sparse import issparse
-import shapely
-from shapely.geometry import Point, Polygon, shape, LinearRing
+from shapely.geometry import LinearRing, Point, Polygon, shape
 from sklearn.metrics import pairwise
 from sklearn.metrics.pairwise import euclidean_distances
 from sklearn.utils import validation
-from numpy.linalg import cholesky
 
 
 def getDataStore_Connection():

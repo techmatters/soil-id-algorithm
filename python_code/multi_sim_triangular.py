@@ -242,9 +242,6 @@ def gsi_mul(x, y):
 
 # acomp function and helper functions
 
-import numpy as np
-
-
 def gsi_plain(x):
     """
     Convert input x to its plain form.

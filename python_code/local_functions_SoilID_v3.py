@@ -21,8 +21,17 @@ from sklearn.metrics import pairwise
 from sklearn.metrics.pairwise import euclidean_distances
 from sklearn.utils import validation
 
+# unused functions
+# getCF
+# get_WISE30sec_data
+# get_WRB_descriptions
+# load_model_output
+# save_model_output
+# save_rank_output
+# save_soilgrids_output
 
-def getDataStore_Connection():
+
+def get_datastore_connection():
     """
     Establish a connection to the datastore using app configurations.
 
@@ -2118,7 +2127,7 @@ def extract_values(obj, key):
 
 def getSG_descriptions(WRB_Comp_List):
     try:
-        conn = getDataStore_Connection()
+        conn = get_datastore_connection()
 
         # Execute a SQL query and return the results
         def execute_query(query, params):

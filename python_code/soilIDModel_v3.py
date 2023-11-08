@@ -16,7 +16,38 @@ import shapely
 from flask import current_app
 
 # Import local fucntions
-from model.local_functions_SoilID_v3 import *
+from model.local_functions_SoilID_v3 import (
+    agg_data_layer,
+    assign_max_distance_scores,
+    calculate_deltaE2000,
+    calculate_location_score,
+    compute_data_completeness,
+    drop_cokey_horz,
+    extract_muhorzdata_STATSGO,
+    extract_statsgo_mucompdata,
+    extract_values,
+    extract_WISE_data,
+    fill_missing_comppct_r,
+    getCF_fromClass,
+    getClay,
+    getDataStore_Connection,
+    getOSDCF,
+    getProfile,
+    getProfile_SG,
+    getProfileLAB,
+    getSand,
+    getSG_descriptions,
+    getTexture,
+    gower_distances,
+    lab2munsell,
+    munsell2rgb,
+    pedon_color,
+    process_distance_scores,
+    pt2polyDist,
+    sda_return,
+    silt_calc,
+    trim_fraction,
+)
 from osgeo import ogr
 from pandas.io.json import json_normalize
 from shapely.geometry import Point

@@ -2,17 +2,10 @@
 import collections
 import csv
 import json
-import math
-import os
-import random
 import re
-import struct
-import sys
 
 # Third-party libraries
-import colour
 import geopandas as gpd
-import MySQLdb
 import numpy as np
 import pandas as pd
 import requests
@@ -20,21 +13,13 @@ import scipy.stats
 import shapely
 
 # Flask
-from flask import Flask, current_app, jsonify
+from flask import current_app
 
 # Import local fucntions
 from model.local_functions_SoilID_v3 import *
-from numpy.linalg import cholesky
-from osgeo import gdal, ogr
+from osgeo import ogr
 from pandas.io.json import json_normalize
-from scipy.interpolate import CubicSpline
-from scipy.sparse import issparse
-from scipy.spatial import distance
-from scipy.stats import norm
-from shapely.geometry import LinearRing, Point, Polygon, shape
-from sklearn.metrics import pairwise
-from sklearn.metrics.pairwise import euclidean_distances
-from sklearn.utils import validation
+from shapely.geometry import Point
 
 
 #####################################################################################################

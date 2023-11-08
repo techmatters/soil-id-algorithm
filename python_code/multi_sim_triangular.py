@@ -1,6 +1,5 @@
 import numpy as np
-from scipy.linalg import sqrtm
-from skbio.stats.composition import ilr, ilr_inv
+from skbio.stats.composition import ilr_inv
 
 
 def simulate_correlated_triangular(n, params, correlation_matrix):

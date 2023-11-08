@@ -2,32 +2,21 @@
 #                                       Database and API Functions                                  #
 #####################################################################################################
 # Standard libraries
-import collections
-import csv
-import json
 import math
-import os
-import random
 import re
-import struct
 import sys
 
 # Third-party libraries
-import colour
 import geopandas as gpd
 import MySQLdb
 import numpy as np
 import pandas as pd
 import requests
-import scipy.stats
 import shapely
 from numpy.linalg import cholesky
-from osgeo import gdal, ogr
-from scipy.interpolate import CubicSpline
 from scipy.sparse import issparse
-from scipy.spatial import distance
 from scipy.stats import norm
-from shapely.geometry import LinearRing, Point, Polygon, shape
+from shapely.geometry import LinearRing, Point
 from sklearn.metrics import pairwise
 from sklearn.metrics.pairwise import euclidean_distances
 from sklearn.utils import validation

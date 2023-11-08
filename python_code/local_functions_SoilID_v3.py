@@ -1,6 +1,6 @@
-#####################################################################################################
-#                                       Database and API Functions                                  #
-#####################################################################################################
+###################################################################################################
+#                                       Database and API Functions                                #
+###################################################################################################
 # Standard libraries
 import math
 import re
@@ -133,7 +133,10 @@ def load_model_output(plot_id):
         conn = get_datastore_connection()
         cur = conn.cursor()
         model_version = 2
-        sql = f"SELECT ID, result_blob, soilIDRank_output_pd, mucompdata_cond_prob FROM  landpks_soil_model WHERE plot_id = {plot_id} AND model_version = {model_version} order by ID desc LIMIT 1"
+        sql = f"""SELECT ID, result_blob, soilIDRank_output_pd, mucompdata_cond_prob
+                  FROM landpks_soil_model
+                  WHERE plot_id = {plot_id} AND model_version = {model_version}
+                  ORDER BY ID DESC LIMIT 1"""
         cur.execute(sql)
         results = cur.fetchall()
         for row in results:
@@ -154,7 +157,11 @@ def get_WISE30sec_data(MUGLB_NEW_Select):
         conn = get_datastore_connection()
         cur = conn.cursor()
         placeholders = ", ".join(["%s"] * len(MUGLB_NEW_Select))
-        sql = f"SELECT MUGLB_NEW, COMPID, id, MU_GLOBAL, NEWSUID, SCID, PROP, CLAF,  PRID, Layer, TopDep, BotDep,  CFRAG,  SDTO,  STPC,  CLPC, CECS, PHAQ, ELCO, SU_name, FAO_SYS FROM  wise_soil_data WHERE MUGLB_NEW IN ({placeholders})"
+        sql = f"""SELECT MUGLB_NEW, COMPID, id, MU_GLOBAL, NEWSUID, SCID, PROP, CLAF,
+                         PRID, Layer, TopDep, BotDep, CFRAG, SDTO, STPC, CLPC, CECS,
+                         PHAQ, ELCO, SU_name, FAO_SYS
+                  FROM   wise_soil_data
+                  WHERE MUGLB_NEW IN ({placeholders})"""
         cur.execute(sql, MUGLB_NEW_Select)
         results = cur.fetchall()
         data = pd.DataFrame(
@@ -237,7 +244,10 @@ def get_WRB_descriptions(WRB_Comp_List):
         conn = get_datastore_connection()
         cur = conn.cursor()
         placeholders = ", ".join(["%s"] * len(WRB_Comp_List))
-        sql = f"SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es, Description_ks, Management_ks, Description_fr, Management_fr FROM wrb_fao90_desc WHERE WRB_tax IN ({placeholders})"
+        sql = f"""SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es,
+                         Description_ks, Management_ks, Description_fr, Management_fr
+                  FROM wrb_fao90_desc
+                  WHERE WRB_tax IN ({placeholders})"""
         cur.execute(sql, WRB_Comp_List)
         results = cur.fetchall()
         data = pd.DataFrame(
@@ -264,7 +274,8 @@ def get_WRB_descriptions(WRB_Comp_List):
 
 def sda_return(propQry):
     """
-    Queries data from the USDA's Soil Data Mart (SDM) Tabular Service and returns it as a pandas DataFrame.
+    Queries data from the USDA's Soil Data Mart (SDM) Tabular Service and returns it
+    as a pandas DataFrame.
     """
     base_url = "https://sdmdataaccess.nrcs.usda.gov/Tabular/SDMTabularService/post.rest"
     request_data = {"format": "JSON+COLUMNNAME", "query": propQry}
@@ -295,9 +306,9 @@ def sda_return(propQry):
         return None
 
 
-#####################################################################################################
-#                                       Utility Functions                                           #
-#####################################################################################################
+###################################################################################################
+#                                       Utility Functions                                         #
+###################################################################################################
 
 
 def getSand(field):
@@ -813,7 +824,9 @@ def getProfile_SG(data, variable, c_bot=False):
 
 def drop_cokey_horz(df):
     """
-    Function to drop duplicate rows of component horizon data when more than one instance of a component are duplicates.
+    Function to drop duplicate rows of component horizon data when more than one instance
+    of a component are duplicates.
+
     Function assumes that the dataframe contains:
       (1) unique cokey identifier ('cokey')
       (2) generic compname identifier ('compname')
@@ -868,7 +881,8 @@ def drop_cokey_horz(df):
 
 def haversine(lon1, lat1, lon2, lat2):
     """
-    Calculate the great circle distance between two points on the earth specified in decimal degrees.
+    Calculate the great circle distance between two points on the earth specified
+    in decimal degrees.
 
     Args:
     - lon1, lat1: Longitude and latitude of the first point.
@@ -918,14 +932,15 @@ def calculate_location_score(group, ExpCoeff):
 
     Parameters:
     - group (DataFrame): A group of data containing 'distance' and 'share' columns.
-    - ExpCoeff (float): Exponential coefficient to adjust sensitivity of the score to distance values.
+    - ExpCoeff (float): Exponential coefficient to adjust sensitivity of the score
+      to distance values.
 
     Returns:
     - float: Calculated location score.
 
-    The score is adjusted based on the provided exponential coefficient (ExpCoeff). The function provides
-    a way to compute a normalized score for locations, giving preference to locations with a closer distance
-    (smaller distance values) and higher share values.
+    The score is adjusted based on the provided exponential coefficient (ExpCoeff). The function
+    provides a way to compute a normalized score for locations, giving preference to locations
+    with a closer distance (smaller distance values) and higher share values.
     """
 
     # Parameter validation
@@ -1007,11 +1022,13 @@ def check_pairwise_arrays(X, Y, precomputed=False, dtype=None):
     # Check for valid shapes based on whether distances are precomputed
     if precomputed and X.shape[1] != Y.shape[0]:
         raise ValueError(
-            f"Precomputed metric requires shape (n_queries, n_indexed). Got ({X.shape[0]}, {X.shape[1]}) for {Y.shape[0]} indexed."
+            f"""Precomputed metric requires shape (n_queries, n_indexed).
+                Got ({X.shape[0]}, {X.shape[1]}) for {Y.shape[0]} indexed."""
         )
     elif X.shape[1] != Y.shape[1]:
         raise ValueError(
-            f"Incompatible dimension for X and Y matrices: X.shape[1] == {X.shape[1]} while Y.shape[1] == {Y.shape[1]}"
+            f"""Incompatible dimension for X and Y matrices:
+                X.shape[1] == {X.shape[1]} while Y.shape[1] == {Y.shape[1]}"""
         )
 
     return X, Y
@@ -1348,7 +1365,8 @@ def trim_fraction(text):
 
 def haversine(lon1, lat1, lon2, lat2):
     """
-    Calculate the great circle distance between two points on the earth specified in decimal degrees.
+    Calculate the great circle distance between two points on the earth specified
+    in decimal degrees.
 
     Parameters:
     - lon1, lat1, lon2, lat2 (float): Longitude and latitude of the two points.
@@ -1421,9 +1439,12 @@ def extract_muhorzdata_STATSGO(mucompdata_pd):
     ]
 
     # Form the muhorzdata query
-    muhorzdataQry = "SELECT cokey, chorizon.chkey, hzdept_r, hzdepb_r, hzname, sandtotal_r, silttotal_r, claytotal_r, cec7_r, ecec_r, ph1to1h2o_r, ec_r,lep_r, chfrags.fragvol_r FROM chorizon LEFT OUTER JOIN chfrags ON chfrags.chkey = chorizon.chkey WHERE cokey IN ({})".format(
-        ",".join(cokey_list)
-    )
+    muhorzdataQry = f"""SELECT cokey, chorizon.chkey, hzdept_r, hzdepb_r, hzname, sandtotal_r,
+                              silttotal_r, claytotal_r, cec7_r, ecec_r, ph1to1h2o_r, ec_r,lep_r,
+                              chfrags.fragvol_r
+                      FROM chorizon
+                      LEFT OUTER JOIN chfrags ON chfrags.chkey = chorizon.chkey
+                      WHERE cokey IN ({",".join(cokey_list)})"""
 
     # Execute the query
     muhorzdata_out = sda_return(propQry=muhorzdataQry)
@@ -1497,7 +1518,14 @@ def extract_statsgo_mucompdata(lon, lat):
 
     # Build the mucompdata query
     mukey_list = mukey_dist_final["MUKEY"].tolist()
-    mucompdataQry = f"SELECT component.mukey, component.cokey, component.compname, component.comppct_r, component.compkind, component.majcompflag, component.slope_r, component.elev_r, component.nirrcapcl, component.nirrcapscl, component.nirrcapunit, component.irrcapcl, component.irrcapscl, component.irrcapunit, component.taxorder, component.taxsubgrp FROM component WHERE mukey IN ({','.join(map(str, mukey_list))})"
+    mucompdataQry = f"""SELECT component.mukey, component.cokey, component.compname,
+                               component.comppct_r, component.compkind, component.majcompflag,
+                               component.slope_r, component.elev_r, component.nirrcapcl,
+                               component.nirrcapscl, component.nirrcapunit, component.irrcapcl,
+                               component.irrcapscl, component.irrcapunit, component.taxorder,
+                               component.taxsubgrp
+                        FROM component
+                        WHERE mukey IN ({','.join(map(str, mukey_list))})"""
     mucompdata_out = sda_return(propQry=mucompdataQry)
 
     # Process the mucompdata results
@@ -1640,9 +1668,9 @@ def process_distance_scores(mucompdata_pd, ExpCoeff):
     return mucompdata_pd
 
 
-#####################################################################################################
-#                                       Soil Color Functions                                        #
-#####################################################################################################
+###################################################################################################
+#                                       Soil Color Functions                                      #
+###################################################################################################
 
 
 def pedon_color(lab_Color, horizonDepth):
@@ -1700,7 +1728,8 @@ def pedon_color(lab_Color, horizonDepth):
 
 def lab2munsell(color_ref, LAB_ref, LAB):
     """
-    Converts LAB color values to Munsell notation using the closest match from a reference dataframe.
+    Converts LAB color values to Munsell notation using the closest match from
+    a reference dataframe.
 
     Parameters:
     - color_ref (pd.DataFrame): Reference dataframe with LAB and Munsell values.
@@ -1711,8 +1740,9 @@ def lab2munsell(color_ref, LAB_ref, LAB):
     - str: Munsell color notation.
     """
     idx = pd.DataFrame(euclidean_distances([LAB], LAB_ref)).idxmin(axis=1).iloc[0]
-    munsell_color = f"{color_ref.at[idx, 'hue']} {int(color_ref.at[idx, 'value'])}/{int(color_ref.at[idx, 'chroma'])}"
-    return munsell_color
+    munsell_color = f"{color_ref.at[idx, 'hue']}"
+    munsell_color_suffix = f"{int(color_ref.at[idx, 'value'])}/{int(color_ref.at[idx, 'chroma'])}"
+    return f"{munsell_color} {munsell_color_suffix}"
 
 
 def munsell2rgb(color_ref, munsell_ref, munsell):
@@ -2023,11 +2053,14 @@ def simulate_correlated_triangular(n, params, correlation_matrix):
 
     Parameters:
     - n: Number of samples.
-    - params: List of tuples, where each tuple contains three parameters (a, b, c) for the triangular distribution.
-    - correlation_matrix: 2D numpy array representing the desired correlations between the variables.
+    - params: List of tuples, where each tuple contains three parameters (a, b, c)
+      for the triangular distribution.
+    - correlation_matrix: 2D numpy array representing the desired correlations between
+      the variables.
 
     Returns:
-    - samples: 2D numpy array with n rows and as many columns as there are sets of parameters in params.
+    - samples: 2D numpy array with n rows and as many columns as there are sets of
+      parameters in params.
     """
 
     # Generate uncorrelated standard normal variables

@@ -1,5 +1,8 @@
 import numpy as np
+import pandas as pd
+from numpy.linalg import cholesky
 from skbio.stats.composition import ilr_inv
+from scipy.stats import spearmanr
 
 
 def simulate_correlated_triangular(n, params, correlation_matrix):

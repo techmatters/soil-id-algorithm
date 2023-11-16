@@ -2,17 +2,10 @@
 import collections
 import csv
 import json
-import math
-import os
-import random
 import re
-import struct
-import sys
 
 # Third-party libraries
-import colour
 import geopandas as gpd
-import MySQLdb
 import numpy as np
 import pandas as pd
 import requests
@@ -20,21 +13,61 @@ import scipy.stats
 import shapely
 
 # Flask
-from flask import Flask, current_app, jsonify
+from flask import current_app
 
 # Import local fucntions
-from model.local_functions_SoilID_v3 import *
-from numpy.linalg import cholesky
-from osgeo import gdal, ogr
+from model.local_functions_SoilID_v3 import (
+    agg_data_layer,
+    assign_max_distance_scores,
+    calculate_deltaE2000,
+    calculate_location_score,
+    compute_data_completeness,
+    drop_cokey_horz,
+    extract_muhorzdata_STATSGO,
+    extract_statsgo_mucompdata,
+    extract_values,
+    extract_WISE_data,
+    fill_missing_comppct_r,
+    get_WRB_descriptions,
+    getCF_fromClass,
+    getClay,
+    getDataStore_Connection,
+    getOSDCF,
+    getProfile,
+    getProfile_SG,
+    getProfileLAB,
+    getSand,
+    getSG_descriptions,
+    getTexture,
+    gower_distances,
+    lab2munsell,
+    load_model_output,
+    munsell2rgb,
+    pedon_color,
+    process_distance_scores,
+    pt2polyDist,
+    save_model_output,
+    save_rank_output,
+    save_soilgrids_output,
+    sda_return,
+    silt_calc,
+    trim_fraction,
+)
+from osgeo import ogr
 from pandas.io.json import json_normalize
-from scipy.interpolate import CubicSpline
-from scipy.sparse import issparse
-from scipy.spatial import distance
-from scipy.stats import norm
-from shapely.geometry import LinearRing, Point, Polygon, shape
-from sklearn.metrics import pairwise
-from sklearn.metrics.pairwise import euclidean_distances
-from sklearn.utils import validation
+from shapely.geometry import Point
+
+# entry points
+# getSoilLocationBasedGlobal
+# getSoilLocationBasedUS
+# rankPredictionUS
+# rankPredictionGlobal
+# getSoilGridsGlobal
+# getSoilGridsUS
+
+# when a site is created, call getSoilLocationBasedUS/getSoilLocationBasedGlobal.
+# when a site is created, call getSoilGridsGlobal
+# after user has collected data, call rankPredictionUS/rankPredictionGlobal.
 
 
 #####################################################################################################
@@ -386,7 +419,7 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
     mucompdata_cond_prob.replace({np.nan: "", "nan": "", "None": "", None: ""}, inplace=True)
 
     # Merge component descriptions
-    WRB_Comp_Desc = getWRB_descriptions(
+    WRB_Comp_Desc = get_WRB_descriptions(
         mucompdata_cond_prob["compname_grp"].drop_duplicates().tolist()
     )
     mucompdata_cond_prob = pd.merge(
@@ -468,7 +501,7 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
             "%s/soilIDRank_ofile2.csv" % current_app.config["DATA_BACKEND"], index=None, header=True
         )
     else:
-        saveModelOutput(
+        save_model_output(
             plot_id,
             model_version,
             json.dumps(
@@ -689,7 +722,7 @@ def rankPredictionGlobal(
 
     # If plot_id is provided, load data from the database
     else:
-        modelRun = loadModelOutput(plot_id)
+        modelRun = load_model_output(plot_id)
 
         # Check if modelRun data was successfully fetched
         if modelRun:
@@ -1218,7 +1251,7 @@ def rankPredictionGlobal(
 
     # Save data if record_id is provided
     if record_id:
-        saveRankOutput(record_id, model_version, json.dumps(result))
+        save_rank_output(record_id, model_version, json.dumps(result))
 
     return result
 
@@ -2856,7 +2889,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 "soilList": output_SoilList,
             }
         )
-        saveModelOutput(
+        save_model_output(
             plot_id,
             model_version,
             output_data,
@@ -3146,7 +3179,7 @@ def rankPredictionUS(
         record_id = None
     else:
         # Read from database
-        modelRun = loadModelOutput(plot_id)
+        modelRun = load_model_output(plot_id)
         if modelRun:
             record_id = modelRun[0]
             soilIDRank_output_pd = pd.read_csv(cStringIO.StringIO(modelRun[2]))
@@ -3696,7 +3729,7 @@ def rankPredictionUS(
     # If 'record_id' is provided, save the output data
     if record_id is not None:
         model_version = 2
-        saveRankOutput(record_id, model_version, json.dumps(output_data))
+        save_rank_output(record_id, model_version, json.dumps(output_data))
 
     return output_data
 
@@ -3724,7 +3757,7 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
     except requests.RequestException as e:
         # Log the error and set the status to unavailable
         if plot_id is not None:
-            saveSoilGridsOutput(plot_id, 1, json.dumps({"status": "unavailable"}))
+            save_soilgrids_output(plot_id, 1, json.dumps({"status": "unavailable"}))
         sg_out = {"status": "unavailable"}
 
     # Use the 'extract_values' function to extract specific keys from the JSON
@@ -3757,7 +3790,7 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
     # Check if all values in the specified columns are NaN
     if sg_data_w[["sand", "clay", "cfvo"]].isnull().all().all():
         if plot_id is not None:
-            saveSoilGridsOutput(plot_id, 1, json.dumps({"status": "unavailable"}))
+            save_soilgrids_output(plot_id, 1, json.dumps({"status": "unavailable"}))
         return {"status": "unavailable"}
     else:
         # Apply the factor to the specific columns
@@ -3778,8 +3811,8 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
         except Exception as e:
             # Handle data fetch failure
             if plot_id is not None:
-                # Assuming the function `saveSoilGridsOutput` exists elsewhere in the code
-                saveSoilGridsOutput(plot_id, 1, json.dumps({"status": "unavailable"}))
+                # Assuming the function `save_soilgrids_output` exists elsewhere in the code
+                save_soilgrids_output(plot_id, 1, json.dumps({"status": "unavailable"}))
             sg_tax = None
 
         # If data was successfully fetched, process it
@@ -3913,7 +3946,7 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
 
         # If a plot_id is provided, save the SoilGrids output
         if plot_id is not None:
-            saveSoilGridsOutput(
+            save_soilgrids_output(
                 plot_id, model_version, json.dumps({"metadata": metadata, "soilGrids": SoilGrids})
             )
 
@@ -3938,7 +3971,7 @@ def getSoilGridsUS(lon, lat, plot_id=None):
     except requests.RequestException as e:
         # Log the error and set the status to unavailable
         if plot_id is not None:
-            saveSoilGridsOutput(plot_id, 1, json.dumps({"status": "unavailable"}))
+            save_soilgrids_output(plot_id, 1, json.dumps({"status": "unavailable"}))
         sg_out = {"status": "unavailable"}
 
     # Use the 'extract_values' function to extract specific keys from the JSON
@@ -3971,7 +4004,7 @@ def getSoilGridsUS(lon, lat, plot_id=None):
     # Check if all values in the specified columns are NaN
     if sg_data_w[["sand", "clay", "cfvo"]].isnull().all().all():
         if plot_id is not None:
-            saveSoilGridsOutput(plot_id, 1, json.dumps({"status": "unavailable"}))
+            save_soilgrids_output(plot_id, 1, json.dumps({"status": "unavailable"}))
         return {"status": "unavailable"}
     else:
         # Apply the factor to the specific columns
@@ -4055,7 +4088,7 @@ def getSoilGridsUS(lon, lat, plot_id=None):
 
         # Save the data if plot_id is provided
         if plot_id:
-            saveSoilGridsOutput(plot_id, model_version, json.dumps(data))
+            save_soilgrids_output(plot_id, model_version, json.dumps(data))
 
         # Return the constructed data
         return data

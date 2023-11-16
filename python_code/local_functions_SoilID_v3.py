@@ -38,11 +38,6 @@ from sklearn.utils import validation
 # unused functions
 # getCF
 # get_WISE30sec_data
-# get_WRB_descriptions
-# load_model_output
-# save_model_output
-# save_rank_output
-# save_soilgrids_output
 
 
 def get_datastore_connection():

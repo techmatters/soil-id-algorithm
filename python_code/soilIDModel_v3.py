@@ -182,7 +182,6 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
     soilIDList_out = [assign_max_distance_scores(group) for group in mucompdata_comp_grps]
 
     mucompdata_pd = pd.concat(soilIDList_out).reset_index(drop=True)
-    index = mucompdata_pd["Index"].tolist()
     comp_key = mucompdata_pd["cokey"].tolist()
 
     # -----------------------------------------------------------------------------------------------------------------

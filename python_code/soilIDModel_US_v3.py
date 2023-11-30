@@ -14,7 +14,7 @@ from scipy.stats import spearmanr
 from skbio.stats.composition import ilr, ilr_inv
 
 # Flask
-from flask import current_app
+from flask import current_app, jsonify
 
 # Import local fucntions
 from model.local_functions_SoilID_v3 import (
@@ -46,6 +46,7 @@ from model.local_functions_SoilID_v3 import (
     simulate_correlated_triangular,
     process_data_with_rosetta,
     aggregate_data,
+    calculate_vwc_awc, 
 )
 from osgeo import ogr
 from pandas.io.json import json_normalize
@@ -908,7 +909,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         sim_txt = pd.DataFrame(sim_txt, columns=["sand_total", "silt_total", "clay_total"])
         sim_txt = sim_txt.multiply(100)
         multi_sim = pd.concat([sim_data.drop(columns=["ilr1", "ilr2"]), sim_txt], axis=1)
-        multi_sim['compname'] = row['compname']
+        multi_sim['compname_grp'] = row['compname_grp']
         multi_sim['hzdept_r'] = row['hzdept_r']
         multi_sim['hzdepb_r'] = row['hzdepb_r']
         sim_data_out.append(multi_sim)
@@ -931,8 +932,11 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     # Create layerID
     sim_data_df['layerID'] = sim_data_df['compname_grp'] + "_" + sim_data_df['hzdept_r'].astype(str)
-    # return jsonify(sim_data_df.to_dict())
-
+    rosetta_data['layerID'] = sim_data_df['layerID']
+    
+    awc = calculate_vwc_awc(rosetta_data)
+    return jsonify(awc)
+    
     # ----------------------------------------------------------------------------
     # This extracts OSD color, texture, and CF data
     if data_source == "STATSGO":
@@ -992,7 +996,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         RGB = munsell2rgb(color_ref, munsell_ref, munsell)
                         munsell_RGB.append(RGB)
 
-                munsell_RGB_df = pd.DataFrame(munsell_RGB, columns=["r", "g", "b"])
+                munsell_RGB_sim = pd.DataFrame(munsell_RGB, columns=["r", "g", "b"])
                 OSDhorzdata_pd = pd.concat([OSDhorzdata_pd, munsell_RGB_df], axis=1)
 
                 # Merge with another dataframe

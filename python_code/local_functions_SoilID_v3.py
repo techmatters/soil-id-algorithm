@@ -2,27 +2,39 @@
 #                                       Database and API Functions                                  #
 #####################################################################################################
 # Standard libraries
+import collections
+import csv
+import json
 import math
+import os
+import random
 import re
+import struct
 import sys
 
 # Third-party libraries
+import colour
 import geopandas as gpd
 import MySQLdb
 import numpy as np
 import pandas as pd
 import requests
+import scipy.stats
 import shapely
 from flask import current_app
 from numpy.linalg import cholesky
+from osgeo import gdal, ogr
+from scipy.interpolate import CubicSpline
+from scipy.linalg import sqrtm
 from scipy.sparse import issparse
+from scipy.spatial import distance
 from scipy.stats import norm
-from shapely.geometry import LinearRing, Point
+from shapely.geometry import LinearRing, Point, Polygon, shape
+from skbio.stats.composition import ilr, ilr_inv
 from sklearn.metrics import pairwise
 from sklearn.metrics.pairwise import euclidean_distances
 from sklearn.utils import validation
 from scipy.interpolate import UnivariateSpline
-
 
 def get_datastore_connection():
     """
@@ -690,7 +702,7 @@ def getProfile(data, variable, c_bot=False):
             pd_add.columns = ["var_pct_intpl"]
             var_pct_intpl_final = pd.concat([var_pct_intpl_final, pd_add], axis=0)
             var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
-    if c_bot is True:
+    if c_bot == True:
         if len(data["hzdept_r"]) == 1:
             c_very_bottom = data["hzdepb_r"].iloc[0]
         else:
@@ -871,7 +883,7 @@ def getProfile_SG(data, variable, c_bot=False):
             pd_add.columns = ["var_pct_intpl"]
             var_pct_intpl_final = pd.concat([var_pct_intpl_final, pd_add], axis=0)
             var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
-    if c_bot is True:
+    if c_bot == True:
         if len(data["hzdept_r"]) == 1:
             c_very_bottom = data["hzdepb_r"].iloc[0]
         else:
@@ -1400,6 +1412,39 @@ def compute_data_completeness(
     return data_completeness, text_completeness
 
 
+def simulate_correlated_triangular(n, params, correlation_matrix):
+    # Generate uncorrelated standard normal variables
+    uncorrelated_normal = np.random.multivariate_normal(
+        mean=np.zeros(len(params)), cov=np.eye(len(params)), size=n
+    )
+
+    # Cholesky decomposition of the correlation matrix
+    L = np.linalg.cholesky(correlation_matrix)
+
+    # Compute correlated variables using Cholesky decomposition
+    correlated_normal = uncorrelated_normal @ L
+
+    # Transform standard normal variables to match triangular marginal distributions
+    samples = np.empty((n, len(params)))
+
+    for i in range(len(params)):
+        a = params[i][0]  # Lower limit of the triangle distribution
+        b = params[i][1]  # Mode (peak) of the triangle distribution
+        c = params[i][2]  # Upper limit of the triangle distribution
+
+        normal_var = correlated_normal[:, i]
+        u = norm.cdf(normal_var)  # Transform to uniform [0, 1] range
+
+        for j in range(len(u)):
+            u_i = u[j]
+            if u_i <= (b - a) / (c - a):
+                samples[j, i] = a + np.sqrt(u_i * (c - a) * (b - a))
+            else:
+                samples[j, i] = c - np.sqrt((1 - u_i) * (c - a) * (c - b))
+
+    return samples
+
+
 def trim_fraction(text):
     """
     Removes trailing ".0" from a given text string.
@@ -1456,7 +1501,7 @@ def extract_muhorzdata_STATSGO(mucompdata_pd):
 
     # Execute the query
     muhorzdata_out = sda_return(propQry=muhorzdataQry)
-    if muhorzdata_out is None:
+    if mucompdata_out is None:
         return "Soil ID not available in this area"
     else:
         muhorzdata = muhorzdata_out["Table"]
@@ -2069,6 +2114,43 @@ def getColor_deltaE2000_OSD_pedon(data_osd, data_pedon):
     return calculate_deltaE2000(osd_avg_lab, pedon_avg_lab)
 
 
+def simulate_correlated_triangular(n, params, correlation_matrix):
+    """
+    Simulate correlated triangular distributed variables.
+
+    Parameters:
+    - n: Number of samples.
+    - params: List of tuples, where each tuple contains three parameters (a, b, c) for the triangular distribution.
+    - correlation_matrix: 2D numpy array representing the desired correlations between the variables.
+
+    Returns:
+    - samples: 2D numpy array with n rows and as many columns as there are sets of parameters in params.
+    """
+
+    # Generate uncorrelated standard normal variables
+    uncorrelated_normal = np.random.normal(size=(n, len(params)))
+
+    # Cholesky decomposition of the correlation matrix
+    L = cholesky(correlation_matrix)
+
+    # Compute correlated variables using Cholesky decomposition
+    correlated_normal = uncorrelated_normal @ L
+
+    # Transform standard normal variables to match triangular marginal distributions
+    samples = np.zeros((n, len(params)))
+
+    for i, (a, b, c) in enumerate(params):
+        normal_var = correlated_normal[:, i]
+        u = norm.cdf(normal_var)  # Transform to uniform [0, 1] range
+
+        # Transform the uniform values into triangularly distributed values
+        condition = u <= (b - a) / (c - a)
+        samples[condition, i] = a + np.sqrt(u[condition] * (c - a) * (b - a))
+        samples[~condition, i] = c - np.sqrt((1 - u[~condition]) * (c - a) * (c - b))
+
+    return samples
+
+
 def extract_values(obj, key):
     """
     Pull all values of the specified key from a nested dictionary or list.
@@ -2114,8 +2196,8 @@ def getSG_descriptions(WRB_Comp_List):
         WRB_Comp_List = [item for t in list(names) for item in t]
 
         # Second SQL query
-        sql2 = """SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es,
-                  Description_ks, Management_ks, Description_fr, Management_fr
+        sql2 = """SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es, 
+                  Description_ks, Management_ks, Description_fr, Management_fr 
                   FROM wrb_fao90_desc WHERE WRB_tax IN %s"""
         results = execute_query(sql2, (tuple(WRB_Comp_List),))
 
@@ -2209,7 +2291,7 @@ def gsi_simshape(x, oldx):
 # Temporary function to infill missing data. TODO: create loopup table with average values for l-r-h by series
 def infill_soil_data(df):
     # Group by 'compname'
-    grouped = df.groupby("compname")
+    grouped = df.groupby("compname_grp")
 
     # Filtering groups
     def filter_group(group):
@@ -2491,7 +2573,7 @@ def rosetta_request(chunk, vars, v, conf=None, include_sd=False):
 
 def process_data_with_rosetta(df, vars, v='3', include_sd=False, chunk_size=10000, conf=None):
     """
-    Processes a DataFrame by sending chunks of data to the ROSETTA web service and
+    Processes a DataFrame by sending chunks of data to the ROSETTA web service and 
     concatenates the results into a single DataFrame.
 
     Parameters:
@@ -2511,16 +2593,16 @@ def process_data_with_rosetta(df, vars, v='3', include_sd=False, chunk_size=1000
     """
     if not isinstance(df, pd.DataFrame):
         raise ValueError("x must be a pandas DataFrame")
-
+    
     if df.empty:
         raise ValueError("x must contain more than 0 rows")
-
+    
     if not all(var in df.columns for var in vars):
         raise ValueError("vars must match columns in x")
-
+    
     if not all(df[var].dtype.kind in 'fi' for var in vars):  # checks for float and integer types
         raise ValueError("x must contain only numeric values")
-
+    
     # Helper function to make chunks
     def make_chunks(data, size):
         return [data.iloc[i:i + size] for i in range(0, len(data), size)]
@@ -2569,47 +2651,43 @@ def vg_function(phi, theta_r, theta_s, alpha, n):
 
 def vg_model(VG_params, phi_min=1e-6, phi_max=1e8, pts=100):
     """
-    Converts R function for van Genuchten equation to Python and computes the VG curve, forward, and inverse functions.
+    Converts R function for van Genuchten equation to Python and computes the VG curve, 
+    forward, and inverse functions for each row in VG_params.
 
     Parameters:
-    VG_params (pandas DataFrame): DataFrame containing the van Genuchten parameters ('theta_r', 'theta_s', 'alpha', 'npar').
-    phi_min (float): Minimum value of phi (default: 1e-6).
-    phi_max (float): Maximum value of phi (default: 1e8).
-    pts (int): Number of points to generate between phi_min and phi_max (default: 100).
+    VG_params (pandas DataFrame): DataFrame containing the van Genuchten parameters.
+    phi_min (float): Minimum value of phi.
+    phi_max (float): Maximum value of phi.
+    pts (int): Number of points to generate between phi_min and phi_max.
 
     Returns:
-    dict: A dictionary with the following keys:
-          'VG_curve' (numpy array): Array containing phi and corresponding theta values.
-          'VG_function' (UnivariateSpline): Spline function of the VG curve.
-          'VG_inverse_function' (UnivariateSpline): Inverse spline function of the VG curve.
+    pandas DataFrame: A DataFrame containing the VG curves for each set of parameters.
     """
     # Check if all required columns are present
     required_columns = ['theta_r', 'theta_s', 'alpha', 'npar']
-    if not all(col in VG_params for col in required_columns):
-        print("one or more required column is missing")
-        return {'VG_curve': None, 'VG_function': None, 'VG_inverse_function': None}
+    if not all(col in VG_params.columns for col in required_columns):
+        raise ValueError("one or more required columns are missing")
 
     # Check for NA values
     if VG_params.isnull().values.any():
-        print("one or more required value is NA")
-        return {'VG_curve': None, 'VG_function': None, 'VG_inverse_function': None}
+        raise ValueError("one or more required values are NA")
 
     # Generate phi values
     phi = np.logspace(np.log10(phi_min), np.log10(phi_max), pts)
-    h = phi * 10.19716
 
-    # Calculate theta using the van Genuchten equation
-    theta = vg_function(h, VG_params['theta_r'], VG_params['theta_s'],
-                        10 ** VG_params['alpha'], 10 ** VG_params['npar'])
+    # Initialize results DataFrame
+    results_df = pd.DataFrame()
 
-    # Create VG curve
-    m = np.column_stack((phi, theta))
+    for index, row in VG_params.iterrows():
+        # Calculate theta for each set of parameters
+        h = phi * 10.19716
+        theta = vg_function(h, row['theta_r'], row['theta_s'], 10 ** row['alpha'], 10 ** row['npar'])
 
-    # Create spline functions for forward and inverse
-    vg_fwd = UnivariateSpline(m[:, 0], m[:, 1], s=0)
-    vg_inv = UnivariateSpline(m[:, 1], m[:, 0], s=0)
+        # Store results
+        result = {'index': index, 'VG_curve': np.column_stack((phi, theta))}
+        results_df = results_df.append(result, ignore_index=True)
 
-    return {'VG_curve': m, 'VG_function': vg_fwd, 'VG_inverse_function': vg_inv}
+    return results_df
 
 
 def calculate_vwc_awc(sim_data):
@@ -2617,17 +2695,15 @@ def calculate_vwc_awc(sim_data):
     Calculates the volumetric water content (VWC) at specific matric potentials and determines the available water capacity (AWC).
 
     Parameters:
-    i (int): Index of the layer in the 'mukey_sim' DataFrame.
     mukey_sim (pandas DataFrame): DataFrame containing soil layers and their properties.
-    VG_model_function (function): Function that computes the van Genuchten model.
-
+    
     Returns:
     pandas DataFrame: A DataFrame containing the VWC at saturation, field capacity, and permanent wilting point, along with the AWC for the specified layer.
     """
-
+    
     # Compute van Genuchten model for the specified layer
     vg = vg_model(VG_params=sim_data, phi_min=1e-3, phi_max=1e6)
-
+    return(vg)
     # Extract VWC at specific matric potentials (kPa)
     d = {
         'layerID': sim_data['layerID'].iloc[i],
@@ -2639,8 +2715,44 @@ def calculate_vwc_awc(sim_data):
 
     # Calculate AWC using 33 kPa -> 1500 kPa interval
     d['awc'] = d['fc'] - d['pwp']
-
+    
     return d
+
+
+def information_gain(data, target_col, feature_cols):
+    """
+    Calculate information gain for each feature with respect to the target variable.
+
+    Args:
+        data (pd.DataFrame): The DataFrame containing the dataset, including target and feature columns.
+        target_col (str): The name of the target variable column.
+        feature_cols (list): List of feature column names.
+
+    Returns:
+        dict: A dictionary where keys are feature names and values are information gain scores.
+    """
+    def entropy_score(series):
+        # Calculate entropy for a given series (e.g., target variable)
+        value_counts = series.value_counts()
+        probabilities = value_counts / len(series)
+        return entropy(probabilities, base=2)
+
+    # Calculate entropy of the entire dataset based on the target variable
+    total_entropy = entropy_score(data[target_col])
+
+    # Calculate information gain for each feature
+    information_gains = {}
+    for feature_col in feature_cols:
+        # Calculate weighted average of entropies for each unique value of the feature
+        feature_entropy = data.groupby(feature_col)[target_col].apply(entropy_score)
+        feature_counts = data[feature_col].value_counts()
+        weighted_feature_entropy = sum(
+            (feature_counts / len(data)) * feature_entropy.fillna(0)
+        )
+        information_gain = total_entropy - weighted_feature_entropy
+        information_gains[feature_col] = information_gain
+
+    return information_gains
 
 
 # -------------------------------------------------------------------------------------------

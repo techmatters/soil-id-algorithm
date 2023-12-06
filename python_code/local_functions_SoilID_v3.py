@@ -28,13 +28,14 @@ from scipy.interpolate import CubicSpline
 from scipy.linalg import sqrtm
 from scipy.sparse import issparse
 from scipy.spatial import distance
-from scipy.stats import norm
+from scipy.stats import norm, entropy
 from shapely.geometry import LinearRing, Point, Polygon, shape
 from skbio.stats.composition import ilr, ilr_inv
 from sklearn.metrics import pairwise
 from sklearn.metrics.pairwise import euclidean_distances
 from sklearn.utils import validation
 from scipy.interpolate import UnivariateSpline
+from sklearn.impute import SimpleImputer
 
 def get_datastore_connection():
     """
@@ -360,9 +361,10 @@ def silt_calc(row):
 
 
 def getTexture(row, sand=None, silt=None, clay=None):
-    sand = sand if sand is not None else row.get("sandtotal_r") or row.get("sand")
-    silt = silt if silt is not None else row.get("silttotal_r") or row.get("silt")
-    clay = clay if clay is not None else row.get("claytotal_r") or row.get("clay")
+  
+    sand = sand if sand is not None else row.get("sandtotal_r") or row.get("sand") or row.get("sand_total")
+    silt = silt if silt is not None else row.get("silttotal_r") or row.get("silt") or row.get("silt_total")
+    clay = clay if clay is not None else row.get("claytotal_r") or row.get("clay") or row.get("clay_total")
 
     silt_clay = silt + 1.5 * clay
     silt_2x_clay = silt + 2.0 * clay
@@ -414,6 +416,7 @@ def getCF(cf):
 
 
 def getCF_fromClass(cf):
+
     cf_to_value = {
         "0-1%": 0,
         "0-15%": 0,
@@ -425,6 +428,21 @@ def getCF_fromClass(cf):
 
     return cf_to_value.get(cf, np.nan)
 
+def getCF_class(row, cf=None):
+  
+    cf = cf if cf is not None else row.get("rfv") 
+    if 0 <= cf < 2:
+        return "0-1%"
+    elif 2 <= cf < 16:
+        return "1-15%"
+    elif 16 <= cf < 36:
+        return "15-35%"
+    elif 36 <= cf < 61:
+        return "35-60%"
+    elif 61 <= cf <= 100:
+        return ">60%"
+    else:
+        return np.nan
 
 def getOSDCF(cf):
     frag_vol_35 = [
@@ -1093,7 +1111,11 @@ def check_pairwise_arrays(X, Y, precomputed=False, dtype=None):
     # If dtype is not provided, use the determined float dtype
     if dtype is None:
         dtype = dtype_float
-
+    
+    # impute missing values
+    imputer = SimpleImputer(missing_values=np.nan, strategy='mean')  # You can change the strategy
+    X = imputer.fit_transform(X)
+    
     # Validate the input arrays
     X = validation.check_array(X, accept_sparse="csr", dtype=dtype, estimator=estimator)
     if Y is X or Y is None:
@@ -1220,7 +1242,9 @@ def _gower_distance_row(
     feature_weight_cat,
     feature_weight_num,
     feature_weight_sum,
+    categorical_features,
     ranges_of_numeric,
+    max_of_numeric,
 ):
     """
     Compute the Gower distance between a single row and a set of rows.
@@ -1263,6 +1287,43 @@ def _gower_distance_row(
     return sum_sij
 
 
+def compute_site_similarity(
+        p_slope, mucompdata, slices, additional_columns=None, feature_weight=None
+    ):
+        """
+        Compute gower distances for site similarity based on the provided feature weights.
+
+        Parameters:
+        - p_slope: DataFrame containing sample_pedon information.
+        - mucompdata: DataFrame containing component data.
+        - slices: DataFrame containing slices of soil.
+        - additional_columns: List of additional columns to consider.
+        - feature_weight: Array of weights for features.
+
+        Returns:
+        - D_site: Gower distances array for site similarity.
+        """
+        # Combine pedon slope data with component data
+        site_vars = pd.concat([p_slope, mucompdata[["compname", "slope_r", "elev_r"]]], axis=0)
+
+        # If additional columns are specified, merge them
+        if additional_columns:
+            site_vars = pd.merge(slices, site_vars, on="compname", how="left")
+            site_mat = site_vars[additional_columns]
+        else:
+            site_mat = site_vars[["slope_r", "elev_r"]]
+
+        site_mat = site_mat.set_index(slices.compname.values)
+        
+        # Compute the gower distances
+        D_site = gower_distances(site_mat, feature_weight=feature_weight)
+
+        # Replace NaN values with the maximum value in the array
+        D_site = np.where(np.isnan(D_site), np.nanmax(D_site), D_site)
+
+        return D_site
+      
+      
 def compute_text_comp(bedrock, p_sandpct_intpl, soilHorizon):
     """
     Computes a value based on the depth of bedrock and length of sand percentages.
@@ -2259,7 +2320,13 @@ def simulate_correlated_triangular(n, params, correlation_matrix):
         u = norm.cdf(normal_var)  # Transform to uniform [0, 1] range
 
         # Transform the uniform values into triangularly distributed values
-        condition = u <= (b - a) / (c - a)
+        try:
+            condition = u <= (b - a) / (c - a)
+        except ZeroDivisionError:
+            # Handle the zero-division case
+            condition = None  # or some other default value
+            
+        # condition = u <= (b - a) / (c - a)
         samples[condition, i] = a + np.sqrt(u[condition] * (c - a) * (b - a))
         samples[~condition, i] = c - np.sqrt((1 - u[~condition]) * (c - a) * (c - b))
 
@@ -2289,6 +2356,19 @@ def gsi_simshape(x, oldx):
 
 
 # Temporary function to infill missing data. TODO: create loopup table with average values for l-r-h by series
+def impute_rfv_values(row):
+    if row['rfv_r'] == 0:
+        row['rfv_r'] = 0.02
+        row['rfv_l'] = 0.01
+        row['rfv_h'] = 0.03
+    elif 0 < row['rfv_r'] <= 2:
+        row['rfv_l'] = 0.01 #if pd.isna(row['rfv_l']) else row['rfv_l']
+        row['rfv_h'] = row['rfv_r'] + 2 #if pd.isna(row['rfv_h']) else row['rfv_h']
+    elif row['rfv_r'] > 2:
+        row['rfv_l'] = row['rfv_r'] - 2 #if pd.isna(row['rfv_l']) else row['rfv_l']
+        row['rfv_h'] = row['rfv_r'] + 2 #if pd.isna(row['rfv_h']) else row['rfv_h']
+    return row
+
 def infill_soil_data(df):
     # Group by 'compname'
     grouped = df.groupby("compname_grp")
@@ -2337,11 +2417,78 @@ def infill_soil_data(df):
     filtered_groups["wfifteenbar_h"].fillna(
         filtered_groups["wfifteenbar_r"] + 0.6, inplace=True
     )
+    # Step 10 and 11: Impute 'rfv_l' and 'rfv_h' values with 'rfv_r' +/- value
+    filtered_groups = filtered_groups.apply(impute_rfv_values, axis=1)
 
     return filtered_groups
 
 
-def slice_and_aggregate_soil_data(df):
+# def slice_and_aggregate_soil_data(df):
+#     # Create an empty DataFrame to hold the aggregated results
+#     aggregated_data = pd.DataFrame()
+# 
+#     # Get numeric columns for aggregation, excluding the depth range columns
+#     data_columns = df.select_dtypes(include=[np.number]).columns.difference(['hzdept_r', 'hzdepb_r'])
+# 
+#     # Iterate through each depth interval
+#     for _, row in df.iterrows():
+#         top_depth = row['hzdept_r']
+#         bottom_depth = row['hzdepb_r']
+#         depth_range = np.arange(top_depth, bottom_depth)
+# 
+#         # Create a DataFrame for each 1 cm increment
+#         for depth in depth_range:
+#             interpolated_row = {col: row[col] for col in data_columns}
+#             interpolated_row['Depth'] = depth
+# 
+#             # Add the interpolated row to the aggregated data
+#             aggregated_data = aggregated_data.append(interpolated_row, ignore_index=True)
+# 
+#     # Calculate mean values for each depth increment
+#     depth_increment_means = aggregated_data.groupby('Depth').mean()
+# 
+#     # Define the depth ranges
+#     depth_ranges = [(0, 30), (30, 100)]
+#     # Initialize the result list
+#     results = []
+# 
+#     # Iterate over each column in the dataframe
+#     for column in depth_increment_means.columns:
+#         column_results = []
+#         for top, bottom in depth_ranges:
+#             mask = (depth_increment_means.index >= top) & (depth_increment_means.index < bottom)
+#             data_subset = depth_increment_means.loc[mask, column]
+#             result = data_subset.mean(skipna=True) if not data_subset.empty else None
+#             column_results.append([top, bottom, result])
+#         
+#         # Append the results for the current column to the overall results list
+#         results.append(
+#             pd.DataFrame(
+#                 column_results,
+#                 columns=["hzdept_r", "hzdepb_r", f"{column}"],
+#             )
+#         )
+# 
+#     # Concatenate the results for each column into a single dataframe
+#     result_df = pd.concat(results, axis=1)
+# 
+#     # If there are multiple columns, remove the repeated 'Top Depth' and 'Bottom Depth' columns
+#     if len(depth_increment_means.columns) > 1:
+#         result_df = result_df.loc[:, ~result_df.columns.duplicated()]
+# 
+#     # Check if there is any row covering the 30-100 cm depth range
+#     # if not ((result_df['hzdept_r'] == 30)).any():
+#     #     # Create a row with hzdept_r=30, hzdepb_r=100, and None for all other columns
+#     #     new_row = {'hzdept_r': 30, 'hzdepb_r': 100}
+#     #     for col in data_columns:
+#     #         new_row[col] = None
+#     # 
+#     #     # Append the new row to result_df
+#     #     result_df = result_df.append(new_row, ignore_index=True)
+#     result_df = result_df.drop_duplicates()
+#     return result_df
+
+def slice_and_aggregate_soil_data_old(df):
     """
     Takes a DataFrame with soil data, slices it into 1 cm increments based on depth ranges provided
     in 'hzdept_r' and 'hzdepb_r' columns, and calculates mean values for each depth increment
@@ -2382,7 +2529,67 @@ def slice_and_aggregate_soil_data(df):
     max_depth = aggregated_data['Depth'].max()
     sd=2
     # Define the depth ranges
-    depth_ranges = [(0, 20), (20, 50)]
+    depth_ranges = [(0, 30), (30, 100)]
+    
+    # Initialize the result list
+    results = []
+
+    # Flag to check if the 30-100 cm range is covered
+    is_depth_30_100_covered = False
+
+    # Iterate over each column in the dataframe
+    for column in aggregated_data.columns:
+        column_results = []
+        for top, bottom in depth_ranges:
+            if max_depth <= top:
+                column_results.append([top, bottom, np.nan])
+            else:
+                mask = (aggregated_data.index >= top) & (aggregated_data.index <= min(bottom, max_depth))
+                data_subset = aggregated_data.loc[mask, column]
+                if not data_subset.empty:
+                    result = round(data_subset.mean(skipna=True), sd) if not data_subset.isna().all() else np.nan
+                    column_results.append([top, min(bottom, max_depth), result])
+                else:
+                    column_results.append([top, min(bottom, max_depth), np.nan])
+
+                # Check if the 30-100 cm range is covered
+                if top == 30:
+                    is_depth_30_100_covered = not data_subset.empty
+
+        # Append the results for the current column to the overall results list
+        results.append(
+            pd.DataFrame(
+                column_results,
+                columns=["hzdept_r", "hzdepb_r", f"{column}"],
+            )
+        )
+
+    # Concatenate the results for each column into a single dataframe
+    result_df = pd.concat(results, axis=1)
+
+    # If there are multiple columns, remove the repeated 'Top Depth' and 'Bottom Depth' columns
+    if len(aggregated_data.columns) > 1:
+        result_df = result_df.loc[:, ~result_df.columns.duplicated()]
+
+    # Add a row for 30-100 cm range if it's not covered
+    if not is_depth_30_100_covered:
+        # Initialize a dictionary with None or a small value for each column
+        none_row = {col: [None] if col not in ['hzdept_r', 'hzdepb_r'] else [] for col in result_df.columns}
+        
+        # Set the depth values for this row
+        none_row['hzdept_r'] = [30]
+        none_row['hzdepb_r'] = [100]
+        
+        # Create a DataFrame from the dictionary
+        none_df = pd.DataFrame(none_row)
+    
+        # Concatenate with the original DataFrame
+        result_df = pd.concat([result_df, none_df], ignore_index=True)
+    result_df = result_df.drop_duplicates()
+    
+    return result_df
+  
+    """
     # Initialize the result list
     results = []
 
@@ -2416,7 +2623,7 @@ def slice_and_aggregate_soil_data(df):
         result_df = result_df.loc[:, ~result_df.columns.duplicated()]
 
     return result_df
-
+    """
 
 # def aggregate_data_vi(data, max_depth, sd=2):
 #     """
@@ -2646,77 +2853,49 @@ def vg_function(phi, theta_r, theta_s, alpha, n):
     Returns:
     numpy array: Calculated water content values based on the van Genuchten equation.
     """
-    return theta_r + (theta_s - theta_r) / ((1 + (alpha * phi) ** n) ** ((n - 1) / n))
+    return theta_r + ((theta_s - theta_r) / ((1 + (alpha * phi) ** n) ** (1 - 1/n)))
 
 
-def vg_model(VG_params, phi_min=1e-6, phi_max=1e8, pts=100):
-    """
-    Converts R function for van Genuchten equation to Python and computes the VG curve, 
-    forward, and inverse functions for each row in VG_params.
-
-    Parameters:
-    VG_params (pandas DataFrame): DataFrame containing the van Genuchten parameters.
-    phi_min (float): Minimum value of phi.
-    phi_max (float): Maximum value of phi.
-    pts (int): Number of points to generate between phi_min and phi_max.
-
-    Returns:
-    pandas DataFrame: A DataFrame containing the VG curves for each set of parameters.
-    """
-    # Check if all required columns are present
-    required_columns = ['theta_r', 'theta_s', 'alpha', 'npar']
-    if not all(col in VG_params.columns for col in required_columns):
-        raise ValueError("one or more required columns are missing")
-
-    # Check for NA values
-    if VG_params.isnull().values.any():
-        raise ValueError("one or more required values are NA")
-
-    # Generate phi values
-    phi = np.logspace(np.log10(phi_min), np.log10(phi_max), pts)
-
-    # Initialize results DataFrame
-    results_df = pd.DataFrame()
-
-    for index, row in VG_params.iterrows():
-        # Calculate theta for each set of parameters
-        h = phi * 10.19716
-        theta = vg_function(h, row['theta_r'], row['theta_s'], 10 ** row['alpha'], 10 ** row['npar'])
-
-        # Store results
-        result = {'index': index, 'VG_curve': np.column_stack((phi, theta))}
-        results_df = results_df.append(result, ignore_index=True)
-
-    return results_df
-
-
-def calculate_vwc_awc(sim_data):
+def calculate_vwc_awc(sim_data, phi_min=1e-6, phi_max=1e8, pts=100):
     """
     Calculates the volumetric water content (VWC) at specific matric potentials and determines the available water capacity (AWC).
 
     Parameters:
-    mukey_sim (pandas DataFrame): DataFrame containing soil layers and their properties.
+    sim_data (pandas DataFrame): DataFrame containing soil layers and their properties.
     
     Returns:
     pandas DataFrame: A DataFrame containing the VWC at saturation, field capacity, and permanent wilting point, along with the AWC for the specified layer.
     """
-    
-    # Compute van Genuchten model for the specified layer
-    vg = vg_model(VG_params=sim_data, phi_min=1e-3, phi_max=1e6)
-    return(vg)
-    # Extract VWC at specific matric potentials (kPa)
-    d = {
-        'layerID': sim_data['layerID'].iloc[i],
-        'sat': vg['VG_function'](0),       # Saturation
-        'fc': vg['VG_function'](33),       # Field Capacity
-        'pwp': vg['VG_function'](1500)     # Permanent Wilting Point
-    }
-    d = pd.DataFrame([d])
+    required_columns = ['theta_r', 'theta_s', 'alpha', 'npar', 'layerID']
+    if not all(col in sim_data.columns for col in required_columns):
+        raise ValueError("One or more required columns are missing.")
 
-    # Calculate AWC using 33 kPa -> 1500 kPa interval
-    d['awc'] = d['fc'] - d['pwp']
-    
-    return d
+    # Handling missing values
+    if sim_data[required_columns].isnull().any().any():
+        raise ValueError("One or more required values are NA.")
+
+    phi = np.logspace(np.log10(phi_min), np.log10(phi_max), pts)
+    h = phi * 10.19716
+
+    results = []
+    for _, row in sim_data.iterrows():
+        m = pd.DataFrame({'phi': phi})
+        m['theta'] = vg_function(h, theta_r=row['theta_r'], theta_s=row['theta_s'],
+                                 alpha=10 ** row['alpha'], n=10 ** row['npar'])
+
+        vg_fwd = UnivariateSpline(m['phi'], m['theta'], s=0)
+
+        # Extract VWC at specific matric potentials (kPa)
+        data = {
+            'layerID': row['layerID'],
+            'sat': vg_fwd(0),       # Saturation
+            'fc': vg_fwd(33),       # Field Capacity
+            'pwp': vg_fwd(1500)     # Permanent Wilting Point
+        }
+        data['awc'] = data['fc'] - data['pwp']
+        results.append(data)
+
+    return pd.DataFrame(results)
 
 
 def information_gain(data, target_col, feature_cols):
@@ -2752,7 +2931,10 @@ def information_gain(data, target_col, feature_cols):
         information_gain = total_entropy - weighted_feature_entropy
         information_gains[feature_col] = information_gain
 
-    return information_gains
+    # Sort the information gains in descending order
+    sorted_information_gains = sorted(information_gains.items(), key=lambda x: x[1], reverse=True)
+
+    return sorted_information_gains
 
 
 # -------------------------------------------------------------------------------------------

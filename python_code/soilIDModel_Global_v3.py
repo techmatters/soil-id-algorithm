@@ -33,19 +33,13 @@ from model.local_functions_SoilID_v3 import (
     gower_distances,
     load_model_output,
     pedon_color,
-    process_distance_scores,
-    pt2polyDist,
     save_model_output,
     save_rank_output,
     save_soilgrids_output,
-    sda_return,
     silt_calc,
-    trim_fraction,
 )
 from osgeo import ogr
-from pandas.io.json import json_normalize
-from scipy.stats import norm, spearmanr
-from shapely.geometry import Point
+from scipy.stats import norm
 
 # entry points
 # getSoilLocationBasedGlobal

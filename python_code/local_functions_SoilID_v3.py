@@ -1733,7 +1733,10 @@ def lab2munsell(color_ref, LAB_ref, LAB):
     - str: Munsell color notation.
     """
     idx = pd.DataFrame(euclidean_distances([LAB], LAB_ref)).idxmin(axis=1).iloc[0]
-    munsell_color = f"{color_ref.at[idx, 'hue']} {int(color_ref.at[idx, 'value'])}/{int(color_ref.at[idx, 'chroma'])}"
+    munsell_color = (
+        "{color_ref.at[idx, 'hue']} "
+        f"{int(color_ref.at[idx, 'value'])}/{int(color_ref.at[idx, 'chroma'])}"
+    )
     return munsell_color
 
 

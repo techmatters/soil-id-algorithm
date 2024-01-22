@@ -134,7 +134,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     # soilweb base url "https://casoilresource.lawr.ucdavis.edu/api/landPKS.php"
 
     # testing API
-    params = urllib.parse.urlencode([('q', 'spn'), ('lon', lon), ('lat', lat), ('r', 1000)])
+    params = urllib.parse.urlencode([("q", "spn"), ("lon", lon), ("lat", lat), ("r", 1000)])
     soilweb_url = f"https://soilmap2-1.lawr.ucdavis.edu/dylan/soilweb/api/landPKS.php?{params}"
     try:
         response = requests.get(soilweb_url, timeout=8)
@@ -1736,9 +1736,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                                 axis=1,
                             )
                         ]["id"].values[0]
-                        ES_URL_t = "https://edit.jornada.nmsu.edu/catalogs/esd/%s/%s" % (
-                            ESD_geo,
-                            ecosite_edit_id,
+                        ES_URL_t = (
+                            "https://edit.jornada.nmsu.edu/catalogs/esd/"
+                            f"{ESD_geo}/{ecosite_edit_id}"
                         )
                         ESD_URL.append(ES_URL_t)
                     else:

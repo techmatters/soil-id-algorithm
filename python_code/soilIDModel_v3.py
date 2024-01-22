@@ -1274,7 +1274,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     # soilweb base url "https://casoilresource.lawr.ucdavis.edu/api/landPKS.php"
 
     # testing API
-    params = urllib.parse.urlencode([('q', 'spn'), ('lon', lon), ('lat', lat), ('r', 1000)])
+    params = urllib.parse.urlencode([("q", "spn"), ("lon", lon), ("lat", lat), ("r", 1000)])
     soilweb_url = f"https://soilmap2-1.lawr.ucdavis.edu/dylan/soilweb/api/landPKS.php?{params}"
     try:
         response = requests.get(soilweb_url, timeout=8)
@@ -2635,8 +2635,10 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 ecosite_edit_id = ESD_list_pd[
                     ESD_list_pd.apply(lambda r: r.str.contains(eco_id, case=False).any(), axis=1)
                 ]["id"].values[0]
-                ES_URL_t = "https://edit.jornada.nmsu.edu/catalogs/esd/" \
-                           f"{ecosite_edit_id[1:5]}/{ecosite_edit_id}"
+                ES_URL_t = (
+                    "https://edit.jornada.nmsu.edu/catalogs/esd/"
+                    f"{ecosite_edit_id[1:5]}/{ecosite_edit_id}"
+                )
                 ESD_URL.append(ES_URL_t)
             else:
                 ESD_URL.append("")
@@ -3328,11 +3330,7 @@ def rankPredictionUS(
 
         # Calculate similarity for each depth slice
         dis_mat_list = []
-        for (
-            i
-        ) in (
-            soil_matrix.index
-        ):  # i should be an index of p_hz_data depth slices,
+        for i in soil_matrix.index:  # i should be an index of p_hz_data depth slices,
             # e.g. if user only enters 100-120cm data, then i = 100:120
             slice_data = [horz.loc[i] for horz in horz_vars]
             sliceT = pd.concat(slice_data, axis=1).T
@@ -4016,7 +4014,6 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
 #                                          getSoilGridsUS                                     #
 ###############################################################################################
 def getSoilGridsUS(lon, lat, plot_id=None):
-
     # SoilGrids250
     # Construct the SoilGrids API v2 URL
     params = [

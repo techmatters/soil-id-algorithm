@@ -660,7 +660,7 @@ def getProfile(data, variable, c_bot=False):
             pd_add.columns = ["var_pct_intpl"]
             var_pct_intpl_final = pd.concat([var_pct_intpl_final, pd_add], axis=0)
             var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
-    if c_bot == True:
+    if c_bot:
         if len(data["hzdept_r"]) == 1:
             c_very_bottom = data["hzdepb_r"].iloc[0]
         else:
@@ -821,7 +821,7 @@ def getProfile_SG(data, variable, c_bot=False):
             pd_add.columns = ["var_pct_intpl"]
             var_pct_intpl_final = pd.concat([var_pct_intpl_final, pd_add], axis=0)
             var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
-    if c_bot == True:
+    if c_bot:
         if len(data["hzdept_r"]) == 1:
             c_very_bottom = data["hzdepb_r"].iloc[0]
         else:

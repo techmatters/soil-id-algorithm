@@ -3859,7 +3859,7 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
         # Avoid repetitive code by creating a function to get data and aggregate
         def get_and_agg(variable, sg_data_w, bottom, return_depth=False):
             pd_int = getProfile_SG(sg_data_w, variable, c_bot=False)
-            if return_depth == True:
+            if return_depth:
                 pd_lpks, lpks_depths = agg_data_layer(
                     data=pd_int.var_pct_intpl, bottom=bottom, depth=True
                 )
@@ -4034,7 +4034,7 @@ def getSoilGridsUS(lon, lat, plot_id=None):
         # Avoid repetitive code by creating a function to get data and aggregate
         def get_and_agg(variable, sg_data_w, bottom, return_depth=False):
             pd_int = getProfile_SG(sg_data_w, variable, c_bot=False)
-            if return_depth == True:
+            if return_depth:
                 pd_lpks, lpks_depths = agg_data_layer(
                     data=pd_int.var_pct_intpl, bottom=bottom, depth=True
                 )

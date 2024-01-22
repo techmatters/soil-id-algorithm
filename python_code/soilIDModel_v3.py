@@ -3,6 +3,7 @@ import collections
 import csv
 import json
 import re
+import urllib
 
 # Third-party libraries
 import geopandas as gpd
@@ -1862,9 +1863,11 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 ]
                 series_join = ",".join(series_name)
 
+                params = {"q": "site_hz", "s": series_name}
+
                 # Fetch data from URL using requests
-                series_url = f"https://casoilresource.lawr.ucdavis.edu/api/soil-series.php?q=site_hz&s={series_join}"
-                response = requests.get(series_url, timeout=3)
+                series_url = "https://casoilresource.lawr.ucdavis.edu/api/soil-series.php"
+                response = requests.get(series_url, params=params, timeout=3)
                 seriesDict = response.json()
 
                 # Normalize the data and perform data manipulations
@@ -2632,7 +2635,8 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 ecosite_edit_id = ESD_list_pd[
                     ESD_list_pd.apply(lambda r: r.str.contains(eco_id, case=False).any(), axis=1)
                 ]["id"].values[0]
-                ES_URL_t = f"https://edit.jornada.nmsu.edu/catalogs/esd/{ecosite_edit_id[1:5]}/{ecosite_edit_id}"
+                ES_URL_t = "https://edit.jornada.nmsu.edu/catalogs/esd/" \
+                           f"{ecosite_edit_id[1:5]}/{ecosite_edit_id}"
                 ESD_URL.append(ES_URL_t)
             else:
                 ESD_URL.append("")
@@ -3785,7 +3789,20 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
 
     # SoilGrids250
     # Construct the SoilGrids API v2 URL
-    sg_api = f"https://rest.isric.org/soilgrids/v2.0/properties/query?lon={lon}&lat={lat}&property=cfvo&property=cec&property=clay&property=phh2o&property=sand&value=mean"
+    params = [
+        ("lon", lon),
+        ("lat", lat),
+        ("property", "cfvo"),
+        ("property", "cec"),
+        ("property", "clay"),
+        ("property", "phh2o"),
+        ("property", "sand"),
+        ("value", "mean"),
+    ]
+
+    sg_api = (
+        f"https://rest.isric.org/soilgrids/v2.0/properties/query?{urllib.parse.urlencode(params)}"
+    )
 
     try:
         # Make the API request using the requests library
@@ -3842,7 +3859,8 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
 
         # Fetch SG wRB Taxonomy
         # Construct the API URL for fetching soil data
-        api_url = f"https://rest.isric.org/soilgrids/v2.0/classification/query?lon={lon}&lat={lat}&number_classes=3"
+        params = urllib.parse.urlencode([("lon", lon), ("lat", lat), ("number_classes", 3)])
+        api_url = f"https://rest.isric.org/soilgrids/v2.0/classification/query?{params}"
 
         # Fetch data from the API
         try:
@@ -3998,9 +4016,23 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
 #                                          getSoilGridsUS                                     #
 ###############################################################################################
 def getSoilGridsUS(lon, lat, plot_id=None):
+
     # SoilGrids250
     # Construct the SoilGrids API v2 URL
-    sg_api = f"https://rest.isric.org/soilgrids/v2.0/properties/query?lon={lon}&lat={lat}&property=cfvo&property=cec&property=clay&property=phh2o&property=sand&value=mean"
+    params = [
+        ("lon", lon),
+        ("lat", lat),
+        ("property", "cfvo"),
+        ("property", "cec"),
+        ("property", "clay"),
+        ("property", "phh2o"),
+        ("property", "sand"),
+        ("value", "mean"),
+    ]
+
+    sg_api = (
+        f"https://rest.isric.org/soilgrids/v2.0/properties/query?{urllib.parse.urlencode(params)}"
+    )
 
     try:
         # Make the API request using the requests library

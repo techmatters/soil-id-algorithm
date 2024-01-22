@@ -55,19 +55,22 @@ from scipy.stats import norm
 # after user has collected data, call rankPredictionUS/rankPredictionGlobal.
 
 
-#####################################################################################################
-#                                       Database and API Functions                                  #
-#####################################################################################################
+##################################################################################################
+#                                       Database and API Functions                               #
+##################################################################################################
 def findSoilLocation(lon, lat):
     """
-    Determines the location type (US, Global, or None) of the given longitude and latitude based on soil datasets.
+    Determines the location type (US, Global, or None) of the given longitude and latitude
+    based on soil datasets.
 
     Args:
     - lon (float): Longitude of the point.
     - lat (float): Latitude of the point.
 
     Returns:
-    - str or None: 'US' if point is in US soil dataset, 'Global' if in global dataset, None otherwise.
+    - str or None: 'US' if point is in US soil dataset,
+                   'Global' if in global dataset,
+                   None otherwise.
     """
 
     drv_h = ogr.GetDriverByName("ESRI Shapefile")
@@ -106,9 +109,9 @@ def findSoilLocation(lon, lat):
         return "Global"
 
 
-#####################################################################################################
-#                                 getSoilLocationBasedGlobal                                        #
-#####################################################################################################
+##################################################################################################
+#                                 getSoilLocationBasedGlobal                                     #
+##################################################################################################
 def getSoilLocationBasedGlobal(lon, lat, plot_id):
     # Extract HWSD-WISE Data
     # Note: Need to convert HWSD shp to gpkg file
@@ -127,14 +130,15 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
     mucompdata_pd["share"] = pd.to_numeric(mucompdata_pd["share"])
     mucompdata_pd = mucompdata_pd.drop_duplicates().reset_index(drop=True)
 
-    # --------------------------------------------------------------------------------------------------------------------------------------------------------
-    #########################################################################################################################################
+    ##############################################################################################
     # Individual probability
-    # Based on Fan et al 2018 EQ 1, the conditional probability for each component is calculated by taking the sum of all occurances of a component
-    # in the home and adjacent mapunits and dividing this by the sum of all map units and components. We have modified this approach so that each
-    # instance of a component occurance is evaluated separately and assinged a weight and the max distance score for each component group is assigned
-    # to all component instances.
-    #########################################################################################################################################
+    # Based on Fan et al 2018 EQ 1, the conditional probability for each component is calculated
+    # by taking the sum of all occurances of a component in the home and adjacent mapunits and
+    # dividing this by the sum of all map units and components. We have modified this approach
+    # so that each instance of a component occurance is evaluated separately and assinged a
+    # weight and the max distance score for each component group is assigned to all component
+    # instances.
+    ##############################################################################################
     ExpCoeff = -0.00036888  # Decays to 0.25 @ 10km
     loc_scores = []
     mucompdata_grouped = mucompdata_pd.groupby(["mukey", "cokey"], sort=False)
@@ -529,9 +533,9 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
     }
 
 
-#####################################################################################################
-#                                   rankPredictionGlobal                                            #
-#####################################################################################################
+##############################################################################################
+#                                   rankPredictionGlobal                                     #
+##############################################################################################
 def rankPredictionGlobal(
     lon, lat, soilHorizon, horizonDepth, rfvDepth, lab_Color, bedrock, cracks, plot_id=None
 ):
@@ -572,8 +576,8 @@ def rankPredictionGlobal(
         soil_df_slice.set_index("index", inplace=True)
 
     if soil_df_slice is not None:
-        # If bedrock has been recorded and the lowest soil depth associated with data is greater than bedrock,
-        # then change lowest soil depth to bedrock depth
+        # If bedrock has been recorded and the lowest soil depth associated with data is
+        # greater than bedrock, then change lowest soil depth to bedrock depth
         if bedrock and soil_df_slice["bottom"].iloc[-1] > bedrock:
             soil_df_slice["bottom"].iloc[-1] = bedrock
             soil_df["bottom"][soil_df_slice.index[-1]] = bedrock
@@ -719,7 +723,8 @@ def rankPredictionGlobal(
     # Group the soilIDRank_output dataframe by 'compname' and return
     grouped_soil_data = [group for _, group in soilIDRank_output.groupby("compname", sort=False)]
 
-    # Create soil depth DataFrame and subset component depths based on max user depth if no bedrock specified
+    # Create soil depth DataFrame and subset component depths based on max user depth
+    # if no bedrock specified
     c_bottom_depths = mucompdata_pd[["compname", "c_very_bottom"]].rename(
         columns={"c_very_bottom": "bottom_depth"}
     )
@@ -727,7 +732,8 @@ def rankPredictionGlobal(
 
     compnames = mucompdata_pd[["compname", "compname_grp"]]
 
-    # If bedrock is not specified, determine max_depth based on user recorded depth (limited to 120 cm)
+    # If bedrock is not specified, determine max_depth based on
+    # user-recorded depth (limited to 120 cm)
     max_depth = (
         120
         if bedrock is None and p_bottom_depth.bottom_depth.values[0] > 120
@@ -750,7 +756,8 @@ def rankPredictionGlobal(
         soil_matrix.iloc[:slice_end, i] = 1
         soil_matrix.iloc[slice_end:max_depth, i] = 0
 
-    # Determine if user has entered horizon data and if so, subset component horizon data based on user input data
+    # Determine if user has entered horizon data and if so, subset component horizon
+    # data based on user input data
     if p_hz_data:
         # Subset component soil properties to match user measured properties
         soilIDRank_output_pd = soilIDRank_output_pd[p_hz_data_names]
@@ -1240,9 +1247,9 @@ def rankPredictionGlobal(
     return result
 
 
-#####################################################################################################
-#                                          getSoilGridsGlobal                                       #
-#####################################################################################################
+##################################################################################################
+#                                          getSoilGridsGlobal                                    #
+##################################################################################################
 def getSoilGridsGlobal(lon, lat, plot_id=None):
     # -------------------------------------------------------------------------------------------
 
@@ -1292,7 +1299,8 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
     # Concatenate the DataFrames to form a single DataFrame
     sg_data = pd.concat([df_names, df_top_depth, df_bottom_depth, df_values], axis=1)
 
-    # Pivot the data based on bottom depth and property name, setting values to be the 'value' column
+    # Pivot the data based on bottom depth and property name, setting values to
+    # be the 'value' column
     sg_data_w = sg_data.pivot(index="bottom_depth", columns="prop", values="value")
 
     # Add the top and bottom depth columns to the wide DataFrame

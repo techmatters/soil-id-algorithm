@@ -1,6 +1,6 @@
-#####################################################################################################
-#                                       Database and API Functions                                  #
-#####################################################################################################
+###################################################################################################
+#                                       Database and API Functions                                #
+###################################################################################################
 # Standard libraries
 import math
 import re
@@ -264,7 +264,8 @@ def get_WRB_descriptions(WRB_Comp_List):
 
 def sda_return(propQry):
     """
-    Queries data from the USDA's Soil Data Mart (SDM) Tabular Service and returns it as a pandas DataFrame.
+    Queries data from the USDA's Soil Data Mart (SDM) Tabular Service and returns
+    it as a pandas DataFrame.
     """
     base_url = "https://sdmdataaccess.nrcs.usda.gov/Tabular/SDMTabularService/post.rest"
     request_data = {"format": "JSON+COLUMNNAME", "query": propQry}
@@ -295,9 +296,9 @@ def sda_return(propQry):
         return None
 
 
-#####################################################################################################
-#                                       Utility Functions                                           #
-#####################################################################################################
+###################################################################################################
+#                                       Utility Functions                                         #
+###################################################################################################
 
 
 def getSand(field):
@@ -833,7 +834,9 @@ def getProfile_SG(data, variable, c_bot=False):
 
 def drop_cokey_horz(df):
     """
-    Function to drop duplicate rows of component horizon data when more than one instance of a component are duplicates.
+    Function to drop duplicate rows of component horizon data when more than one instance of a
+    component are duplicates.
+
     Function assumes that the dataframe contains:
       (1) unique cokey identifier ('cokey')
       (2) generic compname identifier ('compname')
@@ -888,7 +891,8 @@ def drop_cokey_horz(df):
 
 def haversine(lon1, lat1, lon2, lat2):
     """
-    Calculate the great circle distance between two points on the earth specified in decimal degrees.
+    Calculate the great circle distance between two points on the earth specified in
+    decimal degrees.
 
     Args:
     - lon1, lat1: Longitude and latitude of the first point.
@@ -936,14 +940,15 @@ def calculate_location_score(group, ExpCoeff):
 
     Parameters:
     - group (DataFrame): A group of data containing 'distance' and 'share' columns.
-    - ExpCoeff (float): Exponential coefficient to adjust sensitivity of the score to distance values.
+    - ExpCoeff (float): Exponential coefficient to adjust sensitivity of the score
+                        to distance values.
 
     Returns:
     - float: Calculated location score.
 
-    The score is adjusted based on the provided exponential coefficient (ExpCoeff). The function provides
-    a way to compute a normalized score for locations, giving preference to locations with a closer distance
-    (smaller distance values) and higher share values.
+    The score is adjusted based on the provided exponential coefficient (ExpCoeff). The
+    function provides a way to compute a normalized score for locations, giving preference
+    to locations with a closer distance (smaller distance values) and higher share values.
     """
 
     # Parameter validation
@@ -1633,9 +1638,9 @@ def process_distance_scores(mucompdata_pd, ExpCoeff):
     return mucompdata_pd
 
 
-#####################################################################################################
-#                                       Soil Color Functions                                        #
-#####################################################################################################
+###################################################################################################
+#                                       Soil Color Functions                                      #
+###################################################################################################
 
 
 def pedon_color(lab_Color, horizonDepth):
@@ -2017,11 +2022,14 @@ def simulate_correlated_triangular(n, params, correlation_matrix):
 
     Parameters:
     - n: Number of samples.
-    - params: List of tuples, where each tuple contains three parameters (a, b, c) for the triangular distribution.
-    - correlation_matrix: 2D numpy array representing the desired correlations between the variables.
+    - params: List of tuples, where each tuple contains three parameters (a, b, c) for the
+              triangular distribution.
+    - correlation_matrix: 2D numpy array representing the desired correlations between
+                          the variables.
 
     Returns:
-    - samples: 2D numpy array with n rows and as many columns as there are sets of parameters in params.
+    - samples: 2D numpy array with n rows and as many columns as there are sets of
+                  parameters in params.
     """
 
     # Generate uncorrelated standard normal variables
@@ -2132,11 +2140,14 @@ def simulate_correlated_triangular(n, params, correlation_matrix):
 
     Parameters:
     - n: Number of samples.
-    - params: List of tuples, where each tuple contains three parameters (a, b, c) for the triangular distribution.
-    - correlation_matrix: 2D numpy array representing the desired correlations between the variables.
+    - params: List of tuples, where each tuple contains three parameters (a, b, c) for the
+              triangular distribution.
+    - correlation_matrix: 2D numpy array representing the desired correlations between
+                          the variables.
 
     Returns:
-    - samples: 2D numpy array with n rows and as many columns as there are sets of parameters in params.
+    - samples: 2D numpy array with n rows and as many columns as there are sets of
+                  parameters in params.
     """
 
     # Generate uncorrelated standard normal variables
@@ -2185,7 +2196,8 @@ def gsi_simshape(x, oldx):
     return x.flatten() if oldx.ndim == 0 else x.reshape(-1)
 
 
-# Temporary function to infill missing data. TODO: create loopup table with average values for l-r-h by series
+# Temporary function to infill missing data.
+# TODO: create loopup table with average values for l-r-h by series
 def infill_soil_data(df):
     # Group by 'compname'
     grouped = df.groupby("compname_grp")
@@ -2317,7 +2329,8 @@ def slice_and_aggregate_soil_data(df):
 #         sd (int): The number of decimal places to round the aggregated data.
 #
 #     Returns:
-#         pd.DataFrame: A DataFrame with aggregated data for each column within specified depth ranges.
+#         pd.DataFrame: A DataFrame with aggregated data for each column within specified
+#                       depth ranges.
 #     """
 #     if not max_depth or np.isnan(max_depth):
 #         return pd.DataFrame(columns=["hzdept_r", "hzdepb_r", "Data"])
@@ -2360,18 +2373,25 @@ def slice_and_aggregate_soil_data(df):
 
 # def extract_soil_params(soil_df):
 #     # Extract the parameters for sand, silt, and clay from the DataFrame
-#     sand_params = [soil_df["sandtotal_l"].values, soil_df["sandtotal_r"].values, soil_df["sandtotal_h"].values]
-#     silt_params = [soil_df["silttotal_l"].values, soil_df["silttotal_r"].values, soil_df["silttotal_h"].values]
-#     clay_params = [soil_df["claytotal_l"].values, soil_df["claytotal_r"].values, soil_df["claytotal_h"].values]
+#     sand_params = [soil_df["sandtotal_l"].values, soil_df["sandtotal_r"].values,
+#                    soil_df["sandtotal_h"].values]
+#     silt_params = [soil_df["silttotal_l"].values, soil_df["silttotal_r"].values,
+#                    soil_df["silttotal_h"].values]
+#     clay_params = [soil_df["claytotal_l"].values, soil_df["claytotal_r"].values,
+#                    soil_df["claytotal_h"].values]
 #
-#     # Create a list of tuples where each tuple represents the l, r, h values for each soil component for a row
+#     # Create a list of tuples where each tuple represents the l, r, h values for each soil
+#     # component for a row
 #     soil_params_tuples = list(zip(zip(*sand_params), zip(*silt_params), zip(*clay_params)))
 #
 #     # Convert the list of tuples into the desired structure
-#     # Where each tuple has the structure ((sand_l, sand_r, sand_h), (silt_l, silt_r, silt_h), (clay_l, clay_r, clay_h))
+#     # Where each tuple has the structure ((sand_l, sand_r, sand_h),
+#                                           (silt_l, silt_r, silt_h),
+#                                           (clay_l, clay_r, clay_h))
 #     structured_soil_params = [((sand[0], sand[1], sand[2]),
 #                                (silt[0], silt[1], silt[2]),
-#                                (clay[0], clay[1], clay[2])) for sand, silt, clay in soil_params_tuples]
+#                                (clay[0], clay[1], clay[2]))
+#                               for sand, silt, clay in soil_params_tuples]
 #
 #     return structured_soil_params
 
@@ -2432,7 +2452,8 @@ def rosetta_request(chunk, vars, v, conf=None, include_sd=False):
     # Make the POST request to the ROSETTA API
     try:
         response = requests.post(url, json={"X": chunk_vars_matrix}, headers=conf)
-        response.raise_for_status()  # This will raise an HTTPError if the HTTP request returned an unsuccessful status code
+        # This will raise an HTTPError if the HTTP request returned an unsuccessful status code
+        response.raise_for_status()
     except requests.RequestException as e:
         return e  # Return the exception to be handled by the caller
 
@@ -2487,8 +2508,10 @@ def process_data_with_rosetta(df, vars, v="3", include_sd=False, chunk_size=1000
     - df (DataFrame): The DataFrame containing the data to be processed.
     - vars (list): List of variable names to be processed.
     - v (str, optional): The version of the ROSETTA model to use. Defaults to '3'.
-    - include_sd (bool, optional): Whether to include standard deviation in the output. Defaults to False.
-    - chunk_size (int, optional): The number of rows per chunk to send to the ROSETTA service. Defaults to 10000.
+    - include_sd (bool, optional): Whether to include standard deviation in the output.
+      Defaults to False.
+    - chunk_size (int, optional): The number of rows per chunk to send to the ROSETTA service.
+      Defaults to 10000.
     - conf (dict, optional): Additional request configuration options.
 
     Returns:
@@ -2601,13 +2624,15 @@ def vg_model(VG_params, phi_min=1e-6, phi_max=1e8, pts=100):
 
 def calculate_vwc_awc(sim_data):
     """
-    Calculates the volumetric water content (VWC) at specific matric potentials and determines the available water capacity (AWC).
+    Calculates the volumetric water content (VWC) at specific matric potentials and determines
+    the available water capacity (AWC).
 
     Parameters:
     mukey_sim (pandas DataFrame): DataFrame containing soil layers and their properties.
 
     Returns:
-    pandas DataFrame: A DataFrame containing the VWC at saturation, field capacity, and permanent wilting point, along with the AWC for the specified layer.
+    pandas DataFrame: A DataFrame containing the VWC at saturation, field capacity, and permanent
+    wilting point, along with the AWC for the specified layer.
     """
 
     # Compute van Genuchten model for the specified layer
@@ -2683,7 +2708,7 @@ def information_gain(data, target_col, feature_cols):
 #     finally:
 #         conn.close()
 
-# # This function applies a cubic spline model to interpolate values at every 1cm for the SoilGrids data
+# Applies a cubic spline model to interpolate values at every 1cm for the SoilGrids data
 
 # def cspline_soil_lpks(data):
 #     xm=[0,5,15,30,60,100,199]

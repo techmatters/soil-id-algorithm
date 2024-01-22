@@ -16,15 +16,17 @@ import shapely
 from flask import current_app, jsonify
 
 # Import local fucntions
-from model.local_functions_SoilID_v3 import (
+from model.local_functions_SoilID_v3 import (  # slice_and_aggregate_soil_data,
     acomp,
     agg_data_layer,
     aggregate_data,
     calculate_vwc_awc,
+    compute_site_similarity,
     drop_cokey_horz,
     extract_muhorzdata_STATSGO,
     extract_statsgo_mucompdata,
     fill_missing_comppct_r,
+    getCF_class,
     getCF_fromClass,
     getClay,
     getOSDCF,
@@ -34,6 +36,7 @@ from model.local_functions_SoilID_v3 import (
     getTexture,
     gower_distances,
     infill_soil_data,
+    information_gain,
     lab2munsell,
     load_model_output,
     munsell2rgb,
@@ -45,6 +48,7 @@ from model.local_functions_SoilID_v3 import (
     sda_return,
     simulate_correlated_triangular,
     slice_and_aggregate_soil_data,
+    slice_and_aggregate_soil_data_old,
     trim_fraction,
 )
 from osgeo import ogr
@@ -765,7 +769,14 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         "wfifteenbar_l",
         "wfifteenbar_r",
         "wfifteenbar_h",
+        "total_frag_volume",
     ]
+
+    sim = muhorzdata_pd[sim_columns]
+    sim = sim.rename(columns={"total_frag_volume": "rfv_r"})
+
+    sim["rfv_h"] = None
+    sim["rfv_l"] = None
 
     sim_data_columns = [
         "hzdept_r",
@@ -788,9 +799,10 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         "wfifteenbar_l",
         "wfifteenbar_r",
         "wfifteenbar_h",
+        "rfv_l",
+        "rfv_r",
+        "rfv_h",
     ]
-    sim = muhorzdata_pd[sim_columns]
-
     # infill missing data
     sim = infill_soil_data(sim)
 
@@ -798,17 +810,19 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     # Group data by compname_grp
     sim_group_compname = [group for _, group in sim.groupby("compname_grp", sort=False)]
-    for group in sim_group_compname:
-        # aggregate data into 0-20 and 20-50 or bottom depth
-        group_ag = slice_and_aggregate_soil_data(group[sim_data_columns])
+    for index, group in enumerate(sim_group_compname):
+        # aggregate data into 0-30 and 30-100 or bottom depth
+        group_ag = slice_and_aggregate_soil_data_old(group[sim_data_columns])
         group_ag["compname_grp"] = group["compname_grp"].unique()[0]
         group_ag["distance_score"] = group["distance_score"].unique()[0]
         group_ag = group_ag.drop("Depth", axis=1)
+        # group_ag = group_ag.where(pd.notna(group_ag), 0.01)
+        group_ag = group_ag.reset_index(drop=True)
         agg_data.append(group_ag)
 
     # Concatenate the results for each column into a single dataframe
     agg_data_df = pd.concat(agg_data, axis=0, ignore_index=True).dropna().reset_index(drop=True)
-
+    # return(jsonify(agg_data_df.to_dict(orient='records')))
     # return(jsonify(agg_data_df.to_dict()))
     # return(json.dumps(agg_data_df[["sandtotal_r", "silttotal_r", "claytotal_r"]].values.tolist()))
 
@@ -820,20 +834,25 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     # correlation_matrix, _ = spearmanr(selected_columns, axis=0)
 
     ilr_site_txt = ilr(agg_data_df[["sandtotal_r", "silttotal_r", "claytotal_r"]].values)
-    # return(json.dumps(ilr_site_txt[:, 0].tolist()))
+    cor_cols = [
+        "ilr1",
+        "ilr2",
+        "dbovendry_r",
+        "wthirdbar_r",
+        "wfifteenbar_r",
+        "rfv_r",
+    ]
     rep_columns["ilr1"] = pd.Series(ilr_site_txt[:, 0])
     rep_columns["ilr2"] = pd.Series(ilr_site_txt[:, 1])
+    rep_columns[cor_cols] = rep_columns[cor_cols].replace(0, 0.01)
 
-    correlation_matrix_data = rep_columns[
-        [
-            "ilr1",
-            "ilr2",
-            "dbovendry_r",
-            "wthirdbar_r",
-            "wfifteenbar_r",
-        ]
-    ]
+    # remove truncated profile layers from correlation matrix
+    rep_columns = rep_columns[rep_columns["wthirdbar_r"] != 0.01]
+
+    correlation_matrix_data = rep_columns[cor_cols]
+
     local_correlation_matrix, _ = spearmanr(correlation_matrix_data, axis=0)
+
     """
     Step 2. Simulate data for each row, with the number of simulations equal
             to the (distance_score*100)*10
@@ -849,7 +868,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     sim_data_out = []
 
-    for _, row in agg_data_df.iterrows():
+    for index, row in agg_data_df.iterrows():
         # 2a. Simulate sand/silt/clay percentages
         # 1. Extract and format data params
         sand_params = [row["sandtotal_l"], row["sandtotal_r"], row["sandtotal_h"]]
@@ -890,11 +909,49 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             [row["dbovendry_l"], row["dbovendry_r"], row["dbovendry_h"]],
             [row["wthirdbar_l"], row["wthirdbar_r"], row["wthirdbar_h"]],
             [row["wfifteenbar_l"], row["wfifteenbar_r"], row["wfifteenbar_h"]],
+            [row["rfv_l"], row["rfv_r"], row["rfv_h"]],
         ]
+        # Check diagonal elements and off-diagonal range
+        if not np.all(np.diag(local_correlation_matrix) == 1) or np.any(
+            np.abs(local_correlation_matrix - np.eye(*local_correlation_matrix.shape)) > 1
+        ):
+            return f"LinAlgError encountered in row index: {index}"
+            return "Correlation matrix diagonal/off-diagonal values are not valid."
 
-        sim_data = simulate_correlated_triangular(
-            int(row["distance_score"] * 1000), params, local_correlation_matrix
-        )
+        # Check for NaNs or infs in the matrix
+        if np.isnan(local_correlation_matrix).any() or np.isinf(local_correlation_matrix).any():
+            return f"Division by zero encountered in row index: {index}"
+            return "Matrix contains NaNs or infs."
+
+            # Handling NaNs or infs. This is just an example and should be adapted based on your specific context.
+            # For example, replace NaNs with 0.0 (or another appropriate value)
+            local_correlation_matrix = np.nan_to_num(local_correlation_matrix)
+
+        # Try calculating eigenvalues again
+        try:
+            eigenvalues = np.linalg.eigvals(local_correlation_matrix)
+        except np.linalg.LinAlgError:
+            return "Matrix still contains invalid values."
+
+        if np.any(eigenvalues <= 0):
+            # Adjusting the matrix slightly if needed
+            epsilon = 1e-10
+            local_correlation_matrix += np.eye(local_correlation_matrix.shape[0]) * epsilon
+
+        # Proceed with the simulation
+        try:
+            sim_data = simulate_correlated_triangular(
+                n=int(row["distance_score"] * 1000),
+                params=params,
+                correlation_matrix=local_correlation_matrix,
+            )
+        except np.linalg.LinAlgError:
+            return "Adjusted matrix is still not positive definite."
+        except ZeroDivisionError:
+            # Handle the division by zero error
+            return f"Division by zero encountered in row index: {index}"
+            return "Division by zero encountered."
+
         sim_data = pd.DataFrame(
             sim_data,
             columns=[
@@ -903,6 +960,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 "bulk_density_third_bar",
                 "water_retention_third_bar",
                 "water_retention_15_bar",
+                "rfv",
             ],
         )
         sim_data["water_retention_third_bar"] = sim_data["water_retention_third_bar"].div(100)
@@ -915,6 +973,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         multi_sim["hzdept_r"] = row["hzdept_r"]
         multi_sim["hzdepb_r"] = row["hzdepb_r"]
         sim_data_out.append(multi_sim)
+
     sim_data_df = pd.concat(sim_data_out, axis=0, ignore_index=True)
 
     # Convert NaN values to None
@@ -937,7 +996,131 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     rosetta_data["layerID"] = sim_data_df["layerID"]
 
     awc = calculate_vwc_awc(rosetta_data)
-    return jsonify(awc)
+    awc = awc.applymap(lambda x: x.tolist() if isinstance(x, np.ndarray) else x)
+    awc["top"] = sim_data_df["hzdept_r"]
+    awc["bottom"] = sim_data_df["hzdepb_r"]
+    awc["compname_grp"] = sim_data_df["compname_grp"]
+    data_len_depth = (
+        awc.groupby("top")
+        .apply(lambda x: pd.DataFrame({"depth_len": [len(x)]}, index=[x.name]))
+        .reset_index()
+    )
+    awc = awc.merge(data_len_depth, on="top", how="left")
+
+    # Step 1: Reshaping awc data
+
+    # Apply the function to the entire ROI by depth
+    awc_quant_list = (
+        awc.groupby(["bottom"])
+        .apply(
+            lambda x: pd.DataFrame(
+                {
+                    "awc_quant": x["awc"].quantile([0.05, 0.50, 0.95]).values,
+                    "prob": [0.05, 0.50, 0.95],
+                    "n": len(x) / x["depth_len"].iloc[0],
+                }
+            )
+        )
+        .reset_index(level=[0, 1])
+    )
+
+    # Pivoting the DataFrame
+    awc_comp_quant = awc_quant_list.pivot(
+        index=["bottom", "n"], columns="prob", values="awc_quant"
+    ).reset_index()
+
+    # Renaming columns for clarity
+    awc_comp_quant.columns = ["bottom", "n", "0.05", "0.50", "0.95"]
+
+    # Step 2: Joining with mu_data and filtering distinct rows
+    awc_comp_quant["top"] = np.where(
+        awc_comp_quant["bottom"] <= 30, 0, np.where(awc_comp_quant["bottom"] > 30, 30, np.nan)
+    )
+
+    # Step 3: Calculating depth
+    awc_comp_quant["depth"] = awc_comp_quant["bottom"] - awc_comp_quant["top"]
+
+    # Steps 4 and 5: Group by 'compname_grp' and merge
+    def calculate_aws(df, quantile):
+        # calculate AWC for ROI
+        total = (df[quantile] * df["depth"] * df["n"]).sum()
+        return pd.DataFrame({f"aws{quantile}_100": [total]})
+
+    aws50 = calculate_aws(awc_comp_quant, "0.50")
+    aws05 = calculate_aws(awc_comp_quant, "0.05")
+    aws95 = calculate_aws(awc_comp_quant, "0.95")
+
+    """
+    Width of the 90th prediction interval for available water
+    storage in the top 100cm of soil (aws_PIW90). This value
+    represents the weighted average of all soils mapped within
+    the area of interest (AOI). Values greater than 3%
+    indicate significant heterogenity in mapped soil properties.
+    """
+    aws_PIW90 = aws95["aws0.95_100"] - aws05["aws0.05_100"]
+
+    # aws_PI95 = pd.DataFrame({'aws_diff': [aws_PI95]})
+
+    # ---------------------------------------------------------------------------
+    # Calculate Information Gain, i.e., soil input variable importance
+
+    # calculate texture
+    # return(jsonify(sim_data_df.to_dict(orient='records')))
+
+    sim_data_df["texture"] = sim_data_df.apply(getTexture, axis=1)
+    sim_data_df["rfv_class"] = sim_data_df.apply(getCF_class, axis=1)
+
+    # return(jsonify(sim_data_df.to_dict(orient='records')))
+    def rename_columns(df, soil_property_columns, depth):
+        new_column_names = {}
+        for col in soil_property_columns:
+            new_column_names[col] = f"{col}_{depth}"
+        df.rename(columns=new_column_names, inplace=True)
+
+    # Remove the 'hzdepb_r' column
+    sim_data_df = sim_data_df.drop(columns=["hzdepb_r"], errors="ignore")
+    grp_list = sim_data_df["compname_grp"].unique().tolist()
+    # Define the soil property columns
+    soil_property_columns = ["texture", "rfv_class"]
+
+    # Filter only the relevant columns
+    filter_columns = ["compname_grp", "hzdept_r"] + soil_property_columns
+    filtered_df = sim_data_df[filter_columns]
+    final_columns = ["compname_grp"] + soil_property_columns
+
+    # Create a new DataFrame for each soil depth
+    df1 = filtered_df[filtered_df["hzdept_r"] == 0].copy().reset_index(drop=True)
+    df1 = df1[final_columns]
+    rename_columns(df1, soil_property_columns, 0)
+
+    df2 = filtered_df[filtered_df["hzdept_r"] == 30].copy().reset_index(drop=True)
+    df2 = df2[final_columns]
+    rename_columns(df2, soil_property_columns, 30)
+    # Assuming df1 and df2 are your dataframes
+    groups1 = df1.groupby("compname_grp")
+    groups2 = df2.groupby("compname_grp")
+
+    # Concatenating corresponding groups
+
+    concatenated_groups = []
+    for group_label in grp_list:
+        group_df1 = groups1.get_group(group_label).reset_index(drop=True)
+        if group_label in groups2.groups:
+            group_df2 = groups2.get_group(group_label).reset_index(drop=True)
+        else:
+            group_df2 = pd.DataFrame(index=range(len(group_df1)), columns=group_df1.columns)
+            group_df2.columns = df2.columns
+            group_df2["compname_grp"] = group_df1["compname_grp"]
+            group_df2 = group_df2.fillna(0)
+            group_df2 = group_df2.reset_index(drop=True)
+        concatenated_group = pd.concat([group_df1, group_df2.drop("compname_grp", axis=1)], axis=1)
+        concatenated_groups.append(concatenated_group)
+
+    # Combine all concatenated groups into a single dataframe
+    result_df = pd.concat(concatenated_groups, axis=0, ignore_index=True)
+    var_imp = information_gain(
+        result_df, ["compname_grp"], ["texture_0", "texture_30", "rfv_class_0", "rfv_class_30"]
+    )
 
     # ----------------------------------------------------------------------------
     # This extracts OSD color, texture, and CF data
@@ -2030,6 +2213,8 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         "ec": "ds/m",
                     },
                 },
+                "AWS_PIW90": round(float(aws_PIW90), 2),
+                "Soil Data Value": var_imp,
                 "soilList": output_SoilList,
             }
         )
@@ -2056,6 +2241,8 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 "ec": "ds/m",
             },
         },
+        "AWS_PIW90": round(float(aws_PIW90), 2),
+        "Soil Data Value": var_imp,
         "soilList": output_SoilList,
     }
 
@@ -2100,7 +2287,7 @@ def rankPredictionUS(
     soil_df["bottom"] = soil_df["horizonDepth"]
 
     # Replace NaNs with None for consistency
-    soil_df.fillna(value=None, inplace=True)
+    # soil_df.fillna(value=None, inplace=True)
 
     # Calculate the top depth for each horizon
     soil_df["top"] = [0] + soil_df["horizonDepth"].iloc[:-1].tolist()
@@ -2130,10 +2317,10 @@ def rankPredictionUS(
             for i in range(len(soil_df_slice))
             for j in range(int(soil_df_slice.top[i]), int(soil_df_slice.bottom[i]))
         ]
-        pedon_slice_index = [x for x in pedon_slice_index if x < 120]
+        pedon_slice_index = [x for x in pedon_slice_index if x < 200]
 
         if bedrock is not None:
-            pedon_slice_index.extend(range(bedrock, 120))
+            pedon_slice_index.extend(range(bedrock, 200))
 
         # Convert soil properties to lists
         soilHorizon = soil_df.soilHorizon.tolist()
@@ -2239,7 +2426,10 @@ def rankPredictionUS(
         p_lab_intpl = pd.DataFrame(np.nan, index=np.arange(1), columns=np.arange(3))
 
         # Set default bottom depth data
-        p_bottom_depth = pd.DataFrame([-999, "sample_pedon", 0]).T
+        if bedrock is not None:
+            p_bottom_depth = pd.DataFrame([-999, "sample_pedon", bedrock]).T
+        else:
+            p_bottom_depth = pd.DataFrame([-999, "sample_pedon", 0]).T
         p_bottom_depth.columns = ["cokey", "compname", "bottom_depth"]
 
     if pElev is None:
@@ -2269,19 +2459,22 @@ def rankPredictionUS(
         return scores[-1]
 
     # Compute text completeness
-    text_len = len(p_sandpct_intpl.dropna())
+    p_sandpct_intpl = [x for x in p_sandpct_intpl if x is not None and x == x]
+    text_len = len(p_sandpct_intpl)
     text_thresholds = [1, 10, 20, 50, 70, 100]
     text_scores = [3, 8, 15, 25, 30, 35, 40]
     text_comp = compute_completeness(text_len, text_thresholds, text_scores)
 
     # Compute rf completeness
-    rf_len = len(p_cfg_intpl.dropna())
+    p_cfg_intpl = [x for x in p_cfg_intpl if x is not None and x == x]
+    rf_len = len(p_cfg_intpl)
     rf_thresholds = [1, 10, 20, 50, 70, 100, 120]
     rf_scores = [3, 6, 10, 15, 20, 23, 25]
     rf_comp = compute_completeness(rf_len, rf_thresholds, rf_scores)
 
     # Compute lab completeness
-    lab_len = len(p_lab_intpl.dropna())
+    p_lab_intpl = [x for x in p_lab_intpl if x is not None and x == x]
+    lab_len = len(p_lab_intpl)
     lab_thresholds = [1, 10, 20, 50, 70, 100, 120]
     lab_scores = [1, 3, 6, 9, 12, 14, 15]
     lab_comp = compute_completeness(lab_len, lab_thresholds, lab_scores)
@@ -2528,48 +2721,13 @@ def rankPredictionUS(
         D_horz = None
 
     # ---Site Data Similarity---
-    def compute_site_similarity(
-        p_slope, mucompdata, slices, additional_columns=None, feature_weight=None
-    ):
-        """
-        Compute gower distances for site similarity based on the provided feature weights.
-
-        Parameters:
-        - p_slope: DataFrame containing sample_pedon information.
-        - mucompdata: DataFrame containing component data.
-        - slices: DataFrame containing slices of soil.
-        - additional_columns: List of additional columns to consider.
-        - feature_weight: Array of weights for features.
-
-        Returns:
-        - D_site: Gower distances array for site similarity.
-        """
-        # Combine pedon slope data with component data
-        site_vars = pd.concat([p_slope, mucompdata[["compname", "slope_r", "elev_r"]]], axis=0)
-
-        # If additional columns are specified, merge them
-        if additional_columns:
-            site_vars = pd.merge(slices, site_vars, on="compname", how="left")
-            site_mat = site_vars[additional_columns]
-        else:
-            site_mat = site_vars[["slope_r", "elev_r"]]
-
-        site_mat = site_mat.set_index(slices.compname.values)
-
-        # Compute the gower distances
-        D_site = gower_distances(site_mat, feature_weight=feature_weight)
-
-        # Replace NaN values with the maximum value in the array
-        D_site = np.where(np.isnan(D_site), np.nanmax(D_site), D_site)
-
-        return D_site
 
     # Initialize variables for site similarity
     p_slope = pd.DataFrame(["sample_pedon", pSlope, pElev]).T
     p_slope.columns = ["compname", "slope_r", "elev_r"]
 
     # Check conditions to determine the data columns and feature weights
-    if (pSlope is not None) and (pElev is not None) and (p_bottom_depth.bottom_depth.any() > 0):
+    if (pSlope is not None) and (p_bottom_depth.bottom_depth.any() > 0):
         D_site = compute_site_similarity(
             p_slope,
             mucompdata_pd,
@@ -2744,7 +2902,8 @@ def rankPredictionUS(
     # Identify vertisols based on cracks, clay texture, and taxonomic presence of "ert"
     # Compute the condition for rows that meet the criteria
     condition = (
-        D_final_loc["cracks"]
+        cracks
+        == True
         & (D_final_loc["clay"] == "Yes")
         & (
             D_final_loc["taxorder"].str.contains("ert", case=False)

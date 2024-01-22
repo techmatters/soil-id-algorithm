@@ -3391,7 +3391,7 @@ def rankPredictionUS(
     else:
         D_horz = None
 
-    ##---Site Data Similarity
+    # Site Data Similarity
     def compute_site_similarity(
         p_slope, mucompdata, slices, additional_columns=None, feature_weight=None
     ):
@@ -3753,7 +3753,7 @@ def rankPredictionUS(
 def getSoilGridsGlobal(lon, lat, plot_id=None):
     # -------------------------------------------------------------------------------------------
 
-    ########### SoilGrids250  ############################################
+    # SoilGrids250
     # Construct the SoilGrids API v2 URL
     sg_api = f"https://rest.isric.org/soilgrids/v2.0/properties/query?lon={lon}&lat={lat}&property=cfvo&property=cec&property=clay&property=phh2o&property=sand&value=mean"
 
@@ -3967,7 +3967,7 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
 #                                          getSoilGridsUS                                           #
 #####################################################################################################
 def getSoilGridsUS(lon, lat, plot_id=None):
-    ########### SoilGrids250  ############################################
+    # SoilGrids250
     # Construct the SoilGrids API v2 URL
     sg_api = f"https://rest.isric.org/soilgrids/v2.0/properties/query?lon={lon}&lat={lat}&property=cfvo&property=cec&property=clay&property=phh2o&property=sand&value=mean"
 

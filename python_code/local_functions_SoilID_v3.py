@@ -24,7 +24,7 @@ import shapely
 from flask import current_app
 from numpy.linalg import cholesky
 from osgeo import gdal, ogr
-from scipy.interpolate import CubicSpline
+from scipy.interpolate import CubicSpline, UnivariateSpline
 from scipy.linalg import sqrtm
 from scipy.sparse import issparse
 from scipy.spatial import distance
@@ -34,7 +34,7 @@ from skbio.stats.composition import ilr, ilr_inv
 from sklearn.metrics import pairwise
 from sklearn.metrics.pairwise import euclidean_distances
 from sklearn.utils import validation
-from scipy.interpolate import UnivariateSpline
+
 
 def get_datastore_connection():
     """
@@ -474,13 +474,9 @@ def getOSDCF(cf):
 def agg_data_layer(data, bottom, sd=2, depth=False):
     # Handle edge cases
     if np.isnan(bottom):
-        return (
-            (pd.Series([np.nan]), pd.Series([np.nan])) if depth else pd.Series([np.nan])
-        )
+        return (pd.Series([np.nan]), pd.Series([np.nan])) if depth else pd.Series([np.nan])
     if bottom == 0:
-        return (
-            (pd.Series([np.nan]), pd.Series([np.nan])) if depth else pd.Series([np.nan])
-        )
+        return (pd.Series([np.nan]), pd.Series([np.nan])) if depth else pd.Series([np.nan])
 
     # Define depth ranges
     ranges = [
@@ -580,22 +576,14 @@ def getProfile(data, variable, c_bot=False):
                 var.append(data["EC"].iloc[i])
 
     # Return empty fields when there is no depth data or the top depth is not 0
-    if (
-        variable == "sandtotal_r"
-        or variable == "claytotal_r"
-        or variable == "total_frag_volume"
-    ):
+    if variable == "sandtotal_r" or variable == "claytotal_r" or variable == "total_frag_volume":
         if pd.isnull(data["hzdept_r"]).any() or pd.isnull(data["hzdepb_r"]).any():
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(152), columns=np.arange(2)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(152), columns=np.arange(2))
             var_pct_intpl_final.columns = ["var_pct_intpl", "var_pct_intpl_grp"]
             return var_pct_intpl_final
 
         if data["hzdept_r"].iloc[0] != 0:
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(152), columns=np.arange(2)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(152), columns=np.arange(2))
             var_pct_intpl_final.columns = ["var_pct_intpl", "var_pct_intpl_grp"]
             return var_pct_intpl_final
 
@@ -610,23 +598,17 @@ def getProfile(data, variable, c_bot=False):
                 data["hzdept_r"].iloc[i + 1] == data["hzdepb_r"].iloc[i]
 
         if MisHrz == 1:
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(152), columns=np.arange(2)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(152), columns=np.arange(2))
             var_pct_intpl_final.columns = ["var_pct_intpl", "var_pct_intpl_grp"]
             return var_pct_intpl_final
 
         if len(data["hzdept_r"]) == 1:
-            for i in range(
-                int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])
-            ):
+            for i in range(int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])):
                 var_pct_intpl.append(var[0])
                 var_pct_intpl_grp.append(var_grp[0])
         else:
             for i in range(len(data["hzdepb_r"])):
-                for j in range(
-                    int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])
-                ):
+                for j in range(int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])):
                     var_pct_intpl.append(var[i])
                     var_pct_intpl_grp.append(var_grp[i])
 
@@ -646,16 +628,12 @@ def getProfile(data, variable, c_bot=False):
             var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
     else:
         if pd.isnull(data["hzdept_r"]).any() or pd.isnull(data["hzdepb_r"]).any():
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(152), columns=np.arange(1)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(152), columns=np.arange(1))
             var_pct_intpl_final.columns = ["var_pct_intpl"]
             return var_pct_intpl_final
 
         if data["hzdept_r"].iloc[0] != 0:
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(152), columns=np.arange(1)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(152), columns=np.arange(1))
             var_pct_intpl_final.columns = ["var_pct_intpl"]
             return var_pct_intpl_final
 
@@ -670,22 +648,16 @@ def getProfile(data, variable, c_bot=False):
                 data["hzdept_r"].iloc[i + 1] == data["hzdepb_r"].iloc[i]
 
         if MisHrz == 1:
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(152), columns=np.arange(1)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(152), columns=np.arange(1))
             var_pct_intpl_final.columns = ["var_pct_intpl"]
             return var_pct_intpl_final
 
         if len(data["hzdept_r"]) == 1:
-            for i in range(
-                int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])
-            ):
+            for i in range(int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])):
                 var_pct_intpl.append(var[0])
         else:
             for i in range(len(data["hzdepb_r"])):
-                for j in range(
-                    int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])
-                ):
+                for j in range(int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])):
                     var_pct_intpl.append(var[i])
 
         var_pct_intpl_final = pd.DataFrame([var_pct_intpl])
@@ -767,16 +739,12 @@ def getProfile_SG(data, variable, c_bot=False):
         or variable == "phh2o"
     ):
         if pd.isnull(data["hzdept_r"]).any() or pd.isnull(data["hzdepb_r"]).any():
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(200), columns=np.arange(2)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(200), columns=np.arange(2))
             var_pct_intpl_final.columns = ["var_pct_intpl", "var_pct_intpl_grp"]
             return var_pct_intpl_final
 
         if data["hzdept_r"].iloc[0] != 0:
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(200), columns=np.arange(2)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(200), columns=np.arange(2))
             var_pct_intpl_final.columns = ["var_pct_intpl", "var_pct_intpl_grp"]
             return var_pct_intpl_final
 
@@ -791,23 +759,17 @@ def getProfile_SG(data, variable, c_bot=False):
                 data["hzdept_r"].iloc[i + 1] == data["hzdepb_r"].iloc[i]
 
         if MisHrz == 1:
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(200), columns=np.arange(2)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(200), columns=np.arange(2))
             var_pct_intpl_final.columns = ["var_pct_intpl", "var_pct_intpl_grp"]
             return var_pct_intpl_final
 
         if len(data["hzdept_r"]) == 1:
-            for i in range(
-                int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])
-            ):
+            for i in range(int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])):
                 var_pct_intpl.append(var[0])
                 var_pct_intpl_grp.append(var_grp[0])
         else:
             for i in range(len(data["hzdepb_r"])):
-                for j in range(
-                    int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])
-                ):
+                for j in range(int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])):
                     var_pct_intpl.append(var[i])
                     var_pct_intpl_grp.append(var_grp[i])
 
@@ -827,16 +789,12 @@ def getProfile_SG(data, variable, c_bot=False):
             var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
     else:
         if pd.isnull(data["hzdept_r"]).any() or pd.isnull(data["hzdepb_r"]).any():
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(200), columns=np.arange(1)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(200), columns=np.arange(1))
             var_pct_intpl_final.columns = ["var_pct_intpl"]
             return var_pct_intpl_final
 
         if data["hzdept_r"].iloc[0] != 0:
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(200), columns=np.arange(1)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(200), columns=np.arange(1))
             var_pct_intpl_final.columns = ["var_pct_intpl"]
             return var_pct_intpl_final
 
@@ -851,22 +809,16 @@ def getProfile_SG(data, variable, c_bot=False):
                 data["hzdept_r"].iloc[i + 1] == data["hzdepb_r"].iloc[i]
 
         if MisHrz == 1:
-            var_pct_intpl_final = pd.DataFrame(
-                np.nan, index=np.arange(200), columns=np.arange(1)
-            )
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(200), columns=np.arange(1))
             var_pct_intpl_final.columns = ["var_pct_intpl"]
             return var_pct_intpl_final
 
         if len(data["hzdept_r"]) == 1:
-            for i in range(
-                int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])
-            ):
+            for i in range(int(data["hzdepb_r"].iloc[0]) - int(data["hzdept_r"].iloc[0])):
                 var_pct_intpl.append(var[0])
         else:
             for i in range(len(data["hzdepb_r"])):
-                for j in range(
-                    int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])
-                ):
+                for j in range(int(data["hzdepb_r"].iloc[i]) - int(data["hzdept_r"].iloc[i])):
                     var_pct_intpl.append(var[i])
 
         var_pct_intpl_final = pd.DataFrame([var_pct_intpl])
@@ -921,9 +873,7 @@ def drop_cokey_horz(df):
     # Group by 'compname'
     for _, comp_group in df.groupby("compname", sort=False):
         # Group the component group by 'cokey'
-        grouped_by_cokey = [
-            group for _, group in comp_group.groupby("cokey", sort=False)
-        ]
+        grouped_by_cokey = [group for _, group in comp_group.groupby("cokey", sort=False)]
 
         # Iterate over combinations of the component instances
         for j, group_j in enumerate(grouped_by_cokey):
@@ -942,9 +892,7 @@ def drop_cokey_horz(df):
     # Drop duplicates and reset index
     if drop_instances:
         drop_instances = (
-            pd.concat(drop_instances)
-            .drop_duplicates(keep="first")
-            .reset_index(drop=True)
+            pd.concat(drop_instances).drop_duplicates(keep="first").reset_index(drop=True)
         )
     else:
         drop_instances = None
@@ -969,10 +917,7 @@ def haversine(lon1, lat1, lon2, lat2):
     # Haversine formula
     dlon = lon2 - lon1
     dlat = lat2 - lat1
-    a = (
-        math.sin(dlat / 2) ** 2
-        + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
-    )
+    a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
     c = 2 * math.asin(math.sqrt(a))
     r = 6371  # Radius of the earth in kilometers. Use 3956 for miles.
 
@@ -1016,14 +961,8 @@ def calculate_location_score(group, ExpCoeff):
     """
 
     # Parameter validation
-    if (
-        not isinstance(group, pd.DataFrame)
-        or "distance" not in group
-        or "share" not in group
-    ):
-        raise ValueError(
-            "Group should be a DataFrame containing 'distance' and 'share' columns."
-        )
+    if not isinstance(group, pd.DataFrame) or "distance" not in group or "share" not in group:
+        raise ValueError("Group should be a DataFrame containing 'distance' and 'share' columns.")
     if not isinstance(ExpCoeff, (int, float)):
         raise ValueError("ExpCoeff should be a numeric value.")
 
@@ -1038,11 +977,7 @@ def calculate_location_score(group, ExpCoeff):
     distance_multiplier = max(math.exp(ExpCoeff * group.distance.min()), 0.25)
 
     # Calculate and return the score
-    return (
-        distance_multiplier
-        if total_share > 100.0
-        else (total_share / 100) * distance_multiplier
-    )
+    return distance_multiplier if total_share > 100.0 else (total_share / 100) * distance_multiplier
 
 
 def assign_max_distance_scores(group):
@@ -1099,9 +1034,7 @@ def check_pairwise_arrays(X, Y, precomputed=False, dtype=None):
     if Y is X or Y is None:
         Y = X
     else:
-        Y = validation.check_array(
-            Y, accept_sparse="csr", dtype=dtype, estimator=estimator
-        )
+        Y = validation.check_array(Y, accept_sparse="csr", dtype=dtype, estimator=estimator)
 
     # Check for valid shapes based on whether distances are precomputed
     if precomputed and X.shape[1] != Y.shape[0]:
@@ -1580,9 +1513,9 @@ def extract_statsgo_mucompdata(lon, lat):
     else:
         mucompdata = mucompdata_out["Table"]
         mucompdata_pd = pd.DataFrame(mucompdata[1:], columns=mucompdata[0])
-        mucompdata_pd = pd.merge(
-            mucompdata_pd, mukey_dist_final, on="mukey"
-        ).sort_values(["distance", "cokey"])
+        mucompdata_pd = pd.merge(mucompdata_pd, mukey_dist_final, on="mukey").sort_values(
+            ["distance", "cokey"]
+        )
         mucompdata_pd.replace("NULL", np.nan, inplace=True)
         mucompdata_pd[["slope_r", "elev_r", "distance"]] = mucompdata_pd[
             ["slope_r", "elev_r", "distance"]
@@ -1613,9 +1546,7 @@ def fill_missing_comppct_r(mucompdata_pd):
     ].drop_duplicates()
 
     if not mukeys_with_missing_data.empty:
-        subset_data = mucompdata_pd[
-            mucompdata_pd["mukey"].isin(mukeys_with_missing_data)
-        ]
+        subset_data = mucompdata_pd[mucompdata_pd["mukey"].isin(mukeys_with_missing_data)]
 
         aggregated_data = subset_data.groupby("mukey").agg(
             total_pct=("comppct_r", "sum"),
@@ -1640,9 +1571,7 @@ def fill_missing_comppct_r(mucompdata_pd):
 
     # Clean up the dataframe
     mucompdata_pd = (
-        mucompdata_pd.drop_duplicates()
-        .sort_values(by="distance")
-        .reset_index(drop=True)
+        mucompdata_pd.drop_duplicates().sort_values(by="distance").reset_index(drop=True)
     )
 
     # Handle minor components that are either 0 or NaN
@@ -1697,16 +1626,12 @@ def process_distance_scores(mucompdata_pd, ExpCoeff):
     mucompdata_pd["distance_score_norm"] = (
         mucompdata_pd["distance_score"] / mucompdata_pd["distance_score"].max()
     )
-    mucompdata_pd = mucompdata_pd[
-        ~mucompdata_pd["compkind"].str.contains("Miscellaneous area")
-    ]
+    mucompdata_pd = mucompdata_pd[~mucompdata_pd["compkind"].str.contains("Miscellaneous area")]
 
     mucompdata_pd = mucompdata_pd.reset_index(drop=True)
 
     # Create a list of component groups
-    mucompdata_comp_grps = [
-        g for _, g in mucompdata_pd.groupby(["compname"], sort=False)
-    ]
+    mucompdata_comp_grps = [g for _, g in mucompdata_pd.groupby(["compname"], sort=False)]
     mucompdata_comp_grps = mucompdata_comp_grps[: min(12, len(mucompdata_comp_grps))]
 
     # Assign max within-group location-based score to all members of the group
@@ -1746,9 +1671,7 @@ def pedon_color(lab_Color, horizonDepth):
         return np.nan
 
     # Check for missing horizons
-    pedon_MisHrz = any(
-        pedon_top[i + 1] != pedon_bottom[i] for i in range(len(pedon_top) - 1)
-    )
+    pedon_MisHrz = any(pedon_top[i + 1] != pedon_bottom[i] for i in range(len(pedon_top) - 1))
     if pedon_MisHrz:
         return np.nan
 
@@ -1842,9 +1765,9 @@ def getProfileLAB(data_osd, color_ref):
     munsell_ref = color_ref[["hue", "value", "chroma"]]
 
     # Convert the specific columns to numeric
-    data_osd[["top", "bottom", "r", "g", "b"]] = data_osd[
-        ["top", "bottom", "r", "g", "b"]
-    ].apply(pd.to_numeric)
+    data_osd[["top", "bottom", "r", "g", "b"]] = data_osd[["top", "bottom", "r", "g", "b"]].apply(
+        pd.to_numeric
+    )
 
     def validate_data(data):
         """
@@ -1913,9 +1836,7 @@ def getProfileLAB(data_osd, color_ref):
 
     data_osd = correct_depth_discrepancies(data_osd)
 
-    data_osd["L"], data_osd["A"], data_osd["B"] = zip(
-        *data_osd.apply(convert_rgb_to_lab, axis=1)
-    )
+    data_osd["L"], data_osd["A"], data_osd["B"] = zip(*data_osd.apply(convert_rgb_to_lab, axis=1))
 
     l_intpl, a_intpl, b_intpl = [], [], []
 
@@ -1928,9 +1849,7 @@ def getProfileLAB(data_osd, color_ref):
     return lab_intpl
     if len(lab_intpl) < 120:
         lab_intpl = lab_intpl.append(
-            pd.DataFrame(
-                np.nan, index=np.arange(120 - len(lab_intpl)), columns=["L", "A", "B"]
-            )
+            pd.DataFrame(np.nan, index=np.arange(120 - len(lab_intpl)), columns=["L", "A", "B"])
         )
 
     return lab_intpl
@@ -2000,9 +1919,7 @@ def calculate_deltaE2000(LAB1, LAB2):
 
     deltatheta = 30.0 * math.exp(-(math.pow((hprimbar - 275.0) / 25.0, 2.0)))
     RC = 2.0 * math.sqrt(Cprimbar**7 / (Cprimbar**7 + 25**7))
-    SL = 1.0 + (0.015 * (Lprimbar - 50.0) ** 2) / math.sqrt(
-        20.0 + (Lprimbar - 50.0) ** 2
-    )
+    SL = 1.0 + (0.015 * (Lprimbar - 50.0) ** 2) / math.sqrt(20.0 + (Lprimbar - 50.0) ** 2)
     SC = 1.0 + 0.045 * Cprimbar
     SH = 1.0 + 0.015 * Cprimbar * T
     RT = -math.sin(2.0 * deltatheta) * RC
@@ -2083,14 +2000,10 @@ def getColor_deltaE2000_OSD_pedon(data_osd, data_pedon):
 
     # Convert RGB values to LAB for OSD
     osd_colors_rgb = interpolate_color_values(top, bottom, list(zip(r, g, b)))
-    osd_colors_lab = [
-        color.rgb2lab([[color_val]])[0][0] for color_val in osd_colors_rgb
-    ]
+    osd_colors_lab = [color.rgb2lab([[color_val]])[0][0] for color_val in osd_colors_rgb]
 
     # Calculate average LAB for OSD at 31-37 cm depth
-    osd_avg_lab = (
-        np.mean(osd_colors_lab[31:37], axis=0) if len(osd_colors_lab) > 31 else np.nan
-    )
+    osd_avg_lab = np.mean(osd_colors_lab[31:37], axis=0) if len(osd_colors_lab) > 31 else np.nan
     if np.isnan(osd_avg_lab).any():
         return np.nan
 
@@ -2103,9 +2016,7 @@ def getColor_deltaE2000_OSD_pedon(data_osd, data_pedon):
 
     # Calculate average LAB for pedon at 31-37 cm depth
     pedon_avg_lab = (
-        np.mean(pedon_colors_lab[31:37], axis=0)
-        if len(pedon_colors_lab) > 31
-        else np.nan
+        np.mean(pedon_colors_lab[31:37], axis=0) if len(pedon_colors_lab) > 31 else np.nan
     )
     if np.isnan(pedon_avg_lab).any():
         return np.nan
@@ -2307,36 +2218,20 @@ def infill_soil_data(df):
 
     # Step 3: Replace missing '_l' and '_h' values with corresponding '_r' values +/- 8
     for col in ["sandtotal", "claytotal", "silttotal"]:
-        filtered_groups[col + "_l"].fillna(
-            filtered_groups[col + "_r"] - 8, inplace=True
-        )
-        filtered_groups[col + "_h"].fillna(
-            filtered_groups[col + "_r"] + 8, inplace=True
-        )
+        filtered_groups[col + "_l"].fillna(filtered_groups[col + "_r"] - 8, inplace=True)
+        filtered_groups[col + "_h"].fillna(filtered_groups[col + "_r"] + 8, inplace=True)
 
     # Step 4 and 5: Replace missing 'dbovendry_l' and 'dbovendry_h' with 'dbovendry_r' +/- 0.01
-    filtered_groups["dbovendry_l"].fillna(
-        filtered_groups["dbovendry_r"] - 0.01, inplace=True
-    )
-    filtered_groups["dbovendry_h"].fillna(
-        filtered_groups["dbovendry_r"] + 0.01, inplace=True
-    )
+    filtered_groups["dbovendry_l"].fillna(filtered_groups["dbovendry_r"] - 0.01, inplace=True)
+    filtered_groups["dbovendry_h"].fillna(filtered_groups["dbovendry_r"] + 0.01, inplace=True)
 
     # Step 6 and 7: Replace missing 'wthirdbar_l' and 'wthirdbar_h' with 'wthirdbar_r' +/- 1
-    filtered_groups["wthirdbar_l"].fillna(
-        filtered_groups["wthirdbar_r"] - 1, inplace=True
-    )
-    filtered_groups["wthirdbar_h"].fillna(
-        filtered_groups["wthirdbar_r"] + 1, inplace=True
-    )
+    filtered_groups["wthirdbar_l"].fillna(filtered_groups["wthirdbar_r"] - 1, inplace=True)
+    filtered_groups["wthirdbar_h"].fillna(filtered_groups["wthirdbar_r"] + 1, inplace=True)
 
     # Step 8 and 9: Replace missing 'wfifteenbar_l' and 'wfifteenbar_h' with 'wfifteenbar_r' +/- 0.6
-    filtered_groups["wfifteenbar_l"].fillna(
-        filtered_groups["wfifteenbar_r"] - 0.6, inplace=True
-    )
-    filtered_groups["wfifteenbar_h"].fillna(
-        filtered_groups["wfifteenbar_r"] + 0.6, inplace=True
-    )
+    filtered_groups["wfifteenbar_l"].fillna(filtered_groups["wfifteenbar_r"] - 0.6, inplace=True)
+    filtered_groups["wfifteenbar_h"].fillna(filtered_groups["wfifteenbar_r"] + 0.6, inplace=True)
 
     return filtered_groups
 
@@ -2363,24 +2258,26 @@ def slice_and_aggregate_soil_data(df):
     aggregated_data = pd.DataFrame()
 
     # Get numeric columns for aggregation, excluding the depth range columns
-    data_columns = df.select_dtypes(include=[np.number]).columns.difference(['hzdept_r', 'hzdepb_r'])
+    data_columns = df.select_dtypes(include=[np.number]).columns.difference(
+        ["hzdept_r", "hzdepb_r"]
+    )
 
     # Iterate through each depth interval
     for _, row in df.iterrows():
-        top_depth = row['hzdept_r']
-        bottom_depth = row['hzdepb_r']
+        top_depth = row["hzdept_r"]
+        bottom_depth = row["hzdepb_r"]
         depth_range = np.arange(top_depth, bottom_depth)
 
         # Create a DataFrame for each 1 cm increment
         for depth in depth_range:
             interpolated_row = {col: row[col] for col in data_columns}
-            interpolated_row['Depth'] = depth
+            interpolated_row["Depth"] = depth
 
             # Add the interpolated row to the aggregated data
             aggregated_data = aggregated_data.append(interpolated_row, ignore_index=True)
 
-    max_depth = aggregated_data['Depth'].max()
-    sd=2
+    max_depth = aggregated_data["Depth"].max()
+    sd = 2
     # Define the depth ranges
     depth_ranges = [(0, 20), (20, 50)]
     # Initialize the result list
@@ -2393,10 +2290,16 @@ def slice_and_aggregate_soil_data(df):
             if max_depth <= top:
                 column_results.append([top, bottom, np.nan])
             else:
-                mask = (aggregated_data.index >= top) & (aggregated_data.index <= min(bottom, max_depth))
+                mask = (aggregated_data.index >= top) & (
+                    aggregated_data.index <= min(bottom, max_depth)
+                )
                 data_subset = aggregated_data.loc[mask, column]
                 if not data_subset.empty:
-                    result = round(data_subset.mean(skipna=True), sd) if not data_subset.isna().all() else np.nan
+                    result = (
+                        round(data_subset.mean(skipna=True), sd)
+                        if not data_subset.isna().all()
+                        else np.nan
+                    )
                     column_results.append([top, min(bottom, max_depth), result])
                 else:
                     column_results.append([top, min(bottom, max_depth), np.nan])
@@ -2421,23 +2324,23 @@ def slice_and_aggregate_soil_data(df):
 # def aggregate_data_vi(data, max_depth, sd=2):
 #     """
 #     Aggregate data by specific depth ranges and compute the mean of each range for each column.
-# 
+#
 #     Args:
 #         data (pd.DataFrame): The DataFrame containing the data with index as depth.
 #         max_depth (float): The maximum depth to consider for aggregation.
 #         sd (int): The number of decimal places to round the aggregated data.
-# 
+#
 #     Returns:
 #         pd.DataFrame: A DataFrame with aggregated data for each column within specified depth ranges.
 #     """
 #     if not max_depth or np.isnan(max_depth):
 #         return pd.DataFrame(columns=["hzdept_r", "hzdepb_r", "Data"])
-# 
+#
 #     # Define the depth ranges
 #     depth_ranges = [(0, 30), (30, 100)]
 #     # Initialize the result list
 #     results = []
-# 
+#
 #     # Iterate over each column in the dataframe
 #     for column in data.columns:
 #         column_results = []
@@ -2459,14 +2362,14 @@ def slice_and_aggregate_soil_data(df):
 #                 columns=["hzdept_r", "hzdepb_r", f"{column}"],
 #             )
 #         )
-# 
+#
 #     # Concatenate the results for each column into a single dataframe
 #     result_df = pd.concat(results, axis=1)
-# 
+#
 #     # If there are multiple columns, remove the repeated 'Top Depth' and 'Bottom Depth' columns
 #     if len(data.columns) > 1:
 #         result_df = result_df.loc[:, ~result_df.columns.duplicated()]
-# 
+#
 #     return result_df
 
 # def extract_soil_params(soil_df):
@@ -2474,18 +2377,19 @@ def slice_and_aggregate_soil_data(df):
 #     sand_params = [soil_df["sandtotal_l"].values, soil_df["sandtotal_r"].values, soil_df["sandtotal_h"].values]
 #     silt_params = [soil_df["silttotal_l"].values, soil_df["silttotal_r"].values, soil_df["silttotal_h"].values]
 #     clay_params = [soil_df["claytotal_l"].values, soil_df["claytotal_r"].values, soil_df["claytotal_h"].values]
-# 
+#
 #     # Create a list of tuples where each tuple represents the l, r, h values for each soil component for a row
 #     soil_params_tuples = list(zip(zip(*sand_params), zip(*silt_params), zip(*clay_params)))
-#     
+#
 #     # Convert the list of tuples into the desired structure
 #     # Where each tuple has the structure ((sand_l, sand_r, sand_h), (silt_l, silt_r, silt_h), (clay_l, clay_r, clay_h))
-#     structured_soil_params = [((sand[0], sand[1], sand[2]), 
-#                                (silt[0], silt[1], silt[2]), 
+#     structured_soil_params = [((sand[0], sand[1], sand[2]),
+#                                (silt[0], silt[1], silt[2]),
 #                                (clay[0], clay[1], clay[2])) for sand, silt, clay in soil_params_tuples]
-# 
+#
 #     return structured_soil_params
-  
+
+
 # ROSETTA Simulation
 # Define a function to perform Rosetta simulation
 def rosetta_simulate(data):
@@ -2507,13 +2411,12 @@ def mukey_sim_rosseta(aoi_data, cor_matrix):
 
     for i in range(len(aoi_data)):
         data = mukey_data[i]
-        sim_data = multi_sim_hydro(
-            data, cor_matrix
-        )  # Assuming you have a function multi_sim_hydro
+        sim_data = multi_sim_hydro(data, cor_matrix)  # Assuming you have a function multi_sim_hydro
         combined_data = data + sim_data.tolist()
         mukey_sim_list.append(combined_data)
 
     return mukey_sim_list
+
 
 def rosetta_request(chunk, vars, v, conf=None, include_sd=False):
     """
@@ -2533,47 +2436,65 @@ def rosetta_request(chunk, vars, v, conf=None, include_sd=False):
     # Select only the specified vars columns and other columns
     chunk_vars = chunk[vars]
     chunk_other = chunk.drop(columns=vars)
-    
+
     # Convert the vars chunk to a matrix (2D list)
     chunk_vars_matrix = chunk_vars.values.tolist()
-    
+
     # Construct the request URL
     url = f"http://www.handbook60.org/api/v1/rosetta/{v}"
-    
+
     # Make the POST request to the ROSETTA API
     try:
-        response = requests.post(url, json={'X': chunk_vars_matrix}, headers=conf)
+        response = requests.post(url, json={"X": chunk_vars_matrix}, headers=conf)
         response.raise_for_status()  # This will raise an HTTPError if the HTTP request returned an unsuccessful status code
     except requests.RequestException as e:
         return e  # Return the exception to be handled by the caller
-    
+
     # Parse the JSON response content
     try:
         response_json = response.json()
     except ValueError as e:
         return e  # Return the exception to be handled by the caller
-    
+
     # Convert van Genuchten params to DataFrame
-    vg_params = pd.DataFrame(response_json['van_genuchten_params'])
-    vg_params.columns = ['theta_r', 'theta_s', 'alpha', 'npar', 'ksat']
-    
+    vg_params = pd.DataFrame(response_json["van_genuchten_params"])
+    vg_params.columns = ["theta_r", "theta_s", "alpha", "npar", "ksat"]
+
     # Add model codes and version to the DataFrame
-    vg_params['.rosetta.model'] = pd.Categorical.from_codes(response_json['model_codes'], categories=['-1','1', '2', '3', '4', '5'])
-    vg_params['.rosetta.version'] = response_json['rosetta_version']
-    
+    vg_params[".rosetta.model"] = pd.Categorical.from_codes(
+        response_json["model_codes"], categories=["-1", "1", "2", "3", "4", "5"]
+    )
+    vg_params[".rosetta.version"] = response_json["rosetta_version"]
+
     # If include_sd is True, add standard deviations to the DataFrame
     if include_sd:
-        vg_sd = pd.DataFrame(response_json['stdev'])
-        vg_sd.columns = [f'sd_{name}' for name in vg_params.columns]
-        result = pd.concat([chunk_other.reset_index(drop=True), chunk_vars.reset_index(drop=True), vg_params.reset_index(drop=True), vg_sd], axis=1)
+        vg_sd = pd.DataFrame(response_json["stdev"])
+        vg_sd.columns = [f"sd_{name}" for name in vg_params.columns]
+        result = pd.concat(
+            [
+                chunk_other.reset_index(drop=True),
+                chunk_vars.reset_index(drop=True),
+                vg_params.reset_index(drop=True),
+                vg_sd,
+            ],
+            axis=1,
+        )
     else:
-        result = pd.concat([chunk_other.reset_index(drop=True), chunk_vars.reset_index(drop=True), vg_params.reset_index(drop=True)], axis=1)
-    
+        result = pd.concat(
+            [
+                chunk_other.reset_index(drop=True),
+                chunk_vars.reset_index(drop=True),
+                vg_params.reset_index(drop=True),
+            ],
+            axis=1,
+        )
+
     return result
 
-def process_data_with_rosetta(df, vars, v='3', include_sd=False, chunk_size=10000, conf=None):
+
+def process_data_with_rosetta(df, vars, v="3", include_sd=False, chunk_size=10000, conf=None):
     """
-    Processes a DataFrame by sending chunks of data to the ROSETTA web service and 
+    Processes a DataFrame by sending chunks of data to the ROSETTA web service and
     concatenates the results into a single DataFrame.
 
     Parameters:
@@ -2593,19 +2514,19 @@ def process_data_with_rosetta(df, vars, v='3', include_sd=False, chunk_size=1000
     """
     if not isinstance(df, pd.DataFrame):
         raise ValueError("x must be a pandas DataFrame")
-    
+
     if df.empty:
         raise ValueError("x must contain more than 0 rows")
-    
+
     if not all(var in df.columns for var in vars):
         raise ValueError("vars must match columns in x")
-    
-    if not all(df[var].dtype.kind in 'fi' for var in vars):  # checks for float and integer types
+
+    if not all(df[var].dtype.kind in "fi" for var in vars):  # checks for float and integer types
         raise ValueError("x must contain only numeric values")
-    
+
     # Helper function to make chunks
     def make_chunks(data, size):
-        return [data.iloc[i:i + size] for i in range(0, len(data), size)]
+        return [data.iloc[i : i + size] for i in range(0, len(data), size)]
 
     # Create chunks of the dataframe
     chunks = make_chunks(df, chunk_size)
@@ -2625,10 +2546,10 @@ def process_data_with_rosetta(df, vars, v='3', include_sd=False, chunk_size=1000
     if not results:
         print("empty result set")
         return None
-    
+
     # Concatenate all the results into a single DataFrame
     final_result = pd.concat(results, ignore_index=True)
-    
+
     return final_result
 
 
@@ -2651,7 +2572,7 @@ def vg_function(phi, theta_r, theta_s, alpha, n):
 
 def vg_model(VG_params, phi_min=1e-6, phi_max=1e8, pts=100):
     """
-    Converts R function for van Genuchten equation to Python and computes the VG curve, 
+    Converts R function for van Genuchten equation to Python and computes the VG curve,
     forward, and inverse functions for each row in VG_params.
 
     Parameters:
@@ -2664,7 +2585,7 @@ def vg_model(VG_params, phi_min=1e-6, phi_max=1e8, pts=100):
     pandas DataFrame: A DataFrame containing the VG curves for each set of parameters.
     """
     # Check if all required columns are present
-    required_columns = ['theta_r', 'theta_s', 'alpha', 'npar']
+    required_columns = ["theta_r", "theta_s", "alpha", "npar"]
     if not all(col in VG_params.columns for col in required_columns):
         raise ValueError("one or more required columns are missing")
 
@@ -2681,10 +2602,12 @@ def vg_model(VG_params, phi_min=1e-6, phi_max=1e8, pts=100):
     for index, row in VG_params.iterrows():
         # Calculate theta for each set of parameters
         h = phi * 10.19716
-        theta = vg_function(h, row['theta_r'], row['theta_s'], 10 ** row['alpha'], 10 ** row['npar'])
+        theta = vg_function(
+            h, row["theta_r"], row["theta_s"], 10 ** row["alpha"], 10 ** row["npar"]
+        )
 
         # Store results
-        result = {'index': index, 'VG_curve': np.column_stack((phi, theta))}
+        result = {"index": index, "VG_curve": np.column_stack((phi, theta))}
         results_df = results_df.append(result, ignore_index=True)
 
     return results_df
@@ -2696,26 +2619,26 @@ def calculate_vwc_awc(sim_data):
 
     Parameters:
     mukey_sim (pandas DataFrame): DataFrame containing soil layers and their properties.
-    
+
     Returns:
     pandas DataFrame: A DataFrame containing the VWC at saturation, field capacity, and permanent wilting point, along with the AWC for the specified layer.
     """
-    
+
     # Compute van Genuchten model for the specified layer
     vg = vg_model(VG_params=sim_data, phi_min=1e-3, phi_max=1e6)
-    return(vg)
+    return vg
     # Extract VWC at specific matric potentials (kPa)
     d = {
-        'layerID': sim_data['layerID'].iloc[i],
-        'sat': vg['VG_function'](0),       # Saturation
-        'fc': vg['VG_function'](33),       # Field Capacity
-        'pwp': vg['VG_function'](1500)     # Permanent Wilting Point
+        "layerID": sim_data["layerID"].iloc[i],
+        "sat": vg["VG_function"](0),  # Saturation
+        "fc": vg["VG_function"](33),  # Field Capacity
+        "pwp": vg["VG_function"](1500),  # Permanent Wilting Point
     }
     d = pd.DataFrame([d])
 
     # Calculate AWC using 33 kPa -> 1500 kPa interval
-    d['awc'] = d['fc'] - d['pwp']
-    
+    d["awc"] = d["fc"] - d["pwp"]
+
     return d
 
 
@@ -2731,6 +2654,7 @@ def information_gain(data, target_col, feature_cols):
     Returns:
         dict: A dictionary where keys are feature names and values are information gain scores.
     """
+
     def entropy_score(series):
         # Calculate entropy for a given series (e.g., target variable)
         value_counts = series.value_counts()
@@ -2746,9 +2670,7 @@ def information_gain(data, target_col, feature_cols):
         # Calculate weighted average of entropies for each unique value of the feature
         feature_entropy = data.groupby(feature_col)[target_col].apply(entropy_score)
         feature_counts = data[feature_col].value_counts()
-        weighted_feature_entropy = sum(
-            (feature_counts / len(data)) * feature_entropy.fillna(0)
-        )
+        weighted_feature_entropy = sum((feature_counts / len(data)) * feature_entropy.fillna(0))
         information_gain = total_entropy - weighted_feature_entropy
         information_gains[feature_col] = information_gain
 

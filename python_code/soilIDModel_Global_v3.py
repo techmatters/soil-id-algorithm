@@ -8,7 +8,6 @@ import re
 import numpy as np
 import pandas as pd
 import requests
-from scipy.stats import norm, spearmanr
 
 # Flask
 from flask import current_app
@@ -45,6 +44,7 @@ from model.local_functions_SoilID_v3 import (
 )
 from osgeo import ogr
 from pandas.io.json import json_normalize
+from scipy.stats import norm, spearmanr
 from shapely.geometry import Point
 
 # entry points

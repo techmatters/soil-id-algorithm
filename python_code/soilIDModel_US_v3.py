@@ -1,5 +1,6 @@
 # Standard libraries
 import collections
+import io
 import json
 import re
 
@@ -9,16 +10,16 @@ import numpy as np
 import pandas as pd
 import requests
 import shapely
-import io
-from scipy.stats import spearmanr
-from skbio.stats.composition import ilr, ilr_inv
 
 # Flask
 from flask import current_app, jsonify
 
 # Import local fucntions
 from model.local_functions_SoilID_v3 import (
+    acomp,
     agg_data_layer,
+    aggregate_data,
+    calculate_vwc_awc,
     drop_cokey_horz,
     extract_muhorzdata_STATSGO,
     extract_statsgo_mucompdata,
@@ -31,26 +32,25 @@ from model.local_functions_SoilID_v3 import (
     getSand,
     getTexture,
     gower_distances,
+    infill_soil_data,
     lab2munsell,
     load_model_output,
     munsell2rgb,
+    process_data_with_rosetta,
     process_distance_scores,
     pt2polyDist,
     save_model_output,
     save_rank_output,
     sda_return,
-    trim_fraction,
-    infill_soil_data,
-    slice_and_aggregate_soil_data,
-    acomp,
     simulate_correlated_triangular,
-    process_data_with_rosetta,
-    aggregate_data,
-    calculate_vwc_awc, 
+    slice_and_aggregate_soil_data,
+    trim_fraction,
 )
 from osgeo import ogr
 from pandas.io.json import json_normalize
+from scipy.stats import spearmanr
 from shapely.geometry import Point
+from skbio.stats.composition import ilr, ilr_inv
 
 # entry points
 # getSoilLocationBasedGlobal
@@ -801,7 +801,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         group_ag = slice_and_aggregate_soil_data(group[sim_data_columns])
         group_ag["compname_grp"] = group["compname_grp"].unique()[0]
         group_ag["distance_score"] = group["distance_score"].unique()[0]
-        group_ag = group_ag.drop('Depth', axis=1)
+        group_ag = group_ag.drop("Depth", axis=1)
         agg_data.append(group_ag)
 
     # Concatenate the results for each column into a single dataframe
@@ -903,15 +903,15 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 "water_retention_15_bar",
             ],
         )
-        sim_data['water_retention_third_bar'] = sim_data['water_retention_third_bar'].div(100)
-        sim_data['water_retention_15_bar'] = sim_data['water_retention_15_bar'].div(100)
+        sim_data["water_retention_third_bar"] = sim_data["water_retention_third_bar"].div(100)
+        sim_data["water_retention_15_bar"] = sim_data["water_retention_15_bar"].div(100)
         sim_txt = ilr_inv(sim_data[["ilr1", "ilr2"]])
         sim_txt = pd.DataFrame(sim_txt, columns=["sand_total", "silt_total", "clay_total"])
         sim_txt = sim_txt.multiply(100)
         multi_sim = pd.concat([sim_data.drop(columns=["ilr1", "ilr2"]), sim_txt], axis=1)
-        multi_sim['compname_grp'] = row['compname_grp']
-        multi_sim['hzdept_r'] = row['hzdept_r']
-        multi_sim['hzdepb_r'] = row['hzdepb_r']
+        multi_sim["compname_grp"] = row["compname_grp"]
+        multi_sim["hzdept_r"] = row["hzdept_r"]
+        multi_sim["hzdepb_r"] = row["hzdepb_r"]
         sim_data_out.append(multi_sim)
     sim_data_df = pd.concat(sim_data_out, axis=0, ignore_index=True)
 
@@ -931,12 +931,12 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     rosetta_data = process_data_with_rosetta(sim_data_df, vars=variables, v="3")
 
     # Create layerID
-    sim_data_df['layerID'] = sim_data_df['compname_grp'] + "_" + sim_data_df['hzdept_r'].astype(str)
-    rosetta_data['layerID'] = sim_data_df['layerID']
-    
+    sim_data_df["layerID"] = sim_data_df["compname_grp"] + "_" + sim_data_df["hzdept_r"].astype(str)
+    rosetta_data["layerID"] = sim_data_df["layerID"]
+
     awc = calculate_vwc_awc(rosetta_data)
     return jsonify(awc)
-    
+
     # ----------------------------------------------------------------------------
     # This extracts OSD color, texture, and CF data
     if data_source == "STATSGO":

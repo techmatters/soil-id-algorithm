@@ -587,7 +587,7 @@ def rankPredictionGlobal(
         soil_df_slice.set_index("index", inplace=True)
 
     if soil_df_slice is not None:
-        # If bedrock has been recorded and the lowest soil depth associated with data 
+        # If bedrock has been recorded and the lowest soil depth associated with data
         # is greater than bedrock, then change lowest soil depth to bedrock depth
         if bedrock and soil_df_slice["bottom"].iloc[-1] > bedrock:
             soil_df_slice["bottom"].iloc[-1] = bedrock
@@ -734,7 +734,7 @@ def rankPredictionGlobal(
     # Group the soilIDRank_output dataframe by 'compname' and return
     grouped_soil_data = [group for _, group in soilIDRank_output.groupby("compname", sort=False)]
 
-    # Create soil depth DataFrame and subset component depths based on max 
+    # Create soil depth DataFrame and subset component depths based on max
     # user depth if no bedrock specified
     c_bottom_depths = mucompdata_pd[["compname", "c_very_bottom"]].rename(
         columns={"c_very_bottom": "bottom_depth"}
@@ -743,7 +743,7 @@ def rankPredictionGlobal(
 
     compnames = mucompdata_pd[["compname", "compname_grp"]]
 
-    # If bedrock is not specified, determine max_depth based on user recorded 
+    # If bedrock is not specified, determine max_depth based on user recorded
     # depth (limited to 120 cm)
     max_depth = (
         120
@@ -767,7 +767,7 @@ def rankPredictionGlobal(
         soil_matrix.iloc[:slice_end, i] = 1
         soil_matrix.iloc[slice_end:max_depth, i] = 0
 
-    # Determine if user has entered horizon data and if so, subset component horizon 
+    # Determine if user has entered horizon data and if so, subset component horizon
     # data based on user input data
     if p_hz_data:
         # Subset component soil properties to match user measured properties
@@ -1415,11 +1415,11 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     # ---------------------------------------------------------------------------------
     ###################################################################################
     # Individual probability
-    # Based on Fan et al 2018 EQ 1, the conditional probability for each component is 
-    # calculated by taking the sum of all occurances of a component in the home and 
-    # adjacent mapunits and dividing this by the sum of all map units and components. 
-    # We have modified this approach so that each instance of a component occurance is 
-    # evaluated separately and assinged a weight and the max distance score for each 
+    # Based on Fan et al 2018 EQ 1, the conditional probability for each component is
+    # calculated by taking the sum of all occurances of a component in the home and
+    # adjacent mapunits and dividing this by the sum of all map units and components.
+    # We have modified this approach so that each instance of a component occurance is
+    # evaluated separately and assinged a weight and the max distance score for each
     # component group is assignedto all component instances.
     ###################################################################################
 
@@ -1514,11 +1514,11 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 # -----------------------------
                 ###################################################################################
                 # Individual probability
-                # Based on Fan et al 2018 EQ 1, the conditional probability for each component is 
-                # calculated by taking the sum of all occurances of a component in the home and 
-                # adjacent mapunits and dividing this by the sum of all map units and components. 
-                # We have modified this approach so that each instance of a component occurance is 
-                # evaluated separately and assinged a weight and the max distance score for each 
+                # Based on Fan et al 2018 EQ 1, the conditional probability for each component is
+                # calculated by taking the sum of all occurances of a component in the home and
+                # adjacent mapunits and dividing this by the sum of all map units and components.
+                # We have modified this approach so that each instance of a component occurance is
+                # evaluated separately and assinged a weight and the max distance score for each
                 # component group is assignedto all component instances.
                 ###################################################################################
 

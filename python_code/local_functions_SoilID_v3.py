@@ -929,7 +929,8 @@ def pt2polyDist(poly, point):
     d = pol_ext.project(point)
     p = pol_ext.interpolate(d)
     closest_point_coords = list(p.coords)[0]
-    # dist_m = haversine(point.x, point.y, closest_point_coords[0], closest_point_coords[1]) * 1000  # Convert to meters
+    # dist_m = haversine(point.x, point.y, closest_point_coords[0], closest_point_coords[1]) * 1000
+    # Convert to meters
     dist_m = haversine(point.x, point.y, *closest_point_coords) * 1000
     return round(dist_m, 0)
 
@@ -1698,7 +1699,8 @@ def pedon_color(lab_Color, horizonDepth):
 
 def lab2munsell(color_ref, LAB_ref, LAB):
     """
-    Converts LAB color values to Munsell notation using the closest match from a reference dataframe.
+    Converts LAB color values to Munsell notation using the closest match from a reference
+    dataframe.
 
     Parameters:
     - color_ref (pd.DataFrame): Reference dataframe with LAB and Munsell values.
@@ -2350,7 +2352,8 @@ def slice_and_aggregate_soil_data(df):
 #                 mask = (data.index >= top) & (data.index <= min(bottom, max_depth))
 #                 data_subset = data.loc[mask, column]
 #                 if not data_subset.empty:
-#                     result = round(data_subset.mean(skipna=True), sd) if not data_subset.isna().all() else np.nan
+#                     result = round(data_subset.mean(skipna=True), sd)
+#                              if not data_subset.isna().all() else np.nan
 #                     column_results.append([top, min(bottom, max_depth), result])
 #                 else:
 #                     column_results.append([top, min(bottom, max_depth), np.nan])
@@ -2658,7 +2661,8 @@ def information_gain(data, target_col, feature_cols):
     Calculate information gain for each feature with respect to the target variable.
 
     Args:
-        data (pd.DataFrame): The DataFrame containing the dataset, including target and feature columns.
+        data (pd.DataFrame): The DataFrame containing the dataset, including target
+                             and feature columns.
         target_col (str): The name of the target variable column.
         feature_cols (list): List of feature column names.
 
@@ -2696,11 +2700,16 @@ def information_gain(data, target_col, feature_cols):
 #         conn = get_datastore_connection()
 #         cur = conn.cursor()
 #         ST_Comp_List = [x.encode('UTF8') for x in ST_Comp_List]
-#         sql = 'SELECT Suborder, Description_en, Management_en, Description_es, Management_es, Description_ks, Management_ks, Description_fr, Management_fr FROM soil_taxonomy_desc WHERE Suborder IN (' + ''.join(str(ST_Comp_List)[1:-1]) + ')'
+#         sql = f"""SELECT Suborder, Description_en, Management_en, Description_es,
+#                   Management_es, Description_ks, Management_ks, Description_fr, Management_fr
+#                   FROM soil_taxonomy_desc
+#                   WHERE Suborder IN ({''.join(str(ST_Comp_List)[1:-1])})"""
 #         cur.execute(sql)
 #         results = cur.fetchall()
 #         data = pd.DataFrame(list(results))
-#         data.columns = ['Suborder', 'Description_en', 'Management_en', 'Description_es', 'Management_es', 'Description_ks', 'Management_ks', 'Description_fr', 'Management_fr']
+#         data.columns = ['Suborder', 'Description_en', 'Management_en', 'Description_es',
+#                         'Management_es', 'Description_ks', 'Management_ks', 'Description_fr',
+#                         'Management_fr']
 #         return data
 #     except Exception, err:
 #         print err

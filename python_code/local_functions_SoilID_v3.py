@@ -1,43 +1,28 @@
-#####################################################################################################
-#                                       Database and API Functions                                  #
-#####################################################################################################
+###################################################################################################
+#                                       Database and API Functions                                #
+###################################################################################################
 # Standard libraries
-import collections
-import csv
-import json
 import math
-import os
-import random
 import re
-import struct
 import sys
 
 # Third-party libraries
-import colour
 import geopandas as gpd
 import MySQLdb
 import numpy as np
 import pandas as pd
 import requests
-import scipy.stats
 import shapely
 from flask import current_app
 from numpy.linalg import cholesky
-from osgeo import gdal, ogr
-from scipy.interpolate import CubicSpline
-from scipy.linalg import sqrtm
+from scipy.interpolate import UnivariateSpline
 from scipy.sparse import issparse
-from scipy.spatial import distance
-from scipy.stats import norm
-from shapely.geometry import LinearRing, Point, Polygon, shape
-from skbio.stats.composition import ilr, ilr_inv
+from scipy.stats import entropy, norm
+from shapely.geometry import LinearRing, Point
+from sklearn.impute import SimpleImputer
 from sklearn.metrics import pairwise
 from sklearn.metrics.pairwise import euclidean_distances
 from sklearn.utils import validation
-
-# unused functions
-# getCF
-# get_WISE30sec_data
 
 
 def get_datastore_connection():
@@ -151,7 +136,10 @@ def load_model_output(plot_id):
         conn = get_datastore_connection()
         cur = conn.cursor()
         model_version = 2
-        sql = f"SELECT ID, result_blob, soilIDRank_output_pd, mucompdata_cond_prob FROM  landpks_soil_model WHERE plot_id = {plot_id} AND model_version = {model_version} order by ID desc LIMIT 1"
+        sql = f"""SELECT ID, result_blob, soilIDRank_output_pd, mucompdata_cond_prob
+                  FROM  landpks_soil_model
+                  WHERE plot_id = {plot_id} AND model_version = {model_version}
+                  ORDER BY ID DESC LIMIT 1"""
         cur.execute(sql)
         results = cur.fetchall()
         for row in results:
@@ -172,7 +160,11 @@ def get_WISE30sec_data(MUGLB_NEW_Select):
         conn = get_datastore_connection()
         cur = conn.cursor()
         placeholders = ", ".join(["%s"] * len(MUGLB_NEW_Select))
-        sql = f"SELECT MUGLB_NEW, COMPID, id, MU_GLOBAL, NEWSUID, SCID, PROP, CLAF,  PRID, Layer, TopDep, BotDep,  CFRAG,  SDTO,  STPC,  CLPC, CECS, PHAQ, ELCO, SU_name, FAO_SYS FROM  wise_soil_data WHERE MUGLB_NEW IN ({placeholders})"
+        sql = f"""SELECT MUGLB_NEW, COMPID, id, MU_GLOBAL, NEWSUID, SCID, PROP, CLAF,
+                       PRID, Layer, TopDep, BotDep,  CFRAG,  SDTO,  STPC,  CLPC, CECS,
+                       PHAQ, ELCO, SU_name, FAO_SYS
+                  FROM  wise_soil_data
+                  WHERE MUGLB_NEW IN ({placeholders})"""
         cur.execute(sql, MUGLB_NEW_Select)
         results = cur.fetchall()
         data = pd.DataFrame(
@@ -241,7 +233,7 @@ def extract_WISE_data(lon, lat, file_path, layer_name=None, buffer_size=0.5):
     hwsd = pd.merge(mu_id_dist, hwsd, on="MUGLB_NEW", how="left").drop_duplicates()
 
     MUGLB_NEW_Select = hwsd["MUGLB_NEW"].tolist()
-    wise_data = getWISE30sec_data(MUGLB_NEW_Select)
+    wise_data = get_WISE30sec_data(MUGLB_NEW_Select)
     wise_data = pd.merge(wise_data, mu_id_dist, on="MUGLB_NEW", how="left")
 
     return wise_data
@@ -255,7 +247,10 @@ def get_WRB_descriptions(WRB_Comp_List):
         conn = get_datastore_connection()
         cur = conn.cursor()
         placeholders = ", ".join(["%s"] * len(WRB_Comp_List))
-        sql = f"SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es, Description_ks, Management_ks, Description_fr, Management_fr FROM wrb_fao90_desc WHERE WRB_tax IN ({placeholders})"
+        sql = f"""SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es,
+                       Description_ks, Management_ks, Description_fr, Management_fr
+                FROM wrb_fao90_desc
+                WHERE WRB_tax IN ({placeholders})"""
         cur.execute(sql, WRB_Comp_List)
         results = cur.fetchall()
         data = pd.DataFrame(
@@ -282,7 +277,8 @@ def get_WRB_descriptions(WRB_Comp_List):
 
 def sda_return(propQry):
     """
-    Queries data from the USDA's Soil Data Mart (SDM) Tabular Service and returns it as a pandas DataFrame.
+    Queries data from the USDA's Soil Data Mart (SDM) Tabular Service and returns
+    it as a pandas DataFrame.
     """
     base_url = "https://sdmdataaccess.nrcs.usda.gov/Tabular/SDMTabularService/post.rest"
     request_data = {"format": "JSON+COLUMNNAME", "query": propQry}
@@ -313,9 +309,9 @@ def sda_return(propQry):
         return None
 
 
-#####################################################################################################
-#                                       Utility Functions                                           #
-#####################################################################################################
+###################################################################################################
+#                                       Utility Functions                                         #
+###################################################################################################
 
 
 def getSand(field):
@@ -364,9 +360,21 @@ def silt_calc(row):
 
 
 def getTexture(row, sand=None, silt=None, clay=None):
-    sand = sand if sand is not None else row.get("sandtotal_r") or row.get("sand")
-    silt = silt if silt is not None else row.get("silttotal_r") or row.get("silt")
-    clay = clay if clay is not None else row.get("claytotal_r") or row.get("clay")
+    sand = (
+        sand
+        if sand is not None
+        else row.get("sandtotal_r") or row.get("sand") or row.get("sand_total")
+    )
+    silt = (
+        silt
+        if silt is not None
+        else row.get("silttotal_r") or row.get("silt") or row.get("silt_total")
+    )
+    clay = (
+        clay
+        if clay is not None
+        else row.get("claytotal_r") or row.get("clay") or row.get("clay_total")
+    )
 
     silt_clay = silt + 1.5 * clay
     silt_2x_clay = silt + 2.0 * clay
@@ -428,6 +436,22 @@ def getCF_fromClass(cf):
     }
 
     return cf_to_value.get(cf, np.nan)
+
+
+def getCF_class(row, cf=None):
+    cf = cf if cf is not None else row.get("rfv")
+    if 0 <= cf < 2:
+        return "0-1%"
+    elif 2 <= cf < 16:
+        return "1-15%"
+    elif 16 <= cf < 36:
+        return "15-35%"
+    elif 36 <= cf < 61:
+        return "35-60%"
+    elif 61 <= cf <= 100:
+        return ">60%"
+    else:
+        return np.nan
 
 
 def getOSDCF(cf):
@@ -678,7 +702,7 @@ def getProfile(data, variable, c_bot=False):
             pd_add.columns = ["var_pct_intpl"]
             var_pct_intpl_final = pd.concat([var_pct_intpl_final, pd_add], axis=0)
             var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
-    if c_bot == True:
+    if c_bot:
         if len(data["hzdept_r"]) == 1:
             c_very_bottom = data["hzdepb_r"].iloc[0]
         else:
@@ -839,7 +863,7 @@ def getProfile_SG(data, variable, c_bot=False):
             pd_add.columns = ["var_pct_intpl"]
             var_pct_intpl_final = pd.concat([var_pct_intpl_final, pd_add], axis=0)
             var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
-    if c_bot == True:
+    if c_bot:
         if len(data["hzdept_r"]) == 1:
             c_very_bottom = data["hzdepb_r"].iloc[0]
         else:
@@ -851,7 +875,9 @@ def getProfile_SG(data, variable, c_bot=False):
 
 def drop_cokey_horz(df):
     """
-    Function to drop duplicate rows of component horizon data when more than one instance of a component are duplicates.
+    Function to drop duplicate rows of component horizon data when more than one instance of a
+    component are duplicates.
+
     Function assumes that the dataframe contains:
       (1) unique cokey identifier ('cokey')
       (2) generic compname identifier ('compname')
@@ -906,7 +932,8 @@ def drop_cokey_horz(df):
 
 def haversine(lon1, lat1, lon2, lat2):
     """
-    Calculate the great circle distance between two points on the earth specified in decimal degrees.
+    Calculate the great circle distance between two points on the earth specified in
+    decimal degrees.
 
     Args:
     - lon1, lat1: Longitude and latitude of the first point.
@@ -943,7 +970,8 @@ def pt2polyDist(poly, point):
     d = pol_ext.project(point)
     p = pol_ext.interpolate(d)
     closest_point_coords = list(p.coords)[0]
-    # dist_m = haversine(point.x, point.y, closest_point_coords[0], closest_point_coords[1]) * 1000  # Convert to meters
+    # dist_m = haversine(point.x, point.y, closest_point_coords[0], closest_point_coords[1]) * 1000
+    # Convert to meters
     dist_m = haversine(point.x, point.y, *closest_point_coords) * 1000
     return round(dist_m, 0)
 
@@ -954,14 +982,15 @@ def calculate_location_score(group, ExpCoeff):
 
     Parameters:
     - group (DataFrame): A group of data containing 'distance' and 'share' columns.
-    - ExpCoeff (float): Exponential coefficient to adjust sensitivity of the score to distance values.
+    - ExpCoeff (float): Exponential coefficient to adjust sensitivity of the score
+                        to distance values.
 
     Returns:
     - float: Calculated location score.
 
-    The score is adjusted based on the provided exponential coefficient (ExpCoeff). The function provides
-    a way to compute a normalized score for locations, giving preference to locations with a closer distance
-    (smaller distance values) and higher share values.
+    The score is adjusted based on the provided exponential coefficient (ExpCoeff). The
+    function provides a way to compute a normalized score for locations, giving preference
+    to locations with a closer distance (smaller distance values) and higher share values.
     """
 
     # Parameter validation
@@ -1033,6 +1062,10 @@ def check_pairwise_arrays(X, Y, precomputed=False, dtype=None):
     if dtype is None:
         dtype = dtype_float
 
+    # impute missing values
+    imputer = SimpleImputer(missing_values=np.nan, strategy="mean")  # You can change the strategy
+    X = imputer.fit_transform(X)
+
     # Validate the input arrays
     X = validation.check_array(X, accept_sparse="csr", dtype=dtype, estimator=estimator)
     if Y is X or Y is None:
@@ -1043,11 +1076,13 @@ def check_pairwise_arrays(X, Y, precomputed=False, dtype=None):
     # Check for valid shapes based on whether distances are precomputed
     if precomputed and X.shape[1] != Y.shape[0]:
         raise ValueError(
-            f"Precomputed metric requires shape (n_queries, n_indexed). Got ({X.shape[0]}, {X.shape[1]}) for {Y.shape[0]} indexed."
+            "Precomputed metric requires shape (n_queries, n_indexed)."
+            f"Got ({X.shape[0]}, {X.shape[1]}) for {Y.shape[0]} indexed."
         )
     elif X.shape[1] != Y.shape[1]:
         raise ValueError(
-            f"Incompatible dimension for X and Y matrices: X.shape[1] == {X.shape[1]} while Y.shape[1] == {Y.shape[1]}"
+            "Incompatible dimension for X and Y matrices:"
+            f"X.shape[1] == {X.shape[1]} while Y.shape[1] == {Y.shape[1]}"
         )
 
     return X, Y
@@ -1157,7 +1192,9 @@ def _gower_distance_row(
     feature_weight_cat,
     feature_weight_num,
     feature_weight_sum,
+    categorical_features,
     ranges_of_numeric,
+    max_of_numeric,
 ):
     """
     Compute the Gower distance between a single row and a set of rows.
@@ -1198,6 +1235,43 @@ def _gower_distance_row(
     sum_sij = (sum_cat + sum_num) / feature_weight_sum
 
     return sum_sij
+
+
+def compute_site_similarity(
+    p_slope, mucompdata, slices, additional_columns=None, feature_weight=None
+):
+    """
+    Compute gower distances for site similarity based on the provided feature weights.
+
+    Parameters:
+    - p_slope: DataFrame containing sample_pedon information.
+    - mucompdata: DataFrame containing component data.
+    - slices: DataFrame containing slices of soil.
+    - additional_columns: List of additional columns to consider.
+    - feature_weight: Array of weights for features.
+
+    Returns:
+    - D_site: Gower distances array for site similarity.
+    """
+    # Combine pedon slope data with component data
+    site_vars = pd.concat([p_slope, mucompdata[["compname", "slope_r", "elev_r"]]], axis=0)
+
+    # If additional columns are specified, merge them
+    if additional_columns:
+        site_vars = pd.merge(slices, site_vars, on="compname", how="left")
+        site_mat = site_vars[additional_columns]
+    else:
+        site_mat = site_vars[["slope_r", "elev_r"]]
+
+    site_mat = site_mat.set_index(slices.compname.values)
+
+    # Compute the gower distances
+    D_site = gower_distances(site_mat, feature_weight=feature_weight)
+
+    # Replace NaN values with the maximum value in the array
+    D_site = np.where(np.isnan(D_site), np.nanmax(D_site), D_site)
+
+    return D_site
 
 
 def compute_text_comp(bedrock, p_sandpct_intpl, soilHorizon):
@@ -1432,9 +1506,12 @@ def extract_muhorzdata_STATSGO(mucompdata_pd):
     ]
 
     # Form the muhorzdata query
-    muhorzdataQry = "SELECT cokey, chorizon.chkey, hzdept_r, hzdepb_r, hzname, sandtotal_r, silttotal_r, claytotal_r, cec7_r, ecec_r, ph1to1h2o_r, ec_r,lep_r, chfrags.fragvol_r FROM chorizon LEFT OUTER JOIN chfrags ON chfrags.chkey = chorizon.chkey WHERE cokey IN ({})".format(
-        ",".join(cokey_list)
-    )
+    muhorzdataQry = f"""SELECT cokey, chorizon.chkey, hzdept_r, hzdepb_r, hzname, sandtotal_r,
+                        silttotal_r, claytotal_r, cec7_r, ecec_r, ph1to1h2o_r, ec_r,lep_r,
+                        chfrags.fragvol_r
+                        FROM chorizon
+                        LEFT OUTER JOIN chfrags ON chfrags.chkey = chorizon.chkey
+                        WHERE cokey IN ({",".join(cokey_list)})"""
 
     # Execute the query
     muhorzdata_out = sda_return(propQry=muhorzdataQry)
@@ -1508,7 +1585,14 @@ def extract_statsgo_mucompdata(lon, lat):
 
     # Build the mucompdata query
     mukey_list = mukey_dist_final["MUKEY"].tolist()
-    mucompdataQry = f"SELECT component.mukey, component.cokey, component.compname, component.comppct_r, component.compkind, component.majcompflag, component.slope_r, component.elev_r, component.nirrcapcl, component.nirrcapscl, component.nirrcapunit, component.irrcapcl, component.irrcapscl, component.irrcapunit, component.taxorder, component.taxsubgrp FROM component WHERE mukey IN ({','.join(map(str, mukey_list))})"
+    mucompdataQry = f"""SELECT component.mukey, component.cokey, component.compname,
+                        component.comppct_r, component.compkind, component.majcompflag,
+                        component.slope_r, component.elev_r, component.nirrcapcl,
+                        component.nirrcapscl, component.nirrcapunit, component.irrcapcl,
+                        component.irrcapscl, component.irrcapunit, component.taxorder,
+                        component.taxsubgrp
+                        FROM component
+                        WHERE mukey IN ({','.join(map(str, mukey_list))})"""
     mucompdata_out = sda_return(propQry=mucompdataQry)
 
     # Process the mucompdata results
@@ -1651,9 +1735,9 @@ def process_distance_scores(mucompdata_pd, ExpCoeff):
     return mucompdata_pd
 
 
-#####################################################################################################
-#                                       Soil Color Functions                                        #
-#####################################################################################################
+###################################################################################################
+#                                       Soil Color Functions                                      #
+###################################################################################################
 
 
 def pedon_color(lab_Color, horizonDepth):
@@ -1711,7 +1795,8 @@ def pedon_color(lab_Color, horizonDepth):
 
 def lab2munsell(color_ref, LAB_ref, LAB):
     """
-    Converts LAB color values to Munsell notation using the closest match from a reference dataframe.
+    Converts LAB color values to Munsell notation using the closest match from a reference
+    dataframe.
 
     Parameters:
     - color_ref (pd.DataFrame): Reference dataframe with LAB and Munsell values.
@@ -1722,7 +1807,10 @@ def lab2munsell(color_ref, LAB_ref, LAB):
     - str: Munsell color notation.
     """
     idx = pd.DataFrame(euclidean_distances([LAB], LAB_ref)).idxmin(axis=1).iloc[0]
-    munsell_color = f"{color_ref.at[idx, 'hue']} {int(color_ref.at[idx, 'value'])}/{int(color_ref.at[idx, 'chroma'])}"
+    munsell_color = (
+        "{color_ref.at[idx, 'hue']} "
+        f"{int(color_ref.at[idx, 'value'])}/{int(color_ref.at[idx, 'chroma'])}"
+    )
     return munsell_color
 
 
@@ -2035,11 +2123,14 @@ def simulate_correlated_triangular(n, params, correlation_matrix):
 
     Parameters:
     - n: Number of samples.
-    - params: List of tuples, where each tuple contains three parameters (a, b, c) for the triangular distribution.
-    - correlation_matrix: 2D numpy array representing the desired correlations between the variables.
+    - params: List of tuples, where each tuple contains three parameters (a, b, c) for the
+              triangular distribution.
+    - correlation_matrix: 2D numpy array representing the desired correlations between
+                          the variables.
 
     Returns:
-    - samples: 2D numpy array with n rows and as many columns as there are sets of parameters in params.
+    - samples: 2D numpy array with n rows and as many columns as there are sets of
+                  parameters in params.
     """
 
     # Generate uncorrelated standard normal variables
@@ -2150,11 +2241,14 @@ def simulate_correlated_triangular(n, params, correlation_matrix):
 
     Parameters:
     - n: Number of samples.
-    - params: List of tuples, where each tuple contains three parameters (a, b, c) for the triangular distribution.
-    - correlation_matrix: 2D numpy array representing the desired correlations between the variables.
+    - params: List of tuples, where each tuple contains three parameters (a, b, c) for the
+              triangular distribution.
+    - correlation_matrix: 2D numpy array representing the desired correlations between
+                          the variables.
 
     Returns:
-    - samples: 2D numpy array with n rows and as many columns as there are sets of parameters in params.
+    - samples: 2D numpy array with n rows and as many columns as there are sets of
+                  parameters in params.
     """
 
     # Generate uncorrelated standard normal variables
@@ -2174,7 +2268,13 @@ def simulate_correlated_triangular(n, params, correlation_matrix):
         u = norm.cdf(normal_var)  # Transform to uniform [0, 1] range
 
         # Transform the uniform values into triangularly distributed values
-        condition = u <= (b - a) / (c - a)
+        try:
+            condition = u <= (b - a) / (c - a)
+        except ZeroDivisionError:
+            # Handle the zero-division case
+            condition = None  # or some other default value
+
+        # condition = u <= (b - a) / (c - a)
         samples[condition, i] = a + np.sqrt(u[condition] * (c - a) * (b - a))
         samples[~condition, i] = c - np.sqrt((1 - u[~condition]) * (c - a) * (c - b))
 
@@ -2203,10 +2303,25 @@ def gsi_simshape(x, oldx):
     return x.flatten() if oldx.ndim == 0 else x.reshape(-1)
 
 
-# Temporary function to infill missing data. TODO: create loopup table with average values for l-r-h by series
+# Temporary function to infill missing data.
+# TODO: create loopup table with average values for l-r-h by series
+def impute_rfv_values(row):
+    if row["rfv_r"] == 0:
+        row["rfv_r"] = 0.02
+        row["rfv_l"] = 0.01
+        row["rfv_h"] = 0.03
+    elif 0 < row["rfv_r"] <= 2:
+        row["rfv_l"] = 0.01  # if pd.isna(row['rfv_l']) else row['rfv_l']
+        row["rfv_h"] = row["rfv_r"] + 2  # if pd.isna(row['rfv_h']) else row['rfv_h']
+    elif row["rfv_r"] > 2:
+        row["rfv_l"] = row["rfv_r"] - 2  # if pd.isna(row['rfv_l']) else row['rfv_l']
+        row["rfv_h"] = row["rfv_r"] + 2  # if pd.isna(row['rfv_h']) else row['rfv_h']
+    return row
+
+
 def infill_soil_data(df):
     # Group by 'compname'
-    grouped = df.groupby("compname")
+    grouped = df.groupby("compname_grp")
 
     # Filtering groups
     def filter_group(group):
@@ -2236,49 +2351,160 @@ def infill_soil_data(df):
     # Step 8 and 9: Replace missing 'wfifteenbar_l' and 'wfifteenbar_h' with 'wfifteenbar_r' +/- 0.6
     filtered_groups["wfifteenbar_l"].fillna(filtered_groups["wfifteenbar_r"] - 0.6, inplace=True)
     filtered_groups["wfifteenbar_h"].fillna(filtered_groups["wfifteenbar_r"] + 0.6, inplace=True)
+    # Step 10 and 11: Impute 'rfv_l' and 'rfv_h' values with 'rfv_r' +/- value
+    filtered_groups = filtered_groups.apply(impute_rfv_values, axis=1)
 
     return filtered_groups
 
 
-def aggregate_data_vi(data, max_depth, sd=2):
-    """
-    Aggregate data by specific depth ranges and compute the mean of each range for each column.
+# def slice_and_aggregate_soil_data(df):
+#     # Create an empty DataFrame to hold the aggregated results
+#     aggregated_data = pd.DataFrame()
+#
+#     # Get numeric columns for aggregation, excluding the depth range columns
+#     data_columns =
+#       df.select_dtypes(include=[np.number]).columns.difference(['hzdept_r', 'hzdepb_r'])
+#
+#     # Iterate through each depth interval
+#     for _, row in df.iterrows():
+#         top_depth = row['hzdept_r']
+#         bottom_depth = row['hzdepb_r']
+#         depth_range = np.arange(top_depth, bottom_depth)
+#
+#         # Create a DataFrame for each 1 cm increment
+#         for depth in depth_range:
+#             interpolated_row = {col: row[col] for col in data_columns}
+#             interpolated_row['Depth'] = depth
+#
+#             # Add the interpolated row to the aggregated data
+#             aggregated_data = aggregated_data.append(interpolated_row, ignore_index=True)
+#
+#     # Calculate mean values for each depth increment
+#     depth_increment_means = aggregated_data.groupby('Depth').mean()
+#
+#     # Define the depth ranges
+#     depth_ranges = [(0, 30), (30, 100)]
+#     # Initialize the result list
+#     results = []
+#
+#     # Iterate over each column in the dataframe
+#     for column in depth_increment_means.columns:
+#         column_results = []
+#         for top, bottom in depth_ranges:
+#             mask = (depth_increment_means.index >= top) & (depth_increment_means.index < bottom)
+#             data_subset = depth_increment_means.loc[mask, column]
+#             result = data_subset.mean(skipna=True) if not data_subset.empty else None
+#             column_results.append([top, bottom, result])
+#
+#         # Append the results for the current column to the overall results list
+#         results.append(
+#             pd.DataFrame(
+#                 column_results,
+#                 columns=["hzdept_r", "hzdepb_r", f"{column}"],
+#             )
+#         )
+#
+#     # Concatenate the results for each column into a single dataframe
+#     result_df = pd.concat(results, axis=1)
+#
+#     # If there are multiple columns, remove the repeated 'Top Depth' and 'Bottom Depth' columns
+#     if len(depth_increment_means.columns) > 1:
+#         result_df = result_df.loc[:, ~result_df.columns.duplicated()]
+#
+#     # Check if there is any row covering the 30-100 cm depth range
+#     # if not ((result_df['hzdept_r'] == 30)).any():
+#     #     # Create a row with hzdept_r=30, hzdepb_r=100, and None for all other columns
+#     #     new_row = {'hzdept_r': 30, 'hzdepb_r': 100}
+#     #     for col in data_columns:
+#     #         new_row[col] = None
+#     #
+#     #     # Append the new row to result_df
+#     #     result_df = result_df.append(new_row, ignore_index=True)
+#     result_df = result_df.drop_duplicates()
+#     return result_df
 
-    Args:
-        data (pd.DataFrame): The DataFrame containing the data with index as depth.
-        max_depth (float): The maximum depth to consider for aggregation.
-        sd (int): The number of decimal places to round the aggregated data.
+
+def slice_and_aggregate_soil_data_old(df):
+    """
+    Takes a DataFrame with soil data, slices it into 1 cm increments based on depth ranges provided
+    in 'hzdept_r' and 'hzdepb_r' columns, and calculates mean values for each depth increment
+    across all other data columns.
+
+    Parameters:
+    df (pd.DataFrame): A DataFrame where each row represents a soil sample. It must contain
+                       'hzdept_r' and 'hzdepb_r' columns indicating the top and bottom depths.
 
     Returns:
-        pd.DataFrame: A DataFrame with aggregated data for each column within specified depth ranges.
-    """
-    if not max_depth or np.isnan(max_depth):
-        return pd.DataFrame(columns=["hzdept_r", "hzdepb_r", "Data"])
+    pd.DataFrame: A DataFrame indexed by depth in 1 cm increments, containing mean values of
+                  soil properties for each depth increment.
 
+    Note:
+    The function assumes linear distribution of data between depth intervals. Non-numeric columns
+    are excluded from the mean calculation.
+    """
+    # Create an empty DataFrame to hold the aggregated results
+    aggregated_data = pd.DataFrame()
+
+    # Get numeric columns for aggregation, excluding the depth range columns
+    data_columns = df.select_dtypes(include=[np.number]).columns.difference(
+        ["hzdept_r", "hzdepb_r"]
+    )
+
+    # Iterate through each depth interval
+    for _, row in df.iterrows():
+        top_depth = row["hzdept_r"]
+        bottom_depth = row["hzdepb_r"]
+        depth_range = np.arange(top_depth, bottom_depth)
+
+        # Create a DataFrame for each 1 cm increment
+        for depth in depth_range:
+            interpolated_row = {col: row[col] for col in data_columns}
+            interpolated_row["Depth"] = depth
+
+            # Add the interpolated row to the aggregated data
+            aggregated_data = aggregated_data.append(interpolated_row, ignore_index=True)
+
+    max_depth = aggregated_data["Depth"].max()
+    sd = 2
     # Define the depth ranges
     depth_ranges = [(0, 30), (30, 100)]
+
     # Initialize the result list
     results = []
 
+    # Flag to check if the 30-100 cm range is covered
+    is_depth_30_100_covered = False
+
     # Iterate over each column in the dataframe
-    for column in data.columns:
+    for column in aggregated_data.columns:
         column_results = []
         for top, bottom in depth_ranges:
             if max_depth <= top:
                 column_results.append([top, bottom, np.nan])
             else:
-                mask = (data.index >= top) & (data.index <= min(bottom, max_depth))
-                data_subset = data.loc[mask, column]
+                mask = (aggregated_data.index >= top) & (
+                    aggregated_data.index <= min(bottom, max_depth)
+                )
+                data_subset = aggregated_data.loc[mask, column]
                 if not data_subset.empty:
-                    result = round(data_subset.mean(), sd)
+                    result = (
+                        round(data_subset.mean(skipna=True), sd)
+                        if not data_subset.isna().all()
+                        else np.nan
+                    )
                     column_results.append([top, min(bottom, max_depth), result])
                 else:
                     column_results.append([top, min(bottom, max_depth), np.nan])
+
+                # Check if the 30-100 cm range is covered
+                if top == 30:
+                    is_depth_30_100_covered = not data_subset.empty
+
         # Append the results for the current column to the overall results list
         results.append(
             pd.DataFrame(
                 column_results,
-                columns=["hzdept_r", "hzdepb_r", f"Aggregated Data ({column})"],
+                columns=["hzdept_r", "hzdepb_r", f"{column}"],
             )
         )
 
@@ -2286,10 +2512,148 @@ def aggregate_data_vi(data, max_depth, sd=2):
     result_df = pd.concat(results, axis=1)
 
     # If there are multiple columns, remove the repeated 'Top Depth' and 'Bottom Depth' columns
-    if len(data.columns) > 1:
+    if len(aggregated_data.columns) > 1:
+        result_df = result_df.loc[:, ~result_df.columns.duplicated()]
+
+    # Add a row for 30-100 cm range if it's not covered
+    if not is_depth_30_100_covered:
+        # Initialize a dictionary with None or a small value for each column
+        none_row = {
+            col: [None] if col not in ["hzdept_r", "hzdepb_r"] else [] for col in result_df.columns
+        }
+
+        # Set the depth values for this row
+        none_row["hzdept_r"] = [30]
+        none_row["hzdepb_r"] = [100]
+
+        # Create a DataFrame from the dictionary
+        none_df = pd.DataFrame(none_row)
+
+        # Concatenate with the original DataFrame
+        result_df = pd.concat([result_df, none_df], ignore_index=True)
+    result_df = result_df.drop_duplicates()
+
+    return result_df
+
+    """
+    # Initialize the result list
+    results = []
+
+    # Iterate over each column in the dataframe
+    for column in aggregated_data.columns:
+        column_results = []
+        for top, bottom in depth_ranges:
+            if max_depth <= top:
+                column_results.append([top, bottom, np.nan])
+            else:
+                mask = (aggregated_data.index >= top) & (
+                    aggregated_data.index <= min(bottom, max_depth)
+                )
+                data_subset = aggregated_data.loc[mask, column]
+                if not data_subset.empty:
+                    result = (
+                        round(data_subset.mean(skipna=True), sd)
+                        if not data_subset.isna().all()
+                        else np.nan
+                    )
+                    column_results.append([top, min(bottom, max_depth), result])
+                else:
+                    column_results.append([top, min(bottom, max_depth), np.nan])
+        # Append the results for the current column to the overall results list
+        results.append(
+            pd.DataFrame(
+                column_results,
+                columns=["hzdept_r", "hzdepb_r", f"{column}"],
+            )
+        )
+
+    # Concatenate the results for each column into a single dataframe
+    result_df = pd.concat(results, axis=1)
+
+    # If there are multiple columns, remove the repeated 'Top Depth' and 'Bottom Depth' columns
+    if len(aggregated_data.columns) > 1:
         result_df = result_df.loc[:, ~result_df.columns.duplicated()]
 
     return result_df
+    """
+
+
+# def aggregate_data_vi(data, max_depth, sd=2):
+#     """
+#     Aggregate data by specific depth ranges and compute the mean of each range for each column.
+#
+#     Args:
+#         data (pd.DataFrame): The DataFrame containing the data with index as depth.
+#         max_depth (float): The maximum depth to consider for aggregation.
+#         sd (int): The number of decimal places to round the aggregated data.
+#
+#     Returns:
+#         pd.DataFrame: A DataFrame with aggregated data for each column within specified
+#                       depth ranges.
+#     """
+#     if not max_depth or np.isnan(max_depth):
+#         return pd.DataFrame(columns=["hzdept_r", "hzdepb_r", "Data"])
+#
+#     # Define the depth ranges
+#     depth_ranges = [(0, 30), (30, 100)]
+#     # Initialize the result list
+#     results = []
+#
+#     # Iterate over each column in the dataframe
+#     for column in data.columns:
+#         column_results = []
+#         for top, bottom in depth_ranges:
+#             if max_depth <= top:
+#                 column_results.append([top, bottom, np.nan])
+#             else:
+#                 mask = (data.index >= top) & (data.index <= min(bottom, max_depth))
+#                 data_subset = data.loc[mask, column]
+#                 if not data_subset.empty:
+#                     result = round(data_subset.mean(skipna=True), sd)
+#                              if not data_subset.isna().all() else np.nan
+#                     column_results.append([top, min(bottom, max_depth), result])
+#                 else:
+#                     column_results.append([top, min(bottom, max_depth), np.nan])
+#         # Append the results for the current column to the overall results list
+#         results.append(
+#             pd.DataFrame(
+#                 column_results,
+#                 columns=["hzdept_r", "hzdepb_r", f"{column}"],
+#             )
+#         )
+#
+#     # Concatenate the results for each column into a single dataframe
+#     result_df = pd.concat(results, axis=1)
+#
+#     # If there are multiple columns, remove the repeated 'Top Depth' and 'Bottom Depth' columns
+#     if len(data.columns) > 1:
+#         result_df = result_df.loc[:, ~result_df.columns.duplicated()]
+#
+#     return result_df
+
+# def extract_soil_params(soil_df):
+#     # Extract the parameters for sand, silt, and clay from the DataFrame
+#     sand_params = [soil_df["sandtotal_l"].values, soil_df["sandtotal_r"].values,
+#                    soil_df["sandtotal_h"].values]
+#     silt_params = [soil_df["silttotal_l"].values, soil_df["silttotal_r"].values,
+#                    soil_df["silttotal_h"].values]
+#     clay_params = [soil_df["claytotal_l"].values, soil_df["claytotal_r"].values,
+#                    soil_df["claytotal_h"].values]
+#
+#     # Create a list of tuples where each tuple represents the l, r, h values for each soil
+#     # component for a row
+#     soil_params_tuples = list(zip(zip(*sand_params), zip(*silt_params), zip(*clay_params)))
+#
+#     # Convert the list of tuples into the desired structure
+#     # Where each tuple has the structure ((sand_l, sand_r, sand_h),
+#                                           (silt_l, silt_r, silt_h),
+#                                           (clay_l, clay_r, clay_h))
+#     structured_soil_params = [((sand[0], sand[1], sand[2]),
+#                                (silt[0], silt[1], silt[2]),
+#                                (clay[0], clay[1], clay[2]))
+#                               for sand, silt, clay in soil_params_tuples]
+#
+#     return structured_soil_params
 
 
 # ROSETTA Simulation
@@ -2320,6 +2684,249 @@ def mukey_sim_rosseta(aoi_data, cor_matrix):
     return mukey_sim_list
 
 
+def rosetta_request(chunk, vars, v, conf=None, include_sd=False):
+    """
+    Sends a chunk of data to the ROSETTA web service for processing and returns the response.
+
+    Parameters:
+    - chunk (DataFrame): The chunk of the DataFrame to be processed.
+    - vars (list): List of variable names to be processed.
+    - v (str): The version of the ROSETTA model to use.
+    - conf (dict, optional): Additional request configuration options.
+    - include_sd (bool): Whether to include standard deviation in the output.
+
+    Returns:
+    - DataFrame: The processed chunk with results from the ROSETTA service.
+    - Exception: If an HTTP or JSON parsing error occurs, the exception is returned.
+    """
+    # Select only the specified vars columns and other columns
+    chunk_vars = chunk[vars]
+    chunk_other = chunk.drop(columns=vars)
+
+    # Convert the vars chunk to a matrix (2D list)
+    chunk_vars_matrix = chunk_vars.values.tolist()
+
+    # Construct the request URL
+    url = f"http://www.handbook60.org/api/v1/rosetta/{v}"
+
+    # Make the POST request to the ROSETTA API
+    try:
+        response = requests.post(url, json={"X": chunk_vars_matrix}, headers=conf)
+        # This will raise an HTTPError if the HTTP request returned an unsuccessful status code
+        response.raise_for_status()
+    except requests.RequestException as e:
+        return e  # Return the exception to be handled by the caller
+
+    # Parse the JSON response content
+    try:
+        response_json = response.json()
+    except ValueError as e:
+        return e  # Return the exception to be handled by the caller
+
+    # Convert van Genuchten params to DataFrame
+    vg_params = pd.DataFrame(response_json["van_genuchten_params"])
+    vg_params.columns = ["theta_r", "theta_s", "alpha", "npar", "ksat"]
+
+    # Add model codes and version to the DataFrame
+    vg_params[".rosetta.model"] = pd.Categorical.from_codes(
+        response_json["model_codes"], categories=["-1", "1", "2", "3", "4", "5"]
+    )
+    vg_params[".rosetta.version"] = response_json["rosetta_version"]
+
+    # If include_sd is True, add standard deviations to the DataFrame
+    if include_sd:
+        vg_sd = pd.DataFrame(response_json["stdev"])
+        vg_sd.columns = [f"sd_{name}" for name in vg_params.columns]
+        result = pd.concat(
+            [
+                chunk_other.reset_index(drop=True),
+                chunk_vars.reset_index(drop=True),
+                vg_params.reset_index(drop=True),
+                vg_sd,
+            ],
+            axis=1,
+        )
+    else:
+        result = pd.concat(
+            [
+                chunk_other.reset_index(drop=True),
+                chunk_vars.reset_index(drop=True),
+                vg_params.reset_index(drop=True),
+            ],
+            axis=1,
+        )
+
+    return result
+
+
+def process_data_with_rosetta(df, vars, v="3", include_sd=False, chunk_size=10000, conf=None):
+    """
+    Processes a DataFrame by sending chunks of data to the ROSETTA web service and
+    concatenates the results into a single DataFrame.
+
+    Parameters:
+    - df (DataFrame): The DataFrame containing the data to be processed.
+    - vars (list): List of variable names to be processed.
+    - v (str, optional): The version of the ROSETTA model to use. Defaults to '3'.
+    - include_sd (bool, optional): Whether to include standard deviation in the output.
+      Defaults to False.
+    - chunk_size (int, optional): The number of rows per chunk to send to the ROSETTA service.
+      Defaults to 10000.
+    - conf (dict, optional): Additional request configuration options.
+
+    Returns:
+    - DataFrame: The DataFrame containing the combined results from all chunks.
+    - None: If there are no results or an error occurs during processing.
+
+    Raises:
+    - ValueError: If the input DataFrame does not meet the required conditions.
+    """
+    if not isinstance(df, pd.DataFrame):
+        raise ValueError("x must be a pandas DataFrame")
+
+    if df.empty:
+        raise ValueError("x must contain more than 0 rows")
+
+    if not all(var in df.columns for var in vars):
+        raise ValueError("vars must match columns in x")
+
+    if not all(df[var].dtype.kind in "fi" for var in vars):  # checks for float and integer types
+        raise ValueError("x must contain only numeric values")
+
+    # Helper function to make chunks
+    def make_chunks(data, size):
+        return [data.iloc[i : i + size] for i in range(0, len(data), size)]
+
+    # Create chunks of the dataframe
+    chunks = make_chunks(df, chunk_size)
+
+    # Placeholder for results
+    results = []
+
+    # Process each chunk
+    for chunk in chunks:
+        result = rosetta_request(chunk, vars, v, conf, include_sd)
+        if isinstance(result, Exception):
+            # Handle the error as needed, e.g., log it, skip, or stop the process
+            print(f"Error processing chunk: {result}")
+            continue
+        results.append(result)
+
+    if not results:
+        print("empty result set")
+        return None
+
+    # Concatenate all the results into a single DataFrame
+    final_result = pd.concat(results, ignore_index=True)
+
+    return final_result
+
+
+def vg_function(phi, theta_r, theta_s, alpha, n):
+    """
+    Calculates the van Genuchten equation.
+
+    Parameters:
+    phi (numpy array): An array of phi values.
+    theta_r (float): Residual water content.
+    theta_s (float): Saturated water content.
+    alpha (float): Scale parameter in the van Genuchten equation.
+    n (float): Shape parameter in the van Genuchten equation.
+
+    Returns:
+    numpy array: Calculated water content values based on the van Genuchten equation.
+    """
+    return theta_r + ((theta_s - theta_r) / ((1 + (alpha * phi) ** n) ** (1 - 1 / n)))
+
+
+def calculate_vwc_awc(sim_data, phi_min=1e-6, phi_max=1e8, pts=100):
+    """
+    Calculates the volumetric water content (VWC) at specific matric potentials and determines
+    the available water capacity (AWC).
+
+    Parameters:
+    sim_data (pandas DataFrame): DataFrame containing soil layers and their properties.
+
+    Returns:
+    pandas DataFrame: A DataFrame containing the VWC at saturation, field capacity, and permanent
+    wilting point, along with the AWC for the specified layer.
+    """
+    required_columns = ["theta_r", "theta_s", "alpha", "npar", "layerID"]
+    if not all(col in sim_data.columns for col in required_columns):
+        raise ValueError("One or more required columns are missing.")
+
+    # Handling missing values
+    if sim_data[required_columns].isnull().any().any():
+        raise ValueError("One or more required values are NA.")
+
+    phi = np.logspace(np.log10(phi_min), np.log10(phi_max), pts)
+    h = phi * 10.19716
+
+    results = []
+    for _, row in sim_data.iterrows():
+        m = pd.DataFrame({"phi": phi})
+        m["theta"] = vg_function(
+            h,
+            theta_r=row["theta_r"],
+            theta_s=row["theta_s"],
+            alpha=10 ** row["alpha"],
+            n=10 ** row["npar"],
+        )
+
+        vg_fwd = UnivariateSpline(m["phi"], m["theta"], s=0)
+
+        # Extract VWC at specific matric potentials (kPa)
+        data = {
+            "layerID": row["layerID"],
+            "sat": vg_fwd(0),  # Saturation
+            "fc": vg_fwd(33),  # Field Capacity
+            "pwp": vg_fwd(1500),  # Permanent Wilting Point
+        }
+        data["awc"] = data["fc"] - data["pwp"]
+        results.append(data)
+
+    return pd.DataFrame(results)
+
+
+def information_gain(data, target_col, feature_cols):
+    """
+    Calculate information gain for each feature with respect to the target variable.
+
+    Args:
+        data (pd.DataFrame): The DataFrame containing the dataset, including target
+                             and feature columns.
+        target_col (str): The name of the target variable column.
+        feature_cols (list): List of feature column names.
+
+    Returns:
+        dict: A dictionary where keys are feature names and values are information gain scores.
+    """
+
+    def entropy_score(series):
+        # Calculate entropy for a given series (e.g., target variable)
+        value_counts = series.value_counts()
+        probabilities = value_counts / len(series)
+        return entropy(probabilities, base=2)
+
+    # Calculate entropy of the entire dataset based on the target variable
+    total_entropy = entropy_score(data[target_col])
+
+    # Calculate information gain for each feature
+    information_gains = {}
+    for feature_col in feature_cols:
+        # Calculate weighted average of entropies for each unique value of the feature
+        feature_entropy = data.groupby(feature_col)[target_col].apply(entropy_score)
+        feature_counts = data[feature_col].value_counts()
+        weighted_feature_entropy = sum((feature_counts / len(data)) * feature_entropy.fillna(0))
+        information_gain = total_entropy - weighted_feature_entropy
+        information_gains[feature_col] = information_gain
+
+    # Sort the information gains in descending order
+    sorted_information_gains = sorted(information_gains.items(), key=lambda x: x[1], reverse=True)
+
+    return sorted_information_gains
+
+
 # -------------------------------------------------------------------------------------------
 # # This code was used for SoilGrids v1
 
@@ -2328,11 +2935,16 @@ def mukey_sim_rosseta(aoi_data, cor_matrix):
 #         conn = get_datastore_connection()
 #         cur = conn.cursor()
 #         ST_Comp_List = [x.encode('UTF8') for x in ST_Comp_List]
-#         sql = 'SELECT Suborder, Description_en, Management_en, Description_es, Management_es, Description_ks, Management_ks, Description_fr, Management_fr FROM soil_taxonomy_desc WHERE Suborder IN (' + ''.join(str(ST_Comp_List)[1:-1]) + ')'
+#         sql = f"""SELECT Suborder, Description_en, Management_en, Description_es,
+#                   Management_es, Description_ks, Management_ks, Description_fr, Management_fr
+#                   FROM soil_taxonomy_desc
+#                   WHERE Suborder IN ({''.join(str(ST_Comp_List)[1:-1])})"""
 #         cur.execute(sql)
 #         results = cur.fetchall()
 #         data = pd.DataFrame(list(results))
-#         data.columns = ['Suborder', 'Description_en', 'Management_en', 'Description_es', 'Management_es', 'Description_ks', 'Management_ks', 'Description_fr', 'Management_fr']
+#         data.columns = ['Suborder', 'Description_en', 'Management_en', 'Description_es',
+#                         'Management_es', 'Description_ks', 'Management_ks', 'Description_fr',
+#                         'Management_fr']
 #         return data
 #     except Exception, err:
 #         print err
@@ -2340,7 +2952,7 @@ def mukey_sim_rosseta(aoi_data, cor_matrix):
 #     finally:
 #         conn.close()
 
-# # This function applies a cubic spline model to interpolate values at every 1cm for the SoilGrids data
+# Applies a cubic spline model to interpolate values at every 1cm for the SoilGrids data
 
 # def cspline_soil_lpks(data):
 #     xm=[0,5,15,30,60,100,199]

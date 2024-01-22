@@ -1041,11 +1041,13 @@ def check_pairwise_arrays(X, Y, precomputed=False, dtype=None):
     # Check for valid shapes based on whether distances are precomputed
     if precomputed and X.shape[1] != Y.shape[0]:
         raise ValueError(
-            f"Precomputed metric requires shape (n_queries, n_indexed). Got ({X.shape[0]}, {X.shape[1]}) for {Y.shape[0]} indexed."
+            "Precomputed metric requires shape (n_queries, n_indexed)."
+            f"Got ({X.shape[0]}, {X.shape[1]}) for {Y.shape[0]} indexed."
         )
     elif X.shape[1] != Y.shape[1]:
         raise ValueError(
-            f"Incompatible dimension for X and Y matrices: X.shape[1] == {X.shape[1]} while Y.shape[1] == {Y.shape[1]}"
+            "Incompatible dimension for X and Y matrices:"
+            f"X.shape[1] == {X.shape[1]} while Y.shape[1] == {Y.shape[1]}"
         )
 
     return X, Y

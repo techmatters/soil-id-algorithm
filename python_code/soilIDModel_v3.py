@@ -1923,7 +1923,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 OSDhorzdata_pd["total_frag_volume"] = OSDhorzdata_pd["cf_class"].apply(getOSDCF)
                 OSDhorzdata_pd["claytotal_r"] = OSDhorzdata_pd["texture_class"].apply(getClay)
                 OSDhorzdata_pd["sandtotal_r"] = OSDhorzdata_pd["texture_class"].apply(getSand)
-            except Exception as err:
+            except Exception:
                 OSDhorzdata_pd = None
         else:
             OSDhorzdata_pd = None
@@ -3763,7 +3763,7 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
         response.raise_for_status()  # Check for unsuccessful status codes
         sg_out = response.json()
 
-    except requests.RequestException as e:
+    except requests.RequestException:
         # Log the error and set the status to unavailable
         if plot_id is not None:
             save_soilgrids_output(plot_id, 1, json.dumps({"status": "unavailable"}))
@@ -3817,7 +3817,7 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
         try:
             with request.urlopen(api_url, timeout=6) as response:
                 sg_tax = json.load(response)
-        except Exception as e:
+        except Exception:
             # Handle data fetch failure
             if plot_id is not None:
                 # Assuming the function `save_soilgrids_output` exists elsewhere in the code
@@ -3977,7 +3977,7 @@ def getSoilGridsUS(lon, lat, plot_id=None):
         response.raise_for_status()  # Check for unsuccessful status codes
         sg_out = response.json()
 
-    except requests.RequestException as e:
+    except requests.RequestException:
         # Log the error and set the status to unavailable
         if plot_id is not None:
             save_soilgrids_output(plot_id, 1, json.dumps({"status": "unavailable"}))

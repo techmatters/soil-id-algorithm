@@ -133,7 +133,10 @@ def load_model_output(plot_id):
         conn = get_datastore_connection()
         cur = conn.cursor()
         model_version = 2
-        sql = f"SELECT ID, result_blob, soilIDRank_output_pd, mucompdata_cond_prob FROM  landpks_soil_model WHERE plot_id = {plot_id} AND model_version = {model_version} order by ID desc LIMIT 1"
+        sql = f"""SELECT ID, result_blob, soilIDRank_output_pd, mucompdata_cond_prob
+                  FROM  landpks_soil_model
+                  WHERE plot_id = {plot_id} AND model_version = {model_version}
+                  ORDER BY ID DESC LIMIT 1"""
         cur.execute(sql)
         results = cur.fetchall()
         for row in results:
@@ -154,7 +157,11 @@ def get_WISE30sec_data(MUGLB_NEW_Select):
         conn = get_datastore_connection()
         cur = conn.cursor()
         placeholders = ", ".join(["%s"] * len(MUGLB_NEW_Select))
-        sql = f"SELECT MUGLB_NEW, COMPID, id, MU_GLOBAL, NEWSUID, SCID, PROP, CLAF,  PRID, Layer, TopDep, BotDep,  CFRAG,  SDTO,  STPC,  CLPC, CECS, PHAQ, ELCO, SU_name, FAO_SYS FROM  wise_soil_data WHERE MUGLB_NEW IN ({placeholders})"
+        sql = f"""SELECT MUGLB_NEW, COMPID, id, MU_GLOBAL, NEWSUID, SCID, PROP, CLAF,
+                       PRID, Layer, TopDep, BotDep,  CFRAG,  SDTO,  STPC,  CLPC, CECS,
+                       PHAQ, ELCO, SU_name, FAO_SYS
+                  FROM  wise_soil_data
+                  WHERE MUGLB_NEW IN ({placeholders})"""
         cur.execute(sql, MUGLB_NEW_Select)
         results = cur.fetchall()
         data = pd.DataFrame(
@@ -237,7 +244,10 @@ def get_WRB_descriptions(WRB_Comp_List):
         conn = get_datastore_connection()
         cur = conn.cursor()
         placeholders = ", ".join(["%s"] * len(WRB_Comp_List))
-        sql = f"SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es, Description_ks, Management_ks, Description_fr, Management_fr FROM wrb_fao90_desc WHERE WRB_tax IN ({placeholders})"
+        sql = f"""SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es,
+                       Description_ks, Management_ks, Description_fr, Management_fr
+                FROM wrb_fao90_desc
+                WHERE WRB_tax IN ({placeholders})"""
         cur.execute(sql, WRB_Comp_List)
         results = cur.fetchall()
         data = pd.DataFrame(
@@ -1420,9 +1430,12 @@ def extract_muhorzdata_STATSGO(mucompdata_pd):
     ]
 
     # Form the muhorzdata query
-    muhorzdataQry = "SELECT cokey, chorizon.chkey, hzdept_r, hzdepb_r, hzname, sandtotal_r, silttotal_r, claytotal_r, cec7_r, ecec_r, ph1to1h2o_r, ec_r,lep_r, chfrags.fragvol_r FROM chorizon LEFT OUTER JOIN chfrags ON chfrags.chkey = chorizon.chkey WHERE cokey IN ({})".format(
-        ",".join(cokey_list)
-    )
+    muhorzdataQry = f"""SELECT cokey, chorizon.chkey, hzdept_r, hzdepb_r, hzname, sandtotal_r,
+                        silttotal_r, claytotal_r, cec7_r, ecec_r, ph1to1h2o_r, ec_r,lep_r,
+                        chfrags.fragvol_r
+                        FROM chorizon
+                        LEFT OUTER JOIN chfrags ON chfrags.chkey = chorizon.chkey
+                        WHERE cokey IN ({",".join(cokey_list)})"""
 
     # Execute the query
     muhorzdata_out = sda_return(propQry=muhorzdataQry)
@@ -1496,7 +1509,14 @@ def extract_statsgo_mucompdata(lon, lat):
 
     # Build the mucompdata query
     mukey_list = mukey_dist_final["MUKEY"].tolist()
-    mucompdataQry = f"SELECT component.mukey, component.cokey, component.compname, component.comppct_r, component.compkind, component.majcompflag, component.slope_r, component.elev_r, component.nirrcapcl, component.nirrcapscl, component.nirrcapunit, component.irrcapcl, component.irrcapscl, component.irrcapunit, component.taxorder, component.taxsubgrp FROM component WHERE mukey IN ({','.join(map(str, mukey_list))})"
+    mucompdataQry = f"""SELECT component.mukey, component.cokey, component.compname,
+                        component.comppct_r, component.compkind, component.majcompflag,
+                        component.slope_r, component.elev_r, component.nirrcapcl,
+                        component.nirrcapscl, component.nirrcapunit, component.irrcapcl,
+                        component.irrcapscl, component.irrcapunit, component.taxorder,
+                        component.taxsubgrp
+                        FROM component
+                        WHERE mukey IN ({','.join(map(str, mukey_list))})"""
     mucompdata_out = sda_return(propQry=mucompdataQry)
 
     # Process the mucompdata results

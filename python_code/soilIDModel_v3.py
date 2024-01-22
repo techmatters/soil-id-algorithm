@@ -1314,9 +1314,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
         # Build the mucompdata query
         mukey_list = mukey_dist_final["MUKEY"].tolist()
-        mucompdataQry = f"""SELECT component.mukey, component.cokey, component.compname, component.comppct_r, 
-        component.compkind, component.majcompflag, component.slope_r, component.elev_r, component.nirrcapcl, 
-        component.nirrcapscl, component.nirrcapunit, component.irrcapcl, component.irrcapscl, component.irrcapunit, 
+        mucompdataQry = f"""SELECT component.mukey, component.cokey, component.compname, component.comppct_r,
+        component.compkind, component.majcompflag, component.slope_r, component.elev_r, component.nirrcapcl,
+        component.nirrcapscl, component.nirrcapunit, component.irrcapcl, component.irrcapscl, component.irrcapunit,
         component.taxorder, component.taxsubgrp FROM component WHERE mukey IN ({','.join(map(str, mukey_list))})"""
         mucompdata_out = sda_return(propQry=mucompdataQry)
 

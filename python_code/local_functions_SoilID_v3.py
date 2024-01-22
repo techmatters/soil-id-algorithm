@@ -2093,8 +2093,8 @@ def getSG_descriptions(WRB_Comp_List):
         WRB_Comp_List = [item for t in list(names) for item in t]
 
         # Second SQL query
-        sql2 = """SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es, 
-                  Description_ks, Management_ks, Description_fr, Management_fr 
+        sql2 = """SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es,
+                  Description_ks, Management_ks, Description_fr, Management_fr
                   FROM wrb_fao90_desc WHERE WRB_tax IN %s"""
         results = execute_query(sql2, (tuple(WRB_Comp_List),))
 

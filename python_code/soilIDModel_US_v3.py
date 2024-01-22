@@ -3,6 +3,7 @@ import collections
 import io
 import json
 import re
+import urllib
 
 # Third-party libraries
 import geopandas as gpd
@@ -130,10 +131,11 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     # Load in SSURGO data from SoilWeb
     # current production API
-    # soilweb_url = f"""https://casoilresource.lawr.ucdavis.edu/api/landPKS.php?q=spn&lon={lon}&lat={lat}&r=1000"""
+    # soilweb base url "https://casoilresource.lawr.ucdavis.edu/api/landPKS.php"
 
     # testing API
-    soilweb_url = f"""https://soilmap2-1.lawr.ucdavis.edu/dylan/soilweb/api/landPKS.php?q=spn&lon={lon}&lat={lat}&r=1000"""
+    params = urllib.parse.urlencode([('q', 'spn'), ('lon', lon), ('lat', lat), ('r', 1000)])
+    soilweb_url = f"https://soilmap2-1.lawr.ucdavis.edu/dylan/soilweb/api/landPKS.php?{params}"
     try:
         response = requests.get(soilweb_url, timeout=8)
         out = response.json()

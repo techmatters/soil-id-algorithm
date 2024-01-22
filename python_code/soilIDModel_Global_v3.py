@@ -3,6 +3,7 @@ import collections
 import csv
 import json
 import re
+import urllib
 
 # Third-party libraries
 import numpy as np
@@ -1247,7 +1248,20 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
 
     # SoilGrids250
     # Construct the SoilGrids API v2 URL
-    sg_api = f"https://rest.isric.org/soilgrids/v2.0/properties/query?lon={lon}&lat={lat}&property=cfvo&property=cec&property=clay&property=phh2o&property=sand&value=mean"
+    params = [
+        ("lon", lon),
+        ("lat", lat),
+        ("property", "cfvo"),
+        ("property", "cec"),
+        ("property", "clay"),
+        ("property", "phh2o"),
+        ("property", "sand"),
+        ("value", "mean"),
+    ]
+
+    sg_api = (
+        f"https://rest.isric.org/soilgrids/v2.0/properties/query?{urllib.parse.urlencode(params)}"
+    )
 
     try:
         # Make the API request using the requests library
@@ -1303,7 +1317,8 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
 
         # Fetch SG wRB Taxonomy
         # Construct the API URL for fetching soil data
-        api_url = f"https://rest.isric.org/soilgrids/v2.0/classification/query?lon={lon}&lat={lat}&number_classes=3"
+        params = urllib.parse.urlencode([("lon", lon), ("lat", lat), ("number_classes", 3)])
+        api_url = f"https://rest.isric.org/soilgrids/v2.0/classification/query?{params}"
 
         # Fetch data from the API
         try:

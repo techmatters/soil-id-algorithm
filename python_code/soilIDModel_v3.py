@@ -70,19 +70,22 @@ from shapely.geometry import Point
 # after user has collected data, call rankPredictionUS/rankPredictionGlobal.
 
 
-#####################################################################################################
-#                                       Database and API Functions                                  #
-#####################################################################################################
+###################################################################################################
+#                                       Database and API Functions                                #
+###################################################################################################
 def findSoilLocation(lon, lat):
     """
-    Determines the location type (US, Global, or None) of the given longitude and latitude based on soil datasets.
+    Determines the location type (US, Global, or None) of the given longitude and latitude based
+    on soil datasets.
 
     Args:
     - lon (float): Longitude of the point.
     - lat (float): Latitude of the point.
 
     Returns:
-    - str or None: 'US' if point is in US soil dataset, 'Global' if in global dataset, None otherwise.
+    - str or None: 'US' if point is in US soil dataset,
+                   'Global' if in global dataset,
+                   None otherwise.
     """
 
     drv_h = ogr.GetDriverByName("ESRI Shapefile")
@@ -121,9 +124,9 @@ def findSoilLocation(lon, lat):
         return "Global"
 
 
-#####################################################################################################
-#                                 getSoilLocationBasedGlobal                                        #
-#####################################################################################################
+###################################################################################################
+#                                 getSoilLocationBasedGlobal                                      #
+###################################################################################################
 def getSoilLocationBasedGlobal(lon, lat, plot_id):
     # Extract HWSD-WISE Data
     # Note: Need to convert HWSD shp to gpkg file
@@ -142,14 +145,14 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
     mucompdata_pd["share"] = pd.to_numeric(mucompdata_pd["share"])
     mucompdata_pd = mucompdata_pd.drop_duplicates().reset_index(drop=True)
 
-    # --------------------------------------------------------------------------------------------------------------------------------------------------------
-    #########################################################################################################################################
+    ###############################################################################################
     # Individual probability
-    # Based on Fan et al 2018 EQ 1, the conditional probability for each component is calculated by taking the sum of all occurances of a component
-    # in the home and adjacent mapunits and dividing this by the sum of all map units and components. We have modified this approach so that each
-    # instance of a component occurance is evaluated separately and assinged a weight and the max distance score for each component group is assigned
-    # to all component instances.
-    #########################################################################################################################################
+    # Based on Fan et al 2018 EQ 1, the conditional probability for each component is calculated by
+    # taking the sum of all occurances of a component in the home and adjacent mapunits and
+    # dividing this by the sum of all map units and components. We have modified this approach so
+    # each instance of a component occurance is evaluated separately and assinged a weight and
+    # the max distance score for each component group is assigned to all component instances.
+    ###############################################################################################
     ExpCoeff = -0.00036888  # Decays to 0.25 @ 10km
     loc_scores = []
     mucompdata_grouped = mucompdata_pd.groupby(["mukey", "cokey"], sort=False)
@@ -1258,16 +1261,20 @@ def rankPredictionGlobal(
     return result
 
 
-#####################################################################################################
-#                                   getSoilLocationBasedUS                                          #
-#####################################################################################################
+###############################################################################################
+#                                   getSoilLocationBasedUS                                    #
+###############################################################################################
 def getSoilLocationBasedUS(lon, lat, plot_id):
     # Load in LAB to Munsell conversion look-up table
     color_ref = pd.read_csv("%s/LandPKS_munsell_rgb_lab.csv" % current_app.config["DATA_BACKEND"])
 
     # Load in SSURGO data from SoilWeb
-    # soilweb_url = f"https://casoilresource.lawr.ucdavis.edu/api/landPKS.php?q=spn&lon={lon}&lat={lat}&r=1000" # current production API
-    soilweb_url = f"https://soilmap2-1.lawr.ucdavis.edu/dylan/soilweb/api/landPKS.php?q=spn&lon={lon}&lat={lat}&r=1000"  # testing API
+    # current production API
+    # soilweb base url "https://casoilresource.lawr.ucdavis.edu/api/landPKS.php"
+
+    # testing API
+    params = urllib.parse.urlencode([('q', 'spn'), ('lon', lon), ('lat', lat), ('r', 1000)])
+    soilweb_url = f"https://soilmap2-1.lawr.ucdavis.edu/dylan/soilweb/api/landPKS.php?{params}"
     try:
         response = requests.get(soilweb_url, timeout=8)
         out = response.json()
@@ -1314,10 +1321,13 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
         # Build the mucompdata query
         mukey_list = mukey_dist_final["MUKEY"].tolist()
-        mucompdataQry = f"""SELECT component.mukey, component.cokey, component.compname, component.comppct_r,
-        component.compkind, component.majcompflag, component.slope_r, component.elev_r, component.nirrcapcl,
-        component.nirrcapscl, component.nirrcapunit, component.irrcapcl, component.irrcapscl, component.irrcapunit,
-        component.taxorder, component.taxsubgrp FROM component WHERE mukey IN ({','.join(map(str, mukey_list))})"""
+        mucompdataQry = f"""SELECT component.mukey, component.cokey, component.compname,
+        component.comppct_r, component.compkind, component.majcompflag,
+        component.slope_r, component.elev_r, component.nirrcapcl, component.nirrcapscl,
+        component.nirrcapunit, component.irrcapcl, component.irrcapscl,
+        component.irrcapunit, component.taxorder, component.taxsubgrp
+        FROM component WHERE mukey IN ({','.join(map(str, mukey_list))})"""
+
         mucompdata_out = sda_return(propQry=mucompdataQry)
 
         # Process the mucompdata results
@@ -1554,7 +1564,8 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     # Replace "NULL" strings with numpy NaN
     muhorzdata_pd.replace("NULL", np.nan, inplace=True)
 
-    # Filter out components with missing horizon depth data that aren't either a Series, Variant, or Family
+    # Filter out components with missing horizon depth data that aren't either
+    # a Series, Variant, or Family
     filter_condition = muhorzdata_pd["cokey"].isin(cokey_series) | (
         pd.notnull(muhorzdata_pd["hzdept_r"]) & pd.notnull(muhorzdata_pd["hzdepb_r"])
     )
@@ -1839,7 +1850,8 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     # -------------------------------------------------------------------------------------------------------------
     # This extracts OSD color, texture, and CF data
     if data_source == "STATSGO":
-        # If the condition is met, we perform the series of operations, otherwise, we set OSDhorzdata_pd to None
+        # If the condition is met, we perform the series of operations, otherwise,
+        # we set OSDhorzdata_pd to None
         if mucompdata_pd["compkind"].isin(OSD_compkind).any():
             try:
                 # Generate series names
@@ -2226,7 +2238,8 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                             OSD_very_bottom,
                         )
 
-                        # If OSD bottom depth is greater than component depth and component depth is <120cm
+                        # If OSD bottom depth is greater than component depth and component depth
+                        # is <120cm
                         if OSD_depth_remove:
                             # Remove data based on c_bottom_depths
                             OSD_sand_intpl = OSD_sand_intpl.loc[: c_bottom_depths.iloc[i, 2]]
@@ -2368,7 +2381,8 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                     SDE_URL.append("")
                     SEE_URL.append("")
                 else:
-                    # Extract compname, convert to lowercase, remove trailing numbers, and replace spaces with underscores
+                    # Extract compname, convert to lowercase, remove trailing numbers, and replace
+                    # spaces with underscores
                     comp = group["compname"].iloc[0].lower()
                     comp = re.sub(r"\d+$", "", comp)
                     comp = comp.replace(" ", "_")
@@ -2497,7 +2511,8 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             munsell_lyrs,
         ) = layer_lists
 
-    # Create a new column 'soilID_rank' which will be True for the first row in each group sorted by 'distance' and False for other rows
+    # Create a new column 'soilID_rank' which will be True for the first row in each group sorted
+    # by 'distance' and False for other rows
     mucompdata_pd = mucompdata_pd.sort_values(["compname_grp", "distance"])
     mucompdata_pd["soilID_rank"] = ~mucompdata_pd.duplicated("compname_grp", keep="first")
 
@@ -2702,10 +2717,12 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             how="left",
         )
 
-    # Note: Need to devise a way to improve the identification of bedrock or restrictive layers using both comp data and OSD.
-    #      There are many instances where the last one or two component horizons are missing texture data and the OSD bottom depth
-    #      is shallower than the component bottom depth, indicating a shallower profile. But the horizon designations are generic, e.g.,
-    #      H1, H2, H3; thus not allowing their use in indentifying bedrock.
+    # Note: Need to devise a way to improve the identification of bedrock or restrictive
+    #       layers using both comp data and OSD. There are many instances where the last
+    #       one or two component horizons are missing texture data and the OSD bottom depth
+    #       is shallower than the component bottom depth, indicating a shallower profile.
+    #       But the horizon designations are generic, e.g., H1, H2, H3; thus not allowing
+    #       their use in indentifying bedrock.
 
     # --------------------------------------------------------------------------------------------------------------------------
     # SoilIDList output
@@ -2925,9 +2942,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     }
 
 
-#####################################################################################################
-#                                   rankPredictionUS                                                #
-#####################################################################################################
+###############################################################################################
+#                                   rankPredictionUS                                          #
+###############################################################################################
 def rankPredictionUS(
     lon,
     lat,
@@ -2942,7 +2959,8 @@ def rankPredictionUS(
     plot_id=None,
 ):
     # TODO: Future testing to see if deltaE2000 values should be incorporated into site data
-    # use 'getColor_deltaE2000_OSD_pedon' and helper functions located in local_functions_SoilID_v3.py
+    # use 'getColor_deltaE2000_OSD_pedon' and helper functions located in
+    # local_functions_SoilID_v3.py
 
     # ------------------------------------------------------------------------------------------------
     # ------ Load in user data --------#
@@ -3216,7 +3234,8 @@ def rankPredictionUS(
     mucompdata_pd["nirrcapcl"] = mucompdata_pd["nirrcapcl"].apply(trim_fraction)
     mucompdata_pd["irrcapcl"] = mucompdata_pd["irrcapcl"].apply(trim_fraction)
 
-    # Create soil depth DataFrame and subset component depths based on max user depth if no bedrock specified
+    # Create soil depth DataFrame and subset component depths based on max user
+    # depth if no bedrock specified
     c_bottom_depths = mucompdata_pd[["cokey", "compname", "c_very_bottom"]]
     c_bottom_depths.columns = ["cokey", "compname", "bottom_depth"]
     slices_of_soil = pd.concat([p_bottom_depth, c_bottom_depths], axis=0).reset_index(drop=True)
@@ -3309,13 +3328,16 @@ def rankPredictionUS(
             i
         ) in (
             soil_matrix.index
-        ):  # i should be an index of p_hz_data depth slices, e.g. if user only enters 100-120cm data, then i = 100:120
+        ):  # i should be an index of p_hz_data depth slices,
+            # e.g. if user only enters 100-120cm data, then i = 100:120
             slice_data = [horz.loc[i] for horz in horz_vars]
             sliceT = pd.concat(slice_data, axis=1).T
             """
-            Not all depth slices have the same user recorded data. Here we filter out data columns with missing data and use that to subset the component data.
-            If certain components are missing lots of data and the filering results in less than 2 soil properties, than we filter out data columns with missing USER data
-            and components with missing data will later be assigned the max dissimilarity across all horizons
+            Not all depth slices have the same user recorded data. Here we filter out data columns
+            with missing data and use that to subset the component data.
+            If certain components are missing lots of data and the filering results in less than 2
+            soil properties, than we filter out data columns with missing USER data and components
+            with missing data will later be assigned the max dissimilarity across all horizons
             """
             # Filter columns based on available data
             if i < bedrock:
@@ -3543,12 +3565,16 @@ def rankPredictionUS(
 
     D_final["Rank_Data"] = Rank_Data
 
-    # Code options for production API/testing output
+    """
+    Code options for production API/testing output
     # ----------------------------------------------------------------
-    # #Data output for testing
-    # D_final_loc = pd.merge(D_final, mucompdata_pd[['compname', 'cokey', 'mukey', 'distance_score', 'distance_score_norm', 'clay', 'taxorder', 'taxsubgrp', 'OSD_text_int', 'OSD_rfv_int', 'data_source', 'Rank_Loc', 'majcompflag', 'comppct_r', 'distance', 'nirrcapcl', 'nirrcapscl',
-    #    'nirrcapunit', 'irrcapcl', 'irrcapscl', 'irrcapunit', 'ecoclassid_update', 'ecoclassname']], on='compname', how='left')
-
+    #Data output for testing
+    D_final_loc = pd.merge(D_final, mucompdata_pd[['compname', 'cokey', 'mukey',
+    'distance_score', 'distance_score_norm', 'clay', 'taxorder', 'taxsubgrp', 'OSD_text_int',
+    'OSD_rfv_int', 'data_source', 'Rank_Loc', 'majcompflag', 'comppct_r', 'distance',
+    'nirrcapcl', 'nirrcapscl', 'nirrcapunit', 'irrcapcl', 'irrcapscl', 'irrcapunit',
+    'ecoclassid_update', 'ecoclassname']], on='compname', how='left')
+    """
     # Refactoring the code for data output
 
     # Merge D_final with additional data from mucompdata_pd
@@ -3741,15 +3767,19 @@ def rankPredictionUS(
         save_rank_output(record_id, model_version, json.dumps(output_data))
 
     return output_data
-
+    """
     # Data return for testing
-    # return(D_final_loc[['compname', 'compname_grp', 'Rank_Loc', 'distance_score_norm',  'Rank_Data', 'Score_Data', 'Rank_Data_Loc', 'Score_Data_Loc','ecoclassid_update', 'ecoclassname', 'LCC_I', 'LCC_NI', 'taxorder', 'taxsubgrp', 'majcompflag', 'comppct_r', 'distance']])
+    return(D_final_loc[['compname', 'compname_grp', 'Rank_Loc', 'distance_score_norm',
+    'Rank_Data', 'Score_Data', 'Rank_Data_Loc', 'Score_Data_Loc','ecoclassid_update',
+    'ecoclassname', 'LCC_I', 'LCC_NI', 'taxorder', 'taxsubgrp', 'majcompflag',
+    'comppct_r', 'distance']])
     # ----------------------------------------------------------------
+    """
 
 
-#####################################################################################################
-#                                          getSoilGridsGlobal                                       #
-#####################################################################################################
+###############################################################################################
+#                                          getSoilGridsGlobal                                 #
+###############################################################################################
 def getSoilGridsGlobal(lon, lat, plot_id=None):
     # -------------------------------------------------------------------------------------------
 
@@ -3786,7 +3816,8 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
     # Concatenate the DataFrames to form a single DataFrame
     sg_data = pd.concat([df_names, df_top_depth, df_bottom_depth, df_values], axis=1)
 
-    # Pivot the data based on bottom depth and property name, setting values to be the 'value' column
+    # Pivot the data based on bottom depth and property name, setting values to
+    # be the 'value' column
     sg_data_w = sg_data.pivot(index="bottom_depth", columns="prop", values="value")
 
     # Add the top and bottom depth columns to the wide DataFrame
@@ -3963,9 +3994,9 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
         return {"metadata": metadata, "soilGrids": SoilGrids}
 
 
-#####################################################################################################
-#                                          getSoilGridsUS                                           #
-#####################################################################################################
+###############################################################################################
+#                                          getSoilGridsUS                                     #
+###############################################################################################
 def getSoilGridsUS(lon, lat, plot_id=None):
     # SoilGrids250
     # Construct the SoilGrids API v2 URL
@@ -4000,7 +4031,8 @@ def getSoilGridsUS(lon, lat, plot_id=None):
     # Concatenate the DataFrames to form a single DataFrame
     sg_data = pd.concat([df_names, df_top_depth, df_bottom_depth, df_values], axis=1)
 
-    # Pivot the data based on bottom depth and property name, setting values to be the 'value' column
+    # Pivot the data based on bottom depth and property name
+    # setting values to be the 'value' column
     sg_data_w = sg_data.pivot(index="bottom_depth", columns="prop", values="value")
 
     # Add the top and bottom depth columns to the wide DataFrame
@@ -4110,11 +4142,16 @@ def getSoilGridsUS(lon, lat, plot_id=None):
     #         conn = getDataStore_Connection()
     #         cur = conn.cursor()
     #         ST_Comp_List = [x.encode('UTF8') for x in ST_Comp_List]
-    #         sql = 'SELECT Suborder, Description_en, Management_en, Description_es, Management_es, Description_ks, Management_ks, Description_fr, Management_fr FROM soil_taxonomy_desc WHERE Suborder IN (' + ''.join(str(ST_Comp_List)[1:-1]) + ')'
+    #         sql = 'SELECT Suborder, Description_en, Management_en, Description_es, Management_es,
+    #                Description_ks, Management_ks, Description_fr, Management_fr
+    #                FROM soil_taxonomy_desc
+    #                WHERE Suborder IN (' + ''.join(str(ST_Comp_List)[1:-1]) + ')'
     #         cur.execute(sql)
     #         results = cur.fetchall()
     #         data = pd.DataFrame(list(results))
-    #         data.columns = ['Suborder', 'Description_en', 'Management_en', 'Description_es', 'Management_es', 'Description_ks', 'Management_ks', 'Description_fr', 'Management_fr']
+    #         data.columns = ['Suborder', 'Description_en', 'Management_en', 'Description_es',
+    #                         'Management_es', 'Description_ks', 'Management_ks', 'Description_fr',
+    #                         'Management_fr']
     #         return data
     #     except Exception, err:
     #         print err
@@ -4122,7 +4159,8 @@ def getSoilGridsUS(lon, lat, plot_id=None):
     #     finally:
     #         conn.close()
 
-    # # This function applies a cubic spline model to interpolate values at every 1cm for the SoilGrids data
+    # This function applies a cubic spline model to interpolate values at every
+    # 1cm for the SoilGrids data
 
     # def cspline_soil_lpks(data):
     #     xm=[0,5,15,30,60,100,199]

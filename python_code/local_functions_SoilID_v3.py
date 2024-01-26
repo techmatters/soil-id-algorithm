@@ -2577,31 +2577,6 @@ def slice_and_aggregate_soil_data_old(df):
     return result_df
     """
 
-# def extract_soil_params(soil_df):
-#     # Extract the parameters for sand, silt, and clay from the DataFrame
-#     sand_params = [soil_df["sandtotal_l"].values, soil_df["sandtotal_r"].values,
-#                    soil_df["sandtotal_h"].values]
-#     silt_params = [soil_df["silttotal_l"].values, soil_df["silttotal_r"].values,
-#                    soil_df["silttotal_h"].values]
-#     clay_params = [soil_df["claytotal_l"].values, soil_df["claytotal_r"].values,
-#                    soil_df["claytotal_h"].values]
-#
-#     # Create a list of tuples where each tuple represents the l, r, h values for each soil
-#     # component for a row
-#     soil_params_tuples = list(zip(zip(*sand_params), zip(*silt_params), zip(*clay_params)))
-#
-#     # Convert the list of tuples into the desired structure
-#     # Where each tuple has the structure ((sand_l, sand_r, sand_h),
-#                                           (silt_l, silt_r, silt_h),
-#                                           (clay_l, clay_r, clay_h))
-#     structured_soil_params = [((sand[0], sand[1], sand[2]),
-#                                (silt[0], silt[1], silt[2]),
-#                                (clay[0], clay[1], clay[2]))
-#                               for sand, silt, clay in soil_params_tuples]
-#
-#     return structured_soil_params
-
-
 # ROSETTA Simulation
 # Define a function to perform Rosetta simulation
 def rosetta_simulate(data):

@@ -1383,6 +1383,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                             ["c_sandpct_intpl", "c_sandpct_intpl_grp"],
                             sand_values,
                             OSD_very_bottom,
+                            OSD_depth_add,
+                            OSD_depth_remove,
+                            OSD_very_bottom_int,
                         )
 
                         clay_values = OSD_clay_intpl.iloc[OSD_very_bottom_int - 1].tolist()
@@ -1391,6 +1394,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                             ["c_claypct_intpl", "c_claypct_intpl_grp"],
                             clay_values,
                             OSD_very_bottom,
+                            OSD_depth_add,
+                            OSD_depth_remove,
+                            OSD_very_bottom_int,
                         )
 
                         rfv_values = OSD_rfv_intpl.iloc[OSD_very_bottom_int - 1].tolist()
@@ -1399,6 +1405,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                             ["c_cfpct_intpl", "c_cfpct_intpl_grp"],
                             rfv_values,
                             OSD_very_bottom,
+                            OSD_depth_add,
+                            OSD_depth_remove,
+                            OSD_very_bottom_int,
                         )
 
                         # If OSD bottom depth is greater than component depth and component depth
@@ -2913,7 +2922,9 @@ def adjust_depth_interval(data, target_length=120, add_columns=1):
 
 
 # Helper function to update dataframes based on depth conditions
-def update_intpl_data(df, col_names, values, very_bottom):
+def update_intpl_data(
+    df, col_names, values, very_bottom, OSD_depth_add, OSD_depth_remove, OSD_very_bottom_int
+):
     if OSD_depth_add:
         layer_add = very_bottom - OSD_very_bottom_int
         pd_add = pd.DataFrame([values] * layer_add, columns=col_names)

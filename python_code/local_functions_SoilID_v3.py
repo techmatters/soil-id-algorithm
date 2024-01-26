@@ -2577,60 +2577,6 @@ def slice_and_aggregate_soil_data_old(df):
     return result_df
     """
 
-
-# def aggregate_data_vi(data, max_depth, sd=2):
-#     """
-#     Aggregate data by specific depth ranges and compute the mean of each range for each column.
-#
-#     Args:
-#         data (pd.DataFrame): The DataFrame containing the data with index as depth.
-#         max_depth (float): The maximum depth to consider for aggregation.
-#         sd (int): The number of decimal places to round the aggregated data.
-#
-#     Returns:
-#         pd.DataFrame: A DataFrame with aggregated data for each column within specified
-#                       depth ranges.
-#     """
-#     if not max_depth or np.isnan(max_depth):
-#         return pd.DataFrame(columns=["hzdept_r", "hzdepb_r", "Data"])
-#
-#     # Define the depth ranges
-#     depth_ranges = [(0, 30), (30, 100)]
-#     # Initialize the result list
-#     results = []
-#
-#     # Iterate over each column in the dataframe
-#     for column in data.columns:
-#         column_results = []
-#         for top, bottom in depth_ranges:
-#             if max_depth <= top:
-#                 column_results.append([top, bottom, np.nan])
-#             else:
-#                 mask = (data.index >= top) & (data.index <= min(bottom, max_depth))
-#                 data_subset = data.loc[mask, column]
-#                 if not data_subset.empty:
-#                     result = round(data_subset.mean(skipna=True), sd)
-#                              if not data_subset.isna().all() else np.nan
-#                     column_results.append([top, min(bottom, max_depth), result])
-#                 else:
-#                     column_results.append([top, min(bottom, max_depth), np.nan])
-#         # Append the results for the current column to the overall results list
-#         results.append(
-#             pd.DataFrame(
-#                 column_results,
-#                 columns=["hzdept_r", "hzdepb_r", f"{column}"],
-#             )
-#         )
-#
-#     # Concatenate the results for each column into a single dataframe
-#     result_df = pd.concat(results, axis=1)
-#
-#     # If there are multiple columns, remove the repeated 'Top Depth' and 'Bottom Depth' columns
-#     if len(data.columns) > 1:
-#         result_df = result_df.loc[:, ~result_df.columns.duplicated()]
-#
-#     return result_df
-
 # def extract_soil_params(soil_df):
 #     # Extract the parameters for sand, silt, and clay from the DataFrame
 #     sand_params = [soil_df["sandtotal_l"].values, soil_df["sandtotal_r"].values,

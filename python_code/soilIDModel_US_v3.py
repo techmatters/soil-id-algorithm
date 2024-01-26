@@ -26,7 +26,6 @@ from model.local_functions_SoilID_v3 import (  # slice_and_aggregate_soil_data,
     extract_muhorzdata_STATSGO,
     extract_statsgo_mucompdata,
     fill_missing_comppct_r,
-    findSoilLocation,
     getCF_class,
     getCF_fromClass,
     getClay,
@@ -48,11 +47,9 @@ from model.local_functions_SoilID_v3 import (  # slice_and_aggregate_soil_data,
     save_rank_output,
     sda_return,
     simulate_correlated_triangular,
-    slice_and_aggregate_soil_data,
     slice_and_aggregate_soil_data_old,
     trim_fraction,
 )
-from osgeo import ogr
 from pandas.io.json import json_normalize
 from scipy.stats import spearmanr
 from shapely.geometry import Point

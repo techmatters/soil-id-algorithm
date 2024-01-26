@@ -39,7 +39,6 @@ from model.local_functions_SoilID_v3 import (
     save_soilgrids_output,
     silt_calc,
 )
-from osgeo import ogr
 from scipy.stats import norm
 
 # entry points

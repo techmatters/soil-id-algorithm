@@ -2578,34 +2578,6 @@ def slice_and_aggregate_soil_data_old(df):
     """
 
 
-# ROSETTA Simulation
-# Define a function to perform Rosetta simulation
-def rosetta_simulate(data):
-    # Create a SoilData instance
-    soildata = SoilData.from_array(data)
-
-    # Create a RosettaSoil instance
-    rs = RosettaSoil()
-
-    # Perform Rosetta simulation
-    rosetta_sim = rs.predict(soildata)
-
-    return rosetta_sim
-
-
-# Define a function to simulate data for each aoi
-def mukey_sim_rosseta(aoi_data, cor_matrix):
-    mukey_sim_list = []
-
-    for i in range(len(aoi_data)):
-        data = mukey_data[i]
-        sim_data = multi_sim_hydro(data, cor_matrix)  # Assuming you have a function multi_sim_hydro
-        combined_data = data + sim_data.tolist()
-        mukey_sim_list.append(combined_data)
-
-    return mukey_sim_list
-
-
 def rosetta_request(chunk, vars, v, conf=None, include_sd=False):
     """
     Sends a chunk of data to the ROSETTA web service for processing and returns the response.

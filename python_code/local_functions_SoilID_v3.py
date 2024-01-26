@@ -1425,39 +1425,6 @@ def compute_data_completeness(
     return data_completeness, text_completeness
 
 
-def simulate_correlated_triangular(n, params, correlation_matrix):
-    # Generate uncorrelated standard normal variables
-    uncorrelated_normal = np.random.multivariate_normal(
-        mean=np.zeros(len(params)), cov=np.eye(len(params)), size=n
-    )
-
-    # Cholesky decomposition of the correlation matrix
-    L = np.linalg.cholesky(correlation_matrix)
-
-    # Compute correlated variables using Cholesky decomposition
-    correlated_normal = uncorrelated_normal @ L
-
-    # Transform standard normal variables to match triangular marginal distributions
-    samples = np.empty((n, len(params)))
-
-    for i in range(len(params)):
-        a = params[i][0]  # Lower limit of the triangle distribution
-        b = params[i][1]  # Mode (peak) of the triangle distribution
-        c = params[i][2]  # Upper limit of the triangle distribution
-
-        normal_var = correlated_normal[:, i]
-        u = norm.cdf(normal_var)  # Transform to uniform [0, 1] range
-
-        for j in range(len(u)):
-            u_i = u[j]
-            if u_i <= (b - a) / (c - a):
-                samples[j, i] = a + np.sqrt(u_i * (c - a) * (b - a))
-            else:
-                samples[j, i] = c - np.sqrt((1 - u_i) * (c - a) * (c - b))
-
-    return samples
-
-
 def trim_fraction(text):
     """
     Removes trailing ".0" from a given text string.
@@ -2115,46 +2082,6 @@ def getColor_deltaE2000_OSD_pedon(data_osd, data_pedon):
 
     # Return the Delta E 2000 value between the averaged LAB values
     return calculate_deltaE2000(osd_avg_lab, pedon_avg_lab)
-
-
-def simulate_correlated_triangular(n, params, correlation_matrix):
-    """
-    Simulate correlated triangular distributed variables.
-
-    Parameters:
-    - n: Number of samples.
-    - params: List of tuples, where each tuple contains three parameters (a, b, c) for the
-              triangular distribution.
-    - correlation_matrix: 2D numpy array representing the desired correlations between
-                          the variables.
-
-    Returns:
-    - samples: 2D numpy array with n rows and as many columns as there are sets of
-                  parameters in params.
-    """
-
-    # Generate uncorrelated standard normal variables
-    uncorrelated_normal = np.random.normal(size=(n, len(params)))
-
-    # Cholesky decomposition of the correlation matrix
-    L = cholesky(correlation_matrix)
-
-    # Compute correlated variables using Cholesky decomposition
-    correlated_normal = uncorrelated_normal @ L
-
-    # Transform standard normal variables to match triangular marginal distributions
-    samples = np.zeros((n, len(params)))
-
-    for i, (a, b, c) in enumerate(params):
-        normal_var = correlated_normal[:, i]
-        u = norm.cdf(normal_var)  # Transform to uniform [0, 1] range
-
-        # Transform the uniform values into triangularly distributed values
-        condition = u <= (b - a) / (c - a)
-        samples[condition, i] = a + np.sqrt(u[condition] * (c - a) * (b - a))
-        samples[~condition, i] = c - np.sqrt((1 - u[~condition]) * (c - a) * (c - b))
-
-    return samples
 
 
 def extract_values(obj, key):

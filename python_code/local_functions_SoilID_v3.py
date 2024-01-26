@@ -2357,71 +2357,71 @@ def infill_soil_data(df):
     return filtered_groups
 
 
-# def slice_and_aggregate_soil_data(df):
-#     # Create an empty DataFrame to hold the aggregated results
-#     aggregated_data = pd.DataFrame()
-#
-#     # Get numeric columns for aggregation, excluding the depth range columns
-#     data_columns =
-#       df.select_dtypes(include=[np.number]).columns.difference(['hzdept_r', 'hzdepb_r'])
-#
-#     # Iterate through each depth interval
-#     for _, row in df.iterrows():
-#         top_depth = row['hzdept_r']
-#         bottom_depth = row['hzdepb_r']
-#         depth_range = np.arange(top_depth, bottom_depth)
-#
-#         # Create a DataFrame for each 1 cm increment
-#         for depth in depth_range:
-#             interpolated_row = {col: row[col] for col in data_columns}
-#             interpolated_row['Depth'] = depth
-#
-#             # Add the interpolated row to the aggregated data
-#             aggregated_data = aggregated_data.append(interpolated_row, ignore_index=True)
-#
-#     # Calculate mean values for each depth increment
-#     depth_increment_means = aggregated_data.groupby('Depth').mean()
-#
-#     # Define the depth ranges
-#     depth_ranges = [(0, 30), (30, 100)]
-#     # Initialize the result list
-#     results = []
-#
-#     # Iterate over each column in the dataframe
-#     for column in depth_increment_means.columns:
-#         column_results = []
-#         for top, bottom in depth_ranges:
-#             mask = (depth_increment_means.index >= top) & (depth_increment_means.index < bottom)
-#             data_subset = depth_increment_means.loc[mask, column]
-#             result = data_subset.mean(skipna=True) if not data_subset.empty else None
-#             column_results.append([top, bottom, result])
-#
-#         # Append the results for the current column to the overall results list
-#         results.append(
-#             pd.DataFrame(
-#                 column_results,
-#                 columns=["hzdept_r", "hzdepb_r", f"{column}"],
-#             )
-#         )
-#
-#     # Concatenate the results for each column into a single dataframe
-#     result_df = pd.concat(results, axis=1)
-#
-#     # If there are multiple columns, remove the repeated 'Top Depth' and 'Bottom Depth' columns
-#     if len(depth_increment_means.columns) > 1:
-#         result_df = result_df.loc[:, ~result_df.columns.duplicated()]
-#
-#     # Check if there is any row covering the 30-100 cm depth range
-#     # if not ((result_df['hzdept_r'] == 30)).any():
-#     #     # Create a row with hzdept_r=30, hzdepb_r=100, and None for all other columns
-#     #     new_row = {'hzdept_r': 30, 'hzdepb_r': 100}
-#     #     for col in data_columns:
-#     #         new_row[col] = None
-#     #
-#     #     # Append the new row to result_df
-#     #     result_df = result_df.append(new_row, ignore_index=True)
-#     result_df = result_df.drop_duplicates()
-#     return result_df
+def slice_and_aggregate_soil_data(df):
+    # Create an empty DataFrame to hold the aggregated results
+    aggregated_data = pd.DataFrame()
+
+    # Get numeric columns for aggregation, excluding the depth range columns
+    data_columns =
+      df.select_dtypes(include=[np.number]).columns.difference(['hzdept_r', 'hzdepb_r'])
+
+    # Iterate through each depth interval
+    for _, row in df.iterrows():
+        top_depth = row['hzdept_r']
+        bottom_depth = row['hzdepb_r']
+        depth_range = np.arange(top_depth, bottom_depth)
+
+        # Create a DataFrame for each 1 cm increment
+        for depth in depth_range:
+            interpolated_row = {col: row[col] for col in data_columns}
+            interpolated_row['Depth'] = depth
+
+            # Add the interpolated row to the aggregated data
+            aggregated_data = aggregated_data.append(interpolated_row, ignore_index=True)
+
+    # Calculate mean values for each depth increment
+    depth_increment_means = aggregated_data.groupby('Depth').mean()
+
+    # Define the depth ranges
+    depth_ranges = [(0, 30), (30, 100)]
+    # Initialize the result list
+    results = []
+
+    # Iterate over each column in the dataframe
+    for column in depth_increment_means.columns:
+        column_results = []
+        for top, bottom in depth_ranges:
+            mask = (depth_increment_means.index >= top) & (depth_increment_means.index < bottom)
+            data_subset = depth_increment_means.loc[mask, column]
+            result = data_subset.mean(skipna=True) if not data_subset.empty else None
+            column_results.append([top, bottom, result])
+
+        # Append the results for the current column to the overall results list
+        results.append(
+            pd.DataFrame(
+                column_results,
+                columns=["hzdept_r", "hzdepb_r", f"{column}"],
+            )
+        )
+
+    # Concatenate the results for each column into a single dataframe
+    result_df = pd.concat(results, axis=1)
+
+    # If there are multiple columns, remove the repeated 'Top Depth' and 'Bottom Depth' columns
+    if len(depth_increment_means.columns) > 1:
+        result_df = result_df.loc[:, ~result_df.columns.duplicated()]
+
+    # Check if there is any row covering the 30-100 cm depth range
+    # if not ((result_df['hzdept_r'] == 30)).any():
+    #     # Create a row with hzdept_r=30, hzdepb_r=100, and None for all other columns
+    #     new_row = {'hzdept_r': 30, 'hzdepb_r': 100}
+    #     for col in data_columns:
+    #         new_row[col] = None
+    #
+    #     # Append the new row to result_df
+    #     result_df = result_df.append(new_row, ignore_index=True)
+    result_df = result_df.drop_duplicates()
+    return result_df
 
 
 def slice_and_aggregate_soil_data_old(df):

@@ -1281,7 +1281,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             lab_intpl_lyrs = []
 
             # Define helper functions outside the loop
-            def create_new_layer(row, top, bottom):
+            def create_new_layer_osd(row, top, bottom):
                 """Create a new layer with specified top and bottom depths."""
                 new_row = row.copy()
                 new_row["top"] = top
@@ -1320,7 +1320,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 ):
                     # Check for missing surface horizon
                     if group_sorted["top"].iloc[0] != 0:
-                        new_layer = create_new_layer(
+                        new_layer = create_new_layer_osd(
                             group_sorted.iloc[0], 0, group_sorted["top"].iloc[0]
                         )
                         group_sorted = pd.concat(
@@ -1330,7 +1330,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                     # Check for missing subsurface horizons
                     for j in range(len(group_sorted) - 1):
                         if group_sorted["top"].iloc[j + 1] > group_sorted["bottom"].iloc[j]:
-                            new_layer = create_new_layer(
+                            new_layer = create_new_layer_osd(
                                 group_sorted.iloc[j],
                                 group_sorted["bottom"].iloc[j],
                                 group_sorted["top"].iloc[j + 1],

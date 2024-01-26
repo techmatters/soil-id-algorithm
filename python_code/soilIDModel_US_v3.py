@@ -1080,7 +1080,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         RGB = munsell2rgb(color_ref, munsell_ref, munsell)
                         munsell_RGB.append(RGB)
 
-                munsell_RGB_sim = pd.DataFrame(munsell_RGB, columns=["r", "g", "b"])
+                munsell_RGB_df = pd.DataFrame(munsell_RGB, columns=["r", "g", "b"])
                 OSDhorzdata_pd = pd.concat([OSDhorzdata_pd, munsell_RGB_df], axis=1)
 
                 # Merge with another dataframe

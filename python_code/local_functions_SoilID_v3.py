@@ -1515,7 +1515,7 @@ def extract_muhorzdata_STATSGO(mucompdata_pd):
 
     # Execute the query
     muhorzdata_out = sda_return(propQry=muhorzdataQry)
-    if mucompdata_out is None:
+    if muhorzdata_out is None:
         return "Soil ID not available in this area"
     else:
         muhorzdata = muhorzdata_out["Table"]

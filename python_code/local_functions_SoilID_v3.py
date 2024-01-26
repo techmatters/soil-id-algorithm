@@ -2362,8 +2362,7 @@ def slice_and_aggregate_soil_data(df):
     aggregated_data = pd.DataFrame()
 
     # Get numeric columns for aggregation, excluding the depth range columns
-    data_columns =
-      df.select_dtypes(include=[np.number]).columns.difference(['hzdept_r', 'hzdepb_r'])
+    data_columns = df.select_dtypes(include=[np.number]).columns.difference(['hzdept_r', 'hzdepb_r'])
 
     # Iterate through each depth interval
     for _, row in df.iterrows():

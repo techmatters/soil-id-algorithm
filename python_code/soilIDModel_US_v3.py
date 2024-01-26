@@ -64,7 +64,6 @@ from skbio.stats.composition import ilr, ilr_inv
 # rankPredictionUS
 # rankPredictionGlobal
 # getSoilGridsGlobal
-# getSoilGridsUS
 
 # when a site is created, call getSoilLocationBasedUS/getSoilLocationBasedGlobal.
 # when a site is created, call getSoilGridsGlobal

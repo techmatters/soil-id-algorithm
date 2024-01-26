@@ -2847,46 +2847,6 @@ def information_gain(data, target_col, feature_cols):
 
     return sorted_information_gains
 
-
-# -------------------------------------------------------------------------------------------
-# # This code was used for SoilGrids v1
-
-# def getST_descriptions(ST_Comp_List):
-#     try:
-#         conn = get_datastore_connection()
-#         cur = conn.cursor()
-#         ST_Comp_List = [x.encode('UTF8') for x in ST_Comp_List]
-#         sql = f"""SELECT Suborder, Description_en, Management_en, Description_es,
-#                   Management_es, Description_ks, Management_ks, Description_fr, Management_fr
-#                   FROM soil_taxonomy_desc
-#                   WHERE Suborder IN ({''.join(str(ST_Comp_List)[1:-1])})"""
-#         cur.execute(sql)
-#         results = cur.fetchall()
-#         data = pd.DataFrame(list(results))
-#         data.columns = ['Suborder', 'Description_en', 'Management_en', 'Description_es',
-#                         'Management_es', 'Description_ks', 'Management_ks', 'Description_fr',
-#                         'Management_fr']
-#         return data
-#     except Exception, err:
-#         print err
-#         return None
-#     finally:
-#         conn.close()
-
-# Applies a cubic spline model to interpolate values at every 1cm for the SoilGrids data
-
-# def cspline_soil_lpks(data):
-#     xm=[0,5,15,30,60,100,199]
-#     ym=data.loc[['M.sl1','M.sl2','M.sl3','M.sl4','M.sl5','M.sl6','M.sl7'],0].tolist()
-#     x_int=np.arange(0, 200, 1)
-#     cs = CubicSpline(xm,ym,bc_type='natural')
-#     int_vals=cs(x_int)
-#     data=pd.Series(int_vals).apply(pd.to_numeric)
-#     return pd.DataFrame(data=data, columns=['intp_vals'])
-# -------------------------------------------------------------------------------------------
-
-
-
 ##################################################################################################
 #                                       Database and API Functions                               #
 ##################################################################################################

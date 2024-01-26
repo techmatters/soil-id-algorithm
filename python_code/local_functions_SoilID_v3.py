@@ -15,6 +15,7 @@ import requests
 import shapely
 from flask import current_app
 from numpy.linalg import cholesky
+from osgeo import ogr
 from scipy.interpolate import UnivariateSpline
 from scipy.sparse import issparse
 from scipy.stats import entropy, norm
@@ -2360,24 +2361,26 @@ def slice_and_aggregate_soil_data(df):
     aggregated_data = pd.DataFrame()
 
     # Get numeric columns for aggregation, excluding the depth range columns
-    data_columns = df.select_dtypes(include=[np.number]).columns.difference(['hzdept_r', 'hzdepb_r'])
+    data_columns = df.select_dtypes(include=[np.number]).columns.difference(
+        ["hzdept_r", "hzdepb_r"]
+    )
 
     # Iterate through each depth interval
     for _, row in df.iterrows():
-        top_depth = row['hzdept_r']
-        bottom_depth = row['hzdepb_r']
+        top_depth = row["hzdept_r"]
+        bottom_depth = row["hzdepb_r"]
         depth_range = np.arange(top_depth, bottom_depth)
 
         # Create a DataFrame for each 1 cm increment
         for depth in depth_range:
             interpolated_row = {col: row[col] for col in data_columns}
-            interpolated_row['Depth'] = depth
+            interpolated_row["Depth"] = depth
 
             # Add the interpolated row to the aggregated data
             aggregated_data = aggregated_data.append(interpolated_row, ignore_index=True)
 
     # Calculate mean values for each depth increment
-    depth_increment_means = aggregated_data.groupby('Depth').mean()
+    depth_increment_means = aggregated_data.groupby("Depth").mean()
 
     # Define the depth ranges
     depth_ranges = [(0, 30), (30, 100)]
@@ -2573,6 +2576,7 @@ def slice_and_aggregate_soil_data_old(df):
 
     return result_df
     """
+
 
 # ROSETTA Simulation
 # Define a function to perform Rosetta simulation
@@ -2844,6 +2848,7 @@ def information_gain(data, target_col, feature_cols):
 
     return sorted_information_gains
 
+
 ##################################################################################################
 #                                       Database and API Functions                               #
 ##################################################################################################
@@ -2896,4 +2901,3 @@ def findSoilLocation(lon, lat):
         return "US"
     else:
         return "Global"
-

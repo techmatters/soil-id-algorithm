@@ -979,7 +979,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     # ---------------------------------------------------------------------------
     # Calculate Information Gain, i.e., soil input variable importance
 
-
     sim_data_df["texture"] = sim_data_df.apply(getTexture, axis=1)
     sim_data_df["rfv_class"] = sim_data_df.apply(getCF_class, axis=1)
 
@@ -2894,51 +2893,55 @@ def rankPredictionUS(
     # ----------------------------------------------------------------
     """
 
+
 # Generate data completeness score
 def compute_soilid_data_completeness(length, thresholds, scores):
     for thres, score in zip(thresholds, scores):
         if length <= thres:
             return score
     return scores[-1]
-    
+
+
 def adjust_depth_interval(data, target_length=120, add_columns=1):
-            """Adjusts the depth interval of user data."""
-            length = len(data)
-            if length > target_length:
-                data = data.iloc[:target_length]
-            elif length < target_length:
-                add_length = target_length - length
-                if add_columns == 1:
-                    add_data = pd.Series(np.nan, index=np.arange(add_length))
-                else:
-                    add_data = pd.DataFrame(
-                        np.nan, index=np.arange(add_length), columns=np.arange(add_columns)
-                    )
-                data = pd.concat([data, add_data])
-            return data.reset_index(drop=True)
+    """Adjusts the depth interval of user data."""
+    length = len(data)
+    if length > target_length:
+        data = data.iloc[:target_length]
+    elif length < target_length:
+        add_length = target_length - length
+        if add_columns == 1:
+            add_data = pd.Series(np.nan, index=np.arange(add_length))
+        else:
+            add_data = pd.DataFrame(
+                np.nan, index=np.arange(add_length), columns=np.arange(add_columns)
+            )
+        data = pd.concat([data, add_data])
+    return data.reset_index(drop=True)
+
 
 # Helper function to update dataframes based on depth conditions
 def update_intpl_data(df, col_names, values, very_bottom):
     if OSD_depth_add:
         layer_add = very_bottom - OSD_very_bottom_int
         pd_add = pd.DataFrame([values] * layer_add, columns=col_names)
-        df = pd.concat(
-            [df.loc[: OSD_very_bottom_int - 1], pd_add], axis=0
-        ).reset_index(drop=True)
+        df = pd.concat([df.loc[: OSD_very_bottom_int - 1], pd_add], axis=0).reset_index(drop=True)
     elif OSD_depth_remove:
         df = df.loc[:very_bottom].reset_index(drop=True)
     return df
 
+
 def rename_simulated_soil_profile_columns(df, soil_property_columns, depth):
-        new_column_names = {}
-        for col in soil_property_columns:
-            new_column_names[col] = f"{col}_{depth}"
-        df.rename(columns=new_column_names, inplace=True)
+    new_column_names = {}
+    for col in soil_property_columns:
+        new_column_names[col] = f"{col}_{depth}"
+    df.rename(columns=new_column_names, inplace=True)
+
 
 # calculate AWC for ROI
 def calculate_aws(df, quantile):
     total = (df[quantile] * df["depth"] * df["n"]).sum()
     return pd.DataFrame({f"aws{quantile}_100": [total]})
+
 
 # Creates a new soil horizon layer row in the soil horizon table
 def create_new_layer(row, hzdept, hzdepb):
@@ -2964,6 +2967,7 @@ def create_new_layer(row, hzdept, hzdepb):
         },
         index=[0],
     )
+
 
 # Creates a new row entry in the OSD (Official Series Description) soil horizon table
 def create_new_layer_osd(row, top, bottom):

@@ -55,6 +55,7 @@ from scipy.stats import norm
 # when a site is created, call getSoilGridsGlobal
 # after user has collected data, call rankPredictionUS/rankPredictionGlobal.
 
+
 ##################################################################################################
 #                                 getSoilLocationBasedGlobal                                     #
 ##################################################################################################

@@ -2740,8 +2740,7 @@ def rankPredictionUS(
     # Identify vertisols based on cracks, clay texture, and taxonomic presence of "ert"
     # Compute the condition for rows that meet the criteria
     condition = (
-        cracks
-        == True
+        cracks is True
         & (D_final_loc["clay"] == "Yes")
         & (
             D_final_loc["taxorder"].str.contains("ert", case=False)

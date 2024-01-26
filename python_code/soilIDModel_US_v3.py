@@ -13,7 +13,7 @@ import requests
 import shapely
 
 # Flask
-from flask import current_app, jsonify
+from flask import current_app
 
 # Import local fucntions
 from model.local_functions_SoilID_v3 import (  # slice_and_aggregate_soil_data,
@@ -47,11 +47,9 @@ from model.local_functions_SoilID_v3 import (  # slice_and_aggregate_soil_data,
     save_rank_output,
     sda_return,
     simulate_correlated_triangular,
-    slice_and_aggregate_soil_data,
     slice_and_aggregate_soil_data_old,
     trim_fraction,
 )
-from osgeo import ogr
 from pandas.io.json import json_normalize
 from scipy.stats import spearmanr
 from shapely.geometry import Point
@@ -63,64 +61,10 @@ from skbio.stats.composition import ilr, ilr_inv
 # rankPredictionUS
 # rankPredictionGlobal
 # getSoilGridsGlobal
-# getSoilGridsUS
 
 # when a site is created, call getSoilLocationBasedUS/getSoilLocationBasedGlobal.
 # when a site is created, call getSoilGridsGlobal
 # after user has collected data, call rankPredictionUS/rankPredictionGlobal.
-
-
-##############################################################################################
-#                                   Database and API Functions                               #
-##############################################################################################
-def findSoilLocation(lon, lat):
-    """
-    Determines the location type (US, Global, or None) of the given longitude
-        and latitude based on soil datasets.
-
-    Args:
-    - lon (float): Longitude of the point.
-    - lat (float): Latitude of the point.
-
-    Returns:
-    - str or None: 'US' if point is in US soil dataset, 'Global' if in global dataset,
-        None otherwise.
-    """
-
-    drv_h = ogr.GetDriverByName("ESRI Shapefile")
-    ds_in_h = drv_h.Open(
-        "%s/HWSD_global_noWater_no_country.shp" % current_app.config["DATA_BACKEND"], 0
-    )
-    layer_global = ds_in_h.GetLayer(0)
-
-    drv_us = ogr.GetDriverByName("ESRI Shapefile")
-    ds_in_us = drv_us.Open("%s/SoilID_US_Areas.shp" % current_app.config["DATA_BACKEND"], 0)
-    layer_us = ds_in_us.GetLayer(0)
-
-    # Setup coordinate transformation
-    geo_ref = layer_global.GetSpatialRef()
-    pt_ref = ogr.osr.SpatialReference()
-    pt_ref.ImportFromEPSG(4326)
-    coord_transform = ogr.osr.CoordinateTransformation(pt_ref, geo_ref)
-
-    # Transform the coordinate system of the input point
-    lon, lat, _ = coord_transform.TransformPoint(lon, lat)
-
-    # Create a point geometry
-    pt = ogr.Geometry(ogr.wkbPoint)
-    pt.SetPoint_2D(0, lon, lat)
-
-    # Filter layers using the point
-    layer_global.SetSpatialFilter(pt)
-    layer_us.SetSpatialFilter(pt)
-
-    # Determine location type
-    if not (len(layer_global) or len(layer_us)):
-        return None
-    elif len(layer_us):
-        return "US"
-    else:
-        return "Global"
 
 
 ############################################################################################
@@ -536,31 +480,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     # Group data by cokey
     muhorzdata_group_cokey = [group for _, group in muhorzdata_pd.groupby("cokey", sort=False)]
 
-    # Helper function to create a new layer
-    def create_new_layer(row, hzdept, hzdepb):
-        return pd.DataFrame(
-            {
-                "cokey": row["cokey"],
-                "hzdept_r": hzdepb,
-                "hzdepb_r": hzdept,
-                "chkey": row["chkey"],
-                "hzname": None,
-                "sandtotal_r": np.nan,
-                "silttotal_r": np.nan,
-                "claytotal_r": np.nan,
-                "total_frag_volume": np.nan,
-                "CEC": np.nan,
-                "pH": np.nan,
-                "EC": np.nan,
-                "lep_r": np.nan,
-                "comppct_r": row["comppct_r"],
-                "compname": row["compname"],
-                "slope_r": np.nan,
-                "texture": None,
-            },
-            index=[0],
-        )
-
     getProfile_cokey = []
     c_bottom_depths = []
     clay_texture = []
@@ -822,9 +741,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     # Concatenate the results for each column into a single dataframe
     agg_data_df = pd.concat(agg_data, axis=0, ignore_index=True).dropna().reset_index(drop=True)
-    # return(jsonify(agg_data_df.to_dict(orient='records')))
-    # return(jsonify(agg_data_df.to_dict()))
-    # return(json.dumps(agg_data_df[["sandtotal_r", "silttotal_r", "claytotal_r"]].values.tolist()))
 
     # Extract columns with names ending in '_r'
     agg_data_r = agg_data_df[[col for col in agg_data_df.columns if col.endswith("_r")]]
@@ -923,7 +839,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             return f"Division by zero encountered in row index: {index}"
             return "Matrix contains NaNs or infs."
 
-            # Handling NaNs or infs. This is just an example and should be adapted based on your specific context.
+            # Handling NaNs or infs. This is just an example and should be adapted
+            # based on your specific context.
+            #
             # For example, replace NaNs with 0.0 (or another appropriate value)
             local_correlation_matrix = np.nan_to_num(local_correlation_matrix)
 
@@ -1041,12 +959,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     awc_comp_quant["depth"] = awc_comp_quant["bottom"] - awc_comp_quant["top"]
 
     # Steps 4 and 5: Group by 'compname_grp' and merge
-    def calculate_aws(df, quantile):
-        # calculate AWC for ROI
-        total = (df[quantile] * df["depth"] * df["n"]).sum()
-        return pd.DataFrame({f"aws{quantile}_100": [total]})
-
-    aws50 = calculate_aws(awc_comp_quant, "0.50")
     aws05 = calculate_aws(awc_comp_quant, "0.05")
     aws95 = calculate_aws(awc_comp_quant, "0.95")
 
@@ -1059,23 +971,11 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     """
     aws_PIW90 = aws95["aws0.95_100"] - aws05["aws0.05_100"]
 
-    # aws_PI95 = pd.DataFrame({'aws_diff': [aws_PI95]})
-
     # ---------------------------------------------------------------------------
     # Calculate Information Gain, i.e., soil input variable importance
 
-    # calculate texture
-    # return(jsonify(sim_data_df.to_dict(orient='records')))
-
     sim_data_df["texture"] = sim_data_df.apply(getTexture, axis=1)
     sim_data_df["rfv_class"] = sim_data_df.apply(getCF_class, axis=1)
-
-    # return(jsonify(sim_data_df.to_dict(orient='records')))
-    def rename_columns(df, soil_property_columns, depth):
-        new_column_names = {}
-        for col in soil_property_columns:
-            new_column_names[col] = f"{col}_{depth}"
-        df.rename(columns=new_column_names, inplace=True)
 
     # Remove the 'hzdepb_r' column
     sim_data_df = sim_data_df.drop(columns=["hzdepb_r"], errors="ignore")
@@ -1091,11 +991,11 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     # Create a new DataFrame for each soil depth
     df1 = filtered_df[filtered_df["hzdept_r"] == 0].copy().reset_index(drop=True)
     df1 = df1[final_columns]
-    rename_columns(df1, soil_property_columns, 0)
+    rename_simulated_soil_profile_columns(df1, soil_property_columns, 0)
 
     df2 = filtered_df[filtered_df["hzdept_r"] == 30].copy().reset_index(drop=True)
     df2 = df2[final_columns]
-    rename_columns(df2, soil_property_columns, 30)
+    rename_simulated_soil_profile_columns(df2, soil_property_columns, 30)
     # Assuming df1 and df2 are your dataframes
     groups1 = df1.groupby("compname_grp")
     groups2 = df2.groupby("compname_grp")
@@ -1181,7 +1081,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         RGB = munsell2rgb(color_ref, munsell_ref, munsell)
                         munsell_RGB.append(RGB)
 
-                munsell_RGB_sim = pd.DataFrame(munsell_RGB, columns=["r", "g", "b"])
+                munsell_RGB_df = pd.DataFrame(munsell_RGB, columns=["r", "g", "b"])
                 OSDhorzdata_pd = pd.concat([OSDhorzdata_pd, munsell_RGB_df], axis=1)
 
                 # Merge with another dataframe
@@ -1333,32 +1233,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             munsell_lyrs = []
             lab_intpl_lyrs = []
 
-            # Define helper functions outside the loop
-            def create_new_layer(row, top, bottom):
-                """Create a new layer with specified top and bottom depths."""
-                new_row = row.copy()
-                new_row["top"] = top
-                new_row["bottom"] = bottom
-                for col in [
-                    "hzname",
-                    "texture_class",
-                    "cf_class",
-                    "matrix_dry_color_hue",
-                    "matrix_dry_color_value",
-                    "matrix_dry_color_chroma",
-                ]:
-                    new_row[col] = None
-                for col in [
-                    "r",
-                    "g",
-                    "b",
-                    "total_frag_volume",
-                    "claytotal_r",
-                    "sandtotal_r",
-                ]:
-                    new_row[col] = np.nan
-                return new_row
-
             for index, group in enumerate(OSDhorzdata_group_cokey):
                 group_sorted = group.sort_values(by="top").drop_duplicates().reset_index(drop=True)
 
@@ -1373,7 +1247,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 ):
                     # Check for missing surface horizon
                     if group_sorted["top"].iloc[0] != 0:
-                        new_layer = create_new_layer(
+                        new_layer = create_new_layer_osd(
                             group_sorted.iloc[0], 0, group_sorted["top"].iloc[0]
                         )
                         group_sorted = pd.concat(
@@ -1383,7 +1257,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                     # Check for missing subsurface horizons
                     for j in range(len(group_sorted) - 1):
                         if group_sorted["top"].iloc[j + 1] > group_sorted["bottom"].iloc[j]:
-                            new_layer = create_new_layer(
+                            new_layer = create_new_layer_osd(
                                 group_sorted.iloc[j],
                                 group_sorted["bottom"].iloc[j],
                                 group_sorted["top"].iloc[j + 1],
@@ -1481,8 +1355,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                             for lab in lab_parse
                         ]
                         munsell_lyrs.append(dict(zip(l_d.index, munsell_values)))
-                    # return(jsonify(OSD_text_int  = str(OSD_text_int[index] )))
-                    # return(jsonify(group_sorted.to_dict(orient='records')))
+
                     # Extract OSD Texture and Rock Fragment Data
                     if OSD_text_int[index] == "Yes" or OSD_rfv_int[index] == "Yes":
                         group_sorted[["hzdept_r", "hzdepb_r", "texture"]] = group_sorted[
@@ -1503,18 +1376,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         OSD_rfv_intpl = getProfile(group_sorted, "total_frag_volume")
                         OSD_rfv_intpl.columns = ["c_cfpct_intpl", "c_cfpct_intpl_grp"]
 
-                        # Helper function to update dataframes based on depth conditions
-                        def update_intpl_data(df, col_names, values, very_bottom):
-                            if OSD_depth_add:
-                                layer_add = very_bottom - OSD_very_bottom_int
-                                pd_add = pd.DataFrame([values] * layer_add, columns=col_names)
-                                df = pd.concat(
-                                    [df.loc[: OSD_very_bottom_int - 1], pd_add], axis=0
-                                ).reset_index(drop=True)
-                            elif OSD_depth_remove:
-                                df = df.loc[:very_bottom].reset_index(drop=True)
-                            return df
-
                         # Update data based on depth conditions
                         sand_values = OSD_sand_intpl.iloc[OSD_very_bottom_int - 1].tolist()
                         OSD_sand_intpl = update_intpl_data(
@@ -1522,6 +1383,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                             ["c_sandpct_intpl", "c_sandpct_intpl_grp"],
                             sand_values,
                             OSD_very_bottom,
+                            OSD_depth_add,
+                            OSD_depth_remove,
+                            OSD_very_bottom_int,
                         )
 
                         clay_values = OSD_clay_intpl.iloc[OSD_very_bottom_int - 1].tolist()
@@ -1530,6 +1394,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                             ["c_claypct_intpl", "c_claypct_intpl_grp"],
                             clay_values,
                             OSD_very_bottom,
+                            OSD_depth_add,
+                            OSD_depth_remove,
+                            OSD_very_bottom_int,
                         )
 
                         rfv_values = OSD_rfv_intpl.iloc[OSD_very_bottom_int - 1].tolist()
@@ -1538,6 +1405,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                             ["c_cfpct_intpl", "c_cfpct_intpl_grp"],
                             rfv_values,
                             OSD_very_bottom,
+                            OSD_depth_add,
+                            OSD_depth_remove,
+                            OSD_very_bottom_int,
                         )
 
                         # If OSD bottom depth is greater than component depth and component depth
@@ -2369,22 +2239,6 @@ def rankPredictionUS(
                 np.nan, index=np.arange(120), columns=np.arange(3)
             ).reset_index(drop=True)
 
-        def adjust_depth_interval(data, target_length=120, add_columns=1):
-            """Adjusts the depth interval of user data."""
-            length = len(data)
-            if length > target_length:
-                data = data.iloc[:target_length]
-            elif length < target_length:
-                add_length = target_length - length
-                if add_columns == 1:
-                    add_data = pd.Series(np.nan, index=np.arange(add_length))
-                else:
-                    add_data = pd.DataFrame(
-                        np.nan, index=np.arange(add_length), columns=np.arange(add_columns)
-                    )
-                data = pd.concat([data, add_data])
-            return data.reset_index(drop=True)
-
         # Adjust depth interval for each dataset
         p_sandpct_intpl = adjust_depth_interval(p_sandpct_intpl)
         p_claypct_intpl = adjust_depth_interval(p_claypct_intpl)
@@ -2451,33 +2305,26 @@ def rankPredictionUS(
             print(f"Error fetching elevation data: {err}")
             pElev = None
 
-    # Generate data completeness score
-    def compute_completeness(length, thresholds, scores):
-        for thres, score in zip(thresholds, scores):
-            if length <= thres:
-                return score
-        return scores[-1]
-
     # Compute text completeness
     p_sandpct_intpl = [x for x in p_sandpct_intpl if x is not None and x == x]
     text_len = len(p_sandpct_intpl)
     text_thresholds = [1, 10, 20, 50, 70, 100]
     text_scores = [3, 8, 15, 25, 30, 35, 40]
-    text_comp = compute_completeness(text_len, text_thresholds, text_scores)
+    text_comp = compute_soilid_data_completeness(text_len, text_thresholds, text_scores)
 
     # Compute rf completeness
     p_cfg_intpl = [x for x in p_cfg_intpl if x is not None and x == x]
     rf_len = len(p_cfg_intpl)
     rf_thresholds = [1, 10, 20, 50, 70, 100, 120]
     rf_scores = [3, 6, 10, 15, 20, 23, 25]
-    rf_comp = compute_completeness(rf_len, rf_thresholds, rf_scores)
+    rf_comp = compute_soilid_data_completeness(rf_len, rf_thresholds, rf_scores)
 
     # Compute lab completeness
     p_lab_intpl = [x for x in p_lab_intpl if x is not None and x == x]
     lab_len = len(p_lab_intpl)
     lab_thresholds = [1, 10, 20, 50, 70, 100, 120]
     lab_scores = [1, 3, 6, 9, 12, 14, 15]
-    lab_comp = compute_completeness(lab_len, lab_thresholds, lab_scores)
+    lab_comp = compute_soilid_data_completeness(lab_len, lab_thresholds, lab_scores)
 
     # Compute slope and crack completeness
     slope_comp = 15 if pSlope is not None else 0
@@ -2903,7 +2750,7 @@ def rankPredictionUS(
     # Compute the condition for rows that meet the criteria
     condition = (
         cracks
-        == True
+        is True
         & (D_final_loc["clay"] == "Yes")
         & (
             D_final_loc["taxorder"].str.contains("ert", case=False)
@@ -3048,3 +2895,107 @@ def rankPredictionUS(
     'comppct_r', 'distance']])
     # ----------------------------------------------------------------
     """
+
+
+# Generate data completeness score
+def compute_soilid_data_completeness(length, thresholds, scores):
+    for thres, score in zip(thresholds, scores):
+        if length <= thres:
+            return score
+    return scores[-1]
+
+
+def adjust_depth_interval(data, target_length=120, add_columns=1):
+    """Adjusts the depth interval of user data."""
+    length = len(data)
+    if length > target_length:
+        data = data.iloc[:target_length]
+    elif length < target_length:
+        add_length = target_length - length
+        if add_columns == 1:
+            add_data = pd.Series(np.nan, index=np.arange(add_length))
+        else:
+            add_data = pd.DataFrame(
+                np.nan, index=np.arange(add_length), columns=np.arange(add_columns)
+            )
+        data = pd.concat([data, add_data])
+    return data.reset_index(drop=True)
+
+
+# Helper function to update dataframes based on depth conditions
+def update_intpl_data(
+    df, col_names, values, very_bottom, OSD_depth_add, OSD_depth_remove, OSD_very_bottom_int
+):
+    if OSD_depth_add:
+        layer_add = very_bottom - OSD_very_bottom_int
+        pd_add = pd.DataFrame([values] * layer_add, columns=col_names)
+        df = pd.concat([df.loc[: OSD_very_bottom_int - 1], pd_add], axis=0).reset_index(drop=True)
+    elif OSD_depth_remove:
+        df = df.loc[:very_bottom].reset_index(drop=True)
+    return df
+
+
+def rename_simulated_soil_profile_columns(df, soil_property_columns, depth):
+    new_column_names = {}
+    for col in soil_property_columns:
+        new_column_names[col] = f"{col}_{depth}"
+    df.rename(columns=new_column_names, inplace=True)
+
+
+# calculate AWC for ROI
+def calculate_aws(df, quantile):
+    total = (df[quantile] * df["depth"] * df["n"]).sum()
+    return pd.DataFrame({f"aws{quantile}_100": [total]})
+
+
+# Creates a new soil horizon layer row in the soil horizon table
+def create_new_layer(row, hzdept, hzdepb):
+    return pd.DataFrame(
+        {
+            "cokey": row["cokey"],
+            "hzdept_r": hzdepb,
+            "hzdepb_r": hzdept,
+            "chkey": row["chkey"],
+            "hzname": None,
+            "sandtotal_r": np.nan,
+            "silttotal_r": np.nan,
+            "claytotal_r": np.nan,
+            "total_frag_volume": np.nan,
+            "CEC": np.nan,
+            "pH": np.nan,
+            "EC": np.nan,
+            "lep_r": np.nan,
+            "comppct_r": row["comppct_r"],
+            "compname": row["compname"],
+            "slope_r": np.nan,
+            "texture": None,
+        },
+        index=[0],
+    )
+
+
+# Creates a new row entry in the OSD (Official Series Description) soil horizon table
+def create_new_layer_osd(row, top, bottom):
+    """Create a new layer with specified top and bottom depths."""
+    new_row = row.copy()
+    new_row["top"] = top
+    new_row["bottom"] = bottom
+    for col in [
+        "hzname",
+        "texture_class",
+        "cf_class",
+        "matrix_dry_color_hue",
+        "matrix_dry_color_value",
+        "matrix_dry_color_chroma",
+    ]:
+        new_row[col] = None
+    for col in [
+        "r",
+        "g",
+        "b",
+        "total_frag_volume",
+        "claytotal_r",
+        "sandtotal_r",
+    ]:
+        new_row[col] = np.nan
+    return new_row

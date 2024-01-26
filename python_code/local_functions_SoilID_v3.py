@@ -15,10 +15,12 @@ import requests
 import shapely
 from flask import current_app
 from numpy.linalg import cholesky
+from osgeo import ogr
 from scipy.interpolate import UnivariateSpline
 from scipy.sparse import issparse
 from scipy.stats import entropy, norm
 from shapely.geometry import LinearRing, Point
+from skimage import color
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import pairwise
 from sklearn.metrics.pairwise import euclidean_distances
@@ -1423,39 +1425,6 @@ def compute_data_completeness(
     return data_completeness, text_completeness
 
 
-def simulate_correlated_triangular(n, params, correlation_matrix):
-    # Generate uncorrelated standard normal variables
-    uncorrelated_normal = np.random.multivariate_normal(
-        mean=np.zeros(len(params)), cov=np.eye(len(params)), size=n
-    )
-
-    # Cholesky decomposition of the correlation matrix
-    L = np.linalg.cholesky(correlation_matrix)
-
-    # Compute correlated variables using Cholesky decomposition
-    correlated_normal = uncorrelated_normal @ L
-
-    # Transform standard normal variables to match triangular marginal distributions
-    samples = np.empty((n, len(params)))
-
-    for i in range(len(params)):
-        a = params[i][0]  # Lower limit of the triangle distribution
-        b = params[i][1]  # Mode (peak) of the triangle distribution
-        c = params[i][2]  # Upper limit of the triangle distribution
-
-        normal_var = correlated_normal[:, i]
-        u = norm.cdf(normal_var)  # Transform to uniform [0, 1] range
-
-        for j in range(len(u)):
-            u_i = u[j]
-            if u_i <= (b - a) / (c - a):
-                samples[j, i] = a + np.sqrt(u_i * (c - a) * (b - a))
-            else:
-                samples[j, i] = c - np.sqrt((1 - u_i) * (c - a) * (c - b))
-
-    return samples
-
-
 def trim_fraction(text):
     """
     Removes trailing ".0" from a given text string.
@@ -1515,7 +1484,7 @@ def extract_muhorzdata_STATSGO(mucompdata_pd):
 
     # Execute the query
     muhorzdata_out = sda_return(propQry=muhorzdataQry)
-    if mucompdata_out is None:
+    if muhorzdata_out is None:
         return "Soil ID not available in this area"
     else:
         muhorzdata = muhorzdata_out["Table"]
@@ -1852,9 +1821,7 @@ def getProfileLAB(data_osd, color_ref):
     """
     The function processes the given data_osd DataFrame and computes LAB values for soil profiles.
     """
-    LAB_ref = color_ref[["L", "A", "B"]]
     rgb_ref = color_ref[["r", "g", "b"]]
-    munsell_ref = color_ref[["hue", "value", "chroma"]]
 
     # Convert the specific columns to numeric
     data_osd[["top", "bottom", "r", "g", "b"]] = data_osd[["top", "bottom", "r", "g", "b"]].apply(
@@ -2117,46 +2084,6 @@ def getColor_deltaE2000_OSD_pedon(data_osd, data_pedon):
     return calculate_deltaE2000(osd_avg_lab, pedon_avg_lab)
 
 
-def simulate_correlated_triangular(n, params, correlation_matrix):
-    """
-    Simulate correlated triangular distributed variables.
-
-    Parameters:
-    - n: Number of samples.
-    - params: List of tuples, where each tuple contains three parameters (a, b, c) for the
-              triangular distribution.
-    - correlation_matrix: 2D numpy array representing the desired correlations between
-                          the variables.
-
-    Returns:
-    - samples: 2D numpy array with n rows and as many columns as there are sets of
-                  parameters in params.
-    """
-
-    # Generate uncorrelated standard normal variables
-    uncorrelated_normal = np.random.normal(size=(n, len(params)))
-
-    # Cholesky decomposition of the correlation matrix
-    L = cholesky(correlation_matrix)
-
-    # Compute correlated variables using Cholesky decomposition
-    correlated_normal = uncorrelated_normal @ L
-
-    # Transform standard normal variables to match triangular marginal distributions
-    samples = np.zeros((n, len(params)))
-
-    for i, (a, b, c) in enumerate(params):
-        normal_var = correlated_normal[:, i]
-        u = norm.cdf(normal_var)  # Transform to uniform [0, 1] range
-
-        # Transform the uniform values into triangularly distributed values
-        condition = u <= (b - a) / (c - a)
-        samples[condition, i] = a + np.sqrt(u[condition] * (c - a) * (b - a))
-        samples[~condition, i] = c - np.sqrt((1 - u[~condition]) * (c - a) * (c - b))
-
-    return samples
-
-
 def extract_values(obj, key):
     """
     Pull all values of the specified key from a nested dictionary or list.
@@ -2357,71 +2284,72 @@ def infill_soil_data(df):
     return filtered_groups
 
 
-# def slice_and_aggregate_soil_data(df):
-#     # Create an empty DataFrame to hold the aggregated results
-#     aggregated_data = pd.DataFrame()
-#
-#     # Get numeric columns for aggregation, excluding the depth range columns
-#     data_columns =
-#       df.select_dtypes(include=[np.number]).columns.difference(['hzdept_r', 'hzdepb_r'])
-#
-#     # Iterate through each depth interval
-#     for _, row in df.iterrows():
-#         top_depth = row['hzdept_r']
-#         bottom_depth = row['hzdepb_r']
-#         depth_range = np.arange(top_depth, bottom_depth)
-#
-#         # Create a DataFrame for each 1 cm increment
-#         for depth in depth_range:
-#             interpolated_row = {col: row[col] for col in data_columns}
-#             interpolated_row['Depth'] = depth
-#
-#             # Add the interpolated row to the aggregated data
-#             aggregated_data = aggregated_data.append(interpolated_row, ignore_index=True)
-#
-#     # Calculate mean values for each depth increment
-#     depth_increment_means = aggregated_data.groupby('Depth').mean()
-#
-#     # Define the depth ranges
-#     depth_ranges = [(0, 30), (30, 100)]
-#     # Initialize the result list
-#     results = []
-#
-#     # Iterate over each column in the dataframe
-#     for column in depth_increment_means.columns:
-#         column_results = []
-#         for top, bottom in depth_ranges:
-#             mask = (depth_increment_means.index >= top) & (depth_increment_means.index < bottom)
-#             data_subset = depth_increment_means.loc[mask, column]
-#             result = data_subset.mean(skipna=True) if not data_subset.empty else None
-#             column_results.append([top, bottom, result])
-#
-#         # Append the results for the current column to the overall results list
-#         results.append(
-#             pd.DataFrame(
-#                 column_results,
-#                 columns=["hzdept_r", "hzdepb_r", f"{column}"],
-#             )
-#         )
-#
-#     # Concatenate the results for each column into a single dataframe
-#     result_df = pd.concat(results, axis=1)
-#
-#     # If there are multiple columns, remove the repeated 'Top Depth' and 'Bottom Depth' columns
-#     if len(depth_increment_means.columns) > 1:
-#         result_df = result_df.loc[:, ~result_df.columns.duplicated()]
-#
-#     # Check if there is any row covering the 30-100 cm depth range
-#     # if not ((result_df['hzdept_r'] == 30)).any():
-#     #     # Create a row with hzdept_r=30, hzdepb_r=100, and None for all other columns
-#     #     new_row = {'hzdept_r': 30, 'hzdepb_r': 100}
-#     #     for col in data_columns:
-#     #         new_row[col] = None
-#     #
-#     #     # Append the new row to result_df
-#     #     result_df = result_df.append(new_row, ignore_index=True)
-#     result_df = result_df.drop_duplicates()
-#     return result_df
+def slice_and_aggregate_soil_data(df):
+    # Create an empty DataFrame to hold the aggregated results
+    aggregated_data = pd.DataFrame()
+
+    # Get numeric columns for aggregation, excluding the depth range columns
+    data_columns = df.select_dtypes(include=[np.number]).columns.difference(
+        ["hzdept_r", "hzdepb_r"]
+    )
+
+    # Iterate through each depth interval
+    for _, row in df.iterrows():
+        top_depth = row["hzdept_r"]
+        bottom_depth = row["hzdepb_r"]
+        depth_range = np.arange(top_depth, bottom_depth)
+
+        # Create a DataFrame for each 1 cm increment
+        for depth in depth_range:
+            interpolated_row = {col: row[col] for col in data_columns}
+            interpolated_row["Depth"] = depth
+
+            # Add the interpolated row to the aggregated data
+            aggregated_data = aggregated_data.append(interpolated_row, ignore_index=True)
+
+    # Calculate mean values for each depth increment
+    depth_increment_means = aggregated_data.groupby("Depth").mean()
+
+    # Define the depth ranges
+    depth_ranges = [(0, 30), (30, 100)]
+    # Initialize the result list
+    results = []
+
+    # Iterate over each column in the dataframe
+    for column in depth_increment_means.columns:
+        column_results = []
+        for top, bottom in depth_ranges:
+            mask = (depth_increment_means.index >= top) & (depth_increment_means.index < bottom)
+            data_subset = depth_increment_means.loc[mask, column]
+            result = data_subset.mean(skipna=True) if not data_subset.empty else None
+            column_results.append([top, bottom, result])
+
+        # Append the results for the current column to the overall results list
+        results.append(
+            pd.DataFrame(
+                column_results,
+                columns=["hzdept_r", "hzdepb_r", f"{column}"],
+            )
+        )
+
+    # Concatenate the results for each column into a single dataframe
+    result_df = pd.concat(results, axis=1)
+
+    # If there are multiple columns, remove the repeated 'Top Depth' and 'Bottom Depth' columns
+    if len(depth_increment_means.columns) > 1:
+        result_df = result_df.loc[:, ~result_df.columns.duplicated()]
+
+    # Check if there is any row covering the 30-100 cm depth range
+    # if not ((result_df['hzdept_r'] == 30)).any():
+    #     # Create a row with hzdept_r=30, hzdepb_r=100, and None for all other columns
+    #     new_row = {'hzdept_r': 30, 'hzdepb_r': 100}
+    #     for col in data_columns:
+    #         new_row[col] = None
+    #
+    #     # Append the new row to result_df
+    #     result_df = result_df.append(new_row, ignore_index=True)
+    result_df = result_df.drop_duplicates()
+    return result_df
 
 
 def slice_and_aggregate_soil_data_old(df):
@@ -2576,112 +2504,6 @@ def slice_and_aggregate_soil_data_old(df):
 
     return result_df
     """
-
-
-# def aggregate_data_vi(data, max_depth, sd=2):
-#     """
-#     Aggregate data by specific depth ranges and compute the mean of each range for each column.
-#
-#     Args:
-#         data (pd.DataFrame): The DataFrame containing the data with index as depth.
-#         max_depth (float): The maximum depth to consider for aggregation.
-#         sd (int): The number of decimal places to round the aggregated data.
-#
-#     Returns:
-#         pd.DataFrame: A DataFrame with aggregated data for each column within specified
-#                       depth ranges.
-#     """
-#     if not max_depth or np.isnan(max_depth):
-#         return pd.DataFrame(columns=["hzdept_r", "hzdepb_r", "Data"])
-#
-#     # Define the depth ranges
-#     depth_ranges = [(0, 30), (30, 100)]
-#     # Initialize the result list
-#     results = []
-#
-#     # Iterate over each column in the dataframe
-#     for column in data.columns:
-#         column_results = []
-#         for top, bottom in depth_ranges:
-#             if max_depth <= top:
-#                 column_results.append([top, bottom, np.nan])
-#             else:
-#                 mask = (data.index >= top) & (data.index <= min(bottom, max_depth))
-#                 data_subset = data.loc[mask, column]
-#                 if not data_subset.empty:
-#                     result = round(data_subset.mean(skipna=True), sd)
-#                              if not data_subset.isna().all() else np.nan
-#                     column_results.append([top, min(bottom, max_depth), result])
-#                 else:
-#                     column_results.append([top, min(bottom, max_depth), np.nan])
-#         # Append the results for the current column to the overall results list
-#         results.append(
-#             pd.DataFrame(
-#                 column_results,
-#                 columns=["hzdept_r", "hzdepb_r", f"{column}"],
-#             )
-#         )
-#
-#     # Concatenate the results for each column into a single dataframe
-#     result_df = pd.concat(results, axis=1)
-#
-#     # If there are multiple columns, remove the repeated 'Top Depth' and 'Bottom Depth' columns
-#     if len(data.columns) > 1:
-#         result_df = result_df.loc[:, ~result_df.columns.duplicated()]
-#
-#     return result_df
-
-# def extract_soil_params(soil_df):
-#     # Extract the parameters for sand, silt, and clay from the DataFrame
-#     sand_params = [soil_df["sandtotal_l"].values, soil_df["sandtotal_r"].values,
-#                    soil_df["sandtotal_h"].values]
-#     silt_params = [soil_df["silttotal_l"].values, soil_df["silttotal_r"].values,
-#                    soil_df["silttotal_h"].values]
-#     clay_params = [soil_df["claytotal_l"].values, soil_df["claytotal_r"].values,
-#                    soil_df["claytotal_h"].values]
-#
-#     # Create a list of tuples where each tuple represents the l, r, h values for each soil
-#     # component for a row
-#     soil_params_tuples = list(zip(zip(*sand_params), zip(*silt_params), zip(*clay_params)))
-#
-#     # Convert the list of tuples into the desired structure
-#     # Where each tuple has the structure ((sand_l, sand_r, sand_h),
-#                                           (silt_l, silt_r, silt_h),
-#                                           (clay_l, clay_r, clay_h))
-#     structured_soil_params = [((sand[0], sand[1], sand[2]),
-#                                (silt[0], silt[1], silt[2]),
-#                                (clay[0], clay[1], clay[2]))
-#                               for sand, silt, clay in soil_params_tuples]
-#
-#     return structured_soil_params
-
-
-# ROSETTA Simulation
-# Define a function to perform Rosetta simulation
-def rosetta_simulate(data):
-    # Create a SoilData instance
-    soildata = SoilData.from_array(data)
-
-    # Create a RosettaSoil instance
-    rs = RosettaSoil()
-
-    # Perform Rosetta simulation
-    rosetta_sim = rs.predict(soildata)
-
-    return rosetta_sim
-
-
-# Define a function to simulate data for each aoi
-def mukey_sim_rosseta(aoi_data, cor_matrix):
-    mukey_sim_list = []
-
-    for i in range(len(aoi_data)):
-        data = mukey_data[i]
-        sim_data = multi_sim_hydro(data, cor_matrix)  # Assuming you have a function multi_sim_hydro
-        combined_data = data + sim_data.tolist()
-        mukey_sim_list.append(combined_data)
-
-    return mukey_sim_list
 
 
 def rosetta_request(chunk, vars, v, conf=None, include_sd=False):
@@ -2927,39 +2749,55 @@ def information_gain(data, target_col, feature_cols):
     return sorted_information_gains
 
 
-# -------------------------------------------------------------------------------------------
-# # This code was used for SoilGrids v1
+##################################################################################################
+#                                       Database and API Functions                               #
+##################################################################################################
+def findSoilLocation(lon, lat):
+    """
+    Determines the location type (US, Global, or None) of the given longitude and latitude
+    based on soil datasets.
 
-# def getST_descriptions(ST_Comp_List):
-#     try:
-#         conn = get_datastore_connection()
-#         cur = conn.cursor()
-#         ST_Comp_List = [x.encode('UTF8') for x in ST_Comp_List]
-#         sql = f"""SELECT Suborder, Description_en, Management_en, Description_es,
-#                   Management_es, Description_ks, Management_ks, Description_fr, Management_fr
-#                   FROM soil_taxonomy_desc
-#                   WHERE Suborder IN ({''.join(str(ST_Comp_List)[1:-1])})"""
-#         cur.execute(sql)
-#         results = cur.fetchall()
-#         data = pd.DataFrame(list(results))
-#         data.columns = ['Suborder', 'Description_en', 'Management_en', 'Description_es',
-#                         'Management_es', 'Description_ks', 'Management_ks', 'Description_fr',
-#                         'Management_fr']
-#         return data
-#     except Exception, err:
-#         print err
-#         return None
-#     finally:
-#         conn.close()
+    Args:
+    - lon (float): Longitude of the point.
+    - lat (float): Latitude of the point.
 
-# Applies a cubic spline model to interpolate values at every 1cm for the SoilGrids data
+    Returns:
+    - str or None: 'US' if point is in US soil dataset,
+                   'Global' if in global dataset,
+                   None otherwise.
+    """
 
-# def cspline_soil_lpks(data):
-#     xm=[0,5,15,30,60,100,199]
-#     ym=data.loc[['M.sl1','M.sl2','M.sl3','M.sl4','M.sl5','M.sl6','M.sl7'],0].tolist()
-#     x_int=np.arange(0, 200, 1)
-#     cs = CubicSpline(xm,ym,bc_type='natural')
-#     int_vals=cs(x_int)
-#     data=pd.Series(int_vals).apply(pd.to_numeric)
-#     return pd.DataFrame(data=data, columns=['intp_vals'])
-# -------------------------------------------------------------------------------------------
+    drv_h = ogr.GetDriverByName("ESRI Shapefile")
+    ds_in_h = drv_h.Open(
+        "%s/HWSD_global_noWater_no_country.shp" % current_app.config["DATA_BACKEND"], 0
+    )
+    layer_global = ds_in_h.GetLayer(0)
+
+    drv_us = ogr.GetDriverByName("ESRI Shapefile")
+    ds_in_us = drv_us.Open("%s/SoilID_US_Areas.shp" % current_app.config["DATA_BACKEND"], 0)
+    layer_us = ds_in_us.GetLayer(0)
+
+    # Setup coordinate transformation
+    geo_ref = layer_global.GetSpatialRef()
+    pt_ref = ogr.osr.SpatialReference()
+    pt_ref.ImportFromEPSG(4326)
+    coord_transform = ogr.osr.CoordinateTransformation(pt_ref, geo_ref)
+
+    # Transform the coordinate system of the input point
+    lon, lat, _ = coord_transform.TransformPoint(lon, lat)
+
+    # Create a point geometry
+    pt = ogr.Geometry(ogr.wkbPoint)
+    pt.SetPoint_2D(0, lon, lat)
+
+    # Filter layers using the point
+    layer_global.SetSpatialFilter(pt)
+    layer_us.SetSpatialFilter(pt)
+
+    # Determine location type
+    if not (len(layer_global) or len(layer_us)):
+        return None
+    elif len(layer_us):
+        return "US"
+    else:
+        return "Global"

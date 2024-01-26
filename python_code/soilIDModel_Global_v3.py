@@ -1,6 +1,7 @@
 # Standard libraries
 import collections
 import csv
+import io
 import json
 import re
 import urllib
@@ -39,7 +40,6 @@ from model.local_functions_SoilID_v3 import (
     save_soilgrids_output,
     silt_calc,
 )
-from osgeo import ogr
 from scipy.stats import norm
 
 # entry points
@@ -53,60 +53,6 @@ from scipy.stats import norm
 # when a site is created, call getSoilLocationBasedUS/getSoilLocationBasedGlobal.
 # when a site is created, call getSoilGridsGlobal
 # after user has collected data, call rankPredictionUS/rankPredictionGlobal.
-
-
-##################################################################################################
-#                                       Database and API Functions                               #
-##################################################################################################
-def findSoilLocation(lon, lat):
-    """
-    Determines the location type (US, Global, or None) of the given longitude and latitude
-    based on soil datasets.
-
-    Args:
-    - lon (float): Longitude of the point.
-    - lat (float): Latitude of the point.
-
-    Returns:
-    - str or None: 'US' if point is in US soil dataset,
-                   'Global' if in global dataset,
-                   None otherwise.
-    """
-
-    drv_h = ogr.GetDriverByName("ESRI Shapefile")
-    ds_in_h = drv_h.Open(
-        "%s/HWSD_global_noWater_no_country.shp" % current_app.config["DATA_BACKEND"], 0
-    )
-    layer_global = ds_in_h.GetLayer(0)
-
-    drv_us = ogr.GetDriverByName("ESRI Shapefile")
-    ds_in_us = drv_us.Open("%s/SoilID_US_Areas.shp" % current_app.config["DATA_BACKEND"], 0)
-    layer_us = ds_in_us.GetLayer(0)
-
-    # Setup coordinate transformation
-    geo_ref = layer_global.GetSpatialRef()
-    pt_ref = ogr.osr.SpatialReference()
-    pt_ref.ImportFromEPSG(4326)
-    coord_transform = ogr.osr.CoordinateTransformation(pt_ref, geo_ref)
-
-    # Transform the coordinate system of the input point
-    lon, lat, _ = coord_transform.TransformPoint(lon, lat)
-
-    # Create a point geometry
-    pt = ogr.Geometry(ogr.wkbPoint)
-    pt.SetPoint_2D(0, lon, lat)
-
-    # Filter layers using the point
-    layer_global.SetSpatialFilter(pt)
-    layer_us.SetSpatialFilter(pt)
-
-    # Determine location type
-    if not (len(layer_global) or len(layer_us)):
-        return None
-    elif len(layer_us):
-        return "US"
-    else:
-        return "Global"
 
 
 ##################################################################################################
@@ -716,7 +662,7 @@ def rankPredictionGlobal(
         if modelRun:
             record_id = modelRun[0]
             soilIDRank_output = pd.read_csv(io.StringIO(modelRun[2]))
-            mucompdata = pd.read_csv(io.StringIO(modelRun[3]))
+            mucompdata_pd = pd.read_csv(io.StringIO(modelRun[3]))
         else:
             return "Cannot find a plot with this ID"
 
@@ -1330,7 +1276,7 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
 
         # Fetch data from the API
         try:
-            with request.urlopen(api_url, timeout=6) as response:
+            with requests.urlopen(api_url, timeout=6) as response:
                 sg_tax = json.load(response)
         except Exception:
             # Handle data fetch failure

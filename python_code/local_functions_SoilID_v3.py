@@ -24,6 +24,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.metrics import pairwise
 from sklearn.metrics.pairwise import euclidean_distances
 from sklearn.utils import validation
+from skimage import color
 
 
 def get_datastore_connection():

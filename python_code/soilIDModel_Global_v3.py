@@ -1276,7 +1276,7 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
 
         # Fetch data from the API
         try:
-            with request.urlopen(api_url, timeout=6) as response:
+            with requests.urlopen(api_url, timeout=6) as response:
                 sg_tax = json.load(response)
         except Exception:
             # Handle data fetch failure

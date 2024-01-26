@@ -839,7 +839,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             return f"Division by zero encountered in row index: {index}"
             return "Matrix contains NaNs or infs."
 
-            # Handling NaNs or infs. This is just an example and should be adapted based on your specific context.
+            # Handling NaNs or infs. This is just an example and should be adapted
+            # based on your specific context.
+            #
             # For example, replace NaNs with 0.0 (or another appropriate value)
             local_correlation_matrix = np.nan_to_num(local_correlation_matrix)
 

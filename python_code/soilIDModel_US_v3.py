@@ -959,7 +959,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     awc_comp_quant["depth"] = awc_comp_quant["bottom"] - awc_comp_quant["top"]
 
     # Steps 4 and 5: Group by 'compname_grp' and merge
-    aws50 = calculate_aws(awc_comp_quant, "0.50")
     aws05 = calculate_aws(awc_comp_quant, "0.05")
     aws95 = calculate_aws(awc_comp_quant, "0.95")
 

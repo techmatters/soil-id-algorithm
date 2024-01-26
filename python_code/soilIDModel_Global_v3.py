@@ -661,7 +661,7 @@ def rankPredictionGlobal(
         if modelRun:
             record_id = modelRun[0]
             soilIDRank_output = pd.read_csv(io.StringIO(modelRun[2]))
-            mucompdata = pd.read_csv(io.StringIO(modelRun[3]))
+            mucompdata_pd = pd.read_csv(io.StringIO(modelRun[3]))
         else:
             return "Cannot find a plot with this ID"
 

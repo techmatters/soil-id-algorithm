@@ -1852,9 +1852,7 @@ def getProfileLAB(data_osd, color_ref):
     """
     The function processes the given data_osd DataFrame and computes LAB values for soil profiles.
     """
-    LAB_ref = color_ref[["L", "A", "B"]]
     rgb_ref = color_ref[["r", "g", "b"]]
-    munsell_ref = color_ref[["hue", "value", "chroma"]]
 
     # Convert the specific columns to numeric
     data_osd[["top", "bottom", "r", "g", "b"]] = data_osd[["top", "bottom", "r", "g", "b"]].apply(

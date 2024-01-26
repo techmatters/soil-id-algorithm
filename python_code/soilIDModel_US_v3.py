@@ -13,7 +13,7 @@ import requests
 import shapely
 
 # Flask
-from flask import current_app, jsonify
+from flask import current_app
 
 # Import local fucntions
 from model.local_functions_SoilID_v3 import (  # slice_and_aggregate_soil_data,
@@ -744,9 +744,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     # Concatenate the results for each column into a single dataframe
     agg_data_df = pd.concat(agg_data, axis=0, ignore_index=True).dropna().reset_index(drop=True)
-    # return(jsonify(agg_data_df.to_dict(orient='records')))
-    # return(jsonify(agg_data_df.to_dict()))
-    # return(json.dumps(agg_data_df[["sandtotal_r", "silttotal_r", "claytotal_r"]].values.tolist()))
 
     # Extract columns with names ending in '_r'
     agg_data_r = agg_data_df[[col for col in agg_data_df.columns if col.endswith("_r")]]
@@ -1360,8 +1357,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                             for lab in lab_parse
                         ]
                         munsell_lyrs.append(dict(zip(l_d.index, munsell_values)))
-                    # return(jsonify(OSD_text_int  = str(OSD_text_int[index] )))
-                    # return(jsonify(group_sorted.to_dict(orient='records')))
+
                     # Extract OSD Texture and Rock Fragment Data
                     if OSD_text_int[index] == "Yes" or OSD_rfv_int[index] == "Yes":
                         group_sorted[["hzdept_r", "hzdepb_r", "texture"]] = group_sorted[

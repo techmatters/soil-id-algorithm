@@ -23,7 +23,6 @@ from model.local_functions_SoilID_v3 import (
     drop_cokey_horz,
     extract_values,
     extract_WISE_data,
-    findSoilLocation,
     get_WRB_descriptions,
     getCF_fromClass,
     getClay,

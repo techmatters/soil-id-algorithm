@@ -1,6 +1,9 @@
+import json
+
+import date
 from flask import Blueprint
 from flask_restful import Api, Resource
-from model import soilIDModel_US_v3, soilIDModel_v3
+from model import soilIDModel_US_v3, soilIDModel_v3, speciesModel_v3
 from util import common
 
 API_VERSION_V3 = 3
@@ -114,17 +117,18 @@ class soilgridsList(Resource):
         return {"put": "Put"}
 
 
-"""class species(Resource):
+class species(Resource):
     def get(self):
         speciesparser = common.getSpeciesParser()
         args = speciesparser.parse_args()
         species = speciesModel_v3.findSpecies(args.longitude, args.latitude)
-        species['metadata'] = {'version':2.0, 'date': date.today().strftime("%m/%d/%Y")}
-        if args.plot_id is not None and 'message' not in species:
-            speciesModel_v3.saveSpeciesModel(args.plot_id,json.dumps(species), 2)
+        species["metadata"] = {"version": 2.0, "date": date.today().strftime("%m/%d/%Y")}
+        if args.plot_id is not None and "message" not in species:
+            speciesModel_v3.saveSpeciesModel(args.plot_id, json.dumps(species), 2)
         return species
-"""
+
+
 api_v3.add_resource(soilIDList, "/soilidlist")
 api_v3.add_resource(soilIDRank, "/soilidrank")
 api_v3.add_resource(soilgridsList, "/soilgridslist")
-# api_v3.add_resource(species, '/species')
+api_v3.add_resource(species, "/species")

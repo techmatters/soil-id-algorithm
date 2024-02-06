@@ -2,27 +2,29 @@ import collections
 
 from flask_restful import inputs, reqparse
 
-"""def getSpeciesParser():
-    speciesparser  = reqparse.RequestParser()
-    speciesparser.add_argument('longitude', type=float, required=True, help='Longitude is required')
-    speciesparser.add_argument('latitude', type=float, required=True, help='Latitude is required')
-    speciesparser.add_argument('plot_id', type=float, required=True, help='The LandPKS plot ID')
+
+def getSpeciesParser():
+    speciesparser = reqparse.RequestParser()
+    speciesparser.add_argument("longitude", type=float, required=True, help="Longitude is required")
+    speciesparser.add_argument("latitude", type=float, required=True, help="Latitude is required")
+    speciesparser.add_argument("plot_id", type=float, required=True, help="The LandPKS plot ID")
     return speciesparser
+
 
 def getTrendsParser():
-    trendsparser  = reqparse.RequestParser()
-    trendsparser.add_argument('longitude', type=float, required=True, help='Longitude is required')
-    trendsparser.add_argument('latitude', type=float, required=True, help='Latitude is required')
-    trendsparser.add_argument('plot_id', type=float, required=False, help='The LandPKS plot ID')
+    trendsparser = reqparse.RequestParser()
+    trendsparser.add_argument("longitude", type=float, required=True, help="Longitude is required")
+    trendsparser.add_argument("latitude", type=float, required=True, help="Latitude is required")
+    trendsparser.add_argument("plot_id", type=float, required=False, help="The LandPKS plot ID")
     return trendsparser
 
+
 def getClimateParser():
-    speciesparser  = reqparse.RequestParser()
-    speciesparser.add_argument('longitude', type=float, required=True, help='Longitude is required')
-    speciesparser.add_argument('latitude', type=float, required=True, help='Latitude is required')
-    speciesparser.add_argument('plot_id', type=float, required=False, help='The LandPKS plot ID')
+    speciesparser = reqparse.RequestParser()
+    speciesparser.add_argument("longitude", type=float, required=True, help="Longitude is required")
+    speciesparser.add_argument("latitude", type=float, required=True, help="Latitude is required")
+    speciesparser.add_argument("plot_id", type=float, required=False, help="The LandPKS plot ID")
     return speciesparser
-"""
 
 
 def getLocationParser():

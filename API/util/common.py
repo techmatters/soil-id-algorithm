@@ -64,7 +64,7 @@ def getRankedParser():
             "SAND",
             "CLAY",
         ),
-        help="soilHorizon1 is required and must be one of SILTY CLAY, SILTY CLAY LOAM, CLAY LOAM, SILT, SILT LOAM, SANDY CLAY, LOAM, SANDY CLAY LOAM, SANDY LOAM, LOAMY SAND, SAND, CLAY",
+        help="soilHorizon1 is required and must be one of SILTY CLAY, SILTY CLAY LOAM, CLAY LOAM, SILT, SILT LOAM, SANDY CLAY, LOAM, SANDY CLAY LOAM, SANDY LOAM, LOAMY SAND, SAND, CLAY",  # noqa: E501
     )
     rankedparser.add_argument(
         "soilHorizon2",
@@ -86,7 +86,7 @@ def getRankedParser():
             "SAND",
             "CLAY",
         ),
-        help="soilHorizon2 must be one of SILTY CLAY, SILTY CLAY LOAM, CLAY LOAM, SILT, SILT LOAM, SANDY CLAY, LOAM, SANDY CLAY LOAM, SANDY LOAM, LOAMY SAND, SAND, CLAY",
+        help="soilHorizon2 must be one of SILTY CLAY, SILTY CLAY LOAM, CLAY LOAM, SILT, SILT LOAM, SANDY CLAY, LOAM, SANDY CLAY LOAM, SANDY LOAM, LOAMY SAND, SAND, CLAY",  # noqa: E501
     )
     rankedparser.add_argument(
         "soilHorizon3",
@@ -108,7 +108,7 @@ def getRankedParser():
             "SAND",
             "CLAY",
         ),
-        help="soilHorizon3 must be one of SILTY CLAY, SILTY CLAY LOAM, CLAY LOAM, SILT, SILT LOAM, SANDY CLAY, LOAM, SANDY CLAY LOAM, SANDY LOAM, LOAMY SAND, SAND, CLAY",
+        help="soilHorizon3 must be one of SILTY CLAY, SILTY CLAY LOAM, CLAY LOAM, SILT, SILT LOAM, SANDY CLAY, LOAM, SANDY CLAY LOAM, SANDY LOAM, LOAMY SAND, SAND, CLAY",  # noqa: E501
     )
     rankedparser.add_argument(
         "soilHorizon4",
@@ -130,7 +130,7 @@ def getRankedParser():
             "SAND",
             "CLAY",
         ),
-        help="soilHorizon4 must be one of SILTY CLAY, SILTY CLAY LOAM, CLAY LOAM, SILT, SILT LOAM, SANDY CLAY, LOAM, SANDY CLAY LOAM, SANDY LOAM, LOAMY SAND, SAND, CLAY",
+        help="soilHorizon4 must be one of SILTY CLAY, SILTY CLAY LOAM, CLAY LOAM, SILT, SILT LOAM, SANDY CLAY, LOAM, SANDY CLAY LOAM, SANDY LOAM, LOAMY SAND, SAND, CLAY",  # noqa: E501
     )
     rankedparser.add_argument(
         "soilHorizon5",
@@ -152,7 +152,7 @@ def getRankedParser():
             "SAND",
             "CLAY",
         ),
-        help="soilHorizon5 must be one of SILTY CLAY, SILTY CLAY LOAM, CLAY LOAM, SILT, SILT LOAM, SANDY CLAY, LOAM, SANDY CLAY LOAM, SANDY LOAM, LOAMY SAND, SAND, CLAY",
+        help="soilHorizon5 must be one of SILTY CLAY, SILTY CLAY LOAM, CLAY LOAM, SILT, SILT LOAM, SANDY CLAY, LOAM, SANDY CLAY LOAM, SANDY LOAM, LOAMY SAND, SAND, CLAY",  # noqa: E501
     )
     rankedparser.add_argument(
         "soilHorizon6",
@@ -174,7 +174,7 @@ def getRankedParser():
             "SAND",
             "CLAY",
         ),
-        help="soilHorizon6 must be one of SILTY CLAY, SILTY CLAY LOAM, CLAY LOAM, SILT, SILT LOAM, SANDY CLAY, LOAM, SANDY CLAY LOAM, SANDY LOAM, LOAMY SAND, SAND, CLAY",
+        help="soilHorizon6 must be one of SILTY CLAY, SILTY CLAY LOAM, CLAY LOAM, SILT, SILT LOAM, SANDY CLAY, LOAM, SANDY CLAY LOAM, SANDY LOAM, LOAMY SAND, SAND, CLAY",  # noqa: E501
     )
     rankedparser.add_argument(
         "soilHorizon7",
@@ -196,56 +196,56 @@ def getRankedParser():
             "SAND",
             "CLAY",
         ),
-        help="soilHorizon7 must be one of SILTY CLAY, SILTY CLAY LOAM, CLAY LOAM, SILT, SILT LOAM, SANDY CLAY, LOAM, SANDY CLAY LOAM, SANDY LOAM, LOAMY SAND, SAND, CLAY",
+        help="soilHorizon7 must be one of SILTY CLAY, SILTY CLAY LOAM, CLAY LOAM, SILT, SILT LOAM, SANDY CLAY, LOAM, SANDY CLAY LOAM, SANDY LOAM, LOAMY SAND, SAND, CLAY",  # noqa: E501
     )
     rankedparser.add_argument(
         "soilHorizon1_RFV",
         type=str,
         required=False,
         nullable=True,
-        help="soilHorizon1 must be one of 0-1%, 1-15%, 15-35%, 35-60%, or >60% rock fragments by volume",
+        help="soilHorizon1 must be one of 0-1%, 1-15%, 15-35%, 35-60%, or >60% rock fragments by volume",  # noqa: E501
     )
     rankedparser.add_argument(
         "soilHorizon2_RFV",
         type=str,
         required=False,
         nullable=True,
-        help="soilHorizon2 must be one of 0-1%, 1-15%, 15-35%, 35-60%, or >60% rock fragments by volume",
+        help="soilHorizon2 must be one of 0-1%, 1-15%, 15-35%, 35-60%, or >60% rock fragments by volume",  # noqa: E501
     )
     rankedparser.add_argument(
         "soilHorizon3_RFV",
         type=str,
         required=False,
         nullable=True,
-        help="soilHorizon3 must be one of 0-1%, 1-15%, 15-35%, 35-60%, or >60% rock fragments by volume",
+        help="soilHorizon3 must be one of 0-1%, 1-15%, 15-35%, 35-60%, or >60% rock fragments by volume",  # noqa: E501
     )
     rankedparser.add_argument(
         "soilHorizon4_RFV",
         type=str,
         required=False,
         nullable=True,
-        help="soilHorizon4 must be one of 0-1%, 1-15%, 15-35%, 35-60%, or >60% rock fragments by volume",
+        help="soilHorizon4 must be one of 0-1%, 1-15%, 15-35%, 35-60%, or >60% rock fragments by volume",  # noqa: E501
     )
     rankedparser.add_argument(
         "soilHorizon5_RFV",
         type=str,
         required=False,
         nullable=True,
-        help="soilHorizon5 must be one of 0-1%, 1-15%, 15-35%, 35-60%, or >60% rock fragments by volume",
+        help="soilHorizon5 must be one of 0-1%, 1-15%, 15-35%, 35-60%, or >60% rock fragments by volume",  # noqa: E501
     )
     rankedparser.add_argument(
         "soilHorizon6_RFV",
         type=str,
         required=False,
         nullable=True,
-        help="soilHorizon6 must be one of 0-1%, 1-15%, 15-35%, 35-60%, or >60% rock fragments by volume",
+        help="soilHorizon6 must be one of 0-1%, 1-15%, 15-35%, 35-60%, or >60% rock fragments by volume",  # noqa: E501
     )
     rankedparser.add_argument(
         "soilHorizon7_RFV",
         type=str,
         required=False,
         nullable=True,
-        help="soilHorizon7 must be one of 0-1%, 1-15%, 15-35%, 35-60%, or >60% rock fragments by volume",
+        help="soilHorizon7 must be one of 0-1%, 1-15%, 15-35%, 35-60%, or >60% rock fragments by volume",  # noqa: E501
     )
     rankedparser.add_argument(
         "soilHorizon1_Depth",

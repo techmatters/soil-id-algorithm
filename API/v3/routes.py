@@ -1,14 +1,7 @@
-import json
-
-# from model import speciesModel_v3
-from datetime import date
-
-from flask import Blueprint, Flask, current_app
-from flask_restful import Api, Resource, reqparse
+from flask import Blueprint
+from flask_restful import Api, Resource
 from model import soilIDModel_US_v3, soilIDModel_v3
 from util import common
-
-# from api import get_model
 
 API_VERSION_V3 = 3
 API_VERSION = API_VERSION_V3

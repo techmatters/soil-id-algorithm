@@ -1,9 +1,7 @@
 import api
 import config
-from flask import Flask
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from twisted.internet import reactor
-from twisted.web.proxy import ReverseProxyResource
 from twisted.web.resource import Resource
 from twisted.web.server import Site
 from twisted.web.wsgi import WSGIResource

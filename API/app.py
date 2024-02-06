@@ -1,7 +1,7 @@
 #!/usr/bin/env python2.7
 import api
 import config
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 
 app = api.create_app(config)
 CORS(app)

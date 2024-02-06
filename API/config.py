@@ -18,8 +18,6 @@ Update this file with the values for your specific Google Cloud project.
 You can create and manage projects at https://console.developers.google.com
 """
 
-import os
-
 
 class Config(object):
     ENV = "production"

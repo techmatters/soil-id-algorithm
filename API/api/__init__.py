@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request
+from flask import Flask
 
 
 def create_app(config, debug=False, testing=False, config_overrides=None):
@@ -9,7 +9,7 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
 
     app.config.from_object("config.{}".format(environment.capitalize()))
 
-    from v3.routes import API_VERSION_V3, api_v3, api_v3_bp
+    from v3.routes import API_VERSION_V3, api_v3_bp
 
     app.register_blueprint(
         api_v3_bp,

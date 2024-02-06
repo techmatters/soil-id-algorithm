@@ -18,9 +18,3 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
         ),
     )
     return app
-
-
-# def get_model():
-# 	from model import sqlModel
-# 	model = sqlModel
-# 	return model

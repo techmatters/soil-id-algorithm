@@ -14,8 +14,6 @@ apt-get install -yq \
 
 #Install GDAL dependency
 export DEBIAN_FRONTEND=noninteractive
-#apt-get -yq install libgdal-dev
-#apt-get -yq install python-gdal
 sudo apt-get -yq install libgdal-dev
 export CPLUS_INCLUDE_PATH=/usr/include/gdal
 export C_INCLUDE_PATH=/usr/include/gdal
@@ -45,7 +43,7 @@ virtualenv /opt/app/soilid/env
 
 export FLASK_CONFIG=production
 
-# Configure supervisor 
+# Configure supervisor
 cat >/etc/supervisor/conf.d/python-app.conf << EOF
 [program:pythonapp]
 directory=/opt/app/soilid
@@ -55,8 +53,6 @@ autorestart=true
 user=pythonapp
 environment=VIRTUAL_ENV="/opt/app/soilid/env",PATH="/opt/app/soilid/env/bin",HOME="/home/pythonapp",USER="pythonapp",FLASK_CONFIG="production"
 EOF
-
-#su -c "python /opt/climate/api/cherrymain.py &" pythonapp
 
 supervisorctl reread
 supervisorctl update

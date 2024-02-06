@@ -334,6 +334,6 @@ class MultipleLevelsOfDictionary(collections.OrderedDict):
     def __getitem__(self, item):
         try:
             return collections.OrderedDict.__getitem__(self, item)
-        except:
+        except Exception:
             value = self[item] = type(self)()
             return value

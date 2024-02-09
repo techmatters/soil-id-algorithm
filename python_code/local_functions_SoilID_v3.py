@@ -2617,7 +2617,7 @@ def process_data_with_rosetta(df, vars, v="3", include_sd=False, chunk_size=1000
 
     # Helper function to make chunks
     def make_chunks(data, size):
-        return [data.iloc[i : i + size] for i in range(0, len(data), size)]
+        return [data.iloc[i: i + size] for i in range(0, len(data), size)]
 
     # Create chunks of the dataframe
     chunks = make_chunks(df, chunk_size)

@@ -1308,7 +1308,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                                 [
                                     group_sorted.iloc[: j + 1],
                                     pd.DataFrame([new_layer]),
-                                    group_sorted.iloc[j + 1:],
+                                    group_sorted.iloc[j + 1 :],
                                 ],
                                 ignore_index=True,
                             )
@@ -1392,9 +1392,11 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
                         # Convert LAB triplets to Munsell values
                         munsell_values = [
-                            lab2munsell(color_ref, LAB_ref, LAB=lab)
-                            if lab[0] and lab[1] and lab[2]
-                            else ""
+                            (
+                                lab2munsell(color_ref, LAB_ref, LAB=lab)
+                                if lab[0] and lab[1] and lab[2]
+                                else ""
+                            )
                             for lab in lab_parse
                         ]
                         munsell_lyrs.append(dict(zip(l_d.index, munsell_values)))
@@ -2900,15 +2902,15 @@ def rankPredictionUS(
             "name": row.compname.capitalize(),
             "component": row.compname_grp.capitalize(),
             "componentID": row.cokey,
-            "score_data_loc": ""
-            if row.missing_status == "Location data only"
-            else round(row.Score_Data_Loc, 3),
-            "rank_data_loc": ""
-            if row.missing_status == "Location data only"
-            else row.Rank_Data_Loc,
-            "score_data": ""
-            if row.missing_status == "Location data only"
-            else round(row.Score_Data, 3),
+            "score_data_loc": (
+                "" if row.missing_status == "Location data only" else round(row.Score_Data_Loc, 3)
+            ),
+            "rank_data_loc": (
+                "" if row.missing_status == "Location data only" else row.Rank_Data_Loc
+            ),
+            "score_data": (
+                "" if row.missing_status == "Location data only" else round(row.Score_Data, 3)
+            ),
             "rank_data": "" if row.missing_status == "Location data only" else row.Rank_Data,
             "score_loc": round(row.distance_score_norm, 3),
             "rank_loc": row.Rank_Loc,

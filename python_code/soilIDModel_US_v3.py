@@ -755,7 +755,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         "dbovendry_r",
         "wthirdbar_r",
         "wfifteenbar_r",
-        # "rfv_r",
     ]
     rep_columns["ilr1"] = pd.Series(ilr_site_txt[:, 0])
     rep_columns["ilr2"] = pd.Series(ilr_site_txt[:, 1])

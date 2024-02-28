@@ -37,8 +37,8 @@ from model.local_functions_SoilID_v3 import (
     save_model_output,
     save_rank_output,
     save_soilgrids_output,
-    silt_calc,
     sg_get_and_agg,
+    silt_calc,
 )
 from scipy.stats import norm
 
@@ -353,10 +353,10 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
     # API output: Code outputs HWSD data without any alteration (i.e., texture class averaging)
 
     # Handle NaN values
-    mucompdata_cond_prob.replace([np.nan, 'nan', 'None', [None]], "", inplace=True)
+    mucompdata_cond_prob.replace([np.nan, "nan", "None", [None]], "", inplace=True)
 
     mucomp_index = mucompdata_cond_prob.sort_values(
-        ['soilID_rank', 'distance_score_norm'], ascending=[False, False], inplace=True
+        ["soilID_rank", "distance_score_norm"], ascending=[False, False], inplace=True
     )
 
     # Extract lists for constructing ID dictionary
@@ -373,7 +373,7 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
             "name": siteName[i],
             "component": compName[i],
             "score_loc": score[i],
-            "rank_loc": rank_loc[i]
+            "rank_loc": rank_loc[i],
         }
         ID.append(idT)
 
@@ -880,8 +880,8 @@ def rankPredictionGlobal(
     wmf2, wsf2, rmf2, rsf2, ymf2, ysf2 = ([] for _ in range(6))
 
     # Load color distribution data from NormDist1.csv
-    with open(f"{current_app.config['DATA_BACKEND']}/NormDist1.csv", 'r') as csvfile:
-        readCSV = csv.reader(csvfile, delimiter=',')
+    with open(f"{current_app.config['DATA_BACKEND']}/NormDist1.csv", "r") as csvfile:
+        readCSV = csv.reader(csvfile, delimiter=",")
         for row_id, row in enumerate(readCSV):
             if row_id == 0:
                 wmf1 = [float(i) for i in row]
@@ -897,8 +897,8 @@ def rankPredictionGlobal(
                 ysf1 = [float(i) for i in row]
 
     # Load color distribution data from NormDist2.csv
-    with open(f"{current_app.config['DATA_BACKEND']}/NormDist2.csv", 'r') as csvfile:
-        readCSV = csv.reader(csvfile, delimiter=',')
+    with open(f"{current_app.config['DATA_BACKEND']}/NormDist2.csv", "r") as csvfile:
+        readCSV = csv.reader(csvfile, delimiter=",")
         for row_id, row in enumerate(readCSV):
             if row_id == 0:
                 wmf2 = [float(i) for i in row]

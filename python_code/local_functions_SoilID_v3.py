@@ -2617,7 +2617,7 @@ def process_data_with_rosetta(df, vars, v="3", include_sd=False, chunk_size=1000
 
     # Helper function to make chunks
     def make_chunks(data, size):
-        return [data.iloc[i : i + size] for i in range(0, len(data), size)]
+        return [data.iloc[i: i + size] for i in range(0, len(data), size)]
 
     # Create chunks of the dataframe
     chunks = make_chunks(df, chunk_size)
@@ -2747,6 +2747,19 @@ def information_gain(data, target_col, feature_cols):
     sorted_information_gains = sorted(information_gains.items(), key=lambda x: x[1], reverse=True)
 
     return sorted_information_gains
+
+
+# function to get data and aggregate SG data
+def sg_get_and_agg(variable, sg_data_w, bottom, return_depth=False):
+    pd_int = getProfile_SG(sg_data_w, variable, c_bot=False)
+    if return_depth:
+        pd_lpks, lpks_depths = agg_data_layer(
+            data=pd_int.var_pct_intpl, bottom=bottom, depth=True
+        )
+        return (pd_lpks.replace(np.nan, ""), lpks_depths)
+    else:
+        pd_lpks = agg_data_layer(data=pd_int.var_pct_intpl, bottom=bottom, depth=False)
+        return pd_lpks.replace(np.nan, "")
 
 
 ##################################################################################################

@@ -1307,7 +1307,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                                 [
                                     group_sorted.iloc[: j + 1],
                                     pd.DataFrame([new_layer]),
-                                    group_sorted.iloc[j + 1 :],
+                                    group_sorted.iloc[j + 1:],
                                 ],
                                 ignore_index=True,
                             )

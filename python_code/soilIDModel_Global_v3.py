@@ -28,7 +28,6 @@ from model.local_functions_SoilID_v3 import (
     getCF_fromClass,
     getClay,
     getProfile,
-    getProfile_SG,
     getSand,
     getSG_descriptions,
     getTexture,
@@ -38,6 +37,7 @@ from model.local_functions_SoilID_v3 import (
     save_model_output,
     save_rank_output,
     save_soilgrids_output,
+    sg_get_and_agg,
     silt_calc,
 )
 from scipy.stats import norm
@@ -349,8 +349,33 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
         rank_id += rank  # Increase rank_id only if rank is True
     mucompdata_cond_prob["Rank_Loc"] = Rank_Loc
 
+    # --------------------------------------------------------------------------------------------------------------------------
+    # API output: Code outputs HWSD data without any alteration (i.e., texture class averaging)
+
     # Handle NaN values
-    mucompdata_cond_prob.replace({np.nan: "", "nan": "", "None": "", None: ""}, inplace=True)
+    mucompdata_cond_prob.replace([np.nan, "nan", "None", [None]], "", inplace=True)
+
+    mucomp_index = mucompdata_cond_prob.sort_values(
+        ["soilID_rank", "distance_score_norm"], ascending=[False, False], inplace=True
+    )
+
+    # Extract lists for constructing ID dictionary
+    siteName = mucompdata_cond_prob["compname"].apply(lambda x: x.capitalize()).tolist()
+    compName = mucompdata_cond_prob["compname_grp"].apply(lambda x: x.capitalize()).tolist()
+    score = mucompdata_cond_prob["distance_score_norm"].round(3).tolist()
+    rank_loc = mucompdata_cond_prob["Rank_Loc"].tolist()
+    model_version = 3
+
+    # Step 3: Construct ID list directly from the sorted and cleaned DataFrame
+    ID = []
+    for i, idx in enumerate(mucompdata_cond_prob.index):
+        idT = {
+            "name": siteName[i],
+            "component": compName[i],
+            "score_loc": score[i],
+            "rank_loc": rank_loc[i],
+        }
+        ID.append(idT)
 
     # Merge component descriptions
     WRB_Comp_Desc = get_WRB_descriptions(
@@ -359,10 +384,6 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
     mucompdata_cond_prob = pd.merge(
         mucompdata_cond_prob, WRB_Comp_Desc, left_on="compname_grp", right_on="WRB_tax", how="left"
     )
-
-    mucomp_index = mucompdata_cond_prob.sort_values(
-        ["soilID_rank", "distance_score_norm"], ascending=[False, False]
-    ).index
 
     # Extract site information
     Site = [
@@ -647,10 +668,10 @@ def rankPredictionGlobal(
 
     # If no plot_id is provided, load data from file
     if plot_id is None:
-        soilIDRank_output = pd.read_csv(
+        soilIDRank_output_pd = pd.read_csv(
             "{}/soilIDRank_ofile1.csv".format(current_app.config["DATA_BACKEND"])
         )
-        mucompdata = pd.read_csv(
+        mucompdata_pd = pd.read_csv(
             "{}/soilIDRank_ofile2.csv".format(current_app.config["DATA_BACKEND"])
         )
 
@@ -661,13 +682,10 @@ def rankPredictionGlobal(
         # Check if modelRun data was successfully fetched
         if modelRun:
             record_id = modelRun[0]
-            soilIDRank_output = pd.read_csv(io.StringIO(modelRun[2]))
+            soilIDRank_output_pd = pd.read_csv(io.StringIO(modelRun[2]))
             mucompdata_pd = pd.read_csv(io.StringIO(modelRun[3]))
         else:
             return "Cannot find a plot with this ID"
-
-    # Group the soilIDRank_output dataframe by 'compname' and return
-    grouped_soil_data = [group for _, group in soilIDRank_output.groupby("compname", sort=False)]
 
     # Create soil depth DataFrame and subset component depths based on max user depth
     # if no bedrock specified
@@ -691,7 +709,6 @@ def rankPredictionGlobal(
 
     # Adjust slices of soil if they exceed the determined max_depth
     slices_of_soil.loc[slices_of_soil.bottom_depth > max_depth, "bottom_depth"] = max_depth
-    slices_of_non_soil = max_depth - slices_of_soil.bottom_depth
 
     # Generate a matrix describing soil (1) vs. non-soil (0) for each slice
     soil_matrix = pd.DataFrame(
@@ -858,21 +875,43 @@ def rankPredictionGlobal(
 
     # Start of soil color
 
-    # Load in SRG color distribution data
-    dist1_values = [wmf1, wsf1, rmf1, rsf1, ymf1, ysf1]
-    dist2_values = [wmf2, wsf2, rmf2, rsf2, ymf2, ysf2]
+    # Initialize lists to store the color distribution data
+    wmf1, wsf1, rmf1, rsf1, ymf1, ysf1 = ([] for _ in range(6))
+    wmf2, wsf2, rmf2, rsf2, ymf2, ysf2 = ([] for _ in range(6))
 
-    data_path = current_app.config["DATA_BACKEND"]
-
-    with open(f"{data_path}/NormDist1.csv", "r") as csvfile:
+    # Load color distribution data from NormDist1.csv
+    with open(f"{current_app.config['DATA_BACKEND']}/NormDist1.csv", "r") as csvfile:
         readCSV = csv.reader(csvfile, delimiter=",")
-        for idx, row in enumerate(readCSV):
-            dist1_values[idx].extend(row)
+        for row_id, row in enumerate(readCSV):
+            if row_id == 0:
+                wmf1 = [float(i) for i in row]
+            elif row_id == 1:
+                wsf1 = [float(i) for i in row]
+            elif row_id == 2:
+                rmf1 = [float(i) for i in row]
+            elif row_id == 3:
+                rsf1 = [float(i) for i in row]
+            elif row_id == 4:
+                ymf1 = [float(i) for i in row]
+            elif row_id == 5:
+                ysf1 = [float(i) for i in row]
 
-    with open(f"{data_path}/NormDist2.csv", "r") as csvfile:
+    # Load color distribution data from NormDist2.csv
+    with open(f"{current_app.config['DATA_BACKEND']}/NormDist2.csv", "r") as csvfile:
         readCSV = csv.reader(csvfile, delimiter=",")
-        for idx, row in enumerate(readCSV):
-            dist2_values[idx].extend(row)
+        for row_id, row in enumerate(readCSV):
+            if row_id == 0:
+                wmf2 = [float(i) for i in row]
+            elif row_id == 1:
+                wsf2 = [float(i) for i in row]
+            elif row_id == 2:
+                rmf2 = [float(i) for i in row]
+            elif row_id == 3:
+                rsf2 = [float(i) for i in row]
+            elif row_id == 4:
+                ymf2 = [float(i) for i in row]
+            elif row_id == 5:
+                ysf2 = [float(i) for i in row]
 
     fao74 = [
         "Acrisols",
@@ -1231,6 +1270,7 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
     # Use the 'extract_values' function to extract specific keys from the JSON
     top_depths = extract_values(sg_out, "top_depth")
     bottom_depths = extract_values(sg_out, "bottom_depth")
+    bottom = bottom_depths["bottom_depth"].iloc[-1]
     values = extract_values(sg_out, "mean")
     names = extract_values(sg_out, "name")
 
@@ -1317,22 +1357,10 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
                 }
             )
 
-        # Avoid repetitive code by creating a function to get data and aggregate
-        def get_and_agg(variable, sg_data_w, bottom, return_depth=False):
-            pd_int = getProfile_SG(sg_data_w, variable, c_bot=False)
-            if return_depth:
-                pd_lpks, lpks_depths = agg_data_layer(
-                    data=pd_int.var_pct_intpl, bottom=bottom, depth=True
-                )
-                return (pd_lpks.replace(np.nan, ""), lpks_depths)
-            else:
-                pd_lpks = agg_data_layer(data=pd_int.var_pct_intpl, bottom=bottom, depth=False)
-                return pd_lpks.replace(np.nan, "")
-
-        sand_pd_lpks, lpks_depths = get_and_agg("sand", sg_data_w, bottom, return_depth=True)
+        sand_pd_lpks, lpks_depths = sg_get_and_agg("sand", sg_data_w, bottom, return_depth=True)
 
         variables = ["clay", "cfvo", "phh2o", "cec"]
-        dataframes = {var: get_and_agg(var, sg_data_w, bottom) for var in variables}
+        dataframes = {var: sg_get_and_agg(var, sg_data_w, bottom) for var in variables}
 
         clay_pd_lpks = dataframes["clay"]
         rfv_pd_lpks = dataframes["cfvo"]

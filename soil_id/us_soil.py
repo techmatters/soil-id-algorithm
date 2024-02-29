@@ -14,6 +14,10 @@ import shapely
 
 # Flask
 from flask import current_app
+from pandas.io.json import json_normalize
+from scipy.stats import spearmanr
+from shapely.geometry import Point
+from skbio.stats.composition import ilr, ilr_inv
 
 # Import local fucntions
 from utils import (  # slice_and_aggregate_soil_data,
@@ -49,10 +53,6 @@ from utils import (  # slice_and_aggregate_soil_data,
     slice_and_aggregate_soil_data_old,
     trim_fraction,
 )
-from pandas.io.json import json_normalize
-from scipy.stats import spearmanr
-from shapely.geometry import Point
-from skbio.stats.composition import ilr, ilr_inv
 
 # entry points
 # getSoilLocationBasedGlobal

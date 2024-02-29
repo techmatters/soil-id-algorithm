@@ -13,6 +13,7 @@ import requests
 
 # Flask
 from flask import current_app
+from scipy.stats import norm
 
 # Import local fucntions
 from utils import (
@@ -40,7 +41,6 @@ from utils import (
     sg_get_and_agg,
     silt_calc,
 )
-from scipy.stats import norm
 
 # entry points
 # getSoilLocationBasedGlobal

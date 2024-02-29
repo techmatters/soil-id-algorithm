@@ -3,8 +3,9 @@ import json
 import date
 from flask import Blueprint
 from flask_restful import Api, Resource
-from soil_id import us_soil, global_soil, speciesModel_v3
 from util import common
+
+from soil_id import global_soil, speciesModel_v3, us_soil
 
 API_VERSION_V3 = 3
 API_VERSION = API_VERSION_V3
@@ -21,9 +22,7 @@ class soilIDList(Resource):
         if pointer is None:
             return "Soil ID not available in this area"
         elif pointer == "US":
-            data = us_soil.getSoilLocationBasedUS(
-                args.longitude, args.latitude, args.plot_id
-            )
+            data = us_soil.getSoilLocationBasedUS(args.longitude, args.latitude, args.plot_id)
         elif pointer == "Global":
             data = global_soil.getSoilLocationBasedGlobal(
                 args.longitude, args.latitude, args.plot_id

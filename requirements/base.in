@@ -1,5 +1,12 @@
 geopandas
+mysqlclient
 numpy
+gdal
 pandas
+pyogrio
 requests
+rtree
+scipy
 shapely
+scikit-image
+scikit-learn

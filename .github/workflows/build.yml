@@ -41,7 +41,7 @@ jobs:
       - name: Install Linux packages
         run: |
           sudo apt-get update
-          sudo apt-get install libgdal-dev gdal
+          sudo apt-get install libgdal-dev gdal-bin
 
       - name: Setup Python
         uses: actions/setup-python@v5

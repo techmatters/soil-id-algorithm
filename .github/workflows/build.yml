@@ -30,13 +30,16 @@ jobs:
       - name: Run lint checks
         run: make lint
 
-  build-and-test:
+  test:
     runs-on: ubuntu-latest
     needs: lint
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Install Linux packages
+        run: apt install libgdal-dev gdal
 
       - name: Setup Python
         uses: actions/setup-python@v5

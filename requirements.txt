@@ -158,8 +158,8 @@ flask==3.0.2 \
     --hash=sha256:3232e0e9c850d781933cf0207523d1ece087eb8d87b23777ae38456e2fbe7c6e \
     --hash=sha256:822c03f4b799204250a7ee84b1eddc40665395333973dfb9deebfe425fefcb7d
     # via -r requirements/deploy.in
-gdal==3.8.4 \
-    --hash=sha256:7c51e0ae7a7ccf43ad9e4bf435176baa9276653dfa16fd167c3632f6e7275207
+gdal==3.4.1 \
+    --hash=sha256:b19e8143bc2c0d3e222789a465d82b6874236eb78801aec608bf5c8c44d20fcf
     # via -r requirements/base.in
 geopandas==0.14.3 \
     --hash=sha256:41b31ad39e21bc9e8c4254f78f8dc4ce3d33d144e22e630a00bb336c83160204 \

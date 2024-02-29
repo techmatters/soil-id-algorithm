@@ -1,7 +1,7 @@
 geopandas
 mysqlclient
 numpy
-gdal
+gdal==3.4.1
 pandas
 pyogrio
 requests

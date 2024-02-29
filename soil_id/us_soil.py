@@ -16,7 +16,7 @@ import shapely
 from flask import current_app
 
 # Import local fucntions
-from model.local_functions_SoilID_v3 import (  # slice_and_aggregate_soil_data,
+from utils import (  # slice_and_aggregate_soil_data,
     acomp,
     aggregate_data,
     calculate_vwc_awc,
@@ -2183,7 +2183,7 @@ def rankPredictionUS(
     """
     TODO: Future testing to see if deltaE2000 values should be incorporated
     into site data use 'getColor_deltaE2000_OSD_pedon' and helper functions
-    located in local_functions_SoilID_v3.py
+    located in utils.py
     """
     # ---------------------------------------------------------------------------------------
     # ------ Load in user data --------#

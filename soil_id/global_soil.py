@@ -15,7 +15,7 @@ import requests
 from flask import current_app
 
 # Import local fucntions
-from model.local_functions_SoilID_v3 import (
+from utils import (
     agg_data_layer,
     assign_max_distance_scores,
     calculate_deltaE2000,

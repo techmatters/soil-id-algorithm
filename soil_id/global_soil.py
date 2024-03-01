@@ -13,9 +13,10 @@ import requests
 
 # Flask
 from flask import current_app
+from scipy.stats import norm
 
 # Import local fucntions
-from model.local_functions_SoilID_v3 import (
+from utils import (
     agg_data_layer,
     assign_max_distance_scores,
     calculate_deltaE2000,
@@ -40,7 +41,6 @@ from model.local_functions_SoilID_v3 import (
     sg_get_and_agg,
     silt_calc,
 )
-from scipy.stats import norm
 
 # entry points
 # getSoilLocationBasedGlobal

@@ -3,8 +3,9 @@ import json
 import date
 from flask import Blueprint
 from flask_restful import Api, Resource
-from model import soilIDModel_US_v3, soilIDModel_v3, speciesModel_v3
 from util import common
+
+from soil_id import global_soil, speciesModel_v3, us_soil
 
 API_VERSION_V3 = 3
 API_VERSION = API_VERSION_V3
@@ -17,15 +18,13 @@ class soilIDList(Resource):
     def get(self):
         locationparser = common.getLocationParser()
         args = locationparser.parse_args()
-        pointer = soilIDModel_v3.findSoilLocation(args.longitude, args.latitude)
+        pointer = us_soil.findSoilLocation(args.longitude, args.latitude)
         if pointer is None:
             return "Soil ID not available in this area"
         elif pointer == "US":
-            data = soilIDModel_US_v3.getSoilLocationBasedUS(
-                args.longitude, args.latitude, args.plot_id
-            )
+            data = us_soil.getSoilLocationBasedUS(args.longitude, args.latitude, args.plot_id)
         elif pointer == "Global":
-            data = soilIDModel_v3.getSoilLocationBasedGlobal(
+            data = global_soil.getSoilLocationBasedGlobal(
                 args.longitude, args.latitude, args.plot_id
             )
         return data
@@ -65,11 +64,11 @@ class soilIDRank(Resource):
         for i in range(len(lab_Color)):
             if lab_Color[i] is not None:
                 lab_Color[i] = [float(x) for x in lab_Color[i].split(",")]
-        pointer = soilIDModel_v3.findSoilLocation(args.longitude, args.latitude)
+        pointer = global_soil.findSoilLocation(args.longitude, args.latitude)
         if pointer is None:
             return "Soil ID not available in this area"
         elif pointer == "US":
-            data = soilIDModel_US_v3.rankPredictionUS(
+            data = us_soil.rankPredictionUS(
                 args.longitude,
                 args.latitude,
                 userTextureByDepth,
@@ -83,7 +82,7 @@ class soilIDRank(Resource):
                 args.plot_id,
             )
         elif pointer == "Global":
-            data = soilIDModel_v3.rankPredictionGlobal(
+            data = global_soil.rankPredictionGlobal(
                 args.longitude,
                 args.latitude,
                 userTextureByDepth,
@@ -104,13 +103,13 @@ class soilgridsList(Resource):
     def get(self):
         locationparser = common.getLocationParser()
         args = locationparser.parse_args()
-        pointer = soilIDModel_v3.findSoilLocation(args.longitude, args.latitude)
+        pointer = global_soil.findSoilLocation(args.longitude, args.latitude)
         if pointer is None:
             return "SoilGrids not available in this area"
         elif pointer == "US":
-            data = soilIDModel_v3.getSoilGridsUS(args.longitude, args.latitude, args.plot_id)
+            data = global_soil.getSoilGridsUS(args.longitude, args.latitude, args.plot_id)
         elif pointer == "Global":
-            data = soilIDModel_v3.getSoilGridsGlobal(args.longitude, args.latitude, args.plot_id)
+            data = global_soil.getSoilGridsGlobal(args.longitude, args.latitude, args.plot_id)
         return data
 
     def put(self):

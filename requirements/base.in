@@ -1,0 +1,12 @@
+geopandas
+mysqlclient
+numpy
+gdal==3.4.1
+pandas
+pyogrio
+requests
+rtree
+scipy
+shapely
+scikit-image
+scikit-learn

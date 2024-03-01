@@ -1,7 +1,19 @@
-.DS_Store
-.vscode
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Build files
+.rebuild
+
+# Environments
+.env
+.venv
+venv/
+ENV/
+
+# VS Code
+.vscode
+
+# macOS
+.DS_Store

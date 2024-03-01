@@ -50,6 +50,7 @@ def get_datastore_connection():
 def save_model_output(
     plot_id, model_version, result_blob, soilIDRank_output_pd, mucompdata_cond_prob
 ):
+    
     """
     Save the output of the model to the 'landpks_soil_model' table.
     """
@@ -377,6 +378,9 @@ def getTexture(row, sand=None, silt=None, clay=None):
         if clay is not None
         else row.get("claytotal_r") or row.get("clay") or row.get("clay_total")
     )
+
+    if sand is None or silt is None or clay is None:
+        return None
 
     silt_clay = silt + 1.5 * clay
     silt_2x_clay = silt + 2.0 * clay

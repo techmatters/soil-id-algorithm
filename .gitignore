@@ -17,3 +17,6 @@ ENV/
 
 # macOS
 .DS_Store
+
+# plot output
+Data/output

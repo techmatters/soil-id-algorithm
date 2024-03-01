@@ -5,10 +5,10 @@ format:
 	black soil_id API
 
 install:
-	pip install -r requirements.txt
+	pip install --no-deps -r requirements.txt
 
 install-dev:
-	pip install -r requirements-dev.txt
+	pip install --no-deps -r requirements-dev.txt
 
 lint:
 	flake8 soil_id API && isort -c soil_id API && black --check soil_id API

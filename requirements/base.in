@@ -10,3 +10,4 @@ scipy
 shapely
 scikit-image
 scikit-learn
+composition_stats

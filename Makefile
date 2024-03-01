@@ -7,6 +7,9 @@ format:
 install:
 	pip install -r requirements.txt
 
+install-no-deps:
+	pip install -r requirements.txt --no-deps
+
 install-dev:
 	pip install -r requirements-dev.txt
 

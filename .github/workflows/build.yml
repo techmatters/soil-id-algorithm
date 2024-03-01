@@ -25,7 +25,7 @@ jobs:
           cache-dependency-path: 'requirements-dev.txt'
 
       - name: Install Python dependencies
-        run: pip install -r requirements-dev.txt
+        run: make install-dev
 
       - name: Run lint checks
         run: make lint
@@ -52,8 +52,8 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          pip install -r requirements-dev.txt
-          pip install -r requirements.txt --no-deps
+          make install-dev
+          make install-no-deps
 
       - name: Run tests
         run: make test

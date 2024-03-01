@@ -71,9 +71,8 @@ from utils import (  # slice_and_aggregate_soil_data,
 ############################################################################################
 def getSoilLocationBasedUS(lon, lat, plot_id):
     # Load in LAB to Munsell conversion look-up table
-    color_ref = pd.read_csv("%s/LandPKS_munsell_rgb_lab.csv" % current_app.config["DATA_BACKEND"])
+    color_ref = pd.read_csv("Data/LandPKS_munsell_rgb_lab.csv")
     LAB_ref = color_ref[["L", "A", "B"]]
-    # rgb_ref = color_ref[["r", "g", "b"]]
     munsell_ref = color_ref[["hue", "value", "chroma"]]
 
     # Load in SSURGO data from SoilWeb
@@ -2105,12 +2104,12 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     # Writing out list of data needed for soilIDRank
     if plot_id is None:
         soilIDRank_output_pd.to_csv(
-            "%s/soilIDRank_ofile1.csv" % current_app.config["DATA_BACKEND"],
+            "Data/output/soilIDRank_ofile1.csv",
             index=None,
             header=True,
         )
         mucompdata_cond_prob.to_csv(
-            "%s/soilIDRank_ofile2.csv" % current_app.config["DATA_BACKEND"],
+            "Data/output/soilIDRank_ofile2.csv",
             index=None,
             header=True,
         )

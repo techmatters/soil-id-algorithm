@@ -11,13 +11,13 @@ import numpy as np
 import pandas as pd
 import requests
 import shapely
+from composition_stats import ilr, ilr_inv
 
 # Flask
 from flask import current_app
 from pandas import json_normalize
 from scipy.stats import spearmanr
 from shapely.geometry import Point
-from composition_stats import ilr, ilr_inv
 
 # Import local fucntions
 from utils import (  # slice_and_aggregate_soil_data,

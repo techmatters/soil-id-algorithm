@@ -50,7 +50,6 @@ def get_datastore_connection():
 def save_model_output(
     plot_id, model_version, result_blob, soilIDRank_output_pd, mucompdata_cond_prob
 ):
-    
     """
     Save the output of the model to the 'landpks_soil_model' table.
     """
@@ -2309,8 +2308,9 @@ def slice_and_aggregate_soil_data(df):
             interpolated_row["Depth"] = depth
 
             # Add the interpolated row to the aggregated data
-            aggregated_data = pd.concat([aggregated_data, pd.DataFrame([interpolated_row])], ignore_index=True)
-
+            aggregated_data = pd.concat(
+                [aggregated_data, pd.DataFrame([interpolated_row])], ignore_index=True
+            )
 
     # Calculate mean values for each depth increment
     depth_increment_means = aggregated_data.groupby("Depth").mean()
@@ -2395,7 +2395,9 @@ def slice_and_aggregate_soil_data_old(df):
             interpolated_row["Depth"] = depth
 
             # Add the interpolated row to the aggregated data
-            aggregated_data = pd.concat([aggregated_data, pd.DataFrame([interpolated_row])], ignore_index=True)
+            aggregated_data = pd.concat(
+                [aggregated_data, pd.DataFrame([interpolated_row])], ignore_index=True
+            )
 
     max_depth = aggregated_data["Depth"].max()
     sd = 2

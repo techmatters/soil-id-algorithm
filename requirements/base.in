@@ -1,8 +1,8 @@
 geopandas
 mysqlclient
 numpy
-gdal==3.4.1; sys_platform == 'linux'
-gdal; sys_platform == 'darwin'
+GDAL==3.4.1; sys_platform == 'linux'
+GDAL; sys_platform == 'darwin'
 pandas
 pyogrio
 requests

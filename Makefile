@@ -9,6 +9,7 @@ install:
 
 install-no-deps:
 	pip install -r requirements.txt --no-deps
+  pip install GDAL==$(gdal-config --version | awk -F'[.]' '{print $1"."$2}')
 
 install-dev:
 	pip install -r requirements-dev.txt

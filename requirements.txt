@@ -161,9 +161,6 @@ flask==3.0.2 \
     --hash=sha256:3232e0e9c850d781933cf0207523d1ece087eb8d87b23777ae38456e2fbe7c6e \
     --hash=sha256:822c03f4b799204250a7ee84b1eddc40665395333973dfb9deebfe425fefcb7d
     # via -r requirements/deploy.in
-gdal==3.8.4 ; sys_platform == "darwin" \
-    --hash=sha256:7c51e0ae7a7ccf43ad9e4bf435176baa9276653dfa16fd167c3632f6e7275207
-    # via -r requirements/base.in
 geopandas==0.14.3 \
     --hash=sha256:41b31ad39e21bc9e8c4254f78f8dc4ce3d33d144e22e630a00bb336c83160204 \
     --hash=sha256:748af035d4a068a4ae00cab384acb61d387685c833b0022e0729aa45216b23ac

@@ -22,3 +22,4 @@ def test_soil_location():
     for item in test_locations:
         print(f"Testing {item['lon']},{item['lat']},{item['plot_id']}")
         result = getSoilLocationBasedUS(item["lon"], item["lat"], None)
+        print(result)

@@ -42,7 +42,7 @@ jobs:
         run: sudo apt-get update
 
       - name: Install Linux packages
-        run: sudo apt-get install libgdal-dev gdal-bin
+        run: sudo apt-get install libgdal-dev gdal-bin python3-gdal
 
       - name: Setup Python
         uses: actions/setup-python@v5

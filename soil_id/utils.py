@@ -549,7 +549,7 @@ def aggregate_data(data, bottom_depths, sd=2):
     results = []
 
     for top, bottom in zip(top_depths, bottom_depths):
-        mask = (data.index >= top) & (data.index <= bottom)
+        mask = (data.index >= top) & (data.index < bottom)
         data_subset = data[mask]
         if not data_subset.empty:
             result = round(data_subset.mean(), sd)
@@ -611,12 +611,12 @@ def getProfile(data, variable, c_bot=False):
     # Return empty fields when there is no depth data or the top depth is not 0
     if variable == "sandtotal_r" or variable == "claytotal_r" or variable == "total_frag_volume":
         if pd.isnull(data["hzdept_r"]).any() or pd.isnull(data["hzdepb_r"]).any():
-            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(152), columns=np.arange(2))
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(200), columns=np.arange(2))
             var_pct_intpl_final.columns = ["var_pct_intpl", "var_pct_intpl_grp"]
             return var_pct_intpl_final
 
         if data["hzdept_r"].iloc[0] != 0:
-            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(152), columns=np.arange(2))
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(200), columns=np.arange(2))
             var_pct_intpl_final.columns = ["var_pct_intpl", "var_pct_intpl_grp"]
             return var_pct_intpl_final
 
@@ -631,7 +631,7 @@ def getProfile(data, variable, c_bot=False):
                 data["hzdept_r"].iloc[i + 1] == data["hzdepb_r"].iloc[i]
 
         if MisHrz == 1:
-            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(152), columns=np.arange(2))
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(200), columns=np.arange(2))
             var_pct_intpl_final.columns = ["var_pct_intpl", "var_pct_intpl_grp"]
             return var_pct_intpl_final
 
@@ -650,23 +650,23 @@ def getProfile(data, variable, c_bot=False):
         var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
         var_pct_intpl_final.columns = ["var_pct_intpl", "var_pct_intpl_grp"]
 
-        if len(var_pct_intpl_final.index) > 152:
-            var_pct_intpl_final = var_pct_intpl_final.iloc[0:152]
+        if len(var_pct_intpl_final.index) > 200:
+            var_pct_intpl_final = var_pct_intpl_final.iloc[0:200]
             var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
         else:
-            Na_add = 152 - len(var_pct_intpl_final.index)
+            Na_add = 200 - len(var_pct_intpl_final.index)
             pd_add = pd.DataFrame(np.nan, index=np.arange(Na_add), columns=np.arange(2))
             pd_add.columns = ["var_pct_intpl", "var_pct_intpl_grp"]
             var_pct_intpl_final = pd.concat([var_pct_intpl_final, pd_add], axis=0)
             var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
     else:
         if pd.isnull(data["hzdept_r"]).any() or pd.isnull(data["hzdepb_r"]).any():
-            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(152), columns=np.arange(1))
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(200), columns=np.arange(1))
             var_pct_intpl_final.columns = ["var_pct_intpl"]
             return var_pct_intpl_final
 
         if data["hzdept_r"].iloc[0] != 0:
-            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(152), columns=np.arange(1))
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(200), columns=np.arange(1))
             var_pct_intpl_final.columns = ["var_pct_intpl"]
             return var_pct_intpl_final
 
@@ -681,7 +681,7 @@ def getProfile(data, variable, c_bot=False):
                 data["hzdept_r"].iloc[i + 1] == data["hzdepb_r"].iloc[i]
 
         if MisHrz == 1:
-            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(152), columns=np.arange(1))
+            var_pct_intpl_final = pd.DataFrame(np.nan, index=np.arange(200), columns=np.arange(1))
             var_pct_intpl_final.columns = ["var_pct_intpl"]
             return var_pct_intpl_final
 
@@ -698,11 +698,11 @@ def getProfile(data, variable, c_bot=False):
         var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
         var_pct_intpl_final.columns = ["var_pct_intpl"]
 
-        if len(var_pct_intpl_final.index) > 152:
-            var_pct_intpl_final = var_pct_intpl_final.iloc[0:152]
+        if len(var_pct_intpl_final.index) > 200:
+            var_pct_intpl_final = var_pct_intpl_final.iloc[0:200]
             var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
         else:
-            Na_add = 152 - len(var_pct_intpl_final.index)
+            Na_add = 200 - len(var_pct_intpl_final.index)
             pd_add = pd.DataFrame(np.nan, index=np.arange(Na_add), columns=np.arange(1))
             pd_add.columns = ["var_pct_intpl"]
             var_pct_intpl_final = pd.concat([var_pct_intpl_final, pd_add], axis=0)
@@ -712,6 +712,10 @@ def getProfile(data, variable, c_bot=False):
             c_very_bottom = data["hzdepb_r"].iloc[0]
         else:
             c_very_bottom = data["hzdepb_r"].values[-1]
+        
+        # Check if c_very_bottom is greater than 200 and assign 200 if true
+        if c_very_bottom > 200:
+            c_very_bottom = 200
         return c_very_bottom, var_pct_intpl_final
     else:
         return var_pct_intpl_final

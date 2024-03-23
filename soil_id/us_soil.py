@@ -479,7 +479,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     muhorzdata_group_cokey = [group for _, group in muhorzdata_pd.groupby("cokey", sort=False)]
 
     getProfile_cokey = []
-    c_bottom_depths = []
+    comp_max_depths = []
     clay_texture = []
     snd_lyrs = []
     cly_lyrs = []
@@ -520,7 +520,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                     pd.concat([group_sorted, layer]).sort_values("hzdept_r").reset_index(drop=True)
                 )
 
-        c_very_bottom, sand_pct_intpl = getProfile(group_sorted, "sandtotal_r", c_bot=True)
+        comp_max_bottom, sand_pct_intpl = getProfile(group_sorted, "sandtotal_r", c_bot=True)
         sand_pct_intpl.columns = ["c_sandpct_intpl", "c_sandpct_intpl_grp"]
         clay_pct_intpl = getProfile(group_sorted, "claytotal_r")
         clay_pct_intpl.columns = ["c_claypct_intpl", "c_claypct_intpl_grp"]
@@ -575,10 +575,10 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
         cokeyB = getProfile_cokey_temp2["cokey"].iloc[0]
         compnameB = getProfile_cokey_temp2["compname"].iloc[0]
-        c_bottom_depths_temp = pd.DataFrame([cokeyB, compnameB, int(c_very_bottom)]).T
-        c_bottom_depths_temp.columns = ["cokey", "compname", "c_very_bottom"]
+        comp_max_depths_temp = pd.DataFrame([cokeyB, compnameB, int(comp_max_bottom)]).T
+        comp_max_depths_temp.columns = ["cokey", "compname", "comp_max_bottom"]
 
-        c_bottom_depths.append(c_bottom_depths_temp)
+        comp_max_depths.append(comp_max_depths_temp)
         getProfile_cokey.append(getProfile_cokey_temp2)
         comp_texture_list = group_sorted.texture.str.lower().tolist()
         comp_texture_list = [x for x in comp_texture_list if x is not None]
@@ -616,11 +616,11 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         ec_lyrs.append(dict(zip(ec_d.index, ec_d)))
         hz_lyrs.append(dict(zip(hz_depb.index, hz_depb)))
 
-    c_bottom_depths = pd.concat(c_bottom_depths, axis=0)
+    comp_max_depths = pd.concat(comp_max_depths, axis=0)
     clay_texture = pd.concat(clay_texture, axis=0)
 
-    # Filter main dataframes based on cokeys in c_bottom_depths
-    valid_cokeys = c_bottom_depths["cokey"]
+    # Filter main dataframes based on cokeys in comp_max_depths
+    valid_cokeys = comp_max_depths["cokey"]
     mucompdata_pd = mucompdata_pd[mucompdata_pd["cokey"].isin(valid_cokeys)]
     muhorzdata_pd = muhorzdata_pd[muhorzdata_pd["cokey"].isin(valid_cokeys)]
 
@@ -630,7 +630,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     # Merge component bottom depth and clay texture information into mucompdata_pd
     mucompdata_pd = mucompdata_pd.merge(
-        c_bottom_depths[["compname", "c_very_bottom"]], on="compname", how="left"
+        comp_max_depths[["compname", "comp_max_bottom"]], on="compname", how="left"
     )
     mucompdata_pd = mucompdata_pd.merge(clay_texture, on="compname", how="left")
 
@@ -1275,7 +1275,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
             for index, group in enumerate(OSDhorzdata_group_cokey):
                 group_sorted = group.sort_values(by="top").drop_duplicates().reset_index(drop=True)
-
+                print(group_sorted)
                 # Remove invalid horizons where top depth is greater than bottom depth
                 group_sorted = group_sorted[
                     group_sorted["top"] <= group_sorted["bottom"]
@@ -1320,43 +1320,43 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                     # Extract OSD Color Data
                     lab_intpl = getProfileLAB(group_sorted, color_ref)
                     lab_intpl.columns = ["l", "a", "b"]
-                    OSD_very_bottom = group_sorted["bottom"].iloc[-1]
+                    OSD_max_bottom = group_sorted["bottom"].iloc[-1]
 
                     # subset c_bottom_depth by cokey
-                    c_bottom_depths_group = c_bottom_depths[
-                        c_bottom_depths["cokey"].isin(group_sorted["cokey"])
+                    comp_max_depths_group = comp_max_depths[
+                        comp_max_depths["cokey"].isin(group_sorted["cokey"])
                     ]
                     muhorzdata_pd_group = muhorzdata_pd[
                         muhorzdata_pd["cokey"].isin(group_sorted["cokey"])
                     ]
 
                     # Check if OSD depth adjustment is needed
-                    if OSD_very_bottom < c_bottom_depths_group["c_very_bottom"].iloc[0]:
+                    if OSD_max_bottom < comp_max_depths_group["comp_max_bottom"].iloc[0]:
                         OSD_depth_add = True
                         depth_difference = (
-                            c_bottom_depths_group["c_very_bottom"].iloc[0] - OSD_very_bottom
+                            comp_max_depths_group["comp_max_bottom"].iloc[0] - OSD_max_bottom
                         )
 
                         lab_values = [
-                            lab_intpl.loc[OSD_very_bottom - 1].values.tolist()
+                            lab_intpl.loc[OSD_max_bottom - 1].values.tolist()
                         ] * depth_difference
 
                         pd_add = pd.DataFrame(lab_values, columns=["l", "a", "b"])
 
                         # Adjust LAB values for the OSD depth
                         lab_intpl = pd.concat(
-                            [lab_intpl.loc[: OSD_very_bottom - 1], pd_add], axis=0
+                            [lab_intpl.loc[: OSD_max_bottom - 1], pd_add], axis=0
                         ).reset_index(drop=True)
-                        OSD_very_bottom = c_bottom_depths_group["c_very_bottom"].iloc[0]
+                        OSD_max_bottom = comp_max_depths_group["comp_max_bottom"].iloc[0]
 
-                    elif 0 < c_bottom_depths_group["c_very_bottom"].iloc[0] < OSD_very_bottom:
+                    elif 0 < comp_max_depths_group["comp_max_bottom"].iloc[0] < OSD_max_bottom:
                         OSD_depth_remove = True
 
                         # Adjust LAB values for the component depth
                         lab_intpl = lab_intpl.loc[
-                            : c_bottom_depths_group["c_very_bottom"].iloc[0]
+                            : comp_max_depths_group["comp_max_bottom"].iloc[0]
                         ].reset_index(drop=True)
-                        OSD_very_bottom = c_bottom_depths_group["c_very_bottom"].iloc[0]
+                        OSD_max_bottom = comp_max_depths_group["comp_max_bottom"].iloc[0]
 
                     # Set column names for lab_intpl
                     lab_intpl.columns = ["l", "a", "b"]
@@ -1404,7 +1404,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         group_sorted[["hzdept_r", "hzdepb_r", "texture"]] = group_sorted[
                             ["top", "bottom", "texture_class"]
                         ]
-                        OSD_very_bottom_int, OSD_clay_intpl = getProfile(
+                        OSD_max_bottom_int, OSD_clay_intpl = getProfile(
                             group_sorted, "claytotal_r", c_bot=True
                         )
                         OSD_clay_intpl.columns = [
@@ -1420,46 +1420,46 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         OSD_rfv_intpl.columns = ["c_cfpct_intpl", "c_cfpct_intpl_grp"]
 
                         # Update data based on depth conditions
-                        sand_values = OSD_sand_intpl.iloc[OSD_very_bottom_int - 1].tolist()
+                        sand_values = OSD_sand_intpl.iloc[OSD_max_bottom_int - 1].tolist()
                         OSD_sand_intpl = update_intpl_data(
                             OSD_sand_intpl,
                             ["c_sandpct_intpl", "c_sandpct_intpl_grp"],
                             sand_values,
-                            OSD_very_bottom,
+                            OSD_max_bottom,
                             OSD_depth_add,
                             OSD_depth_remove,
-                            OSD_very_bottom_int,
+                            OSD_max_bottom_int,
                         )
 
-                        clay_values = OSD_clay_intpl.iloc[OSD_very_bottom_int - 1].tolist()
+                        clay_values = OSD_clay_intpl.iloc[OSD_max_bottom_int - 1].tolist()
                         OSD_clay_intpl = update_intpl_data(
                             OSD_clay_intpl,
                             ["c_claypct_intpl", "c_claypct_intpl_grp"],
                             clay_values,
-                            OSD_very_bottom,
+                            OSD_max_bottom,
                             OSD_depth_add,
                             OSD_depth_remove,
-                            OSD_very_bottom_int,
+                            OSD_max_bottom_int,
                         )
 
-                        rfv_values = OSD_rfv_intpl.iloc[OSD_very_bottom_int - 1].tolist()
+                        rfv_values = OSD_rfv_intpl.iloc[OSD_max_bottom_int - 1].tolist()
                         OSD_rfv_intpl = update_intpl_data(
                             OSD_rfv_intpl,
                             ["c_cfpct_intpl", "c_cfpct_intpl_grp"],
                             rfv_values,
-                            OSD_very_bottom,
+                            OSD_max_bottom,
                             OSD_depth_add,
                             OSD_depth_remove,
-                            OSD_very_bottom_int,
+                            OSD_max_bottom_int,
                         )
 
                         # If OSD bottom depth is greater than component depth and component depth
-                        # is <120cm
+                        # is <200cm
                         if OSD_depth_remove:
-                            # Remove data based on c_bottom_depths
-                            OSD_sand_intpl = OSD_sand_intpl.loc[: c_bottom_depths.iloc[index, 2]]
-                            OSD_clay_intpl = OSD_clay_intpl.loc[: c_bottom_depths.iloc[index, 2]]
-                            OSD_rfv_intpl = OSD_rfv_intpl.loc[: c_bottom_depths.iloc[index, 2]]
+                            # Remove data based on comp_max_depths
+                            OSD_sand_intpl = OSD_sand_intpl.loc[: comp_max_depths.iloc[index, 2]]
+                            OSD_clay_intpl = OSD_clay_intpl.loc[: comp_max_depths.iloc[index, 2]]
+                            OSD_rfv_intpl = OSD_rfv_intpl.loc[: comp_max_depths.iloc[index, 2]]
 
                         # Create the compname and cokey dataframes
                         compname_df = pd.DataFrame(
@@ -1512,10 +1512,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         getProfile_cokey[index] = getProfile_mod
 
                         # Aggregate sand data
-                        snd_d_osd, hz_depb_osd = aggregate_data(
+                        snd_d_osd = aggregate_data(
                             data=OSD_sand_intpl.iloc[:, 0],
                             bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
-                            depth=True,
                         )
 
                         # Aggregate clay data
@@ -1542,8 +1541,8 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         cly_d_osd.fillna("", inplace=True)
                         txt_d_osd.fillna("", inplace=True)
                         rf_d_osd.fillna("", inplace=True)
-                        hz_depb_osd = pd.DataFrame(hz_depb_osd)
-                        hz_depb_osd.fillna("", inplace=True)
+                        # hz_depb_osd = pd.DataFrame(hz_depb_osd)
+                        # hz_depb_osd.fillna("", inplace=True)
 
                         # Store aggregated data in dictionaries based on conditions
                         if OSD_text_int[index] == "Yes":
@@ -1554,15 +1553,15 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         if OSD_rfv_int[index] == "Yes":
                             rf_lyrs[index] = rf_d_osd.to_dict()
 
-                        # Update horizon layers if bottom depth is zero
-                        if c_bottom_depths.iloc[index, 2] == 0:
-                            hz_lyrs[index] = hz_depb_osd.to_dict()
-                            mucompdata_pd.loc[index, "c_very_bottom"] = OSD_very_bottom
+                        # # Update horizon layers if bottom depth is zero
+                        # if comp_max_depths.iloc[index, 2] == 0:
+                        #     hz_lyrs[index] = hz_depb_osd.to_dict()
+                        #     mucompdata_pd.loc[index, "comp_max_bottom"] = OSD_max_bottom
 
                         # Update cec, ph, and ec layers if they contain only a single empty string
                         for lyr in [cec_lyrs, ph_lyrs, ec_lyrs]:
                             if len(lyr[index]) == 1 and lyr[index][0] == "":
-                                lyr[index] = dict(zip(hz_depb_osd.index, [""] * len(hz_depb_osd)))
+                                lyr[index] = dict(zip(hz_lyrs[index], [""] * len(hz_lyrs[index])))
 
                 else:
                     OSDhorzdata_group_cokey[index] = group_sorted
@@ -1570,7 +1569,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                     # Create an empty dataframe with NaNs for lab_intpl
                     lab_intpl = pd.DataFrame(
                         np.nan,
-                        index=np.arange(c_bottom_depths.iloc[index, 2]),
+                        index=np.arange(comp_max_depths.iloc[index, 2]),
                         columns=["l", "a", "b"],
                     )
                     lab_intpl_lyrs.append(lab_intpl)
@@ -1623,7 +1622,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 # Initialize a DataFrame filled with NaNs
                 lab_intpl = pd.DataFrame(
                     np.nan,
-                    index=np.arange(c_bottom_depths.iloc[i, 2]),
+                    index=np.arange(comp_max_depths.iloc[i, 2]),
                     columns=["l", "a", "b"],
                 )
                 lab_intpl_lyrs.append(lab_intpl)
@@ -1654,7 +1653,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             # Initialize a DataFrame filled with NaNs
             lab_intpl = pd.DataFrame(
                 np.nan,
-                index=np.arange(c_bottom_depths.iloc[i, 2]),
+                index=np.arange(comp_max_depths.iloc[i, 2]),
                 columns=["l", "a", "b"],
             )
             lab_intpl_lyrs.append(lab_intpl)
@@ -1673,7 +1672,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             SEE_URL.append("")
 
     # Subset datasets to exclude pedons without any depth information
-    cokeys_with_depth = mucompdata_pd[mucompdata_pd["c_very_bottom"] > 0].cokey.unique()
+    cokeys_with_depth = mucompdata_pd[mucompdata_pd["comp_max_bottom"] > 0].cokey.unique()
 
     # If there are cokeys with depth
     if len(cokeys_with_depth) > 0:
@@ -1684,8 +1683,8 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         muhorzdata_pd = muhorzdata_pd[muhorzdata_pd["cokey"].isin(cokeys_with_depth)].reset_index(
             drop=True
         )
-        c_bottom_depths = c_bottom_depths[
-            c_bottom_depths["cokey"].isin(cokeys_with_depth)
+        comp_max_depths = comp_max_depths[
+            comp_max_depths["cokey"].isin(cokeys_with_depth)
         ].reset_index(drop=True)
 
         # Update comp_key and cokey_Index
@@ -2441,9 +2440,9 @@ def rankPredictionUS(
 
     # Create soil depth DataFrame and subset component depths based on max user
     # depth if no bedrock specified
-    c_bottom_depths = mucompdata_pd[["cokey", "compname", "c_very_bottom"]]
-    c_bottom_depths.columns = ["cokey", "compname", "bottom_depth"]
-    slices_of_soil = pd.concat([p_bottom_depth, c_bottom_depths], axis=0).reset_index(drop=True)
+    comp_max_depths = mucompdata_pd[["cokey", "compname", "comp_max_bottom"]]
+    comp_max_depths.columns = ["cokey", "compname", "bottom_depth"]
+    slices_of_soil = pd.concat([p_bottom_depth, comp_max_depths], axis=0).reset_index(drop=True)
     compnames = mucompdata_pd[["compname", "compname_grp"]]
 
     # Generate a matrix storing a flag describing soil (1) vs. non-soil (0) at each slice
@@ -2969,12 +2968,12 @@ def adjust_depth_interval(data, target_length=120, add_columns=1):
 
 # Helper function to update dataframes based on depth conditions
 def update_intpl_data(
-    df, col_names, values, very_bottom, OSD_depth_add, OSD_depth_remove, OSD_very_bottom_int
+    df, col_names, values, very_bottom, OSD_depth_add, OSD_depth_remove, OSD_max_bottom_int
 ):
     if OSD_depth_add:
-        layer_add = very_bottom - OSD_very_bottom_int
+        layer_add = very_bottom - OSD_max_bottom_int
         pd_add = pd.DataFrame([values] * layer_add, columns=col_names)
-        df = pd.concat([df.loc[: OSD_very_bottom_int - 1], pd_add], axis=0).reset_index(drop=True)
+        df = pd.concat([df.loc[: OSD_max_bottom_int - 1], pd_add], axis=0).reset_index(drop=True)
     elif OSD_depth_remove:
         df = df.loc[:very_bottom].reset_index(drop=True)
     return df

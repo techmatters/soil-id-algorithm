@@ -712,7 +712,7 @@ def getProfile(data, variable, c_bot=False):
             c_very_bottom = data["hzdepb_r"].iloc[0]
         else:
             c_very_bottom = data["hzdepb_r"].values[-1]
-        
+
         # Check if c_very_bottom is greater than 200 and assign 200 if true
         if c_very_bottom > 200:
             c_very_bottom = 200

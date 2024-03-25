@@ -1,7 +1,6 @@
 geopandas
 mysqlclient
 numpy
-gdal==3.4.1
 pandas
 pyogrio
 requests
@@ -10,3 +9,4 @@ scipy
 shapely
 scikit-image
 scikit-learn
+composition_stats

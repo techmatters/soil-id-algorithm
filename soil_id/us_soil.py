@@ -1079,7 +1079,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
             for index, group in enumerate(OSDhorzdata_group_cokey):
                 group_sorted = group.sort_values(by="top").drop_duplicates().reset_index(drop=True)
-
+                print(group_sorted)
                 # Remove invalid horizons where top depth is greater than bottom depth
                 group_sorted = group_sorted[
                     group_sorted["top"] <= group_sorted["bottom"]
@@ -2233,7 +2233,7 @@ def rankPredictionUS(
 
     # Create soil depth DataFrame and subset component depths based on max user
     # depth if no bedrock specified
-    print(mucompdata_pd.columns)
+
     comp_max_depths = mucompdata_pd[["cokey", "compname", "comp_max_bottom"]]
     comp_max_depths.columns = ["cokey", "compname", "bottom_depth"]
     slices_of_soil = pd.concat([p_bottom_depth, comp_max_depths], axis=0).reset_index(drop=True)

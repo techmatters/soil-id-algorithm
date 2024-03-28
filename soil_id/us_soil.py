@@ -13,7 +13,6 @@ import requests
 from composition_stats import ilr, ilr_inv
 
 # Flask
-# from flask import current_app
 from pandas import json_normalize
 from scipy.stats import spearmanr
 

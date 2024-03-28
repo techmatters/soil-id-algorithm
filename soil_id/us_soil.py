@@ -99,7 +99,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         # Extract STATSGO data at point
         mucompdata_pd = extract_mucompdata_STATSGO(lon, lat)
         mucompdata_pd = process_site_data(mucompdata_pd)
-        if mucompdata_pd.empty:
+        if mucompdata_pd is None or mucompdata_pd.empty:
             return "Soil ID not available in this area"
         else:
             data_source = "STATSGO"

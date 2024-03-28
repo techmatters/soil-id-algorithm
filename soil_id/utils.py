@@ -7,6 +7,7 @@ import re
 import sys
 
 # Third-party libraries
+import fiona
 import geopandas as gpd
 import MySQLdb
 import numpy as np
@@ -1578,9 +1579,13 @@ def load_statsgo_data(box):
     Returns:
         GeoDataFrame: Filtered STATSGO data.
     """
-    return gpd.read_file(
-        "Data/gsmsoilmu_a_us.shp", bbox=box.bounds, mode="r", driver="ESRI Shapefile"
-    )
+    try:
+        return gpd.read_file(
+            "Data/gsmsoilmu_a_us.shp", bbox=box.bounds, mode="r", driver="ESRI Shapefile"
+        )
+    except fiona.errors.DriverError as e:
+        print(e)
+        return None
 
 
 def extract_mucompdata_STATSGO(lon, lat):
@@ -1604,6 +1609,9 @@ def extract_mucompdata_STATSGO(lon, lat):
     box = shapely.geometry.box(*s_buff.total_bounds)
 
     statsgo_mukey = load_statsgo_data(box)
+    if statsgo_mukey is None:
+        return "Soil ID not available in this area"
+
     mu_geo = statsgo_mukey[["MUKEY", "geometry"]].drop_duplicates(subset=["geometry"])
 
     mu_id_dist = calculate_distances_and_intersections(mu_geo, point)
@@ -1655,6 +1663,9 @@ def process_site_data(mucompdata_pd):
         pd.DataFrame: The processed mucompdata DataFrame.
     """
     # rename columns
+    if not isinstance(mucompdata_pd, pd.DataFrame):
+        return None
+
     mucompdata_pd = mucompdata_pd.rename(
         columns={
             "distance_m": "distance",

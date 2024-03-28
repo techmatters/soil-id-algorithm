@@ -712,7 +712,7 @@ def getProfile(data, variable, c_bot=False):
             c_very_bottom = data["hzdepb_r"].iloc[0]
         else:
             c_very_bottom = data["hzdepb_r"].values[-1]
-        
+
         # Check if c_very_bottom is greater than 200 and assign 200 if true
         if c_very_bottom > 200:
             c_very_bottom = 200
@@ -1125,7 +1125,7 @@ def gower_distances(X, Y=None, feature_weight=None, categorical_features=None):
     X = np.asarray(X)
 
     dtype = (
-        np.object
+        object
         if not np.issubdtype(X.dtype, np.number) or np.isnan(X.sum())
         else type(np.zeros(1, X.dtype).flat[0])
     )
@@ -1140,7 +1140,7 @@ def gower_distances(X, Y=None, feature_weight=None, categorical_features=None):
     else:
         categorical_features = np.array(categorical_features)
 
-    if np.issubdtype(categorical_features.dtype, np.int):
+    if np.issubdtype(categorical_features.dtype, int):
         new_categorical_features = np.zeros(n_cols, dtype=bool)
         new_categorical_features[categorical_features] = True
         categorical_features = new_categorical_features
@@ -1151,28 +1151,49 @@ def gower_distances(X, Y=None, feature_weight=None, categorical_features=None):
 
     # Calculate ranges and max values for normalization
     max_of_numeric = np.nanmax(X_num, axis=0)
-    ranges_of_numeric = np.where(
-        max_of_numeric != 0, max_of_numeric - np.nanmin(X_num, axis=0), 1.0
-    )
+    min_of_numeric = np.nanmin(X_num, axis=0)
+    ranges_of_numeric = max_of_numeric - min_of_numeric
+    ranges_of_numeric[ranges_of_numeric == 0] = 1
 
     # Normalize numeric data
-    X_num /= max_of_numeric
+    X_num = (X_num - min_of_numeric) / ranges_of_numeric
 
     # Handle feature weights
     if feature_weight is None:
-        feature_weight = np.ones(n_cols)
+        feature_weight = np.ones(X_num.shape[1])
 
-    feature_weight_cat = feature_weight[categorical_features]
     feature_weight_num = feature_weight[~categorical_features]
 
-    Y_cat = X_cat if Y is None else Y[:, categorical_features]
-    Y_num = X_num if Y is None else Y[:, ~categorical_features]
-    Y_num /= max_of_numeric
+    # Conditional processing for Y
+    if Y is not None:
+        Y_cat = Y[:, categorical_features]
+        Y_num = Y[:, ~categorical_features]
+        # Normalize numeric data safely for Y_num
+        Y_num = np.where(
+            ranges_of_numeric != 0, (Y_num - min_of_numeric) / ranges_of_numeric, Y_num
+        )
+    else:
+        Y_cat = X_cat.copy()
+        Y_num = X_num.copy()
+
+    # Ensure feature_weight_cat is defined
+    feature_weight_cat = feature_weight[categorical_features]
+
+    # # Handle feature weights
+    # if feature_weight is None:
+    #     feature_weight = np.ones(n_cols)
+
+    # feature_weight_cat = feature_weight[categorical_features]
+    # feature_weight_num = feature_weight[~categorical_features]
+
+    # Y_cat = X_cat if Y is None else Y[:, categorical_features]
+    # Y_num = X_num if Y is None else Y[:, ~categorical_features]
+    # Y_num /= max_of_numeric
 
     dm = np.zeros((n_rows, Y.shape[0]), dtype=np.float32)
 
     # Calculate pairwise gower distances
-    for i in range(n_rows):
+    for i in range(X_num.shape[0]):
         start = i if Y is None else 0
         result = _gower_distance_row(
             X_cat[i, :],
@@ -1191,6 +1212,26 @@ def gower_distances(X, Y=None, feature_weight=None, categorical_features=None):
             dm[start:, i] = result
 
     return dm
+    # # Calculate pairwise gower distances
+    # for i in range(n_rows):
+    #     start = i if Y is None else 0
+    #     result = _gower_distance_row(
+    #         X_cat[i, :],
+    #         X_num[i, :],
+    #         Y_cat[start:, :],
+    #         Y_num[start:, :],
+    #         feature_weight_cat,
+    #         feature_weight_num,
+    #         feature_weight.sum(),
+    #         categorical_features,
+    #         ranges_of_numeric,
+    #         max_of_numeric,
+    #     )
+    #     dm[i, start:] = result
+    #     if Y is None:  # If Y is not provided, the matrix is symmetric
+    #         dm[start:, i] = result
+
+    # return dm
 
 
 def _gower_distance_row(
@@ -1442,6 +1483,8 @@ def trim_fraction(text):
     Returns:
     - str: Text without trailing ".0".
     """
+    if text is None:
+        return None  # or return None, depending on what you need
     return text.rstrip(".0") if text.endswith(".0") else text
 
 
@@ -1482,9 +1525,13 @@ def extract_muhorzdata_STATSGO(mucompdata_pd):
     ]
 
     # Form the muhorzdata query
-    muhorzdataQry = f"""SELECT cokey, chorizon.chkey, hzdept_r, hzdepb_r, hzname, sandtotal_r,
-                        silttotal_r, claytotal_r, cec7_r, ecec_r, ph1to1h2o_r, ec_r,lep_r,
-                        chfrags.fragvol_r
+    muhorzdataQry = f"""SELECT cokey, chorizon.chkey, hzdept_r, hzdepb_r, hzname,
+                        sandtotal_l, sandtotal_r, sandtotal_h, silttotal_l,
+                        silttotal_r, silttotal_h, claytotal_l, claytotal_r,
+                        claytotal_h, dbovendry_l, dbovendry_r, dbovendry_h,
+                        wthirdbar_l, wthirdbar_r, wthirdbar_h, wfifteenbar_l,
+                        wfifteenbar_r, wfifteenbar_h, cec7_r, ecec_r, ph1to1h2o_r,
+                        ec_r, lep_r, chfrags.fragvol_r
                         FROM chorizon
                         LEFT OUTER JOIN chfrags ON chfrags.chkey = chorizon.chkey
                         WHERE cokey IN ({",".join(cokey_list)})"""
@@ -1494,18 +1541,49 @@ def extract_muhorzdata_STATSGO(mucompdata_pd):
     if muhorzdata_out is None:
         return "Soil ID not available in this area"
     else:
-        muhorzdata = muhorzdata_out["Table"]
+        muhorzdata = muhorzdata_out["Table"].iloc[0]
 
         # Convert the list of lists to a DataFrame
         muhorzdata_pd = pd.DataFrame(muhorzdata[1:], columns=muhorzdata[0])
 
-        # Additional processing steps
-        ...  # (rest of the code remains unchanged)
-
         return muhorzdata_pd
 
 
-def extract_statsgo_mucompdata(lon, lat):
+def calculate_distances_and_intersections(mu_geo, point):
+    """
+    Calculate distances and intersections of geometries to a point.
+
+    Args:
+        mu_geo (GeoDataFrame): GeoDataFrame containing mapunit geometries.
+        point (Point): Shapely Point object for the location of interest.
+
+    Returns:
+        DataFrame: Contains mapunit keys, distances, and intersection flags.
+    """
+    distances = mu_geo["geometry"].distance(point)
+    intersects = mu_geo["geometry"].intersects(point)
+
+    return pd.DataFrame(
+        {"mukey": mu_geo["MUKEY"], "distance_m": distances, "pt_intersect": intersects}
+    )
+
+
+def load_statsgo_data(box):
+    """
+    Load STATSGO data within a given bounding box.
+
+    Args:
+        box (BaseGeometry): Bounding box to filter the data.
+
+    Returns:
+        GeoDataFrame: Filtered STATSGO data.
+    """
+    return gpd.read_file(
+        "Data/gsmsoilmu_a_us.shp", bbox=box.bounds, mode="r", driver="ESRI Shapefile"
+    )
+
+
+def extract_mucompdata_STATSGO(lon, lat):
     """
     Extracts and processes STATSGO data for the given longitude and latitude.
 
@@ -1514,53 +1592,29 @@ def extract_statsgo_mucompdata(lon, lat):
         lat (float): Latitude of the point of interest.
 
     External Functions:
-        sda_return (function): Function to execute the sda query.
+        sda_return (function): Function to execute the SDA query.
         trim_fraction (function): Function to trim fractions.
 
     Returns:
-        pd.DataFrame: Processed mucompdata.
+        DataFrame: Processed mucompdata, or error message if data is unavailable.
     """
-    # Create LPKS point
     point = Point(lon, lat)
-    point.crs = {"init": "epsg:4326"}
-
-    # Create a bounding box to clip STATSGO data around the point
-    s_buff = gpd.GeoSeries(point).buffer(0.1)  # 0.1 deg buffer around point = ~11km
+    point_gdf = gpd.GeoDataFrame([{"geometry": point}], crs="EPSG:4326")
+    s_buff = point_gdf.geometry.buffer(0.1)  # ~11km buffer
     box = shapely.geometry.box(*s_buff.total_bounds)
 
-    # Load STATSGO mukey data
-    statsgo_mukey = gpd.read_file(
-        "%s/gsmsoilmu_a_us.shp" % current_app.config["DATA_BACKEND"],
-        bbox=box.bounds,
-        mode="r",
-        driver="ESRI Shapefile",
-    )
-
-    # Filter out mapunits with duplicate geometries
+    statsgo_mukey = load_statsgo_data(box)
     mu_geo = statsgo_mukey[["MUKEY", "geometry"]].drop_duplicates(subset=["geometry"])
 
-    # Calculate distances and intersection flags for each mapunit
-    distances = [pt2polyDist(geom, point) for geom in mu_geo["geometry"]]
-    intersects = [point.intersects(geom) for geom in mu_geo["geometry"]]
+    mu_id_dist = calculate_distances_and_intersections(mu_geo, point)
+    mu_id_dist.loc[mu_id_dist["pt_intersect"], "distance_m"] = 0
+    mu_id_dist["distance_m"] = mu_id_dist.groupby("mukey")["distance_m"].transform(min)
+    mukey_dist_final = mu_id_dist.drop_duplicates("mukey").sort_values("distance_m").head(2)
 
-    # Create a DataFrame for distances and intersections
-    mu_id_dist = pd.DataFrame(
-        {
-            "MUKEY": mu_geo["MUKEY"].values,
-            "distance": distances,
-            "pt_intersect": intersects,
-        }
-    )
+    mukey_list = mukey_dist_final["mukey"].tolist()
+    if not mukey_list:
+        return "Soil ID not available in this area"
 
-    # Update distance to 0 for intersecting mapunits
-    mu_id_dist.loc[mu_id_dist.pt_intersect, "distance"] = 0
-    mu_id_dist["distance"] = mu_id_dist.groupby(["MUKEY"])["distance"].transform(min)
-    mukey_dist_final = (
-        mu_id_dist.drop_duplicates(subset=["MUKEY"]).sort_values(by="distance").head(2)
-    )
-
-    # Build the mucompdata query
-    mukey_list = mukey_dist_final["MUKEY"].tolist()
     mucompdataQry = f"""SELECT component.mukey, component.cokey, component.compname,
                         component.comppct_r, component.compkind, component.majcompflag,
                         component.slope_r, component.elev_r, component.nirrcapcl,
@@ -1571,26 +1625,201 @@ def extract_statsgo_mucompdata(lon, lat):
                         WHERE mukey IN ({','.join(map(str, mukey_list))})"""
     mucompdata_out = sda_return(propQry=mucompdataQry)
 
-    # Process the mucompdata results
-    if mucompdata_out is None:
-        return "Soil ID not available in this area"
-    else:
-        mucompdata = mucompdata_out["Table"]
+    if not mucompdata_out.empty:
+        mucompdata = mucompdata_out["Table"].iloc[0]
         mucompdata_pd = pd.DataFrame(mucompdata[1:], columns=mucompdata[0])
         mucompdata_pd = pd.merge(mucompdata_pd, mukey_dist_final, on="mukey").sort_values(
-            ["distance", "cokey"]
+            ["distance_m", "cokey"]
         )
-        mucompdata_pd.replace("NULL", np.nan, inplace=True)
-        mucompdata_pd[["slope_r", "elev_r", "distance"]] = mucompdata_pd[
-            ["slope_r", "elev_r", "distance"]
-        ].astype(float)
-        mucompdata_pd.nirrcapcl = mucompdata_pd.nirrcapcl.apply(trim_fraction)
-        mucompdata_pd.irrcapcl = mucompdata_pd.irrcapcl.apply(trim_fraction)
 
-        # Subset dataframe to extract only components within 5000m -- STATSGO
-        mucompdata_pd = mucompdata_pd[mucompdata_pd["distance"] <= 5000]
+        mucompdata_pd = mucompdata_pd[mucompdata_pd["distance_m"] <= 5000]
+
+        if mucompdata_pd.empty:
+            return "Soil ID not available in this area"
+        else:
+            return mucompdata_pd
+    else:
+        return "Soil ID not available in this area"
+
+
+def process_site_data(mucompdata_pd):
+    """
+    Processes mucompdata by selecting relevant columns, renaming, sorting,
+    and converting data types.
+
+    Args:
+        mucompdata_pd (pd.DataFrame): The DataFrame containing mucompdata to be processed.
+        trim_fraction (function): A function to trim fractions from numeric data stored as strings.
+
+    Returns:
+        pd.DataFrame: The processed mucompdata DataFrame.
+    """
+    # rename columns
+    mucompdata_pd = mucompdata_pd.rename(
+        columns={
+            "distance_m": "distance",
+        }
+    )
+
+    # Define the columns to keep and rename 'distance_m' to 'distance'
+    relevant_columns = [
+        "mukey",
+        "cokey",
+        "compname",
+        "compkind",
+        "majcompflag",
+        "comppct_r",
+        "distance",
+        "slope_r",
+        "elev_r",
+        "nirrcapcl",
+        "nirrcapscl",
+        "nirrcapunit",
+        "irrcapcl",
+        "irrcapscl",
+        "irrcapunit",
+        "taxorder",
+        "taxsubgrp",
+    ]
+    mucompdata_pd = mucompdata_pd[relevant_columns].sort_values(["distance", "cokey"])
+
+    # Replace 'NULL' with NaN and convert numeric columns to float
+    mucompdata_pd.replace("NULL", np.nan, inplace=True)
+    mucompdata_pd[["slope_r", "elev_r", "distance"]] = mucompdata_pd[
+        ["slope_r", "elev_r", "distance"]
+    ].astype(float)
+
+    # Convert specified columns to string
+    cols_to_str = [
+        "mukey",
+        "cokey",
+        "compname",
+        "compkind",
+        "majcompflag",
+        "nirrcapcl",
+        "nirrcapscl",
+        "nirrcapunit",
+        "irrcapcl",
+        "irrcapscl",
+        "irrcapunit",
+        "taxorder",
+        "taxsubgrp",
+    ]
+    mucompdata_pd[cols_to_str] = mucompdata_pd[cols_to_str].astype(str)
+
+    # Apply the trim_fraction function to specified columns
+    mucompdata_pd["nirrcapcl"] = mucompdata_pd["nirrcapcl"].apply(trim_fraction)
+    mucompdata_pd["irrcapcl"] = mucompdata_pd["irrcapcl"].apply(trim_fraction)
 
     return mucompdata_pd
+
+
+def process_horz_data(muhorzdata_pd):
+    """
+    Process the muhorzdata DataFrame by subsetting columns, converting data types,
+    infilling missing values, and renaming columns for clarity.
+
+    Args:
+        muhorzdata_pd (pd.DataFrame): The DataFrame to process.
+
+    Returns:
+        pd.DataFrame: The processed DataFrame.
+    """
+
+    # rename columns
+    muhorzdata_pd = muhorzdata_pd.rename(
+        columns={
+            "fragvol_r": "total_frag_volume",
+        }
+    )
+
+    # Subset the DataFrame to include only the relevant columns
+    relevant_columns = [
+        "cokey",
+        "hzdept_r",
+        "hzdepb_r",
+        "chkey",
+        "hzname",
+        "sandtotal_l",
+        "sandtotal_r",
+        "sandtotal_h",
+        "silttotal_l",
+        "silttotal_r",
+        "silttotal_h",
+        "claytotal_l",
+        "claytotal_r",
+        "claytotal_h",
+        "dbovendry_l",
+        "dbovendry_r",
+        "dbovendry_h",
+        "wthirdbar_l",
+        "wthirdbar_r",
+        "wthirdbar_h",
+        "wfifteenbar_l",
+        "wfifteenbar_r",
+        "wfifteenbar_h",
+        "total_frag_volume",
+        "cec7_r",
+        "ecec_r",
+        "ph1to1h2o_r",
+        "ec_r",
+        "lep_r",
+    ]
+
+    muhorzdata_pd = muhorzdata_pd[relevant_columns]
+
+    # Convert specific columns to appropriate data types
+    numeric_columns = [
+        "sandtotal_l",
+        "sandtotal_r",
+        "sandtotal_h",
+        "silttotal_l",
+        "silttotal_r",
+        "silttotal_h",
+        "claytotal_l",
+        "claytotal_r",
+        "claytotal_h",
+        "dbovendry_l",
+        "dbovendry_r",
+        "dbovendry_h",
+        "wthirdbar_l",
+        "wthirdbar_r",
+        "wthirdbar_h",
+        "wfifteenbar_l",
+        "wfifteenbar_r",
+        "wfifteenbar_h",
+        "total_frag_volume",
+        "cec7_r",
+        "ecec_r",
+        "ph1to1h2o_r",
+        "ec_r",
+        "lep_r",
+    ]
+    muhorzdata_pd[numeric_columns] = muhorzdata_pd[numeric_columns].apply(pd.to_numeric)
+    muhorzdata_pd[["cokey", "chkey", "hzname"]] = muhorzdata_pd[
+        ["cokey", "chkey", "hzname"]
+    ].astype(str)
+
+    # Infill missing CEC values with ECEC
+    muhorzdata_pd["CEC"] = muhorzdata_pd["cec7_r"].fillna(muhorzdata_pd["ecec_r"])
+
+    # Rename columns for better clarity
+    muhorzdata_pd = muhorzdata_pd.rename(
+        columns={"cec7_r": "CEC", "ph1to1h2o_r": "pH", "ec_r": "EC"}
+    )
+
+    # Assign textures
+    muhorzdata_pd["texture"] = muhorzdata_pd.apply(getTexture, axis=1)
+
+    # Replace "NULL" strings with numpy NaN
+    muhorzdata_pd.replace("NULL", np.nan, inplace=True)
+
+    # Replace NaN with 0 for depth columns and convert them to int
+    muhorzdata_pd[["hzdept_r", "hzdepb_r"]] = (
+        muhorzdata_pd[["hzdept_r", "hzdepb_r"]].fillna(0).astype(int)
+    )
+
+    return muhorzdata_pd
 
 
 def fill_missing_comppct_r(mucompdata_pd):
@@ -1657,6 +1886,17 @@ def process_distance_scores(mucompdata_pd, ExpCoeff):
 
     Returns:
     - pd.DataFrame: Updated DataFrame with processed distance scores and aggregations.
+
+    Notes on location function:
+        Individual probability
+        Based on Fan et al 2018 EQ 1, the conditional probability for each component
+        is calculated by taking the sum of all occurances of a component in the
+        home and adjacent mapunits and dividing this by the sum of all map units
+        and components. We have modified this approach so that each instance of a
+        component occurance is evaluated separately and assinged a weight and the
+        max distance score for each component group is assigned to all component instances.
+    # --------------------------------------------------------------------
+
     """
 
     # Calculate distance score for each group
@@ -1898,7 +2138,7 @@ def getProfileLAB(data_osd, color_ref):
             return np.nan, np.nan, np.nan
 
     if not validate_data(data_osd):
-        return pd.DataFrame(np.nan, index=np.arange(120), columns=["L", "A", "B"])
+        return pd.DataFrame(np.nan, index=np.arange(200), columns=["L", "A", "B"])
 
     data_osd = correct_depth_discrepancies(data_osd)
 
@@ -1911,11 +2151,11 @@ def getProfileLAB(data_osd, color_ref):
         a_intpl.extend([row["A"]] * (int(row["bottom"]) - int(row["top"])))
         b_intpl.extend([row["B"]] * (int(row["bottom"]) - int(row["top"])))
 
-    lab_intpl = pd.DataFrame({"L": l_intpl, "A": a_intpl, "B": b_intpl}).head(120)
+    lab_intpl = pd.DataFrame({"L": l_intpl, "A": a_intpl, "B": b_intpl}).head(200)
     return lab_intpl
-    if len(lab_intpl) < 120:
+    if len(lab_intpl) < 200:
         lab_intpl = lab_intpl.append(
-            pd.DataFrame(np.nan, index=np.arange(120 - len(lab_intpl)), columns=["L", "A", "B"])
+            pd.DataFrame(np.nan, index=np.arange(200 - len(lab_intpl)), columns=["L", "A", "B"])
         )
 
     return lab_intpl
@@ -2253,13 +2493,46 @@ def impute_rfv_values(row):
     return row
 
 
+def remove_organic_layer(df):
+    # Function to remove organic horizons and adjust depths within each group
+    def process_group(group):
+        # Filter out rows where 'hzname' contains a capital 'O'
+        filtered_group = group[~group["hzname"].str.contains("O")]
+
+        # Reset index to assist in calculating depth differences
+        filtered_group = filtered_group.reset_index(drop=True)
+
+        # If the group is empty after filtering, return it directly
+        if filtered_group.empty:
+            return filtered_group
+
+        # Calculate and adjust the depth differences
+        for i in range(len(filtered_group)):
+            if i == 0:
+                depth_diff = filtered_group.loc[i, "hzdept_r"]
+            else:
+                depth_diff += (
+                    filtered_group.loc[i, "hzdept_r"] - filtered_group.loc[i - 1, "hzdepb_r"]
+                )
+
+            filtered_group.loc[i, "hzdept_r"] -= depth_diff
+            filtered_group.loc[i, "hzdepb_r"] -= depth_diff
+
+        return filtered_group
+
+    # Group by 'compname_grp' and apply the processing function to each group
+    result = df.groupby("compname_grp").apply(process_group).reset_index(drop=True)
+
+    return result
+
+
 def infill_soil_data(df):
-    # Group by 'compname'
+    # Step 1: Group by 'compname'
     grouped = df.groupby("compname_grp")
 
+    # Step 2: Check for missing 'r' values where 'hzdepb_r' <= 50
     # Filtering groups
     def filter_group(group):
-        # Step 2: Check for missing 'r' values where 'hzdepb_r' <= 50
         if (group["hzdepb_r"] <= 50).any() and group[
             ["sandtotal_r", "claytotal_r", "silttotal_r"]
         ].isnull().any().any():
@@ -2269,7 +2542,8 @@ def infill_soil_data(df):
     # Apply the filter to the groups
     filtered_groups = grouped.filter(filter_group)
 
-    # Step 3: Replace missing '_l' and '_h' values with corresponding '_r' values +/- 8
+    # Step 3: Replace missing '_l' and '_h' for particle size values
+    # with corresponding '_r' values +/- 8
     for col in ["sandtotal", "claytotal", "silttotal"]:
         filtered_groups[col + "_l"].fillna(filtered_groups[col + "_r"] - 8, inplace=True)
         filtered_groups[col + "_h"].fillna(filtered_groups[col + "_r"] + 8, inplace=True)

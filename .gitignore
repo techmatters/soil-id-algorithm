@@ -20,3 +20,5 @@ ENV/
 
 # plot output
 Data/output
+
+get-pip.py*

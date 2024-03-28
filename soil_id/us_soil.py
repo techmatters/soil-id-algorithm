@@ -4,6 +4,7 @@ import io
 import json
 import re
 import urllib
+from pathlib import Path
 
 # Third-party libraries
 import numpy as np
@@ -1907,6 +1908,8 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     # Writing out list of data needed for soilIDRank
     if plot_id is None:
+        Path("Data/output").mkdir(parents=True, exist_ok=True)
+
         soilIDRank_output_pd.to_csv(
             "Data/output/soilIDRank_ofile1.csv",
             index=None,

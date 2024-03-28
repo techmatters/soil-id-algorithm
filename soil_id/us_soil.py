@@ -1345,8 +1345,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         cly_d_osd.fillna("", inplace=True)
                         txt_d_osd.fillna("", inplace=True)
                         rf_d_osd.fillna("", inplace=True)
-                        # hz_depb_osd = pd.DataFrame(hz_depb_osd)
-                        # hz_depb_osd.fillna("", inplace=True)
 
                         # Store aggregated data in dictionaries based on conditions
                         if OSD_text_int[index] == "Yes":
@@ -1356,11 +1354,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
                         if OSD_rfv_int[index] == "Yes":
                             rf_lyrs[index] = rf_d_osd.to_dict()
-
-                        # # Update horizon layers if bottom depth is zero
-                        # if comp_max_depths.iloc[index, 2] == 0:
-                        #     hz_lyrs[index] = hz_depb_osd.to_dict()
-                        #     mucompdata_pd.loc[index, "comp_max_bottom"] = OSD_max_bottom
 
                         # Update cec, ph, and ec layers if they contain only a single empty string
                         for lyr in [cec_lyrs, ph_lyrs, ec_lyrs]:

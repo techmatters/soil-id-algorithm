@@ -4,30 +4,27 @@ import io
 import json
 import re
 import urllib
+from pathlib import Path
 
 # Third-party libraries
-import geopandas as gpd
 import numpy as np
 import pandas as pd
 import requests
-import shapely
+from composition_stats import ilr, ilr_inv
 
 # Flask
-from flask import current_app
-from pandas.io.json import json_normalize
+from pandas import json_normalize
 from scipy.stats import spearmanr
-from shapely.geometry import Point
-from skbio.stats.composition import ilr, ilr_inv
 
-# Import local fucntions
+# Import local functions
 from utils import (  # slice_and_aggregate_soil_data,
     acomp,
     aggregate_data,
     calculate_vwc_awc,
     compute_site_similarity,
     drop_cokey_horz,
+    extract_mucompdata_STATSGO,
     extract_muhorzdata_STATSGO,
-    extract_statsgo_mucompdata,
     fill_missing_comppct_r,
     getCF_class,
     getCF_fromClass,
@@ -45,13 +42,14 @@ from utils import (  # slice_and_aggregate_soil_data,
     munsell2rgb,
     process_data_with_rosetta,
     process_distance_scores,
-    pt2polyDist,
+    process_horz_data,
+    process_site_data,
+    remove_organic_layer,
     save_model_output,
     save_rank_output,
     sda_return,
     simulate_correlated_triangular,
     slice_and_aggregate_soil_data_old,
-    trim_fraction,
 )
 
 # entry points
@@ -71,9 +69,8 @@ from utils import (  # slice_and_aggregate_soil_data,
 ############################################################################################
 def getSoilLocationBasedUS(lon, lat, plot_id):
     # Load in LAB to Munsell conversion look-up table
-    color_ref = pd.read_csv("%s/LandPKS_munsell_rgb_lab.csv" % current_app.config["DATA_BACKEND"])
+    color_ref = pd.read_csv("Data/LandPKS_munsell_rgb_lab.csv")
     LAB_ref = color_ref[["L", "A", "B"]]
-    # rgb_ref = color_ref[["r", "g", "b"]]
     munsell_ref = color_ref[["hue", "value", "chroma"]]
 
     # Load in SSURGO data from SoilWeb
@@ -99,134 +96,30 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     OSD_compkind = ["Series", "Variant", "Family", "Taxadjunct"]
     # Check if point is in a NOTCOM area, and if so then infill with STATSGO from NRCS SDA
     if not out["spn"]:
-        # Create LPKS point
-        point = Point(lon, lat)
-        point.crs = {"init": "epsg:4326"}
-
-        # Create a bounding box to clip STATSGO data around the point
-        s_buff = gpd.GeoSeries(point).buffer(0.1)  # 0.1 deg buffer around point = ~11km
-        box = shapely.geometry.box(*s_buff.total_bounds)
-
-        # Load STATSGO mukey data
-        statsgo_mukey = gpd.read_file(
-            "%s/gsmsoilmu_a_us.shp" % current_app.config["DATA_BACKEND"],
-            bbox=box.bounds,
-            mode="r",
-            driver="ESRI Shapefile",
-        )
-        # Filter out mapunits with duplicate geometries
-        mu_geo = statsgo_mukey[["MUKEY", "geometry"]].drop_duplicates(subset=["geometry"])
-
-        # Calculate distances and intersection flags for each mapunit
-        distances = [pt2polyDist(geom, point) for geom in mu_geo["geometry"]]
-        intersects = [point.intersects(geom) for geom in mu_geo["geometry"]]
-
-        # Create a DataFrame for distances and intersections
-        mu_id_dist = pd.DataFrame(
-            {
-                "MUKEY": mu_geo["MUKEY"].values,
-                "distance": distances,
-                "pt_intersect": intersects,
-            }
-        )
-
-        # Update distance to 0 for intersecting mapunits
-        mu_id_dist.loc[mu_id_dist.pt_intersect, "distance"] = 0
-        mu_id_dist["distance"] = mu_id_dist.groupby(["MUKEY"])["distance"].transform(min)
-        mukey_dist_final = (
-            mu_id_dist.drop_duplicates(subset=["MUKEY"]).sort_values(by="distance").head(2)
-        )
-
-        # Build the mucompdata query
-        mukey_list = mukey_dist_final["MUKEY"].tolist()
-        mucompdataQry = f"""SELECT component.mukey, component.cokey, component.compname,
-        component.comppct_r, component.compkind, component.majcompflag,
-        component.slope_r, component.elev_r, component.nirrcapcl, component.nirrcapscl,
-        component.nirrcapunit, component.irrcapcl, component.irrcapscl,
-        component.irrcapunit, component.taxorder, component.taxsubgrp
-        FROM component WHERE mukey IN ({','.join(map(str, mukey_list))})"""
-
-        mucompdata_out = sda_return(propQry=mucompdataQry)
-
-        # Process the mucompdata results
-        if mucompdata_out:
-            mucompdata = mucompdata_out["Table"]
-            mucompdata_pd = pd.DataFrame(mucompdata[1:], columns=mucompdata[0])
-            mucompdata_pd = pd.merge(mucompdata_pd, mukey_dist_final, on="mukey").sort_values(
-                ["distance", "cokey"]
-            )
-            mucompdata_pd.replace("NULL", np.nan, inplace=True)
-            mucompdata_pd[["slope_r", "elev_r", "distance"]] = mucompdata_pd[
-                ["slope_r", "elev_r", "distance"]
-            ].astype(float)
-            mucompdata_pd.nirrcapcl = mucompdata_pd.nirrcapcl.apply(trim_fraction)
-            mucompdata_pd.irrcapcl = mucompdata_pd.irrcapcl.apply(trim_fraction)
-
-            # Subset dataframe to extract only components within 5000m -- STATSGO
-            mucompdata_pd = mucompdata_pd[mucompdata_pd["distance"] <= 5000]
-
-            if mucompdata_pd.empty:
-                return "Soil ID not available in this area"
-            data_source = "STATSGO"
-        else:
+        # Extract STATSGO data at point
+        mucompdata_pd = extract_mucompdata_STATSGO(lon, lat)
+        mucompdata_pd = process_site_data(mucompdata_pd)
+        if mucompdata_pd is None or mucompdata_pd.empty:
             return "Soil ID not available in this area"
+        else:
+            data_source = "STATSGO"
     else:
         mucompdata_pd = pd.json_normalize(out["spn"])
-        relevant_columns = [
-            "mukey",
-            "cokey",
-            "compname",
-            "compkind",
-            "majcompflag",
-            "comppct_r",
-            "distance_m",
-            "slope_r",
-            "elev_r",
-            "nirrcapcl",
-            "nirrcapscl",
-            "nirrcapunit",
-            "irrcapcl",
-            "irrcapscl",
-            "irrcapunit",
-            "taxorder",
-            "taxsubgrp",
-        ]
-        mucompdata_pd = (
-            mucompdata_pd[relevant_columns]
-            .rename(columns={"distance_m": "distance"})
-            .sort_values(["distance", "cokey"])
-        )
-        mucompdata_pd.replace("NULL", np.nan, inplace=True)
-        mucompdata_pd[["slope_r", "elev_r", "distance"]] = mucompdata_pd[
-            ["slope_r", "elev_r", "distance"]
-        ].astype(float)
-        # Modify mucompdata_pd DataFrame
-        cols_to_str = [
-            "mukey",
-            "cokey",
-            "compname",
-            "compkind",
-            "majcompflag",
-            "nirrcapcl",
-            "nirrcapscl",
-            "nirrcapunit",
-            "irrcapcl",
-            "irrcapscl",
-            "irrcapunit",
-            "taxorder",
-            "taxsubgrp",
-        ]
-        mucompdata_pd[cols_to_str] = mucompdata_pd[cols_to_str].astype(str)
-        mucompdata_pd["nirrcapcl"] = mucompdata_pd["nirrcapcl"].apply(trim_fraction)
-        mucompdata_pd["irrcapcl"] = mucompdata_pd["irrcapcl"].apply(trim_fraction)
+        mucompdata_pd = process_site_data(mucompdata_pd)
 
-        # Filter out data for distances over 1000m
+        # For SSURGO, filter out data for distances over 1000m
         mucompdata_pd = mucompdata_pd[mucompdata_pd["distance"] <= 1000]
 
         if mucompdata_pd.empty:
-            return "Soil ID not available in this area"
-        data_source = "SSURGO"
-
+            # Extract STATSGO data at point
+            mucompdata_pd = extract_mucompdata_STATSGO(lon, lat)
+            mucompdata_pd = process_site_data(mucompdata_pd)
+            if mucompdata_pd.empty:
+                return "Soil ID not available in this area"
+            else:
+                data_source = "STATSGO"
+        else:
+            data_source = "SSURGO"
     # Set the Exponential Decay Coefficient based on data source
     if data_source == "STATSGO":
         ExpCoeff = -0.0002772
@@ -238,19 +131,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     # --------------------------------------------------------------------
     # Location based calculation
-    # -----------------------------
-    """
     # --------------------------------------------------------------------
-    ############################################################################
-    Individual probability
-    Based on Fan et al 2018 EQ 1, the conditional probability for each component
-    is calculated by taking the sum of all occurances of a component in the
-    home and adjacent mapunits and dividing this by the sum of all map units
-    and components. We have modified this approach so that each instance of a
-    component occurance is evaluated separately and assinged a weight and the
-    max distance score for each component group is assigned to all component instances.
-    ############################################################################
-    """
     # Process distance scores and perform group-wise aggregations.
     mucompdata_pd = process_distance_scores(mucompdata_pd, ExpCoeff)
 
@@ -270,79 +151,23 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     # ------------------------------------------------------------------------
     if data_source == "SSURGO":
         # Convert JSON data to DataFrame
-        muhorzdata_pd = pd.json_normalize(out["hz"])[
-            [
-                "cokey",
-                "hzdept_r",
-                "hzdepb_r",
-                "chkey",
-                "hzname",
-                "sandtotal_l",
-                "sandtotal_r",
-                "sandtotal_h",
-                "silttotal_l",
-                "silttotal_r",
-                "silttotal_h",
-                "claytotal_l",
-                "claytotal_r",
-                "claytotal_h",
-                "dbovendry_l",
-                "dbovendry_r",
-                "dbovendry_h",
-                "wthirdbar_l",
-                "wthirdbar_r",
-                "wthirdbar_h",
-                "wfifteenbar_l",
-                "wfifteenbar_r",
-                "wfifteenbar_h",
-                "total_frag_volume",
-                "cec7_r",
-                "ecec_r",
-                "ph1to1h2o_r",
-                "ec_r",
-                "lep_r",
-            ]
-        ]
-        # Convert specific columns to appropriate data types
-        numeric_columns = [
-            "total_frag_volume",
-            "sandtotal_r",
-            "silttotal_r",
-            "claytotal_r",
-            "cec7_r",
-            "ecec_r",
-            "ph1to1h2o_r",
-            "ec_r",
-            "lep_r",
-        ]
-        muhorzdata_pd[numeric_columns] = muhorzdata_pd[numeric_columns].apply(pd.to_numeric)
-        muhorzdata_pd[["cokey", "chkey", "hzname"]] = muhorzdata_pd[
-            ["cokey", "chkey", "hzname"]
-        ].astype(str)
-
-        # Infill missing CEC values with ECEC
-        muhorzdata_pd.cec7_r = np.where(
-            pd.isnull(muhorzdata_pd.cec7_r), muhorzdata_pd.ecec_r, muhorzdata_pd.cec7_r
-        )
-
-        # Rename columns for better clarity
-        muhorzdata_pd.rename(
-            columns={"cec7_r": "CEC", "ph1to1h2o_r": "pH", "ec_r": "EC"}, inplace=True
-        )
+        muhorzdata_pd = pd.json_normalize(out["hz"])
+        muhorzdata_pd = process_horz_data(muhorzdata_pd)
 
         # Filter rows based on component keys
         muhorzdata_pd = muhorzdata_pd.loc[muhorzdata_pd["cokey"].isin(comp_key)]
 
         # If dataset is empty and none of the components are Series, switch to STATSGO
+        # and rerun site data extraction
         if (
             muhorzdata_pd[["hzdept_r", "hzdepb_r"]].isnull().all().all()
             and not mucompdata_pd["compkind"].isin(OSD_compkind).any()
         ):
             # STATSGO Component Data Processing
-            mucompdata_pd = extract_statsgo_mucompdata(lon, lat)
+            mucompdata_pd = extract_mucompdata_STATSGO(lon, lat)
 
             # Process the mucompdata results
-            if mucompdata_out is None:
+            if mucompdata_pd is None:
                 return "Soil ID not available in this area"
             else:
                 data_source = "STATSGO"
@@ -353,19 +178,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
                 # --------------------------------------------------------------------
                 # Location based calculation
-                # -----------------------------
-                """
                 # --------------------------------------------------------------------
-                ############################################################################
-                Individual probability
-                Based on Fan et al 2018 EQ 1, the conditional probability for each component
-                is calculated by taking the sum of all occurances of a component in the
-                home and adjacent mapunits and dividing this by the sum of all map units
-                and components. We have modified this approach so that each instance of a
-                component occurance is evaluated separately and assinged a weight and the
-                max distance score for each component group is assigned to all component instances.
-                ############################################################################
-                """
                 # Process distance scores and perform group-wise aggregations.
                 mucompdata_pd = process_distance_scores(mucompdata_pd, ExpCoeff)
 
@@ -382,11 +195,11 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 # -----------------------------------------------------------------------------------------------------------
                 # STATSGO Horizon Data Query
                 muhorzdata_pd = extract_muhorzdata_STATSGO(mucompdata_pd)
-
+                muhorzdata_pd = process_horz_data(muhorzdata_pd)
     elif data_source == "STATSGO":
         # STATSGO Horizon Data Query
         muhorzdata_pd = extract_muhorzdata_STATSGO(mucompdata_pd)
-
+        muhorzdata_pd = process_horz_data(muhorzdata_pd)
     # Merge muhorzdata_pd with selected columns from mucompdata_pd
     muhorzdata_pd = pd.merge(
         muhorzdata_pd,
@@ -395,9 +208,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         how="left",
     )
 
-    # Replace "NULL" strings with numpy NaN
-    muhorzdata_pd.replace("NULL", np.nan, inplace=True)
-
     # Filter out components with missing horizon depth data that aren't either
     # a Series, Variant, or Family
     filter_condition = muhorzdata_pd["cokey"].isin(cokey_series) | (
@@ -405,17 +215,8 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     )
     muhorzdata_pd = muhorzdata_pd[filter_condition]
 
-    # Replace NaN with 0 for depth columns and convert them to int
-    muhorzdata_pd[["hzdept_r", "hzdepb_r"]] = (
-        muhorzdata_pd[["hzdept_r", "hzdepb_r"]].fillna(0).astype(int)
-    )
-
-    # Assign textures
-    muhorzdata_pd["texture"] = muhorzdata_pd.apply(getTexture, axis=1)
-
     # Drop duplicates and reset index
-    muhorzdata_pd.drop_duplicates(inplace=True)
-    muhorzdata_pd.reset_index(drop=True, inplace=True)
+    muhorzdata_pd = muhorzdata_pd.drop_duplicates().reset_index(drop=True)
 
     # Check for duplicate component instances
     hz_drop = drop_cokey_horz(muhorzdata_pd)
@@ -480,7 +281,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     muhorzdata_group_cokey = [group for _, group in muhorzdata_pd.groupby("cokey", sort=False)]
 
     getProfile_cokey = []
-    c_bottom_depths = []
+    comp_max_depths = []
     clay_texture = []
     snd_lyrs = []
     cly_lyrs = []
@@ -521,7 +322,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                     pd.concat([group_sorted, layer]).sort_values("hzdept_r").reset_index(drop=True)
                 )
 
-        c_very_bottom, sand_pct_intpl = getProfile(group_sorted, "sandtotal_r", c_bot=True)
+        comp_max_bottom, sand_pct_intpl = getProfile(group_sorted, "sandtotal_r", c_bot=True)
         sand_pct_intpl.columns = ["c_sandpct_intpl", "c_sandpct_intpl_grp"]
         clay_pct_intpl = getProfile(group_sorted, "claytotal_r")
         clay_pct_intpl.columns = ["c_claypct_intpl", "c_claypct_intpl_grp"]
@@ -576,10 +377,10 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
         cokeyB = getProfile_cokey_temp2["cokey"].iloc[0]
         compnameB = getProfile_cokey_temp2["compname"].iloc[0]
-        c_bottom_depths_temp = pd.DataFrame([cokeyB, compnameB, int(c_very_bottom)]).T
-        c_bottom_depths_temp.columns = ["cokey", "compname", "c_very_bottom"]
+        comp_max_depths_temp = pd.DataFrame([cokeyB, compnameB, int(comp_max_bottom)]).T
+        comp_max_depths_temp.columns = ["cokey", "compname", "comp_max_bottom"]
 
-        c_bottom_depths.append(c_bottom_depths_temp)
+        comp_max_depths.append(comp_max_depths_temp)
         getProfile_cokey.append(getProfile_cokey_temp2)
         comp_texture_list = group_sorted.texture.str.lower().tolist()
         comp_texture_list = [x for x in comp_texture_list if x is not None]
@@ -617,11 +418,11 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         ec_lyrs.append(dict(zip(ec_d.index, ec_d)))
         hz_lyrs.append(dict(zip(hz_depb.index, hz_depb)))
 
-    c_bottom_depths = pd.concat(c_bottom_depths, axis=0)
+    comp_max_depths = pd.concat(comp_max_depths, axis=0)
     clay_texture = pd.concat(clay_texture, axis=0)
 
-    # Filter main dataframes based on cokeys in c_bottom_depths
-    valid_cokeys = c_bottom_depths["cokey"]
+    # Filter main dataframes based on cokeys in comp_max_depths
+    valid_cokeys = comp_max_depths["cokey"]
     mucompdata_pd = mucompdata_pd[mucompdata_pd["cokey"].isin(valid_cokeys)]
     muhorzdata_pd = muhorzdata_pd[muhorzdata_pd["cokey"].isin(valid_cokeys)]
 
@@ -631,7 +432,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     # Merge component bottom depth and clay texture information into mucompdata_pd
     mucompdata_pd = mucompdata_pd.merge(
-        c_bottom_depths[["compname", "c_very_bottom"]], on="compname", how="left"
+        comp_max_depths[["compname", "comp_max_bottom"]], on="compname", how="left"
     )
     mucompdata_pd = mucompdata_pd.merge(clay_texture, on="compname", how="left")
 
@@ -666,6 +467,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     # Subset data based on required soil inputs
     sim_columns = [
         "compname_grp",
+        "hzname",
         "distance_score",
         "hzdept_r",
         "hzdepb_r",
@@ -691,8 +493,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     ]
 
     sim = muhorzdata_pd[sim_columns]
+    if sim["hzname"].str.contains("O").any():
+        sim = remove_organic_layer(sim)
     sim = sim.rename(columns={"total_frag_volume": "rfv_r"})
-
     sim["rfv_h"] = None
     sim["rfv_l"] = None
 
@@ -1276,7 +1079,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
             for index, group in enumerate(OSDhorzdata_group_cokey):
                 group_sorted = group.sort_values(by="top").drop_duplicates().reset_index(drop=True)
-
+                print(group_sorted)
                 # Remove invalid horizons where top depth is greater than bottom depth
                 group_sorted = group_sorted[
                     group_sorted["top"] <= group_sorted["bottom"]
@@ -1321,43 +1124,43 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                     # Extract OSD Color Data
                     lab_intpl = getProfileLAB(group_sorted, color_ref)
                     lab_intpl.columns = ["l", "a", "b"]
-                    OSD_very_bottom = group_sorted["bottom"].iloc[-1]
+                    OSD_max_bottom = group_sorted["bottom"].iloc[-1]
 
                     # subset c_bottom_depth by cokey
-                    c_bottom_depths_group = c_bottom_depths[
-                        c_bottom_depths["cokey"].isin(group_sorted["cokey"])
+                    comp_max_depths_group = comp_max_depths[
+                        comp_max_depths["cokey"].isin(group_sorted["cokey"])
                     ]
                     muhorzdata_pd_group = muhorzdata_pd[
                         muhorzdata_pd["cokey"].isin(group_sorted["cokey"])
                     ]
 
                     # Check if OSD depth adjustment is needed
-                    if OSD_very_bottom < c_bottom_depths_group["c_very_bottom"].iloc[0]:
+                    if OSD_max_bottom < comp_max_depths_group["comp_max_bottom"].iloc[0]:
                         OSD_depth_add = True
                         depth_difference = (
-                            c_bottom_depths_group["c_very_bottom"].iloc[0] - OSD_very_bottom
+                            comp_max_depths_group["comp_max_bottom"].iloc[0] - OSD_max_bottom
                         )
 
                         lab_values = [
-                            lab_intpl.loc[OSD_very_bottom - 1].values.tolist()
+                            lab_intpl.loc[OSD_max_bottom - 1].values.tolist()
                         ] * depth_difference
 
                         pd_add = pd.DataFrame(lab_values, columns=["l", "a", "b"])
 
                         # Adjust LAB values for the OSD depth
                         lab_intpl = pd.concat(
-                            [lab_intpl.loc[: OSD_very_bottom - 1], pd_add], axis=0
+                            [lab_intpl.loc[: OSD_max_bottom - 1], pd_add], axis=0
                         ).reset_index(drop=True)
-                        OSD_very_bottom = c_bottom_depths_group["c_very_bottom"].iloc[0]
+                        OSD_max_bottom = comp_max_depths_group["comp_max_bottom"].iloc[0]
 
-                    elif 0 < c_bottom_depths_group["c_very_bottom"].iloc[0] < OSD_very_bottom:
+                    elif 0 < comp_max_depths_group["comp_max_bottom"].iloc[0] < OSD_max_bottom:
                         OSD_depth_remove = True
 
                         # Adjust LAB values for the component depth
                         lab_intpl = lab_intpl.loc[
-                            : c_bottom_depths_group["c_very_bottom"].iloc[0]
+                            : comp_max_depths_group["comp_max_bottom"].iloc[0]
                         ].reset_index(drop=True)
-                        OSD_very_bottom = c_bottom_depths_group["c_very_bottom"].iloc[0]
+                        OSD_max_bottom = comp_max_depths_group["comp_max_bottom"].iloc[0]
 
                     # Set column names for lab_intpl
                     lab_intpl.columns = ["l", "a", "b"]
@@ -1405,7 +1208,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         group_sorted[["hzdept_r", "hzdepb_r", "texture"]] = group_sorted[
                             ["top", "bottom", "texture_class"]
                         ]
-                        OSD_very_bottom_int, OSD_clay_intpl = getProfile(
+                        OSD_max_bottom_int, OSD_clay_intpl = getProfile(
                             group_sorted, "claytotal_r", c_bot=True
                         )
                         OSD_clay_intpl.columns = [
@@ -1421,46 +1224,46 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         OSD_rfv_intpl.columns = ["c_cfpct_intpl", "c_cfpct_intpl_grp"]
 
                         # Update data based on depth conditions
-                        sand_values = OSD_sand_intpl.iloc[OSD_very_bottom_int - 1].tolist()
+                        sand_values = OSD_sand_intpl.iloc[OSD_max_bottom_int - 1].tolist()
                         OSD_sand_intpl = update_intpl_data(
                             OSD_sand_intpl,
                             ["c_sandpct_intpl", "c_sandpct_intpl_grp"],
                             sand_values,
-                            OSD_very_bottom,
+                            OSD_max_bottom,
                             OSD_depth_add,
                             OSD_depth_remove,
-                            OSD_very_bottom_int,
+                            OSD_max_bottom_int,
                         )
 
-                        clay_values = OSD_clay_intpl.iloc[OSD_very_bottom_int - 1].tolist()
+                        clay_values = OSD_clay_intpl.iloc[OSD_max_bottom_int - 1].tolist()
                         OSD_clay_intpl = update_intpl_data(
                             OSD_clay_intpl,
                             ["c_claypct_intpl", "c_claypct_intpl_grp"],
                             clay_values,
-                            OSD_very_bottom,
+                            OSD_max_bottom,
                             OSD_depth_add,
                             OSD_depth_remove,
-                            OSD_very_bottom_int,
+                            OSD_max_bottom_int,
                         )
 
-                        rfv_values = OSD_rfv_intpl.iloc[OSD_very_bottom_int - 1].tolist()
+                        rfv_values = OSD_rfv_intpl.iloc[OSD_max_bottom_int - 1].tolist()
                         OSD_rfv_intpl = update_intpl_data(
                             OSD_rfv_intpl,
                             ["c_cfpct_intpl", "c_cfpct_intpl_grp"],
                             rfv_values,
-                            OSD_very_bottom,
+                            OSD_max_bottom,
                             OSD_depth_add,
                             OSD_depth_remove,
-                            OSD_very_bottom_int,
+                            OSD_max_bottom_int,
                         )
 
                         # If OSD bottom depth is greater than component depth and component depth
-                        # is <120cm
+                        # is <200cm
                         if OSD_depth_remove:
-                            # Remove data based on c_bottom_depths
-                            OSD_sand_intpl = OSD_sand_intpl.loc[: c_bottom_depths.iloc[index, 2]]
-                            OSD_clay_intpl = OSD_clay_intpl.loc[: c_bottom_depths.iloc[index, 2]]
-                            OSD_rfv_intpl = OSD_rfv_intpl.loc[: c_bottom_depths.iloc[index, 2]]
+                            # Remove data based on comp_max_depths
+                            OSD_sand_intpl = OSD_sand_intpl.loc[: comp_max_depths.iloc[index, 2]]
+                            OSD_clay_intpl = OSD_clay_intpl.loc[: comp_max_depths.iloc[index, 2]]
+                            OSD_rfv_intpl = OSD_rfv_intpl.loc[: comp_max_depths.iloc[index, 2]]
 
                         # Create the compname and cokey dataframes
                         compname_df = pd.DataFrame(
@@ -1513,10 +1316,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         getProfile_cokey[index] = getProfile_mod
 
                         # Aggregate sand data
-                        snd_d_osd, hz_depb_osd = aggregate_data(
+                        snd_d_osd = aggregate_data(
                             data=OSD_sand_intpl.iloc[:, 0],
                             bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
-                            depth=True,
                         )
 
                         # Aggregate clay data
@@ -1543,8 +1345,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         cly_d_osd.fillna("", inplace=True)
                         txt_d_osd.fillna("", inplace=True)
                         rf_d_osd.fillna("", inplace=True)
-                        hz_depb_osd = pd.DataFrame(hz_depb_osd)
-                        hz_depb_osd.fillna("", inplace=True)
 
                         # Store aggregated data in dictionaries based on conditions
                         if OSD_text_int[index] == "Yes":
@@ -1555,15 +1355,10 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         if OSD_rfv_int[index] == "Yes":
                             rf_lyrs[index] = rf_d_osd.to_dict()
 
-                        # Update horizon layers if bottom depth is zero
-                        if c_bottom_depths.iloc[index, 2] == 0:
-                            hz_lyrs[index] = hz_depb_osd.to_dict()
-                            mucompdata_pd.loc[index, "c_very_bottom"] = OSD_very_bottom
-
                         # Update cec, ph, and ec layers if they contain only a single empty string
                         for lyr in [cec_lyrs, ph_lyrs, ec_lyrs]:
                             if len(lyr[index]) == 1 and lyr[index][0] == "":
-                                lyr[index] = dict(zip(hz_depb_osd.index, [""] * len(hz_depb_osd)))
+                                lyr[index] = dict(zip(hz_lyrs[index], [""] * len(hz_lyrs[index])))
 
                 else:
                     OSDhorzdata_group_cokey[index] = group_sorted
@@ -1571,7 +1366,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                     # Create an empty dataframe with NaNs for lab_intpl
                     lab_intpl = pd.DataFrame(
                         np.nan,
-                        index=np.arange(c_bottom_depths.iloc[index, 2]),
+                        index=np.arange(comp_max_depths.iloc[index, 2]),
                         columns=["l", "a", "b"],
                     )
                     lab_intpl_lyrs.append(lab_intpl)
@@ -1624,7 +1419,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 # Initialize a DataFrame filled with NaNs
                 lab_intpl = pd.DataFrame(
                     np.nan,
-                    index=np.arange(c_bottom_depths.iloc[i, 2]),
+                    index=np.arange(comp_max_depths.iloc[i, 2]),
                     columns=["l", "a", "b"],
                 )
                 lab_intpl_lyrs.append(lab_intpl)
@@ -1655,7 +1450,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             # Initialize a DataFrame filled with NaNs
             lab_intpl = pd.DataFrame(
                 np.nan,
-                index=np.arange(c_bottom_depths.iloc[i, 2]),
+                index=np.arange(comp_max_depths.iloc[i, 2]),
                 columns=["l", "a", "b"],
             )
             lab_intpl_lyrs.append(lab_intpl)
@@ -1674,7 +1469,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             SEE_URL.append("")
 
     # Subset datasets to exclude pedons without any depth information
-    cokeys_with_depth = mucompdata_pd[mucompdata_pd["c_very_bottom"] > 0].cokey.unique()
+    cokeys_with_depth = mucompdata_pd[mucompdata_pd["comp_max_bottom"] > 0].cokey.unique()
 
     # If there are cokeys with depth
     if len(cokeys_with_depth) > 0:
@@ -1685,8 +1480,8 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         muhorzdata_pd = muhorzdata_pd[muhorzdata_pd["cokey"].isin(cokeys_with_depth)].reset_index(
             drop=True
         )
-        c_bottom_depths = c_bottom_depths[
-            c_bottom_depths["cokey"].isin(cokeys_with_depth)
+        comp_max_depths = comp_max_depths[
+            comp_max_depths["cokey"].isin(cokeys_with_depth)
         ].reset_index(drop=True)
 
         # Update comp_key and cokey_Index
@@ -1765,18 +1560,19 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     elif data_source == "STATSGO":
         ESDcompdataQry = (
-            "SELECT cokey,  coecoclasskey, ecoclassname FROM coecoclass WHERE cokey IN ("
+            "SELECT cokey,  ecoclassid, ecoclassname FROM coecoclass WHERE cokey IN ("
             + ",".join(map(str, comp_key))
             + ")"
         )
         ESDcompdata_out = sda_return(propQry=ESDcompdataQry)
 
-        if not ESDcompdata_out:
+        if ESDcompdata_out.empty:
             ESDcompdata_pd = None
         else:
             ESDcompdata_sda = pd.DataFrame(
-                ESDcompdata_out["Table"][1:], columns=ESDcompdata_out["Table"][0]
+                ESDcompdata_out["Table"].iloc[0][1:], columns=ESDcompdata_out["Table"].iloc[0][0]
             )
+
             ESDcompdata_sda[["cokey", "ecoclassid", "ecoclassname"]] = ESDcompdata_sda[
                 ["cokey", "ecoclassid", "ecoclassname"]
             ].astype(str)
@@ -1975,7 +1771,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             Rank_Loc.append("Not Displayed")
 
     mucompdata_cond_prob["Rank_Loc"] = Rank_Loc
-
+    print(mucompdata_cond_prob.columns)
     # ------------------------------------------------------------
 
     # Sort mucompdata_cond_prob by soilID_rank and distance_score_norm
@@ -2104,13 +1900,15 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     # Writing out list of data needed for soilIDRank
     if plot_id is None:
+        Path("Data/output").mkdir(parents=True, exist_ok=True)
+
         soilIDRank_output_pd.to_csv(
-            "%s/soilIDRank_ofile1.csv" % current_app.config["DATA_BACKEND"],
+            "Data/output/soilIDRank_ofile1.csv",
             index=None,
             header=True,
         )
         mucompdata_cond_prob.to_csv(
-            "%s/soilIDRank_ofile2.csv" % current_app.config["DATA_BACKEND"],
+            "Data/output/soilIDRank_ofile2.csv",
             index=None,
             header=True,
         )
@@ -2272,25 +2070,32 @@ def rankPredictionUS(
         p_bottom_depth.columns = ["cokey", "compname", "bottom_depth"]
 
         # Pedon color data
-        if not lab_Color.isnull().all():
-            lab_Color = [[np.nan, np.nan, np.nan] if x is None else x for x in lab_Color]
+        if not isinstance(lab_Color, pd.DataFrame):
+            lab_Color = pd.DataFrame(lab_Color)
+        if not lab_Color.isnull().all().all():  # Use all().all() to check the entire DataFrame
+            lab_Color = lab_Color.apply(
+                lambda x: [np.nan, np.nan, np.nan] if x.isnull().all() else x, axis=1
+            )
             p_lab_intpl = [
-                lab_Color.iloc[i]
+                lab_Color.iloc[i].tolist()
                 for i in range(len(lab_Color))
                 for _ in range(horizonDepthT[i], horizonDepthB[i])
             ]
-            p_lab_intpl = pd.DataFrame(p_lab_intpl).reset_index(drop=True)
+            p_lab_intpl_list = [item[0] for item in p_lab_intpl]  # Access the inner list
+            p_lab_intpl = pd.DataFrame(p_lab_intpl_list, columns=["L", "A", "B"]).reset_index(
+                drop=True
+            )
         else:
-            lab_Color = pd.DataFrame([x for x in lab_Color if x is not None])
+            lab_Color = lab_Color.dropna()  # Remove rows where all elements are None
             p_lab_intpl = pd.DataFrame(
-                np.nan, index=np.arange(200), columns=np.arange(3)
+                np.nan, index=np.arange(200), columns=["L", "A", "B"]
             ).reset_index(drop=True)
 
         # Adjust depth interval for each dataset
         p_sandpct_intpl = adjust_depth_interval(p_sandpct_intpl)
         p_claypct_intpl = adjust_depth_interval(p_claypct_intpl)
         p_cfg_intpl = adjust_depth_interval(p_cfg_intpl)
-        p_lab_intpl = adjust_depth_interval(p_lab_intpl, add_columns=3)
+        p_lab_intpl = adjust_depth_interval(p_lab_intpl)  # , add_columns=3)
 
         # Construct final dataframe with adjusted data
         p_compname = pd.Series("sample_pedon", index=np.arange(len(p_sandpct_intpl)))
@@ -2405,10 +2210,8 @@ def rankPredictionUS(
     # Load in component data from soilIDList
     if plot_id is None:
         # Reading from file
-        soilIDRank_output_pd = pd.read_csv(
-            f"{current_app.config['DATA_BACKEND']}/soilIDRank_ofile1.csv"
-        )
-        mucompdata_pd = pd.read_csv(f"{current_app.config['DATA_BACKEND']}/soilIDRank_ofile2.csv")
+        soilIDRank_output_pd = pd.read_csv("Data/output/soilIDRank_ofile1.csv")
+        mucompdata_pd = pd.read_csv("Data/output/soilIDRank_ofile2.csv")
         record_id = None
     else:
         # Read from database
@@ -2421,30 +2224,14 @@ def rankPredictionUS(
             print("Cannot find a plot with this ID")
 
     # Modify mucompdata_pd DataFrame
-    cols_to_str = [
-        "mukey",
-        "cokey",
-        "compname",
-        "compkind",
-        "majcompflag",
-        "nirrcapcl",
-        "nirrcapscl",
-        "nirrcapunit",
-        "irrcapcl",
-        "irrcapscl",
-        "irrcapunit",
-        "taxorder",
-        "taxsubgrp",
-    ]
-    mucompdata_pd[cols_to_str] = mucompdata_pd[cols_to_str].astype(str)
-    mucompdata_pd["nirrcapcl"] = mucompdata_pd["nirrcapcl"].apply(trim_fraction)
-    mucompdata_pd["irrcapcl"] = mucompdata_pd["irrcapcl"].apply(trim_fraction)
+    # mucompdata_pd = process_site_data(mucompdata_pd)
 
     # Create soil depth DataFrame and subset component depths based on max user
     # depth if no bedrock specified
-    c_bottom_depths = mucompdata_pd[["cokey", "compname", "c_very_bottom"]]
-    c_bottom_depths.columns = ["cokey", "compname", "bottom_depth"]
-    slices_of_soil = pd.concat([p_bottom_depth, c_bottom_depths], axis=0).reset_index(drop=True)
+
+    comp_max_depths = mucompdata_pd[["cokey", "compname", "comp_max_bottom"]]
+    comp_max_depths.columns = ["cokey", "compname", "bottom_depth"]
+    slices_of_soil = pd.concat([p_bottom_depth, comp_max_depths], axis=0).reset_index(drop=True)
     compnames = mucompdata_pd[["compname", "compname_grp"]]
 
     # Generate a matrix storing a flag describing soil (1) vs. non-soil (0) at each slice
@@ -2474,7 +2261,7 @@ def rankPredictionUS(
             soil_matrix.iloc[:, i] = 1
 
     # Check if user has entered horizon data
-    if not p_hz_data or p_bottom_depth.bottom_depth.le(0).any():
+    if p_hz_data.empty or p_bottom_depth.bottom_depth.le(0).any():
         soilIDRank_output_pd = None
     else:
         # Subset component soil properties to match user measured properties
@@ -2492,7 +2279,7 @@ def rankPredictionUS(
         Comp_name = []
 
         for group in groups:
-            data_subgroup = group[p_hz_data_names].drop("compname", 1)
+            data_subgroup = group.drop(columns="compname")
             all_nan = data_subgroup.isnull().all().all()
             any_nan = data_subgroup.isnull().all().any()
 
@@ -2541,19 +2328,19 @@ def rankPredictionUS(
             with missing data will later be assigned the max dissimilarity across all horizons
             """
             # Filter columns based on available data
-            if i < bedrock:
+            if bedrock is None or (bedrock is not None and i < bedrock):
                 sample_pedon_slice_vars = (
-                    sliceT.dropna(axis="columns").drop(["compname"], 1).columns.tolist()
+                    sliceT.dropna(axis="columns").drop(["compname"], axis=1).columns.tolist()
                 )
                 if len(sample_pedon_slice_vars) < 2:
                     sample_pedon_slice_vars = (
                         sliceT[sliceT["compname"] == "sample_pedon"]
                         .dropna(axis="columns")
-                        .drop(["compname"], 1)
+                        .drop(["compname"], axis=1)
                         .columns.tolist()
                     )
                 sliceT = sliceT[sample_pedon_slice_vars]
-
+            print(sliceT)
             D = gower_distances(sliceT)  # Equal weighting given to all soil variables
             dis_mat_list.append(D)
 
@@ -2572,9 +2359,9 @@ def rankPredictionUS(
         dis_max_slice = [dis_max if np.isnan(x) else x for x in dis_max_slice]
 
         # Apply depth weight
-        depth_weight = np.concatenate((np.repeat(0.2, 20), np.repeat(1.0, 80)), axis=0)
+        depth_weight = np.concatenate((np.repeat(0.2, 20), np.repeat(1.0, 180)), axis=0)
         depth_weight = depth_weight[pedon_slice_index]
-
+        print(depth_weight)
         # Infill Nan data
 
         # Update dis_mat_list using numpy operations
@@ -2951,31 +2738,42 @@ def compute_soilid_data_completeness(length, thresholds, scores):
     return scores[-1]
 
 
-def adjust_depth_interval(data, target_length=120, add_columns=1):
+def adjust_depth_interval(data, target_length=200, add_columns=1):
     """Adjusts the depth interval of user data."""
+
+    # Convert input to a DataFrame
+    if isinstance(data, list):
+        data = pd.DataFrame(data)  # , columns=np.arange(add_columns))
+    elif isinstance(data, pd.Series):
+        data = data.to_frame()
+
+    # Ensure data is a DataFrame at this point
+    if not isinstance(data, pd.DataFrame):
+        raise TypeError("Data must be a list, Series, or DataFrame")
+
     length = len(data)
+
     if length > target_length:
+        # Truncate data if it exceeds the target length
         data = data.iloc[:target_length]
     elif length < target_length:
+        # Extend data if it's shorter than the target length
         add_length = target_length - length
-        if add_columns == 1:
-            add_data = pd.Series(np.nan, index=np.arange(add_length))
-        else:
-            add_data = pd.DataFrame(
-                np.nan, index=np.arange(add_length), columns=np.arange(add_columns)
-            )
+        add_data = pd.DataFrame(np.nan, index=np.arange(add_length), columns=data.columns)
         data = pd.concat([data, add_data])
-    return data.reset_index(drop=True)
+
+    data.reset_index(drop=True, inplace=True)
+    return data
 
 
 # Helper function to update dataframes based on depth conditions
 def update_intpl_data(
-    df, col_names, values, very_bottom, OSD_depth_add, OSD_depth_remove, OSD_very_bottom_int
+    df, col_names, values, very_bottom, OSD_depth_add, OSD_depth_remove, OSD_max_bottom_int
 ):
     if OSD_depth_add:
-        layer_add = very_bottom - OSD_very_bottom_int
+        layer_add = very_bottom - OSD_max_bottom_int
         pd_add = pd.DataFrame([values] * layer_add, columns=col_names)
-        df = pd.concat([df.loc[: OSD_very_bottom_int - 1], pd_add], axis=0).reset_index(drop=True)
+        df = pd.concat([df.loc[: OSD_max_bottom_int - 1], pd_add], axis=0).reset_index(drop=True)
     elif OSD_depth_remove:
         df = df.loc[:very_bottom].reset_index(drop=True)
     return df

@@ -25,7 +25,7 @@ jobs:
           cache-dependency-path: 'requirements-dev.txt'
 
       - name: Install Python dependencies
-        run: pip install -r requirements-dev.txt
+        run: make install-dev
 
       - name: Run lint checks
         run: make lint
@@ -38,10 +38,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Update Linux packages
+        run: sudo apt-get update
+
       - name: Install Linux packages
-        run: |
-          sudo apt-get update
-          sudo apt-get install libgdal-dev gdal-bin
+        run: sudo apt-get install libgdal-dev gdal-bin python3-gdal
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -51,9 +52,7 @@ jobs:
           cache-dependency-path: 'requirements.txt'
 
       - name: Install Python dependencies
-        run: |
-          pip install -r requirements-dev.txt
-          pip install -r requirements.txt --no-deps
+        run: make install-dev && make install-no-deps
 
       - name: Run tests
         run: make test

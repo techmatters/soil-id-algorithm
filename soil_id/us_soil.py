@@ -17,7 +17,7 @@ from composition_stats import ilr, ilr_inv
 from pandas import json_normalize
 from scipy.stats import spearmanr
 
-# Import local fucntions
+# Import local functions
 from utils import (  # slice_and_aggregate_soil_data,
     acomp,
     aggregate_data,

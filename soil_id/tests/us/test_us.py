@@ -1,7 +1,6 @@
 from us_soil import getSoilLocationBasedUS, rankPredictionUS
 
 
-
 def test_true():
     assert True
 
@@ -19,7 +18,7 @@ def test_soil_location():
         {"lon": -69.28246582, "lat": 47.213922, "plot_id": 3009},
         {"lon": -158.4018264, "lat": 60.42282639, "plot_id": 3010},
     ]
-    
+
     # Dummy Soil Profile Data (replicating the structure provided)
     soilHorizon = ["LOAM"] * 7
     horizonDepth = [1, 10, 20, 50, 70, 100, 120]

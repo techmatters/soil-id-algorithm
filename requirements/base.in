@@ -3,6 +3,7 @@ mysqlclient
 numpy
 pandas
 pyogrio
+python-dotenv
 requests
 rtree
 scipy

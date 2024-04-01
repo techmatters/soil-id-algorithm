@@ -1,3 +1,4 @@
+import config
 from us_soil import getSoilLocationBasedUS, rankPredictionUS
 
 
@@ -46,3 +47,5 @@ def test_soil_location():
         )
         print(result_list)
         print(result_rank)
+
+    config.TEMP_DIR.cleanup()

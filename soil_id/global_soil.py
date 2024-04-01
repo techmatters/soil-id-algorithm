@@ -6,16 +6,14 @@ import json
 import re
 import urllib
 
+# local libraries
+import config
+
 # Third-party libraries
 import numpy as np
 import pandas as pd
 import requests
-
-# Flask
-from flask import current_app
 from scipy.stats import norm
-
-# Import local fucntions
 from utils import (
     agg_data_layer,
     assign_max_distance_scores,
@@ -64,7 +62,7 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
     wise_data = extract_WISE_data(
         lon,
         lat,
-        file_path="%s/wise30sec_poly_simp_soil.shp" % current_app.config["DATA_BACKEND"],
+        file_path=config.WISE_PATH,
         layer_name=None,
         buffer_size=0.5,
     )
@@ -449,12 +447,8 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
 
     # Save data
     if plot_id is None:
-        soilIDRank_output_pd.to_csv(
-            "%s/soilIDRank_ofile1.csv" % current_app.config["DATA_BACKEND"], index=None, header=True
-        )
-        mucompdata_cond_prob.to_csv(
-            "%s/soilIDRank_ofile2.csv" % current_app.config["DATA_BACKEND"], index=None, header=True
-        )
+        soilIDRank_output_pd.to_csv(config.SOIL_ID_RANK_PATH, index=None, header=True)
+        mucompdata_cond_prob.to_csv(config.SOIL_ID_PROB_PATH, index=None, header=True)
     else:
         save_model_output(
             plot_id,
@@ -668,12 +662,8 @@ def rankPredictionGlobal(
 
     # If no plot_id is provided, load data from file
     if plot_id is None:
-        soilIDRank_output_pd = pd.read_csv(
-            "{}/soilIDRank_ofile1.csv".format(current_app.config["DATA_BACKEND"])
-        )
-        mucompdata_pd = pd.read_csv(
-            "{}/soilIDRank_ofile2.csv".format(current_app.config["DATA_BACKEND"])
-        )
+        soilIDRank_output_pd = pd.read_csv(config.SOIL_ID_RANK_PATH)
+        mucompdata_pd = pd.read_csv(config.SOIL_ID_PROB_PATH)
 
     # If plot_id is provided, load data from the database
     else:
@@ -880,7 +870,7 @@ def rankPredictionGlobal(
     wmf2, wsf2, rmf2, rsf2, ymf2, ysf2 = ([] for _ in range(6))
 
     # Load color distribution data from NormDist1.csv
-    with open(f"{current_app.config['DATA_BACKEND']}/NormDist1.csv", "r") as csvfile:
+    with open(config.NORM_DIST_1_PATH, "r") as csvfile:
         readCSV = csv.reader(csvfile, delimiter=",")
         for row_id, row in enumerate(readCSV):
             if row_id == 0:
@@ -897,7 +887,7 @@ def rankPredictionGlobal(
                 ysf1 = [float(i) for i in row]
 
     # Load color distribution data from NormDist2.csv
-    with open(f"{current_app.config['DATA_BACKEND']}/NormDist2.csv", "r") as csvfile:
+    with open(config.NORM_DIST_2_PATH, "r") as csvfile:
         readCSV = csv.reader(csvfile, delimiter=",")
         for row_id, row in enumerate(readCSV):
             if row_id == 0:

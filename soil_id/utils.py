@@ -6,6 +6,9 @@ import math
 import re
 import sys
 
+# local libraries
+import config
+
 # Third-party libraries
 import fiona
 import geopandas as gpd
@@ -1581,7 +1584,7 @@ def load_statsgo_data(box):
     """
     try:
         return gpd.read_file(
-            "Data/gsmsoilmu_a_us.shp", bbox=box.bounds, mode="r", driver="ESRI Shapefile"
+            config.STATSGO_PATH, bbox=box.bounds, mode="r", driver="ESRI Shapefile"
         )
     except fiona.errors.DriverError as e:
         print(e)
@@ -3075,13 +3078,11 @@ def findSoilLocation(lon, lat):
     """
 
     drv_h = ogr.GetDriverByName("ESRI Shapefile")
-    ds_in_h = drv_h.Open(
-        "%s/HWSD_global_noWater_no_country.shp" % current_app.config["DATA_BACKEND"], 0
-    )
+    ds_in_h = drv_h.Open(config.HWSD_PATH, 0)
     layer_global = ds_in_h.GetLayer(0)
 
     drv_us = ogr.GetDriverByName("ESRI Shapefile")
-    ds_in_us = drv_us.Open("%s/SoilID_US_Areas.shp" % current_app.config["DATA_BACKEND"], 0)
+    ds_in_us = drv_us.Open(config.US_AREA_PATH, 0)
     layer_us = ds_in_us.GetLayer(0)
 
     # Setup coordinate transformation

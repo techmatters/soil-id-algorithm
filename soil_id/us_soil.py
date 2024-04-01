@@ -4,7 +4,9 @@ import io
 import json
 import re
 import urllib
-from pathlib import Path
+
+# local libraries
+import config
 
 # Third-party libraries
 import numpy as np
@@ -15,8 +17,6 @@ from composition_stats import ilr, ilr_inv
 # Flask
 from pandas import json_normalize
 from scipy.stats import spearmanr
-
-# Import local functions
 from utils import (  # slice_and_aggregate_soil_data,
     acomp,
     aggregate_data,
@@ -69,7 +69,7 @@ from utils import (  # slice_and_aggregate_soil_data,
 ############################################################################################
 def getSoilLocationBasedUS(lon, lat, plot_id):
     # Load in LAB to Munsell conversion look-up table
-    color_ref = pd.read_csv("Data/LandPKS_munsell_rgb_lab.csv")
+    color_ref = pd.read_csv(config.MUNSELL_RGB_LAB_PATH)
     LAB_ref = color_ref[["L", "A", "B"]]
     munsell_ref = color_ref[["hue", "value", "chroma"]]
 
@@ -1900,15 +1900,13 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     # Writing out list of data needed for soilIDRank
     if plot_id is None:
-        Path("Data/output").mkdir(parents=True, exist_ok=True)
-
         soilIDRank_output_pd.to_csv(
-            "Data/output/soilIDRank_ofile1.csv",
+            config.SOIL_ID_RANK_PATH,
             index=None,
             header=True,
         )
         mucompdata_cond_prob.to_csv(
-            "Data/output/soilIDRank_ofile2.csv",
+            config.SOIL_ID_PROB_PATH,
             index=None,
             header=True,
         )
@@ -2210,8 +2208,8 @@ def rankPredictionUS(
     # Load in component data from soilIDList
     if plot_id is None:
         # Reading from file
-        soilIDRank_output_pd = pd.read_csv("Data/output/soilIDRank_ofile1.csv")
-        mucompdata_pd = pd.read_csv("Data/output/soilIDRank_ofile2.csv")
+        soilIDRank_output_pd = pd.read_csv(config.SOIL_ID_RANK_PATH)
+        mucompdata_pd = pd.read_csv(config.SOIL_ID_PROB_PATH)
         record_id = None
     else:
         # Read from database

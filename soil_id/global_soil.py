@@ -13,6 +13,14 @@ import config
 import numpy as np
 import pandas as pd
 import requests
+from db import (
+    get_WRB_descriptions,
+    getSG_descriptions,
+    load_model_output,
+    save_model_output,
+    save_rank_output,
+    save_soilgrids_output,
+)
 from scipy.stats import norm
 from utils import (
     agg_data_layer,
@@ -23,19 +31,13 @@ from utils import (
     drop_cokey_horz,
     extract_values,
     extract_WISE_data,
-    get_WRB_descriptions,
     getCF_fromClass,
     getClay,
     getProfile,
     getSand,
-    getSG_descriptions,
     getTexture,
     gower_distances,
-    load_model_output,
     pedon_color,
-    save_model_output,
-    save_rank_output,
-    save_soilgrids_output,
     sg_get_and_agg,
     silt_calc,
 )

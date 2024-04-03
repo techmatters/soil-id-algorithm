@@ -13,6 +13,7 @@ import numpy as np
 import pandas as pd
 import requests
 from composition_stats import ilr, ilr_inv
+from db import load_model_output, save_model_output, save_rank_output
 
 # Flask
 from pandas import json_normalize
@@ -38,15 +39,12 @@ from utils import (  # slice_and_aggregate_soil_data,
     infill_soil_data,
     information_gain,
     lab2munsell,
-    load_model_output,
     munsell2rgb,
     process_data_with_rosetta,
     process_distance_scores,
     process_horz_data,
     process_site_data,
     remove_organic_layer,
-    save_model_output,
-    save_rank_output,
     sda_return,
     simulate_correlated_triangular,
     slice_and_aggregate_soil_data_old,

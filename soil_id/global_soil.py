@@ -4,7 +4,6 @@ import csv
 import io
 import json
 import re
-import urllib
 
 # local libraries
 import config
@@ -12,7 +11,6 @@ import config
 # Third-party libraries
 import numpy as np
 import pandas as pd
-import requests
 from db import (
     get_WRB_descriptions,
     getSG_descriptions,
@@ -22,6 +20,7 @@ from db import (
     save_soilgrids_output,
 )
 from scipy.stats import norm
+from services import get_soilgrids_classification_data, get_soilgrids_property_data
 from utils import (
     agg_data_layer,
     assign_max_distance_scores,
@@ -1228,36 +1227,9 @@ def rankPredictionGlobal(
 #                                          getSoilGridsGlobal                                    #
 ##################################################################################################
 def getSoilGridsGlobal(lon, lat, plot_id=None):
-    # -------------------------------------------------------------------------------------------
 
-    # SoilGrids250
-    # Construct the SoilGrids API v2 URL
-    params = [
-        ("lon", lon),
-        ("lat", lat),
-        ("property", "cfvo"),
-        ("property", "cec"),
-        ("property", "clay"),
-        ("property", "phh2o"),
-        ("property", "sand"),
-        ("value", "mean"),
-    ]
-
-    sg_api = (
-        f"https://rest.isric.org/soilgrids/v2.0/properties/query?{urllib.parse.urlencode(params)}"
-    )
-
-    try:
-        # Make the API request using the requests library
-        response = requests.get(sg_api, timeout=160)
-        response.raise_for_status()  # Check for unsuccessful status codes
-        sg_out = response.json()
-
-    except requests.RequestException:
-        # Log the error and set the status to unavailable
-        if plot_id is not None:
-            save_soilgrids_output(plot_id, 1, json.dumps({"status": "unavailable"}))
-        sg_out = {"status": "unavailable"}
+    # Call soildgrids API
+    sg_out = get_soilgrids_property_data(lon, lat)
 
     # Use the 'extract_values' function to extract specific keys from the JSON
     top_depths = extract_values(sg_out, "top_depth")
@@ -1301,21 +1273,7 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
         sg_data_w["silt"] = sg_data_w.apply(silt_calc, axis=1)
         sg_data_w["texture"] = sg_data_w.apply(getTexture, axis=1)
 
-        # Fetch SG wRB Taxonomy
-        # Construct the API URL for fetching soil data
-        params = urllib.parse.urlencode([("lon", lon), ("lat", lat), ("number_classes", 3)])
-        api_url = f"https://rest.isric.org/soilgrids/v2.0/classification/query?{params}"
-
-        # Fetch data from the API
-        try:
-            with requests.urlopen(api_url, timeout=6) as response:
-                sg_tax = json.load(response)
-        except Exception:
-            # Handle data fetch failure
-            if plot_id is not None:
-                # Assuming the function `save_soilgrids_output` exists elsewhere in the code
-                save_soilgrids_output(plot_id, 1, json.dumps({"status": "unavailable"}))
-            sg_tax = None
+        sg_tax = get_soilgrids_classification_data(lon, lat, plot_id)
 
         # If data was successfully fetched, process it
         if sg_tax:

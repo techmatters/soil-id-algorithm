@@ -3,7 +3,6 @@ import collections
 import io
 import json
 import re
-import urllib
 
 # local libraries
 import config
@@ -11,13 +10,19 @@ import config
 # Third-party libraries
 import numpy as np
 import pandas as pd
-import requests
 from composition_stats import ilr, ilr_inv
 from db import load_model_output, save_model_output, save_rank_output
 
 # Flask
 from pandas import json_normalize
 from scipy.stats import spearmanr
+from services import (
+    get_elev_data,
+    get_esd_data,
+    get_soil_series_data,
+    get_soilweb_data,
+    sda_return,
+)
 from utils import (  # slice_and_aggregate_soil_data,
     acomp,
     aggregate_data,
@@ -45,7 +50,6 @@ from utils import (  # slice_and_aggregate_soil_data,
     process_horz_data,
     process_site_data,
     remove_organic_layer,
-    sda_return,
     simulate_correlated_triangular,
     slice_and_aggregate_soil_data_old,
 )
@@ -71,25 +75,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     LAB_ref = color_ref[["L", "A", "B"]]
     munsell_ref = color_ref[["hue", "value", "chroma"]]
 
-    # Load in SSURGO data from SoilWeb
-    # current production API
-    # soilweb base url "https://casoilresource.lawr.ucdavis.edu/api/landPKS.php"
-
-    # testing API
-    params = urllib.parse.urlencode([("q", "spn"), ("lon", lon), ("lat", lat), ("r", 1000)])
-    soilweb_url = f"https://soilmap2-1.lawr.ucdavis.edu/dylan/soilweb/api/landPKS.php?{params}"
-    try:
-        response = requests.get(soilweb_url, timeout=8)
-        out = response.json()
-    except requests.RequestException as e:
-        print(f"Error fetching data from SoilWeb: {e}")
-        out = {
-            "ESD": False,
-            "OSD_morph": False,
-            "OSD_narrative": False,
-            "hz": False,
-            "spn": False,
-        }
+    out = get_soilweb_data(lon, lat)
 
     OSD_compkind = ["Series", "Variant", "Family", "Taxadjunct"]
     # Check if point is in a NOTCOM area, and if so then infill with STATSGO from NRCS SDA
@@ -872,18 +858,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         if mucompdata_pd["compkind"].isin(OSD_compkind).any():
             try:
                 # Generate series names
-                series_name = [
-                    re.sub("[0-9]+", "", compname)
-                    for compname in mucompdata_pd["compname"]
-                    if compname in OSD_compkind
-                ]
-
-                params = {"q": "site_hz", "s": series_name}
-
-                # Fetch data from URL using requests
-                series_url = "https://casoilresource.lawr.ucdavis.edu/api/soil-series.php"
-                response = requests.get(series_url, params=params, timeout=3)
-                seriesDict = response.json()
+                seriesDict = get_soil_series_data(mucompdata_pd, OSD_compkind)
 
                 # Normalize the data and perform data manipulations
                 OSDhorzdata_pd = pd.json_normalize(seriesDict["hz"])[
@@ -1604,44 +1579,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         ESD_geo = [ESD_geo for ESD_geo in ESD_geo if str(ESD_geo) != "nan"]
         ESD_geo = ESD_geo[0][1:5]
 
-        class_url = "https://edit.jornada.nmsu.edu/services/downloads/esd/%s/class-list.json" % (
-            ESD_geo
-        )
-
-        try:
-            response = requests.get(class_url, timeout=4)
-            response.raise_for_status()  # Raise an exception for any HTTP error
-
-            ESD_list = response.json()
-            ESD_list_pd = json_normalize(ESD_list["ecoclasses"])[["id", "legacyId"]]
-            ESD_URL = []
-
-            if isinstance(ESD_list, list):
-                ESD_URL.append("")
-            else:
-                for i in range(len(ecositeID)):
-                    if (
-                        ecositeID[i] in ESD_list_pd["id"].tolist()
-                        or ecositeID[i] in ESD_list_pd["legacyId"].tolist()
-                    ):
-                        ecosite_edit_id = ESD_list_pd[
-                            ESD_list_pd.apply(
-                                lambda r: r.str.contains(ecositeID[i], case=False).any(),
-                                axis=1,
-                            )
-                        ]["id"].values[0]
-                        ES_URL_t = (
-                            "https://edit.jornada.nmsu.edu/catalogs/esd/"
-                            f"{ESD_geo}/{ecosite_edit_id}"
-                        )
-                        ESD_URL.append(ES_URL_t)
-                    else:
-                        ESD_URL.append("")
-
-            ESDcompdata_pd = ESDcompdata_pd.assign(esd_url=ESD_URL)
-        except requests.exceptions.RequestException as err:
-            ESDcompdata_pd["esd_url"] = pd.Series(np.repeat("", len(ecositeID))).values
-            print("An error occurred:", err)
+        ESDcompdata_pd = get_esd_data(ecositeID, ESD_geo, ESDcompdata_pd)
 
         # Assign missing ESD for components that have other instances with an assigned ESD
         if ESDcompdata_pd is not None:
@@ -2136,14 +2074,7 @@ def rankPredictionUS(
 
     if pElev is None:
         try:
-            # Construct the URL for fetching elevation data based on latitude and longitude
-            elev_url = (
-                f"https://nationalmap.gov/epqs/pqs.php?x={lon}&y={lat}&units=Meters&output=json"
-            )
-
-            # Fetch data from the URL
-            response = requests.get(elev_url, timeout=2)
-            elev_data = response.json()
+            elev_data = get_elev_data(lon, lat)
 
             # Extract elevation value and round it to 3 decimal places
             pElev = round(

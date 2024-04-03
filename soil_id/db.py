@@ -1,8 +1,12 @@
+# Standard libraries
 import sys
 
+# local libraries
+import config
+
+# Third-party libraries
 import MySQLdb
 import pandas as pd
-from flask import current_app
 
 
 def get_datastore_connection():
@@ -14,10 +18,10 @@ def get_datastore_connection():
     """
     try:
         conn = MySQLdb.connect(
-            host=current_app.config["CLOUDSQL_IP"],
-            user=current_app.config["CLOUDSQL_USER"],
-            passwd=current_app.config["CLOUDSQL_PASSWORD"],
-            db="apex",
+            host=config.DB_HOST,
+            user=config.DB_USERNAME,
+            passwd=config.DB_PASSWORD,
+            db=config.DB_NAME,
         )
         return conn
     except Exception as err:

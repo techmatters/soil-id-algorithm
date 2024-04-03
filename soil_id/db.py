@@ -61,31 +61,6 @@ def save_model_output(
         conn.close()
 
 
-# global only
-def save_soilgrids_output(plot_id, model_version, soilgrids_blob):
-    """
-    Save the output of the soil grids to the 'landpks_soilgrids_model' table.
-    """
-    try:
-        conn = get_datastore_connection()
-        cur = conn.cursor()
-
-        sql = """
-        INSERT INTO landpks_soilgrids_model
-        (plot_id, model_version, soilgrids_blob)
-        VALUES (%s, %s, %s)
-        """
-        cur.execute(sql, (plot_id, model_version, soilgrids_blob))
-        conn.commit()
-
-    except Exception as err:
-        print(err)
-        conn.rollback()
-        return None
-    finally:
-        conn.close()
-
-
 # us, global
 def save_rank_output(record_id, model_version, rank_blob):
     """
@@ -129,6 +104,31 @@ def load_model_output(plot_id):
         return model_run
     except Exception as err:
         print(err)
+        return None
+    finally:
+        conn.close()
+
+
+# global only
+def save_soilgrids_output(plot_id, model_version, soilgrids_blob):
+    """
+    Save the output of the soil grids to the 'landpks_soilgrids_model' table.
+    """
+    try:
+        conn = get_datastore_connection()
+        cur = conn.cursor()
+
+        sql = """
+        INSERT INTO landpks_soilgrids_model
+        (plot_id, model_version, soilgrids_blob)
+        VALUES (%s, %s, %s)
+        """
+        cur.execute(sql, (plot_id, model_version, soilgrids_blob))
+        conn.commit()
+
+    except Exception as err:
+        print(err)
+        conn.rollback()
         return None
     finally:
         conn.close()

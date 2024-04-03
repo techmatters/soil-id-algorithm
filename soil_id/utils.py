@@ -13,7 +13,6 @@ import fiona
 import geopandas as gpd
 import numpy as np
 import pandas as pd
-import requests
 import shapely
 from db import get_WISE30sec_data
 from numpy.linalg import cholesky
@@ -21,6 +20,7 @@ from osgeo import ogr
 from scipy.interpolate import UnivariateSpline
 from scipy.sparse import issparse
 from scipy.stats import entropy, norm
+from services import rosetta_request, sda_return
 from shapely.geometry import LinearRing, Point
 from skimage import color
 from sklearn.impute import SimpleImputer
@@ -66,40 +66,6 @@ def extract_WISE_data(lon, lat, file_path, layer_name=None, buffer_size=0.5):
     wise_data = pd.merge(wise_data, mu_id_dist, on="MUGLB_NEW", how="left")
 
     return wise_data
-
-
-def sda_return(propQry):
-    """
-    Queries data from the USDA's Soil Data Mart (SDM) Tabular Service and returns
-    it as a pandas DataFrame.
-    """
-    base_url = "https://sdmdataaccess.nrcs.usda.gov/Tabular/SDMTabularService/post.rest"
-    request_data = {"format": "JSON+COLUMNNAME", "query": propQry}
-
-    try:
-        # Send POST request using the requests library
-        response = requests.post(base_url, json=request_data, timeout=6)
-        response.raise_for_status()  # Raise an exception for HTTP errors
-
-        # Convert the returned JSON into a Python dictionary
-        qData = response.json()
-
-        # If dictionary key "Table" is found, normalize the data and return as DataFrame
-        if "Table" in qData:
-            qDataPD = pd.json_normalize(qData)
-            return qDataPD
-        else:
-            return None
-
-    except requests.ConnectionError:
-        print("Failed to connect to the USDA service.")
-        return None
-    except requests.Timeout:
-        print("Request to USDA service timed out.")
-        return None
-    except requests.RequestException as err:
-        print(f"An error occurred: {err}")
-        return None
 
 
 ###################################################################################################
@@ -2544,81 +2510,6 @@ def slice_and_aggregate_soil_data_old(df):
 
     return result_df
     """
-
-
-def rosetta_request(chunk, vars, v, conf=None, include_sd=False):
-    """
-    Sends a chunk of data to the ROSETTA web service for processing and returns the response.
-
-    Parameters:
-    - chunk (DataFrame): The chunk of the DataFrame to be processed.
-    - vars (list): List of variable names to be processed.
-    - v (str): The version of the ROSETTA model to use.
-    - conf (dict, optional): Additional request configuration options.
-    - include_sd (bool): Whether to include standard deviation in the output.
-
-    Returns:
-    - DataFrame: The processed chunk with results from the ROSETTA service.
-    - Exception: If an HTTP or JSON parsing error occurs, the exception is returned.
-    """
-    # Select only the specified vars columns and other columns
-    chunk_vars = chunk[vars]
-    chunk_other = chunk.drop(columns=vars)
-
-    # Convert the vars chunk to a matrix (2D list)
-    chunk_vars_matrix = chunk_vars.values.tolist()
-
-    # Construct the request URL
-    url = f"http://www.handbook60.org/api/v1/rosetta/{v}"
-
-    # Make the POST request to the ROSETTA API
-    try:
-        response = requests.post(url, json={"X": chunk_vars_matrix}, headers=conf)
-        # This will raise an HTTPError if the HTTP request returned an unsuccessful status code
-        response.raise_for_status()
-    except requests.RequestException as e:
-        return e  # Return the exception to be handled by the caller
-
-    # Parse the JSON response content
-    try:
-        response_json = response.json()
-    except ValueError as e:
-        return e  # Return the exception to be handled by the caller
-
-    # Convert van Genuchten params to DataFrame
-    vg_params = pd.DataFrame(response_json["van_genuchten_params"])
-    vg_params.columns = ["theta_r", "theta_s", "alpha", "npar", "ksat"]
-
-    # Add model codes and version to the DataFrame
-    vg_params[".rosetta.model"] = pd.Categorical.from_codes(
-        response_json["model_codes"], categories=["-1", "1", "2", "3", "4", "5"]
-    )
-    vg_params[".rosetta.version"] = response_json["rosetta_version"]
-
-    # If include_sd is True, add standard deviations to the DataFrame
-    if include_sd:
-        vg_sd = pd.DataFrame(response_json["stdev"])
-        vg_sd.columns = [f"sd_{name}" for name in vg_params.columns]
-        result = pd.concat(
-            [
-                chunk_other.reset_index(drop=True),
-                chunk_vars.reset_index(drop=True),
-                vg_params.reset_index(drop=True),
-                vg_sd,
-            ],
-            axis=1,
-        )
-    else:
-        result = pd.concat(
-            [
-                chunk_other.reset_index(drop=True),
-                chunk_vars.reset_index(drop=True),
-                vg_params.reset_index(drop=True),
-            ],
-            axis=1,
-        )
-
-    return result
 
 
 def process_data_with_rosetta(df, vars, v="3", include_sd=False, chunk_size=10000, conf=None):

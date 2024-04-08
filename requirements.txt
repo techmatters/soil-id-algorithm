@@ -157,9 +157,9 @@ fiona==1.9.6 \
     --hash=sha256:f1b49d51a744874608b689f029766aa1e078dd72e94b44cf8eeef6d7bd2e9051 \
     --hash=sha256:f4230eccbd896a79d1ebfa551d84bf90f512f7bcbe1ca61e3f82231321f1a532
     # via geopandas
-flask==3.0.2 \
-    --hash=sha256:3232e0e9c850d781933cf0207523d1ece087eb8d87b23777ae38456e2fbe7c6e \
-    --hash=sha256:822c03f4b799204250a7ee84b1eddc40665395333973dfb9deebfe425fefcb7d
+flask==3.0.3 \
+    --hash=sha256:34e815dfaa43340d1d15a5c3a02b8476004037eb4840b34910c6e21679d288f3 \
+    --hash=sha256:ceb27b0af3823ea2737928a4d99d125a06175b8512c445cbd9a9ce200ef76842
     # via -r requirements/deploy.in
 geopandas==0.14.3 \
     --hash=sha256:41b31ad39e21bc9e8c4254f78f8dc4ce3d33d144e22e630a00bb336c83160204 \

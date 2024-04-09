@@ -30,7 +30,7 @@ from sklearn.utils import validation
 
 
 # global
-def extract_WISE_data(lon, lat, file_path, layer_name=None, buffer_size=0.5):
+def extract_WISE_data(lon, lat, file_path, buffer_size=0.5):
     # Create LPKS point
     point = Point(lon, lat)
     point.crs = {"init": "epsg:4326"}
@@ -1132,19 +1132,6 @@ def compute_text_comp(bedrock, p_sandpct_intpl, soilHorizon):
     return 0
 
 
-# Generalized function to remove elements if "hzname" contains 'R' or 'r' (indicates bedrock)
-def remove_bedrock(data):
-    # Convert the list of dictionaries to a pandas DataFrame
-    df = pd.DataFrame(data)
-
-    # Filter the DataFrame to exclude rows where "hzname" contains 'R' or 'r'
-    df_filtered = df[~df["hzname"].str.contains("R|r", na=False)]
-
-    # Convert the filtered DataFrame back to a list of dictionaries
-    result = df_filtered.to_dict("records")
-    return result
-
-
 def compute_rf_comp(bedrock, p_cfg_intpl, rfvDepth):
     if all(x is None for x in rfvDepth):
         return 0
@@ -1887,22 +1874,6 @@ def getProfileLAB(data_osd, color_ref):
 
         LAB = rgb2lab(color_ref, rgb_ref, [row["r"], row["g"], row["b"]])
         return LAB
-        # Check the structure of LAB and extract values accordingly
-        try:
-            if isinstance(LAB, list) and all(isinstance(x, np.ndarray) for x in LAB):
-                # Assuming LAB is a list of arrays
-                return LAB[0], LAB[1], LAB[2]
-            elif isinstance(LAB, np.ndarray) and LAB.ndim == 1:
-                # Assuming LAB is a 1D array
-                return LAB[0], LAB[1], LAB[2]
-            else:
-                # Handle other cases or unknown structures
-                print(f"Unexpected structure of LAB: {LAB}")
-                return np.nan, np.nan, np.nan
-        except IndexError as e:
-            # Handle indexing errors
-            print(f"Indexing error in LAB: {e}")
-            return np.nan, np.nan, np.nan
 
     if not validate_data(data_osd):
         return pd.DataFrame(np.nan, index=np.arange(200), columns=["L", "A", "B"])
@@ -1919,12 +1890,6 @@ def getProfileLAB(data_osd, color_ref):
         b_intpl.extend([row["B"]] * (int(row["bottom"]) - int(row["top"])))
 
     lab_intpl = pd.DataFrame({"L": l_intpl, "A": a_intpl, "B": b_intpl}).head(200)
-    return lab_intpl
-    if len(lab_intpl) < 200:
-        lab_intpl = lab_intpl.append(
-            pd.DataFrame(np.nan, index=np.arange(200 - len(lab_intpl)), columns=["L", "A", "B"])
-        )
-
     return lab_intpl
 
 
@@ -2468,48 +2433,6 @@ def slice_and_aggregate_soil_data_old(df):
     result_df = result_df.drop_duplicates()
 
     return result_df
-
-    """
-    # Initialize the result list
-    results = []
-
-    # Iterate over each column in the dataframe
-    for column in aggregated_data.columns:
-        column_results = []
-        for top, bottom in depth_ranges:
-            if max_depth <= top:
-                column_results.append([top, bottom, np.nan])
-            else:
-                mask = (aggregated_data.index >= top) & (
-                    aggregated_data.index <= min(bottom, max_depth)
-                )
-                data_subset = aggregated_data.loc[mask, column]
-                if not data_subset.empty:
-                    result = (
-                        round(data_subset.mean(skipna=True), sd)
-                        if not data_subset.isna().all()
-                        else np.nan
-                    )
-                    column_results.append([top, min(bottom, max_depth), result])
-                else:
-                    column_results.append([top, min(bottom, max_depth), np.nan])
-        # Append the results for the current column to the overall results list
-        results.append(
-            pd.DataFrame(
-                column_results,
-                columns=["hzdept_r", "hzdepb_r", f"{column}"],
-            )
-        )
-
-    # Concatenate the results for each column into a single dataframe
-    result_df = pd.concat(results, axis=1)
-
-    # If there are multiple columns, remove the repeated 'Top Depth' and 'Bottom Depth' columns
-    if len(aggregated_data.columns) > 1:
-        result_df = result_df.loc[:, ~result_df.columns.duplicated()]
-
-    return result_df
-    """
 
 
 def process_data_with_rosetta(df, vars, v="3", include_sd=False, chunk_size=10000, conf=None):

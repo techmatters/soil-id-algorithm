@@ -644,19 +644,12 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         if not np.all(np.diag(local_correlation_matrix) >= 0.99999999999999) or np.any(
             np.abs(local_correlation_matrix - np.eye(*local_correlation_matrix.shape)) > 1
         ):
-            return f"LinAlgError encountered in row index: {index}"
-            return "Correlation matrix diagonal/off-diagonal values are not valid."
+            return f"""LinAlgError encountered in row index: {index}.
+                       Correlation matrix diagonal/off-diagonal values are not valid."""
 
         # Check for NaNs or infs in the matrix
         if np.isnan(local_correlation_matrix).any() or np.isinf(local_correlation_matrix).any():
-            return f"Division by zero encountered in row index: {index}"
-            return "Matrix contains NaNs or infs."
-
-            # Handling NaNs or infs. This is just an example and should be adapted
-            # based on your specific context.
-            #
-            # For example, replace NaNs with 0.0 (or another appropriate value)
-            local_correlation_matrix = np.nan_to_num(local_correlation_matrix)
+            return f"Matrix contains NaNs or infs in row index: {index}"
 
         # Try calculating eigenvalues again
         try:
@@ -681,7 +674,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         except ZeroDivisionError:
             # Handle the division by zero error
             return f"Division by zero encountered in row index: {index}"
-            return "Division by zero encountered."
         if is_constant:
             sim_data = pd.DataFrame(
                 sim_data,
@@ -2029,7 +2021,7 @@ def rankPredictionUS(
         p_sandpct_intpl = adjust_depth_interval(p_sandpct_intpl)
         p_claypct_intpl = adjust_depth_interval(p_claypct_intpl)
         p_cfg_intpl = adjust_depth_interval(p_cfg_intpl)
-        p_lab_intpl = adjust_depth_interval(p_lab_intpl)  # , add_columns=3)
+        p_lab_intpl = adjust_depth_interval(p_lab_intpl)
 
         # Construct final dataframe with adjusted data
         p_compname = pd.Series("sample_pedon", index=np.arange(len(p_sandpct_intpl)))
@@ -2647,14 +2639,6 @@ def rankPredictionUS(
         save_rank_output(record_id, model_version, json.dumps(output_data))
 
     return output_data
-    """
-    # Data return for testing
-    return(D_final_loc[['compname', 'compname_grp', 'Rank_Loc', 'distance_score_norm',
-    'Rank_Data', 'Score_Data', 'Rank_Data_Loc', 'Score_Data_Loc','ecoclassid_update',
-    'ecoclassname', 'LCC_I', 'LCC_NI', 'taxorder', 'taxsubgrp', 'majcompflag',
-    'comppct_r', 'distance']])
-    # ----------------------------------------------------------------
-    """
 
 
 # Generate data completeness score
@@ -2665,12 +2649,12 @@ def compute_soilid_data_completeness(length, thresholds, scores):
     return scores[-1]
 
 
-def adjust_depth_interval(data, target_length=200, add_columns=1):
+def adjust_depth_interval(data, target_length=200):
     """Adjusts the depth interval of user data."""
 
     # Convert input to a DataFrame
     if isinstance(data, list):
-        data = pd.DataFrame(data)  # , columns=np.arange(add_columns))
+        data = pd.DataFrame(data)
     elif isinstance(data, pd.Series):
         data = data.to_frame()
 

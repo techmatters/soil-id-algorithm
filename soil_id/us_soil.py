@@ -10,6 +10,7 @@ import config
 # Third-party libraries
 import numpy as np
 import pandas as pd
+from color import lab2munsell, munsell2rgb
 from composition_stats import ilr, ilr_inv
 from db import load_model_output, save_model_output, save_rank_output
 
@@ -43,8 +44,6 @@ from utils import (
     gower_distances,
     infill_soil_data,
     information_gain,
-    lab2munsell,
-    munsell2rgb,
     process_data_with_rosetta,
     process_distance_scores,
     process_horz_data,

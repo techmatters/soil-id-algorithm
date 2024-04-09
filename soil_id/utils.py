@@ -5,6 +5,8 @@
 import math
 import re
 
+import color
+
 # local libraries
 import config
 
@@ -14,6 +16,7 @@ import geopandas as gpd
 import numpy as np
 import pandas as pd
 import shapely
+import skimage
 from db import get_WISE30sec_data
 from numpy.linalg import cholesky
 from osgeo import ogr
@@ -22,10 +25,8 @@ from scipy.sparse import issparse
 from scipy.stats import entropy, norm
 from services import rosetta_request, sda_return
 from shapely.geometry import LinearRing, Point
-from skimage import color
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import pairwise
-from sklearn.metrics.pairwise import euclidean_distances
 from sklearn.utils import validation
 
 
@@ -1763,61 +1764,6 @@ def pedon_color(lab_Color, horizonDepth):
         return [pedon_l_mean, pedon_a_mean, pedon_b_mean]
 
 
-def lab2munsell(color_ref, LAB_ref, LAB):
-    """
-    Converts LAB color values to Munsell notation using the closest match from a reference
-    dataframe.
-
-    Parameters:
-    - color_ref (pd.DataFrame): Reference dataframe with LAB and Munsell values.
-    - LAB_ref (list): Reference LAB values.
-    - LAB (list): LAB values to be converted.
-
-    Returns:
-    - str: Munsell color notation.
-    """
-    idx = pd.DataFrame(euclidean_distances([LAB], LAB_ref)).idxmin(axis=1).iloc[0]
-    munsell_color = (
-        "{color_ref.at[idx, 'hue']} "
-        f"{int(color_ref.at[idx, 'value'])}/{int(color_ref.at[idx, 'chroma'])}"
-    )
-    return munsell_color
-
-
-def munsell2rgb(color_ref, munsell_ref, munsell):
-    """
-    Converts Munsell notation to RGB values using a reference dataframe.
-
-    Parameters:
-    - color_ref (pd.DataFrame): Reference dataframe with Munsell and RGB values.
-    - munsell_ref (pd.DataFrame): Reference dataframe with Munsell values.
-    - munsell (list): Munsell values [hue, value, chroma] to be converted.
-
-    Returns:
-    - list: RGB values.
-    """
-    idx = munsell_ref.query(
-        f'hue == "{munsell[0]}" & value == {int(munsell[1])} & chroma == {int(munsell[2])}'
-    ).index[0]
-    return [color_ref.at[idx, col] for col in ["r", "g", "b"]]
-
-
-def rgb2lab(color_ref, rgb_ref, rgb):
-    """
-    Convert RGB values to LAB color values using a reference dataframe.
-
-    Parameters:
-    - color_ref (pd.DataFrame): Reference dataframe containing RGB and LAB values.
-    - rgb_ref (list): Reference RGB values.
-    - rgb (list): RGB values to be converted.
-
-    Returns:
-    - list: LAB values.
-    """
-    idx = pd.DataFrame(euclidean_distances([rgb], rgb_ref)).idxmin(axis=1).iloc[0]
-    return [color_ref.at[idx, col] for col in ["L", "A", "B"]]
-
-
 def getProfileLAB(data_osd, color_ref):
     """
     The function processes the given data_osd DataFrame and computes LAB values for soil profiles.
@@ -1872,7 +1818,7 @@ def getProfileLAB(data_osd, color_ref):
         if pd.isnull(row["r"]) or pd.isnull(row["g"]) or pd.isnull(row["b"]):
             return np.nan, np.nan, np.nan
 
-        LAB = rgb2lab(color_ref, rgb_ref, [row["r"], row["g"], row["b"]])
+        LAB = color.rgb2lab(color_ref, rgb_ref, [row["r"], row["g"], row["b"]])
         return LAB
 
     if not validate_data(data_osd):
@@ -2038,7 +1984,7 @@ def getColor_deltaE2000_OSD_pedon(data_osd, data_pedon):
 
     # Convert RGB values to LAB for OSD
     osd_colors_rgb = interpolate_color_values(top, bottom, list(zip(r, g, b)))
-    osd_colors_lab = [color.rgb2lab([[color_val]])[0][0] for color_val in osd_colors_rgb]
+    osd_colors_lab = [skimage.color.rgb2lab([[color_val]])[0][0] for color_val in osd_colors_rgb]
 
     # Calculate average LAB for OSD at 31-37 cm depth
     osd_avg_lab = np.mean(osd_colors_lab[31:37], axis=0) if len(osd_colors_lab) > 31 else np.nan

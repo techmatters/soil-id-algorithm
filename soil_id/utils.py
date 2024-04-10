@@ -2265,8 +2265,10 @@ def slice_and_aggregate_soil_data(df):
     """
 
     # Select numeric columns for aggregation, excluding the depth range columns
-    data_columns = df.select_dtypes(include=[np.number]).columns.difference(["hzdept_r", "hzdepb_r"])
-    
+    data_columns = df.select_dtypes(include=[np.number]).columns.difference(
+        ["hzdept_r", "hzdepb_r"]
+    )
+
     # Generate a DataFrame for each 1 cm increment within each row's depth range
     rows_list = []
     for _, row in df.iterrows():
@@ -2287,22 +2289,22 @@ def slice_and_aggregate_soil_data(df):
     for top, bottom in depth_ranges:
         mask = (depth_increment_means["Depth"] >= top) & (depth_increment_means["Depth"] < bottom)
         subset = depth_increment_means[mask]
-        
+
         # Calculate the mean for each column in the subset
         mean_values = subset.mean()
-        mean_values['hzdept_r'] = top
-        mean_values['hzdepb_r'] = bottom
+        mean_values["hzdept_r"] = top
+        mean_values["hzdepb_r"] = bottom
 
         results.append(mean_values)
 
     result_df = pd.DataFrame(results).fillna(np.nan)
-    #result_df = result_df.drop(columns=['Depth'])
+    # result_df = result_df.drop(columns=['Depth'])
 
     # Check and add a row for the 30-100 cm depth range if not covered
-    if 30 not in result_df['hzdept_r'].values:
+    if 30 not in result_df["hzdept_r"].values:
         missing_row = {col: np.nan for col in result_df.columns}
-        missing_row['hzdept_r'] = 30
-        missing_row['hzdepb_r'] = 100
+        missing_row["hzdept_r"] = 30
+        missing_row["hzdepb_r"] = 100
         result_df = result_df.append(missing_row, ignore_index=True)
 
     return result_df

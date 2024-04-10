@@ -527,7 +527,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     # Concatenate the results for each column into a single dataframe
     agg_data_df = pd.concat(agg_data, axis=0, ignore_index=True).dropna().reset_index(drop=True)
-    return(print(agg_data_df))
+
     # Extract columns with names ending in '_r'
     agg_data_r = agg_data_df[[col for col in agg_data_df.columns if col.endswith("_r")]]
 

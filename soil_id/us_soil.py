@@ -23,7 +23,7 @@ from services import (
     get_soilweb_data,
     sda_return,
 )
-from utils import (  # slice_and_aggregate_soil_data,
+from utils import (
     acomp,
     aggregate_data,
     calculate_vwc_awc,
@@ -51,7 +51,7 @@ from utils import (  # slice_and_aggregate_soil_data,
     process_site_data,
     remove_organic_layer,
     simulate_correlated_triangular,
-    slice_and_aggregate_soil_data_old,
+    slice_and_aggregate_soil_data,
 )
 
 # entry points
@@ -517,7 +517,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     sim_group_compname = [group for _, group in sim.groupby("compname_grp", sort=False)]
     for index, group in enumerate(sim_group_compname):
         # aggregate data into 0-30 and 30-100 or bottom depth
-        group_ag = slice_and_aggregate_soil_data_old(group[sim_data_columns])
+        group_ag = slice_and_aggregate_soil_data(group[sim_data_columns])
         group_ag["compname_grp"] = group["compname_grp"].unique()[0]
         group_ag["distance_score"] = group["distance_score"].unique()[0]
         group_ag = group_ag.drop("Depth", axis=1)
@@ -527,7 +527,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     # Concatenate the results for each column into a single dataframe
     agg_data_df = pd.concat(agg_data, axis=0, ignore_index=True).dropna().reset_index(drop=True)
-
+    return(print(agg_data_df))
     # Extract columns with names ending in '_r'
     agg_data_r = agg_data_df[[col for col in agg_data_df.columns if col.endswith("_r")]]
 
@@ -1699,7 +1699,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             Rank_Loc.append("Not Displayed")
 
     mucompdata_cond_prob["Rank_Loc"] = Rank_Loc
-    print(mucompdata_cond_prob.columns)
+
     # ------------------------------------------------------------
 
     # Sort mucompdata_cond_prob by soilID_rank and distance_score_norm
@@ -2259,7 +2259,7 @@ def rankPredictionUS(
                         .columns.tolist()
                     )
                 sliceT = sliceT[sample_pedon_slice_vars]
-            print(sliceT)
+
             D = gower_distances(sliceT)  # Equal weighting given to all soil variables
             dis_mat_list.append(D)
 
@@ -2280,7 +2280,7 @@ def rankPredictionUS(
         # Apply depth weight
         depth_weight = np.concatenate((np.repeat(0.2, 20), np.repeat(1.0, 180)), axis=0)
         depth_weight = depth_weight[pedon_slice_index]
-        print(depth_weight)
+
         # Infill Nan data
 
         # Update dis_mat_list using numpy operations

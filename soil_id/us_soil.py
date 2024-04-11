@@ -740,7 +740,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     awc["top"] = sim_data_df["hzdept_r"]
     awc["bottom"] = sim_data_df["hzdepb_r"]
     awc["compname_grp"] = sim_data_df["compname_grp"]
-
     awc_grouped = awc.groupby(["top"])
     data_len_depth = awc_grouped.apply(
         lambda x: pd.DataFrame({"depth_len": [len(x)]}, index=[x.name]), include_groups=False

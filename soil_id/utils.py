@@ -31,7 +31,7 @@ from sklearn.utils import validation
 
 
 # global
-def extract_WISE_data(lon, lat, file_path, layer_name=None, buffer_size=0.5):
+def extract_WISE_data(lon, lat, file_path, buffer_size=0.5):
     # Create LPKS point
     point = Point(lon, lat)
     point.crs = {"init": "epsg:4326"}
@@ -1133,19 +1133,6 @@ def compute_text_comp(bedrock, p_sandpct_intpl, soilHorizon):
     return 0
 
 
-# Generalized function to remove elements if "hzname" contains 'R' or 'r' (indicates bedrock)
-def remove_bedrock(data):
-    # Convert the list of dictionaries to a pandas DataFrame
-    df = pd.DataFrame(data)
-
-    # Filter the DataFrame to exclude rows where "hzname" contains 'R' or 'r'
-    df_filtered = df[~df["hzname"].str.contains("R|r", na=False)]
-
-    # Convert the filtered DataFrame back to a list of dictionaries
-    result = df_filtered.to_dict("records")
-    return result
-
-
 def compute_rf_comp(bedrock, p_cfg_intpl, rfvDepth):
     if all(x is None for x in rfvDepth):
         return 0
@@ -1636,7 +1623,7 @@ def fill_missing_comppct_r(mucompdata_pd):
     )
 
     # Handle minor components that are either 0 or NaN
-    mucompdata_pd["comppct_r"].replace({np.nan: 1, 0: 1}, inplace=True)
+    mucompdata_pd.replace({"comppct_r": {np.nan: 1, 0: 1}}, inplace=True)
     mucompdata_pd["comppct_r"] = mucompdata_pd["comppct_r"].astype(int)
 
     return mucompdata_pd
@@ -1833,22 +1820,6 @@ def getProfileLAB(data_osd, color_ref):
 
         LAB = color.rgb2lab(color_ref, rgb_ref, [row["r"], row["g"], row["b"]])
         return LAB
-        # Check the structure of LAB and extract values accordingly
-        try:
-            if isinstance(LAB, list) and all(isinstance(x, np.ndarray) for x in LAB):
-                # Assuming LAB is a list of arrays
-                return LAB[0], LAB[1], LAB[2]
-            elif isinstance(LAB, np.ndarray) and LAB.ndim == 1:
-                # Assuming LAB is a 1D array
-                return LAB[0], LAB[1], LAB[2]
-            else:
-                # Handle other cases or unknown structures
-                print(f"Unexpected structure of LAB: {LAB}")
-                return np.nan, np.nan, np.nan
-        except IndexError as e:
-            # Handle indexing errors
-            print(f"Indexing error in LAB: {e}")
-            return np.nan, np.nan, np.nan
 
     if not validate_data(data_osd):
         return pd.DataFrame(np.nan, index=np.arange(200), columns=["L", "A", "B"])
@@ -1865,12 +1836,6 @@ def getProfileLAB(data_osd, color_ref):
         b_intpl.extend([row["B"]] * (int(row["bottom"]) - int(row["top"])))
 
     lab_intpl = pd.DataFrame({"L": l_intpl, "A": a_intpl, "B": b_intpl}).head(200)
-    return lab_intpl
-    if len(lab_intpl) < 200:
-        lab_intpl = lab_intpl.append(
-            pd.DataFrame(np.nan, index=np.arange(200 - len(lab_intpl)), columns=["L", "A", "B"])
-        )
-
     return lab_intpl
 
 
@@ -2212,20 +2177,36 @@ def infill_soil_data(df):
     # Step 3: Replace missing '_l' and '_h' for particle size values
     # with corresponding '_r' values +/- 8
     for col in ["sandtotal", "claytotal", "silttotal"]:
-        filtered_groups[col + "_l"].fillna(filtered_groups[col + "_r"] - 8, inplace=True)
-        filtered_groups[col + "_h"].fillna(filtered_groups[col + "_r"] + 8, inplace=True)
+        filtered_groups[col + "_l"] = filtered_groups[col + "_l"].fillna(
+            filtered_groups[col + "_r"] - 8
+        )
+        filtered_groups[col + "_h"] = filtered_groups[col + "_h"].fillna(
+            filtered_groups[col + "_r"] + 8
+        )
 
     # Step 4 and 5: Replace missing 'dbovendry_l' and 'dbovendry_h' with 'dbovendry_r' +/- 0.01
-    filtered_groups["dbovendry_l"].fillna(filtered_groups["dbovendry_r"] - 0.01, inplace=True)
-    filtered_groups["dbovendry_h"].fillna(filtered_groups["dbovendry_r"] + 0.01, inplace=True)
+    filtered_groups["dbovendry_l"] = filtered_groups["dbovendry_l"].fillna(
+        filtered_groups["dbovendry_r"] - 0.01
+    )
+    filtered_groups["dbovendry_h"] = filtered_groups["dbovendry_h"].fillna(
+        filtered_groups["dbovendry_r"] + 0.01
+    )
 
     # Step 6 and 7: Replace missing 'wthirdbar_l' and 'wthirdbar_h' with 'wthirdbar_r' +/- 1
-    filtered_groups["wthirdbar_l"].fillna(filtered_groups["wthirdbar_r"] - 1, inplace=True)
-    filtered_groups["wthirdbar_h"].fillna(filtered_groups["wthirdbar_r"] + 1, inplace=True)
+    filtered_groups["wthirdbar_l"] = filtered_groups["wthirdbar_l"].fillna(
+        filtered_groups["wthirdbar_r"] - 1
+    )
+    filtered_groups["wthirdbar_h"] = filtered_groups["wthirdbar_h"].fillna(
+        filtered_groups["wthirdbar_r"] + 1
+    )
 
     # Step 8 and 9: Replace missing 'wfifteenbar_l' and 'wfifteenbar_h' with 'wfifteenbar_r' +/- 0.6
-    filtered_groups["wfifteenbar_l"].fillna(filtered_groups["wfifteenbar_r"] - 0.6, inplace=True)
-    filtered_groups["wfifteenbar_h"].fillna(filtered_groups["wfifteenbar_r"] + 0.6, inplace=True)
+    filtered_groups["wfifteenbar_l"] = filtered_groups["wfifteenbar_l"].fillna(
+        filtered_groups["wfifteenbar_r"] - 0.6
+    )
+    filtered_groups["wfifteenbar_h"] = filtered_groups["wfifteenbar_h"].fillna(
+        filtered_groups["wfifteenbar_r"] + 0.6
+    )
     # Step 10 and 11: Impute 'rfv_l' and 'rfv_h' values with 'rfv_r' +/- value
     filtered_groups = filtered_groups.apply(impute_rfv_values, axis=1)
 
@@ -2233,72 +2214,61 @@ def infill_soil_data(df):
 
 
 def slice_and_aggregate_soil_data(df):
-    # Create an empty DataFrame to hold the aggregated results
-    aggregated_data = pd.DataFrame()
+    """
+    Optimized function to slice a DataFrame with soil data into 1 cm increments based on
+    depth ranges provided in 'hzdept_r' and 'hzdepb_r' columns, and calculate mean values
+    for each depth increment across all other data columns.
 
-    # Get numeric columns for aggregation, excluding the depth range columns
+    Parameters:
+    df (pd.DataFrame): DataFrame where each row represents a soil sample with 'hzdept_r'
+    and 'hzdepb_r' columns.
+
+    Returns:
+    pd.DataFrame: A DataFrame with depth ranges and mean values of soil properties for each range.
+    """
+
+    # Select numeric columns for aggregation, excluding the depth range columns
     data_columns = df.select_dtypes(include=[np.number]).columns.difference(
         ["hzdept_r", "hzdepb_r"]
     )
 
-    # Iterate through each depth interval
+    # Generate a DataFrame for each 1 cm increment within each row's depth range
+    rows_list = []
     for _, row in df.iterrows():
-        top_depth = row["hzdept_r"]
-        bottom_depth = row["hzdepb_r"]
-        depth_range = np.arange(top_depth, bottom_depth)
+        for depth in np.arange(row["hzdept_r"], row["hzdepb_r"]):
+            rows_list.append({**{col: row[col] for col in data_columns}, "Depth": depth})
 
-        # Create a DataFrame for each 1 cm increment
-        for depth in depth_range:
-            interpolated_row = {col: row[col] for col in data_columns}
-            interpolated_row["Depth"] = depth
-
-            # Add the interpolated row to the aggregated data
-            aggregated_data = pd.concat(
-                [aggregated_data, pd.DataFrame([interpolated_row])], ignore_index=True
-            )
+    # Create a single DataFrame from the list of rows
+    aggregated_data = pd.DataFrame(rows_list)
 
     # Calculate mean values for each depth increment
-    depth_increment_means = aggregated_data.groupby("Depth").mean()
+    depth_increment_means = aggregated_data.groupby("Depth").mean().reset_index()
 
-    # Define the depth ranges
+    # Define depth ranges
     depth_ranges = [(0, 30), (30, 100)]
-    # Initialize the result list
     results = []
 
-    # Iterate over each column in the dataframe
-    for column in depth_increment_means.columns:
-        column_results = []
-        for top, bottom in depth_ranges:
-            mask = (depth_increment_means.index >= top) & (depth_increment_means.index < bottom)
-            data_subset = depth_increment_means.loc[mask, column]
-            result = data_subset.mean(skipna=True) if not data_subset.empty else None
-            column_results.append([top, bottom, result])
+    # Process each depth range
+    for top, bottom in depth_ranges:
+        mask = (depth_increment_means["Depth"] >= top) & (depth_increment_means["Depth"] < bottom)
+        subset = depth_increment_means[mask]
 
-        # Append the results for the current column to the overall results list
-        results.append(
-            pd.DataFrame(
-                column_results,
-                columns=["hzdept_r", "hzdepb_r", f"{column}"],
-            )
-        )
+        # Calculate the mean for each column in the subset
+        mean_values = subset.mean()
+        mean_values["hzdept_r"] = top
+        mean_values["hzdepb_r"] = bottom
 
-    # Concatenate the results for each column into a single dataframe
-    result_df = pd.concat(results, axis=1)
+        results.append(mean_values)
 
-    # If there are multiple columns, remove the repeated 'Top Depth' and 'Bottom Depth' columns
-    if len(depth_increment_means.columns) > 1:
-        result_df = result_df.loc[:, ~result_df.columns.duplicated()]
+    result_df = pd.DataFrame(results).fillna(np.nan)
 
-    # Check if there is any row covering the 30-100 cm depth range
-    # if not ((result_df['hzdept_r'] == 30)).any():
-    #     # Create a row with hzdept_r=30, hzdepb_r=100, and None for all other columns
-    #     new_row = {'hzdept_r': 30, 'hzdepb_r': 100}
-    #     for col in data_columns:
-    #         new_row[col] = None
-    #
-    #     # Append the new row to result_df
-    #     result_df = result_df.append(new_row, ignore_index=True)
-    result_df = result_df.drop_duplicates()
+    # Check and add a row for the 30-100 cm depth range if not covered
+    if 30 not in result_df["hzdept_r"].values:
+        missing_row = {col: np.nan for col in result_df.columns}
+        missing_row["hzdept_r"] = 30
+        missing_row["hzdepb_r"] = 100
+        result_df = result_df.append(missing_row, ignore_index=True)
+
     return result_df
 
 
@@ -2414,48 +2384,6 @@ def slice_and_aggregate_soil_data_old(df):
     result_df = result_df.drop_duplicates()
 
     return result_df
-
-    """
-    # Initialize the result list
-    results = []
-
-    # Iterate over each column in the dataframe
-    for column in aggregated_data.columns:
-        column_results = []
-        for top, bottom in depth_ranges:
-            if max_depth <= top:
-                column_results.append([top, bottom, np.nan])
-            else:
-                mask = (aggregated_data.index >= top) & (
-                    aggregated_data.index <= min(bottom, max_depth)
-                )
-                data_subset = aggregated_data.loc[mask, column]
-                if not data_subset.empty:
-                    result = (
-                        round(data_subset.mean(skipna=True), sd)
-                        if not data_subset.isna().all()
-                        else np.nan
-                    )
-                    column_results.append([top, min(bottom, max_depth), result])
-                else:
-                    column_results.append([top, min(bottom, max_depth), np.nan])
-        # Append the results for the current column to the overall results list
-        results.append(
-            pd.DataFrame(
-                column_results,
-                columns=["hzdept_r", "hzdepb_r", f"{column}"],
-            )
-        )
-
-    # Concatenate the results for each column into a single dataframe
-    result_df = pd.concat(results, axis=1)
-
-    # If there are multiple columns, remove the repeated 'Top Depth' and 'Bottom Depth' columns
-    if len(aggregated_data.columns) > 1:
-        result_df = result_df.loc[:, ~result_df.columns.duplicated()]
-
-    return result_df
-    """
 
 
 def process_data_with_rosetta(df, vars, v="3", include_sd=False, chunk_size=10000, conf=None):

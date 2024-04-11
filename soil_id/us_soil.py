@@ -24,7 +24,7 @@ from services import (
     get_soilweb_data,
     sda_return,
 )
-from utils import (  # slice_and_aggregate_soil_data,
+from utils import (
     acomp,
     aggregate_data,
     calculate_vwc_awc,
@@ -50,7 +50,7 @@ from utils import (  # slice_and_aggregate_soil_data,
     process_site_data,
     remove_organic_layer,
     simulate_correlated_triangular,
-    slice_and_aggregate_soil_data_old,
+    slice_and_aggregate_soil_data,
 )
 
 # entry points
@@ -516,7 +516,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     sim_group_compname = [group for _, group in sim.groupby("compname_grp", sort=False)]
     for index, group in enumerate(sim_group_compname):
         # aggregate data into 0-30 and 30-100 or bottom depth
-        group_ag = slice_and_aggregate_soil_data_old(group[sim_data_columns])
+        group_ag = slice_and_aggregate_soil_data(group[sim_data_columns])
         group_ag["compname_grp"] = group["compname_grp"].unique()[0]
         group_ag["distance_score"] = group["distance_score"].unique()[0]
         group_ag = group_ag.drop("Depth", axis=1)
@@ -643,19 +643,12 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         if not np.all(np.diag(local_correlation_matrix) >= 0.99999999999999) or np.any(
             np.abs(local_correlation_matrix - np.eye(*local_correlation_matrix.shape)) > 1
         ):
-            return f"LinAlgError encountered in row index: {index}"
-            return "Correlation matrix diagonal/off-diagonal values are not valid."
+            return f"""LinAlgError encountered in row index: {index}.
+                       Correlation matrix diagonal/off-diagonal values are not valid."""
 
         # Check for NaNs or infs in the matrix
         if np.isnan(local_correlation_matrix).any() or np.isinf(local_correlation_matrix).any():
-            return f"Division by zero encountered in row index: {index}"
-            return "Matrix contains NaNs or infs."
-
-            # Handling NaNs or infs. This is just an example and should be adapted
-            # based on your specific context.
-            #
-            # For example, replace NaNs with 0.0 (or another appropriate value)
-            local_correlation_matrix = np.nan_to_num(local_correlation_matrix)
+            return f"Matrix contains NaNs or infs in row index: {index}"
 
         # Try calculating eigenvalues again
         try:
@@ -680,7 +673,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         except ZeroDivisionError:
             # Handle the division by zero error
             return f"Division by zero encountered in row index: {index}"
-            return "Division by zero encountered."
         if is_constant:
             sim_data = pd.DataFrame(
                 sim_data,
@@ -741,33 +733,31 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     rosetta_data["layerID"] = sim_data_df["layerID"]
 
     awc = calculate_vwc_awc(rosetta_data)
-    awc = awc.applymap(lambda x: x.tolist() if isinstance(x, np.ndarray) else x)
+    awc = awc.map(lambda x: x.tolist() if isinstance(x, np.ndarray) else x)
     awc["top"] = sim_data_df["hzdept_r"]
     awc["bottom"] = sim_data_df["hzdepb_r"]
     awc["compname_grp"] = sim_data_df["compname_grp"]
-    data_len_depth = (
-        awc.groupby("top")
-        .apply(lambda x: pd.DataFrame({"depth_len": [len(x)]}, index=[x.name]))
-        .reset_index()
+    awc_grouped = awc.groupby(["top"])
+    data_len_depth = awc_grouped.apply(
+        lambda x: pd.DataFrame({"depth_len": [len(x)]}, index=[x.name]), include_groups=True
     )
+
     awc = awc.merge(data_len_depth, on="top", how="left")
 
     # Step 1: Reshaping awc data
 
     # Apply the function to the entire ROI by depth
-    awc_quant_list = (
-        awc.groupby(["bottom"])
-        .apply(
-            lambda x: pd.DataFrame(
-                {
-                    "awc_quant": x["awc"].quantile([0.05, 0.50, 0.95]).values,
-                    "prob": [0.05, 0.50, 0.95],
-                    "n": len(x) / x["depth_len"].iloc[0],
-                }
-            )
-        )
-        .reset_index(level=[0, 1])
-    )
+    awc_grouped_bottom = awc.groupby(["bottom"])
+    awc_quant_list = awc_grouped_bottom.apply(
+        lambda x: pd.DataFrame(
+            {
+                "awc_quant": x["awc"].quantile([0.05, 0.50, 0.95]).values,
+                "prob": [0.05, 0.50, 0.95],
+                "n": len(x) / x["depth_len"].iloc[0],
+            }
+        ),
+        include_groups=True,
+    ).reset_index(level=[0, 1])
 
     # Pivoting the DataFrame
     awc_comp_quant = awc_quant_list.pivot(
@@ -943,8 +933,10 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             OSDhorzdata_pd = pd.json_normalize(out["OSD_morph"])
 
             # Prepare for merge
-            mucompdata_pd_merge = mucompdata_pd[["mukey", "cokey", "compname", "compkind"]]
-            mucompdata_pd_merge["series"] = mucompdata_pd_merge["compname"].str.replace(r"\d+", "")
+            mucompdata_pd_merge = mucompdata_pd[["mukey", "cokey", "compname", "compkind"]].copy()
+            mucompdata_pd_merge["series"] = mucompdata_pd_merge["compname"].str.replace(
+                r"\d+", "", regex=True
+            )
 
             # Filter and merge the dataframes
             OSDhorzdata_pd = OSDhorzdata_pd[
@@ -1051,7 +1043,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
             for index, group in enumerate(OSDhorzdata_group_cokey):
                 group_sorted = group.sort_values(by="top").drop_duplicates().reset_index(drop=True)
-                print(group_sorted)
+
                 # Remove invalid horizons where top depth is greater than bottom depth
                 group_sorted = group_sorted[
                     group_sorted["top"] <= group_sorted["bottom"]
@@ -1087,7 +1079,15 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                                 ignore_index=True,
                             )
 
-                    group[:] = group_sorted
+                    # Explicitly cast group_sorted to match the data type of group before assignment
+                    if group_sorted.dtypes.equals(group.dtypes):
+                        group[:] = group_sorted
+                    else:
+                        # Assuming group is a DataFrame and needs to retain its structure
+                        for col in group_sorted:
+                            if col in group.columns:
+                                group_sorted[col] = group_sorted[col].astype(group.dtypes[col])
+                        group[:] = group_sorted
 
                     # Initialize flags to indicate if OSD depth adjustment is needed
                     OSD_depth_add = False
@@ -1706,7 +1706,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             Rank_Loc.append("Not Displayed")
 
     mucompdata_cond_prob["Rank_Loc"] = Rank_Loc
-    print(mucompdata_cond_prob.columns)
+
     # ------------------------------------------------------------
 
     # Sort mucompdata_cond_prob by soilID_rank and distance_score_norm
@@ -2028,7 +2028,7 @@ def rankPredictionUS(
         p_sandpct_intpl = adjust_depth_interval(p_sandpct_intpl)
         p_claypct_intpl = adjust_depth_interval(p_claypct_intpl)
         p_cfg_intpl = adjust_depth_interval(p_cfg_intpl)
-        p_lab_intpl = adjust_depth_interval(p_lab_intpl)  # , add_columns=3)
+        p_lab_intpl = adjust_depth_interval(p_lab_intpl)
 
         # Construct final dataframe with adjusted data
         p_compname = pd.Series("sample_pedon", index=np.arange(len(p_sandpct_intpl)))
@@ -2266,7 +2266,7 @@ def rankPredictionUS(
                         .columns.tolist()
                     )
                 sliceT = sliceT[sample_pedon_slice_vars]
-            print(sliceT)
+
             D = gower_distances(sliceT)  # Equal weighting given to all soil variables
             dis_mat_list.append(D)
 
@@ -2287,7 +2287,7 @@ def rankPredictionUS(
         # Apply depth weight
         depth_weight = np.concatenate((np.repeat(0.2, 20), np.repeat(1.0, 180)), axis=0)
         depth_weight = depth_weight[pedon_slice_index]
-        print(depth_weight)
+
         # Infill Nan data
 
         # Update dis_mat_list using numpy operations
@@ -2646,14 +2646,6 @@ def rankPredictionUS(
         save_rank_output(record_id, model_version, json.dumps(output_data))
 
     return output_data
-    """
-    # Data return for testing
-    return(D_final_loc[['compname', 'compname_grp', 'Rank_Loc', 'distance_score_norm',
-    'Rank_Data', 'Score_Data', 'Rank_Data_Loc', 'Score_Data_Loc','ecoclassid_update',
-    'ecoclassname', 'LCC_I', 'LCC_NI', 'taxorder', 'taxsubgrp', 'majcompflag',
-    'comppct_r', 'distance']])
-    # ----------------------------------------------------------------
-    """
 
 
 # Generate data completeness score
@@ -2664,12 +2656,12 @@ def compute_soilid_data_completeness(length, thresholds, scores):
     return scores[-1]
 
 
-def adjust_depth_interval(data, target_length=200, add_columns=1):
+def adjust_depth_interval(data, target_length=200):
     """Adjusts the depth interval of user data."""
 
     # Convert input to a DataFrame
     if isinstance(data, list):
-        data = pd.DataFrame(data)  # , columns=np.arange(add_columns))
+        data = pd.DataFrame(data)
     elif isinstance(data, pd.Series):
         data = data.to_frame()
 

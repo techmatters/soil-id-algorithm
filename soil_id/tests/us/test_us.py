@@ -32,19 +32,19 @@ def test_soil_location():
     for item in test_locations:
         print(f"Testing {item['lon']},{item['lat']},{item['plot_id']}")
         result_list = getSoilLocationBasedUS(item["lon"], item["lat"], None)
-            result_rank = rankPredictionUS(
-                item["lon"],
-                item["lat"],
-                soilHorizon,
-                horizonDepth,
-                rfvDepth,
-                lab_Color,
-                pSlope,
-                pElev,
-                bedrock,
-                cracks,
-                plot_id=None,
-            )
+        result_rank = rankPredictionUS(
+            item["lon"],
+            item["lat"],
+            soilHorizon,
+            horizonDepth,
+            rfvDepth,
+            lab_Color,
+            pSlope,
+            pElev,
+            bedrock,
+            cracks,
+            plot_id=None,
+        )
         print(result_list)
         print(result_rank)
 

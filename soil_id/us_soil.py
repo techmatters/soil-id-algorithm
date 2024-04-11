@@ -734,33 +734,31 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     rosetta_data["layerID"] = sim_data_df["layerID"]
 
     awc = calculate_vwc_awc(rosetta_data)
-    awc = awc.applymap(lambda x: x.tolist() if isinstance(x, np.ndarray) else x)
+    awc = awc.map(lambda x: x.tolist() if isinstance(x, np.ndarray) else x)
     awc["top"] = sim_data_df["hzdept_r"]
     awc["bottom"] = sim_data_df["hzdepb_r"]
     awc["compname_grp"] = sim_data_df["compname_grp"]
-    data_len_depth = (
-        awc.groupby("top")
-        .apply(lambda x: pd.DataFrame({"depth_len": [len(x)]}, index=[x.name]))
-        .reset_index()
+    awc_grouped = awc.groupby(["top"])
+    data_len_depth = awc_grouped.apply(
+        lambda x: pd.DataFrame({"depth_len": [len(x)]}, index=[x.name]), include_groups=True
     )
+
     awc = awc.merge(data_len_depth, on="top", how="left")
 
     # Step 1: Reshaping awc data
 
     # Apply the function to the entire ROI by depth
-    awc_quant_list = (
-        awc.groupby(["bottom"])
-        .apply(
-            lambda x: pd.DataFrame(
-                {
-                    "awc_quant": x["awc"].quantile([0.05, 0.50, 0.95]).values,
-                    "prob": [0.05, 0.50, 0.95],
-                    "n": len(x) / x["depth_len"].iloc[0],
-                }
-            )
-        )
-        .reset_index(level=[0, 1])
-    )
+    awc_grouped_bottom = awc.groupby(["bottom"])
+    awc_quant_list = awc_grouped_bottom.apply(
+        lambda x: pd.DataFrame(
+            {
+                "awc_quant": x["awc"].quantile([0.05, 0.50, 0.95]).values,
+                "prob": [0.05, 0.50, 0.95],
+                "n": len(x) / x["depth_len"].iloc[0],
+            }
+        ),
+        include_groups=True,
+    ).reset_index(level=[0, 1])
 
     # Pivoting the DataFrame
     awc_comp_quant = awc_quant_list.pivot(
@@ -936,8 +934,10 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             OSDhorzdata_pd = pd.json_normalize(out["OSD_morph"])
 
             # Prepare for merge
-            mucompdata_pd_merge = mucompdata_pd[["mukey", "cokey", "compname", "compkind"]]
-            mucompdata_pd_merge["series"] = mucompdata_pd_merge["compname"].str.replace(r"\d+", "")
+            mucompdata_pd_merge = mucompdata_pd[["mukey", "cokey", "compname", "compkind"]].copy()
+            mucompdata_pd_merge["series"] = mucompdata_pd_merge["compname"].str.replace(
+                r"\d+", "", regex=True
+            )
 
             # Filter and merge the dataframes
             OSDhorzdata_pd = OSDhorzdata_pd[
@@ -1044,7 +1044,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
             for index, group in enumerate(OSDhorzdata_group_cokey):
                 group_sorted = group.sort_values(by="top").drop_duplicates().reset_index(drop=True)
-                print(group_sorted)
+
                 # Remove invalid horizons where top depth is greater than bottom depth
                 group_sorted = group_sorted[
                     group_sorted["top"] <= group_sorted["bottom"]
@@ -1080,7 +1080,15 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                                 ignore_index=True,
                             )
 
-                    group[:] = group_sorted
+                    # Explicitly cast group_sorted to match the data type of group before assignment
+                    if group_sorted.dtypes.equals(group.dtypes):
+                        group[:] = group_sorted
+                    else:
+                        # Assuming group is a DataFrame and needs to retain its structure
+                        for col in group_sorted:
+                            if col in group.columns:
+                                group_sorted[col] = group_sorted[col].astype(group.dtypes[col])
+                        group[:] = group_sorted
 
                     # Initialize flags to indicate if OSD depth adjustment is needed
                     OSD_depth_add = False

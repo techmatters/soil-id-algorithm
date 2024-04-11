@@ -1622,7 +1622,7 @@ def fill_missing_comppct_r(mucompdata_pd):
     )
 
     # Handle minor components that are either 0 or NaN
-    mucompdata_pd["comppct_r"].replace({np.nan: 1, 0: 1}, inplace=True)
+    mucompdata_pd.replace({"comppct_r": {np.nan: 1, 0: 1}}, inplace=True)
     mucompdata_pd["comppct_r"] = mucompdata_pd["comppct_r"].astype(int)
 
     return mucompdata_pd
@@ -2231,20 +2231,36 @@ def infill_soil_data(df):
     # Step 3: Replace missing '_l' and '_h' for particle size values
     # with corresponding '_r' values +/- 8
     for col in ["sandtotal", "claytotal", "silttotal"]:
-        filtered_groups[col + "_l"].fillna(filtered_groups[col + "_r"] - 8, inplace=True)
-        filtered_groups[col + "_h"].fillna(filtered_groups[col + "_r"] + 8, inplace=True)
+        filtered_groups[col + "_l"] = filtered_groups[col + "_l"].fillna(
+            filtered_groups[col + "_r"] - 8
+        )
+        filtered_groups[col + "_h"] = filtered_groups[col + "_h"].fillna(
+            filtered_groups[col + "_r"] + 8
+        )
 
     # Step 4 and 5: Replace missing 'dbovendry_l' and 'dbovendry_h' with 'dbovendry_r' +/- 0.01
-    filtered_groups["dbovendry_l"].fillna(filtered_groups["dbovendry_r"] - 0.01, inplace=True)
-    filtered_groups["dbovendry_h"].fillna(filtered_groups["dbovendry_r"] + 0.01, inplace=True)
+    filtered_groups["dbovendry_l"] = filtered_groups["dbovendry_l"].fillna(
+        filtered_groups["dbovendry_r"] - 0.01
+    )
+    filtered_groups["dbovendry_h"] = filtered_groups["dbovendry_h"].fillna(
+        filtered_groups["dbovendry_r"] + 0.01
+    )
 
     # Step 6 and 7: Replace missing 'wthirdbar_l' and 'wthirdbar_h' with 'wthirdbar_r' +/- 1
-    filtered_groups["wthirdbar_l"].fillna(filtered_groups["wthirdbar_r"] - 1, inplace=True)
-    filtered_groups["wthirdbar_h"].fillna(filtered_groups["wthirdbar_r"] + 1, inplace=True)
+    filtered_groups["wthirdbar_l"] = filtered_groups["wthirdbar_l"].fillna(
+        filtered_groups["wthirdbar_r"] - 1
+    )
+    filtered_groups["wthirdbar_h"] = filtered_groups["wthirdbar_h"].fillna(
+        filtered_groups["wthirdbar_r"] + 1
+    )
 
     # Step 8 and 9: Replace missing 'wfifteenbar_l' and 'wfifteenbar_h' with 'wfifteenbar_r' +/- 0.6
-    filtered_groups["wfifteenbar_l"].fillna(filtered_groups["wfifteenbar_r"] - 0.6, inplace=True)
-    filtered_groups["wfifteenbar_h"].fillna(filtered_groups["wfifteenbar_r"] + 0.6, inplace=True)
+    filtered_groups["wfifteenbar_l"] = filtered_groups["wfifteenbar_l"].fillna(
+        filtered_groups["wfifteenbar_r"] - 0.6
+    )
+    filtered_groups["wfifteenbar_h"] = filtered_groups["wfifteenbar_h"].fillna(
+        filtered_groups["wfifteenbar_r"] + 0.6
+    )
     # Step 10 and 11: Impute 'rfv_l' and 'rfv_h' values with 'rfv_r' +/- value
     filtered_groups = filtered_groups.apply(impute_rfv_values, axis=1)
 
@@ -2298,7 +2314,6 @@ def slice_and_aggregate_soil_data(df):
         results.append(mean_values)
 
     result_df = pd.DataFrame(results).fillna(np.nan)
-    # result_df = result_df.drop(columns=['Depth'])
 
     # Check and add a row for the 30-100 cm depth range if not covered
     if 30 not in result_df["hzdept_r"].values:

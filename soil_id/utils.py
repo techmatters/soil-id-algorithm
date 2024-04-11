@@ -2269,12 +2269,13 @@ def infill_soil_data(df):
 
 def slice_and_aggregate_soil_data(df):
     """
-    Optimized function to slice a DataFrame with soil data into 1 cm increments based on depth ranges
-    provided in 'hzdept_r' and 'hzdepb_r' columns, and calculate mean values for each depth increment
-    across all other data columns.
+    Optimized function to slice a DataFrame with soil data into 1 cm increments based on
+    depth ranges provided in 'hzdept_r' and 'hzdepb_r' columns, and calculate mean values
+    for each depth increment across all other data columns.
 
     Parameters:
-    df (pd.DataFrame): DataFrame where each row represents a soil sample with 'hzdept_r' and 'hzdepb_r' columns.
+    df (pd.DataFrame): DataFrame where each row represents a soil sample with 'hzdept_r'
+    and 'hzdepb_r' columns.
 
     Returns:
     pd.DataFrame: A DataFrame with depth ranges and mean values of soil properties for each range.

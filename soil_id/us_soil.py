@@ -65,6 +65,9 @@ from utils import (
 # when a site is created, call getSoilGridsGlobal
 # after user has collected data, call rankPredictionUS/rankPredictionGlobal.
 
+# set Pandas dataframe options
+pd.set_option("future.no_silent_downcasting", True)
+
 
 ############################################################################################
 #                                   getSoilLocationBasedUS                                 #
@@ -738,9 +741,10 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     awc["top"] = sim_data_df["hzdept_r"]
     awc["bottom"] = sim_data_df["hzdepb_r"]
     awc["compname_grp"] = sim_data_df["compname_grp"]
+
     awc_grouped = awc.groupby(["top"])
     data_len_depth = awc_grouped.apply(
-        lambda x: pd.DataFrame({"depth_len": [len(x)]}, index=[x.name]), include_groups=True
+        lambda x: pd.DataFrame({"depth_len": [len(x)]}, index=[x.name]), include_groups=False
     )
 
     awc = awc.merge(data_len_depth, on="top", how="left")
@@ -757,7 +761,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 "n": len(x) / x["depth_len"].iloc[0],
             }
         ),
-        include_groups=True,
+        include_groups=False,
     ).reset_index(level=[0, 1])
 
     # Pivoting the DataFrame
@@ -1080,16 +1084,6 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                                 ignore_index=True,
                             )
 
-                    # Explicitly cast group_sorted to match the data type of group before assignment
-                    if group_sorted.dtypes.equals(group.dtypes):
-                        group[:] = group_sorted
-                    else:
-                        # Assuming group is a DataFrame and needs to retain its structure
-                        for col in group_sorted:
-                            if col in group.columns:
-                                group_sorted[col] = group_sorted[col].astype(group.dtypes[col])
-                        group[:] = group_sorted
-
                     # Initialize flags to indicate if OSD depth adjustment is needed
                     OSD_depth_add = False
                     OSD_depth_remove = False
@@ -1314,10 +1308,10 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         )
 
                         # Fill NaN values
-                        snd_d_osd.fillna("", inplace=True)
-                        cly_d_osd.fillna("", inplace=True)
-                        txt_d_osd.fillna("", inplace=True)
-                        rf_d_osd.fillna("", inplace=True)
+                        snd_d_osd.fillna(np.nan, inplace=True)
+                        cly_d_osd.fillna(np.nan, inplace=True)
+                        txt_d_osd.fillna(np.nan, inplace=True)
+                        rf_d_osd.fillna(np.nan, inplace=True)
 
                         # Store aggregated data in dictionaries based on conditions
                         if OSD_text_int[index] == "Yes":
@@ -1890,7 +1884,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 "ec": "ds/m",
             },
         },
-        "AWS_PIW90": round(float(aws_PIW90), 2),
+        "AWS_PIW90": round(float(aws_PIW90.iloc[0]), 2),
         "Soil Data Value": var_imp,
         "soilList": output_SoilList,
     }

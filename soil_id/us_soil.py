@@ -2069,13 +2069,9 @@ def rankPredictionUS(
     if pElev is None:
         try:
             elev_data = get_elev_data(lon, lat)
-
-            # Extract elevation value and round it to 3 decimal places
-            pElev = round(
-                elev_data["USGS_Elevation_Point_Query_Service"]["Elevation_Query"]["Elevation"], 3
-            )
+            pElev = round(float(elev_data["value"]), 3)
         except Exception as err:
-            print(f"Error fetching elevation data: {err}")
+            print(f"Error rouding elevation data: {err}")
             pElev = None
 
     # Compute text completeness

@@ -15,6 +15,9 @@ ENV/
 # VS Code
 .vscode
 
+# profiling
+prof/
+
 # macOS
 .DS_Store
 

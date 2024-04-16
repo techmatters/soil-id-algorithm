@@ -20,11 +20,11 @@ import skimage
 from db import get_WISE30sec_data
 from numpy.linalg import cholesky
 from osgeo import ogr
-from rosetta import rosetta, SoilData
+from rosetta import SoilData, rosetta
 from scipy.interpolate import UnivariateSpline
 from scipy.sparse import issparse
 from scipy.stats import entropy, norm
-from services import sda_return #rosetta_request
+from services import sda_return
 from shapely.geometry import LinearRing, Point
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import pairwise

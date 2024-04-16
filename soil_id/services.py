@@ -1,6 +1,5 @@
 import json
 import re
-import urllib
 
 import numpy as np
 import pandas as pd
@@ -10,18 +9,37 @@ from pandas import json_normalize
 
 
 def get_elev_data(lon, lat):
+    """
+    Fetch elevation data from the National Map's Elevation Point Query Service.
+
+    Args:
+        lon (float): Longitude of the location for which to fetch elevation data.
+        lat (float): Latitude of the location for which to fetch elevation data.
+
+    Returns:
+        dict: A dictionary containing the elevation data or error information if the request fails.
+    """
+    # Define the base URL for the Elevation Point Query Service API
+    elev_url = "https://epqs.nationalmap.gov/v1/json"
+
+    # Parameters for the API request
     params = {
-        "x": lon,
-        "y": lat,
-        "units": "Meters",
-        "output": "json",
+        "x": lon,  # Longitude of the location
+        "y": lat,  # Latitude of the location
+        "wkid": 4326,  # Well-known ID for geographic coordinate systems
+        "units": "Meters",  # Output units for elevation
+        "includeDate": False,  # Option to include the date in the response
     }
 
-    elev_url = "https://nationalmap.gov/epqs/pqs.php"
-
-    # Fetch data from the URL
-    response = requests.get(elev_url, params=params, timeout=2)
-    result = response.json()
+    try:
+        # Perform the GET request with specified parameters and a timeout
+        response = requests.get(elev_url, params=params, timeout=2)
+        # Decode the JSON response into a dictionary
+        result = response.json()
+    except requests.RequestException as e:
+        # Log any request-related errors and return a predefined error dictionary
+        print(f"Error fetching elevation data: {e}")
+        result = {"error": "Failed to fetch elevation data"}
 
     return result
 
@@ -134,19 +152,36 @@ def get_soilgrids_classification_data(lon, lat, plot_id):
 
 
 def get_soilweb_data(lon, lat):
-    # Load in SSURGO data from SoilWeb
-    # current production API
-    # soilweb base url "https://casoilresource.lawr.ucdavis.edu/api/landPKS.php"
+    """
+    Fetch SSURGO data from the SoilWeb API for a specified longitude and latitude.
 
-    # testing API
-    params = urllib.parse.urlencode([("q", "spn"), ("lon", lon), ("lat", lat), ("r", 1000)])
-    soilweb_url = f"https://soilmap2-1.lawr.ucdavis.edu/dylan/soilweb/api/landPKS.php?{params}"
+    Args:
+    lon (float): Longitude of the location for which to fetch soil data.
+    lat (float): Latitude of the location for which to fetch soil data.
+
+    Returns:
+    dict: A dictionary containing soil data or error information if the request fails.
+    """
+    # Base URL for the SoilWeb API - moved here to keep it close to its usage
+    soilweb_url = "https://soilmap2-1.lawr.ucdavis.edu/dylan/soilweb/api/landPKS.php"
+
+    # Parameters for the API request
+    params = {
+        "q": "spn",  # Query type - static for this function's purpose
+        "lon": lon,  # Longitude parameter
+        "lat": lat,  # Latitude parameter
+        "r": 1000,  # Radius parameter - static for this function's purpose
+    }
+
     try:
-        response = requests.get(soilweb_url, timeout=8)
-        out = response.json()
+        # Perform the GET request with a timeout to prevent hanging
+        response = requests.get(soilweb_url, params=params, timeout=8)
+        # Decode JSON response into a dictionary
+        response_data = response.json()
     except requests.RequestException as e:
+        # Log any request-related errors and return a predefined error dictionary
         print(f"Error fetching data from SoilWeb: {e}")
-        out = {
+        response_data = {
             "ESD": False,
             "OSD_morph": False,
             "OSD_narrative": False,
@@ -154,7 +189,7 @@ def get_soilweb_data(lon, lat):
             "spn": False,
         }
 
-    return out
+    return response_data
 
 
 def sda_return(propQry):

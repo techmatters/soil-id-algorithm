@@ -663,8 +663,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
         # Proceed with the simulation
         try:
+            n_sim = max(int(row["distance_score"] * 1000), 20)
             sim_data = simulate_correlated_triangular(
-                n=int(row["distance_score"] * 1000),
+                n=n_sim,
                 params=params,
                 correlation_matrix=local_correlation_matrix,
             )
@@ -726,7 +727,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         "water_retention_15_bar",
     ]
 
-    rosetta_data = process_data_with_rosetta(sim_data_df, vars=variables, v="3")
+    rosetta_data = process_data_with_rosetta(sim_data_df, vars=variables, v=3)
 
     # Create layerID
     sim_data_df["layerID"] = sim_data_df["compname_grp"] + "_" + sim_data_df["hzdept_r"].astype(str)

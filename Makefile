@@ -8,7 +8,9 @@ install:
 	pip install -r requirements.txt
 
 install-no-deps:
-	pip install -r requirements.txt --no-deps && pip install GDAL==`gdal-config --version`
+	pip install -r requirements.txt --no-deps
+	pip install GDAL==`gdal-config --version`
+	pip install https://github.com/paulschreiber/rosetta-soil/archive/main.zip
 
 install-dev:
 	pip install -r requirements-dev.txt

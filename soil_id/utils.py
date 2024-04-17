@@ -39,12 +39,12 @@ from sklearn.utils import validation
 # global
 def extract_WISE_data(lon, lat, file_path, buffer_size=0.5):
     # Create LPKS point
-    point = Point(lon, lat)
-    point.crs = {"init": "epsg:4326"}
+    point_geo = Point(lon, lat)
+    point_geo.crs = {"init": "epsg:4326"}
+   
 
     # Create bounding box to clip HWSD data around the point
-    s = gpd.GeoSeries(point)
-    bounding_box = s.buffer(buffer_size).total_bounds
+    bounding_box = create_bounding_box(lon, lat, buffer_dist=10000)
     box_geom = shapely.geometry.box(*bounding_box)
 
     # Load HWSD data from the provided file_path
@@ -52,17 +52,9 @@ def extract_WISE_data(lon, lat, file_path, buffer_size=0.5):
 
     # Filter data to consider unique map units
     mu_geo = hwsd[["MUGLB_NEW", "geometry"]].drop_duplicates(subset="MUGLB_NEW")
-
-    distances = mu_geo.geometry.apply(lambda geom: pt2polyDist(geom, point))
-    intersects = mu_geo.geometry.apply(lambda geom: point.intersects(geom))
-
-    mu_id_dist = pd.DataFrame(
-        {
-            "MUGLB_NEW": mu_geo["MUGLB_NEW"],
-            "distance": distances.where(~intersects, 0),
-        }
-    )
-    mu_id_dist["distance"] = mu_id_dist.groupby("MUGLB_NEW")["distance"].transform(min)
+    mu_id_dist = calculate_distances_and_intersections(mu_geo, point)
+    mu_id_dist.loc[mu_id_dist["pt_intersect"], "distance_m"] = 0
+    mu_id_dist["distance"] = mu_id_dist.groupby("MUGLB_NEW")["distance_m"].transform(min)
     mu_id_dist = mu_id_dist.nsmallest(2, "distance")
 
     hwsd = hwsd.drop(columns=["geometry"])
@@ -701,52 +693,6 @@ def drop_cokey_horz(df):
         drop_instances = None
 
     return drop_instances
-
-
-def haversine(lon1, lat1, lon2, lat2):
-    """
-    Calculate the great circle distance between two points on the earth specified in
-    decimal degrees.
-
-    Args:
-    - lon1, lat1: Longitude and latitude of the first point.
-    - lon2, lat2: Longitude and latitude of the second point.
-
-    Returns:
-    - Distance in kilometers between the two points.
-    """
-    # Convert decimal degrees to radians
-    lon1, lat1, lon2, lat2 = map(math.radians, [lon1, lat1, lon2, lat2])
-
-    # Haversine formula
-    dlon = lon2 - lon1
-    dlat = lat2 - lat1
-    a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
-    c = 2 * math.asin(math.sqrt(a))
-    r = 6371  # Radius of the earth in kilometers. Use 3956 for miles.
-
-    return c * r
-
-
-def pt2polyDist(poly, point):
-    """
-    Calculate the distance between a point and the closest point on the exterior of a polygon.
-
-    Args:
-    - poly: A shapely Polygon object.
-    - point: A shapely Point object.
-
-    Returns:
-    - Distance in meters between the point and the polygon.
-    """
-    pol_ext = LinearRing(poly.exterior.coords)
-    d = pol_ext.project(point)
-    p = pol_ext.interpolate(d)
-    closest_point_coords = list(p.coords)[0]
-    # dist_m = haversine(point.x, point.y, closest_point_coords[0], closest_point_coords[1]) * 1000
-    # Convert to meters
-    dist_m = haversine(point.x, point.y, *closest_point_coords) * 1000
-    return round(dist_m, 0)
 
 
 def calculate_location_score(group, ExpCoeff):

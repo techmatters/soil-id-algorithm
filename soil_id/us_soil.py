@@ -2140,7 +2140,7 @@ def rankPredictionUS(
             soilIDRank_output_pd = pd.read_csv(io.StringIO(modelRun[2]))
             mucompdata_pd = pd.read_csv(io.StringIO(modelRun[3]))
         else:
-            logging.error(f"Cannot find a plot with ID: {plot_id}}")
+            logging.error(f"Cannot find a plot with ID: {plot_id}")
 
     # Modify mucompdata_pd DataFrame
     # mucompdata_pd = process_site_data(mucompdata_pd)

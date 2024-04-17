@@ -38,11 +38,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Update Linux packages
-        run: sudo apt-get update
+      - name: Checkout data
+        uses: actions/checkout@v4
+        with:
+          repository: techmatters/soil-id-data
+          path: Data
+          lfs: true
 
-      - name: Install Linux packages
-        run: sudo apt-get install libgdal-dev gdal-bin python3-gdal
+      - name: Update and install Linux packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install libgdal-dev gdal-bin python3-gdal
 
       - name: Setup Python
         uses: actions/setup-python@v5

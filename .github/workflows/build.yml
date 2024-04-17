@@ -17,6 +17,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Checkout data
+        uses: actions/checkout@v4
+        with:
+          repository: techmatters/soil-id-data
+          path: Data
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:

@@ -29,6 +29,7 @@ def test_soil_location():
     pSlope = "15"
     pElev = None
     cracks = False
+
     for item in test_locations:
         print(f"Testing {item['lon']},{item['lat']},{item['plot_id']}")
         result_list = getSoilLocationBasedUS(item["lon"], item["lat"], None)

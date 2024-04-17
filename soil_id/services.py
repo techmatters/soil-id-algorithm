@@ -1,4 +1,5 @@
 import json
+import logging
 import re
 
 import numpy as np
@@ -19,10 +20,9 @@ def get_elev_data(lon, lat):
     Returns:
         dict: A dictionary containing the elevation data or error information if the request fails.
     """
-    # Define the base URL for the Elevation Point Query Service API
-    elev_url = "https://epqs.nationalmap.gov/v1/json"
 
-    # Parameters for the API request
+    base_url = "https://epqs.nationalmap.gov/v1/json"
+
     params = {
         "x": lon,  # Longitude of the location
         "y": lat,  # Latitude of the location
@@ -32,33 +32,37 @@ def get_elev_data(lon, lat):
     }
 
     try:
-        # Perform the GET request with specified parameters and a timeout
-        response = requests.get(elev_url, params=params, timeout=2)
-        # Decode the JSON response into a dictionary
+        response = requests.get(base_url, params=params, timeout=2)
+        logging.info(f"{round(round(response.elapsed.total_seconds(), 2), 2)}: {base_url}")
+        response.raise_for_status()
         result = response.json()
-    except requests.RequestException as e:
-        # Log any request-related errors and return a predefined error dictionary
-        print(f"Error fetching elevation data: {e}")
-        result = {"error": "Failed to fetch elevation data"}
+    except requests.ConnectionError:
+        logging.error("Elevation: failed to connect")
+        result = None
+    except requests.Timeout:
+        logging.error("Elevation: timed out")
+        result = None
+    except requests.RequestException as err:
+        logging.error(f"Elevation: error: {err}")
+        result = None
 
     return result
 
 
 def get_esd_data(ecositeID, esd_geo, ESDcompdata_pd):
-    class_url = "https://edit.jornada.nmsu.edu/services/downloads/esd/%s/class-list.json" % (
-        esd_geo
-    )
+    base_url = "https://edit.jornada.nmsu.edu/services/downloads/esd/%s/class-list.json" % (esd_geo)
 
     try:
-        response = requests.get(class_url, timeout=4)
+        response = requests.get(base_url, timeout=4)
+        logging.info(f"{round(response.elapsed.total_seconds(), 2)}: {base_url}")
         response.raise_for_status()
 
-        ESD_list = response.json()
+        result = response.json()
 
-        ESD_list_pd = json_normalize(ESD_list["ecoclasses"])[["id", "legacyId"]]
+        ESD_list_pd = json_normalize(result["ecoclasses"])[["id", "legacyId"]]
         esd_url = []
 
-        if isinstance(ESD_list, list):
+        if isinstance(result, list):
             esd_url.append("")
         else:
             for i in range(len(ecositeID)):
@@ -81,9 +85,15 @@ def get_esd_data(ecositeID, esd_geo, ESDcompdata_pd):
 
         ESDcompdata_pd = ESDcompdata_pd.assign(esd_url=esd_url)
 
-    except requests.exceptions.RequestException as err:
+    except requests.ConnectionError:
+        logging.error("ESD: failed to connect")
         ESDcompdata_pd["esd_url"] = pd.Series(np.repeat("", len(ecositeID))).values
-        print("An error occurred:", err)
+    except requests.Timeout:
+        logging.error("ESD: timed out")
+        ESDcompdata_pd["esd_url"] = pd.Series(np.repeat("", len(ecositeID))).values
+    except requests.RequestException as err:
+        logging.error(f"ESD: error: {err}")
+        ESDcompdata_pd["esd_url"] = pd.Series(np.repeat("", len(ecositeID))).values
 
     return ESDcompdata_pd
 
@@ -96,10 +106,23 @@ def get_soil_series_data(mucompdata_pd, OSD_compkind):
     ]
 
     params = {"q": "site_hz", "s": series_name}
+    base_url = "https://casoilresource.lawr.ucdavis.edu/api/soil-series.php"
 
-    series_url = "https://casoilresource.lawr.ucdavis.edu/api/soil-series.php"
-    response = requests.get(series_url, params=params, timeout=3)
-    result = response.json()
+    try:
+        response = requests.get(base_url, params=params, timeout=3)
+        logging.info(f"{round(response.elapsed.total_seconds(), 2)}: {base_url}")
+        response.raise_for_status()
+        result = response.json()
+
+    except requests.ConnectionError:
+        logging.error("Soil series data: failed to connect")
+        result = None
+    except requests.Timeout:
+        logging.error("Soil series data: timed out")
+        result = None
+    except requests.RequestException as err:
+        logging.error(f"Soil series data: error: {err}")
+        result = None
 
     return result
 
@@ -117,38 +140,55 @@ def get_soilgrids_property_data(lon, lat, plot_id):
         ("value", "mean"),
     ]
 
-    sg_api = "https://rest.isric.org/soilgrids/v2.0/properties/query"
+    base_url = "https://rest.isric.org/soilgrids/v2.0/properties/query"
 
     try:
-        response = requests.get(sg_api, params=params, timeout=160)
+        response = requests.get(base_url, params=params, timeout=160)
+        logging.info(f"{round(response.elapsed.total_seconds(), 2)}: {base_url}")
         response.raise_for_status()
-        sg_out = response.json()
+        result = response.json()
 
-    except requests.RequestException:
+    except requests.ConnectionError:
+        logging.error("Soilgrids properties: failed to connect")
+        result = None
+    except requests.Timeout:
+        logging.error("Soilgrids properties: timed out")
+        result = None
+    except requests.RequestException as err:
+        logging.error(f"Soilgrids properties: error: {err}")
         if plot_id is not None:
+            # Assuming the function `save_soilgrids_output` exists elsewhere in the code
             save_soilgrids_output(plot_id, 1, json.dumps({"status": "unavailable"}))
-        sg_out = {"status": "unavailable"}
+        result = None
 
-    return sg_out
+    return result if result is not None else {"status": "unavailable"}
 
 
 def get_soilgrids_classification_data(lon, lat, plot_id):
     # Fetch SG wRB Taxonomy
     params = [("lon", lon), ("lat", lat), ("number_classes", 3)]
-    sg_api = "https://rest.isric.org/soilgrids/v2.0/classification/query"
+    base_url = "https://rest.isric.org/soilgrids/v2.0/classification/query"
 
     try:
-        response = requests.get(sg_api, params=params, timeout=160)
+        response = requests.get(base_url, params=params, timeout=160)
+        logging.info(f"{round(response.elapsed.total_seconds(), 2)}: {base_url}")
         response.raise_for_status()
-        sg_tax = response.json()
+        result = response.json()
 
-    except requests.RequestException:
+    except requests.ConnectionError:
+        logging.error("Soilgrids classification: failed to connect")
+        result = None
+    except requests.Timeout:
+        logging.error("Soilgrids classification: timed out")
+        result = None
+    except requests.RequestException as err:
+        logging.error(f"Soilgrids classification: error: {err}")
         if plot_id is not None:
             # Assuming the function `save_soilgrids_output` exists elsewhere in the code
             save_soilgrids_output(plot_id, 1, json.dumps({"status": "unavailable"}))
-        sg_tax = None
+        result = None
 
-    return sg_tax
+    return result
 
 
 def get_soilweb_data(lon, lat):
@@ -162,34 +202,42 @@ def get_soilweb_data(lon, lat):
     Returns:
     dict: A dictionary containing soil data or error information if the request fails.
     """
-    # Base URL for the SoilWeb API - moved here to keep it close to its usage
-    soilweb_url = "https://soilmap2-1.lawr.ucdavis.edu/dylan/soilweb/api/landPKS.php"
+    base_url = "https://soilmap2-1.lawr.ucdavis.edu/dylan/soilweb/api/landPKS.php"
 
-    # Parameters for the API request
     params = {
         "q": "spn",  # Query type - static for this function's purpose
-        "lon": lon,  # Longitude parameter
-        "lat": lat,  # Latitude parameter
-        "r": 1000,  # Radius parameter - static for this function's purpose
+        "lon": lon,
+        "lat": lat,
+        "r": 1000,  # Radius (in TODO: units)
     }
 
     try:
-        # Perform the GET request with a timeout to prevent hanging
-        response = requests.get(soilweb_url, params=params, timeout=8)
-        # Decode JSON response into a dictionary
-        response_data = response.json()
-    except requests.RequestException as e:
-        # Log any request-related errors and return a predefined error dictionary
-        print(f"Error fetching data from SoilWeb: {e}")
-        response_data = {
+        response = requests.get(base_url, params=params, timeout=8)
+        logging.info(f"{round(response.elapsed.total_seconds(), 2)}: {base_url}")
+        response.raise_for_status()
+        result = response.json()
+
+    except requests.ConnectionError:
+        logging.error("SoilWeb: failed to connect")
+        result = None
+    except requests.Timeout:
+        logging.error("SoilWeb: timed out")
+        result = None
+    except requests.RequestException as err:
+        logging.error(f"SoilWeb: error: {err}")
+        result = None
+
+    return (
+        result
+        if result is not None
+        else {
             "ESD": False,
             "OSD_morph": False,
             "OSD_narrative": False,
             "hz": False,
             "spn": False,
         }
-
-    return response_data
+    )
 
 
 def sda_return(propQry):
@@ -201,26 +249,20 @@ def sda_return(propQry):
     request_data = {"format": "JSON+COLUMNNAME", "query": propQry}
 
     try:
-        # Send POST request using the requests library
         response = requests.post(base_url, json=request_data, timeout=6)
-        response.raise_for_status()  # Raise an exception for HTTP errors
-
-        # Convert the returned JSON into a Python dictionary
-        qData = response.json()
+        logging.info(f"{round(response.elapsed.total_seconds(), 2)}: {base_url}")
+        response.raise_for_status()
+        result = response.json()
 
         # If dictionary key "Table" is found, normalize the data and return as DataFrame
-        if "Table" in qData:
-            qDataPD = pd.json_normalize(qData)
-            return qDataPD
-        else:
-            return None
+        return pd.json_normalize(result) if "Table" in result else None
 
     except requests.ConnectionError:
-        print("Failed to connect to the USDA service.")
+        logging.error("USDA service: failed to connect")
         return None
     except requests.Timeout:
-        print("Request to USDA service timed out.")
+        logging.error("USDA service: timed out")
         return None
     except requests.RequestException as err:
-        print(f"An error occurred: {err}")
+        logging.error(f"USDA service: error: {err}")
         return None

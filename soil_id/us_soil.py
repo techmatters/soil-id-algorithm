@@ -2,6 +2,7 @@
 import collections
 import io
 import json
+import logging
 import re
 
 # local libraries
@@ -925,7 +926,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 OSDhorzdata_pd["sandtotal_r"] = OSDhorzdata_pd["texture_class"].apply(getSand)
             except Exception as err:
                 OSDhorzdata_pd = None
-                print("An error occurred:", err)
+                logging.error("Error occurred with STATSGO:", err)
         else:
             OSDhorzdata_pd = None
 
@@ -2072,7 +2073,7 @@ def rankPredictionUS(
             if elevation_data is not None:
                 pElev = round(float(elevation_data["value"]), 3)
         except Exception as err:
-            print(f"Error rounding elevation data: {err}")
+            logging.error(f"Error rounding elevation data: {err}")
             pElev = None
 
     # Compute text completeness
@@ -2139,7 +2140,7 @@ def rankPredictionUS(
             soilIDRank_output_pd = pd.read_csv(io.StringIO(modelRun[2]))
             mucompdata_pd = pd.read_csv(io.StringIO(modelRun[3]))
         else:
-            print("Cannot find a plot with this ID")
+            logging.error(f"Cannot find a plot with ID: {plot_id}")
 
     # Modify mucompdata_pd DataFrame
     # mucompdata_pd = process_site_data(mucompdata_pd)

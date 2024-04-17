@@ -44,11 +44,6 @@ jobs:
           repository: techmatters/soil-id-data
           path: Data
 
-      - name: list files
-        run: |
-          ls
-          exit 1
-
       - name: Update and install Linux packages
         run: |
           sudo apt-get update

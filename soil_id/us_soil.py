@@ -2,8 +2,8 @@
 import collections
 import io
 import json
-import re
 import logging
+import re
 
 # local libraries
 import config

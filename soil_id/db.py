@@ -1,6 +1,6 @@
 # Standard libraries
-import sys
 import logging
+import sys
 
 # local libraries
 import config

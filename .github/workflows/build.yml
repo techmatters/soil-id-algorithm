@@ -43,6 +43,7 @@ jobs:
         with:
           repository: techmatters/soil-id-data
           path: Data
+          lfs: true
 
       - name: Update and install Linux packages
         run: |

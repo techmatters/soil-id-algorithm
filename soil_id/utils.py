@@ -1356,7 +1356,7 @@ def extract_mucompdata_STATSGO(lon, lat):
 
     statsgo_mukey = load_statsgo_data(box)
     if statsgo_mukey is None:
-        logging.warn(f"Soil ID not available in this area: {lon}.{lat}")
+        logging.warning(f"Soil ID not available in this area: {lon}.{lat}")
         return None
 
     mu_geo = statsgo_mukey[["MUKEY", "geometry"]].drop_duplicates(subset=["geometry"])
@@ -1368,7 +1368,7 @@ def extract_mucompdata_STATSGO(lon, lat):
 
     mukey_list = mukey_dist_final["mukey"].tolist()
     if not mukey_list:
-        logging.warn(f"Soil ID not available in this area: {lon}.{lat}")
+        logging.warning(f"Soil ID not available in this area: {lon}.{lat}")
         return None
 
     mucompdataQry = f"""SELECT component.mukey, component.cokey, component.compname,
@@ -1391,12 +1391,12 @@ def extract_mucompdata_STATSGO(lon, lat):
         mucompdata_pd = mucompdata_pd[mucompdata_pd["distance_m"] <= 5000]
 
         if mucompdata_pd.empty:
-            logging.warn(f"Soil ID not available in this area: {lon}.{lat}")
+            logging.warning(f"Soil ID not available in this area: {lon}.{lat}")
             return None
         else:
             return mucompdata_pd
     else:
-        logging.warn(f"Soil ID not available in this area: {lon}.{lat}")
+        logging.warning(f"Soil ID not available in this area: {lon}.{lat}")
         return None
 
 

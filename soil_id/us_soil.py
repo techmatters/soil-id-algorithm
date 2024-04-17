@@ -441,7 +441,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         b. Perform the isometric log-ratio transformation.
         c. Extract l,r,h values (min, median, max for ilr1 and ilr2) and format into a
            params object for simiulation.
-        d. Simulate all properties and then permorm inverse transform on ilr1 and ilr2
+        d. Simulate all properties and then perform inverse transform on ilr1 and ilr2
            to obtain sand, silt, and clay values.
         e. Append simulated values to dataframe
 
@@ -575,6 +575,24 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     local_correlation_matrix, _ = spearmanr(correlation_matrix_data, axis=0)
 
+    # Define global correlation matrix data (derived from KSSL SPCS)
+    # Used if unable to calculate a local_correlation_matrix
+    global_correlation_matrix = np.array(
+        [
+            [1.0000000, 0.6149869, -0.30000031, 0.5573609, 0.5240642, -0.33380115], # "ilr1" 
+            [0.6149869, 1.0000000, -0.18742324, 0.5089337, 0.7580271, -0.32807023], # "ilr2"
+            [-0.30000031, -0.18742324, 1.00000000, -0.7706528, -0.5117794, 0.02803607], # "dbovendry_r"
+            [0.5573609, 0.5089337, -0.77065276, 1.0000000, 0.7826896, -0.14029112], # "wthirdbar_r"
+            [0.5240642, 0.7580271, -0.51177936, 0.7826896, 1.0000000, -0.17901686], # "wfifteenbar_r"
+            [-0.33380115, -0.32807023, 0.02803607, -0.14029112, -0.17901686, 1.00000000] # "rfv_r"
+        ]
+    
+    )
+
+    # Check for NaNs or infs in the local correlation matrix and if so, replace with global matrix
+    if np.isnan(local_correlation_matrix).any() or np.isinf(local_correlation_matrix).any():
+        local_correlation_matrix = global_correlation_matrix
+
     """
     Step 2. Simulate data for each row, with the number of simulations equal
             to the (distance_score*100)*10
@@ -591,25 +609,33 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     sim_data_out = []
 
     for index, row in agg_data_df.iterrows():
-        # 2a. Simulate sand/silt/clay percentages
-        # 1. Extract and format data params
+        """
+        Step 2a. Simulate sand/silt/clay percentages
+        """
+        # Extract and format data params
         sand_params = [row["sandtotal_l"], row["sandtotal_r"], row["sandtotal_h"]]
         silt_params = [row["silttotal_l"], row["silttotal_r"], row["silttotal_h"]]
         clay_params = [row["claytotal_l"], row["claytotal_r"], row["claytotal_h"]]
 
         params_txt = [sand_params, silt_params, clay_params]
 
-        # 2. Perform processing steps on data
-        #    Convert simulated data using the acomp function and then compute the isometric
-        #    log-ratio transformation.
+        """
+        Step 2b. Perform processing steps on data
+        - Convert simulated data using the acomp function and then compute the isometric
+          log-ratio transformation.
+        """
+
         simulated_txt = acomp(
             simulate_correlated_triangular(
                 (int(row["distance_score"] * 1000)), params_txt, texture_correlation_matrix
             )
         )
         simulated_txt_ilr = ilr(simulated_txt)
-
-        # Extract min, median, and max for the first two ilr transformed columns.
+        
+        """
+        Step 2c. Extract l,r,h values (min, median, max for ilr1 and ilr2) and format into a
+                 params object for simiulation
+        """
         ilr1_values = simulated_txt_ilr[:, 0]
         ilr2_values = simulated_txt_ilr[:, 1]
 
@@ -642,23 +668,25 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 [row["wfifteenbar_l"], row["wfifteenbar_r"], row["wfifteenbar_h"]],
                 [row["rfv_l"], row["rfv_r"], row["rfv_h"]],
             ]
+ 
+        """
+        Step 2d. Simulate all properties and then perform inverse transform on ilr1 and ilr2
+                 to obtain sand, silt, and clay values.
+        """
 
         # Check diagonal elements and off-diagonal range
         if not np.all(np.diag(local_correlation_matrix) >= 0.99999999999999) or np.any(
             np.abs(local_correlation_matrix - np.eye(*local_correlation_matrix.shape)) > 1
         ):
-            return f"""LinAlgError encountered in row index: {index}.
-                       Correlation matrix diagonal/off-diagonal values are not valid."""
+            print(f"""LinAlgError encountered in row index: {index}.
+                       Correlation matrix diagonal/off-diagonal values are not valid.""")
 
-        # Check for NaNs or infs in the matrix
-        if np.isnan(local_correlation_matrix).any() or np.isinf(local_correlation_matrix).any():
-            return f"Matrix contains NaNs or infs in row index: {index}"
-
-        # Try calculating eigenvalues again
+        # Try calculating eigenvalues
+        eigenvalues = np.array([])
         try:
             eigenvalues = np.linalg.eigvals(local_correlation_matrix)
         except np.linalg.LinAlgError:
-            return "Matrix still contains invalid values."
+            print("Matrix still contains invalid values.")
 
         if np.any(eigenvalues <= 0):
             # Adjusting the matrix slightly if needed
@@ -673,10 +701,10 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 correlation_matrix=local_correlation_matrix,
             )
         except np.linalg.LinAlgError:
-            return "Adjusted matrix is still not positive definite."
+            print("Adjusted matrix is still not positive definite.")
         except ZeroDivisionError:
             # Handle the division by zero error
-            return f"Division by zero encountered in row index: {index}"
+            print(f"Division by zero encountered in row index: {index}")
         if is_constant:
             sim_data = pd.DataFrame(
                 sim_data,
@@ -714,13 +742,21 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         multi_sim["hzdepb_r"] = row["hzdepb_r"]
         sim_data_out.append(multi_sim)
 
+    """
+    Step 2e. Append simulated values to dataframe
+    """
     sim_data_df = pd.concat(sim_data_out, axis=0, ignore_index=True)
 
     # Convert NaN values to None
     sim_data_df = sim_data_df.where(pd.notna(sim_data_df), None)
 
+    # ------------------------------------------------------------------------------------
+    # Step 3. Run Rosetta and other Van Genuchten equations 
+    # ------------------------------------------------------------------------------------
+
+    # Step 3a: Run Rosetta
+
     # Convert the DataFrame to the desired format
-    # rossetta_input_data = sim_data_df.values.tolist()
     variables = [
         "sand_total",
         "silt_total",
@@ -749,7 +785,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     awc = awc.merge(data_len_depth, on="top", how="left")
 
-    # Step 1: Reshaping awc data
+    # Step 3b: Reshaping awc data
 
     # Apply the function to the entire ROI by depth
     awc_grouped_bottom = awc.groupby(["bottom"])
@@ -772,15 +808,15 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     # Renaming columns for clarity
     awc_comp_quant.columns = ["bottom", "n", "0.05", "0.50", "0.95"]
 
-    # Step 2: Joining with mu_data and filtering distinct rows
+    # Step 3c: Joining with mu_data and filtering distinct rows
     awc_comp_quant["top"] = np.where(
         awc_comp_quant["bottom"] <= 30, 0, np.where(awc_comp_quant["bottom"] > 30, 30, np.nan)
     )
 
-    # Step 3: Calculating depth
+    # Step 3d: Calculating depth
     awc_comp_quant["depth"] = awc_comp_quant["bottom"] - awc_comp_quant["top"]
 
-    # Steps 4 and 5: Group by 'compname_grp' and merge
+    # Step 3e: Group by 'compname_grp' and merge
     aws05 = calculate_aws(awc_comp_quant, "0.05")
     aws95 = calculate_aws(awc_comp_quant, "0.95")
 
@@ -1533,7 +1569,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         )
         ESDcompdata_out = sda_return(propQry=ESDcompdataQry)
 
-        if ESDcompdata_out.empty:
+        if ESDcompdata_out is None:
             ESDcompdata_pd = None
         else:
             ESDcompdata_sda = pd.DataFrame(
@@ -1555,99 +1591,165 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             else:
                 ESDcompdata_pd = None
 
+    # Initialize the list for storing ESD components data
+    esd_comp_list = []
+
+    # Function to handle the update of ecological site data
+    def update_esd_data(df):
+        """
+        Processes the given DataFrame by updating missing ESD data based on component groups with the same names,
+        filling missing URLs and ecoclass IDs and names.
+        """
+        if 'esd_url' not in df.columns:
+            df['esd_url'] = np.nan  # Initialize 'esd_url' as NaN if it does not exist
+
+        # Replace group-specific data for missing ESD components
+        df["compname_grp"] = df["compname"].str.replace(r"[0-9]+", "")
+        grouped = df.groupby("compname_grp", sort=False)
+
+        # Generate a list of updated groups
+        updated_groups = []
+        for _, group in grouped:
+            unique_ids = group["ecoclassid"].dropna().unique()
+            unique_names = group["ecoclassname"].dropna().unique()
+            if group["ecoclassid"].isnull().all() or group["ecoclassname"].isnull().all():
+                # Fill all missing values if all are missing within the group
+                group.fillna({"ecoclassid": unique_ids[0] if unique_ids else "",
+                              "ecoclassname": unique_names[0] if unique_names else ""}, inplace=True)
+            elif len(unique_ids) == 1 and len(unique_names) == 1:
+                # Fill missing values with existing unique values if present
+                group["ecoclassid"].fillna(unique_ids[0], inplace=True)
+                group["ecoclassname"].fillna(unique_names[0], inplace=True)
+
+            # Handle URLs separately as they might not exist
+            urls = group["esd_url"].dropna().unique()
+            group["esd_url"].fillna(urls[0] if urls.size > 0 else "", inplace=True)
+            updated_groups.append(group)
+
+        return pd.concat(updated_groups, ignore_index=True)
+
+    # Main logic for handling ESD data based on its presence
     if ESDcompdata_pd is not None:
-        # Clean and process the dataframe
-        ESDcompdata_pd = ESDcompdata_pd.replace("NULL", np.nan)
-        ESDcompdata_pd = ESDcompdata_pd.drop_duplicates(keep="first").reset_index(drop=True)
+        # Process DataFrame: cleaning and updating
+        ESDcompdata_pd.replace("NULL", np.nan, inplace=True)
+        ESDcompdata_pd.drop_duplicates(subset=["cokey"], keep="first", inplace=True)
         ESDcompdata_pd = ESDcompdata_pd[ESDcompdata_pd["cokey"].isin(comp_key)]
         ESDcompdata_pd["Comp_Rank"] = ESDcompdata_pd["cokey"].map(cokey_Index)
-        ESDcompdata_pd.sort_values(["Comp_Rank"], ascending=True, inplace=True)
+        ESDcompdata_pd.sort_values("Comp_Rank", ascending=True, inplace=True)
         ESDcompdata_pd.drop(columns="Comp_Rank", inplace=True)
 
-        # Update ecoclassid based on MLRA update by querying 'ESD_class_synonym_list' table
-        ecositeID = ESDcompdata_pd["ecoclassid"].dropna().tolist()
+        # Further processing and checks for missing ESD data
+        ESDcompdata_pd = update_esd_data(ESDcompdata_pd)
 
-        # old code
-        ESD_geo = []
-        ESD_geo.extend(ecositeID)
-        ESD_geo = [ESD_geo for ESD_geo in ESD_geo if str(ESD_geo) != "nan"]
-        ESD_geo = ESD_geo[0][1:5]
+        # Aggregate the ESD components for output
+        for _, group in ESDcompdata_pd.groupby("cokey"):
+            esd_data = {
+                "ESD": {
+                    "ecoclassid": group["ecoclassid"].tolist(),
+                    "ecoclassname": group["ecoclassname"].tolist(),
+                    "esd_url": group["esd_url"].tolist(),
+                }
+            }
+            esd_comp_list.append(esd_data)
+    else:
+        # Fill the list with empty data if ESDcompdata_pd is not available
+        esd_comp_list = [{"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}} for _ in range(len(mucompdata_pd))]
 
-        ESDcompdata_pd = get_esd_data(ecositeID, ESD_geo, ESDcompdata_pd)
+    # esd_comp_list = []
 
-        # Assign missing ESD for components that have other instances with an assigned ESD
-        if ESDcompdata_pd is not None:
-            if (
-                ESDcompdata_pd.ecoclassid.isnull().any()
-                or ESDcompdata_pd.ecoclassname.isnull().any()
-            ):
-                ESDcompdata_pd["compname_grp"] = ESDcompdata_pd.compname.str.replace(r"[0-9]+", "")
-                ESDcompdata_pd_comp_grps = [
-                    g for _, g in ESDcompdata_pd.groupby(["compname_grp"], sort=False)
-                ]
-                ecoList_out = []
-                for i in range(len(ESDcompdata_pd_comp_grps)):
-                    comp_grps_temp = ESDcompdata_pd_comp_grps[i]
-                    if len(comp_grps_temp) == 1:
-                        ecoList_out.append(comp_grps_temp)
-                    elif (
-                        comp_grps_temp.ecoclassid.isnull().all()
-                        or comp_grps_temp.ecoclassname.isnull().all()
-                    ):
-                        ecoList_out.append(comp_grps_temp)
-                    elif (
-                        comp_grps_temp.ecoclassid.isnull().any()
-                        and len(comp_grps_temp.ecoclassid.dropna().unique()) == 1
-                    ) and (
-                        comp_grps_temp.ecoclassname.isnull().any()
-                        and len(comp_grps_temp.ecoclassname.dropna().unique()) == 1
-                    ):
-                        comp_grps_temp["ecoclassid"] = pd.Series(
-                            np.tile(
-                                comp_grps_temp.ecoclassid.dropna().unique().tolist(),
-                                len(comp_grps_temp),
-                            )
-                        ).values
-                        comp_grps_temp["ecoclassname"] = pd.Series(
-                            np.tile(
-                                comp_grps_temp.ecoclassname.dropna().unique().tolist(),
-                                len(comp_grps_temp),
-                            )
-                        ).values
-                        url = comp_grps_temp.esd_url.unique().tolist()
-                        url = [x for x in url if x != ""]
-                        if not url:
-                            comp_grps_temp["esd_url"] = pd.Series(
-                                np.tile("", len(comp_grps_temp))
-                            ).values
-                        else:
-                            comp_grps_temp["esd_url"] = pd.Series(
-                                np.tile(url, len(comp_grps_temp))
-                            ).values
-                        ecoList_out.append(comp_grps_temp)
-                    else:
-                        ecoList_out.append(comp_grps_temp)
-                ESDcompdata_pd = pd.concat(ecoList_out)
+    # if ESDcompdata_pd is not None:
+    #     # Clean and process the dataframe
+    #     ESDcompdata_pd = ESDcompdata_pd.replace("NULL", np.nan)
+    #     ESDcompdata_pd = ESDcompdata_pd.drop_duplicates(keep="first").reset_index(drop=True)
+    #     ESDcompdata_pd = ESDcompdata_pd[ESDcompdata_pd["cokey"].isin(comp_key)]
+    #     ESDcompdata_pd["Comp_Rank"] = ESDcompdata_pd["cokey"].map(cokey_Index)
+    #     ESDcompdata_pd.sort_values(["Comp_Rank"], ascending=True, inplace=True)
+    #     ESDcompdata_pd.drop(columns="Comp_Rank", inplace=True)
 
-        ESDcompdata_group_cokey = [g for _, g in ESDcompdata_pd.groupby(["cokey"], sort=False)]
-        esd_comp_list = []
-        for i in range(len(ESDcompdata_group_cokey)):
-            if ESDcompdata_group_cokey[i]["ecoclassname"].isnull().values.any():
-                esd_comp_list.append({"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}})
-            else:
-                esd_comp_list.append(
-                    {
-                        "ESD": {
-                            "ecoclassid": ESDcompdata_group_cokey[i]["ecoclassid"].tolist(),
-                            "ecoclassname": ESDcompdata_group_cokey[i]["ecoclassname"].tolist(),
-                            "esd_url": ESDcompdata_group_cokey[i]["esd_url"].tolist(),
-                        }
-                    }
-                )
-        else:
-            esd_comp_list = []
-            for i in range(len(mucompdata_pd)):
-                esd_comp_list.append({"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}})
+    #     # Update ecoclassid based on MLRA update by querying 'ESD_class_synonym_list' table
+    #     ecositeID = ESDcompdata_pd["ecoclassid"].dropna().tolist()
+
+    #     # old code
+    #     ESD_geo = []
+    #     ESD_geo.extend(ecositeID)
+    #     ESD_geo = [ESD_geo for ESD_geo in ESD_geo if str(ESD_geo) != "nan"]
+    #     ESD_geo = ESD_geo[0][1:5]
+
+    #     ESDcompdata_pd = get_esd_data(ecositeID, ESD_geo, ESDcompdata_pd)
+    #     # Assign missing ESD for components that have other instances with an assigned ESD
+    #     if ESDcompdata_pd is not None:
+    #         if (
+    #             ESDcompdata_pd.ecoclassid.isnull().any()
+    #             or ESDcompdata_pd.ecoclassname.isnull().any()
+    #         ):
+    #             ESDcompdata_pd["compname_grp"] = ESDcompdata_pd.compname.str.replace(r"[0-9]+", "")
+    #             ESDcompdata_pd_comp_grps = [
+    #                 g for _, g in ESDcompdata_pd.groupby(["compname_grp"], sort=False)
+    #             ]
+    #             ecoList_out = []
+    #             for i in range(len(ESDcompdata_pd_comp_grps)):
+    #                 comp_grps_temp = ESDcompdata_pd_comp_grps[i]
+    #                 if len(comp_grps_temp) == 1:
+    #                     ecoList_out.append(comp_grps_temp)
+    #                 elif (
+    #                     comp_grps_temp.ecoclassid.isnull().all()
+    #                     or comp_grps_temp.ecoclassname.isnull().all()
+    #                 ):
+    #                     ecoList_out.append(comp_grps_temp)
+    #                 elif (
+    #                     comp_grps_temp.ecoclassid.isnull().any()
+    #                     and len(comp_grps_temp.ecoclassid.dropna().unique()) == 1
+    #                 ) and (
+    #                     comp_grps_temp.ecoclassname.isnull().any()
+    #                     and len(comp_grps_temp.ecoclassname.dropna().unique()) == 1
+    #                 ):
+    #                     comp_grps_temp["ecoclassid"] = pd.Series(
+    #                         np.tile(
+    #                             comp_grps_temp.ecoclassid.dropna().unique().tolist(),
+    #                             len(comp_grps_temp),
+    #                         )
+    #                     ).values
+    #                     comp_grps_temp["ecoclassname"] = pd.Series(
+    #                         np.tile(
+    #                             comp_grps_temp.ecoclassname.dropna().unique().tolist(),
+    #                             len(comp_grps_temp),
+    #                         )
+    #                     ).values
+    #                     url = comp_grps_temp.esd_url.unique().tolist()
+    #                     url = [x for x in url if x != ""]
+    #                     if not url:
+    #                         comp_grps_temp["esd_url"] = pd.Series(
+    #                             np.tile("", len(comp_grps_temp))
+    #                         ).values
+    #                     else:
+    #                         comp_grps_temp["esd_url"] = pd.Series(
+    #                             np.tile(url, len(comp_grps_temp))
+    #                         ).values
+    #                     ecoList_out.append(comp_grps_temp)
+    #                 else:
+    #                     ecoList_out.append(comp_grps_temp)
+    #             ESDcompdata_pd = pd.concat(ecoList_out)
+
+    #         ESDcompdata_group_cokey = [g for _, g in ESDcompdata_pd.groupby(["cokey"], sort=False)]
+    #         for i in range(len(ESDcompdata_group_cokey)):
+    #             if ESDcompdata_group_cokey[i]["ecoclassname"].isnull().values.any():
+    #                 esd_comp_list.append({"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}})
+    #             else:
+    #                 esd_comp_list.append(
+    #                     {
+    #                         "ESD": {
+    #                             "ecoclassid": ESDcompdata_group_cokey[i]["ecoclassid"].tolist(),
+    #                             "ecoclassname": ESDcompdata_group_cokey[i]["ecoclassname"].tolist(),
+    #                             "esd_url": ESDcompdata_group_cokey[i]["esd_url"].tolist(),
+    #                         }
+    #                     }
+    #                 )
+    #     else:
+    #         for i in range(len(mucompdata_pd)):
+    #             esd_comp_list.append({"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}})
+    # else:
+    #     for i in range(len(mucompdata_pd)):
+    #         esd_comp_list.append({"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}})
 
         # Add ecosite data to mucompdata_pd for testing output. In cases with multiple ESDs per
         # component, only take the first.
@@ -2756,3 +2858,6 @@ def create_new_layer_osd(row, top, bottom):
     ]:
         new_row[col] = np.nan
     return new_row
+
+
+

@@ -1,7 +1,7 @@
 import json
+import logging
 import re
 
-import logging
 import numpy as np
 import pandas as pd
 import requests

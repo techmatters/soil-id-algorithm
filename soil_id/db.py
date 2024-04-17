@@ -1,5 +1,6 @@
 # Standard libraries
 import sys
+import logging
 
 # local libraries
 import config
@@ -25,7 +26,7 @@ def get_datastore_connection():
         )
         return conn
     except Exception as err:
-        print(err)
+        logging.error(err)
         sys.exit(str(err))
 
 
@@ -58,7 +59,7 @@ def save_model_output(
         conn.commit()
 
     except Exception as err:
-        print(err)
+        logging.error(err)
         conn.rollback()
         return None
     finally:
@@ -81,7 +82,7 @@ def save_rank_output(record_id, model_version, rank_blob):
         conn.commit()
 
     except Exception as err:
-        print(err)
+        logging.error(err)
         conn.rollback()
         return None
     finally:
@@ -107,7 +108,7 @@ def load_model_output(plot_id):
             model_run = [row[0], row[1], row[2], row[3]]
         return model_run
     except Exception as err:
-        print(err)
+        logging.error(err)
         return None
     finally:
         conn.close()
@@ -131,7 +132,7 @@ def save_soilgrids_output(plot_id, model_version, soilgrids_blob):
         conn.commit()
 
     except Exception as err:
-        print(err)
+        logging.error(err)
         conn.rollback()
         return None
     finally:
@@ -182,7 +183,7 @@ def get_WISE30sec_data(MUGLB_NEW_Select):
         )
         return data
     except Exception as err:
-        print(err)
+        logging.error(err)
         return None
     finally:
         conn.close()
@@ -219,7 +220,7 @@ def get_WRB_descriptions(WRB_Comp_List):
         )
         return data
     except Exception as err:
-        print(err)
+        logging.error(err)
         return None
     finally:
         conn.close()
@@ -268,7 +269,7 @@ def getSG_descriptions(WRB_Comp_List):
         return data
 
     except Exception as err:
-        print(err)
+        logging.error(err)
         return None
 
     finally:

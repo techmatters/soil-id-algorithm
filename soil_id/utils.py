@@ -2,6 +2,7 @@
 #                                       Database and API Functions                                #
 ###################################################################################################
 # Standard libraries
+import logging
 import math
 import re
 
@@ -1329,7 +1330,7 @@ def load_statsgo_data(box):
             config.STATSGO_PATH, bbox=box.bounds, mode="r", driver="ESRI Shapefile"
         )
     except fiona.errors.DriverError as e:
-        print(e)
+        logging.error(f"fiona driver error: {e}")
         return None
 
 
@@ -1355,7 +1356,8 @@ def extract_mucompdata_STATSGO(lon, lat):
 
     statsgo_mukey = load_statsgo_data(box)
     if statsgo_mukey is None:
-        return "Soil ID not available in this area"
+        logging.warn(f"Soil ID not available in this area: {lon}.{lat}")
+        return None
 
     mu_geo = statsgo_mukey[["MUKEY", "geometry"]].drop_duplicates(subset=["geometry"])
 
@@ -1366,7 +1368,8 @@ def extract_mucompdata_STATSGO(lon, lat):
 
     mukey_list = mukey_dist_final["mukey"].tolist()
     if not mukey_list:
-        return "Soil ID not available in this area"
+        logging.warn(f"Soil ID not available in this area: {lon}.{lat}")
+        return None
 
     mucompdataQry = f"""SELECT component.mukey, component.cokey, component.compname,
                         component.comppct_r, component.compkind, component.majcompflag,
@@ -1388,11 +1391,13 @@ def extract_mucompdata_STATSGO(lon, lat):
         mucompdata_pd = mucompdata_pd[mucompdata_pd["distance_m"] <= 5000]
 
         if mucompdata_pd.empty:
-            return "Soil ID not available in this area"
+            logging.warn(f"Soil ID not available in this area: {lon}.{lat}")
+            return None
         else:
             return mucompdata_pd
     else:
-        return "Soil ID not available in this area"
+        logging.warn(f"Soil ID not available in this area: {lon}.{lat}")
+        return None
 
 
 def process_site_data(mucompdata_pd):

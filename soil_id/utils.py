@@ -22,12 +22,11 @@ from db import get_WISE30sec_data
 from numpy.linalg import cholesky
 from osgeo import ogr
 from rosetta import SoilData, rosetta
-from services import sda_return
 from pyproj import Proj, Transformer
 from scipy.interpolate import UnivariateSpline
 from scipy.sparse import issparse
 from scipy.stats import entropy, norm
-from services import rosetta_request, sda_return
+from services import sda_return
 from shapely.geometry import LinearRing, Point, box
 import shapely.ops as ops
 from skimage import color

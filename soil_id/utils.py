@@ -22,11 +22,15 @@ from db import get_WISE30sec_data
 from numpy.linalg import cholesky
 from osgeo import ogr
 from rosetta import SoilData, rosetta
+from services import sda_return
+from pyproj import Proj, Transformer
 from scipy.interpolate import UnivariateSpline
 from scipy.sparse import issparse
 from scipy.stats import entropy, norm
-from services import sda_return
-from shapely.geometry import LinearRing, Point
+from services import rosetta_request, sda_return
+from shapely.geometry import LinearRing, Point, box
+import shapely.ops as ops
+from skimage import color
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import pairwise
 from sklearn.utils import validation
@@ -1295,7 +1299,6 @@ def extract_muhorzdata_STATSGO(mucompdata_pd):
 
         return muhorzdata_pd
 
-
 def calculate_distances_and_intersections(mu_geo, point):
     """
     Calculate distances and intersections of geometries to a point.
@@ -1307,12 +1310,24 @@ def calculate_distances_and_intersections(mu_geo, point):
     Returns:
         DataFrame: Contains mapunit keys, distances, and intersection flags.
     """
-    distances = mu_geo["geometry"].distance(point)
-    intersects = mu_geo["geometry"].intersects(point)
 
-    return pd.DataFrame(
-        {"mukey": mu_geo["MUKEY"], "distance_m": distances, "pt_intersect": intersects}
-    )
+    # Project the data to a suitable UTM zone based on the point's location
+    point_utm, epsg_code = convert_geometry_to_utm(point)
+    
+    # Project the GeoDataFrame to UTM for distance calculation
+    transformer = Transformer.from_proj('epsg:4326', f'epsg:{epsg_code}', always_xy=True)
+    mu_geo_utm = mu_geo.copy()
+    mu_geo_utm['geometry'] = mu_geo_utm['geometry'].apply(lambda geom: ops.transform(transformer.transform, geom) if not geom.is_empty else geom)
+
+    # Calculate distances and intersections
+    distances = mu_geo_utm['geometry'].distance(point_utm)
+    intersects = mu_geo_utm['geometry'].intersects(point_utm)
+
+    return pd.DataFrame({
+        "mukey": mu_geo_utm["MUKEY"],
+        "distance_m": distances,
+        "pt_intersect": intersects
+    })
 
 
 def load_statsgo_data(box):
@@ -1334,6 +1349,65 @@ def load_statsgo_data(box):
         return None
 
 
+def convert_geometry_to_utm(geometry):
+    """
+    Converts a shapely geometry from latitude and longitude to UTM coordinates in the appropriate UTM zone.
+    
+    Parameters:
+    - geometry (shapely.geometry): A shapely geometry object (e.g., Point, Polygon) in geographic coordinates.
+    
+    Returns:
+    - tuple: A tuple containing the transformed geometry in UTM coordinates and the EPSG code of the UTM zone.
+    """
+    # Extract centroid for determining UTM zone
+    lon, lat = geometry.centroid.x, geometry.centroid.y
+    
+    # Determine the UTM zone and construct the EPSG code
+    utm_zone = int((lon + 180) / 6) + 1
+    hemisphere = 'north' if lat >= 0 else 'south'
+    epsg_code = f"326{utm_zone}" if hemisphere == 'north' else f"327{utm_zone}"
+    
+    # Initialize the Proj object for the determined UTM zone
+    proj_utm = Proj(f'epsg:{epsg_code}')
+    transformer = Transformer.from_proj(Proj('epsg:4326'), proj_utm, always_xy=True)
+    
+    # Transform the geometry to UTM coordinates
+    utm_geometry = ops.transform(transformer.transform, geometry)
+    
+    return utm_geometry, epsg_code
+
+
+def create_bounding_box(lon, lat, buffer_dist):
+    """
+    Creates a geographic bounding box around a given latitude and longitude,
+    buffered by a specified distance in meters.
+    
+    Parameters:
+    - lon (float): Longitude of the center point.
+    - lat (float): Latitude of the center point.
+    - buffer_dist (float): Buffer distance in meters.
+    
+    Returns:
+    - Shapely Polygon: Geographic bounding box as a shapely polygon.
+    """
+    point_geo = Point(lon, lat)
+    point_utm, epsg_code = convert_geometry_to_utm(point_geo)
+
+    proj_utm = Proj(f'epsg:{epsg_code}')
+    proj_latlon = Proj(proj='latlong', datum='WGS84')
+    
+    # Create a point and buffer in UTM coordinates
+    point_gdf = gpd.GeoDataFrame([{"geometry": point_utm}], crs=f'epsg:{epsg_code}')
+    s_buff = point_gdf.geometry.buffer(buffer_dist)
+    utm_box = box(*s_buff.total_bounds)
+    
+    # Convert the UTM box back to geographic coordinates
+    transformer = Transformer.from_proj(proj_utm, proj_latlon, always_xy=True)
+    geographic_box = ops.transform(transformer.transform, utm_box)
+    
+    return geographic_box
+
+
 def extract_mucompdata_STATSGO(lon, lat):
     """
     Extracts and processes STATSGO data for the given longitude and latitude.
@@ -1349,18 +1423,16 @@ def extract_mucompdata_STATSGO(lon, lat):
     Returns:
         DataFrame: Processed mucompdata, or error message if data is unavailable.
     """
-    point = Point(lon, lat)
-    point_gdf = gpd.GeoDataFrame([{"geometry": point}], crs="EPSG:4326")
-    s_buff = point_gdf.geometry.buffer(0.1)  # ~11km buffer
-    box = shapely.geometry.box(*s_buff.total_bounds)
 
+    point = Point(lon, lat)
+    box = create_bounding_box(lon, lat, buffer_dist=5000)
+    
     statsgo_mukey = load_statsgo_data(box)
     if statsgo_mukey is None:
         logging.warning(f"Soil ID not available in this area: {lon}.{lat}")
         return None
 
     mu_geo = statsgo_mukey[["MUKEY", "geometry"]].drop_duplicates(subset=["geometry"])
-
     mu_id_dist = calculate_distances_and_intersections(mu_geo, point)
     mu_id_dist.loc[mu_id_dist["pt_intersect"], "distance_m"] = 0
     mu_id_dist["distance_m"] = mu_id_dist.groupby("mukey")["distance_m"].transform(min)

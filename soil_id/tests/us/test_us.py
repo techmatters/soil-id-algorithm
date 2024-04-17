@@ -1,3 +1,5 @@
+import logging
+
 import config
 from us_soil import getSoilLocationBasedUS, rankPredictionUS
 
@@ -31,7 +33,7 @@ def test_soil_location():
     cracks = False
 
     for item in test_locations:
-        print(f"Testing {item['lon']},{item['lat']},{item['plot_id']}")
+        logging.info(f"Testing {item['lon']}, {item['lat']}, {item['plot_id']}")
         result_list = getSoilLocationBasedUS(item["lon"], item["lat"], None)
         result_rank = rankPredictionUS(
             item["lon"],

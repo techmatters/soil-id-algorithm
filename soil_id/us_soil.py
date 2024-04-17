@@ -2068,10 +2068,11 @@ def rankPredictionUS(
 
     if pElev is None:
         try:
-            elev_data = get_elev_data(lon, lat)
-            pElev = round(float(elev_data["value"]), 3)
+            elevation_data = get_elev_data(lon, lat)
+            if elevation_data is not None:
+                pElev = round(float(elevation_data["value"]), 3)
         except Exception as err:
-            print(f"Error rouding elevation data: {err}")
+            print(f"Error rounding elevation data: {err}")
             pElev = None
 
     # Compute text completeness

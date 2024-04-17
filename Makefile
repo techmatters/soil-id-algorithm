@@ -41,5 +41,14 @@ test: clean check_rebuild
 		$(DC_RUN_CMD) pytest soil_id -k $(PATTERN); \
 	fi
 
+test-verbose:
+	pytest soil_id --capture=no
+
+test-profile:
+	pytest soil_id --profile
+
+test-profile-svg:
+	pytest soil_id --profile-svg
+
 ${VIRTUAL_ENV}/scripts/pip-sync:
 	pip install pip-tools

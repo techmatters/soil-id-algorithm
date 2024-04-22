@@ -2238,7 +2238,7 @@ def infill_soil_data(df):
 
 def slice_and_aggregate_soil_data(df):
     """
-    Optimized function to slice a DataFrame with soil data into 1 cm increments based
+    Function to slice a DataFrame with soil data into 1 cm increments based
     on depth ranges provided in 'hzdept_r' and 'hzdepb_r' columns, and calculate mean
     values for each depth increment across all other data columns.
 
@@ -2291,120 +2291,6 @@ def slice_and_aggregate_soil_data(df):
         missing_row["hzdept_r"] = 30
         missing_row["hzdepb_r"] = 100
         result_df = result_df.append(missing_row, ignore_index=True)
-
-    return result_df
-
-
-def slice_and_aggregate_soil_data_old(df):
-    """
-    Takes a DataFrame with soil data, slices it into 1 cm increments based on depth ranges provided
-    in 'hzdept_r' and 'hzdepb_r' columns, and calculates mean values for each depth increment
-    across all other data columns.
-
-    Parameters:
-    df (pd.DataFrame): A DataFrame where each row represents a soil sample. It must contain
-                       'hzdept_r' and 'hzdepb_r' columns indicating the top and bottom depths.
-
-    Returns:
-    pd.DataFrame: A DataFrame indexed by depth in 1 cm increments, containing mean values of
-                  soil properties for each depth increment.
-
-    Note:
-    The function assumes linear distribution of data between depth intervals. Non-numeric columns
-    are excluded from the mean calculation.
-    """
-    # Create an empty DataFrame to hold the aggregated results
-    aggregated_data = pd.DataFrame()
-
-    # Get numeric columns for aggregation, excluding the depth range columns
-    data_columns = df.select_dtypes(include=[np.number]).columns.difference(
-        ["hzdept_r", "hzdepb_r"]
-    )
-
-    # Iterate through each depth interval
-    for _, row in df.iterrows():
-        top_depth = row["hzdept_r"]
-        bottom_depth = row["hzdepb_r"]
-        depth_range = np.arange(top_depth, bottom_depth)
-
-        # Create a DataFrame for each 1 cm increment
-        for depth in depth_range:
-            interpolated_row = {col: row[col] for col in data_columns}
-            interpolated_row["Depth"] = depth
-
-            # Add the interpolated row to the aggregated data
-            aggregated_data = pd.concat(
-                [aggregated_data, pd.DataFrame([interpolated_row])], ignore_index=True
-            )
-
-    max_depth = aggregated_data["Depth"].max()
-    sd = 2
-    # Define the depth ranges
-    depth_ranges = [(0, 30), (30, 100)]
-
-    # Initialize the result list
-    results = []
-
-    # Flag to check if the 30-100 cm range is covered
-    is_depth_30_100_covered = False
-
-    # Iterate over each column in the dataframe
-    for column in aggregated_data.columns:
-        column_results = []
-        for top, bottom in depth_ranges:
-            if max_depth <= top:
-                column_results.append([top, bottom, np.nan])
-            else:
-                mask = (aggregated_data.index >= top) & (
-                    aggregated_data.index <= min(bottom, max_depth)
-                )
-                data_subset = aggregated_data.loc[mask, column]
-                if not data_subset.empty:
-                    result = (
-                        round(data_subset.mean(skipna=True), sd)
-                        if not data_subset.isna().all()
-                        else np.nan
-                    )
-                    column_results.append([top, min(bottom, max_depth), result])
-                else:
-                    column_results.append([top, min(bottom, max_depth), np.nan])
-
-                # Check if the 30-100 cm range is covered
-                if top == 30:
-                    is_depth_30_100_covered = not data_subset.empty
-
-        # Append the results for the current column to the overall results list
-        results.append(
-            pd.DataFrame(
-                column_results,
-                columns=["hzdept_r", "hzdepb_r", f"{column}"],
-            )
-        )
-
-    # Concatenate the results for each column into a single dataframe
-    result_df = pd.concat(results, axis=1)
-
-    # If there are multiple columns, remove the repeated 'Top Depth' and 'Bottom Depth' columns
-    if len(aggregated_data.columns) > 1:
-        result_df = result_df.loc[:, ~result_df.columns.duplicated()]
-
-    # Add a row for 30-100 cm range if it's not covered
-    if not is_depth_30_100_covered:
-        # Initialize a dictionary with None or a small value for each column
-        none_row = {
-            col: [None] if col not in ["hzdept_r", "hzdepb_r"] else [] for col in result_df.columns
-        }
-
-        # Set the depth values for this row
-        none_row["hzdept_r"] = [30]
-        none_row["hzdepb_r"] = [100]
-
-        # Create a DataFrame from the dictionary
-        none_df = pd.DataFrame(none_row)
-
-        # Concatenate with the original DataFrame
-        result_df = pd.concat([result_df, none_df], ignore_index=True)
-    result_df = result_df.drop_duplicates()
 
     return result_df
 

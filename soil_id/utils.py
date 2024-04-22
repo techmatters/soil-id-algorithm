@@ -1787,69 +1787,69 @@ def pedon_color(lab_Color, horizonDepth):
         return [pedon_l_mean, pedon_a_mean, pedon_b_mean]
 
 
+def validate_data(data):
+    """
+    Validates the data based on given conditions.
+    """
+    if data.top.isnull().any() or data.bottom.isnull().any():
+        return False
+    if data.r.isnull().all() or data.g.isnull().all() or data.b.isnull().all():
+        return False
+    if data.top.iloc[0] != 0:
+        return False
+    return True
+
+def correct_depth_discrepancies(data):
+    """
+    Corrects depth discrepancies by adding layers when needed.
+    """
+    layers_to_add = []
+    for i in range(len(data.top) - 1):
+        if data.top.iloc[i + 1] > data.bottom.iloc[i]:
+            layer_add = pd.DataFrame(
+                {
+                    "top": data.bottom.iloc[i],
+                    "bottom": data.top.iloc[i + 1],
+                    "r": np.nan,
+                    "g": np.nan,
+                    "b": np.nan,
+                },
+                index=[i + 0.5],
+            )
+            layers_to_add.append(layer_add)
+
+    if layers_to_add:
+        data = pd.concat([data] + layers_to_add).sort_index().reset_index(drop=True)
+
+    return data
+
+def convert_rgb_to_lab(row, color_ref):
+    """
+    Converts RGB values to LAB.
+    """
+    rgb_ref = color_ref[["r", "g", "b"]]
+    if pd.isnull(row["r"]) or pd.isnull(row["g"]) or pd.isnull(row["b"]):
+        return np.nan, np.nan, np.nan
+
+    LAB = color.rgb2lab(color_ref, rgb_ref, [row["r"], row["g"], row["b"]])
+    return LAB
+
+
 def getProfileLAB(data_osd, color_ref):
     """
     The function processes the given data_osd DataFrame and computes LAB values for soil profiles.
     """
-    rgb_ref = color_ref[["r", "g", "b"]]
-
     # Convert the specific columns to numeric
     data_osd[["top", "bottom", "r", "g", "b"]] = data_osd[["top", "bottom", "r", "g", "b"]].apply(
         pd.to_numeric
     )
-
-    def validate_data(data):
-        """
-        Validates the data based on given conditions.
-        """
-        if data.top.isnull().any() or data.bottom.isnull().any():
-            return False
-        if data.r.isnull().all() or data.g.isnull().all() or data.b.isnull().all():
-            return False
-        if data.top.iloc[0] != 0:
-            return False
-        return True
-
-    def correct_depth_discrepancies(data):
-        """
-        Corrects depth discrepancies by adding layers when needed.
-        """
-        layers_to_add = []
-        for i in range(len(data.top) - 1):
-            if data.top.iloc[i + 1] > data.bottom.iloc[i]:
-                layer_add = pd.DataFrame(
-                    {
-                        "top": data.bottom.iloc[i],
-                        "bottom": data.top.iloc[i + 1],
-                        "r": np.nan,
-                        "g": np.nan,
-                        "b": np.nan,
-                    },
-                    index=[i + 0.5],
-                )
-                layers_to_add.append(layer_add)
-
-        if layers_to_add:
-            data = pd.concat([data] + layers_to_add).sort_index().reset_index(drop=True)
-
-        return data
-
-    def convert_rgb_to_lab(row):
-        """
-        Converts RGB values to LAB.
-        """
-        if pd.isnull(row["r"]) or pd.isnull(row["g"]) or pd.isnull(row["b"]):
-            return np.nan, np.nan, np.nan
-
-        LAB = color.rgb2lab(color_ref, rgb_ref, [row["r"], row["g"], row["b"]])
-        return LAB
 
     if not validate_data(data_osd):
         return pd.DataFrame(np.nan, index=np.arange(200), columns=["L", "A", "B"])
 
     data_osd = correct_depth_discrepancies(data_osd)
 
-    data_osd["L"], data_osd["A"], data_osd["B"] = zip(*data_osd.apply(convert_rgb_to_lab, axis=1))
+    data_osd["L"], data_osd["A"], data_osd["B"] = zip(*data_osd.apply(lambda row: convert_rgb_to_lab(row, color_ref), axis=1))
 
     l_intpl, a_intpl, b_intpl = [], [], []
 

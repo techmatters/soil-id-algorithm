@@ -1120,7 +1120,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                                 ],
                                 ignore_index=True,
                             )
-
+                    print(group_sorted)
                     # Initialize flags to indicate if OSD depth adjustment is needed
                     OSD_depth_add = False
                     OSD_depth_remove = False

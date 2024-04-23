@@ -17,18 +17,18 @@ import geopandas as gpd
 import numpy as np
 import pandas as pd
 import shapely
+import shapely.ops as ops
 import skimage
 from db import get_WISE30sec_data
 from numpy.linalg import cholesky
 from osgeo import ogr
-from rosetta import SoilData, rosetta
 from pyproj import Proj, Transformer
+from rosetta import SoilData, rosetta
 from scipy.interpolate import UnivariateSpline
 from scipy.sparse import issparse
 from scipy.stats import entropy, norm
 from services import sda_return
 from shapely.geometry import LinearRing, Point, box
-import shapely.ops as ops
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import pairwise
 from sklearn.utils import validation
@@ -39,7 +39,6 @@ def extract_WISE_data(lon, lat, file_path, buffer_size=0.5):
     # Create LPKS point
     point_geo = Point(lon, lat)
     point_geo.crs = {"init": "epsg:4326"}
-   
 
     # Create bounding box to clip HWSD data around the point
     bounding_box = create_bounding_box(lon, lat, buffer_dist=10000)
@@ -1243,6 +1242,7 @@ def extract_muhorzdata_STATSGO(mucompdata_pd):
 
         return muhorzdata_pd
 
+
 def calculate_distances_and_intersections(mu_geo, point):
     """
     Calculate distances and intersections of geometries to a point.
@@ -1257,21 +1257,21 @@ def calculate_distances_and_intersections(mu_geo, point):
 
     # Project the data to a suitable UTM zone based on the point's location
     point_utm, epsg_code = convert_geometry_to_utm(point)
-    
+
     # Project the GeoDataFrame to UTM for distance calculation
-    transformer = Transformer.from_proj('epsg:4326', f'epsg:{epsg_code}', always_xy=True)
+    transformer = Transformer.from_proj("epsg:4326", f"epsg:{epsg_code}", always_xy=True)
     mu_geo_utm = mu_geo.copy()
-    mu_geo_utm['geometry'] = mu_geo_utm['geometry'].apply(lambda geom: ops.transform(transformer.transform, geom) if not geom.is_empty else geom)
+    mu_geo_utm["geometry"] = mu_geo_utm["geometry"].apply(
+        lambda geom: ops.transform(transformer.transform, geom) if not geom.is_empty else geom
+    )
 
     # Calculate distances and intersections
-    distances = mu_geo_utm['geometry'].distance(point_utm)
-    intersects = mu_geo_utm['geometry'].intersects(point_utm)
+    distances = mu_geo_utm["geometry"].distance(point_utm)
+    intersects = mu_geo_utm["geometry"].intersects(point_utm)
 
-    return pd.DataFrame({
-        "mukey": mu_geo_utm["MUKEY"],
-        "distance_m": distances,
-        "pt_intersect": intersects
-    })
+    return pd.DataFrame(
+        {"mukey": mu_geo_utm["MUKEY"], "distance_m": distances, "pt_intersect": intersects}
+    )
 
 
 def load_statsgo_data(box):
@@ -1296,28 +1296,28 @@ def load_statsgo_data(box):
 def convert_geometry_to_utm(geometry):
     """
     Converts a shapely geometry from latitude and longitude to UTM coordinates in the appropriate UTM zone.
-    
+
     Parameters:
     - geometry (shapely.geometry): A shapely geometry object (e.g., Point, Polygon) in geographic coordinates.
-    
+
     Returns:
     - tuple: A tuple containing the transformed geometry in UTM coordinates and the EPSG code of the UTM zone.
     """
     # Extract centroid for determining UTM zone
     lon, lat = geometry.centroid.x, geometry.centroid.y
-    
+
     # Determine the UTM zone and construct the EPSG code
     utm_zone = int((lon + 180) / 6) + 1
-    hemisphere = 'north' if lat >= 0 else 'south'
-    epsg_code = f"326{utm_zone}" if hemisphere == 'north' else f"327{utm_zone}"
-    
+    hemisphere = "north" if lat >= 0 else "south"
+    epsg_code = f"326{utm_zone}" if hemisphere == "north" else f"327{utm_zone}"
+
     # Initialize the Proj object for the determined UTM zone
-    proj_utm = Proj(f'epsg:{epsg_code}')
-    transformer = Transformer.from_proj(Proj('epsg:4326'), proj_utm, always_xy=True)
-    
+    proj_utm = Proj(f"epsg:{epsg_code}")
+    transformer = Transformer.from_proj(Proj("epsg:4326"), proj_utm, always_xy=True)
+
     # Transform the geometry to UTM coordinates
     utm_geometry = ops.transform(transformer.transform, geometry)
-    
+
     return utm_geometry, epsg_code
 
 
@@ -1325,30 +1325,30 @@ def create_bounding_box(lon, lat, buffer_dist):
     """
     Creates a geographic bounding box around a given latitude and longitude,
     buffered by a specified distance in meters.
-    
+
     Parameters:
     - lon (float): Longitude of the center point.
     - lat (float): Latitude of the center point.
     - buffer_dist (float): Buffer distance in meters.
-    
+
     Returns:
     - Shapely Polygon: Geographic bounding box as a shapely polygon.
     """
     point_geo = Point(lon, lat)
     point_utm, epsg_code = convert_geometry_to_utm(point_geo)
 
-    proj_utm = Proj(f'epsg:{epsg_code}')
-    proj_latlon = Proj(proj='latlong', datum='WGS84')
-    
+    proj_utm = Proj(f"epsg:{epsg_code}")
+    proj_latlon = Proj(proj="latlong", datum="WGS84")
+
     # Create a point and buffer in UTM coordinates
-    point_gdf = gpd.GeoDataFrame([{"geometry": point_utm}], crs=f'epsg:{epsg_code}')
+    point_gdf = gpd.GeoDataFrame([{"geometry": point_utm}], crs=f"epsg:{epsg_code}")
     s_buff = point_gdf.geometry.buffer(buffer_dist)
     utm_box = box(*s_buff.total_bounds)
-    
+
     # Convert the UTM box back to geographic coordinates
     transformer = Transformer.from_proj(proj_utm, proj_latlon, always_xy=True)
     geographic_box = ops.transform(transformer.transform, utm_box)
-    
+
     return geographic_box
 
 
@@ -1370,7 +1370,7 @@ def extract_mucompdata_STATSGO(lon, lat):
 
     point = Point(lon, lat)
     box = create_bounding_box(lon, lat, buffer_dist=5000)
-    
+
     statsgo_mukey = load_statsgo_data(box)
     if statsgo_mukey is None:
         logging.warning(f"Soil ID not available in this area: {lon}.{lat}")
@@ -1798,6 +1798,7 @@ def validate_data(data):
         return False
     return True
 
+
 def correct_depth_discrepancies(data):
     """
     Corrects depth discrepancies by adding layers when needed.
@@ -1821,6 +1822,7 @@ def correct_depth_discrepancies(data):
         data = pd.concat([data] + layers_to_add).sort_index().reset_index(drop=True)
 
     return data
+
 
 def convert_rgb_to_lab(row, color_ref):
     """
@@ -1848,7 +1850,9 @@ def getProfileLAB(data_osd, color_ref):
 
     data_osd = correct_depth_discrepancies(data_osd)
 
-    data_osd["L"], data_osd["A"], data_osd["B"] = zip(*data_osd.apply(lambda row: convert_rgb_to_lab(row, color_ref), axis=1))
+    data_osd["L"], data_osd["A"], data_osd["B"] = zip(
+        *data_osd.apply(lambda row: convert_rgb_to_lab(row, color_ref), axis=1)
+    )
 
     l_intpl, a_intpl, b_intpl = [], [], []
 

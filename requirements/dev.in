@@ -1,5 +1,6 @@
-flake8
 black
+flake8
+gdown
 isort
 pytest
 pytest-profiling

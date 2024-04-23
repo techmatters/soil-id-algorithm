@@ -29,7 +29,6 @@ from scipy.stats import entropy, norm
 from services import sda_return
 from shapely.geometry import LinearRing, Point, box
 import shapely.ops as ops
-from skimage import color
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import pairwise
 from sklearn.utils import validation
@@ -2108,6 +2107,11 @@ def simulate_correlated_triangular(n, params, correlation_matrix):
         samples[~condition, i] = c - np.sqrt((1 - u[~condition]) * (c - a) * (c - b))
 
     return samples
+
+
+def regularize_matrix(matrix, epsilon=1e-8):
+    """Add a small positive value to the diagonal of the matrix to ensure positive definiteness."""
+    return matrix + np.eye(matrix.shape[0]) * epsilon
 
 
 def acomp(X, parts=None, total=1):

@@ -83,7 +83,7 @@ jobs:
           restore-keys: ${{ runner.os }}-data-
 
       - name: Download data
-        if: ${{ hashFiles('Data/*') != '' }}
+        if: ${{ hashFiles('Data/*') == '' }}
         run: |
           mkdir Data
           cd Data

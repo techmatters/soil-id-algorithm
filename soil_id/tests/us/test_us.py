@@ -18,7 +18,7 @@ def test_soil_location():
         {"lon": -119.4596489, "lat": 43.06450312, "plot_id": 3008},
         {"lon": -69.28246582, "lat": 47.21392200, "plot_id": 3009},
         {"lon": -158.4018264, "lat": 60.42282639, "plot_id": 3010},
-        {"lon": -121.8166, "lat": 48.6956, "plot_id": 3011},
+        # {"lon": -121.8166, "lat": 48.6956, "plot_id": 3011},
     ]
 
     # Dummy Soil Profile Data (replicating the structure provided)

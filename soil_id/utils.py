@@ -1494,7 +1494,7 @@ def process_site_data(mucompdata_pd):
     return mucompdata_pd
 
 
-def process_horz_data(muhorzdata_pd):
+def process_horizon_data(muhorzdata_pd):
     """
     Process the muhorzdata DataFrame by subsetting columns, converting data types,
     infilling missing values, and renaming columns for clarity.

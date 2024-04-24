@@ -47,7 +47,7 @@ from utils import (
     information_gain,
     process_data_with_rosetta,
     process_distance_scores,
-    process_horz_data,
+    process_horizon_data,
     process_site_data,
     regularize_matrix,
     remove_organic_layer,
@@ -83,6 +83,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     OSD_compkind = ["Series", "Variant", "Family", "Taxadjunct"]
     # Check if point is in a NOTCOM area, and if so then infill with STATSGO from NRCS SDA
+    # NOTCOM means not in SSURGO data
     if not out["spn"]:
         # Extract STATSGO data at point
         mucompdata_pd = extract_mucompdata_STATSGO(lon, lat)
@@ -140,7 +141,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     if data_source == "SSURGO":
         # Convert JSON data to DataFrame
         muhorzdata_pd = pd.json_normalize(out["hz"])
-        muhorzdata_pd = process_horz_data(muhorzdata_pd)
+        muhorzdata_pd = process_horizon_data(muhorzdata_pd)
 
         # Filter rows based on component keys
         muhorzdata_pd = muhorzdata_pd.loc[muhorzdata_pd["cokey"].isin(comp_key)]
@@ -183,11 +184,11 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 # -----------------------------------------------------------------------------------------------------------
                 # STATSGO Horizon Data Query
                 muhorzdata_pd = extract_muhorzdata_STATSGO(mucompdata_pd)
-                muhorzdata_pd = process_horz_data(muhorzdata_pd)
+                muhorzdata_pd = process_horizon_data(muhorzdata_pd)
     elif data_source == "STATSGO":
         # STATSGO Horizon Data Query
         muhorzdata_pd = extract_muhorzdata_STATSGO(mucompdata_pd)
-        muhorzdata_pd = process_horz_data(muhorzdata_pd)
+        muhorzdata_pd = process_horizon_data(muhorzdata_pd)
     # Merge muhorzdata_pd with selected columns from mucompdata_pd
     muhorzdata_pd = pd.merge(
         muhorzdata_pd,
@@ -265,7 +266,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     # Remove bedrock by filtering out 'R|r' in hzname
     muhorzdata_pd = muhorzdata_pd[~muhorzdata_pd["hzname"].str.contains("R", case=False, na=False)]
 
-    # Group data by cokey
+    # Group data by cokey (component key)
     muhorzdata_group_cokey = [group for _, group in muhorzdata_pd.groupby("cokey", sort=False)]
 
     getProfile_cokey = []

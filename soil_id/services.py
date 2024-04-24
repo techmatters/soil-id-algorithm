@@ -240,6 +240,7 @@ def get_soilweb_data(lon, lat):
     )
 
 
+# SDA = Soil Data Access
 def sda_return(propQry):
     """
     Queries data from the USDA's Soil Data Mart (SDM) Tabular Service and returns

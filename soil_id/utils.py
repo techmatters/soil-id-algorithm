@@ -28,7 +28,7 @@ from scipy.interpolate import UnivariateSpline
 from scipy.sparse import issparse
 from scipy.stats import entropy, norm
 from services import sda_return
-from shapely.geometry import LinearRing, Point, box
+from shapely.geometry import Point, box
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import pairwise
 from sklearn.utils import validation

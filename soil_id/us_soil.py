@@ -1629,7 +1629,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         )
         ESDcompdata_out = sda_return(propQry=ESDcompdataQry)
 
-        if ESDcompdata_out is None:
+        if ESDcompdata_out.empty:
             ESDcompdata_pd = None
         else:
             ESDcompdata_sda = pd.DataFrame(
@@ -1651,171 +1651,97 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             else:
                 ESDcompdata_pd = None
 
-    # Initialize the list for storing ESD components data
-    esd_comp_list = []
-
-    # Function to handle the update of ecological site data
-    def update_esd_data(df):
-        """
-        Processes the given DataFrame by updating missing ESD data based on component groups with the same names,
-        filling missing URLs and ecoclass IDs and names.
-        """
-        if "esd_url" not in df.columns:
-            df["esd_url"] = np.nan  # Initialize 'esd_url' as NaN if it does not exist
-
-        # Replace group-specific data for missing ESD components
-        df["compname_grp"] = df["compname"].str.replace(r"[0-9]+", "")
-        grouped = df.groupby("compname_grp", sort=False)
-
-        # Generate a list of updated groups
-        updated_groups = []
-        for _, group in grouped:
-            unique_ids = group["ecoclassid"].dropna().unique()
-            unique_names = group["ecoclassname"].dropna().unique()
-            if group["ecoclassid"].isnull().all() or group["ecoclassname"].isnull().all():
-                # Fill all missing values if all are missing within the group
-                group.fillna(
-                    {
-                        "ecoclassid": unique_ids[0] if unique_ids else "",
-                        "ecoclassname": unique_names[0] if unique_names else "",
-                    },
-                    inplace=True,
-                )
-            elif len(unique_ids) == 1 and len(unique_names) == 1:
-                # Fill missing values with existing unique values if present
-                group["ecoclassid"].fillna(unique_ids[0], inplace=True)
-                group["ecoclassname"].fillna(unique_names[0], inplace=True)
-
-            # Handle URLs separately as they might not exist
-            urls = group["esd_url"].dropna().unique()
-            group["esd_url"].fillna(urls[0] if urls.size > 0 else "", inplace=True)
-            updated_groups.append(group)
-
-        return pd.concat(updated_groups, ignore_index=True)
-
-    # Main logic for handling ESD data based on its presence
     if ESDcompdata_pd is not None:
-        # Process DataFrame: cleaning and updating
-        ESDcompdata_pd.replace("NULL", np.nan, inplace=True)
-        ESDcompdata_pd.drop_duplicates(subset=["cokey"], keep="first", inplace=True)
+        # Clean and process the dataframe
+        ESDcompdata_pd = ESDcompdata_pd.replace("NULL", np.nan)
+        ESDcompdata_pd = ESDcompdata_pd.drop_duplicates(keep="first").reset_index(drop=True)
         ESDcompdata_pd = ESDcompdata_pd[ESDcompdata_pd["cokey"].isin(comp_key)]
         ESDcompdata_pd["Comp_Rank"] = ESDcompdata_pd["cokey"].map(cokey_Index)
-        ESDcompdata_pd.sort_values("Comp_Rank", ascending=True, inplace=True)
+        ESDcompdata_pd.sort_values(["Comp_Rank"], ascending=True, inplace=True)
         ESDcompdata_pd.drop(columns="Comp_Rank", inplace=True)
 
-        # Further processing and checks for missing ESD data
-        ESDcompdata_pd = update_esd_data(ESDcompdata_pd)
+        # Update ecoclassid based on MLRA update by querying 'ESD_class_synonym_list' table
+        ecositeID = ESDcompdata_pd["ecoclassid"].dropna().tolist()
 
-        # Aggregate the ESD components for output
-        for _, group in ESDcompdata_pd.groupby("cokey"):
-            esd_data = {
-                "ESD": {
-                    "ecoclassid": group["ecoclassid"].tolist(),
-                    "ecoclassname": group["ecoclassname"].tolist(),
-                    "esd_url": group["esd_url"].tolist(),
-                }
-            }
-            esd_comp_list.append(esd_data)
-    else:
-        # Fill the list with empty data if ESDcompdata_pd is not available
-        esd_comp_list = [
-            {"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}}
-            for _ in range(len(mucompdata_pd))
-        ]
+        # old code
+        ESD_geo = []
+        ESD_geo.extend(ecositeID)
+        ESD_geo = [ESD_geo for ESD_geo in ESD_geo if str(ESD_geo) != "nan"]
+        ESD_geo = ESD_geo[0][1:5]
 
-        esd_comp_list = []
+        ESDcompdata_pd = get_esd_data(ecositeID, ESD_geo, ESDcompdata_pd)
 
+        # Assign missing ESD for components that have other instances with an assigned ESD
         if ESDcompdata_pd is not None:
-            # Clean and process the dataframe
-            ESDcompdata_pd = ESDcompdata_pd.replace("NULL", np.nan)
-            ESDcompdata_pd = ESDcompdata_pd.drop_duplicates(keep="first").reset_index(drop=True)
-            ESDcompdata_pd = ESDcompdata_pd[ESDcompdata_pd["cokey"].isin(comp_key)]
-            ESDcompdata_pd["Comp_Rank"] = ESDcompdata_pd["cokey"].map(cokey_Index)
-            ESDcompdata_pd.sort_values(["Comp_Rank"], ascending=True, inplace=True)
-            ESDcompdata_pd.drop(columns="Comp_Rank", inplace=True)
-
-            # Update ecoclassid based on MLRA update by querying 'ESD_class_synonym_list' table
-            ecositeID = ESDcompdata_pd["ecoclassid"].dropna().tolist()
-
-            # old code
-            ESD_geo = []
-            ESD_geo.extend(ecositeID)
-            ESD_geo = [ESD_geo for ESD_geo in ESD_geo if str(ESD_geo) != "nan"]
-            ESD_geo = ESD_geo[0][1:5]
-
-            ESDcompdata_pd = get_esd_data(ecositeID, ESD_geo, ESDcompdata_pd)
-            # Assign missing ESD for components that have other instances with an assigned ESD
-            if ESDcompdata_pd is not None:
-                if (
-                    ESDcompdata_pd.ecoclassid.isnull().any()
-                    or ESDcompdata_pd.ecoclassname.isnull().any()
-                ):
-                    ESDcompdata_pd["compname_grp"] = ESDcompdata_pd.compname.str.replace(r"[0-9]+", "")
-                    ESDcompdata_pd_comp_grps = [
-                        g for _, g in ESDcompdata_pd.groupby(["compname_grp"], sort=False)
-                    ]
-                    ecoList_out = []
-                    for i in range(len(ESDcompdata_pd_comp_grps)):
-                        comp_grps_temp = ESDcompdata_pd_comp_grps[i]
-                        if len(comp_grps_temp) == 1:
-                            ecoList_out.append(comp_grps_temp)
-                        elif (
-                            comp_grps_temp.ecoclassid.isnull().all()
-                            or comp_grps_temp.ecoclassname.isnull().all()
-                        ):
-                            ecoList_out.append(comp_grps_temp)
-                        elif (
-                            comp_grps_temp.ecoclassid.isnull().any()
-                            and len(comp_grps_temp.ecoclassid.dropna().unique()) == 1
-                        ) and (
-                            comp_grps_temp.ecoclassname.isnull().any()
-                            and len(comp_grps_temp.ecoclassname.dropna().unique()) == 1
-                        ):
-                            comp_grps_temp["ecoclassid"] = pd.Series(
-                                np.tile(
-                                    comp_grps_temp.ecoclassid.dropna().unique().tolist(),
-                                    len(comp_grps_temp),
-                                )
+            if (
+                ESDcompdata_pd.ecoclassid.isnull().any()
+                or ESDcompdata_pd.ecoclassname.isnull().any()
+            ):
+                ESDcompdata_pd["compname_grp"] = ESDcompdata_pd.compname.str.replace(r"[0-9]+", "")
+                ESDcompdata_pd_comp_grps = [
+                    g for _, g in ESDcompdata_pd.groupby(["compname_grp"], sort=False)
+                ]
+                ecoList_out = []
+                for i in range(len(ESDcompdata_pd_comp_grps)):
+                    comp_grps_temp = ESDcompdata_pd_comp_grps[i]
+                    if len(comp_grps_temp) == 1:
+                        ecoList_out.append(comp_grps_temp)
+                    elif (
+                        comp_grps_temp.ecoclassid.isnull().all()
+                        or comp_grps_temp.ecoclassname.isnull().all()
+                    ):
+                        ecoList_out.append(comp_grps_temp)
+                    elif (
+                        comp_grps_temp.ecoclassid.isnull().any()
+                        and len(comp_grps_temp.ecoclassid.dropna().unique()) == 1
+                    ) and (
+                        comp_grps_temp.ecoclassname.isnull().any()
+                        and len(comp_grps_temp.ecoclassname.dropna().unique()) == 1
+                    ):
+                        comp_grps_temp["ecoclassid"] = pd.Series(
+                            np.tile(
+                                comp_grps_temp.ecoclassid.dropna().unique().tolist(),
+                                len(comp_grps_temp),
+                            )
+                        ).values
+                        comp_grps_temp["ecoclassname"] = pd.Series(
+                            np.tile(
+                                comp_grps_temp.ecoclassname.dropna().unique().tolist(),
+                                len(comp_grps_temp),
+                            )
+                        ).values
+                        url = comp_grps_temp.esd_url.unique().tolist()
+                        url = [x for x in url if x != ""]
+                        if not url:
+                            comp_grps_temp["esd_url"] = pd.Series(
+                                np.tile("", len(comp_grps_temp))
                             ).values
-                            comp_grps_temp["ecoclassname"] = pd.Series(
-                                np.tile(
-                                    comp_grps_temp.ecoclassname.dropna().unique().tolist(),
-                                    len(comp_grps_temp),
-                                )
-                            ).values
-                            url = comp_grps_temp.esd_url.unique().tolist()
-                            url = [x for x in url if x != ""]
-                            if not url:
-                                comp_grps_temp["esd_url"] = pd.Series(
-                                    np.tile("", len(comp_grps_temp))
-                                ).values
-                            else:
-                                comp_grps_temp["esd_url"] = pd.Series(
-                                    np.tile(url, len(comp_grps_temp))
-                                ).values
-                            ecoList_out.append(comp_grps_temp)
                         else:
-                            ecoList_out.append(comp_grps_temp)
-                    ESDcompdata_pd = pd.concat(ecoList_out)
-
-                ESDcompdata_group_cokey = [g for _, g in ESDcompdata_pd.groupby(["cokey"], sort=False)]
-                for i in range(len(ESDcompdata_group_cokey)):
-                    if ESDcompdata_group_cokey[i]["ecoclassname"].isnull().values.any():
-                        esd_comp_list.append({"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}})
+                            comp_grps_temp["esd_url"] = pd.Series(
+                                np.tile(url, len(comp_grps_temp))
+                            ).values
+                        ecoList_out.append(comp_grps_temp)
                     else:
-                        esd_comp_list.append(
-                            {
-                                "ESD": {
-                                    "ecoclassid": ESDcompdata_group_cokey[i]["ecoclassid"].tolist(),
-                                    "ecoclassname": ESDcompdata_group_cokey[i]["ecoclassname"].tolist(),
-                                    "esd_url": ESDcompdata_group_cokey[i]["esd_url"].tolist(),
-                                }
-                            }
-                        )
+                        ecoList_out.append(comp_grps_temp)
+                ESDcompdata_pd = pd.concat(ecoList_out)
+
+        ESDcompdata_group_cokey = [g for _, g in ESDcompdata_pd.groupby(["cokey"], sort=False)]
+        esd_comp_list = []
+        for i in range(len(ESDcompdata_group_cokey)):
+            if ESDcompdata_group_cokey[i]["ecoclassname"].isnull().values.any():
+                esd_comp_list.append({"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}})
             else:
-                for i in range(len(mucompdata_pd)):
-                    esd_comp_list.append({"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}})
+                esd_comp_list.append(
+                    {
+                        "ESD": {
+                            "ecoclassid": ESDcompdata_group_cokey[i]["ecoclassid"].tolist(),
+                            "ecoclassname": ESDcompdata_group_cokey[i]["ecoclassname"].tolist(),
+                            "esd_url": ESDcompdata_group_cokey[i]["esd_url"].tolist(),
+                        }
+                    }
+                )
         else:
+            esd_comp_list = []
             for i in range(len(mucompdata_pd)):
                 esd_comp_list.append({"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}})
 

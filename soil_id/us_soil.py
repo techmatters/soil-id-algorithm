@@ -49,6 +49,7 @@ from utils import (
     process_distance_scores,
     process_horz_data,
     process_site_data,
+    regularize_matrix,
     remove_organic_layer,
     simulate_correlated_triangular,
     slice_and_aggregate_soil_data,
@@ -441,7 +442,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
         b. Perform the isometric log-ratio transformation.
         c. Extract l,r,h values (min, median, max for ilr1 and ilr2) and format into a
            params object for simiulation.
-        d. Simulate all properties and then permorm inverse transform on ilr1 and ilr2
+        d. Simulate all properties and then perform inverse transform on ilr1 and ilr2
            to obtain sand, silt, and clay values.
         e. Append simulated values to dataframe
 
@@ -480,6 +481,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
     ]
 
     sim = muhorzdata_pd[sim_columns]
+
     if sim["hzname"].str.contains("O").any():
         sim = remove_organic_layer(sim)
     sim = sim.rename(columns={"total_frag_volume": "rfv_r"})
@@ -530,170 +532,183 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
 
     # Concatenate the results for each column into a single dataframe
     agg_data_df = pd.concat(agg_data, axis=0, ignore_index=True).dropna().reset_index(drop=True)
-
-    # Extract columns with names ending in '_r'
-    agg_data_r = agg_data_df[[col for col in agg_data_df.columns if col.endswith("_r")]]
-
-    # Compute the local correlation matrix (Spearman correlation matrix)
-    rep_columns = agg_data_r.drop(columns=["sandtotal_r", "silttotal_r", "claytotal_r"])
-    # correlation_matrix, _ = spearmanr(selected_columns, axis=0)
-
-    ilr_site_txt = ilr(agg_data_df[["sandtotal_r", "silttotal_r", "claytotal_r"]].values)
-    cor_cols = [
-        "ilr1",
-        "ilr2",
-        "dbovendry_r",
-        "wthirdbar_r",
-        "wfifteenbar_r",
-    ]
-    rep_columns["ilr1"] = pd.Series(ilr_site_txt[:, 0])
-    rep_columns["ilr2"] = pd.Series(ilr_site_txt[:, 1])
-    rep_columns[cor_cols] = rep_columns[cor_cols].replace(0, 0.01)
-    is_constant = rep_columns["rfv_r"].nunique() == 1
-    if is_constant:
-        cor_cols = [
-            "ilr1",
-            "ilr2",
-            "dbovendry_r",
-            "wthirdbar_r",
-            "wfifteenbar_r",
-        ]
+    if agg_data_df["compname_grp"].nunique() < 2:
+        aws_PIW90 = "Data not available"
+        var_imp = "Data not available"
     else:
+
+        # Extract columns with names ending in '_r'
+        agg_data_r = agg_data_df[[col for col in agg_data_df.columns if col.endswith("_r")]]
+
+        # Compute the local correlation matrix (Spearman correlation matrix)
+        rep_columns = agg_data_r.drop(columns=["sandtotal_r", "silttotal_r", "claytotal_r"])
+        # correlation_matrix, _ = spearmanr(selected_columns, axis=0)
+
+        ilr_site_txt = ilr(agg_data_df[["sandtotal_r", "silttotal_r", "claytotal_r"]].values)
         cor_cols = [
             "ilr1",
             "ilr2",
             "dbovendry_r",
             "wthirdbar_r",
             "wfifteenbar_r",
-            "rfv_r",
         ]
-
-    # remove truncated profile layers from correlation matrix
-    rep_columns = rep_columns[rep_columns["wthirdbar_r"] != 0.01]
-
-    correlation_matrix_data = rep_columns[cor_cols]
-
-    local_correlation_matrix, _ = spearmanr(correlation_matrix_data, axis=0)
-
-    """
-    Step 2. Simulate data for each row, with the number of simulations equal
-            to the (distance_score*100)*10
-    """
-    # Global soil texture correlation matrix (used for initial simulation)
-    texture_correlation_matrix = np.array(
-        [
-            [1.0000000, -0.76231798, -0.67370589],
-            [-0.7623180, 1.00000000, 0.03617498],
-            [-0.6737059, 0.03617498, 1.00000000],
-        ]
-    )
-
-    sim_data_out = []
-
-    for index, row in agg_data_df.iterrows():
-        # 2a. Simulate sand/silt/clay percentages
-        # 1. Extract and format data params
-        sand_params = [row["sandtotal_l"], row["sandtotal_r"], row["sandtotal_h"]]
-        silt_params = [row["silttotal_l"], row["silttotal_r"], row["silttotal_h"]]
-        clay_params = [row["claytotal_l"], row["claytotal_r"], row["claytotal_h"]]
-
-        params_txt = [sand_params, silt_params, clay_params]
-
-        # 2. Perform processing steps on data
-        #    Convert simulated data using the acomp function and then compute the isometric
-        #    log-ratio transformation.
-        simulated_txt = acomp(
-            simulate_correlated_triangular(
-                (int(row["distance_score"] * 1000)), params_txt, texture_correlation_matrix
-            )
-        )
-        simulated_txt_ilr = ilr(simulated_txt)
-
-        # Extract min, median, and max for the first two ilr transformed columns.
-        ilr1_values = simulated_txt_ilr[:, 0]
-        ilr2_values = simulated_txt_ilr[:, 1]
-
-        ilr1_l, ilr1_r, ilr1_h = (
-            ilr1_values.min(),
-            np.median(ilr1_values),
-            ilr1_values.max(),
-        )
-        ilr2_l, ilr2_r, ilr2_h = (
-            ilr2_values.min(),
-            np.median(ilr2_values),
-            ilr2_values.max(),
-        )
-
-        # Create the list of parameters.
+        rep_columns["ilr1"] = pd.Series(ilr_site_txt[:, 0])
+        rep_columns["ilr2"] = pd.Series(ilr_site_txt[:, 1])
+        rep_columns[cor_cols] = rep_columns[cor_cols].replace(0, 0.01)
+        is_constant = rep_columns["rfv_r"].nunique() == 1
         if is_constant:
-            params = [
-                [ilr1_l, ilr1_r, ilr1_h],
-                [ilr2_l, ilr2_r, ilr2_h],
-                [row["dbovendry_l"], row["dbovendry_r"], row["dbovendry_h"]],
-                [row["wthirdbar_l"], row["wthirdbar_r"], row["wthirdbar_h"]],
-                [row["wfifteenbar_l"], row["wfifteenbar_r"], row["wfifteenbar_h"]],
+            cor_cols = [
+                "ilr1",
+                "ilr2",
+                "dbovendry_r",
+                "wthirdbar_r",
+                "wfifteenbar_r",
             ]
         else:
-            params = [
-                [ilr1_l, ilr1_r, ilr1_h],
-                [ilr2_l, ilr2_r, ilr2_h],
-                [row["dbovendry_l"], row["dbovendry_r"], row["dbovendry_h"]],
-                [row["wthirdbar_l"], row["wthirdbar_r"], row["wthirdbar_h"]],
-                [row["wfifteenbar_l"], row["wfifteenbar_r"], row["wfifteenbar_h"]],
-                [row["rfv_l"], row["rfv_r"], row["rfv_h"]],
+            cor_cols = [
+                "ilr1",
+                "ilr2",
+                "dbovendry_r",
+                "wthirdbar_r",
+                "wfifteenbar_r",
+                "rfv_r",
             ]
 
-        # Check diagonal elements and off-diagonal range
-        if not np.all(np.diag(local_correlation_matrix) >= 0.99999999999999) or np.any(
-            np.abs(local_correlation_matrix - np.eye(*local_correlation_matrix.shape)) > 1
-        ):
-            return f"""LinAlgError encountered in row index: {index}.
-                       Correlation matrix diagonal/off-diagonal values are not valid."""
+        # remove truncated profile layers from correlation matrix
+        rep_columns = rep_columns[rep_columns["wthirdbar_r"] != 0.01]
 
-        # Check for NaNs or infs in the matrix
+        correlation_matrix_data = rep_columns[cor_cols]
+
+        local_correlation_matrix, _ = spearmanr(correlation_matrix_data, axis=0)
+
+        # Define global correlation matrix data (derived from KSSL SPCS)
+        # Used if unable to calculate a local_correlation_matrix
+        global_correlation_matrix = np.array(
+            [
+                [1.0000000, 0.6149869, -0.30000031, 0.5573609, 0.5240642, -0.33380115],  # "ilr1"
+                [0.6149869, 1.0000000, -0.18742324, 0.5089337, 0.7580271, -0.32807023],  # "ilr2"
+                [
+                    -0.30000031,
+                    -0.18742324,
+                    1.00000000,
+                    -0.7706528,
+                    -0.5117794,
+                    0.02803607,
+                ],  # "dbovendry_r"
+                [
+                    0.5573609,
+                    0.5089337,
+                    -0.77065276,
+                    1.0000000,
+                    0.7826896,
+                    -0.14029112,
+                ],  # "wthirdbar_r"
+                [
+                    0.5240642,
+                    0.7580271,
+                    -0.51177936,
+                    0.7826896,
+                    1.0000000,
+                    -0.17901686,
+                ],  # "wfifteenbar_r"
+                [
+                    -0.33380115,
+                    -0.32807023,
+                    0.02803607,
+                    -0.14029112,
+                    -0.17901686,
+                    1.00000000,
+                ],  # "rfv_r"
+            ]
+        )
+
+        # Check for NaNs or infs in the local correlation matrix and if so,
+        # replace with global matrix
         if np.isnan(local_correlation_matrix).any() or np.isinf(local_correlation_matrix).any():
-            return f"Matrix contains NaNs or infs in row index: {index}"
+            local_correlation_matrix = global_correlation_matrix
 
-        # Try calculating eigenvalues again
-        try:
-            eigenvalues = np.linalg.eigvals(local_correlation_matrix)
-        except np.linalg.LinAlgError:
-            return "Matrix still contains invalid values."
+        """
+        Step 2. Simulate data for each row, with the number of simulations equal
+                to the (distance_score*100)*10
+        """
+        # Global soil texture correlation matrix (used for initial simulation)
+        texture_correlation_matrix = np.array(
+            [
+                [1.0000000, -0.76231798, -0.67370589],
+                [-0.7623180, 1.00000000, 0.03617498],
+                [-0.6737059, 0.03617498, 1.00000000],
+            ]
+        )
 
-        if np.any(eigenvalues <= 0):
-            # Adjusting the matrix slightly if needed
-            epsilon = 1e-10
-            local_correlation_matrix += np.eye(local_correlation_matrix.shape[0]) * epsilon
+        sim_data_out = []
 
-        # Proceed with the simulation
-        try:
-            n_sim = max(int(row["distance_score"] * 1000), 20)
-            sim_data = simulate_correlated_triangular(
-                n=n_sim,
-                params=params,
-                correlation_matrix=local_correlation_matrix,
+        for index, row in agg_data_df.iterrows():
+            """
+            Step 2a. Simulate sand/silt/clay percentages
+            """
+            # Extract and format data params
+            sand_params = [row["sandtotal_l"], row["sandtotal_r"], row["sandtotal_h"]]
+            silt_params = [row["silttotal_l"], row["silttotal_r"], row["silttotal_h"]]
+            clay_params = [row["claytotal_l"], row["claytotal_r"], row["claytotal_h"]]
+
+            params_txt = [sand_params, silt_params, clay_params]
+
+            """
+            Step 2b. Perform processing steps on data
+            - Convert simulated data using the acomp function and then compute the isometric
+              log-ratio transformation.
+            """
+
+            simulated_txt = acomp(
+                simulate_correlated_triangular(
+                    (int(row["distance_score"] * 1000)), params_txt, texture_correlation_matrix
+                )
             )
-        except np.linalg.LinAlgError:
-            return "Adjusted matrix is still not positive definite."
-        except ZeroDivisionError:
-            # Handle the division by zero error
-            return f"Division by zero encountered in row index: {index}"
-        if is_constant:
-            sim_data = pd.DataFrame(
-                sim_data,
-                columns=[
-                    "ilr1",
-                    "ilr2",
-                    "bulk_density_third_bar",
-                    "water_retention_third_bar",
-                    "water_retention_15_bar",
-                ],
+            simulated_txt_ilr = ilr(simulated_txt)
+
+            """
+            Step 2c. Extract l,r,h values (min, median, max for ilr1 and ilr2) and format into a
+                     params object for simiulation
+            """
+            ilr1_values = simulated_txt_ilr[:, 0]
+            ilr2_values = simulated_txt_ilr[:, 1]
+
+            ilr1_l, ilr1_r, ilr1_h = (
+                ilr1_values.min(),
+                np.median(ilr1_values),
+                ilr1_values.max(),
             )
-            rfv_unique = rep_columns["rfv_r"].unique()[0]
-            sim_data["rfv"] = rfv_unique
-        else:
+            ilr2_l, ilr2_r, ilr2_h = (
+                ilr2_values.min(),
+                np.median(ilr2_values),
+                ilr2_values.max(),
+            )
+
+            # Create the list of parameters.
+            if is_constant:
+                params = [
+                    [ilr1_l, ilr1_r, ilr1_h],
+                    [ilr2_l, ilr2_r, ilr2_h],
+                    [row["dbovendry_l"], row["dbovendry_r"], row["dbovendry_h"]],
+                    [row["wthirdbar_l"], row["wthirdbar_r"], row["wthirdbar_h"]],
+                    [row["wfifteenbar_l"], row["wfifteenbar_r"], row["wfifteenbar_h"]],
+                ]
+            else:
+                params = [
+                    [ilr1_l, ilr1_r, ilr1_h],
+                    [ilr2_l, ilr2_r, ilr2_h],
+                    [row["dbovendry_l"], row["dbovendry_r"], row["dbovendry_h"]],
+                    [row["wthirdbar_l"], row["wthirdbar_r"], row["wthirdbar_h"]],
+                    [row["wfifteenbar_l"], row["wfifteenbar_r"], row["wfifteenbar_h"]],
+                    [row["rfv_l"], row["rfv_r"], row["rfv_h"]],
+                ]
+
+            """
+            Step 2d. Simulate all properties and then perform inverse transform on ilr1 and ilr2
+                     to obtain sand, silt, and clay values.
+            """
+            # Initialize sim_data to an empty DataFrame with expected columns
             sim_data = pd.DataFrame(
-                sim_data,
                 columns=[
                     "ilr1",
                     "ilr2",
@@ -701,152 +716,230 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                     "water_retention_third_bar",
                     "water_retention_15_bar",
                     "rfv",
-                ],
+                ]
             )
 
-        sim_data["water_retention_third_bar"] = sim_data["water_retention_third_bar"].div(100)
-        sim_data["water_retention_15_bar"] = sim_data["water_retention_15_bar"].div(100)
-        sim_txt = ilr_inv(sim_data[["ilr1", "ilr2"]])
-        sim_txt = pd.DataFrame(sim_txt, columns=["sand_total", "silt_total", "clay_total"])
-        sim_txt = sim_txt.multiply(100)
-        multi_sim = pd.concat([sim_data.drop(columns=["ilr1", "ilr2"]), sim_txt], axis=1)
-        multi_sim["compname_grp"] = row["compname_grp"]
-        multi_sim["hzdept_r"] = row["hzdept_r"]
-        multi_sim["hzdepb_r"] = row["hzdepb_r"]
-        sim_data_out.append(multi_sim)
+            # Check diagonal elements and off-diagonal range
+            if not np.all(np.diag(local_correlation_matrix) >= 0.99999999999999) or np.any(
+                np.abs(local_correlation_matrix - np.eye(*local_correlation_matrix.shape)) > 1
+            ):
+                print(
+                    f"""LinAlgError encountered in row index: {index}.
+                           Correlation matrix diagonal/off-diagonal values are not valid."""
+                )
 
-    sim_data_df = pd.concat(sim_data_out, axis=0, ignore_index=True)
+            # Proceed with the simulation
+            try:
+                eigenvalues = np.linalg.eigvals(local_correlation_matrix)
+                epsilon = 1e-8
+                # Regularize the matrix if any eigenvalue is non-positive or very close to zero
+                if np.any(eigenvalues <= epsilon):
+                    print(
+                        f"Regularizing matrix due to non-positive or small eigenvalues at row {index}."  # noqa: E501
+                    )
+                    local_correlation_matrix = regularize_matrix(local_correlation_matrix)
 
-    # Convert NaN values to None
-    sim_data_df = sim_data_df.where(pd.notna(sim_data_df), None)
+                n_sim = max(int(row["distance_score"] * 1000), 20)
+                sim_data = simulate_correlated_triangular(
+                    n=n_sim,
+                    params=params,
+                    correlation_matrix=local_correlation_matrix,
+                )
 
-    # Convert the DataFrame to the desired format
-    # rossetta_input_data = sim_data_df.values.tolist()
-    variables = [
-        "sand_total",
-        "silt_total",
-        "clay_total",
-        "bulk_density_third_bar",
-        "water_retention_third_bar",
-        "water_retention_15_bar",
-    ]
+            except np.linalg.LinAlgError:
+                print("Adjusted matrix is still not positive definite.")
+                continue  # Skip this iteration
 
-    rosetta_data = process_data_with_rosetta(sim_data_df, vars=variables, v=3)
+            except ZeroDivisionError:
+                # Handle the division by zero error
+                print(f"Division by zero encountered in row index: {index}")
+                continue  # Skip this iteration
+            # Process sim_data only if it's valid
+            if not sim_data.shape[0] == 0:
+                if is_constant:
+                    sim_data = pd.DataFrame(
+                        sim_data,
+                        columns=[
+                            "ilr1",
+                            "ilr2",
+                            "bulk_density_third_bar",
+                            "water_retention_third_bar",
+                            "water_retention_15_bar",
+                        ],
+                    )
+                    rfv_unique = rep_columns["rfv_r"].unique()[0]
+                    sim_data["rfv"] = rfv_unique
+                else:
+                    sim_data = pd.DataFrame(
+                        sim_data,
+                        columns=[
+                            "ilr1",
+                            "ilr2",
+                            "bulk_density_third_bar",
+                            "water_retention_third_bar",
+                            "water_retention_15_bar",
+                            "rfv",
+                        ],
+                    )
 
-    # Create layerID
-    sim_data_df["layerID"] = sim_data_df["compname_grp"] + "_" + sim_data_df["hzdept_r"].astype(str)
-    rosetta_data["layerID"] = sim_data_df["layerID"]
+                sim_data["water_retention_third_bar"] = sim_data["water_retention_third_bar"].div(
+                    100
+                )
+                sim_data["water_retention_15_bar"] = sim_data["water_retention_15_bar"].div(100)
+                sim_txt = ilr_inv(sim_data[["ilr1", "ilr2"]])
+                sim_txt = pd.DataFrame(sim_txt, columns=["sand_total", "silt_total", "clay_total"])
+                sim_txt = sim_txt.multiply(100)
+                multi_sim = pd.concat([sim_data.drop(columns=["ilr1", "ilr2"]), sim_txt], axis=1)
+                multi_sim["compname_grp"] = row["compname_grp"]
+                multi_sim["hzdept_r"] = row["hzdept_r"]
+                multi_sim["hzdepb_r"] = row["hzdepb_r"]
+                sim_data_out.append(multi_sim)
 
-    awc = calculate_vwc_awc(rosetta_data)
-    awc = awc.map(lambda x: x.tolist() if isinstance(x, np.ndarray) else x)
-    awc["top"] = sim_data_df["hzdept_r"]
-    awc["bottom"] = sim_data_df["hzdepb_r"]
-    awc["compname_grp"] = sim_data_df["compname_grp"]
+        """
+        Step 2e. Append simulated values to dataframe
+        """
+        sim_data_df = pd.concat(sim_data_out, axis=0, ignore_index=True)
 
-    awc_grouped = awc.groupby(["top"])
-    data_len_depth = awc_grouped.apply(
-        lambda x: pd.DataFrame({"depth_len": [len(x)]}, index=[x.name]), include_groups=False
-    )
+        # Convert NaN values to None
+        sim_data_df = sim_data_df.where(pd.notna(sim_data_df), None)
 
-    awc = awc.merge(data_len_depth, on="top", how="left")
+        # ------------------------------------------------------------------------------------
+        # Step 3. Run Rosetta and other Van Genuchten equations
+        # ------------------------------------------------------------------------------------
 
-    # Step 1: Reshaping awc data
+        # Step 3a: Run Rosetta
 
-    # Apply the function to the entire ROI by depth
-    awc_grouped_bottom = awc.groupby(["bottom"])
-    awc_quant_list = awc_grouped_bottom.apply(
-        lambda x: pd.DataFrame(
-            {
-                "awc_quant": x["awc"].quantile([0.05, 0.50, 0.95]).values,
-                "prob": [0.05, 0.50, 0.95],
-                "n": len(x) / x["depth_len"].iloc[0],
-            }
-        ),
-        include_groups=False,
-    ).reset_index(level=[0, 1])
+        # Convert the DataFrame to the desired format
+        variables = [
+            "sand_total",
+            "silt_total",
+            "clay_total",
+            "bulk_density_third_bar",
+            "water_retention_third_bar",
+            "water_retention_15_bar",
+        ]
 
-    # Pivoting the DataFrame
-    awc_comp_quant = awc_quant_list.pivot(
-        index=["bottom", "n"], columns="prob", values="awc_quant"
-    ).reset_index()
+        rosetta_data = process_data_with_rosetta(sim_data_df, vars=variables, v=3)
 
-    # Renaming columns for clarity
-    awc_comp_quant.columns = ["bottom", "n", "0.05", "0.50", "0.95"]
+        # Create layerID
+        sim_data_df["layerID"] = (
+            sim_data_df["compname_grp"] + "_" + sim_data_df["hzdept_r"].astype(str)
+        )
+        rosetta_data["layerID"] = sim_data_df["layerID"]
 
-    # Step 2: Joining with mu_data and filtering distinct rows
-    awc_comp_quant["top"] = np.where(
-        awc_comp_quant["bottom"] <= 30, 0, np.where(awc_comp_quant["bottom"] > 30, 30, np.nan)
-    )
+        awc = calculate_vwc_awc(rosetta_data)
+        awc = awc.map(lambda x: x.tolist() if isinstance(x, np.ndarray) else x)
+        awc["top"] = sim_data_df["hzdept_r"]
+        awc["bottom"] = sim_data_df["hzdepb_r"]
+        awc["compname_grp"] = sim_data_df["compname_grp"]
 
-    # Step 3: Calculating depth
-    awc_comp_quant["depth"] = awc_comp_quant["bottom"] - awc_comp_quant["top"]
+        awc_grouped = awc.groupby(["top"])
+        data_len_depth = awc_grouped.apply(
+            lambda x: pd.DataFrame({"depth_len": [len(x)]}, index=[x.name]), include_groups=False
+        )
 
-    # Steps 4 and 5: Group by 'compname_grp' and merge
-    aws05 = calculate_aws(awc_comp_quant, "0.05")
-    aws95 = calculate_aws(awc_comp_quant, "0.95")
+        awc = awc.merge(data_len_depth, on="top", how="left")
 
-    """
-    Width of the 90th prediction interval for available water
-    storage in the top 100cm of soil (aws_PIW90). This value
-    represents the weighted average of all soils mapped within
-    the area of interest (AOI). Values greater than 3%
-    indicate significant heterogenity in mapped soil properties.
-    """
-    aws_PIW90 = aws95["aws0.95_100"] - aws05["aws0.05_100"]
+        # Step 3b: Reshaping awc data
 
-    # ---------------------------------------------------------------------------
-    # Calculate Information Gain, i.e., soil input variable importance
+        # Apply the function to the entire ROI by depth
+        awc_grouped_bottom = awc.groupby(["bottom"])
+        awc_quant_list = awc_grouped_bottom.apply(
+            lambda x: pd.DataFrame(
+                {
+                    "awc_quant": x["awc"].quantile([0.05, 0.50, 0.95]).values,
+                    "prob": [0.05, 0.50, 0.95],
+                    "n": len(x) / x["depth_len"].iloc[0],
+                }
+            ),
+            include_groups=False,
+        ).reset_index(level=[0, 1])
 
-    sim_data_df["texture"] = sim_data_df.apply(getTexture, axis=1)
-    sim_data_df["rfv_class"] = sim_data_df.apply(getCF_class, axis=1)
+        # Pivoting the DataFrame
+        awc_comp_quant = awc_quant_list.pivot(
+            index=["bottom", "n"], columns="prob", values="awc_quant"
+        ).reset_index()
 
-    # Remove the 'hzdepb_r' column
-    sim_data_df = sim_data_df.drop(columns=["hzdepb_r"], errors="ignore")
-    grp_list = sim_data_df["compname_grp"].unique().tolist()
-    # Define the soil property columns
-    soil_property_columns = ["texture", "rfv_class"]
+        # Renaming columns for clarity
+        awc_comp_quant.columns = ["bottom", "n", "0.05", "0.50", "0.95"]
 
-    # Filter only the relevant columns
-    filter_columns = ["compname_grp", "hzdept_r"] + soil_property_columns
-    filtered_df = sim_data_df[filter_columns]
-    final_columns = ["compname_grp"] + soil_property_columns
+        # Step 3c: Joining with mu_data and filtering distinct rows
+        awc_comp_quant["top"] = np.where(
+            awc_comp_quant["bottom"] <= 30, 0, np.where(awc_comp_quant["bottom"] > 30, 30, np.nan)
+        )
 
-    # Create a new DataFrame for each soil depth
-    df1 = filtered_df[filtered_df["hzdept_r"] == 0].copy().reset_index(drop=True)
-    df1 = df1[final_columns]
-    rename_simulated_soil_profile_columns(df1, soil_property_columns, 0)
+        # Step 3d: Calculating depth
+        awc_comp_quant["depth"] = awc_comp_quant["bottom"] - awc_comp_quant["top"]
 
-    df2 = filtered_df[filtered_df["hzdept_r"] == 30].copy().reset_index(drop=True)
-    df2 = df2[final_columns]
-    rename_simulated_soil_profile_columns(df2, soil_property_columns, 30)
-    # Assuming df1 and df2 are your dataframes
-    groups1 = df1.groupby("compname_grp")
-    groups2 = df2.groupby("compname_grp")
+        # Step 3e: Group by 'compname_grp' and merge
+        aws05 = calculate_aws(awc_comp_quant, "0.05")
+        aws95 = calculate_aws(awc_comp_quant, "0.95")
 
-    # Concatenating corresponding groups
+        """
+        Width of the 90th prediction interval for available water
+        storage in the top 100cm of soil (aws_PIW90). This value
+        represents the weighted average of all soils mapped within
+        the area of interest (AOI). Values greater than 3%
+        indicate significant heterogenity in mapped soil properties.
+        """
+        aws_PIW90 = aws95["aws0.95_100"] - aws05["aws0.05_100"]
+        aws_PIW90 = round(float(aws_PIW90.iloc[0]), 2)
+        # ---------------------------------------------------------------------------
+        # Calculate Information Gain, i.e., soil input variable importance
 
-    concatenated_groups = []
-    for group_label in grp_list:
-        group_df1 = groups1.get_group(group_label).reset_index(drop=True)
-        if group_label in groups2.groups:
-            group_df2 = groups2.get_group(group_label).reset_index(drop=True)
-        else:
-            group_df2 = pd.DataFrame(index=range(len(group_df1)), columns=group_df1.columns)
-            group_df2.columns = df2.columns
-            group_df2["compname_grp"] = group_df1["compname_grp"]
-            group_df2 = group_df2.fillna(0)
-            group_df2 = group_df2.reset_index(drop=True)
-        concatenated_group = pd.concat([group_df1, group_df2.drop("compname_grp", axis=1)], axis=1)
-        concatenated_groups.append(concatenated_group)
+        sim_data_df["texture"] = sim_data_df.apply(getTexture, axis=1)
+        sim_data_df["rfv_class"] = sim_data_df.apply(getCF_class, axis=1)
 
-    # Combine all concatenated groups into a single dataframe
-    result_df = pd.concat(concatenated_groups, axis=0, ignore_index=True)
-    var_imp = information_gain(
-        result_df, ["compname_grp"], ["texture_0", "texture_30", "rfv_class_0", "rfv_class_30"]
-    )
+        # Remove the 'hzdepb_r' column
+        sim_data_df = sim_data_df.drop(columns=["hzdepb_r"], errors="ignore")
+        grp_list = sim_data_df["compname_grp"].unique().tolist()
+        # Define the soil property columns
+        soil_property_columns = ["texture", "rfv_class"]
+
+        # Filter only the relevant columns
+        filter_columns = ["compname_grp", "hzdept_r"] + soil_property_columns
+        filtered_df = sim_data_df[filter_columns]
+        final_columns = ["compname_grp"] + soil_property_columns
+
+        # Create a new DataFrame for each soil depth
+        df1 = filtered_df[filtered_df["hzdept_r"] == 0].copy().reset_index(drop=True)
+        df1 = df1[final_columns]
+        rename_simulated_soil_profile_columns(df1, soil_property_columns, 0)
+
+        df2 = filtered_df[filtered_df["hzdept_r"] == 30].copy().reset_index(drop=True)
+        df2 = df2[final_columns]
+        rename_simulated_soil_profile_columns(df2, soil_property_columns, 30)
+        # Assuming df1 and df2 are your dataframes
+        groups1 = df1.groupby("compname_grp")
+        groups2 = df2.groupby("compname_grp")
+
+        # Concatenating corresponding groups
+
+        concatenated_groups = []
+        for group_label in grp_list:
+            group_df1 = groups1.get_group(group_label).reset_index(drop=True)
+            if group_label in groups2.groups:
+                group_df2 = groups2.get_group(group_label).reset_index(drop=True)
+            else:
+                group_df2 = pd.DataFrame(index=range(len(group_df1)), columns=group_df1.columns)
+                group_df2.columns = df2.columns
+                group_df2["compname_grp"] = group_df1["compname_grp"]
+                group_df2 = group_df2.fillna(0)
+                group_df2 = group_df2.reset_index(drop=True)
+            concatenated_group = pd.concat(
+                [group_df1, group_df2.drop("compname_grp", axis=1)], axis=1
+            )
+            concatenated_groups.append(concatenated_group)
+
+        # Combine all concatenated groups into a single dataframe
+        result_df = pd.concat(concatenated_groups, axis=0, ignore_index=True)
+        var_imp = information_gain(
+            result_df, ["compname_grp"], ["texture_0", "texture_30", "rfv_class_0", "rfv_class_30"]
+        )
 
     # ----------------------------------------------------------------------------
     # This extracts OSD color, texture, and CF data
+
     if data_source == "STATSGO":
         # If the condition is met, we perform the series of operations, otherwise,
         # we set OSDhorzdata_pd to None
@@ -854,79 +947,82 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             try:
                 # Generate series names
                 seriesDict = get_soil_series_data(mucompdata_pd, OSD_compkind)
+                if seriesDict.get("hz") is not None:
+                    # Normalize the data and perform data manipulations
+                    OSDhorzdata_pd = pd.json_normalize(seriesDict["hz"])[
+                        [
+                            "series",
+                            "top",
+                            "bottom",
+                            "hzname",
+                            "matrix_dry_color_hue",
+                            "matrix_dry_color_value",
+                            "matrix_dry_color_chroma",
+                            "texture_class",
+                            "cf_class",
+                        ]
+                    ]
+                    OSDhorzdata_pd["texture_class"] = (
+                        OSDhorzdata_pd["texture_class"]
+                        .str.lower()
+                        .str.replace(r"(fine|medium|coarse) ", "")
+                    )
+                    OSDhorzdata_pd.loc[
+                        OSDhorzdata_pd["matrix_dry_color_hue"] == "N",
+                        "matrix_dry_color_value",
+                    ] = 1
 
-                # Normalize the data and perform data manipulations
-                OSDhorzdata_pd = pd.json_normalize(seriesDict["hz"])[
-                    [
+                    # Color conversion
+                    munsell_RGB = []
+                    for hue, value, chroma in zip(
+                        OSDhorzdata_pd["matrix_dry_color_hue"],
+                        OSDhorzdata_pd["matrix_dry_color_value"],
+                        OSDhorzdata_pd["matrix_dry_color_chroma"],
+                    ):
+                        if pd.isnull(hue) or pd.isnull(value) or pd.isnull(chroma):
+                            munsell_RGB.append([np.nan, np.nan, np.nan])
+                        else:
+                            munsell = pd.Series([hue, value, chroma])
+                            RGB = munsell2rgb(color_ref, munsell_ref, munsell)
+                            munsell_RGB.append(RGB)
+
+                    munsell_RGB_df = pd.DataFrame(munsell_RGB, columns=["r", "g", "b"])
+                    OSDhorzdata_pd = pd.concat([OSDhorzdata_pd, munsell_RGB_df], axis=1)
+
+                    # Merge with another dataframe
+                    mucompdata_pd_merge = mucompdata_pd[["mukey", "cokey", "compname", "compkind"]]
+                    mucompdata_pd_merge["series"] = mucompdata_pd_merge["compname"].str.replace(
+                        r"\d+", ""
+                    )
+                    OSDhorzdata_pd["series"] = OSDhorzdata_pd["series"].str.lower().str.capitalize()
+                    OSDhorzdata_pd = pd.merge(
+                        mucompdata_pd_merge, OSDhorzdata_pd, on="series", how="left"
+                    )
+
+                    # Data type conversions and value assignments
+                    columns_to_str = [
                         "series",
-                        "top",
-                        "bottom",
                         "hzname",
+                        "texture_class",
+                        "cf_class",
                         "matrix_dry_color_hue",
                         "matrix_dry_color_value",
                         "matrix_dry_color_chroma",
-                        "texture_class",
-                        "cf_class",
                     ]
-                ]
-                OSDhorzdata_pd["texture_class"] = (
-                    OSDhorzdata_pd["texture_class"]
-                    .str.lower()
-                    .str.replace(r"(fine|medium|coarse) ", "")
-                )
-                OSDhorzdata_pd.loc[
-                    OSDhorzdata_pd["matrix_dry_color_hue"] == "N",
-                    "matrix_dry_color_value",
-                ] = 1
-
-                # Color conversion
-                munsell_RGB = []
-                for hue, value, chroma in zip(
-                    OSDhorzdata_pd["matrix_dry_color_hue"],
-                    OSDhorzdata_pd["matrix_dry_color_value"],
-                    OSDhorzdata_pd["matrix_dry_color_chroma"],
-                ):
-                    if pd.isnull(hue) or pd.isnull(value) or pd.isnull(chroma):
-                        munsell_RGB.append([np.nan, np.nan, np.nan])
-                    else:
-                        munsell = pd.Series([hue, value, chroma])
-                        RGB = munsell2rgb(color_ref, munsell_ref, munsell)
-                        munsell_RGB.append(RGB)
-
-                munsell_RGB_df = pd.DataFrame(munsell_RGB, columns=["r", "g", "b"])
-                OSDhorzdata_pd = pd.concat([OSDhorzdata_pd, munsell_RGB_df], axis=1)
-
-                # Merge with another dataframe
-                mucompdata_pd_merge = mucompdata_pd[["mukey", "cokey", "compname", "compkind"]]
-                mucompdata_pd_merge["series"] = mucompdata_pd_merge["compname"].str.replace(
-                    r"\d+", ""
-                )
-                OSDhorzdata_pd["series"] = OSDhorzdata_pd["series"].str.lower().str.capitalize()
-                OSDhorzdata_pd = pd.merge(
-                    mucompdata_pd_merge, OSDhorzdata_pd, on="series", how="left"
-                )
-
-                # Data type conversions and value assignments
-                columns_to_str = [
-                    "series",
-                    "hzname",
-                    "texture_class",
-                    "cf_class",
-                    "matrix_dry_color_hue",
-                    "matrix_dry_color_value",
-                    "matrix_dry_color_chroma",
-                ]
-                OSDhorzdata_pd[columns_to_str] = OSDhorzdata_pd[columns_to_str].astype(str)
-                OSDhorzdata_pd[["top", "bottom"]] = (
-                    OSDhorzdata_pd[["top", "bottom"]].fillna(0).astype(int)
-                )
-                OSDhorzdata_pd["cf_class"] = OSDhorzdata_pd["cf_class"].astype(str)
-                OSDhorzdata_pd["total_frag_volume"] = OSDhorzdata_pd["cf_class"].apply(getOSDCF)
-                OSDhorzdata_pd["claytotal_r"] = OSDhorzdata_pd["texture_class"].apply(getClay)
-                OSDhorzdata_pd["sandtotal_r"] = OSDhorzdata_pd["texture_class"].apply(getSand)
+                    OSDhorzdata_pd[columns_to_str] = OSDhorzdata_pd[columns_to_str].astype(str)
+                    OSDhorzdata_pd[["top", "bottom"]] = (
+                        OSDhorzdata_pd[["top", "bottom"]].fillna(0).astype(int)
+                    )
+                    OSDhorzdata_pd["cf_class"] = OSDhorzdata_pd["cf_class"].astype(str)
+                    OSDhorzdata_pd["total_frag_volume"] = OSDhorzdata_pd["cf_class"].apply(getOSDCF)
+                    OSDhorzdata_pd["claytotal_r"] = OSDhorzdata_pd["texture_class"].apply(getClay)
+                    OSDhorzdata_pd["sandtotal_r"] = OSDhorzdata_pd["texture_class"].apply(getSand)
+                else:
+                    print("Data for 'hz' is not available.")
+                    OSDhorzdata_pd = None
             except Exception as err:
                 OSDhorzdata_pd = None
-                logging.error("Error occurred with STATSGO:", err)
+                logging.error("Error occurred with STATSGO: %s", err)
         else:
             OSDhorzdata_pd = None
 
@@ -1857,7 +1953,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                         "ec": "ds/m",
                     },
                 },
-                "AWS_PIW90": round(float(aws_PIW90), 2),
+                "AWS_PIW90": aws_PIW90,
                 "Soil Data Value": var_imp,
                 "soilList": output_SoilList,
             }
@@ -1885,7 +1981,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 "ec": "ds/m",
             },
         },
-        "AWS_PIW90": round(float(aws_PIW90.iloc[0]), 2),
+        "AWS_PIW90": aws_PIW90,
         "Soil Data Value": var_imp,
         "soilList": output_SoilList,
     }

@@ -17,16 +17,18 @@ import geopandas as gpd
 import numpy as np
 import pandas as pd
 import shapely
+import shapely.ops as ops
 import skimage
 from db import get_WISE30sec_data
 from numpy.linalg import cholesky
 from osgeo import ogr
+from pyproj import Proj, Transformer
 from rosetta import SoilData, rosetta
 from scipy.interpolate import UnivariateSpline
 from scipy.sparse import issparse
 from scipy.stats import entropy, norm
 from services import sda_return
-from shapely.geometry import LinearRing, Point
+from shapely.geometry import Point, box
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import pairwise
 from sklearn.utils import validation
@@ -35,12 +37,11 @@ from sklearn.utils import validation
 # global
 def extract_WISE_data(lon, lat, file_path, buffer_size=0.5):
     # Create LPKS point
-    point = Point(lon, lat)
-    point.crs = {"init": "epsg:4326"}
+    point_geo = Point(lon, lat)
+    point_geo.crs = {"init": "epsg:4326"}
 
     # Create bounding box to clip HWSD data around the point
-    s = gpd.GeoSeries(point)
-    bounding_box = s.buffer(buffer_size).total_bounds
+    bounding_box = create_bounding_box(lon, lat, buffer_dist=10000)
     box_geom = shapely.geometry.box(*bounding_box)
 
     # Load HWSD data from the provided file_path
@@ -48,17 +49,9 @@ def extract_WISE_data(lon, lat, file_path, buffer_size=0.5):
 
     # Filter data to consider unique map units
     mu_geo = hwsd[["MUGLB_NEW", "geometry"]].drop_duplicates(subset="MUGLB_NEW")
-
-    distances = mu_geo.geometry.apply(lambda geom: pt2polyDist(geom, point))
-    intersects = mu_geo.geometry.apply(lambda geom: point.intersects(geom))
-
-    mu_id_dist = pd.DataFrame(
-        {
-            "MUGLB_NEW": mu_geo["MUGLB_NEW"],
-            "distance": distances.where(~intersects, 0),
-        }
-    )
-    mu_id_dist["distance"] = mu_id_dist.groupby("MUGLB_NEW")["distance"].transform(min)
+    mu_id_dist = calculate_distances_and_intersections(mu_geo, point_geo)
+    mu_id_dist.loc[mu_id_dist["pt_intersect"], "distance_m"] = 0
+    mu_id_dist["distance"] = mu_id_dist.groupby("MUGLB_NEW")["distance_m"].transform(min)
     mu_id_dist = mu_id_dist.nsmallest(2, "distance")
 
     hwsd = hwsd.drop(columns=["geometry"])
@@ -699,52 +692,6 @@ def drop_cokey_horz(df):
     return drop_instances
 
 
-def haversine(lon1, lat1, lon2, lat2):
-    """
-    Calculate the great circle distance between two points on the earth specified in
-    decimal degrees.
-
-    Args:
-    - lon1, lat1: Longitude and latitude of the first point.
-    - lon2, lat2: Longitude and latitude of the second point.
-
-    Returns:
-    - Distance in kilometers between the two points.
-    """
-    # Convert decimal degrees to radians
-    lon1, lat1, lon2, lat2 = map(math.radians, [lon1, lat1, lon2, lat2])
-
-    # Haversine formula
-    dlon = lon2 - lon1
-    dlat = lat2 - lat1
-    a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
-    c = 2 * math.asin(math.sqrt(a))
-    r = 6371  # Radius of the earth in kilometers. Use 3956 for miles.
-
-    return c * r
-
-
-def pt2polyDist(poly, point):
-    """
-    Calculate the distance between a point and the closest point on the exterior of a polygon.
-
-    Args:
-    - poly: A shapely Polygon object.
-    - point: A shapely Point object.
-
-    Returns:
-    - Distance in meters between the point and the polygon.
-    """
-    pol_ext = LinearRing(poly.exterior.coords)
-    d = pol_ext.project(point)
-    p = pol_ext.interpolate(d)
-    closest_point_coords = list(p.coords)[0]
-    # dist_m = haversine(point.x, point.y, closest_point_coords[0], closest_point_coords[1]) * 1000
-    # Convert to meters
-    dist_m = haversine(point.x, point.y, *closest_point_coords) * 1000
-    return round(dist_m, 0)
-
-
 def calculate_location_score(group, ExpCoeff):
     """
     Computes a location score based on the distance and the share of a given group of data.
@@ -1307,11 +1254,23 @@ def calculate_distances_and_intersections(mu_geo, point):
     Returns:
         DataFrame: Contains mapunit keys, distances, and intersection flags.
     """
-    distances = mu_geo["geometry"].distance(point)
-    intersects = mu_geo["geometry"].intersects(point)
+
+    # Project the data to a suitable UTM zone based on the point's location
+    point_utm, epsg_code = convert_geometry_to_utm(point)
+
+    # Project the GeoDataFrame to UTM for distance calculation
+    transformer = Transformer.from_proj("epsg:4326", f"epsg:{epsg_code}", always_xy=True)
+    mu_geo_utm = mu_geo.copy()
+    mu_geo_utm["geometry"] = mu_geo_utm["geometry"].apply(
+        lambda geom: ops.transform(transformer.transform, geom) if not geom.is_empty else geom
+    )
+
+    # Calculate distances and intersections
+    distances = mu_geo_utm["geometry"].distance(point_utm)
+    intersects = mu_geo_utm["geometry"].intersects(point_utm)
 
     return pd.DataFrame(
-        {"mukey": mu_geo["MUKEY"], "distance_m": distances, "pt_intersect": intersects}
+        {"mukey": mu_geo_utm["MUKEY"], "distance_m": distances, "pt_intersect": intersects}
     )
 
 
@@ -1334,6 +1293,68 @@ def load_statsgo_data(box):
         return None
 
 
+def convert_geometry_to_utm(geometry):
+    """
+    Converts a shapely geometry from latitude and longitude to UTM coordinates in
+    the appropriate UTM zone.
+
+    Parameters:
+    - geometry (shapely.geometry): A shapely geometry object (e.g., Point, Polygon)
+      in geographic coordinates.
+
+    Returns:
+    - tuple: A tuple containing the transformed geometry in UTM coordinates and the
+      EPSG code of the UTM zone.
+    """
+    # Extract centroid for determining UTM zone
+    lon, lat = geometry.centroid.x, geometry.centroid.y
+
+    # Determine the UTM zone and construct the EPSG code
+    utm_zone = int((lon + 180) / 6) + 1
+    hemisphere = "north" if lat >= 0 else "south"
+    epsg_code = f"326{utm_zone}" if hemisphere == "north" else f"327{utm_zone}"
+
+    # Initialize the Proj object for the determined UTM zone
+    proj_utm = Proj(f"epsg:{epsg_code}")
+    transformer = Transformer.from_proj(Proj("epsg:4326"), proj_utm, always_xy=True)
+
+    # Transform the geometry to UTM coordinates
+    utm_geometry = ops.transform(transformer.transform, geometry)
+
+    return utm_geometry, epsg_code
+
+
+def create_bounding_box(lon, lat, buffer_dist):
+    """
+    Creates a geographic bounding box around a given latitude and longitude,
+    buffered by a specified distance in meters.
+
+    Parameters:
+    - lon (float): Longitude of the center point.
+    - lat (float): Latitude of the center point.
+    - buffer_dist (float): Buffer distance in meters.
+
+    Returns:
+    - Shapely Polygon: Geographic bounding box as a shapely polygon.
+    """
+    point_geo = Point(lon, lat)
+    point_utm, epsg_code = convert_geometry_to_utm(point_geo)
+
+    proj_utm = Proj(f"epsg:{epsg_code}")
+    proj_latlon = Proj(proj="latlong", datum="WGS84")
+
+    # Create a point and buffer in UTM coordinates
+    point_gdf = gpd.GeoDataFrame([{"geometry": point_utm}], crs=f"epsg:{epsg_code}")
+    s_buff = point_gdf.geometry.buffer(buffer_dist)
+    utm_box = box(*s_buff.total_bounds)
+
+    # Convert the UTM box back to geographic coordinates
+    transformer = Transformer.from_proj(proj_utm, proj_latlon, always_xy=True)
+    geographic_box = ops.transform(transformer.transform, utm_box)
+
+    return geographic_box
+
+
 def extract_mucompdata_STATSGO(lon, lat):
     """
     Extracts and processes STATSGO data for the given longitude and latitude.
@@ -1349,10 +1370,9 @@ def extract_mucompdata_STATSGO(lon, lat):
     Returns:
         DataFrame: Processed mucompdata, or error message if data is unavailable.
     """
+
     point = Point(lon, lat)
-    point_gdf = gpd.GeoDataFrame([{"geometry": point}], crs="EPSG:4326")
-    s_buff = point_gdf.geometry.buffer(0.1)  # ~11km buffer
-    box = shapely.geometry.box(*s_buff.total_bounds)
+    box = create_bounding_box(lon, lat, buffer_dist=5000)
 
     statsgo_mukey = load_statsgo_data(box)
     if statsgo_mukey is None:
@@ -1360,7 +1380,6 @@ def extract_mucompdata_STATSGO(lon, lat):
         return None
 
     mu_geo = statsgo_mukey[["MUKEY", "geometry"]].drop_duplicates(subset=["geometry"])
-
     mu_id_dist = calculate_distances_and_intersections(mu_geo, point)
     mu_id_dist.loc[mu_id_dist["pt_intersect"], "distance_m"] = 0
     mu_id_dist["distance_m"] = mu_id_dist.groupby("mukey")["distance_m"].transform(min)
@@ -1770,69 +1789,73 @@ def pedon_color(lab_Color, horizonDepth):
         return [pedon_l_mean, pedon_a_mean, pedon_b_mean]
 
 
+def validate_data(data):
+    """
+    Validates the data based on given conditions.
+    """
+    if data.top.isnull().any() or data.bottom.isnull().any():
+        return False
+    if data.r.isnull().all() or data.g.isnull().all() or data.b.isnull().all():
+        return False
+    if data.top.iloc[0] != 0:
+        return False
+    return True
+
+
+def correct_depth_discrepancies(data):
+    """
+    Corrects depth discrepancies by adding layers when needed.
+    """
+    layers_to_add = []
+    for i in range(len(data.top) - 1):
+        if data.top.iloc[i + 1] > data.bottom.iloc[i]:
+            layer_add = pd.DataFrame(
+                {
+                    "top": data.bottom.iloc[i],
+                    "bottom": data.top.iloc[i + 1],
+                    "r": np.nan,
+                    "g": np.nan,
+                    "b": np.nan,
+                },
+                index=[i + 0.5],
+            )
+            layers_to_add.append(layer_add)
+
+    if layers_to_add:
+        data = pd.concat([data] + layers_to_add).sort_index().reset_index(drop=True)
+
+    return data
+
+
+def convert_rgb_to_lab(row, color_ref):
+    """
+    Converts RGB values to LAB.
+    """
+    rgb_ref = color_ref[["r", "g", "b"]]
+    if pd.isnull(row["r"]) or pd.isnull(row["g"]) or pd.isnull(row["b"]):
+        return np.nan, np.nan, np.nan
+
+    LAB = color.rgb2lab(color_ref, rgb_ref, [row["r"], row["g"], row["b"]])
+    return LAB
+
+
 def getProfileLAB(data_osd, color_ref):
     """
     The function processes the given data_osd DataFrame and computes LAB values for soil profiles.
     """
-    rgb_ref = color_ref[["r", "g", "b"]]
-
     # Convert the specific columns to numeric
     data_osd[["top", "bottom", "r", "g", "b"]] = data_osd[["top", "bottom", "r", "g", "b"]].apply(
         pd.to_numeric
     )
-
-    def validate_data(data):
-        """
-        Validates the data based on given conditions.
-        """
-        if data.top.isnull().any() or data.bottom.isnull().any():
-            return False
-        if data.r.isnull().all() or data.g.isnull().all() or data.b.isnull().all():
-            return False
-        if data.top.iloc[0] != 0:
-            return False
-        return True
-
-    def correct_depth_discrepancies(data):
-        """
-        Corrects depth discrepancies by adding layers when needed.
-        """
-        layers_to_add = []
-        for i in range(len(data.top) - 1):
-            if data.top.iloc[i + 1] > data.bottom.iloc[i]:
-                layer_add = pd.DataFrame(
-                    {
-                        "top": data.bottom.iloc[i],
-                        "bottom": data.top.iloc[i + 1],
-                        "r": np.nan,
-                        "g": np.nan,
-                        "b": np.nan,
-                    },
-                    index=[i + 0.5],
-                )
-                layers_to_add.append(layer_add)
-
-        if layers_to_add:
-            data = pd.concat([data] + layers_to_add).sort_index().reset_index(drop=True)
-
-        return data
-
-    def convert_rgb_to_lab(row):
-        """
-        Converts RGB values to LAB.
-        """
-        if pd.isnull(row["r"]) or pd.isnull(row["g"]) or pd.isnull(row["b"]):
-            return np.nan, np.nan, np.nan
-
-        LAB = color.rgb2lab(color_ref, rgb_ref, [row["r"], row["g"], row["b"]])
-        return LAB
 
     if not validate_data(data_osd):
         return pd.DataFrame(np.nan, index=np.arange(200), columns=["L", "A", "B"])
 
     data_osd = correct_depth_discrepancies(data_osd)
 
-    data_osd["L"], data_osd["A"], data_osd["B"] = zip(*data_osd.apply(convert_rgb_to_lab, axis=1))
+    data_osd["L"], data_osd["A"], data_osd["B"] = zip(
+        *data_osd.apply(lambda row: convert_rgb_to_lab(row, color_ref), axis=1)
+    )
 
     l_intpl, a_intpl, b_intpl = [], [], []
 
@@ -2093,6 +2116,11 @@ def simulate_correlated_triangular(n, params, correlation_matrix):
     return samples
 
 
+def regularize_matrix(matrix, epsilon=1e-8):
+    """Add a small positive value to the diagonal of the matrix to ensure positive definiteness."""
+    return matrix + np.eye(matrix.shape[0]) * epsilon
+
+
 def acomp(X, parts=None, total=1):
     if parts is None:
         parts = list(range(X.shape[1]))
@@ -2221,7 +2249,7 @@ def infill_soil_data(df):
 
 def slice_and_aggregate_soil_data(df):
     """
-    Optimized function to slice a DataFrame with soil data into 1 cm increments based
+    Function to slice a DataFrame with soil data into 1 cm increments based
     on depth ranges provided in 'hzdept_r' and 'hzdepb_r' columns, and calculate mean
     values for each depth increment across all other data columns.
 
@@ -2274,120 +2302,6 @@ def slice_and_aggregate_soil_data(df):
         missing_row["hzdept_r"] = 30
         missing_row["hzdepb_r"] = 100
         result_df = result_df.append(missing_row, ignore_index=True)
-
-    return result_df
-
-
-def slice_and_aggregate_soil_data_old(df):
-    """
-    Takes a DataFrame with soil data, slices it into 1 cm increments based on depth ranges provided
-    in 'hzdept_r' and 'hzdepb_r' columns, and calculates mean values for each depth increment
-    across all other data columns.
-
-    Parameters:
-    df (pd.DataFrame): A DataFrame where each row represents a soil sample. It must contain
-                       'hzdept_r' and 'hzdepb_r' columns indicating the top and bottom depths.
-
-    Returns:
-    pd.DataFrame: A DataFrame indexed by depth in 1 cm increments, containing mean values of
-                  soil properties for each depth increment.
-
-    Note:
-    The function assumes linear distribution of data between depth intervals. Non-numeric columns
-    are excluded from the mean calculation.
-    """
-    # Create an empty DataFrame to hold the aggregated results
-    aggregated_data = pd.DataFrame()
-
-    # Get numeric columns for aggregation, excluding the depth range columns
-    data_columns = df.select_dtypes(include=[np.number]).columns.difference(
-        ["hzdept_r", "hzdepb_r"]
-    )
-
-    # Iterate through each depth interval
-    for _, row in df.iterrows():
-        top_depth = row["hzdept_r"]
-        bottom_depth = row["hzdepb_r"]
-        depth_range = np.arange(top_depth, bottom_depth)
-
-        # Create a DataFrame for each 1 cm increment
-        for depth in depth_range:
-            interpolated_row = {col: row[col] for col in data_columns}
-            interpolated_row["Depth"] = depth
-
-            # Add the interpolated row to the aggregated data
-            aggregated_data = pd.concat(
-                [aggregated_data, pd.DataFrame([interpolated_row])], ignore_index=True
-            )
-
-    max_depth = aggregated_data["Depth"].max()
-    sd = 2
-    # Define the depth ranges
-    depth_ranges = [(0, 30), (30, 100)]
-
-    # Initialize the result list
-    results = []
-
-    # Flag to check if the 30-100 cm range is covered
-    is_depth_30_100_covered = False
-
-    # Iterate over each column in the dataframe
-    for column in aggregated_data.columns:
-        column_results = []
-        for top, bottom in depth_ranges:
-            if max_depth <= top:
-                column_results.append([top, bottom, np.nan])
-            else:
-                mask = (aggregated_data.index >= top) & (
-                    aggregated_data.index <= min(bottom, max_depth)
-                )
-                data_subset = aggregated_data.loc[mask, column]
-                if not data_subset.empty:
-                    result = (
-                        round(data_subset.mean(skipna=True), sd)
-                        if not data_subset.isna().all()
-                        else np.nan
-                    )
-                    column_results.append([top, min(bottom, max_depth), result])
-                else:
-                    column_results.append([top, min(bottom, max_depth), np.nan])
-
-                # Check if the 30-100 cm range is covered
-                if top == 30:
-                    is_depth_30_100_covered = not data_subset.empty
-
-        # Append the results for the current column to the overall results list
-        results.append(
-            pd.DataFrame(
-                column_results,
-                columns=["hzdept_r", "hzdepb_r", f"{column}"],
-            )
-        )
-
-    # Concatenate the results for each column into a single dataframe
-    result_df = pd.concat(results, axis=1)
-
-    # If there are multiple columns, remove the repeated 'Top Depth' and 'Bottom Depth' columns
-    if len(aggregated_data.columns) > 1:
-        result_df = result_df.loc[:, ~result_df.columns.duplicated()]
-
-    # Add a row for 30-100 cm range if it's not covered
-    if not is_depth_30_100_covered:
-        # Initialize a dictionary with None or a small value for each column
-        none_row = {
-            col: [None] if col not in ["hzdept_r", "hzdepb_r"] else [] for col in result_df.columns
-        }
-
-        # Set the depth values for this row
-        none_row["hzdept_r"] = [30]
-        none_row["hzdepb_r"] = [100]
-
-        # Create a DataFrame from the dictionary
-        none_df = pd.DataFrame(none_row)
-
-        # Concatenate with the original DataFrame
-        result_df = pd.concat([result_df, none_df], ignore_index=True)
-    result_df = result_df.drop_duplicates()
 
     return result_df
 

@@ -49,7 +49,7 @@ def extract_WISE_data(lon, lat, file_path, buffer_size=0.5):
 
     # Filter data to consider unique map units
     mu_geo = hwsd[["MUGLB_NEW", "geometry"]].drop_duplicates(subset="MUGLB_NEW")
-    mu_id_dist = calculate_distances_and_intersections(mu_geo, point)
+    mu_id_dist = calculate_distances_and_intersections(mu_geo, point_geo)
     mu_id_dist.loc[mu_id_dist["pt_intersect"], "distance_m"] = 0
     mu_id_dist["distance"] = mu_id_dist.groupby("MUGLB_NEW")["distance_m"].transform(min)
     mu_id_dist = mu_id_dist.nsmallest(2, "distance")

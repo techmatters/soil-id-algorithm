@@ -622,7 +622,8 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
             ]
         )
 
-        # Check for NaNs or infs in the local correlation matrix and if so, replace with global matrix
+        # Check for NaNs or infs in the local correlation matrix and if so,
+        # replace with global matrix
         if np.isnan(local_correlation_matrix).any() or np.isinf(local_correlation_matrix).any():
             local_correlation_matrix = global_correlation_matrix
 
@@ -734,7 +735,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id):
                 # Regularize the matrix if any eigenvalue is non-positive or very close to zero
                 if np.any(eigenvalues <= epsilon):
                     print(
-                        f"Regularizing matrix due to non-positive or small eigenvalues at row {index}."
+                        f"Regularizing matrix due to non-positive or small eigenvalues at row {index}."  # noqa: E501
                     )
                     local_correlation_matrix = regularize_matrix(local_correlation_matrix)
 

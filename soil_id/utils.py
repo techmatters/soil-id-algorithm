@@ -1295,13 +1295,16 @@ def load_statsgo_data(box):
 
 def convert_geometry_to_utm(geometry):
     """
-    Converts a shapely geometry from latitude and longitude to UTM coordinates in the appropriate UTM zone.
+    Converts a shapely geometry from latitude and longitude to UTM coordinates in
+    the appropriate UTM zone.
 
     Parameters:
-    - geometry (shapely.geometry): A shapely geometry object (e.g., Point, Polygon) in geographic coordinates.
+    - geometry (shapely.geometry): A shapely geometry object (e.g., Point, Polygon)
+      in geographic coordinates.
 
     Returns:
-    - tuple: A tuple containing the transformed geometry in UTM coordinates and the EPSG code of the UTM zone.
+    - tuple: A tuple containing the transformed geometry in UTM coordinates and the
+      EPSG code of the UTM zone.
     """
     # Extract centroid for determining UTM zone
     lon, lat = geometry.centroid.x, geometry.centroid.y

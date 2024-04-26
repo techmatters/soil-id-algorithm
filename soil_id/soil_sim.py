@@ -1,3 +1,25 @@
+# Third-party libraries
+import numpy as np
+import pandas as pd
+from composition_stats import ilr, ilr_inv
+from scipy.stats import spearmanr
+from utils import (
+    acomp,
+    calculate_aws,
+    calculate_vwc_awc,
+    getCF_class,
+    getTexture,
+    infill_soil_data,
+    information_gain,
+    process_data_with_rosetta,
+    regularize_matrix,
+    remove_organic_layer,
+    rename_simulated_soil_profile_columns,
+    simulate_correlated_triangular,
+    slice_and_aggregate_soil_data,
+)
+
+
 # ------------------------------------------------------------------------
 def soil_sim(muhorzdata_pd):
     """

@@ -11,13 +11,12 @@ import config
 # Third-party libraries
 import numpy as np
 import pandas as pd
+import soil_sim
 from color import lab2munsell, munsell2rgb
-from composition_stats import ilr, ilr_inv
 from db import load_model_output, save_model_output, save_rank_output
 
 # Flask
 from pandas import json_normalize
-from scipy.stats import spearmanr
 from services import (
     get_elev_data,
     get_esd_data,
@@ -25,17 +24,13 @@ from services import (
     get_soilweb_data,
     sda_return,
 )
-import soil_sim
 from utils import (
-    acomp,
     aggregate_data,
-    calculate_vwc_awc,
     compute_site_similarity,
     drop_cokey_horz,
     extract_mucompdata_STATSGO,
     extract_muhorzdata_STATSGO,
     fill_missing_comppct_r,
-    getCF_class,
     getCF_fromClass,
     getClay,
     getOSDCF,
@@ -44,17 +39,10 @@ from utils import (
     getSand,
     getTexture,
     gower_distances,
-    infill_soil_data,
-    information_gain,
     max_comp_depth,
-    process_data_with_rosetta,
     process_distance_scores,
     process_horizon_data,
     process_site_data,
-    regularize_matrix,
-    remove_organic_layer,
-    simulate_correlated_triangular,
-    slice_and_aggregate_soil_data,
 )
 
 # entry points
@@ -75,7 +63,7 @@ pd.set_option("future.no_silent_downcasting", True)
 ############################################################################################
 #                                   getSoilLocationBasedUS                                 #
 ############################################################################################
-def getSoilLocationBasedUS(lon, lat, plot_id, site_calc = False):
+def getSoilLocationBasedUS(lon, lat, plot_id, site_calc=False):
     # Load in LAB to Munsell conversion look-up table
     color_ref = pd.read_csv(config.MUNSELL_RGB_LAB_PATH)
     LAB_ref = color_ref[["L", "A", "B"]]
@@ -305,9 +293,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id, site_calc = False):
                     pd.concat([group_sorted, layer]).sort_values("hzdept_r").reset_index(drop=True)
                 )
 
-        mucompdata_pd_group = mucompdata_pd[
-            mucompdata_pd["cokey"].isin(group_sorted["cokey"])
-        ]
+        mucompdata_pd_group = mucompdata_pd[mucompdata_pd["cokey"].isin(group_sorted["cokey"])]
         if (
             group_sorted["sandtotal_r"].isnull().values.all()
             or group_sorted["claytotal_r"].isnull().values.all()
@@ -353,23 +339,22 @@ def getSoilLocationBasedUS(lon, lat, plot_id, site_calc = False):
         cokey_group = group_sorted["cokey"].iloc[0]
         compname_group = group_sorted["compname"].iloc[0]
         comp_max_bottom = max_comp_depth(group_sorted)
-        comp_max_depths_temp = pd.DataFrame({
-            "cokey": [cokey_group],
-            "compname": [compname_group],
-            "comp_max_bottom": [int(comp_max_bottom)]
-        })
+        comp_max_depths_temp = pd.DataFrame(
+            {
+                "cokey": [cokey_group],
+                "compname": [compname_group],
+                "comp_max_bottom": [int(comp_max_bottom)],
+            }
+        )
         comp_max_depths.append(comp_max_depths_temp)
 
-        # Handle texture information        
+        # Handle texture information
         comp_texture_list = [x for x in group_sorted.texture.str.lower().tolist() if x is not None]
         clay_indicator = "Yes" if any("clay" in s for s in comp_texture_list) else "No"
-        clay_texture_temp = pd.DataFrame({
-            "compname": [compname_group],
-            "clay": [clay_indicator]
-        })
+        clay_texture_temp = pd.DataFrame({"compname": [compname_group], "clay": [clay_indicator]})
         clay_texture.append(clay_texture_temp)
 
-        if site_calc == True:
+        if site_calc:
             sand_pct_intpl = getProfile(group_sorted, "sandtotal_r")
             sand_pct_intpl.columns = ["c_sandpct_intpl", "c_sandpct_intpl_grp"]
             clay_pct_intpl = getProfile(group_sorted, "claytotal_r")
@@ -430,7 +415,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id, site_calc = False):
     comp_key = mucompdata_pd["cokey"].unique().tolist()
     cokey_Index = {key: index for index, key in enumerate(comp_key)}
 
-    if site_calc == True:
+    if site_calc:
         aws_PIW90, var_imp = soil_sim(muhorzdata_pd)
     # ----------------------------------------------------------------------------
     # This extracts OSD color, texture, and CF data
@@ -762,7 +747,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id, site_calc = False):
                         ]
                         munsell_lyrs.append(dict(zip(l_d.index, munsell_values)))
 
-                    if site_calc == True:
+                    if site_calc:
                         # Extract OSD Texture and Rock Fragment Data
                         if OSD_text_int[index] == "Yes" or OSD_rfv_int[index] == "Yes":
                             group_sorted[["hzdept_r", "hzdepb_r", "texture"]] = group_sorted[
@@ -816,19 +801,25 @@ def getSoilLocationBasedUS(lon, lat, plot_id, site_calc = False):
                                 OSD_max_bottom_int,
                             )
 
-                            # If OSD bottom depth is greater than component depth and component depth
-                            # is <200cm
+                            # If OSD bottom depth is greater than component depth
+                            # and component depth is <200cm
                             if OSD_depth_remove:
                                 # Remove data based on comp_max_depths
-                                OSD_sand_intpl = OSD_sand_intpl.loc[: comp_max_depths.iloc[index, 2]]
-                                OSD_clay_intpl = OSD_clay_intpl.loc[: comp_max_depths.iloc[index, 2]]
+                                OSD_sand_intpl = OSD_sand_intpl.loc[
+                                    : comp_max_depths.iloc[index, 2]
+                                ]
+                                OSD_clay_intpl = OSD_clay_intpl.loc[
+                                    : comp_max_depths.iloc[index, 2]
+                                ]
                                 OSD_rfv_intpl = OSD_rfv_intpl.loc[: comp_max_depths.iloc[index, 2]]
 
                             # Create the compname and cokey dataframes
                             compname_df = pd.DataFrame(
                                 [group_sorted.compname.unique()] * len(OSD_sand_intpl)
                             )
-                            cokey_df = pd.DataFrame([group_sorted.cokey.unique()] * len(OSD_sand_intpl))
+                            cokey_df = pd.DataFrame(
+                                [group_sorted.cokey.unique()] * len(OSD_sand_intpl)
+                            )
 
                             # Concatenate the dataframes
                             group_sorted2 = pd.concat(
@@ -1263,13 +1254,15 @@ def getSoilLocationBasedUS(lon, lat, plot_id, site_calc = False):
     # ------------------------------------------------------------
     # Define model version
     model_version = "3.0"
-    
-    if site_calc == True:
+
+    if site_calc:
         # Create the soilIDRank_output list by combining the dataframes of various data sources
         soilIDRank_output = [
             pd.concat(
                 [
-                    getProfile_cokey[i][["compname", "sandpct_intpl", "claypct_intpl", "rfv_intpl"]],
+                    getProfile_cokey[i][
+                        ["compname", "sandpct_intpl", "claypct_intpl", "rfv_intpl"]
+                    ],
                     lab_intpl_lyrs[i],
                 ],
                 axis=1,
@@ -1423,7 +1416,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id, site_calc = False):
         )
     ]
 
-    if site_calc == True:
+    if site_calc:
         # Writing out list of data needed for soilIDRank
         if plot_id is None:
             soilIDRank_output_pd.to_csv(
@@ -1466,7 +1459,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id, site_calc = False):
             )
 
     # Return the final output
-    if site_calc == True:
+    if site_calc:
         return {
             "metadata": {
                 "location": "us",
@@ -1502,6 +1495,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id, site_calc = False):
             },
             "soilList": output_SoilList,
         }
+
 
 ##############################################################################################
 #                                   rankPredictionUS                                         #
@@ -2307,12 +2301,6 @@ def rename_simulated_soil_profile_columns(df, soil_property_columns, depth):
     for col in soil_property_columns:
         new_column_names[col] = f"{col}_{depth}"
     df.rename(columns=new_column_names, inplace=True)
-
-
-# calculate AWC for ROI
-def calculate_aws(df, quantile):
-    total = (df[quantile] * df["depth"] * df["n"]).sum()
-    return pd.DataFrame({f"aws{quantile}_100": [total]})
 
 
 # Creates a new soil horizon layer row in the soil horizon table

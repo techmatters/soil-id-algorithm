@@ -2530,3 +2530,9 @@ def findSoilLocation(lon, lat):
         return "US"
     else:
         return "Global"
+
+
+# calculate AWC for ROI
+def calculate_aws(df, quantile):
+    total = (df[quantile] * df["depth"] * df["n"]).sum()
+    return pd.DataFrame({f"aws{quantile}_100": [total]})

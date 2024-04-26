@@ -428,8 +428,8 @@ def getSoilLocationBasedUS(lon, lat, plot_id, site_calc=False):
                 # Generate series names
                 seriesDict = get_soil_series_data(mucompdata_pd, OSD_compkind)
                 if seriesDict is None:
-                    logging.error("STATSGO: series is missing")
-                    return None
+                    logging.error("STATSGO: series data is missing")
+                    raise ValueError("STATSGO: series data is missing")
 
                 if seriesDict.get("hz") is not None:
                     # Normalize the data and perform data manipulations

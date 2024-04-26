@@ -313,7 +313,7 @@ def aggregate_data(data, bottom_depths, sd=2):
     return pd.Series(results)
 
 
-def getProfile(data, variable, c_bot=False):
+def getProfile(data, variable):
     var = []
     var_grp = []
     var_pct_intpl = []
@@ -460,18 +460,19 @@ def getProfile(data, variable, c_bot=False):
             pd_add.columns = ["var_pct_intpl"]
             var_pct_intpl_final = pd.concat([var_pct_intpl_final, pd_add], axis=0)
             var_pct_intpl_final = var_pct_intpl_final.reset_index(drop=True)
-    if c_bot:
-        if len(data["hzdept_r"]) == 1:
-            c_very_bottom = data["hzdepb_r"].iloc[0]
-        else:
-            c_very_bottom = data["hzdepb_r"].values[-1]
+    return var_pct_intpl_final
 
-        # Check if c_very_bottom is greater than 200 and assign 200 if true
-        if c_very_bottom > 200:
-            c_very_bottom = 200
-        return c_very_bottom, var_pct_intpl_final
+
+def max_comp_depth(data):
+    if len(data["hzdept_r"]) == 1:
+        c_very_bottom = data["hzdepb_r"].iloc[0]
     else:
-        return var_pct_intpl_final
+        c_very_bottom = data["hzdepb_r"].values[-1]
+
+    # Check if c_very_bottom is greater than 200 and assign 200 if true
+    if c_very_bottom > 200:
+        c_very_bottom = 200
+    return c_very_bottom
 
 
 def getProfile_SG(data, variable, c_bot=False):

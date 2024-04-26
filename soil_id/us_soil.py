@@ -2296,13 +2296,6 @@ def update_intpl_data(
     return df
 
 
-def rename_simulated_soil_profile_columns(df, soil_property_columns, depth):
-    new_column_names = {}
-    for col in soil_property_columns:
-        new_column_names[col] = f"{col}_{depth}"
-    df.rename(columns=new_column_names, inplace=True)
-
-
 # Creates a new soil horizon layer row in the soil horizon table
 def create_new_layer(row, hzdept, hzdepb):
     return pd.DataFrame(

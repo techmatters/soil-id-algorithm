@@ -2536,3 +2536,10 @@ def findSoilLocation(lon, lat):
 def calculate_aws(df, quantile):
     total = (df[quantile] * df["depth"] * df["n"]).sum()
     return pd.DataFrame({f"aws{quantile}_100": [total]})
+
+
+def rename_simulated_soil_profile_columns(df, soil_property_columns, depth):
+    new_column_names = {}
+    for col in soil_property_columns:
+        new_column_names[col] = f"{col}_{depth}"
+    df.rename(columns=new_column_names, inplace=True)

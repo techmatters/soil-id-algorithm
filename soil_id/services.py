@@ -105,6 +105,12 @@ def get_soil_series_data(mucompdata_pd, OSD_compkind):
         if compname in OSD_compkind
     ]
 
+    if not series_name:
+        logging.error("Soil series data: empty series")
+        logging.debug(f"mucompdata: {mucompdata_pd}")
+        logging.debug(f"OSD: {OSD_compkind}")
+        return None
+
     params = {"q": "site_hz", "s": series_name}
     base_url = "https://casoilresource.lawr.ucdavis.edu/api/soil-series.php"
 

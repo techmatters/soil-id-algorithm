@@ -2,6 +2,7 @@ geopandas
 mysqlclient
 numpy
 pandas
+profilehooks
 pyogrio
 python-dotenv
 requests

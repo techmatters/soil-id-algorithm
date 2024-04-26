@@ -430,6 +430,10 @@ pillow==10.3.0 \
     # via
     #   imageio
     #   scikit-image
+profilehooks==1.12.0 \
+    --hash=sha256:05b87589df8a8c630fd701bae6008cc1cfff4457bd0064887ad25248327a5ba3 \
+    --hash=sha256:dc87f319c9596b8c50fd374e3c08c51fa29a61553f1d9281482e4ca31829b021
+    # via -r requirements/base.in
 pyogrio==0.7.2 \
     --hash=sha256:1b7197c72f034ac7187da2a8d50a063a5f1256aab732b154f11f887a7652dc3d \
     --hash=sha256:234b0d1d22e9680229b0618c25077a0cb2428cbbc2939b4bb9bdd8ee77e0f3e0 \
@@ -641,9 +645,9 @@ threadpoolctl==3.4.0 \
     --hash=sha256:8f4c689a65b23e5ed825c8436a92b818aac005e0f3715f6a1664d7c7ee29d262 \
     --hash=sha256:f11b491a03661d6dd7ef692dd422ab34185d982466c49c8f98c8f716b5c93196
     # via scikit-learn
-tifffile==2024.4.18 \
-    --hash=sha256:5ffcd77b9d77c3aada1278631af5c8ac788438452fda2eb1b9b60d5553e95c82 \
-    --hash=sha256:72643b5c9ef886669a00a659c9fd60a81f220d2fb6572d184c3e147435ccec43
+tifffile==2024.4.24 \
+    --hash=sha256:8d0b982f4b01ace358835ae6c2beb5a70cb7287f5d3a2e96c318bd5befa97b1f \
+    --hash=sha256:e329f36ac8ff3bbe7dd04609340be26b03c4b9e9a69235fc3ab33434157c38ea
     # via scikit-image
 tzdata==2024.1 \
     --hash=sha256:2674120f8d891909751c38abcdfd386ac0a5a1127954fbc332af6b5ceae07efd \

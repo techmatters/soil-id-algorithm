@@ -17,12 +17,10 @@ import geopandas as gpd
 import numpy as np
 import pandas as pd
 import shapely
-import shapely.ops as ops
 import skimage
 from db import get_WISE30sec_data
 from numpy.linalg import cholesky
 from osgeo import ogr
-from pyproj import Proj, Transformer
 from rosetta import SoilData, rosetta
 from scipy.interpolate import UnivariateSpline
 from scipy.sparse import issparse
@@ -1259,12 +1257,8 @@ def calculate_distances_and_intersections(mu_geo, point):
     # Project the data to a suitable UTM zone based on the point's location
     point_utm, epsg_code = convert_geometry_to_utm(point)
 
-    # Project the GeoDataFrame to UTM for distance calculation
-    transformer = Transformer.from_proj("epsg:4326", f"epsg:{epsg_code}", always_xy=True)
-    mu_geo_utm = mu_geo.copy()
-    mu_geo_utm["geometry"] = mu_geo_utm["geometry"].apply(
-        lambda geom: ops.transform(transformer.transform, geom) if not geom.is_empty else geom
-    )
+    # Ensure both the point and GeoDataFrame are transformed to the same CRS
+    mu_geo_utm = mu_geo.to_crs(epsg_code)
 
     # Calculate distances and intersections
     distances = mu_geo_utm["geometry"].distance(point_utm)
@@ -1294,35 +1288,46 @@ def load_statsgo_data(box):
         return None
 
 
-def convert_geometry_to_utm(geometry):
+def convert_geometry_to_utm(geometry, src_crs="epsg:4326", target_crs=None):
     """
-    Converts a shapely geometry from latitude and longitude to UTM coordinates in
-    the appropriate UTM zone.
+    Transforms a given geometry from its source coordinate reference system (CRS)
+    to an appropriate Universal Transverse Mercator (UTM) CRS based on the geometry's
+    centroid location.
 
     Parameters:
-    - geometry (shapely.geometry): A shapely geometry object (e.g., Point, Polygon)
-      in geographic coordinates.
+    - geometry (shapely.geometry.base.BaseGeometry): The geometry to transform, which
+      could be any type of geometry, e.g., Point, Polygon.
+    - src_crs (str, optional): The EPSG code of the source CRS of the geometry. Defaults
+      to 'epsg:4326'.
+    - target_crs (str, optional): The EPSG code of the target CRS to which the geometry
+      should be transformed. If None, the appropriate UTM CRS based on the geometry's
+      centroid will be calculated.
 
     Returns:
-    - tuple: A tuple containing the transformed geometry in UTM coordinates and the
-      EPSG code of the UTM zone.
+    - tuple: A tuple containing the transformed geometry and the EPSG code of the
+      target UTM CRS. The transformed geometry is in the new CRS, and distances from
+      this geometry can be accurately calculated in linear units (meters).
+
+    Notes:
+    - If the target_crs is not provided, the function calculates the correct UTM zone
+      based on the longitude (from -180 to 180 degrees) and adjusts for the northern or
+      southern hemisphere based on the latitude.
+    - This function assumes the geometry is already in the specified source CRS and will
+      convert it directly to the target CRS without additional CRS transformations.
     """
-    # Extract centroid for determining UTM zone
-    lon, lat = geometry.centroid.x, geometry.centroid.y
+    if target_crs is None:
+        lon, lat = geometry.centroid.x, geometry.centroid.y
+        utm_zone = int((lon + 180) / 6) + 1
+        hemisphere = "north" if lat >= 0 else "south"
+        epsg_code = f"326{utm_zone:02d}" if hemisphere == "north" else f"327{utm_zone:02d}"
+        target_crs = f"epsg:{epsg_code}"
 
-    # Determine the UTM zone and construct the EPSG code
-    utm_zone = int((lon + 180) / 6) + 1
-    hemisphere = "north" if lat >= 0 else "south"
-    epsg_code = f"326{utm_zone}" if hemisphere == "north" else f"327{utm_zone}"
+    # Wrap the shapely geometry in a GeoSeries to use the to_crs() method
+    geo_series = gpd.GeoSeries([geometry], crs=src_crs)
+    transformed_geo_series = geo_series.to_crs(target_crs)
 
-    # Initialize the Proj object for the determined UTM zone
-    proj_utm = Proj(f"epsg:{epsg_code}")
-    transformer = Transformer.from_proj(Proj("epsg:4326"), proj_utm, always_xy=True)
-
-    # Transform the geometry to UTM coordinates
-    utm_geometry = ops.transform(transformer.transform, geometry)
-
-    return utm_geometry, epsg_code
+    # Return the first (and only) geometry in the transformed GeoSeries and the new EPSG code
+    return transformed_geo_series.iloc[0], target_crs
 
 
 def create_bounding_box(lon, lat, buffer_dist):
@@ -1338,20 +1343,22 @@ def create_bounding_box(lon, lat, buffer_dist):
     Returns:
     - Shapely Polygon: Geographic bounding box as a shapely polygon.
     """
+    # Convert geographic coordinates to a Point geometry
     point_geo = Point(lon, lat)
+
+    # Use the convert_geometry_to_utm function to transform the point
     point_utm, epsg_code = convert_geometry_to_utm(point_geo)
 
-    proj_utm = Proj(f"epsg:{epsg_code}")
-    proj_latlon = Proj(proj="latlong", datum="WGS84")
+    # Create a GeoDataFrame with the UTM point
+    point_gdf = gpd.GeoDataFrame([{"geometry": point_utm}], crs=epsg_code)
 
-    # Create a point and buffer in UTM coordinates
-    point_gdf = gpd.GeoDataFrame([{"geometry": point_utm}], crs=f"epsg:{epsg_code}")
-    s_buff = point_gdf.geometry.buffer(buffer_dist)
-    utm_box = box(*s_buff.total_bounds)
+    # Buffer the point in UTM coordinates
+    buffered_point = point_gdf.buffer(buffer_dist)[0]
+    utm_box = box(*buffered_point.bounds)
 
     # Convert the UTM box back to geographic coordinates
-    transformer = Transformer.from_proj(proj_utm, proj_latlon, always_xy=True)
-    geographic_box = ops.transform(transformer.transform, utm_box)
+    point_gdf = gpd.GeoDataFrame([{"geometry": utm_box}], crs=epsg_code)
+    geographic_box = point_gdf.to_crs("epsg:4326").geometry.iloc[0]
 
     return geographic_box
 
@@ -1383,7 +1390,7 @@ def extract_mucompdata_STATSGO(lon, lat):
     mu_geo = statsgo_mukey[["MUKEY", "geometry"]].drop_duplicates(subset=["geometry"])
     mu_id_dist = calculate_distances_and_intersections(mu_geo, point)
     mu_id_dist.loc[mu_id_dist["pt_intersect"], "distance_m"] = 0
-    mu_id_dist["distance_m"] = mu_id_dist.groupby("mukey")["distance_m"].transform(min)
+    mu_id_dist["distance_m"] = mu_id_dist.groupby("mukey")["distance_m"].transform("min")
     mukey_dist_final = mu_id_dist.drop_duplicates("mukey").sort_values("distance_m").head(2)
 
     mukey_list = mukey_dist_final["mukey"].tolist()
@@ -2543,3 +2550,43 @@ def rename_simulated_soil_profile_columns(df, soil_property_columns, depth):
     for col in soil_property_columns:
         new_column_names[col] = f"{col}_{depth}"
     df.rename(columns=new_column_names, inplace=True)
+
+
+# Function to handle the update of ecological site data
+def update_esd_data(df):
+    """
+    Processes the given DataFrame by updating missing ESD data based on component
+    groups with the same names, filling missing URLs and ecoclass IDs and names.
+    """
+    if "esd_url" not in df.columns:
+        df["esd_url"] = np.nan  # Initialize 'esd_url' as NaN if it does not exist
+
+    # Replace group-specific data for missing ESD components
+    df["compname_grp"] = df["compname"].str.replace(r"[0-9]+", "")
+    grouped = df.groupby("compname_grp", sort=False)
+
+    # Generate a list of updated groups
+    updated_groups = []
+    for _, group in grouped:
+        unique_ids = group["ecoclassid"].dropna().unique()
+        unique_names = group["ecoclassname"].dropna().unique()
+        if group["ecoclassid"].isnull().all() or group["ecoclassname"].isnull().all():
+            # Fill all missing values if all are missing within the group
+            group.fillna(
+                {
+                    "ecoclassid": unique_ids[0] if unique_ids else "",
+                    "ecoclassname": unique_names[0] if unique_names else "",
+                },
+                inplace=True,
+            )
+        elif len(unique_ids) == 1 and len(unique_names) == 1:
+            # Fill missing values with existing unique values if present
+            group.loc[:, "ecoclassid"] = group["ecoclassid"].fillna(unique_ids[0])
+            group.loc[:, "ecoclassname"] = group["ecoclassname"].fillna(unique_ids[0])
+
+        # Handle URLs separately as they might not exist
+        urls = group["esd_url"].dropna().unique()
+        group["esd_url"] = group["esd_url"].fillna(urls[0] if urls.size > 0 else "")
+        updated_groups.append(group)
+
+    return pd.concat(updated_groups, ignore_index=True)

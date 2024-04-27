@@ -100,7 +100,7 @@ def get_esd_data(ecositeID, esd_geo, ESDcompdata_pd):
 
 def get_soil_series_data(mucompdata_pd, OSD_compkind):
     series_name = [
-        re.sub("[0-9]+", "", compname)
+        re.sub("[0-9]+", "", compname).strip()
         for compname in mucompdata_pd["compname"]
         if compname in OSD_compkind
     ]
@@ -110,19 +110,15 @@ def get_soil_series_data(mucompdata_pd, OSD_compkind):
 
     try:
         response = requests.get(base_url, params=params, timeout=3)
-        logging.info(f"{round(response.elapsed.total_seconds(), 2)}: {base_url}")
-        response.raise_for_status()
-        result = response.json()
-
-    except requests.ConnectionError:
-        logging.error("Soil series data: failed to connect")
-        result = None
-    except requests.Timeout:
-        logging.error("Soil series data: timed out")
-        result = None
+        logging.info(f"{round(response.elapsed.total_seconds(), 2)} seconds: {base_url}")
+        response.raise_for_status()  # will raise an exception for HTTP error statuses
+        result = response.json()  # should be a dictionary
+    except (requests.ConnectionError, requests.Timeout) as e:
+        logging.error(f"Soil series data: failed to connect or timeout: {str(e)}")
+        result = {}
     except requests.RequestException as err:
-        logging.error(f"Soil series data: error: {err}")
-        result = None
+        logging.error(f"Soil series data: request error: {str(err)}")
+        result = {}
 
     return result
 

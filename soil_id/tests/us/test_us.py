@@ -20,7 +20,7 @@ def test_soil_location():
         {"lon": -119.4596489, "lat": 43.06450312, "plot_id": 3008},
         {"lon": -69.28246582, "lat": 47.21392200, "plot_id": 3009},
         {"lon": -158.4018264, "lat": 60.42282639, "plot_id": 3010},
-        # {"lon": -121.8166, "lat": 48.6956, "plot_id": 3011},
+        {"lon": -121.8166, "lat": 48.6956, "plot_id": 3011},
     ]
 
     # Dummy Soil Profile Data (replicating the structure provided)
@@ -32,24 +32,27 @@ def test_soil_location():
     pSlope = "15"
     pElev = None
     cracks = False
+    site_calc = False
 
     for item in test_locations:
         logging.info(f"Testing {item['lon']}, {item['lat']}, {item['plot_id']}")
-        result_list = getSoilLocationBasedUS(item["lon"], item["lat"], None)
-        result_rank = rankPredictionUS(
-            item["lon"],
-            item["lat"],
-            soilHorizon,
-            horizonDepth,
-            rfvDepth,
-            lab_Color,
-            pSlope,
-            pElev,
-            bedrock,
-            cracks,
-            plot_id=None,
-        )
+        result_list = getSoilLocationBasedUS(item["lon"], item["lat"], None, site_calc)
+        if site_calc:
+            result_rank = rankPredictionUS(
+                item["lon"],
+                item["lat"],
+                soilHorizon,
+                horizonDepth,
+                rfvDepth,
+                lab_Color,
+                pSlope,
+                pElev,
+                bedrock,
+                cracks,
+                plot_id=None,
+            )
         print(result_list)
-        print(result_rank)
+        if site_calc:
+            print(result_rank)
 
     config.TEMP_DIR.cleanup()

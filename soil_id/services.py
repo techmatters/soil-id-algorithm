@@ -119,9 +119,9 @@ def get_soil_series_data(mucompdata_pd, OSD_compkind):
         logging.info(f"{round(response.elapsed.total_seconds(), 2)} seconds: {base_url}")
         response.raise_for_status()
         result = response.json()
-    except (requests.ConnectionError) as err:
+    except requests.ConnectionError as err:
         logging.error(f"Soil series data: failed to connect: {err}")
-    except (requests.Timeout):
+    except requests.Timeout:
         logging.error(f"Soil series data: timed out")
     except requests.RequestException as err:
         logging.error(f"Soil series data: request error: {err}")

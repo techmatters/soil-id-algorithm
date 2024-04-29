@@ -1843,8 +1843,8 @@ def convert_rgb_to_lab(row, color_ref):
     if pd.isnull(row["r"]) or pd.isnull(row["g"]) or pd.isnull(row["b"]):
         return np.nan, np.nan, np.nan
 
-    LAB = color.rgb2lab(color_ref, rgb_ref, [row["r"], row["g"], row["b"]])
-    return LAB
+    result = color.rgb2lab(color_ref, rgb_ref, [row["r"], row["g"], row["b"]])
+    return result
 
 
 def getProfileLAB(data_osd, color_ref):

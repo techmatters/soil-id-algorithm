@@ -2,10 +2,12 @@ geopandas
 mysqlclient
 numpy
 pandas
+platformdirs
 profilehooks
 pyogrio
 python-dotenv
 requests
+requests-cache
 rtree
 scipy
 shapely

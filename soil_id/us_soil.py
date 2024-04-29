@@ -11,7 +11,6 @@ import config
 # Third-party libraries
 import numpy as np
 import pandas as pd
-import soil_sim
 from color import lab2munsell, munsell2rgb
 from db import load_model_output, save_model_output, save_rank_output
 
@@ -24,6 +23,7 @@ from services import (
     get_soilweb_data,
     sda_return,
 )
+from soil_sim import soil_sim
 from utils import (
     aggregate_data,
     compute_site_similarity,

@@ -47,8 +47,13 @@ test-verbose:
 test-profile:
 	pytest soil_id --profile
 
-test-profile-svg:
-	pytest soil_id --profile-svg
+test-graphs: test-profile graphs
+
+graphs:
+	# gprof2dot -f pstats  prof/combined.prof | dot -Tsvg -o prof/combined.svg
+	# flameprof prof/combined.prof > prof/combined_flame.svg
+	gprof2dot -f pstats  prof/test_soil_location.prof | dot -Tsvg -o prof/test_soil_location.svg
+	flameprof prof/test_soil_location.prof > prof/test_soil_location_flame.svg
 
 ${VIRTUAL_ENV}/scripts/pip-sync:
 	pip install pip-tools

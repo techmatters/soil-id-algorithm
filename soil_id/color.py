@@ -41,17 +41,3 @@ def munsell2rgb(color_ref, munsell_ref, munsell):
     return [color_ref.at[idx, col] for col in ["r", "g", "b"]]
 
 
-def rgb2lab(color_ref, rgb_ref, rgb):
-    """
-    Convert RGB values to LAB color values using a reference dataframe.
-
-    Parameters:
-    - color_ref (pd.DataFrame): Reference dataframe containing RGB and LAB values.
-    - rgb_ref (list): Reference RGB values.
-    - rgb (list): RGB values to be converted.
-
-    Returns:
-    - list: LAB values.
-    """
-    idx = pd.DataFrame(euclidean_distances([rgb], rgb_ref)).idxmin(axis=1).iloc[0]
-    return [color_ref.at[idx, col] for col in ["L", "A", "B"]]

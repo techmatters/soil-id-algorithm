@@ -6,8 +6,6 @@ import logging
 import math
 import re
 
-import color
-
 # local libraries
 import config
 

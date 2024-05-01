@@ -744,7 +744,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id, site_calc=False):
                         # Convert LAB triplets to Munsell values
                         munsell_values = [
                             (
-                                lab2munsell(color_ref, LAB_ref, LAB=lab)
+                                lab2munsell(color_ref, LAB_ref, lab)
                                 if lab[0] and lab[1] and lab[2]
                                 else ""
                             )

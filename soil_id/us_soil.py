@@ -1519,12 +1519,12 @@ def getSoilLocationBasedUS(lon, lat, plot_id, site_calc=False):
                 "ec": "ds/m",
             },
         },
-        "AWS_PIW90": aws_PIW90,
+        "soilList": output_SoilList,
     }
 
     if site_calc:
         result["Soil Data Value"] = var_imp
-        result["soilList"] = output_SoilList
+        result["AWS_PIW90"] = aws_PIW90
 
     return result
 

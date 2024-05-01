@@ -1,3 +1,4 @@
+composition_stats
 geopandas
 mysqlclient
 numpy
@@ -9,8 +10,7 @@ python-dotenv
 requests
 requests-cache
 rtree
-scipy
-shapely
 scikit-image
 scikit-learn
-composition_stats
+scipy
+shapely

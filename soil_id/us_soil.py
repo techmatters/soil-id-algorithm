@@ -1505,43 +1505,28 @@ def getSoilLocationBasedUS(lon, lat, plot_id, site_calc=False):
                 mucompdata_cond_prob.to_csv(index=None, header=True),
             )
 
-    # Return the final output
+    result = {
+        "metadata": {
+            "location": "us",
+            "model": "v3",
+            "unit_measure": {
+                "distance": "m",
+                "depth": "cm",
+                "cec": "cmol(c)/kg",
+                "clay": "%",
+                "rock_fragments": "cm3/100cm3",
+                "sand": "%",
+                "ec": "ds/m",
+            },
+        },
+        "AWS_PIW90": aws_PIW90,
+    }
+
     if site_calc:
-        return {
-            "metadata": {
-                "location": "us",
-                "model": "v3",
-                "unit_measure": {
-                    "distance": "m",
-                    "depth": "cm",
-                    "cec": "cmol(c)/kg",
-                    "clay": "%",
-                    "rock_fragments": "cm3/100cm3",
-                    "sand": "%",
-                    "ec": "ds/m",
-                },
-            },
-            "AWS_PIW90": aws_PIW90,
-            "Soil Data Value": var_imp,
-            "soilList": output_SoilList,
-        }
-    else:
-        return {
-            "metadata": {
-                "location": "us",
-                "model": "v3",
-                "unit_measure": {
-                    "distance": "m",
-                    "depth": "cm",
-                    "cec": "cmol(c)/kg",
-                    "clay": "%",
-                    "rock_fragments": "cm3/100cm3",
-                    "sand": "%",
-                    "ec": "ds/m",
-                },
-            },
-            "soilList": output_SoilList,
-        }
+        result["Soil Data Value"] = var_imp
+        result["soilList"] = output_SoilList
+
+    return result
 
 
 ##############################################################################################

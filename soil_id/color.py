@@ -37,5 +37,3 @@ def munsell2rgb(color_ref, munsell_ref, munsell):
         f'hue == "{munsell[0]}" & value == {int(munsell[1])} & chroma == {int(munsell[2])}'
     ).index[0]
     return [color_ref.at[idx, col] for col in ["r", "g", "b"]]
-
-

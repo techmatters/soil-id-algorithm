@@ -2,20 +2,18 @@ import pandas as pd
 from sklearn.metrics.pairwise import euclidean_distances
 
 
-def lab2munsell(color_ref, LAB_ref, LAB):
+def lab2munsell(color_ref, LAB_ref, lab):
     """
     Converts LAB color values to Munsell notation using the closest match from a reference
     dataframe.
 
     Parameters:
-    - color_ref (pd.DataFrame): Reference dataframe with LAB and Munsell values.
-    - LAB_ref (list): Reference LAB values.
-    - LAB (list): LAB values to be converted.
+    - lab (list): LAB values to be converted.
 
     Returns:
     - str: Munsell color notation.
     """
-    idx = pd.DataFrame(euclidean_distances([LAB], LAB_ref)).idxmin(axis=1).iloc[0]
+    idx = pd.DataFrame(euclidean_distances([lab], LAB_ref)).idxmin(axis=1).iloc[0]
     munsell_color = (
         f"{color_ref.at[idx, 'hue']} "
         f"{int(color_ref.at[idx, 'value'])}/{int(color_ref.at[idx, 'chroma'])}"

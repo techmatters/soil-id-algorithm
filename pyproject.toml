@@ -7,6 +7,7 @@ authors = [
   {name = "Jonathan Maynard", email = "jonathan.maynard@usda.gov"},
   {name = "Paul Schreiber", email = "paul@techmatters.org"},
 ]
+dynamic = ["version", "description", "classifiers", "dependencies"]
 
 [tool.black]
 line-length = 100
@@ -18,3 +19,6 @@ known_first_party = "soil_id"
 [tool.pytest.ini_options]
 log_cli = true
 log_cli_level = "INFO"
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}

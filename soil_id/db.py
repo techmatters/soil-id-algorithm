@@ -2,9 +2,10 @@
 import logging
 import sys
 
+import pandas as pd
+
 # Third-party libraries
 import psycopg2
-import pandas as pd
 
 # local libraries
 import soil_id.config

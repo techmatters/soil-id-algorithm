@@ -529,7 +529,7 @@ requests-cache==1.2.0 \
     # via -r requirements/base.in
 # WARNING: pip install will require the following package to be hashed.
 # Consider using a hashable URL like https://github.com/jazzband/pip-tools/archive/SOMECOMMIT.zip
-rosetta-soil @ git+https://github.com/paulschreiber/rosetta-soil
+rosetta-soil @ git+https://github.com/paulschreiber/rosetta-soil@bc53029
     # via -r requirements/base.in
 rtree==1.2.0 \
     --hash=sha256:008d86fd8990f3ca15c06834ae597e16209b3e0a3d6512f0a3489c201011390f \

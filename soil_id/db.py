@@ -2,12 +2,12 @@
 import logging
 import sys
 
-# local libraries
-import config
-
 # Third-party libraries
 import MySQLdb
 import pandas as pd
+
+# local libraries
+import soil_id.config
 
 
 def get_datastore_connection():

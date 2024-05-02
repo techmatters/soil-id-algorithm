@@ -5,26 +5,25 @@ import json
 import logging
 import re
 
-# local libraries
-import config
-
 # Third-party libraries
 import numpy as np
 import pandas as pd
-from color import lab2munsell, munsell2rgb
-from db import load_model_output, save_model_output, save_rank_output
-
-# Flask
 from pandas import json_normalize
-from services import (
+
+# local libraries
+import soil_id.config
+
+from .color import lab2munsell, munsell2rgb
+from .db import load_model_output, save_model_output, save_rank_output
+from .services import (
     get_elev_data,
     get_esd_data,
     get_soil_series_data,
     get_soilweb_data,
     sda_return,
 )
-from soil_sim import soil_sim
-from utils import (
+from .soil_sim import soil_sim
+from .utils import (
     aggregate_data,
     compute_site_similarity,
     drop_cokey_horz,
@@ -66,7 +65,7 @@ pd.set_option("future.no_silent_downcasting", True)
 ############################################################################################
 def list_soils(lon, lat, plot_id, site_calc=False):
     # Load in LAB to Munsell conversion look-up table
-    color_ref = pd.read_csv(config.MUNSELL_RGB_LAB_PATH)
+    color_ref = pd.read_csv(soil_id.config.MUNSELL_RGB_LAB_PATH)
     LAB_ref = color_ref[["L", "A", "B"]]
     munsell_ref = color_ref[["hue", "value", "chroma"]]
 
@@ -1467,12 +1466,12 @@ def list_soils(lon, lat, plot_id, site_calc=False):
         # Writing out list of data needed for soilIDRank
         if plot_id is None:
             soilIDRank_output_pd.to_csv(
-                config.SOIL_ID_RANK_PATH,
+                soil_id.config.SOIL_ID_RANK_PATH,
                 index=None,
                 header=True,
             )
             mucompdata_cond_prob.to_csv(
-                config.SOIL_ID_PROB_PATH,
+                soil_id.config.SOIL_ID_PROB_PATH,
                 index=None,
                 header=True,
             )
@@ -1767,8 +1766,8 @@ def rank_soils(
     # Load in component data from soilIDList
     if plot_id is None:
         # Reading from file
-        soilIDRank_output_pd = pd.read_csv(config.SOIL_ID_RANK_PATH)
-        mucompdata_pd = pd.read_csv(config.SOIL_ID_PROB_PATH)
+        soilIDRank_output_pd = pd.read_csv(soil_id.config.SOIL_ID_RANK_PATH)
+        mucompdata_pd = pd.read_csv(soil_id.config.SOIL_ID_PROB_PATH)
         record_id = None
     else:
         # Read from database

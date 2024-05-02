@@ -1,8 +1,8 @@
 import logging
 import time
 
-import config
-from us_soil import list_soils, rank_soils
+import soil_id.config
+from soil_id.us_soil import list_soils, rank_soils
 
 
 def test_true():
@@ -58,4 +58,4 @@ def test_soil_location():
         if site_calc:
             print(result_rank)
 
-    config.TEMP_DIR.cleanup()
+    soil_id.config.TEMP_DIR.cleanup()

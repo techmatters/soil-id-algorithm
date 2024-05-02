@@ -3,7 +3,7 @@ import logging
 import sys
 
 # Third-party libraries
-import MySQLdb
+import psycopg2
 import pandas as pd
 
 # local libraries
@@ -18,11 +18,11 @@ def get_datastore_connection():
         Connection object if successful, otherwise exits the program.
     """
     try:
-        conn = MySQLdb.connect(
+        conn = psycopg2.connect(
             host=soil_id.config.DB_HOST,
             user=soil_id.config.DB_USERNAME,
             passwd=soil_id.config.DB_PASSWORD,
-            db=soil_id.config.DB_NAME,
+            database=soil_id.config.DB_NAME,
         )
         return conn
     except Exception as err:

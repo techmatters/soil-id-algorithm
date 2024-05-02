@@ -1,10 +1,10 @@
 composition_stats
 geopandas
-mysqlclient
 numpy
 pandas
 platformdirs
 profilehooks
+psycopg2
 pyogrio
 python-dotenv
 requests

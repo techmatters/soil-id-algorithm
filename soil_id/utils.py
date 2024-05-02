@@ -6,9 +6,6 @@ import logging
 import math
 import re
 
-# local libraries
-import config
-
 # Third-party libraries
 import fiona
 import geopandas as gpd
@@ -16,18 +13,22 @@ import numpy as np
 import pandas as pd
 import shapely
 import skimage
-from db import get_WISE30sec_data
 from numpy.linalg import cholesky
 from osgeo import ogr
 from rosetta import SoilData, rosetta
 from scipy.interpolate import UnivariateSpline
 from scipy.sparse import issparse
 from scipy.stats import entropy, norm
-from services import sda_return
 from shapely.geometry import Point, box
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import pairwise
 from sklearn.utils import validation
+
+# local libraries
+import soil_id.config
+
+from .db import get_WISE30sec_data
+from .services import sda_return
 
 
 # global
@@ -1279,7 +1280,7 @@ def load_statsgo_data(box):
     """
     try:
         return gpd.read_file(
-            config.STATSGO_PATH, bbox=box.bounds, mode="r", driver="ESRI Shapefile"
+            soil_id.config.STATSGO_PATH, bbox=box.bounds, mode="r", driver="ESRI Shapefile"
         )
     except fiona.errors.DriverError as e:
         logging.error(f"fiona driver error: {e}")
@@ -2504,11 +2505,11 @@ def findSoilLocation(lon, lat):
     """
 
     drv_h = ogr.GetDriverByName("ESRI Shapefile")
-    ds_in_h = drv_h.Open(config.HWSD_PATH, 0)
+    ds_in_h = drv_h.Open(soil_id.config.HWSD_PATH, 0)
     layer_global = ds_in_h.GetLayer(0)
 
     drv_us = ogr.GetDriverByName("ESRI Shapefile")
-    ds_in_us = drv_us.Open(config.US_AREA_PATH, 0)
+    ds_in_us = drv_us.Open(soil_id.config.US_AREA_PATH, 0)
     layer_us = ds_in_us.GetLayer(0)
 
     # Setup coordinate transformation

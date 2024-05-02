@@ -5,26 +5,25 @@ import json
 import logging
 import re
 
-# local libraries
-import config
-
 # Third-party libraries
 import numpy as np
 import pandas as pd
-from color import lab2munsell, munsell2rgb
-from db import load_model_output, save_model_output, save_rank_output
-
-# Flask
 from pandas import json_normalize
-from services import (
+
+# local libraries
+import soil_id.config
+
+from .color import lab2munsell, munsell2rgb
+from .db import load_model_output, save_model_output, save_rank_output
+from .services import (
     get_elev_data,
     get_esd_data,
     get_soil_series_data,
     get_soilweb_data,
     sda_return,
 )
-from soil_sim import soil_sim
-from utils import (
+from .soil_sim import soil_sim
+from .utils import (
     aggregate_data,
     compute_site_similarity,
     drop_cokey_horz,
@@ -48,25 +47,25 @@ from utils import (
 
 # entry points
 # getSoilLocationBasedGlobal
-# getSoilLocationBasedUS
-# rankPredictionUS
+# list_soils
+# rank_soils
 # rankPredictionGlobal
 # getSoilGridsGlobal
 
-# when a site is created, call getSoilLocationBasedUS/getSoilLocationBasedGlobal.
+# when a site is created, call list_soils/getSoilLocationBasedGlobal.
 # when a site is created, call getSoilGridsGlobal
-# after user has collected data, call rankPredictionUS/rankPredictionGlobal.
+# after user has collected data, call rank_soils/rankPredictionGlobal.
 
 # set Pandas dataframe options
 pd.set_option("future.no_silent_downcasting", True)
 
 
 ############################################################################################
-#                                   getSoilLocationBasedUS                                 #
+#                                   list_soils                                 #
 ############################################################################################
-def getSoilLocationBasedUS(lon, lat, plot_id, site_calc=False):
+def list_soils(lon, lat, plot_id, site_calc=False):
     # Load in LAB to Munsell conversion look-up table
-    color_ref = pd.read_csv(config.MUNSELL_RGB_LAB_PATH)
+    color_ref = pd.read_csv(soil_id.config.MUNSELL_RGB_LAB_PATH)
     LAB_ref = color_ref[["L", "A", "B"]]
     munsell_ref = color_ref[["hue", "value", "chroma"]]
 
@@ -1467,12 +1466,12 @@ def getSoilLocationBasedUS(lon, lat, plot_id, site_calc=False):
         # Writing out list of data needed for soilIDRank
         if plot_id is None:
             soilIDRank_output_pd.to_csv(
-                config.SOIL_ID_RANK_PATH,
+                soil_id.config.SOIL_ID_RANK_PATH,
                 index=None,
                 header=True,
             )
             mucompdata_cond_prob.to_csv(
-                config.SOIL_ID_PROB_PATH,
+                soil_id.config.SOIL_ID_PROB_PATH,
                 index=None,
                 header=True,
             )
@@ -1530,9 +1529,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id, site_calc=False):
 
 
 ##############################################################################################
-#                                   rankPredictionUS                                         #
+#                                   rank_soils                                         #
 ##############################################################################################
-def rankPredictionUS(
+def rank_soils(
     lon,
     lat,
     soilHorizon,
@@ -1767,8 +1766,8 @@ def rankPredictionUS(
     # Load in component data from soilIDList
     if plot_id is None:
         # Reading from file
-        soilIDRank_output_pd = pd.read_csv(config.SOIL_ID_RANK_PATH)
-        mucompdata_pd = pd.read_csv(config.SOIL_ID_PROB_PATH)
+        soilIDRank_output_pd = pd.read_csv(soil_id.config.SOIL_ID_RANK_PATH)
+        mucompdata_pd = pd.read_csv(soil_id.config.SOIL_ID_PROB_PATH)
         record_id = None
     else:
         # Read from database

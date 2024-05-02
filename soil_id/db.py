@@ -2,12 +2,12 @@
 import logging
 import sys
 
-# local libraries
-import config
-
 # Third-party libraries
 import MySQLdb
 import pandas as pd
+
+# local libraries
+import soil_id.config
 
 
 def get_datastore_connection():
@@ -19,10 +19,10 @@ def get_datastore_connection():
     """
     try:
         conn = MySQLdb.connect(
-            host=config.DB_HOST,
-            user=config.DB_USERNAME,
-            passwd=config.DB_PASSWORD,
-            db=config.DB_NAME,
+            host=soil_id.config.DB_HOST,
+            user=soil_id.config.DB_USERNAME,
+            passwd=soil_id.config.DB_PASSWORD,
+            db=soil_id.config.DB_NAME,
         )
         return conn
     except Exception as err:

@@ -3,7 +3,8 @@ import numpy as np
 import pandas as pd
 from composition_stats import ilr, ilr_inv
 from scipy.stats import spearmanr
-from utils import (
+
+from .utils import (
     acomp,
     calculate_aws,
     calculate_vwc_awc,

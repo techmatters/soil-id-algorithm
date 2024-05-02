@@ -2,7 +2,7 @@ import logging
 import time
 
 import config
-from us_soil import getSoilLocationBasedUS, rankPredictionUS
+from us_soil import list_soils, rank_soils
 
 
 def test_true():
@@ -38,10 +38,10 @@ def test_soil_location():
     for item in test_locations:
         logging.info(f"Testing {item['lon']}, {item['lat']}, {item['plot_id']}")
         start_time = time.perf_counter()
-        result_list = getSoilLocationBasedUS(item["lon"], item["lat"], None, site_calc)
+        result_list = list_soils(item["lon"], item["lat"], None, site_calc)
         logging.info(f"...time: {(time.perf_counter()-start_time):.2f}s")
         if site_calc:
-            result_rank = rankPredictionUS(
+            result_rank = rank_soils(
                 item["lon"],
                 item["lat"],
                 soilHorizon,

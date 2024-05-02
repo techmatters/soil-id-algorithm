@@ -43,15 +43,15 @@ from utils import (
 
 # entry points
 # getSoilLocationBasedGlobal
-# getSoilLocationBasedUS
-# rankPredictionUS
+# list_soils
+# rank_soils
 # rankPredictionGlobal
 # getSoilGridsGlobal
 # getSoilGridsUS
 
-# when a site is created, call getSoilLocationBasedUS/getSoilLocationBasedGlobal.
+# when a site is created, call list_soils/getSoilLocationBasedGlobal.
 # when a site is created, call getSoilGridsGlobal
-# after user has collected data, call rankPredictionUS/rankPredictionGlobal.
+# after user has collected data, call rank_soils/rankPredictionGlobal.
 
 
 ##################################################################################################

@@ -22,7 +22,7 @@ class soilIDList(Resource):
         if pointer is None:
             return "Soil ID not available in this area"
         elif pointer == "US":
-            data = us_soil.getSoilLocationBasedUS(args.longitude, args.latitude, args.plot_id)
+            data = us_soil.list_soils(args.longitude, args.latitude, args.plot_id)
         elif pointer == "Global":
             data = global_soil.getSoilLocationBasedGlobal(
                 args.longitude, args.latitude, args.plot_id
@@ -68,7 +68,7 @@ class soilIDRank(Resource):
         if pointer is None:
             return "Soil ID not available in this area"
         elif pointer == "US":
-            data = us_soil.rankPredictionUS(
+            data = us_soil.rank_soils(
                 args.longitude,
                 args.latitude,
                 userTextureByDepth,

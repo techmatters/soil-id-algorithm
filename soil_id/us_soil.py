@@ -48,23 +48,23 @@ from utils import (
 
 # entry points
 # getSoilLocationBasedGlobal
-# getSoilLocationBasedUS
-# rankPredictionUS
+# list_soils
+# rank_soils
 # rankPredictionGlobal
 # getSoilGridsGlobal
 
-# when a site is created, call getSoilLocationBasedUS/getSoilLocationBasedGlobal.
+# when a site is created, call list_soils/getSoilLocationBasedGlobal.
 # when a site is created, call getSoilGridsGlobal
-# after user has collected data, call rankPredictionUS/rankPredictionGlobal.
+# after user has collected data, call rank_soils/rankPredictionGlobal.
 
 # set Pandas dataframe options
 pd.set_option("future.no_silent_downcasting", True)
 
 
 ############################################################################################
-#                                   getSoilLocationBasedUS                                 #
+#                                   list_soils                                 #
 ############################################################################################
-def getSoilLocationBasedUS(lon, lat, plot_id, site_calc=False):
+def list_soils(lon, lat, plot_id, site_calc=False):
     # Load in LAB to Munsell conversion look-up table
     color_ref = pd.read_csv(config.MUNSELL_RGB_LAB_PATH)
     LAB_ref = color_ref[["L", "A", "B"]]
@@ -1530,9 +1530,9 @@ def getSoilLocationBasedUS(lon, lat, plot_id, site_calc=False):
 
 
 ##############################################################################################
-#                                   rankPredictionUS                                         #
+#                                   rank_soils                                         #
 ##############################################################################################
-def rankPredictionUS(
+def rank_soils(
     lon,
     lat,
     soilHorizon,

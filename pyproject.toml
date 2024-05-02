@@ -1,9 +1,19 @@
+[project]
+name = "soil_id"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.12"
+authors = [
+  {name = "Jonathan Maynard", email = "jonathan.maynard@usda.gov"},
+  {name = "Paul Schreiber", email = "paul@techmatters.org"},
+]
+
 [tool.black]
 line-length = 100
 
 [tool.isort]
 profile = "black"
-known_first_party = "current_app"
+known_first_party = "soil_id"
 
 [tool.pytest.ini_options]
 log_cli = true

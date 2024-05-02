@@ -18,7 +18,7 @@ lint:
 	flake8 soil_id API && isort -c soil_id API && black --check soil_id API
 
 lock: pip-tools
-	CUSTOM_COMPILE_COMMAND="make lock" pip-compile --upgrade --generate-hashes --resolver=backtracking --output-file requirements.txt requirements/base.in requirements/deploy.in
+	CUSTOM_COMPILE_COMMAND="make lock" pip-compile --upgrade --resolver=backtracking --output-file requirements.txt requirements/base.in requirements/deploy.in
 
 lock-dev: pip-tools
 	CUSTOM_COMPILE_COMMAND="make lock-dev" pip-compile --upgrade --generate-hashes --resolver=backtracking --output-file requirements-dev.txt requirements/dev.in

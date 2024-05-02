@@ -9,7 +9,7 @@ pyogrio
 python-dotenv
 requests
 requests-cache
-rosetta-soil @ git+https://github.com/paulschreiber/rosetta-soil
+rosetta-soil @ https://github.com/paulschreiber/rosetta-soil/archive/bc53029.zip
 rtree
 scikit-image
 scikit-learn

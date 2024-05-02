@@ -109,7 +109,7 @@ requests==2.31.0
     #   requests-cache
 requests-cache==1.2.0
     # via -r requirements/base.in
-rosetta-soil @ git+https://github.com/paulschreiber/rosetta-soil
+rosetta-soil @ https://github.com/paulschreiber/rosetta-soil/archive/bc53029.zip
     # via -r requirements/base.in
 rtree==1.2.0
     # via -r requirements/base.in

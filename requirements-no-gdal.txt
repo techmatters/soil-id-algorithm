@@ -37,8 +37,6 @@ fiona==1.9.6
     # via geopandas
 flask==3.0.3
     # via -r requirements/deploy.in
-gdal==3.8.5
-    # via -r requirements/gdal.in
 geopandas==0.14.4
     # via -r requirements/base.in
 idna==3.7

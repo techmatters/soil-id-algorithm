@@ -1,5 +1,4 @@
 composition_stats
-gdal
 geopandas
 mysqlclient
 numpy

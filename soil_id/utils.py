@@ -6,8 +6,6 @@ import logging
 import math
 import re
 
-import color
-
 # local libraries
 import config
 
@@ -1835,16 +1833,16 @@ def correct_depth_discrepancies(data):
     return data
 
 
-def convert_rgb_to_lab(row, color_ref):
+def convert_rgb_to_lab(row):
     """
     Converts RGB values to LAB.
     """
-    rgb_ref = color_ref[["r", "g", "b"]]
     if pd.isnull(row["r"]) or pd.isnull(row["g"]) or pd.isnull(row["b"]):
         return np.nan, np.nan, np.nan
 
-    LAB = color.rgb2lab(color_ref, rgb_ref, [row["r"], row["g"], row["b"]])
-    return LAB
+    result = skimage.color.rgb2lab([row["r"], row["g"], row["b"]])
+
+    return result
 
 
 def getProfileLAB(data_osd, color_ref):
@@ -1862,7 +1860,7 @@ def getProfileLAB(data_osd, color_ref):
     data_osd = correct_depth_discrepancies(data_osd)
 
     data_osd["L"], data_osd["A"], data_osd["B"] = zip(
-        *data_osd.apply(lambda row: convert_rgb_to_lab(row, color_ref), axis=1)
+        *data_osd.apply(lambda row: convert_rgb_to_lab(row), axis=1)
     )
 
     l_intpl, a_intpl, b_intpl = [], [], []

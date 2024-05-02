@@ -744,7 +744,7 @@ def getSoilLocationBasedUS(lon, lat, plot_id, site_calc=False):
                         # Convert LAB triplets to Munsell values
                         munsell_values = [
                             (
-                                lab2munsell(color_ref, LAB_ref, LAB=lab)
+                                lab2munsell(color_ref, LAB_ref, lab)
                                 if lab[0] and lab[1] and lab[2]
                                 else ""
                             )
@@ -1505,43 +1505,28 @@ def getSoilLocationBasedUS(lon, lat, plot_id, site_calc=False):
                 mucompdata_cond_prob.to_csv(index=None, header=True),
             )
 
-    # Return the final output
+    result = {
+        "metadata": {
+            "location": "us",
+            "model": "v3",
+            "unit_measure": {
+                "distance": "m",
+                "depth": "cm",
+                "cec": "cmol(c)/kg",
+                "clay": "%",
+                "rock_fragments": "cm3/100cm3",
+                "sand": "%",
+                "ec": "ds/m",
+            },
+        },
+        "soilList": output_SoilList,
+    }
+
     if site_calc:
-        return {
-            "metadata": {
-                "location": "us",
-                "model": "v3",
-                "unit_measure": {
-                    "distance": "m",
-                    "depth": "cm",
-                    "cec": "cmol(c)/kg",
-                    "clay": "%",
-                    "rock_fragments": "cm3/100cm3",
-                    "sand": "%",
-                    "ec": "ds/m",
-                },
-            },
-            "AWS_PIW90": aws_PIW90,
-            "Soil Data Value": var_imp,
-            "soilList": output_SoilList,
-        }
-    else:
-        return {
-            "metadata": {
-                "location": "us",
-                "model": "v3",
-                "unit_measure": {
-                    "distance": "m",
-                    "depth": "cm",
-                    "cec": "cmol(c)/kg",
-                    "clay": "%",
-                    "rock_fragments": "cm3/100cm3",
-                    "sand": "%",
-                    "ec": "ds/m",
-                },
-            },
-            "soilList": output_SoilList,
-        }
+        result["Soil Data Value"] = var_imp
+        result["AWS_PIW90"] = aws_PIW90
+
+    return result
 
 
 ##############################################################################################

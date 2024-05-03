@@ -11,6 +11,7 @@ import config
 # Third-party libraries
 import numpy as np
 import pandas as pd
+from .color import calculate_deltaE2000, pedon_color
 from db import (
     get_WRB_descriptions,
     getSG_descriptions,
@@ -24,9 +25,7 @@ from services import get_soilgrids_classification_data, get_soilgrids_property_d
 from utils import (
     agg_data_layer,
     assign_max_distance_scores,
-    calculate_deltaE2000,
     calculate_location_score,
-    compute_data_completeness,
     drop_cokey_horz,
     extract_values,
     extract_WISE_data,
@@ -36,7 +35,6 @@ from utils import (
     getSand,
     getTexture,
     gower_distances,
-    pedon_color,
     sg_get_and_agg,
     silt_calc,
 )

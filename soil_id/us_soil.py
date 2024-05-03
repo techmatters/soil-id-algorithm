@@ -13,7 +13,7 @@ from pandas import json_normalize
 # local libraries
 import soil_id.config
 
-from .color import lab2munsell, munsell2rgb
+from .color import lab2munsell, munsell2rgb, getProfileLAB
 from .db import load_model_output, save_model_output, save_rank_output
 from .services import (
     get_elev_data,
@@ -34,7 +34,6 @@ from .utils import (
     getClay,
     getOSDCF,
     getProfile,
-    getProfileLAB,
     getSand,
     getTexture,
     gower_distances,

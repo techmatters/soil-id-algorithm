@@ -136,7 +136,7 @@ six==1.16.0
     #   url-normalize
 threadpoolctl==3.5.0
     # via scikit-learn
-tifffile==2024.4.24
+tifffile==2024.5.3
     # via scikit-image
 tzdata==2024.1
     # via pandas

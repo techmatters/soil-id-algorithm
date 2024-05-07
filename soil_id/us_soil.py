@@ -874,42 +874,43 @@ def list_soils(lon, lat, plot_id, site_calc=False):
                                 data=OSD_sand_intpl.iloc[:, 0],
                                 bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
                             )
-    
+
                             # Aggregate clay data
                             cly_d_osd = aggregate_data(
                                 data=OSD_clay_intpl.iloc[:, 1],
                                 bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
                             )
-    
+
                             # Calculate texture data based on sand and clay data
                             txt_d_osd = [
                                 getTexture(row=None, sand=s, silt=(100 - (s + c)), clay=c)
                                 for s, c in zip(snd_d_osd, cly_d_osd)
                             ]
                             txt_d_osd = pd.Series(txt_d_osd, index=snd_d_osd.index)
-    
+
                             # Aggregate rock fragment data
                             rf_d_osd = aggregate_data(
                                 data=OSD_rfv_intpl.c_cfpct_intpl,
                                 bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
                             )
-    
+
                             # Fill NaN values
                             snd_d_osd.fillna(np.nan, inplace=True)
                             cly_d_osd.fillna(np.nan, inplace=True)
                             txt_d_osd.fillna(np.nan, inplace=True)
                             rf_d_osd.fillna(np.nan, inplace=True)
-    
+
                             # Store aggregated data in dictionaries based on conditions
                             if OSD_text_int[index] == "Yes":
                                 snd_lyrs[index] = snd_d_osd.to_dict()
                                 cly_lyrs[index] = cly_d_osd.to_dict()
                                 txt_lyrs[index] = txt_d_osd.to_dict()
-    
+
                             if OSD_rfv_int[index] == "Yes":
                                 rf_lyrs[index] = rf_d_osd.to_dict()
-    
-                            # Update cec, ph, and ec layers if they contain only a single empty string
+
+                            # Update cec, ph, and ec layers if they contain only a single
+                            # empty string
                             for lyr in [cec_lyrs, ph_lyrs, ec_lyrs]:
                                 if len(lyr[index]) == 1 and lyr[index][0] == "":
                                     lyr[index] = dict(zip(hz_lyrs[index], [""] * len(hz_lyrs[index])))

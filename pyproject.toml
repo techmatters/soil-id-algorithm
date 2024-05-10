@@ -21,4 +21,4 @@ log_cli = true
 log_cli_level = "INFO"
 
 [tool.setuptools.dynamic]
-dependencies = {file = ["requirements.txt"]}
+dependencies = {file = ["requirements/base.in"]}

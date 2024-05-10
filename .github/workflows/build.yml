@@ -40,6 +40,7 @@ jobs:
 
       - name: Update and install Linux packages
         run: |
+          sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
           sudo apt-get update
           sudo apt-get install libgdal-dev gdal-bin python3-gdal
 

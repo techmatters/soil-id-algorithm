@@ -7,10 +7,6 @@ format:
 install:
 	pip install -r requirements.txt
 
-install-gdal:
-	pip install -r requirements-no-gdal.txt --no-deps
-	pip install GDAL==`gdal-config --version` # needed for GitHub Actions, as runner only supports GDAL 3.4.1
-
 install-dev:
 	pip install -r requirements-dev.txt
 
@@ -18,8 +14,7 @@ lint:
 	flake8 soil_id API && isort -c soil_id API && black --check soil_id API
 
 lock: pip-tools
-	CUSTOM_COMPILE_COMMAND="make lock" pip-compile --upgrade --resolver=backtracking --output-file requirements-no-gdal.txt requirements/base.in requirements/deploy.in
-	CUSTOM_COMPILE_COMMAND="make lock" pip-compile --upgrade --resolver=backtracking --output-file requirements.txt requirements/base.in requirements/gdal.in requirements/deploy.in
+	CUSTOM_COMPILE_COMMAND="make lock" pip-compile --upgrade --generate-hashes --resolver=backtracking --output-file requirements.txt requirements/base.in requirements/deploy.in
 
 lock-dev: pip-tools
 	CUSTOM_COMPILE_COMMAND="make lock-dev" pip-compile --upgrade --generate-hashes --resolver=backtracking --output-file requirements-dev.txt requirements/dev.in

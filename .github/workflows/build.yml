@@ -51,7 +51,7 @@ jobs:
           cache-dependency-path: 'requirements.txt'
 
       - name: Install Python dependencies
-        run: make install-dev && make install-gdal
+        run: make install-dev
 
       - name: Restore data cache
         uses: actions/cache@v4

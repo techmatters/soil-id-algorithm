@@ -49,10 +49,14 @@ jobs:
         with:
           python-version: "3.12.3"
           cache: pip
-          cache-dependency-path: 'requirements.txt'
+          cache-dependency-path: |
+            'requirements.txt'
+            'requirements-dev.txt'
 
       - name: Install Python dependencies
-        run: make install-dev
+        run: |
+          make install
+          make install-dev
 
       - name: Restore data cache
         uses: actions/cache@v4

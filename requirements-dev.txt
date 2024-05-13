@@ -143,9 +143,9 @@ flake8==7.0.0 \
 flameprof==0.4 \
     --hash=sha256:dbc86d4190cbbba624f1e0a40f44d9db96138e27534d83c8ef42d420857875a3
     # via -r requirements/dev.in
-gdown==5.1.0 \
-    --hash=sha256:421530fd238fa15d41ba43219a79fdc28efe8ac11022173abad333701b77de2c \
-    --hash=sha256:550a72dc5ca2819fe4bcc15d80d05d7c98c0b90e57256254b77d0256b9df4683
+gdown==5.2.0 \
+    --hash=sha256:2145165062d85520a3cd98b356c9ed522c5e7984d408535409fd46f94defc787 \
+    --hash=sha256:33083832d82b1101bdd0e9df3edd0fbc0e1c5f14c9d8c38d2a35bf1683b526d6
     # via -r requirements/dev.in
 gprof2dot==2022.7.29 \
     --hash=sha256:45b4d298bd36608fccf9511c3fd88a773f7a1abc04d6cd39445b11ba43133ec5 \

@@ -1659,15 +1659,6 @@ def rank_soils(
             p_bottom_depth = pd.DataFrame([-999, "sample_pedon", 0]).T
         p_bottom_depth.columns = ["cokey", "compname", "bottom_depth"]
 
-    if pElev is None:
-        try:
-            elevation_data = get_elev_data(lon, lat)
-            if elevation_data is not None:
-                pElev = round(float(elevation_data["value"]), 3)
-        except Exception as err:
-            logging.error(f"Error rounding elevation data: {err}")
-            pElev = None
-
     # Compute text completeness
     p_sandpct_intpl = [x for x in p_sandpct_intpl if x is not None and x == x]
     text_len = len(p_sandpct_intpl)

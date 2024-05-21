@@ -1478,7 +1478,7 @@ def list_soils(lon, lat):
 
     return SoilListOutputData(
         soil_list_json=soil_list_json,
-        rank_data_csv=soilIDRank_output_pd.tocsv(index=None, header=True),
+        rank_data_csv=soilIDRank_output_pd.to_csv(index=None, header=True),
         map_unit_component_data_csv=mucompdata_cond_prob.to_csv(index=None, header=True),
     )
 

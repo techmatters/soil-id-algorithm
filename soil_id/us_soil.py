@@ -14,13 +14,7 @@ from pandas import json_normalize
 import soil_id.config
 
 from .color import lab2munsell, munsell2rgb
-from .services import (
-    get_elev_data,
-    get_esd_data,
-    get_soil_series_data,
-    get_soilweb_data,
-    sda_return,
-)
+from .services import get_esd_data, get_soil_series_data, get_soilweb_data, sda_return
 from .soil_sim import soil_sim
 from .utils import (
     aggregate_data,

@@ -1,9 +1,9 @@
 # Standard libraries
 import collections
 import io
-import json
 import logging
 import re
+from dataclasses import dataclass
 
 # Third-party libraries
 import numpy as np
@@ -14,14 +14,7 @@ from pandas import json_normalize
 import soil_id.config
 
 from .color import lab2munsell, munsell2rgb
-from .db import load_model_output, save_model_output, save_rank_output
-from .services import (
-    get_elev_data,
-    get_esd_data,
-    get_soil_series_data,
-    get_soilweb_data,
-    sda_return,
-)
+from .services import get_esd_data, get_soil_series_data, get_soilweb_data, sda_return
 from .soil_sim import soil_sim
 from .utils import (
     aggregate_data,
@@ -60,10 +53,17 @@ from .utils import (
 pd.set_option("future.no_silent_downcasting", True)
 
 
+@dataclass
+class SoilListOutputData:
+    soil_list_json: dict
+    rank_data_csv: str
+    map_unit_component_data_csv: str
+
+
 ############################################################################################
 #                                   list_soils                                 #
 ############################################################################################
-def list_soils(lon, lat, plot_id, site_calc=False):
+def list_soils(lon, lat):
     # Load in LAB to Munsell conversion look-up table
     color_ref = pd.read_csv(soil_id.config.MUNSELL_RGB_LAB_PATH)
     LAB_ref = color_ref[["L", "A", "B"]]
@@ -354,43 +354,43 @@ def list_soils(lon, lat, plot_id, site_calc=False):
         clay_texture_temp = pd.DataFrame({"compname": [compname_group], "clay": [clay_indicator]})
         clay_texture.append(clay_texture_temp)
 
-        if site_calc:
-            sand_pct_intpl = getProfile(group_sorted, "sandtotal_r")
-            sand_pct_intpl.columns = ["c_sandpct_intpl", "c_sandpct_intpl_grp"]
-            clay_pct_intpl = getProfile(group_sorted, "claytotal_r")
-            clay_pct_intpl.columns = ["c_claypct_intpl", "c_claypct_intpl_grp"]
-            cf_pct_intpl = getProfile(group_sorted, "total_frag_volume")
-            cf_pct_intpl.columns = ["c_cfpct_intpl", "c_cfpct_intpl_grp"]
-            cec_intpl = getProfile(group_sorted, "CEC")
-            cec_intpl.columns = ["c_cec_intpl"]
-            ph_intpl = getProfile(group_sorted, "pH")
-            ph_intpl.columns = ["c_ph_intpl"]
-            ec_intpl = getProfile(group_sorted, "EC")
-            ec_intpl.columns = ["c_ec_intpl"]
-            compname = pd.DataFrame([group_sorted.compname.unique()] * len(sand_pct_intpl))
-            comppct = pd.DataFrame([group_sorted.comppct_r.unique()] * len(sand_pct_intpl))
-            cokey = pd.DataFrame([group_sorted.cokey.unique()] * len(sand_pct_intpl))
-            getProfile_cokey_temp2 = pd.concat(
-                [
-                    sand_pct_intpl[["c_sandpct_intpl_grp"]],
-                    clay_pct_intpl[["c_claypct_intpl_grp"]],
-                    cf_pct_intpl[["c_cfpct_intpl_grp"]],
-                    compname,
-                    cokey,
-                    comppct,
-                ],
-                axis=1,
-            )
-            getProfile_cokey_temp2.columns = [
-                "sandpct_intpl",
-                "claypct_intpl",
-                "rfv_intpl",
-                "compname",
-                "cokey",
-                "comppct",
-            ]
+        # extract information to be combined later with site soil measurements
+        sand_pct_intpl = getProfile(group_sorted, "sandtotal_r")
+        sand_pct_intpl.columns = ["c_sandpct_intpl", "c_sandpct_intpl_grp"]
+        clay_pct_intpl = getProfile(group_sorted, "claytotal_r")
+        clay_pct_intpl.columns = ["c_claypct_intpl", "c_claypct_intpl_grp"]
+        cf_pct_intpl = getProfile(group_sorted, "total_frag_volume")
+        cf_pct_intpl.columns = ["c_cfpct_intpl", "c_cfpct_intpl_grp"]
+        cec_intpl = getProfile(group_sorted, "CEC")
+        cec_intpl.columns = ["c_cec_intpl"]
+        ph_intpl = getProfile(group_sorted, "pH")
+        ph_intpl.columns = ["c_ph_intpl"]
+        ec_intpl = getProfile(group_sorted, "EC")
+        ec_intpl.columns = ["c_ec_intpl"]
+        compname = pd.DataFrame([group_sorted.compname.unique()] * len(sand_pct_intpl))
+        comppct = pd.DataFrame([group_sorted.comppct_r.unique()] * len(sand_pct_intpl))
+        cokey = pd.DataFrame([group_sorted.cokey.unique()] * len(sand_pct_intpl))
+        getProfile_cokey_temp2 = pd.concat(
+            [
+                sand_pct_intpl[["c_sandpct_intpl_grp"]],
+                clay_pct_intpl[["c_claypct_intpl_grp"]],
+                cf_pct_intpl[["c_cfpct_intpl_grp"]],
+                compname,
+                cokey,
+                comppct,
+            ],
+            axis=1,
+        )
+        getProfile_cokey_temp2.columns = [
+            "sandpct_intpl",
+            "claypct_intpl",
+            "rfv_intpl",
+            "compname",
+            "cokey",
+            "comppct",
+        ]
 
-            getProfile_cokey.append(getProfile_cokey_temp2)
+        getProfile_cokey.append(getProfile_cokey_temp2)
 
     comp_max_depths = pd.concat(comp_max_depths, axis=0)
     clay_texture = pd.concat(clay_texture, axis=0)
@@ -415,8 +415,7 @@ def list_soils(lon, lat, plot_id, site_calc=False):
     comp_key = mucompdata_pd["cokey"].unique().tolist()
     cokey_Index = {key: index for index, key in enumerate(comp_key)}
 
-    if site_calc:
-        aws_PIW90, var_imp = soil_sim(muhorzdata_pd)
+    aws_PIW90, var_imp = soil_sim(muhorzdata_pd)
     # ----------------------------------------------------------------------------
     # This extracts OSD color, texture, and CF data
 
@@ -751,170 +750,163 @@ def list_soils(lon, lat, plot_id, site_calc=False):
                         ]
                         munsell_lyrs.append(dict(zip(l_d.index, munsell_values)))
 
-                    if site_calc:
-                        # Extract OSD Texture and Rock Fragment Data
-                        if OSD_text_int[index] == "Yes" or OSD_rfv_int[index] == "Yes":
-                            group_sorted[["hzdept_r", "hzdepb_r", "texture"]] = group_sorted[
-                                ["top", "bottom", "texture_class"]
-                            ]
-                            OSD_max_bottom_int = max_comp_depth(group_sorted)
-                            OSD_clay_intpl = getProfile(group_sorted, "claytotal_r")
-                            OSD_clay_intpl.columns = [
-                                "c_claypct_intpl",
-                                "c_claypct_intpl_grp",
-                            ]
-                            OSD_sand_intpl = getProfile(group_sorted, "sandtotal_r")
-                            OSD_sand_intpl.columns = [
-                                "c_sandpct_intpl",
-                                "c_sandpct_intpl_grp",
-                            ]
-                            OSD_rfv_intpl = getProfile(group_sorted, "total_frag_volume")
-                            OSD_rfv_intpl.columns = ["c_cfpct_intpl", "c_cfpct_intpl_grp"]
+                    # Extract OSD Texture and Rock Fragment Data
+                    if OSD_text_int[index] == "Yes" or OSD_rfv_int[index] == "Yes":
+                        group_sorted[["hzdept_r", "hzdepb_r", "texture"]] = group_sorted[
+                            ["top", "bottom", "texture_class"]
+                        ]
+                        OSD_max_bottom_int = max_comp_depth(group_sorted)
+                        OSD_clay_intpl = getProfile(group_sorted, "claytotal_r")
+                        OSD_clay_intpl.columns = [
+                            "c_claypct_intpl",
+                            "c_claypct_intpl_grp",
+                        ]
+                        OSD_sand_intpl = getProfile(group_sorted, "sandtotal_r")
+                        OSD_sand_intpl.columns = [
+                            "c_sandpct_intpl",
+                            "c_sandpct_intpl_grp",
+                        ]
+                        OSD_rfv_intpl = getProfile(group_sorted, "total_frag_volume")
+                        OSD_rfv_intpl.columns = ["c_cfpct_intpl", "c_cfpct_intpl_grp"]
 
-                            # Update data based on depth conditions
-                            sand_values = OSD_sand_intpl.iloc[OSD_max_bottom_int - 1].tolist()
-                            OSD_sand_intpl = update_intpl_data(
-                                OSD_sand_intpl,
-                                ["c_sandpct_intpl", "c_sandpct_intpl_grp"],
-                                sand_values,
-                                OSD_max_bottom,
-                                OSD_depth_add,
-                                OSD_depth_remove,
-                                OSD_max_bottom_int,
-                            )
+                        # Update data based on depth conditions
+                        sand_values = OSD_sand_intpl.iloc[OSD_max_bottom_int - 1].tolist()
+                        OSD_sand_intpl = update_intpl_data(
+                            OSD_sand_intpl,
+                            ["c_sandpct_intpl", "c_sandpct_intpl_grp"],
+                            sand_values,
+                            OSD_max_bottom,
+                            OSD_depth_add,
+                            OSD_depth_remove,
+                            OSD_max_bottom_int,
+                        )
 
-                            clay_values = OSD_clay_intpl.iloc[OSD_max_bottom_int - 1].tolist()
-                            OSD_clay_intpl = update_intpl_data(
-                                OSD_clay_intpl,
-                                ["c_claypct_intpl", "c_claypct_intpl_grp"],
-                                clay_values,
-                                OSD_max_bottom,
-                                OSD_depth_add,
-                                OSD_depth_remove,
-                                OSD_max_bottom_int,
-                            )
+                        clay_values = OSD_clay_intpl.iloc[OSD_max_bottom_int - 1].tolist()
+                        OSD_clay_intpl = update_intpl_data(
+                            OSD_clay_intpl,
+                            ["c_claypct_intpl", "c_claypct_intpl_grp"],
+                            clay_values,
+                            OSD_max_bottom,
+                            OSD_depth_add,
+                            OSD_depth_remove,
+                            OSD_max_bottom_int,
+                        )
 
-                            rfv_values = OSD_rfv_intpl.iloc[OSD_max_bottom_int - 1].tolist()
-                            OSD_rfv_intpl = update_intpl_data(
-                                OSD_rfv_intpl,
-                                ["c_cfpct_intpl", "c_cfpct_intpl_grp"],
-                                rfv_values,
-                                OSD_max_bottom,
-                                OSD_depth_add,
-                                OSD_depth_remove,
-                                OSD_max_bottom_int,
-                            )
+                        rfv_values = OSD_rfv_intpl.iloc[OSD_max_bottom_int - 1].tolist()
+                        OSD_rfv_intpl = update_intpl_data(
+                            OSD_rfv_intpl,
+                            ["c_cfpct_intpl", "c_cfpct_intpl_grp"],
+                            rfv_values,
+                            OSD_max_bottom,
+                            OSD_depth_add,
+                            OSD_depth_remove,
+                            OSD_max_bottom_int,
+                        )
 
-                            # If OSD bottom depth is greater than component depth
-                            # and component depth is <200cm
-                            if OSD_depth_remove:
-                                # Remove data based on comp_max_depths
-                                OSD_sand_intpl = OSD_sand_intpl.loc[
-                                    : comp_max_depths.iloc[index, 2]
-                                ]
-                                OSD_clay_intpl = OSD_clay_intpl.loc[
-                                    : comp_max_depths.iloc[index, 2]
-                                ]
-                                OSD_rfv_intpl = OSD_rfv_intpl.loc[: comp_max_depths.iloc[index, 2]]
+                        # If OSD bottom depth is greater than component depth
+                        # and component depth is <200cm
+                        if OSD_depth_remove:
+                            # Remove data based on comp_max_depths
+                            OSD_sand_intpl = OSD_sand_intpl.loc[: comp_max_depths.iloc[index, 2]]
+                            OSD_clay_intpl = OSD_clay_intpl.loc[: comp_max_depths.iloc[index, 2]]
+                            OSD_rfv_intpl = OSD_rfv_intpl.loc[: comp_max_depths.iloc[index, 2]]
 
-                            # Create the compname and cokey dataframes
-                            compname_df = pd.DataFrame(
-                                [group_sorted.compname.unique()] * len(OSD_sand_intpl)
-                            )
-                            cokey_df = pd.DataFrame(
-                                [group_sorted.cokey.unique()] * len(OSD_sand_intpl)
-                            )
+                        # Create the compname and cokey dataframes
+                        compname_df = pd.DataFrame(
+                            [group_sorted.compname.unique()] * len(OSD_sand_intpl)
+                        )
+                        cokey_df = pd.DataFrame([group_sorted.cokey.unique()] * len(OSD_sand_intpl))
 
-                            # Concatenate the dataframes
-                            group_sorted2 = pd.concat(
-                                [
-                                    OSD_sand_intpl[["c_sandpct_intpl_grp"]],
-                                    OSD_clay_intpl[["c_claypct_intpl_grp"]],
-                                    OSD_rfv_intpl[["c_cfpct_intpl_grp"]],
-                                    compname_df,
-                                    cokey_df,
-                                ],
-                                axis=1,
-                            )
-                            group_sorted2.columns = [
-                                "c_sandpct_intpl",
-                                "c_claypct_intpl",
-                                "c_cfpct_intpl",
-                                "compname",
-                                "cokey",
-                            ]
+                        # Concatenate the dataframes
+                        group_sorted2 = pd.concat(
+                            [
+                                OSD_sand_intpl[["c_sandpct_intpl_grp"]],
+                                OSD_clay_intpl[["c_claypct_intpl_grp"]],
+                                OSD_rfv_intpl[["c_cfpct_intpl_grp"]],
+                                compname_df,
+                                cokey_df,
+                            ],
+                            axis=1,
+                        )
+                        group_sorted2.columns = [
+                            "c_sandpct_intpl",
+                            "c_claypct_intpl",
+                            "c_cfpct_intpl",
+                            "compname",
+                            "cokey",
+                        ]
 
-                            # Update getProfile_mod based on conditions
-                            getProfile_mod = getProfile_cokey[index]
-                            compname_check = (
-                                getProfile_mod["compname"]
-                                .isin(group_sorted2[["compname"]].iloc[0])
-                                .any()
-                            )
+                        # Update getProfile_mod based on conditions
+                        getProfile_mod = getProfile_cokey[index]
+                        compname_check = (
+                            getProfile_mod["compname"]
+                            .isin(group_sorted2[["compname"]].iloc[0])
+                            .any()
+                        )
 
-                            if (
-                                compname_check
-                                and OSD_text_int[index] == "Yes"
-                                and not group_sorted2["c_sandpct_intpl"].isnull().all()
-                            ):
-                                getProfile_mod["sandpct_intpl"] = group_sorted2["c_sandpct_intpl"]
-                                getProfile_mod["claypct_intpl"] = group_sorted2["c_claypct_intpl"]
+                        if (
+                            compname_check
+                            and OSD_text_int[index] == "Yes"
+                            and not group_sorted2["c_sandpct_intpl"].isnull().all()
+                        ):
+                            getProfile_mod["sandpct_intpl"] = group_sorted2["c_sandpct_intpl"]
+                            getProfile_mod["claypct_intpl"] = group_sorted2["c_claypct_intpl"]
 
-                            if (
-                                compname_check
-                                and OSD_rfv_int[index] == "Yes"
-                                and not group_sorted2["c_cfpct_intpl"].isnull().all()
-                            ):
-                                getProfile_mod["rfv_intpl"] = group_sorted2["c_cfpct_intpl"]
+                        if (
+                            compname_check
+                            and OSD_rfv_int[index] == "Yes"
+                            and not group_sorted2["c_cfpct_intpl"].isnull().all()
+                        ):
+                            getProfile_mod["rfv_intpl"] = group_sorted2["c_cfpct_intpl"]
 
-                            getProfile_cokey[index] = getProfile_mod
+                        getProfile_cokey[index] = getProfile_mod
 
-                            # Aggregate sand data
-                            snd_d_osd = aggregate_data(
-                                data=OSD_sand_intpl.iloc[:, 0],
-                                bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
-                            )
+                        # Aggregate sand data
+                        snd_d_osd = aggregate_data(
+                            data=OSD_sand_intpl.iloc[:, 0],
+                            bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
+                        )
 
-                            # Aggregate clay data
-                            cly_d_osd = aggregate_data(
-                                data=OSD_clay_intpl.iloc[:, 1],
-                                bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
-                            )
+                        # Aggregate clay data
+                        cly_d_osd = aggregate_data(
+                            data=OSD_clay_intpl.iloc[:, 1],
+                            bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
+                        )
 
-                            # Calculate texture data based on sand and clay data
-                            txt_d_osd = [
-                                getTexture(row=None, sand=s, silt=(100 - (s + c)), clay=c)
-                                for s, c in zip(snd_d_osd, cly_d_osd)
-                            ]
-                            txt_d_osd = pd.Series(txt_d_osd, index=snd_d_osd.index)
+                        # Calculate texture data based on sand and clay data
+                        txt_d_osd = [
+                            getTexture(row=None, sand=s, silt=(100 - (s + c)), clay=c)
+                            for s, c in zip(snd_d_osd, cly_d_osd)
+                        ]
+                        txt_d_osd = pd.Series(txt_d_osd, index=snd_d_osd.index)
 
-                            # Aggregate rock fragment data
-                            rf_d_osd = aggregate_data(
-                                data=OSD_rfv_intpl.c_cfpct_intpl,
-                                bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
-                            )
+                        # Aggregate rock fragment data
+                        rf_d_osd = aggregate_data(
+                            data=OSD_rfv_intpl.c_cfpct_intpl,
+                            bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
+                        )
 
-                            # Fill NaN values
-                            snd_d_osd.fillna(np.nan, inplace=True)
-                            cly_d_osd.fillna(np.nan, inplace=True)
-                            txt_d_osd.fillna(np.nan, inplace=True)
-                            rf_d_osd.fillna(np.nan, inplace=True)
+                        # Fill NaN values
+                        snd_d_osd.fillna(np.nan, inplace=True)
+                        cly_d_osd.fillna(np.nan, inplace=True)
+                        txt_d_osd.fillna(np.nan, inplace=True)
+                        rf_d_osd.fillna(np.nan, inplace=True)
 
-                            # Store aggregated data in dictionaries based on conditions
-                            if OSD_text_int[index] == "Yes":
-                                snd_lyrs[index] = snd_d_osd.to_dict()
-                                cly_lyrs[index] = cly_d_osd.to_dict()
-                                txt_lyrs[index] = txt_d_osd.to_dict()
+                        # Store aggregated data in dictionaries based on conditions
+                        if OSD_text_int[index] == "Yes":
+                            snd_lyrs[index] = snd_d_osd.to_dict()
+                            cly_lyrs[index] = cly_d_osd.to_dict()
+                            txt_lyrs[index] = txt_d_osd.to_dict()
 
-                            if OSD_rfv_int[index] == "Yes":
-                                rf_lyrs[index] = rf_d_osd.to_dict()
+                        if OSD_rfv_int[index] == "Yes":
+                            rf_lyrs[index] = rf_d_osd.to_dict()
 
-                            # Update cec, ph, and ec layers if they contain only a single
-                            # empty string
-                            for lyr in [cec_lyrs, ph_lyrs, ec_lyrs]:
-                                if len(lyr[index]) == 1 and lyr[index][0] == "":
-                                    empty_values = [""] * len(hz_lyrs[index])
-                                    lyr[index] = dict(zip(hz_lyrs[index], empty_values))
+                        # Update cec, ph, and ec layers if they contain only a single
+                        # empty string
+                        for lyr in [cec_lyrs, ph_lyrs, ec_lyrs]:
+                            if len(lyr[index]) == 1 and lyr[index][0] == "":
+                                empty_values = [""] * len(hz_lyrs[index])
+                                lyr[index] = dict(zip(hz_lyrs[index], empty_values))
 
                 else:
                     OSDhorzdata_group_cokey[index] = group_sorted
@@ -1300,26 +1292,21 @@ def list_soils(lon, lat, plot_id, site_calc=False):
     # SoilIDList output
 
     # ------------------------------------------------------------
-    # Define model version
-    model_version = "3.0"
 
-    if site_calc:
-        # Create the soilIDRank_output list by combining the dataframes of various data sources
-        soilIDRank_output = [
-            pd.concat(
-                [
-                    getProfile_cokey[i][
-                        ["compname", "sandpct_intpl", "claypct_intpl", "rfv_intpl"]
-                    ],
-                    lab_intpl_lyrs[i],
-                ],
-                axis=1,
-            )
-            for i in range(len(getProfile_cokey))
-        ]
+    # Create the soilIDRank_output list by combining the dataframes of various data sources
+    soilIDRank_output = [
+        pd.concat(
+            [
+                getProfile_cokey[i][["compname", "sandpct_intpl", "claypct_intpl", "rfv_intpl"]],
+                lab_intpl_lyrs[i],
+            ],
+            axis=1,
+        )
+        for i in range(len(getProfile_cokey))
+    ]
 
-        # Convert the list to a DataFrame and reset the index
-        soilIDRank_output_pd = pd.concat(soilIDRank_output).reset_index(drop=True)
+    # Convert the list to a DataFrame and reset the index
+    soilIDRank_output_pd = pd.concat(soilIDRank_output).reset_index(drop=True)
 
     # Sort mucompdata_pd based on normalized distance score in descending order
     mucompdata_cond_prob = mucompdata_pd.sort_values(
@@ -1464,49 +1451,7 @@ def list_soils(lon, lat, plot_id, site_calc=False):
         )
     ]
 
-    if site_calc:
-        # Writing out list of data needed for soilIDRank
-        if plot_id is None:
-            soilIDRank_output_pd.to_csv(
-                soil_id.config.SOIL_ID_RANK_PATH,
-                index=None,
-                header=True,
-            )
-            mucompdata_cond_prob.to_csv(
-                soil_id.config.SOIL_ID_PROB_PATH,
-                index=None,
-                header=True,
-            )
-        else:
-            output_data = json.dumps(
-                {
-                    "metadata": {
-                        "location": "us",
-                        "model": "v3",
-                        "unit_measure": {
-                            "distance": "m",
-                            "depth": "cm",
-                            "cec": "cmol(c)/kg",
-                            "clay": "%",
-                            "rock_fragments": "cm3/100cm3",
-                            "sand": "%",
-                            "ec": "ds/m",
-                        },
-                    },
-                    "AWS_PIW90": aws_PIW90,
-                    "Soil Data Value": var_imp,
-                    "soilList": output_SoilList,
-                }
-            )
-            save_model_output(
-                plot_id,
-                model_version,
-                output_data,
-                soilIDRank_output_pd.to_csv(index=None, header=True),
-                mucompdata_cond_prob.to_csv(index=None, header=True),
-            )
-
-    result = {
+    soil_list_json = {
         "metadata": {
             "location": "us",
             "model": "v3",
@@ -1520,14 +1465,16 @@ def list_soils(lon, lat, plot_id, site_calc=False):
                 "ec": "ds/m",
             },
         },
+        "AWS_PIW90": aws_PIW90,
+        "Soil Data Value": var_imp,
         "soilList": output_SoilList,
     }
 
-    if site_calc:
-        result["Soil Data Value"] = var_imp
-        result["AWS_PIW90"] = aws_PIW90
-
-    return result
+    return SoilListOutputData(
+        soil_list_json=soil_list_json,
+        rank_data_csv=soilIDRank_output_pd.to_csv(index=None, header=True),
+        map_unit_component_data_csv=mucompdata_cond_prob.to_csv(index=None, header=True),
+    )
 
 
 ##############################################################################################
@@ -1536,6 +1483,7 @@ def list_soils(lon, lat, plot_id, site_calc=False):
 def rank_soils(
     lon,
     lat,
+    list_output_data: SoilListOutputData,
     soilHorizon,
     horizonDepth,
     rfvDepth,
@@ -1544,7 +1492,6 @@ def rank_soils(
     pElev,
     bedrock,
     cracks,
-    plot_id=None,
 ):
     """
     TODO: Future testing to see if deltaE2000 values should be incorporated
@@ -1706,15 +1653,6 @@ def rank_soils(
             p_bottom_depth = pd.DataFrame([-999, "sample_pedon", 0]).T
         p_bottom_depth.columns = ["cokey", "compname", "bottom_depth"]
 
-    if pElev is None:
-        try:
-            elevation_data = get_elev_data(lon, lat)
-            if elevation_data is not None:
-                pElev = round(float(elevation_data["value"]), 3)
-        except Exception as err:
-            logging.error(f"Error rounding elevation data: {err}")
-            pElev = None
-
     # Compute text completeness
     p_sandpct_intpl = [x for x in p_sandpct_intpl if x is not None and x == x]
     text_len = len(p_sandpct_intpl)
@@ -1766,20 +1704,8 @@ def rank_soils(
 
     # -------------------------------------------------------------------------------------------
     # Load in component data from soilIDList
-    if plot_id is None:
-        # Reading from file
-        soilIDRank_output_pd = pd.read_csv(soil_id.config.SOIL_ID_RANK_PATH)
-        mucompdata_pd = pd.read_csv(soil_id.config.SOIL_ID_PROB_PATH)
-        record_id = None
-    else:
-        # Read from database
-        modelRun = load_model_output(plot_id)
-        if modelRun:
-            record_id = modelRun[0]
-            soilIDRank_output_pd = pd.read_csv(io.StringIO(modelRun[2]))
-            mucompdata_pd = pd.read_csv(io.StringIO(modelRun[3]))
-        else:
-            logging.error(f"Cannot find a plot with ID: {plot_id}")
+    soilIDRank_output_pd = pd.read_csv(io.StringIO(list_output_data.rank_data_csv))
+    mucompdata_pd = pd.read_csv(io.StringIO(list_output_data.map_unit_component_data_csv))
 
     # Modify mucompdata_pd DataFrame
     # mucompdata_pd = process_site_data(mucompdata_pd)
@@ -2271,11 +2197,6 @@ def rank_soils(
         },
         "soilRank": Rank,
     }
-
-    # If 'record_id' is provided, save the output data
-    if record_id is not None:
-        model_version = 3
-        save_rank_output(record_id, model_version, json.dumps(output_data))
 
     return output_data
 

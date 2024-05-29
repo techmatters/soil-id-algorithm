@@ -1677,6 +1677,8 @@ def rank_soils(
     # Compute slope and crack completeness
     slope_comp = 15 if pSlope is not None else 0
     crack_comp = 5 if cracks is not None else 0
+    if cracks is None:
+        cracks = False
 
     # Compute total data completeness
     data_completeness = slope_comp + crack_comp + text_comp + rf_comp + lab_comp

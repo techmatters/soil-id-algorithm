@@ -2164,10 +2164,6 @@ def rank_soils(
         0.0
     )
 
-    # Adjust the 'Score_Data_Loc' column based on 'data_completeness'
-    min_scaling_factor = 0.25 if data_completeness < 25 else float(data_completeness) / 100
-    D_final_loc["Score_Data_Loc"] *= min_scaling_factor
-
     # Construct the output format
     Rank = [
         {

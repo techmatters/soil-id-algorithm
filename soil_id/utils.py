@@ -2220,40 +2220,56 @@ def infill_soil_data(df):
     # Step 3: Replace missing '_l' and '_h' for particle size values
     # with corresponding '_r' values +/- 8
     for col in ["sandtotal", "claytotal", "silttotal"]:
-        filtered_groups[col + "_l"] = filtered_groups[col + "_l"].fillna(
-            filtered_groups[col + "_r"] - 8
-        ).apply(lambda x: max(x, 0))
+        filtered_groups[col + "_l"] = (
+            filtered_groups[col + "_l"]
+            .fillna(filtered_groups[col + "_r"] - 8)
+            .apply(lambda x: max(x, 0))
+        )
 
-        filtered_groups[col + "_h"] = filtered_groups[col + "_h"].fillna(
-            filtered_groups[col + "_r"] + 8
-        ).apply(lambda x: max(x, 0))
+        filtered_groups[col + "_h"] = (
+            filtered_groups[col + "_h"]
+            .fillna(filtered_groups[col + "_r"] + 8)
+            .apply(lambda x: max(x, 0))
+        )
 
     # Step 4 and 5: Replace missing 'dbovendry_l' and 'dbovendry_h' with 'dbovendry_r' +/- 0.01
-    filtered_groups["dbovendry_l"] = filtered_groups["dbovendry_l"].fillna(
-        filtered_groups["dbovendry_r"] - 0.01
-    ).apply(lambda x: max(x, 0))
+    filtered_groups["dbovendry_l"] = (
+        filtered_groups["dbovendry_l"]
+        .fillna(filtered_groups["dbovendry_r"] - 0.01)
+        .apply(lambda x: max(x, 0))
+    )
 
-    filtered_groups["dbovendry_h"] = filtered_groups["dbovendry_h"].fillna(
-        filtered_groups["dbovendry_r"] + 0.01
-    ).apply(lambda x: max(x, 0))
+    filtered_groups["dbovendry_h"] = (
+        filtered_groups["dbovendry_h"]
+        .fillna(filtered_groups["dbovendry_r"] + 0.01)
+        .apply(lambda x: max(x, 0))
+    )
 
     # Step 6 and 7: Replace missing 'wthirdbar_l' and 'wthirdbar_h' with 'wthirdbar_r' +/- 1
-    filtered_groups["wthirdbar_l"] = filtered_groups["wthirdbar_l"].fillna(
-        filtered_groups["wthirdbar_r"] - 1
-    ).apply(lambda x: max(x, 0))
+    filtered_groups["wthirdbar_l"] = (
+        filtered_groups["wthirdbar_l"]
+        .fillna(filtered_groups["wthirdbar_r"] - 1)
+        .apply(lambda x: max(x, 0))
+    )
 
-    filtered_groups["wthirdbar_h"] = filtered_groups["wthirdbar_h"].fillna(
-        filtered_groups["wthirdbar_r"] + 1
-    ).apply(lambda x: max(x, 0))
+    filtered_groups["wthirdbar_h"] = (
+        filtered_groups["wthirdbar_h"]
+        .fillna(filtered_groups["wthirdbar_r"] + 1)
+        .apply(lambda x: max(x, 0))
+    )
 
     # Step 8 and 9: Replace missing 'wfifteenbar_l' and 'wfifteenbar_h' with 'wfifteenbar_r' +/- 0.6
-    filtered_groups["wfifteenbar_l"] = filtered_groups["wfifteenbar_l"].fillna(
-        filtered_groups["wfifteenbar_r"] - 0.6
-    ).apply(lambda x: max(x, 0))
+    filtered_groups["wfifteenbar_l"] = (
+        filtered_groups["wfifteenbar_l"]
+        .fillna(filtered_groups["wfifteenbar_r"] - 0.6)
+        .apply(lambda x: max(x, 0))
+    )
 
-    filtered_groups["wfifteenbar_h"] = filtered_groups["wfifteenbar_h"].fillna(
-        filtered_groups["wfifteenbar_r"] + 0.6
-    ).apply(lambda x: max(x, 0))
+    filtered_groups["wfifteenbar_h"] = (
+        filtered_groups["wfifteenbar_h"]
+        .fillna(filtered_groups["wfifteenbar_r"] + 0.6)
+        .apply(lambda x: max(x, 0))
+    )
 
     # Step 10 and 11: Impute 'rfv_l' and 'rfv_h' values with 'rfv_r' +/- value
     filtered_groups = filtered_groups.apply(impute_rfv_values, axis=1)

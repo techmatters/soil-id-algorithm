@@ -8,6 +8,9 @@ load_dotenv()
 
 DATA_PATH = os.environ.get("DATA_PATH", "Data")
 
+# Numpy seeding
+RANDOM_SEED = os.environ.get("RANDOM_SEED", 19)
+
 # Output
 APP_NAME = os.environ.get("APP_NAME", "org.terraso.soilid")
 TEMP_DIR = tempfile.TemporaryDirectory(delete=False)

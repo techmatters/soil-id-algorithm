@@ -2092,6 +2092,8 @@ def simulate_correlated_triangular(n, params, correlation_matrix):
     - samples: 2D numpy array with n rows and as many columns as there are sets of
                   parameters in params.
     """
+    # Sets the seed for numpy's random functions
+    np.random.seed(19)
 
     # Generate uncorrelated standard normal variables
     uncorrelated_normal = np.random.normal(size=(n, len(params)))
@@ -2220,34 +2222,39 @@ def infill_soil_data(df):
     for col in ["sandtotal", "claytotal", "silttotal"]:
         filtered_groups[col + "_l"] = filtered_groups[col + "_l"].fillna(
             filtered_groups[col + "_r"] - 8
-        )
+        ).apply(lambda x: max(x, 0))
+
         filtered_groups[col + "_h"] = filtered_groups[col + "_h"].fillna(
             filtered_groups[col + "_r"] + 8
-        )
+        ).apply(lambda x: max(x, 0))
 
     # Step 4 and 5: Replace missing 'dbovendry_l' and 'dbovendry_h' with 'dbovendry_r' +/- 0.01
     filtered_groups["dbovendry_l"] = filtered_groups["dbovendry_l"].fillna(
         filtered_groups["dbovendry_r"] - 0.01
-    )
+    ).apply(lambda x: max(x, 0))
+
     filtered_groups["dbovendry_h"] = filtered_groups["dbovendry_h"].fillna(
         filtered_groups["dbovendry_r"] + 0.01
-    )
+    ).apply(lambda x: max(x, 0))
 
     # Step 6 and 7: Replace missing 'wthirdbar_l' and 'wthirdbar_h' with 'wthirdbar_r' +/- 1
     filtered_groups["wthirdbar_l"] = filtered_groups["wthirdbar_l"].fillna(
         filtered_groups["wthirdbar_r"] - 1
-    )
+    ).apply(lambda x: max(x, 0))
+
     filtered_groups["wthirdbar_h"] = filtered_groups["wthirdbar_h"].fillna(
         filtered_groups["wthirdbar_r"] + 1
-    )
+    ).apply(lambda x: max(x, 0))
 
     # Step 8 and 9: Replace missing 'wfifteenbar_l' and 'wfifteenbar_h' with 'wfifteenbar_r' +/- 0.6
     filtered_groups["wfifteenbar_l"] = filtered_groups["wfifteenbar_l"].fillna(
         filtered_groups["wfifteenbar_r"] - 0.6
-    )
+    ).apply(lambda x: max(x, 0))
+
     filtered_groups["wfifteenbar_h"] = filtered_groups["wfifteenbar_h"].fillna(
         filtered_groups["wfifteenbar_r"] + 0.6
-    )
+    ).apply(lambda x: max(x, 0))
+
     # Step 10 and 11: Impute 'rfv_l' and 'rfv_h' values with 'rfv_r' +/- value
     filtered_groups = filtered_groups.apply(impute_rfv_values, axis=1)
 

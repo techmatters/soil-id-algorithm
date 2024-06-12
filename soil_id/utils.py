@@ -2093,7 +2093,7 @@ def simulate_correlated_triangular(n, params, correlation_matrix):
                   parameters in params.
     """
     # Sets the seed for numpy's random functions
-    np.random.seed(19)
+    np.random.seed(soil_id.config.RANDOM_SEED)
 
     # Generate uncorrelated standard normal variables
     uncorrelated_normal = np.random.normal(size=(n, len(params)))

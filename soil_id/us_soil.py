@@ -1747,7 +1747,7 @@ def rank_soils(
             soil_matrix.iloc[:, i] = 1
 
     # Check if user has entered horizon data
-    if p_hz_data.empty or p_bottom_depth.bottom_depth.le(0).any():
+    if p_hz_data is None or p_hz_data.empty or p_bottom_depth.bottom_depth.le(0).any():
         soilIDRank_output_pd = None
     else:
         # Subset component soil properties to match user measured properties

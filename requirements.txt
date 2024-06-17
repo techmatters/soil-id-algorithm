@@ -463,8 +463,9 @@ requests-cache==1.2.0 \
     --hash=sha256:490324301bf0cb924ff4e6324bd2613453e7e1f847353928b08adb0fdfb7f722 \
     --hash=sha256:db1c709ca343cc1cd5b6c8b1a5387298eceed02306a6040760db538c885e3838
     # via -r requirements/base.in
-rosetta-soil @ https://github.com/paulschreiber/rosetta-soil/archive/bc53029.zip \
-    --hash=sha256:6aa7934ffd07b6d52fa6167eb888dbc9f2d2ae1c1ccd5d00ad537c0114f041ba
+rosetta-soil==0.1.2 \
+    --hash=sha256:1b4153dfe54ca09fc8918bfe197542ae98104462fd8101c63b1595b50ccb7274 \
+    --hash=sha256:e7dd34e43a906f38aa3c840df286d27cb932b972ea43043847e7bf245af1ecab
     # via -r requirements/base.in
 rtree==1.2.0 \
     --hash=sha256:008d86fd8990f3ca15c06834ae597e16209b3e0a3d6512f0a3489c201011390f \

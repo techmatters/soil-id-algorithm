@@ -1,6 +1,6 @@
 composition_stats
-gdal==3.8.4
-geopandas
+gdal
+geopandas==0.14.4
 numpy
 pandas
 platformdirs

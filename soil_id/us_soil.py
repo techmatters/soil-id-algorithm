@@ -105,6 +105,11 @@ def list_soils(lon, lat):
     elif data_source == "SSURGO":
         ExpCoeff = -0.008
 
+    if mucompdata_pd.empty:
+        return "Soil ID not available in this area"
+    if mucompdata_pd["compname"].iloc[0] == "Water" and mucompdata_pd["comppct_r"].iloc[0] == "100":
+        return "Soil ID not available in this area"
+
     # Process and fill missing or zero values in the 'comppct_r' column.
     mucompdata_pd = fill_missing_comppct_r(mucompdata_pd)
 
@@ -114,8 +119,6 @@ def list_soils(lon, lat):
     # Process distance scores and perform group-wise aggregations.
     mucompdata_pd = process_distance_scores(mucompdata_pd, ExpCoeff)
 
-    if mucompdata_pd.empty:
-        return "Soil ID not available in this area"
     # Add the data source column
     mucompdata_pd["data_source"] = data_source
 
@@ -415,7 +418,6 @@ def list_soils(lon, lat):
     comp_key = mucompdata_pd["cokey"].unique().tolist()
     cokey_Index = {key: index for index, key in enumerate(comp_key)}
 
-    aws_PIW90, var_imp = soil_sim(muhorzdata_pd)
     # ----------------------------------------------------------------------------
     # This extracts OSD color, texture, and CF data
 
@@ -1074,6 +1076,15 @@ def list_soils(lon, lat):
             lab_lyrs,
             munsell_lyrs,
         ) = layer_lists
+
+    # Filter muhorzdata_pd to remove horizons with missing data == likely bedrock
+    # --Remove rows where both 'sandtotal_r' and 'claytotal_r' are NaN
+    muhorzdata_pd = muhorzdata_pd[
+        ~(muhorzdata_pd["sandtotal_r"].isna() & muhorzdata_pd["claytotal_r"].isna())
+    ]
+
+    # Run soil simulations: functional similarity calculation and soil information value
+    aws_PIW90, var_imp = soil_sim(muhorzdata_pd)
 
     # Create a new column 'soilID_rank' which will be True for the first row in each group sorted
     # by 'distance' and False for other rows

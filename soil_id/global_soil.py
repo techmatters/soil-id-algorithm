@@ -1,8 +1,6 @@
 # Standard libraries
 import collections
 import csv
-import io
-import json
 import re
 
 # local libraries
@@ -356,7 +354,6 @@ def getSoilLocationBasedGlobal(lon, lat):
     compName = mucompdata_cond_prob["compname_grp"].apply(lambda x: x.capitalize()).tolist()
     score = mucompdata_cond_prob["distance_score_norm"].round(3).tolist()
     rank_loc = mucompdata_cond_prob["Rank_Loc"].tolist()
-    model_version = 3
 
     # Step 3: Construct ID list directly from the sorted and cleaned DataFrame
     ID = []
@@ -1156,7 +1153,6 @@ def rankPredictionGlobal(lon, lat, soilHorizon, horizonDepth, rfvDepth, lab_Colo
         rank_list.append(rank_entry)
 
     # Setting up the return data structure
-    model_version = 3
     metadata = {
         "location": "global",
         "model": "v3",
@@ -1265,9 +1261,6 @@ def getSoilGridsGlobal(lon, lat):
         texture_pd.columns = ["sand", "clay"]
         texture_pd["silt"] = texture_pd.apply(silt_calc, axis=1)
         texture_pd_lpks = texture_pd.apply(getTexture, axis=1).replace([None], "")
-
-        # SoilGrids API call version 1
-        model_version = 1
 
         # Define keys and corresponding values for the 'components' dictionary
         component_keys = [

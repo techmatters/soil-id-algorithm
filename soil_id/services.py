@@ -1,4 +1,3 @@
-import json
 import logging
 import re
 
@@ -6,8 +5,6 @@ import numpy as np
 import pandas as pd
 import requests
 from pandas import json_normalize
-
-from .db import save_soilgrids_output
 
 
 def get_elev_data(lon, lat):
@@ -157,9 +154,6 @@ def get_soilgrids_property_data(lon, lat, plot_id):
         logging.error("Soilgrids properties: timed out")
     except requests.RequestException as err:
         logging.error(f"Soilgrids properties: error: {err}")
-        if plot_id is not None:
-            # Assuming the function `save_soilgrids_output` exists elsewhere in the code
-            save_soilgrids_output(plot_id, 1, json.dumps({"status": "unavailable"}))
 
     return result if result is not None else {"status": "unavailable"}
 
@@ -182,9 +176,6 @@ def get_soilgrids_classification_data(lon, lat, plot_id):
         logging.error("Soilgrids classification: timed out")
     except requests.RequestException as err:
         logging.error(f"Soilgrids classification: error: {err}")
-        if plot_id is not None:
-            # Assuming the function `save_soilgrids_output` exists elsewhere in the code
-            save_soilgrids_output(plot_id, 1, json.dumps({"status": "unavailable"}))
 
     return result
 

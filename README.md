@@ -4,20 +4,20 @@
 
 ### terminology
 
-- soil map unit: (possibly disjoint) geographic area that is associated with soil component percentage / arial coverage
-- soil series: collection of related soil components
-- soil component: description of various soil properties at specific depth intervals
+-   soil map unit: (possibly disjoint) geographic area that is associated with soil component percentage / arial coverage
+-   soil series: collection of related soil components
+-   soil component: description of various soil properties at specific depth intervals
 
 ### references
 
-- equation 1 in https://landpotential.org/wp-content/uploads/2020/07/sssaj-0-0-sssaj2017.09.0337.pdf
+-   equation 1 in https://landpotential.org/wp-content/uploads/2020/07/sssaj-0-0-sssaj2017.09.0337.pdf
 
 ### dependencies
 
-- simple features: https://r-spatial.github.io/sf/index.html
-- well-known geometry: https://paleolimbot.github.io/wk/
-- R package for querying soilDB: https://ncss-tech.github.io/soilDB/
-- dplyr: https://dplyr.tidyverse.org/
+-   simple features: https://r-spatial.github.io/sf/index.html
+-   well-known geometry: https://paleolimbot.github.io/wk/
+-   R package for querying soilDB: https://ncss-tech.github.io/soilDB/
+-   dplyr: https://dplyr.tidyverse.org/
 
 ### algorithm
 
@@ -31,3 +31,17 @@ Input: a specific point in lat/lon, and a set of depth intervals.
 6. Limit to components in the top 12 component series by probability.
 7. Query the local database for the component horizons.
 8. Return the individual probabilities of data at each horizon based on the weighted sum of each component's data at each horizon.
+
+### SoilID Project Box Folder
+
+• This folder contains the data schema and processed soil database tables that are ingested into the mySQL database.
+
+• https://nrcs.app.box.com/s/vs999nq9ruyetb9b4l7okmssdggh8okn
+
+### SSURGO/STATSGO2 metadata:
+
+• https://www.nrcs.usda.gov/resources/data-and-reports/ssurgo/stats2go-metadata
+
+### SSURGO/STATSGO data:
+
+• https://nrcs.app.box.com/v/soils/folder/17971946225

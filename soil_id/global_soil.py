@@ -11,14 +11,7 @@ import config
 # Third-party libraries
 import numpy as np
 import pandas as pd
-from db import (
-    get_WRB_descriptions,
-    getSG_descriptions,
-    load_model_output,
-    save_model_output,
-    save_rank_output,
-    save_soilgrids_output,
-)
+from db import get_WRB_descriptions, getSG_descriptions
 from scipy.stats import norm
 from services import get_soilgrids_classification_data, get_soilgrids_property_data
 from utils import (
@@ -57,7 +50,7 @@ from utils import (
 ##################################################################################################
 #                                 getSoilLocationBasedGlobal                                     #
 ##################################################################################################
-def getSoilLocationBasedGlobal(lon, lat, plot_id):
+def getSoilLocationBasedGlobal(lon, lat):
     # Extract HWSD-WISE Data
     # Note: Need to convert HWSD shp to gpkg file
     wise_data = extract_WISE_data(
@@ -447,34 +440,8 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
     ]
 
     # Save data
-    if plot_id is None:
-        soilIDRank_output_pd.to_csv(config.SOIL_ID_RANK_PATH, index=None, header=True)
-        mucompdata_cond_prob.to_csv(config.SOIL_ID_PROB_PATH, index=None, header=True)
-    else:
-        save_model_output(
-            plot_id,
-            model_version,
-            json.dumps(
-                {
-                    "metadata": {
-                        "location": "global",
-                        "model": "v2",
-                        "unit_measure": {
-                            "distance": "m",
-                            "depth": "cm",
-                            "cec": "cmol(c)/kg",
-                            "clay": "%",
-                            "rock_fragments": "cm3/100cm3",
-                            "sand": "%",
-                            "ec": "ds/m",
-                        },
-                    },
-                    "soilList": output_SoilList,
-                }
-            ),
-            soilIDRank_output_pd.to_csv(index=None, header=True),
-            mucompdata_cond_prob.to_csv(index=None, header=True),
-        )
+    soilIDRank_output_pd.to_csv(config.SOIL_ID_RANK_PATH, index=None, header=True)
+    mucompdata_cond_prob.to_csv(config.SOIL_ID_PROB_PATH, index=None, header=True)
 
     # Return the JSON output
     return {
@@ -498,9 +465,7 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
 ##############################################################################################
 #                                   rankPredictionGlobal                                     #
 ##############################################################################################
-def rankPredictionGlobal(
-    lon, lat, soilHorizon, horizonDepth, rfvDepth, lab_Color, bedrock, cracks, plot_id=None
-):
+def rankPredictionGlobal(lon, lat, soilHorizon, horizonDepth, rfvDepth, lab_Color, bedrock, cracks):
     # ------------------------------------------------------------------------------------------------
     # ------ Load in user data --------#
 
@@ -658,25 +623,9 @@ def rankPredictionGlobal(
 
     # --------------------------------------------------------------------------------------------------------------------------------------
     # Load in component data from soilIDList
-    # Initialize
-    record_id = None
 
-    # If no plot_id is provided, load data from file
-    if plot_id is None:
-        soilIDRank_output_pd = pd.read_csv(config.SOIL_ID_RANK_PATH)
-        mucompdata_pd = pd.read_csv(config.SOIL_ID_PROB_PATH)
-
-    # If plot_id is provided, load data from the database
-    else:
-        modelRun = load_model_output(plot_id)
-
-        # Check if modelRun data was successfully fetched
-        if modelRun:
-            record_id = modelRun[0]
-            soilIDRank_output_pd = pd.read_csv(io.StringIO(modelRun[2]))
-            mucompdata_pd = pd.read_csv(io.StringIO(modelRun[3]))
-        else:
-            return "Cannot find a plot with this ID"
+    soilIDRank_output_pd = pd.read_csv(config.SOIL_ID_RANK_PATH)
+    mucompdata_pd = pd.read_csv(config.SOIL_ID_PROB_PATH)
 
     # Create soil depth DataFrame and subset component depths based on max user depth
     # if no bedrock specified
@@ -1216,17 +1165,13 @@ def rankPredictionGlobal(
 
     result = {"metadata": metadata, "soilRank": rank_list}
 
-    # Save data if record_id is provided
-    if record_id:
-        save_rank_output(record_id, model_version, json.dumps(result))
-
     return result
 
 
 ##################################################################################################
 #                                          getSoilGridsGlobal                                    #
 ##################################################################################################
-def getSoilGridsGlobal(lon, lat, plot_id=None):
+def getSoilGridsGlobal(lon, lat):
 
     # Call soildgrids API
     sg_out = get_soilgrids_property_data(lon, lat)
@@ -1262,8 +1207,6 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
 
     # Check if all values in the specified columns are NaN
     if sg_data_w[["sand", "clay", "cfvo"]].isnull().all().all():
-        if plot_id is not None:
-            save_soilgrids_output(plot_id, 1, json.dumps({"status": "unavailable"}))
         return {"status": "unavailable"}
     else:
         # Apply the factor to the specific columns
@@ -1273,7 +1216,7 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
         sg_data_w["silt"] = sg_data_w.apply(silt_calc, axis=1)
         sg_data_w["texture"] = sg_data_w.apply(getTexture, axis=1)
 
-        sg_tax = get_soilgrids_classification_data(lon, lat, plot_id)
+        sg_tax = get_soilgrids_classification_data(lon, lat)
 
         # If data was successfully fetched, process it
         if sg_tax:
@@ -1391,12 +1334,6 @@ def getSoilGridsGlobal(lon, lat, plot_id=None):
                 "sand": "%",
             },
         }
-
-        # If a plot_id is provided, save the SoilGrids output
-        if plot_id is not None:
-            save_soilgrids_output(
-                plot_id, model_version, json.dumps({"metadata": metadata, "soilGrids": SoilGrids})
-            )
 
         # Return the final result
         return {"metadata": metadata, "soilGrids": SoilGrids}

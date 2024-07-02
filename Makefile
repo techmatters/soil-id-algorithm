@@ -1,8 +1,8 @@
 pip-tools: ${VIRTUAL_ENV}/scripts/pip-sync
 
 format:
-	isort --atomic soil_id API
-	black soil_id API
+	isort --atomic soil_id
+	black soil_id
 
 install:
 	pip install -r requirements.txt
@@ -11,7 +11,7 @@ install-dev:
 	pip install -r requirements-dev.txt
 
 lint:
-	flake8 soil_id API && isort -c soil_id API && black --check soil_id API
+	flake8 soil_id && isort -c soil_id && black --check soil_id
 
 lock: pip-tools
 	CUSTOM_COMPILE_COMMAND="make lock" pip-compile --upgrade --generate-hashes --resolver=backtracking --output-file requirements.txt requirements/base.in

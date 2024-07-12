@@ -450,7 +450,7 @@ def list_soils(lon, lat):
                     OSDhorzdata_pd["texture_class"] = (
                         OSDhorzdata_pd["texture_class"]
                         .str.lower()
-                        .str.replace(r"(fine|medium|coarse) ", "")
+                        .str.replace(r"(fine|medium|coarse) ", "", regex=True)
                     )
                     OSDhorzdata_pd.loc[
                         OSDhorzdata_pd["matrix_dry_color_hue"] == "N",
@@ -477,7 +477,7 @@ def list_soils(lon, lat):
                     # Merge with another dataframe
                     mucompdata_pd_merge = mucompdata_pd[["mukey", "cokey", "compname", "compkind"]]
                     mucompdata_pd_merge["series"] = mucompdata_pd_merge["compname"].str.replace(
-                        r"\d+", ""
+                        r"\d+", "", regex=True
                     )
                     OSDhorzdata_pd["series"] = OSDhorzdata_pd["series"].str.lower().str.capitalize()
                     OSDhorzdata_pd = pd.merge(
@@ -560,7 +560,7 @@ def list_soils(lon, lat):
             OSDhorzdata_pd["texture_class"] = (
                 OSDhorzdata_pd["texture_class"]
                 .str.lower()
-                .str.replace(r"(fine|medium|coarse) ", "")
+                .str.replace(r"(fine|medium|coarse) ", "", regex=True)
             )
 
             # For horizons missing all depth data, replace NaN with 0
@@ -588,7 +588,7 @@ def list_soils(lon, lat):
     else:
         OSDnarrative_pd = json_normalize(out["OSD_narrative"])
         mucompdata_pd_merge = base_df.copy()
-        mucompdata_pd_merge["series"] = mucompdata_pd_merge["compname"].str.replace(r"\d+", "")
+        mucompdata_pd_merge["series"] = mucompdata_pd_merge["compname"].str.replace(r"\d+", "", regex=True)
         OSDnarrative_pd = pd.merge(mucompdata_pd_merge, OSDnarrative_pd, on="series", how="left")
 
     # Merge with the main dataframe
@@ -1160,6 +1160,7 @@ def list_soils(lon, lat):
         ESDcompdata_pd["Comp_Rank"] = ESDcompdata_pd["cokey"].map(cokey_Index)
         ESDcompdata_pd.sort_values("Comp_Rank", ascending=True, inplace=True)
         ESDcompdata_pd.drop(columns="Comp_Rank", inplace=True)
+        ESDcompdata_pd["ecoclassname"] = ESDcompdata_pd["ecoclassname"].str.title()
 
         # Further processing and checks for missing ESD data
         ESDcompdata_pd = update_esd_data(ESDcompdata_pd)
@@ -1207,7 +1208,7 @@ def list_soils(lon, lat):
                     or ESDcompdata_pd.ecoclassname.isnull().any()
                 ):
                     ESDcompdata_pd["compname_grp"] = ESDcompdata_pd.compname.str.replace(
-                        r"[0-9]+", ""
+                        r"[0-9]+", "", regex=True
                     )
                     ESDcompdata_pd_comp_grps = [
                         g for _, g in ESDcompdata_pd.groupby(["compname_grp"], sort=False)

@@ -588,7 +588,9 @@ def list_soils(lon, lat):
     else:
         OSDnarrative_pd = json_normalize(out["OSD_narrative"])
         mucompdata_pd_merge = base_df.copy()
-        mucompdata_pd_merge["series"] = mucompdata_pd_merge["compname"].str.replace(r"\d+", "", regex=True)
+        mucompdata_pd_merge["series"] = mucompdata_pd_merge["compname"].str.replace(
+            r"\d+", "", regex=True
+        )
         OSDnarrative_pd = pd.merge(mucompdata_pd_merge, OSDnarrative_pd, on="series", how="left")
 
     # Merge with the main dataframe

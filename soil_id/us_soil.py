@@ -1320,9 +1320,9 @@ def list_soils(lon, lat):
     soilIDRank_output_pd = pd.concat(soilIDRank_output).reset_index(drop=True)
 
     # Sort mucompdata_pd based on distance score in descending order
-    mucompdata_cond_prob = mucompdata_pd.sort_values(
-        "distance_score", ascending=False
-    ).reset_index(drop=True)
+    mucompdata_cond_prob = mucompdata_pd.sort_values("distance_score", ascending=False).reset_index(
+        drop=True
+    )
 
     # Generate the Rank_Loc column values
     rank_id = 1

@@ -704,7 +704,8 @@ def calculate_location_score(group, ExpCoeff):
 
     The score is adjusted based on the provided exponential coefficient (ExpCoeff). The
     function provides a way to compute a score for locations, giving preference
-    to locations with a closer distance (smaller distance values) and higher aerial coverage within a mapunit.
+    to locations with a closer distance (smaller distance values) and higher aerial
+    coverage within a mapunit.
     """
 
     # Parameter validation

@@ -59,10 +59,10 @@ def get_esd_data(ecositeID, esd_geo, ESDcompdata_pd):
         result = response.json()
 
         ESD_list_pd = json_normalize(result["ecoclasses"])[["id", "legacyId"]]
-        esd_url = []
+        edit_url = []
 
         if isinstance(result, list):
-            esd_url.append("")
+            edit_url.append("")
         else:
             for i in range(len(ecositeID)):
                 if (
@@ -75,14 +75,14 @@ def get_esd_data(ecositeID, esd_geo, ESDcompdata_pd):
                             axis=1,
                         )
                     ]["id"].values[0]
-                    ES_URL_t = (
+                    EDIT_URL_t = (
                         f"https://edit.jornada.nmsu.edu/catalogs/esd/{esd_geo}/{ecosite_edit_id}"
                     )
-                    esd_url.append(ES_URL_t)
+                    edit_url.append(EDIT_URL_t)
                 else:
-                    esd_url.append("")
+                    edit_url.append("")
 
-        ESDcompdata_pd = ESDcompdata_pd.assign(esd_url=esd_url)
+        ESDcompdata_pd = ESDcompdata_pd.assign(edit_url=edit_url)
         complete = True
 
     except requests.ConnectionError as err:
@@ -93,7 +93,7 @@ def get_esd_data(ecositeID, esd_geo, ESDcompdata_pd):
         logging.error(f"ESD: error: {err}")
 
     if not complete:
-        ESDcompdata_pd["esd_url"] = pd.Series(np.repeat("", len(ecositeID))).values
+        ESDcompdata_pd["edit_url"] = pd.Series(np.repeat("", len(ecositeID))).values
 
     return ESDcompdata_pd
 

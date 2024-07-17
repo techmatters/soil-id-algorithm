@@ -1173,14 +1173,14 @@ def list_soils(lon, lat):
                 "ESD": {
                     "ecoclassid": group["ecoclassid"].tolist(),
                     "ecoclassname": group["ecoclassname"].tolist(),
-                    "esd_url": group["esd_url"].tolist(),
+                    "edit_url": group["edit_url"].tolist(),
                 }
             }
             esd_comp_list.append(esd_data)
     else:
         # Fill the list with empty data if ESDcompdata_pd is not available
         esd_comp_list = [
-            {"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}}
+            {"ESD": {"ecoclassid": "", "ecoclassname": "", "edit_url": ""}}
             for _ in range(len(mucompdata_pd))
         ]
 
@@ -1244,14 +1244,14 @@ def list_soils(lon, lat):
                                     len(comp_grps_temp),
                                 )
                             ).values
-                            url = comp_grps_temp.esd_url.unique().tolist()
+                            url = comp_grps_temp.edit_url.unique().tolist()
                             url = [x for x in url if x != ""]
                             if not url:
-                                comp_grps_temp["esd_url"] = pd.Series(
+                                comp_grps_temp["edit_url"] = pd.Series(
                                     np.tile("", len(comp_grps_temp))
                                 ).values
                             else:
-                                comp_grps_temp["esd_url"] = pd.Series(
+                                comp_grps_temp["edit_url"] = pd.Series(
                                     np.tile(url, len(comp_grps_temp))
                                 ).values
                             ecoList_out.append(comp_grps_temp)
@@ -1265,7 +1265,7 @@ def list_soils(lon, lat):
                 for i in range(len(ESDcompdata_group_cokey)):
                     if ESDcompdata_group_cokey[i]["ecoclassname"].isnull().values.any():
                         esd_comp_list.append(
-                            {"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}}
+                            {"ESD": {"ecoclassid": "", "ecoclassname": "", "edit_url": ""}}
                         )
                     else:
                         esd_comp_list.append(
@@ -1275,18 +1275,18 @@ def list_soils(lon, lat):
                                     "ecoclassname": ESDcompdata_group_cokey[i][
                                         "ecoclassname"
                                     ].tolist(),
-                                    "esd_url": ESDcompdata_group_cokey[i]["esd_url"].tolist(),
+                                    "edit_url": ESDcompdata_group_cokey[i]["edit_url"].tolist(),
                                 }
                             }
                         )
             else:
                 for i in range(len(mucompdata_pd)):
                     esd_comp_list.append(
-                        {"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}}
+                        {"ESD": {"ecoclassid": "", "ecoclassname": "", "edit_url": ""}}
                     )
         else:
             for i in range(len(mucompdata_pd)):
-                esd_comp_list.append({"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}})
+                esd_comp_list.append({"ESD": {"ecoclassid": "", "ecoclassname": "", "edit_url": ""}})
 
         # Add ecosite data to mucompdata_pd for testing output. In cases with multiple ESDs per
         # component, only take the first.

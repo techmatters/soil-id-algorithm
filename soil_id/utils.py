@@ -1820,9 +1820,9 @@ def correct_depth_discrepancies(data):
                 {
                     "top": data.bottom.iloc[i],
                     "bottom": data.top.iloc[i + 1],
-                    "r": np.nan,
-                    "g": np.nan,
-                    "b": np.nan,
+                    "srgb_r": np.nan,
+                    "srgb_g": np.nan,
+                    "srgb_b": np.nan,
                 },
                 index=[i + 0.5],
             )
@@ -1838,10 +1838,10 @@ def convert_rgb_to_lab(row):
     """
     Converts RGB values to LAB.
     """
-    if pd.isnull(row["r"]) or pd.isnull(row["g"]) or pd.isnull(row["b"]):
+    if pd.isnull(row["srgb_r"]) or pd.isnull(row["srgb_g"]) or pd.isnull(row["srgb_b"]):
         return np.nan, np.nan, np.nan
 
-    result = skimage.color.rgb2lab([row["r"], row["g"], row["b"]])
+    result = skimage.color.rgb2lab([row["srgb_r"], row["srgb_g"], row["srgb_b"]])
 
     return result
 
@@ -1851,7 +1851,7 @@ def getProfileLAB(data_osd, color_ref):
     The function processes the given data_osd DataFrame and computes LAB values for soil profiles.
     """
     # Convert the specific columns to numeric
-    data_osd[["top", "bottom", "r", "g", "b"]] = data_osd[["top", "bottom", "r", "g", "b"]].apply(
+    data_osd[["top", "bottom", "srgb_r", "srgb_g", "srgb_b"]] = data_osd[["top", "bottom", "srgb_r", "srgb_g", "srgb_b"]].apply(
         pd.to_numeric
     )
 

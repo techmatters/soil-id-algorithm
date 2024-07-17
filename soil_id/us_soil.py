@@ -471,7 +471,7 @@ def list_soils(lon, lat):
                             RGB = munsell2rgb(color_ref, munsell_ref, munsell)
                             munsell_RGB.append(RGB)
 
-                    munsell_RGB_df = pd.DataFrame(munsell_RGB, columns=["r", "g", "b"])
+                    munsell_RGB_df = pd.DataFrame(munsell_RGB, columns=["srgb_r", "srgb_g", "srgb_b"])
                     OSDhorzdata_pd = pd.concat([OSDhorzdata_pd, munsell_RGB_df], axis=1)
 
                     # Merge with another dataframe
@@ -537,9 +537,9 @@ def list_soils(lon, lat):
                     "matrix_dry_color_hue",
                     "matrix_dry_color_value",
                     "matrix_dry_color_chroma",
-                    "r",
-                    "g",
-                    "b",
+                    "srgb_r",
+                    "srgb_g",
+                    "srgb_b",
                 ]
             ]
             OSDhorzdata_pd = pd.merge(mucompdata_pd_merge, OSDhorzdata_pd, on="series", how="left")
@@ -2301,9 +2301,9 @@ def create_new_layer_osd(row, top, bottom):
     ]:
         new_row[col] = None
     for col in [
-        "r",
-        "g",
-        "b",
+        "srgb_r",
+        "srgb_g",
+        "srgb_b",
         "total_frag_volume",
         "claytotal_r",
         "sandtotal_r",

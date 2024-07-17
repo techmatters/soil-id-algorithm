@@ -47,8 +47,8 @@ def extract_WISE_data(lon, lat, file_path, buffer_size=0.5):
     # Filter data to consider unique map units
     mu_geo = hwsd[["MUGLB_NEW", "geometry"]].drop_duplicates(subset="MUGLB_NEW")
     mu_id_dist = calculate_distances_and_intersections(mu_geo, point_geo)
-    mu_id_dist.loc[mu_id_dist["pt_intersect"], "distance_m"] = 0
-    mu_id_dist["distance"] = mu_id_dist.groupby("MUGLB_NEW")["distance_m"].transform(min)
+    mu_id_dist.loc[mu_id_dist["pt_intersect"], "dist_meters"] = 0
+    mu_id_dist["distance"] = mu_id_dist.groupby("MUGLB_NEW")["dist_meters"].transform(min)
     mu_id_dist = mu_id_dist.nsmallest(2, "distance")
 
     hwsd = hwsd.drop(columns=["geometry"])
@@ -1263,7 +1263,7 @@ def calculate_distances_and_intersections(mu_geo, point):
     intersects = mu_geo_utm["geometry"].intersects(point_utm)
 
     return pd.DataFrame(
-        {"mukey": mu_geo_utm["MUKEY"], "distance_m": distances, "pt_intersect": intersects}
+        {"mukey": mu_geo_utm["MUKEY"], "dist_meters": distances, "pt_intersect": intersects}
     )
 
 
@@ -1387,9 +1387,9 @@ def extract_mucompdata_STATSGO(lon, lat):
 
     mu_geo = statsgo_mukey[["MUKEY", "geometry"]].drop_duplicates(subset=["geometry"])
     mu_id_dist = calculate_distances_and_intersections(mu_geo, point)
-    mu_id_dist.loc[mu_id_dist["pt_intersect"], "distance_m"] = 0
-    mu_id_dist["distance_m"] = mu_id_dist.groupby("mukey")["distance_m"].transform("min")
-    mukey_dist_final = mu_id_dist.drop_duplicates("mukey").sort_values("distance_m").head(2)
+    mu_id_dist.loc[mu_id_dist["pt_intersect"], "dist_meters"] = 0
+    mu_id_dist["dist_meters"] = mu_id_dist.groupby("mukey")["dist_meters"].transform("min")
+    mukey_dist_final = mu_id_dist.drop_duplicates("mukey").sort_values("dist_meters").head(2)
 
     mukey_list = mukey_dist_final["mukey"].tolist()
     if not mukey_list:
@@ -1410,10 +1410,10 @@ def extract_mucompdata_STATSGO(lon, lat):
         mucompdata = mucompdata_out["Table"].iloc[0]
         mucompdata_pd = pd.DataFrame(mucompdata[1:], columns=mucompdata[0])
         mucompdata_pd = pd.merge(mucompdata_pd, mukey_dist_final, on="mukey").sort_values(
-            ["distance_m", "cokey"]
+            ["dist_meters", "cokey"]
         )
 
-        mucompdata_pd = mucompdata_pd[mucompdata_pd["distance_m"] <= 5000]
+        mucompdata_pd = mucompdata_pd[mucompdata_pd["dist_meters"] <= 5000]
 
         if mucompdata_pd.empty:
             logging.warning(f"Soil ID not available in this area: {lon}.{lat}")
@@ -1443,7 +1443,7 @@ def process_site_data(mucompdata_pd):
 
     mucompdata_pd = mucompdata_pd.rename(
         columns={
-            "distance_m": "distance",
+            "dist_meters": "distance",
         }
     )
 

@@ -703,8 +703,9 @@ def calculate_location_score(group, ExpCoeff):
     - float: Calculated location score.
 
     The score is adjusted based on the provided exponential coefficient (ExpCoeff). The
-    function provides a way to compute a normalized score for locations, giving preference
-    to locations with a closer distance (smaller distance values) and higher share values.
+    function provides a way to compute a score for locations, giving preference
+    to locations with a closer distance (smaller distance values) and higher aerial
+    coverage within a mapunit.
     """
 
     # Parameter validation
@@ -740,12 +741,10 @@ def assign_max_distance_scores(group):
 
     # Compute the required values once
     max_distance_score = group["distance_score"].max()
-    max_distance_score_norm = group["distance_score_norm"].max()
     min_distance = group["distance"].min()
 
     # Use .loc for efficient modification
     group.loc[:, "distance_score"] = max_distance_score
-    group.loc[:, "distance_score_norm"] = max_distance_score_norm
     group.loc[:, "min_dist"] = min_distance
 
     return group
@@ -1713,10 +1712,7 @@ def process_distance_scores(mucompdata_pd, ExpCoeff):
 
     # Additional processing
     mucompdata_pd = mucompdata_pd.sort_values("distance_score", ascending=False)
-    # Normalize distance score
-    mucompdata_pd["distance_score_norm"] = (
-        mucompdata_pd["distance_score"] / mucompdata_pd["distance_score"].max()
-    )
+
     mucompdata_pd = mucompdata_pd[~mucompdata_pd["compkind"].str.contains("Miscellaneous area")]
 
     mucompdata_pd = mucompdata_pd.reset_index(drop=True)
@@ -1728,7 +1724,6 @@ def process_distance_scores(mucompdata_pd, ExpCoeff):
     # Assign max within-group location-based score to all members of the group
     for group in mucompdata_comp_grps:
         group["distance_score"] = group["distance_score"].max()
-        group["distance_score_norm"] = group["distance_score_norm"].max()
         group = group.sort_values("distance").reset_index(drop=True)
         group["min_dist"] = group["distance"].iloc[0]
 

@@ -12,7 +12,6 @@ import geopandas as gpd
 import numpy as np
 import pandas as pd
 import shapely
-import skimage
 from numpy.linalg import cholesky
 from osgeo import ogr
 from rosetta import SoilData, rosetta

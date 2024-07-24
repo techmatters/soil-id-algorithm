@@ -13,8 +13,8 @@ from pandas import json_normalize
 # local libraries
 import soil_id.config
 
-from .color import lab2munsell, munsell2rgb
-from .services import get_esd_data, get_soil_series_data, get_soilweb_data, sda_return
+from .color import lab2munsell, munsell2rgb, getProfileLAB
+from .services import get_soil_series_data, get_soilweb_data, sda_return
 from .soil_sim import soil_sim
 from .utils import (
     aggregate_data,
@@ -27,7 +27,6 @@ from .utils import (
     getClay,
     getOSDCF,
     getProfile,
-    getProfileLAB,
     getSand,
     getTexture,
     gower_distances,
@@ -66,7 +65,7 @@ class SoilListOutputData:
 def list_soils(lon, lat):
     # Load in LAB to Munsell conversion look-up table
     color_ref = pd.read_csv(soil_id.config.MUNSELL_RGB_LAB_PATH)
-    LAB_ref = color_ref[["L", "A", "B"]]
+    LAB_ref = color_ref[["cielab_l", "cielab_a", "cielab_b"]]
     munsell_ref = color_ref[["hue", "value", "chroma"]]
 
     out = get_soilweb_data(lon, lat)
@@ -228,6 +227,8 @@ def list_soils(lon, lat):
     muhorzdata_pd.drop("Comp_Rank", axis=1, inplace=True)
     muhorzdata_pd.reset_index(drop=True, inplace=True)
 
+    mucompdata_pd = mucompdata_pd.drop_duplicates().reset_index(drop=True)
+    return(mucompdata_pd)
     # Update component names in mucompdata_pd to handle duplicates
     component_names = mucompdata_pd["compname"].tolist()
     name_counts = collections.Counter(component_names)
@@ -295,7 +296,7 @@ def list_soils(lon, lat):
                 group_sorted = (
                     pd.concat([group_sorted, layer]).sort_values("hzdept_r").reset_index(drop=True)
                 )
-
+        
         mucompdata_pd_group = mucompdata_pd[mucompdata_pd["cokey"].isin(group_sorted["cokey"])]
         if (
             group_sorted["sandtotal_r"].isnull().values.all()
@@ -373,6 +374,15 @@ def list_soils(lon, lat):
         compname = pd.DataFrame([group_sorted.compname.unique()] * len(sand_pct_intpl))
         comppct = pd.DataFrame([group_sorted.comppct_r.unique()] * len(sand_pct_intpl))
         cokey = pd.DataFrame([group_sorted.cokey.unique()] * len(sand_pct_intpl))
+        
+        # Print shapes of DataFrames to debug
+        print(sand_pct_intpl[["c_sandpct_intpl_grp"]].shape)
+        print(clay_pct_intpl[["c_claypct_intpl_grp"]].shape)
+        print(cf_pct_intpl[["c_cfpct_intpl_grp"]].shape)
+        print(compname.shape)
+        print(cokey.shape)
+        print(comppct.shape)
+        
         getProfile_cokey_temp2 = pd.concat(
             [
                 sand_pct_intpl[["c_sandpct_intpl_grp"]],
@@ -384,6 +394,7 @@ def list_soils(lon, lat):
             ],
             axis=1,
         )
+
         getProfile_cokey_temp2.columns = [
             "sandpct_intpl",
             "claypct_intpl",
@@ -471,7 +482,9 @@ def list_soils(lon, lat):
                             RGB = munsell2rgb(color_ref, munsell_ref, munsell)
                             munsell_RGB.append(RGB)
 
-                    munsell_RGB_df = pd.DataFrame(munsell_RGB, columns=["srgb_r", "srgb_g", "srgb_b"])
+                    munsell_RGB_df = pd.DataFrame(
+                        munsell_RGB, columns=["srgb_r", "srgb_g", "srgb_b"]
+                    )
                     OSDhorzdata_pd = pd.concat([OSDhorzdata_pd, munsell_RGB_df], axis=1)
 
                     # Merge with another dataframe
@@ -540,8 +553,24 @@ def list_soils(lon, lat):
                     "srgb_r",
                     "srgb_g",
                     "srgb_b",
+                    "cielab_l",
+                    "cielab_a",
+                    "cielab_b",
                 ]
             ]
+
+            # # Rename
+            # OSDhorzdata_pd = OSDhorzdata_pd.rename(
+            #     columns={
+            #         "srgb_r": "r",
+            #         "srgb_g": "g",
+            #         "srgb_b": "b",
+            #         "cielab_l": "l",
+            #         "cielab_a": "a",
+            #         "cielab_b": "b",
+            #     }
+            # )
+
             OSDhorzdata_pd = pd.merge(mucompdata_pd_merge, OSDhorzdata_pd, on="series", how="left")
 
             # Set data types for specific columns
@@ -1105,8 +1134,8 @@ def list_soils(lon, lat):
             ESDcompdata_pd = None
         else:
             ESD = pd.json_normalize(out["ESD"])
-            ESD[["cokey", "ecoclassid", "ecoclassname"]] = ESD[
-                ["cokey", "ecoclassid", "ecoclassname"]
+            ESD[["cokey", "ecoclassid", "ecoclassname", "edit_url"]] = ESD[
+                ["cokey", "ecoclassid", "ecoclassname", "edit_url"]
             ].astype(str)
 
             # Check if any cokey in ESD matches with mucompdata_pd
@@ -1138,6 +1167,14 @@ def list_soils(lon, lat):
             ESDcompdata_sda[["cokey", "ecoclassid", "ecoclassname"]] = ESDcompdata_sda[
                 ["cokey", "ecoclassid", "ecoclassname"]
             ].astype(str)
+
+            # Create the "edit_url" column
+            ESDcompdata_sda["edit_url"] = (
+                "https://edit.jornada.nmsu.edu/catalogs/esd/"
+                + ESDcompdata_sda["ecoclassid"].str[1:5]
+                + "/"
+                + ESDcompdata_sda["ecoclassid"]
+            )
 
             # Check if any cokey in ESDcompdata_sda matches with mucompdata_pd
             if any(ESDcompdata_sda["cokey"].isin(mucompdata_pd["cokey"])):
@@ -1201,8 +1238,8 @@ def list_soils(lon, lat):
             ESD_geo.extend(ecositeID)
             ESD_geo = [ESD_geo for ESD_geo in ESD_geo if str(ESD_geo) != "nan"]
             ESD_geo = ESD_geo[0][1:5]
-            print(ecositeID, ESD_geo)
             ESDcompdata_pd = get_esd_data(ecositeID, ESD_geo, ESDcompdata_pd)
+
             # Assign missing ESD for components that have other instances with an assigned ESD
             if ESDcompdata_pd is not None:
                 if (
@@ -1286,7 +1323,9 @@ def list_soils(lon, lat):
                     )
         else:
             for i in range(len(mucompdata_pd)):
-                esd_comp_list.append({"ESD": {"ecoclassid": "", "ecoclassname": "", "edit_url": ""}})
+                esd_comp_list.append(
+                    {"ESD": {"ecoclassid": "", "ecoclassname": "", "edit_url": ""}}
+                )
 
         # Add ecosite data to mucompdata_pd for testing output. In cases with multiple ESDs per
         # component, only take the first.

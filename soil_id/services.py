@@ -47,57 +47,6 @@ def get_elev_data(lon, lat):
     return result
 
 
-def get_esd_data(ecositeID, esd_geo, ESDcompdata_pd):
-    base_url = "https://edit.jornada.nmsu.edu/services/downloads/esd/%s/class-list.json" % (esd_geo)
-    complete = False
-
-    try:
-        response = requests.get(base_url, timeout=4)
-        logging.info(f"{round(response.elapsed.total_seconds(), 2)}: {base_url}")
-        response.raise_for_status()
-
-        result = response.json()
-
-        ESD_list_pd = json_normalize(result["ecoclasses"])[["id", "legacyId"]]
-        edit_url = []
-
-        if isinstance(result, list):
-            edit_url.append("")
-        else:
-            for i in range(len(ecositeID)):
-                if (
-                    ecositeID[i] in ESD_list_pd["id"].tolist()
-                    or ecositeID[i] in ESD_list_pd["legacyId"].tolist()
-                ):
-                    ecosite_edit_id = ESD_list_pd[
-                        ESD_list_pd.apply(
-                            lambda r: r.str.contains(ecositeID[i], case=False).any(),
-                            axis=1,
-                        )
-                    ]["id"].values[0]
-                    EDIT_URL_t = (
-                        f"https://edit.jornada.nmsu.edu/catalogs/esd/{esd_geo}/{ecosite_edit_id}"
-                    )
-                    edit_url.append(EDIT_URL_t)
-                else:
-                    edit_url.append("")
-
-        ESDcompdata_pd = ESDcompdata_pd.assign(edit_url=edit_url)
-        complete = True
-
-    except requests.ConnectionError as err:
-        logging.error(f"ESD: failed to connect: {err}")
-    except requests.Timeout:
-        logging.error("ESD: timed out")
-    except requests.RequestException as err:
-        logging.error(f"ESD: error: {err}")
-
-    if not complete:
-        ESDcompdata_pd["edit_url"] = pd.Series(np.repeat("", len(ecositeID))).values
-
-    return ESDcompdata_pd
-
-
 def get_soil_series_data(mucompdata_pd, OSD_compkind):
     series_name = [
         re.sub("[0-9]+", "", compname).strip()

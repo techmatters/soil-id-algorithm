@@ -2,10 +2,8 @@ import json
 import logging
 import re
 
-import numpy as np
 import pandas as pd
 import requests
-from pandas import json_normalize
 
 from .db import save_soilgrids_output
 

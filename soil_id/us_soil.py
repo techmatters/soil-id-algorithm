@@ -1238,7 +1238,6 @@ def list_soils(lon, lat):
             ESD_geo.extend(ecositeID)
             ESD_geo = [ESD_geo for ESD_geo in ESD_geo if str(ESD_geo) != "nan"]
             ESD_geo = ESD_geo[0][1:5]
-            ESDcompdata_pd = get_esd_data(ecositeID, ESD_geo, ESDcompdata_pd)
 
             # Assign missing ESD for components that have other instances with an assigned ESD
             if ESDcompdata_pd is not None:

@@ -1,5 +1,7 @@
-import pandas as pd
+import math
+
 import numpy as np
+import pandas as pd
 import skimage
 from sklearn.metrics.pairwise import euclidean_distances
 
@@ -63,7 +65,9 @@ def getProfileLAB(data_osd, color_ref):
     ].apply(pd.to_numeric)
 
     if not validate_color_data(data_osd):
-        return pd.DataFrame(np.nan, index=np.arange(200), columns=["cielab_l", "cielab_a", "cielab_b"])
+        return pd.DataFrame(
+            np.nan, index=np.arange(200), columns=["cielab_l", "cielab_a", "cielab_b"]
+        )
 
     data_osd = correct_color_depth_discrepancies(data_osd)
 
@@ -78,7 +82,9 @@ def getProfileLAB(data_osd, color_ref):
         a_intpl.extend([row["cielab_a"]] * (int(row["bottom"]) - int(row["top"])))
         b_intpl.extend([row["cielab_b"]] * (int(row["bottom"]) - int(row["top"])))
 
-    lab_intpl = pd.DataFrame({"cielab_l": l_intpl, "cielab_a": a_intpl, "cielab_b": b_intpl}).head(200)
+    lab_intpl = pd.DataFrame({"cielab_l": l_intpl, "cielab_a": a_intpl, "cielab_b": b_intpl}).head(
+        200
+    )
     return lab_intpl
 
 

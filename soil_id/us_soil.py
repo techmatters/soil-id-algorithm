@@ -13,7 +13,7 @@ from pandas import json_normalize
 # local libraries
 import soil_id.config
 
-from .color import lab2munsell, munsell2rgb, getProfileLAB
+from .color import getProfileLAB, lab2munsell, munsell2rgb
 from .services import get_soil_series_data, get_soilweb_data, sda_return
 from .soil_sim import soil_sim
 from .utils import (
@@ -228,7 +228,7 @@ def list_soils(lon, lat):
     muhorzdata_pd.reset_index(drop=True, inplace=True)
 
     mucompdata_pd = mucompdata_pd.drop_duplicates().reset_index(drop=True)
-    return(mucompdata_pd)
+    return mucompdata_pd
     # Update component names in mucompdata_pd to handle duplicates
     component_names = mucompdata_pd["compname"].tolist()
     name_counts = collections.Counter(component_names)
@@ -296,7 +296,7 @@ def list_soils(lon, lat):
                 group_sorted = (
                     pd.concat([group_sorted, layer]).sort_values("hzdept_r").reset_index(drop=True)
                 )
-        
+
         mucompdata_pd_group = mucompdata_pd[mucompdata_pd["cokey"].isin(group_sorted["cokey"])]
         if (
             group_sorted["sandtotal_r"].isnull().values.all()
@@ -374,7 +374,7 @@ def list_soils(lon, lat):
         compname = pd.DataFrame([group_sorted.compname.unique()] * len(sand_pct_intpl))
         comppct = pd.DataFrame([group_sorted.comppct_r.unique()] * len(sand_pct_intpl))
         cokey = pd.DataFrame([group_sorted.cokey.unique()] * len(sand_pct_intpl))
-        
+
         # Print shapes of DataFrames to debug
         print(sand_pct_intpl[["c_sandpct_intpl_grp"]].shape)
         print(clay_pct_intpl[["c_claypct_intpl_grp"]].shape)
@@ -382,7 +382,7 @@ def list_soils(lon, lat):
         print(compname.shape)
         print(cokey.shape)
         print(comppct.shape)
-        
+
         getProfile_cokey_temp2 = pd.concat(
             [
                 sand_pct_intpl[["c_sandpct_intpl_grp"]],

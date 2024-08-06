@@ -228,7 +228,7 @@ def list_soils(lon, lat):
     muhorzdata_pd.reset_index(drop=True, inplace=True)
 
     mucompdata_pd = mucompdata_pd.drop_duplicates().reset_index(drop=True)
-    return mucompdata_pd
+
     # Update component names in mucompdata_pd to handle duplicates
     component_names = mucompdata_pd["compname"].tolist()
     name_counts = collections.Counter(component_names)
@@ -1521,7 +1521,7 @@ def list_soils(lon, lat):
         "Soil Data Value": var_imp,
         "soilList": output_SoilList,
     }
-
+    
     return SoilListOutputData(
         soil_list_json=soil_list_json,
         rank_data_csv=soilIDRank_output_pd.to_csv(index=None, header=True),
@@ -1575,10 +1575,14 @@ def rank_soils(
     soil_df["top"] = [0] + soil_df["horizonDepth"].iloc[:-1].tolist()
 
     # Adjust the bottom depth based on bedrock depth
-    if bedrock is not None and soil_df["bottom"].iloc[-1] > bedrock:
-        last_valid_index = soil_df.loc[soil_df["bottom"] <= bedrock].index[-1]
-        soil_df = soil_df.loc[:last_valid_index]
-        soil_df["bottom"].iloc[-1] = bedrock
+    if bedrock is not None:
+        if bedrock is not soil_df.empty and soil_df["bottom"].iloc[-1] > bedrock:
+            # Find the last valid index where bottom depth is less than or equal to bedrock
+            last_valid_index = soil_df.loc[soil_df["bottom"] <= bedrock].index[-1]
+            # Filter the DataFrame up to the last valid index
+            soil_df = soil_df.loc[:last_valid_index].copy()
+            # Set the bottom depth of the last row to the bedrock depth
+            soil_df.at[last_valid_index, "bottom"] = bedrock
 
     # Drop the original horizonDepth column
     soil_df.drop(columns=["horizonDepth"], inplace=True)
@@ -1705,58 +1709,7 @@ def rank_soils(
             p_bottom_depth = pd.DataFrame([-999, "sample_pedon", 0]).T
         p_bottom_depth.columns = ["cokey", "compname", "bottom_depth"]
 
-    # Compute text completeness
-    p_sandpct_intpl = [x for x in p_sandpct_intpl if x is not None and x == x]
-    text_len = len(p_sandpct_intpl)
-    text_thresholds = [1, 10, 20, 50, 70, 100]
-    text_scores = [3, 8, 15, 25, 30, 35, 40]
-    text_comp = compute_soilid_data_completeness(text_len, text_thresholds, text_scores)
-
-    # Compute rf completeness
-    p_cfg_intpl = [x for x in p_cfg_intpl if x is not None and x == x]
-    rf_len = len(p_cfg_intpl)
-    rf_thresholds = [1, 10, 20, 50, 70, 100, 120]
-    rf_scores = [3, 6, 10, 15, 20, 23, 25]
-    rf_comp = compute_soilid_data_completeness(rf_len, rf_thresholds, rf_scores)
-
-    # Compute lab completeness
-    p_lab_intpl = [x for x in p_lab_intpl if x is not None and x == x]
-    lab_len = len(p_lab_intpl)
-    lab_thresholds = [1, 10, 20, 50, 70, 100, 120]
-    lab_scores = [1, 3, 6, 9, 12, 14, 15]
-    lab_comp = compute_soilid_data_completeness(lab_len, lab_thresholds, lab_scores)
-
-    # Compute slope and crack completeness
-    slope_comp = 15 if pSlope is not None else 0
-    crack_comp = 5 if cracks is not None else 0
-    if cracks is None:
-        cracks = False
-
-    # Compute total data completeness
-    data_completeness = slope_comp + crack_comp + text_comp + rf_comp + lab_comp
-
-    # Generate completeness message
-    missing_data = []
-    if text_comp < 40:
-        missing_data.append("soil texture")
-    if rf_comp < 25:
-        missing_data.append("soil rock fragments")
-    if lab_comp < 15:
-        missing_data.append("soil color")
-    if slope_comp < 15:
-        missing_data.append("slope")
-    if crack_comp < 5:
-        missing_data.append("soil cracking")
-
-    if missing_data:
-        missing_text = ", ".join(missing_data)
-        text_completeness = (
-            f"To improve predictions, complete data entry for: {missing_text} and re-sync."
-        )
-    else:
-        text_completeness = "SoilID data entry for this site is complete."
-
-    # -------------------------------------------------------------------------------------------
+     # -------------------------------------------------------------------------------------------
     # Load in component data from soilIDList
     soilIDRank_output_pd = pd.read_csv(io.StringIO(list_output_data.rank_data_csv))
     mucompdata_pd = pd.read_csv(io.StringIO(list_output_data.map_unit_component_data_csv))
@@ -2173,26 +2126,6 @@ def rank_soils(
         ["soilID_rank_final", "Score_Data_Loc"], ascending=[False, False]
     ).reset_index(drop=True)
 
-    # Uncomment code for testing output
-    """
-    # ----------------------------------------------------------------
-    # Data formatting for testing
-
-    # # Update LCC_I column
-    D_final_loc['LCC_I'] = np.where(
-        (D_final_loc['irrcapcl'] == 'nan') | (D_final_loc['irrcapscl'] == 'nan'),
-        None, D_final_loc['irrcapcl'] + "-" + D_final_loc['irrcapscl']
-    )
-
-    # Update LCC_NI column
-    D_final_loc['LCC_NI'] = np.where(
-        (D_final_loc['nirrcapcl'] == 'nan') | (D_final_loc['nirrcapscl'] == 'nan'),
-        None,
-        D_final_loc['nirrcapcl'] + "-" + D_final_loc['nirrcapscl']
-    )
-    # ----------------------------------------------------------------
-    """
-
     # Replace NaN values in the specified columns with 0.0
     D_final_loc[
         [
@@ -2243,20 +2176,11 @@ def rank_soils(
         "metadata": {
             "location": "us",
             "model": "v2",
-            "dataCompleteness": {"score": data_completeness, "text": text_completeness},
         },
         "soilRank": Rank,
     }
 
     return output_data
-
-
-# Generate data completeness score
-def compute_soilid_data_completeness(length, thresholds, scores):
-    for thres, score in zip(thresholds, scores):
-        if length <= thres:
-            return score
-    return scores[-1]
 
 
 def adjust_depth_interval(data, target_length=200):

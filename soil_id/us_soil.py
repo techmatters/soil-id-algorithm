@@ -1521,7 +1521,7 @@ def list_soils(lon, lat):
         "Soil Data Value": var_imp,
         "soilList": output_SoilList,
     }
-    
+
     return SoilListOutputData(
         soil_list_json=soil_list_json,
         rank_data_csv=soilIDRank_output_pd.to_csv(index=None, header=True),
@@ -1709,7 +1709,7 @@ def rank_soils(
             p_bottom_depth = pd.DataFrame([-999, "sample_pedon", 0]).T
         p_bottom_depth.columns = ["cokey", "compname", "bottom_depth"]
 
-     # -------------------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------------------------
     # Load in component data from soilIDList
     soilIDRank_output_pd = pd.read_csv(io.StringIO(list_output_data.rank_data_csv))
     mucompdata_pd = pd.read_csv(io.StringIO(list_output_data.map_unit_component_data_csv))

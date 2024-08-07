@@ -1360,10 +1360,10 @@ def list_soils(lon, lat):
     # Convert the list to a DataFrame and reset the index
     soilIDRank_output_pd = pd.concat(soilIDRank_output).reset_index(drop=True)
 
-    # Sort mucompdata_pd based on normalized distance score in descending order
-    mucompdata_cond_prob = mucompdata_pd.sort_values(
-        "distance_score_norm", ascending=False
-    ).reset_index(drop=True)
+    # Sort mucompdata_pd based on distance score in descending order
+    mucompdata_cond_prob = mucompdata_pd.sort_values("distance_score", ascending=False).reset_index(
+        drop=True
+    )
 
     # Generate the Rank_Loc column values
     rank_id = 1
@@ -1379,9 +1379,9 @@ def list_soils(lon, lat):
 
     # ------------------------------------------------------------
 
-    # Sort mucompdata_cond_prob by soilID_rank and distance_score_norm
+    # Sort mucompdata_cond_prob by soilID_rank and distance_score
     mucompdata_cond_prob = mucompdata_cond_prob.sort_values(
-        ["soilID_rank", "distance_score_norm"], ascending=[False, False]
+        ["soilID_rank", "distance_score"], ascending=[False, False]
     )
     mucomp_index = mucompdata_cond_prob.index
 
@@ -1396,7 +1396,7 @@ def list_soils(lon, lat):
         for site, comp, sc, rank in zip(
             mucompdata_cond_prob["compname"],
             mucompdata_cond_prob["compname_grp"],
-            mucompdata_cond_prob["distance_score_norm"].round(3),
+            mucompdata_cond_prob["distance_score"].round(3),
             mucompdata_cond_prob["Rank_Loc"],
         )
     ]
@@ -2013,7 +2013,7 @@ def rank_soils(
     # ----------------------------------------------------------------
     #Data output for testing
     D_final_loc = pd.merge(D_final, mucompdata_pd[['compname', 'cokey', 'mukey',
-    'distance_score', 'distance_score_norm', 'clay', 'taxorder', 'taxsubgrp', 'OSD_text_int',
+    'distance_score', 'clay', 'taxorder', 'taxsubgrp', 'OSD_text_int',
     'OSD_rfv_int', 'data_source', 'Rank_Loc', 'majcompflag', 'comppct_r', 'distance',
     'nirrcapcl', 'nirrcapscl', 'nirrcapunit', 'irrcapcl', 'irrcapscl', 'irrcapunit',
     'ecoclassid_update', 'ecoclassname']], on='compname', how='left')
@@ -2028,7 +2028,6 @@ def rank_soils(
                 "compname",
                 "cokey",
                 "distance_score",
-                "distance_score_norm",
                 "clay",
                 "taxorder",
                 "taxsubgrp",
@@ -2134,7 +2133,6 @@ def rank_soils(
             "D_site",
             "Score_Data_Loc",
             "distance_score",
-            "distance_score_norm",
         ]
     ] = D_final_loc[
         [
@@ -2143,7 +2141,6 @@ def rank_soils(
             "D_site",
             "Score_Data_Loc",
             "distance_score",
-            "distance_score_norm",
         ]
     ].fillna(
         0.0
@@ -2165,7 +2162,7 @@ def rank_soils(
                 "" if row.missing_status == "Location data only" else round(row.Score_Data, 3)
             ),
             "rank_data": "" if row.missing_status == "Location data only" else row.Rank_Data,
-            "score_loc": round(row.distance_score_norm, 3),
+            "score_loc": round(row.distance_score, 3),
             "rank_loc": row.Rank_Loc,
             "componentData": row.missing_status,
         }

@@ -2326,7 +2326,7 @@ def update_esd_data(df):
     groups with the same names, filling missing URLs and ecoclass IDs and names.
     """
     if "edit_url" not in df.columns:
-        df["edit_url"] = np.nan  # Initialize 'edit_url' as NaN if it does not exist
+        df["edit_url"] = ""  # Initialize 'edit_url' as "" if it does not exist
 
     # Replace group-specific data for missing ESD components
     df["compname_grp"] = df["compname"].str.replace(r"[0-9]+", "")

@@ -2072,15 +2072,17 @@ def rank_soils(
 
     # Identify vertisols based on cracks, clay texture, and taxonomic presence of "ert"
     # Compute the condition for rows that meet the criteria
-    condition = (
-        cracks
-        & (D_final_loc["clay"] == "Yes")
-        & (
-            D_final_loc["taxorder"].str.contains("ert", case=False)
-            | D_final_loc["taxsubgrp"].str.contains("ert", case=False)
+    if cracks is None or cracks is False:
+        condition = pd.Series([False] * len(D_final_loc))
+    else:
+        condition = (
+            (D_final_loc["clay"] == "Yes")
+            & (
+                D_final_loc["taxorder"].str.contains("ert", case=False)
+                | D_final_loc["taxsubgrp"].str.contains("ert", case=False)
+            )
+            & D_final_loc["soilID_rank_data"]
         )
-        & D_final_loc["soilID_rank_data"]
-    )
 
     # Sum the number of components that meet the criteria
     vert = condition.sum()

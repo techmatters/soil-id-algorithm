@@ -551,18 +551,6 @@ def list_soils(lon, lat):
                 ]
             ]
 
-            # # Rename
-            # OSDhorzdata_pd = OSDhorzdata_pd.rename(
-            #     columns={
-            #         "srgb_r": "r",
-            #         "srgb_g": "g",
-            #         "srgb_b": "b",
-            #         "cielab_l": "l",
-            #         "cielab_a": "a",
-            #         "cielab_b": "b",
-            #     }
-            # )
-
             OSDhorzdata_pd = pd.merge(mucompdata_pd_merge, OSDhorzdata_pd, on="series", how="left")
 
             # Set data types for specific columns

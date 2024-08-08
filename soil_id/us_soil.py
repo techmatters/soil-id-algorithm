@@ -375,14 +375,6 @@ def list_soils(lon, lat):
         comppct = pd.DataFrame([group_sorted.comppct_r.unique()] * len(sand_pct_intpl))
         cokey = pd.DataFrame([group_sorted.cokey.unique()] * len(sand_pct_intpl))
 
-        # Print shapes of DataFrames to debug
-        print(sand_pct_intpl[["c_sandpct_intpl_grp"]].shape)
-        print(clay_pct_intpl[["c_claypct_intpl_grp"]].shape)
-        print(cf_pct_intpl[["c_cfpct_intpl_grp"]].shape)
-        print(compname.shape)
-        print(cokey.shape)
-        print(comppct.shape)
-
         getProfile_cokey_temp2 = pd.concat(
             [
                 sand_pct_intpl[["c_sandpct_intpl_grp"]],

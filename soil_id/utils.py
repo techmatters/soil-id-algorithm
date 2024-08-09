@@ -12,7 +12,6 @@ import geopandas as gpd
 import numpy as np
 import pandas as pd
 import shapely
-import skimage
 from numpy.linalg import cholesky
 from osgeo import ogr
 from rosetta import SoilData, rosetta
@@ -47,8 +46,8 @@ def extract_WISE_data(lon, lat, file_path, buffer_size=0.5):
     # Filter data to consider unique map units
     mu_geo = hwsd[["MUGLB_NEW", "geometry"]].drop_duplicates(subset="MUGLB_NEW")
     mu_id_dist = calculate_distances_and_intersections(mu_geo, point_geo)
-    mu_id_dist.loc[mu_id_dist["pt_intersect"], "distance_m"] = 0
-    mu_id_dist["distance"] = mu_id_dist.groupby("MUGLB_NEW")["distance_m"].transform(min)
+    mu_id_dist.loc[mu_id_dist["pt_intersect"], "dist_meters"] = 0
+    mu_id_dist["distance"] = mu_id_dist.groupby("MUGLB_NEW")["dist_meters"].transform(min)
     mu_id_dist = mu_id_dist.nsmallest(2, "distance")
 
     hwsd = hwsd.drop(columns=["geometry"])
@@ -1263,7 +1262,7 @@ def calculate_distances_and_intersections(mu_geo, point):
     intersects = mu_geo_utm["geometry"].intersects(point_utm)
 
     return pd.DataFrame(
-        {"mukey": mu_geo_utm["MUKEY"], "distance_m": distances, "pt_intersect": intersects}
+        {"mukey": mu_geo_utm["MUKEY"], "dist_meters": distances, "pt_intersect": intersects}
     )
 
 
@@ -1387,9 +1386,9 @@ def extract_mucompdata_STATSGO(lon, lat):
 
     mu_geo = statsgo_mukey[["MUKEY", "geometry"]].drop_duplicates(subset=["geometry"])
     mu_id_dist = calculate_distances_and_intersections(mu_geo, point)
-    mu_id_dist.loc[mu_id_dist["pt_intersect"], "distance_m"] = 0
-    mu_id_dist["distance_m"] = mu_id_dist.groupby("mukey")["distance_m"].transform("min")
-    mukey_dist_final = mu_id_dist.drop_duplicates("mukey").sort_values("distance_m").head(2)
+    mu_id_dist.loc[mu_id_dist["pt_intersect"], "dist_meters"] = 0
+    mu_id_dist["dist_meters"] = mu_id_dist.groupby("mukey")["dist_meters"].transform("min")
+    mukey_dist_final = mu_id_dist.drop_duplicates("mukey").sort_values("dist_meters").head(2)
 
     mukey_list = mukey_dist_final["mukey"].tolist()
     if not mukey_list:
@@ -1410,10 +1409,10 @@ def extract_mucompdata_STATSGO(lon, lat):
         mucompdata = mucompdata_out["Table"].iloc[0]
         mucompdata_pd = pd.DataFrame(mucompdata[1:], columns=mucompdata[0])
         mucompdata_pd = pd.merge(mucompdata_pd, mukey_dist_final, on="mukey").sort_values(
-            ["distance_m", "cokey"]
+            ["dist_meters", "cokey"]
         )
 
-        mucompdata_pd = mucompdata_pd[mucompdata_pd["distance_m"] <= 5000]
+        mucompdata_pd = mucompdata_pd[mucompdata_pd["dist_meters"] <= 5000]
 
         if mucompdata_pd.empty:
             logging.warning(f"Soil ID not available in this area: {lon}.{lat}")
@@ -1443,7 +1442,7 @@ def process_site_data(mucompdata_pd):
 
     mucompdata_pd = mucompdata_pd.rename(
         columns={
-            "distance_m": "distance",
+            "dist_meters": "distance",
         }
     )
 
@@ -1789,255 +1788,6 @@ def pedon_color(lab_Color, horizonDepth):
         return np.nan
     else:
         return [pedon_l_mean, pedon_a_mean, pedon_b_mean]
-
-
-def validate_data(data):
-    """
-    Validates the data based on given conditions.
-    """
-    if data.top.isnull().any() or data.bottom.isnull().any():
-        return False
-    if data.r.isnull().all() or data.g.isnull().all() or data.b.isnull().all():
-        return False
-    if data.top.iloc[0] != 0:
-        return False
-    return True
-
-
-def correct_depth_discrepancies(data):
-    """
-    Corrects depth discrepancies by adding layers when needed.
-    """
-    layers_to_add = []
-    for i in range(len(data.top) - 1):
-        if data.top.iloc[i + 1] > data.bottom.iloc[i]:
-            layer_add = pd.DataFrame(
-                {
-                    "top": data.bottom.iloc[i],
-                    "bottom": data.top.iloc[i + 1],
-                    "r": np.nan,
-                    "g": np.nan,
-                    "b": np.nan,
-                },
-                index=[i + 0.5],
-            )
-            layers_to_add.append(layer_add)
-
-    if layers_to_add:
-        data = pd.concat([data] + layers_to_add).sort_index().reset_index(drop=True)
-
-    return data
-
-
-def convert_rgb_to_lab(row):
-    """
-    Converts RGB values to LAB.
-    """
-    if pd.isnull(row["r"]) or pd.isnull(row["g"]) or pd.isnull(row["b"]):
-        return np.nan, np.nan, np.nan
-
-    result = skimage.color.rgb2lab([row["r"], row["g"], row["b"]])
-
-    return result
-
-
-def getProfileLAB(data_osd, color_ref):
-    """
-    The function processes the given data_osd DataFrame and computes LAB values for soil profiles.
-    """
-    # Convert the specific columns to numeric
-    data_osd[["top", "bottom", "r", "g", "b"]] = data_osd[["top", "bottom", "r", "g", "b"]].apply(
-        pd.to_numeric
-    )
-
-    if not validate_data(data_osd):
-        return pd.DataFrame(np.nan, index=np.arange(200), columns=["L", "A", "B"])
-
-    data_osd = correct_depth_discrepancies(data_osd)
-
-    data_osd["L"], data_osd["A"], data_osd["B"] = zip(
-        *data_osd.apply(lambda row: convert_rgb_to_lab(row), axis=1)
-    )
-
-    l_intpl, a_intpl, b_intpl = [], [], []
-
-    for index, row in data_osd.iterrows():
-        l_intpl.extend([row["L"]] * (int(row["bottom"]) - int(row["top"])))
-        a_intpl.extend([row["A"]] * (int(row["bottom"]) - int(row["top"])))
-        b_intpl.extend([row["B"]] * (int(row["bottom"]) - int(row["top"])))
-
-    lab_intpl = pd.DataFrame({"L": l_intpl, "A": a_intpl, "B": b_intpl}).head(200)
-    return lab_intpl
-
-
-def calculate_deltaE2000(LAB1, LAB2):
-    """
-    Computes the Delta E 2000 value between two LAB color values.
-
-    Args:
-        LAB1 (list): First LAB color value.
-        LAB2 (list): Second LAB color value.
-
-    Returns:
-        float: Delta E 2000 value.
-    """
-
-    L1star, a1star, b1star = LAB1
-    L2star, a2star, b2star = LAB2
-
-    C1abstar = math.sqrt(a1star**2 + b1star**2)
-    C2abstar = math.sqrt(a2star**2 + b2star**2)
-    Cabstarbar = (C1abstar + C2abstar) / 2.0
-
-    G = 0.5 * (1.0 - math.sqrt(Cabstarbar**7 / (Cabstarbar**7 + 25**7)))
-
-    a1prim = (1.0 + G) * a1star
-    a2prim = (1.0 + G) * a2star
-
-    C1prim = math.sqrt(a1prim**2 + b1star**2)
-    C2prim = math.sqrt(a2prim**2 + b2star**2)
-
-    h1prim = math.atan2(b1star, a1prim) if (b1star != 0 or a1prim != 0) else 0
-    h2prim = math.atan2(b2star, a2prim) if (b2star != 0 or a2prim != 0) else 0
-
-    deltaLprim = L2star - L1star
-    deltaCprim = C2prim - C1prim
-
-    if (C1prim * C2prim) == 0:
-        deltahprim = 0
-    elif abs(h2prim - h1prim) <= 180:
-        deltahprim = h2prim - h1prim
-    elif abs(h2prim - h1prim) > 180 and (h2prim - h1prim) < 360:
-        deltahprim = h2prim - h1prim - 360.0
-    else:
-        deltahprim = h2prim - h1prim + 360.0
-
-    deltaHprim = 2 * math.sqrt(C1prim * C2prim) * math.sin(deltahprim / 2.0)
-
-    Lprimbar = (L1star + L2star) / 2.0
-    Cprimbar = (C1prim + C2prim) / 2.0
-
-    if abs(h1prim - h2prim) <= 180:
-        hprimbar = (h1prim + h2prim) / 2.0
-    elif abs(h1prim - h2prim) > 180 and (h1prim + h2prim) < 360:
-        hprimbar = (h1prim + h2prim + 360) / 2.0
-    else:
-        hprimbar = (h1prim + h2prim - 360) / 2.0
-
-    T = (
-        1.0
-        - 0.17 * math.cos(hprimbar - 30.0)
-        + 0.24 * math.cos(2.0 * hprimbar)
-        + 0.32 * math.cos(3.0 * hprimbar + 6.0)
-        - 0.20 * math.cos(4.0 * hprimbar - 63.0)
-    )
-
-    deltatheta = 30.0 * math.exp(-(math.pow((hprimbar - 275.0) / 25.0, 2.0)))
-    RC = 2.0 * math.sqrt(Cprimbar**7 / (Cprimbar**7 + 25**7))
-    SL = 1.0 + (0.015 * (Lprimbar - 50.0) ** 2) / math.sqrt(20.0 + (Lprimbar - 50.0) ** 2)
-    SC = 1.0 + 0.045 * Cprimbar
-    SH = 1.0 + 0.015 * Cprimbar * T
-    RT = -math.sin(2.0 * deltatheta) * RC
-
-    kL, kC, kH = 1.0, 1.0, 1.0
-    term1 = (deltaLprim / (kL * SL)) ** 2
-    term2 = (deltaCprim / (kC * SC)) ** 2
-    term3 = (deltaHprim / (kH * SH)) ** 2
-    term4 = RT * (deltaCprim / (kC * SC)) * (deltaHprim / (kH * SH))
-
-    return math.sqrt(term1 + term2 + term3 + term4)
-
-
-# Not currently implemented for US SoilID
-def interpolate_color_values(top, bottom, color_values):
-    """
-    Interpolates the color values based on depth.
-
-    Args:
-        top (pd.Series): Top depths.
-        bottom (pd.Series): Bottom depths.
-        color_values (pd.Series): Corresponding color values.
-
-    Returns:
-        np.array: Interpolated color values for each depth.
-    """
-
-    if top[0] != 0:
-        raise ValueError("The top depth must start from 0.")
-
-    MisHrz = any([top[i + 1] != bottom[i] for i in range(len(top) - 1)])
-    if MisHrz:
-        raise ValueError("There is a mismatch in horizon depths.")
-
-    color_intpl = []
-    for i, color_val in enumerate(color_values):
-        color_intpl.extend([color_val] * (bottom[i] - top[i]))
-
-    return np.array(color_intpl)
-
-
-# Not currently implemented for US SoilID
-def getColor_deltaE2000_OSD_pedon(data_osd, data_pedon):
-    """
-    Calculate the Delta E 2000 value between averaged LAB values of OSD and pedon samples.
-
-    The function interpolates the color values based on depth for both OSD and pedon samples.
-    It then computes the average LAB color value for the 31-37 cm depth range.
-    Finally, it calculates the Delta E 2000 value between the two averaged LAB values.
-
-    Args:
-        data_osd (object): Contains depth and RGB data for the OSD sample.
-            - top: List of top depths.
-            - bottom: List of bottom depths.
-            - r, g, b: Lists of RGB color values corresponding to each depth.
-
-        data_pedon (object): Contains depth and LAB data for the pedon sample.
-            - [0]: List of bottom depths.
-            - [1]: DataFrame with LAB color values corresponding to each depth.
-
-    Returns:
-        float: Delta E 2000 value between the averaged LAB values of OSD and pedon.
-        Returns NaN if the data is not adequate for calculations.
-    """
-    # Extract relevant data for OSD and pedon
-    top, bottom, r, g, b = (
-        data_osd.top,
-        data_osd.bottom,
-        data_osd.r,
-        data_osd.g,
-        data_osd.b,
-    )
-    ref_top, ref_bottom, ref_lab = (
-        [0] + data_pedon[0][:-1],
-        data_pedon[0],
-        data_pedon[1],
-    )
-
-    # Convert RGB values to LAB for OSD
-    osd_colors_rgb = interpolate_color_values(top, bottom, list(zip(r, g, b)))
-    osd_colors_lab = [skimage.color.rgb2lab([[color_val]])[0][0] for color_val in osd_colors_rgb]
-
-    # Calculate average LAB for OSD at 31-37 cm depth
-    osd_avg_lab = np.mean(osd_colors_lab[31:37], axis=0) if len(osd_colors_lab) > 31 else np.nan
-    if np.isnan(osd_avg_lab).any():
-        return np.nan
-
-    # Convert depth values to LAB for pedon
-    pedon_colors_lab = interpolate_color_values(
-        ref_top,
-        ref_bottom,
-        list(zip(ref_lab.iloc[:, 0], ref_lab.iloc[:, 1], ref_lab.iloc[:, 2])),
-    )
-
-    # Calculate average LAB for pedon at 31-37 cm depth
-    pedon_avg_lab = (
-        np.mean(pedon_colors_lab[31:37], axis=0) if len(pedon_colors_lab) > 31 else np.nan
-    )
-    if np.isnan(pedon_avg_lab).any():
-        return np.nan
-
-    # Return the Delta E 2000 value between the averaged LAB values
-    return calculate_deltaE2000(osd_avg_lab, pedon_avg_lab)
 
 
 def extract_values(obj, key):
@@ -2575,8 +2325,8 @@ def update_esd_data(df):
     Processes the given DataFrame by updating missing ESD data based on component
     groups with the same names, filling missing URLs and ecoclass IDs and names.
     """
-    if "esd_url" not in df.columns:
-        df["esd_url"] = np.nan  # Initialize 'esd_url' as NaN if it does not exist
+    if "edit_url" not in df.columns:
+        df["edit_url"] = ""  # Initialize 'edit_url' as "" if it does not exist
 
     # Replace group-specific data for missing ESD components
     df["compname_grp"] = df["compname"].str.replace(r"[0-9]+", "")
@@ -2602,8 +2352,8 @@ def update_esd_data(df):
             group.loc[:, "ecoclassname"] = group["ecoclassname"].fillna(unique_ids[0])
 
         # Handle URLs separately as they might not exist
-        urls = group["esd_url"].dropna().unique()
-        group["esd_url"] = group["esd_url"].fillna(urls[0] if urls.size > 0 else "")
+        urls = group["edit_url"].dropna().unique()
+        group["edit_url"] = group["edit_url"].fillna(urls[0] if urls.size > 0 else "")
         updated_groups.append(group)
 
     return pd.concat(updated_groups, ignore_index=True)

@@ -13,8 +13,8 @@ from pandas import json_normalize
 # local libraries
 import soil_id.config
 
-from .color import lab2munsell, munsell2rgb
-from .services import get_esd_data, get_soil_series_data, get_soilweb_data, sda_return
+from .color import getProfileLAB, lab2munsell, munsell2rgb
+from .services import get_soil_series_data, get_soilweb_data, sda_return
 from .soil_sim import soil_sim
 from .utils import (
     aggregate_data,
@@ -27,7 +27,6 @@ from .utils import (
     getClay,
     getOSDCF,
     getProfile,
-    getProfileLAB,
     getSand,
     getTexture,
     gower_distances,
@@ -66,7 +65,7 @@ class SoilListOutputData:
 def list_soils(lon, lat):
     # Load in LAB to Munsell conversion look-up table
     color_ref = pd.read_csv(soil_id.config.MUNSELL_RGB_LAB_PATH)
-    LAB_ref = color_ref[["L", "A", "B"]]
+    LAB_ref = color_ref[["cielab_l", "cielab_a", "cielab_b"]]
     munsell_ref = color_ref[["hue", "value", "chroma"]]
 
     out = get_soilweb_data(lon, lat)
@@ -228,6 +227,8 @@ def list_soils(lon, lat):
     muhorzdata_pd.drop("Comp_Rank", axis=1, inplace=True)
     muhorzdata_pd.reset_index(drop=True, inplace=True)
 
+    mucompdata_pd = mucompdata_pd.drop_duplicates().reset_index(drop=True)
+
     # Update component names in mucompdata_pd to handle duplicates
     component_names = mucompdata_pd["compname"].tolist()
     name_counts = collections.Counter(component_names)
@@ -373,6 +374,7 @@ def list_soils(lon, lat):
         compname = pd.DataFrame([group_sorted.compname.unique()] * len(sand_pct_intpl))
         comppct = pd.DataFrame([group_sorted.comppct_r.unique()] * len(sand_pct_intpl))
         cokey = pd.DataFrame([group_sorted.cokey.unique()] * len(sand_pct_intpl))
+
         getProfile_cokey_temp2 = pd.concat(
             [
                 sand_pct_intpl[["c_sandpct_intpl_grp"]],
@@ -384,6 +386,7 @@ def list_soils(lon, lat):
             ],
             axis=1,
         )
+
         getProfile_cokey_temp2.columns = [
             "sandpct_intpl",
             "claypct_intpl",
@@ -471,7 +474,9 @@ def list_soils(lon, lat):
                             RGB = munsell2rgb(color_ref, munsell_ref, munsell)
                             munsell_RGB.append(RGB)
 
-                    munsell_RGB_df = pd.DataFrame(munsell_RGB, columns=["r", "g", "b"])
+                    munsell_RGB_df = pd.DataFrame(
+                        munsell_RGB, columns=["srgb_r", "srgb_g", "srgb_b"]
+                    )
                     OSDhorzdata_pd = pd.concat([OSDhorzdata_pd, munsell_RGB_df], axis=1)
 
                     # Merge with another dataframe
@@ -537,11 +542,15 @@ def list_soils(lon, lat):
                     "matrix_dry_color_hue",
                     "matrix_dry_color_value",
                     "matrix_dry_color_chroma",
-                    "r",
-                    "g",
-                    "b",
+                    "srgb_r",
+                    "srgb_g",
+                    "srgb_b",
+                    "cielab_l",
+                    "cielab_a",
+                    "cielab_b",
                 ]
             ]
+
             OSDhorzdata_pd = pd.merge(mucompdata_pd_merge, OSDhorzdata_pd, on="series", how="left")
 
             # Set data types for specific columns
@@ -1105,8 +1114,8 @@ def list_soils(lon, lat):
             ESDcompdata_pd = None
         else:
             ESD = pd.json_normalize(out["ESD"])
-            ESD[["cokey", "ecoclassid", "ecoclassname"]] = ESD[
-                ["cokey", "ecoclassid", "ecoclassname"]
+            ESD[["cokey", "ecoclassid", "ecoclassname", "edit_url"]] = ESD[
+                ["cokey", "ecoclassid", "ecoclassname", "edit_url"]
             ].astype(str)
 
             # Check if any cokey in ESD matches with mucompdata_pd
@@ -1138,6 +1147,14 @@ def list_soils(lon, lat):
             ESDcompdata_sda[["cokey", "ecoclassid", "ecoclassname"]] = ESDcompdata_sda[
                 ["cokey", "ecoclassid", "ecoclassname"]
             ].astype(str)
+
+            # Create the "edit_url" column
+            ESDcompdata_sda["edit_url"] = (
+                "https://edit.jornada.nmsu.edu/catalogs/esd/"
+                + ESDcompdata_sda["ecoclassid"].str[1:5]
+                + "/"
+                + ESDcompdata_sda["ecoclassid"]
+            )
 
             # Check if any cokey in ESDcompdata_sda matches with mucompdata_pd
             if any(ESDcompdata_sda["cokey"].isin(mucompdata_pd["cokey"])):
@@ -1173,14 +1190,14 @@ def list_soils(lon, lat):
                 "ESD": {
                     "ecoclassid": group["ecoclassid"].tolist(),
                     "ecoclassname": group["ecoclassname"].tolist(),
-                    "esd_url": group["esd_url"].tolist(),
+                    "edit_url": group["edit_url"].tolist(),
                 }
             }
             esd_comp_list.append(esd_data)
     else:
         # Fill the list with empty data if ESDcompdata_pd is not available
         esd_comp_list = [
-            {"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}}
+            {"ESD": {"ecoclassid": "", "ecoclassname": "", "edit_url": ""}}
             for _ in range(len(mucompdata_pd))
         ]
 
@@ -1201,8 +1218,7 @@ def list_soils(lon, lat):
             ESD_geo.extend(ecositeID)
             ESD_geo = [ESD_geo for ESD_geo in ESD_geo if str(ESD_geo) != "nan"]
             ESD_geo = ESD_geo[0][1:5]
-            print(ecositeID, ESD_geo)
-            ESDcompdata_pd = get_esd_data(ecositeID, ESD_geo, ESDcompdata_pd)
+
             # Assign missing ESD for components that have other instances with an assigned ESD
             if ESDcompdata_pd is not None:
                 if (
@@ -1244,14 +1260,14 @@ def list_soils(lon, lat):
                                     len(comp_grps_temp),
                                 )
                             ).values
-                            url = comp_grps_temp.esd_url.unique().tolist()
+                            url = comp_grps_temp.edit_url.unique().tolist()
                             url = [x for x in url if x != ""]
                             if not url:
-                                comp_grps_temp["esd_url"] = pd.Series(
+                                comp_grps_temp["edit_url"] = pd.Series(
                                     np.tile("", len(comp_grps_temp))
                                 ).values
                             else:
-                                comp_grps_temp["esd_url"] = pd.Series(
+                                comp_grps_temp["edit_url"] = pd.Series(
                                     np.tile(url, len(comp_grps_temp))
                                 ).values
                             ecoList_out.append(comp_grps_temp)
@@ -1265,7 +1281,7 @@ def list_soils(lon, lat):
                 for i in range(len(ESDcompdata_group_cokey)):
                     if ESDcompdata_group_cokey[i]["ecoclassname"].isnull().values.any():
                         esd_comp_list.append(
-                            {"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}}
+                            {"ESD": {"ecoclassid": "", "ecoclassname": "", "edit_url": ""}}
                         )
                     else:
                         esd_comp_list.append(
@@ -1275,18 +1291,20 @@ def list_soils(lon, lat):
                                     "ecoclassname": ESDcompdata_group_cokey[i][
                                         "ecoclassname"
                                     ].tolist(),
-                                    "esd_url": ESDcompdata_group_cokey[i]["esd_url"].tolist(),
+                                    "edit_url": ESDcompdata_group_cokey[i]["edit_url"].tolist(),
                                 }
                             }
                         )
             else:
                 for i in range(len(mucompdata_pd)):
                     esd_comp_list.append(
-                        {"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}}
+                        {"ESD": {"ecoclassid": "", "ecoclassname": "", "edit_url": ""}}
                     )
         else:
             for i in range(len(mucompdata_pd)):
-                esd_comp_list.append({"ESD": {"ecoclassid": "", "ecoclassname": "", "esd_url": ""}})
+                esd_comp_list.append(
+                    {"ESD": {"ecoclassid": "", "ecoclassname": "", "edit_url": ""}}
+                )
 
         # Add ecosite data to mucompdata_pd for testing output. In cases with multiple ESDs per
         # component, only take the first.
@@ -1537,10 +1555,14 @@ def rank_soils(
     soil_df["top"] = [0] + soil_df["horizonDepth"].iloc[:-1].tolist()
 
     # Adjust the bottom depth based on bedrock depth
-    if bedrock is not None and soil_df["bottom"].iloc[-1] > bedrock:
-        last_valid_index = soil_df.loc[soil_df["bottom"] <= bedrock].index[-1]
-        soil_df = soil_df.loc[:last_valid_index]
-        soil_df["bottom"].iloc[-1] = bedrock
+    if bedrock is not None:
+        if bedrock is not soil_df.empty and soil_df["bottom"].iloc[-1] > bedrock:
+            # Find the last valid index where bottom depth is less than or equal to bedrock
+            last_valid_index = soil_df.loc[soil_df["bottom"] <= bedrock].index[-1]
+            # Filter the DataFrame up to the last valid index
+            soil_df = soil_df.loc[:last_valid_index].copy()
+            # Set the bottom depth of the last row to the bedrock depth
+            soil_df.at[last_valid_index, "bottom"] = bedrock
 
     # Drop the original horizonDepth column
     soil_df.drop(columns=["horizonDepth"], inplace=True)
@@ -1666,57 +1688,6 @@ def rank_soils(
         else:
             p_bottom_depth = pd.DataFrame([-999, "sample_pedon", 0]).T
         p_bottom_depth.columns = ["cokey", "compname", "bottom_depth"]
-
-    # Compute text completeness
-    p_sandpct_intpl = [x for x in p_sandpct_intpl if x is not None and x == x]
-    text_len = len(p_sandpct_intpl)
-    text_thresholds = [1, 10, 20, 50, 70, 100]
-    text_scores = [3, 8, 15, 25, 30, 35, 40]
-    text_comp = compute_soilid_data_completeness(text_len, text_thresholds, text_scores)
-
-    # Compute rf completeness
-    p_cfg_intpl = [x for x in p_cfg_intpl if x is not None and x == x]
-    rf_len = len(p_cfg_intpl)
-    rf_thresholds = [1, 10, 20, 50, 70, 100, 120]
-    rf_scores = [3, 6, 10, 15, 20, 23, 25]
-    rf_comp = compute_soilid_data_completeness(rf_len, rf_thresholds, rf_scores)
-
-    # Compute lab completeness
-    p_lab_intpl = [x for x in p_lab_intpl if x is not None and x == x]
-    lab_len = len(p_lab_intpl)
-    lab_thresholds = [1, 10, 20, 50, 70, 100, 120]
-    lab_scores = [1, 3, 6, 9, 12, 14, 15]
-    lab_comp = compute_soilid_data_completeness(lab_len, lab_thresholds, lab_scores)
-
-    # Compute slope and crack completeness
-    slope_comp = 15 if pSlope is not None else 0
-    crack_comp = 5 if cracks is not None else 0
-    if cracks is None:
-        cracks = False
-
-    # Compute total data completeness
-    data_completeness = slope_comp + crack_comp + text_comp + rf_comp + lab_comp
-
-    # Generate completeness message
-    missing_data = []
-    if text_comp < 40:
-        missing_data.append("soil texture")
-    if rf_comp < 25:
-        missing_data.append("soil rock fragments")
-    if lab_comp < 15:
-        missing_data.append("soil color")
-    if slope_comp < 15:
-        missing_data.append("slope")
-    if crack_comp < 5:
-        missing_data.append("soil cracking")
-
-    if missing_data:
-        missing_text = ", ".join(missing_data)
-        text_completeness = (
-            f"To improve predictions, complete data entry for: {missing_text} and re-sync."
-        )
-    else:
-        text_completeness = "SoilID data entry for this site is complete."
 
     # -------------------------------------------------------------------------------------------
     # Load in component data from soilIDList
@@ -2081,15 +2052,17 @@ def rank_soils(
 
     # Identify vertisols based on cracks, clay texture, and taxonomic presence of "ert"
     # Compute the condition for rows that meet the criteria
-    condition = (
-        cracks
-        & (D_final_loc["clay"] == "Yes")
-        & (
-            D_final_loc["taxorder"].str.contains("ert", case=False)
-            | D_final_loc["taxsubgrp"].str.contains("ert", case=False)
+    if cracks is None or cracks is False:
+        condition = pd.Series([False] * len(D_final_loc))
+    else:
+        condition = (
+            (D_final_loc["clay"] == "Yes")
+            & (
+                D_final_loc["taxorder"].str.contains("ert", case=False)
+                | D_final_loc["taxsubgrp"].str.contains("ert", case=False)
+            )
+            & D_final_loc["soilID_rank_data"]
         )
-        & D_final_loc["soilID_rank_data"]
-    )
 
     # Sum the number of components that meet the criteria
     vert = condition.sum()
@@ -2133,26 +2106,6 @@ def rank_soils(
     D_final_loc = D_final_loc.sort_values(
         ["soilID_rank_final", "Score_Data_Loc"], ascending=[False, False]
     ).reset_index(drop=True)
-
-    # Uncomment code for testing output
-    """
-    # ----------------------------------------------------------------
-    # Data formatting for testing
-
-    # # Update LCC_I column
-    D_final_loc['LCC_I'] = np.where(
-        (D_final_loc['irrcapcl'] == 'nan') | (D_final_loc['irrcapscl'] == 'nan'),
-        None, D_final_loc['irrcapcl'] + "-" + D_final_loc['irrcapscl']
-    )
-
-    # Update LCC_NI column
-    D_final_loc['LCC_NI'] = np.where(
-        (D_final_loc['nirrcapcl'] == 'nan') | (D_final_loc['nirrcapscl'] == 'nan'),
-        None,
-        D_final_loc['nirrcapcl'] + "-" + D_final_loc['nirrcapscl']
-    )
-    # ----------------------------------------------------------------
-    """
 
     # Replace NaN values in the specified columns with 0.0
     D_final_loc[
@@ -2202,20 +2155,11 @@ def rank_soils(
         "metadata": {
             "location": "us",
             "model": "v2",
-            "dataCompleteness": {"score": data_completeness, "text": text_completeness},
         },
         "soilRank": Rank,
     }
 
     return output_data
-
-
-# Generate data completeness score
-def compute_soilid_data_completeness(length, thresholds, scores):
-    for thres, score in zip(thresholds, scores):
-        if length <= thres:
-            return score
-    return scores[-1]
 
 
 def adjust_depth_interval(data, target_length=200):
@@ -2301,9 +2245,9 @@ def create_new_layer_osd(row, top, bottom):
     ]:
         new_row[col] = None
     for col in [
-        "r",
-        "g",
-        "b",
+        "srgb_r",
+        "srgb_g",
+        "srgb_b",
         "total_frag_volume",
         "claytotal_r",
         "sandtotal_r",

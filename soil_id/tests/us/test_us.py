@@ -52,11 +52,11 @@ def test_soil_location():
 
 
 def test_empty_rank():
-    list_result = list_soils(test_locations[0]["lon"], test_locations[0]["lat"])
+    SoilListOutputData = list_soils(test_locations[0]["lon"], test_locations[0]["lat"])
     rank_soils(
-        lon=test_locations[0]["lon"],
-        lat=test_locations[0]["lat"],
-        list_output_data=list_result,
+        test_locations[0]["lon"],
+        test_locations[0]["lat"],
+        SoilListOutputData,
         soilHorizon=[],
         horizonDepth=[],
         rfvDepth=[],

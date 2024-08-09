@@ -1,5 +1,5 @@
 composition_stats
-gdal==3.8.4
+gdal==3.9.0
 geopandas==0.14.4
 numpy
 pandas

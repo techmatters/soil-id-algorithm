@@ -1,4 +1,4 @@
-# soil-id-algorithm
+# Soil ID Algorithm
 
 ## explanation of algorithm
 
@@ -45,3 +45,11 @@ Input: a specific point in lat/lon, and a set of depth intervals.
 ### SSURGO/STATSGO data:
 
 • https://nrcs.app.box.com/v/soils/folder/17971946225
+
+### Acknowledgements
+
+* Beaudette, D., Roudier, P., Brown, A. (2023). [aqp: Algorithms for Quantitative Pedology](https://CRAN.R-project.org/package=aqp). R package version 2.0.
+ 
+* Beaudette, D.E., Roudier, P., O'Geen, A.T. [Algorithms for quantitative pedology: A toolkit for soil scientists, Computers & Geosciences](http://dx.doi.org/10.1016/j.cageo.2012.10.020), Volume 52, March 2013, Pages 258-268, ISSN 0098-3004.
+ 
+* soilDB: Beaudette, D., Skovlin, J., Roecker, S., Brown, A. (2024). [soilDB: Soil Database Interface](https://CRAN.R-project.org/package=soilDB). R package version 2.8.3.

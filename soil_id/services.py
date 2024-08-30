@@ -163,7 +163,7 @@ def get_soilweb_data(lon, lat):
         result = response.json()
 
     except requests.ConnectionError as err:
-        logging.error(f"SoilWeb: failed to connect:  {err}")
+        logging.error(f"SoilWeb: failed to connect: {err}")
     except requests.Timeout:
         logging.error("SoilWeb: timed out")
     except requests.RequestException as err:

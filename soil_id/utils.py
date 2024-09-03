@@ -7,7 +7,6 @@ import math
 import re
 
 # Third-party libraries
-import fiona
 import geopandas as gpd
 import numpy as np
 import pandas as pd
@@ -1280,8 +1279,8 @@ def load_statsgo_data(box):
         return gpd.read_file(
             soil_id.config.STATSGO_PATH, bbox=box.bounds, mode="r", driver="ESRI Shapefile"
         )
-    except fiona.errors.DriverError as e:
-        logging.error(f"fiona driver error: {e}")
+    except Exception as e:
+        logging.error(f"STATSGO error: {e}")
         return None
 
 

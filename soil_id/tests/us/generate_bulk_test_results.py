@@ -5,6 +5,7 @@ import time
 import traceback
 
 import pandas
+
 from soil_id.us_soil import list_soils, rank_soils
 
 test_data_df = pandas.read_csv(
@@ -45,7 +46,7 @@ with open(result_file_name, "w") as result_file:
                 bedrock=None,
                 cracks=None,
             )
-        except:
+        except Exception:
             result_record["traceback"] = traceback.format_exc()
         result_record["execution_time_s"] = time.perf_counter() - start_time
 

@@ -58,8 +58,8 @@ There is a small suite of integration tests which can be run with the `make test
 
 There is a large suite of integration tests which takes many hours to run. It comes in the format of two scripts:
 
--   Run `python -m soil_id.tests.us.generate_bulk_test_results` to run the algorithm over a collection of 3000 soil pits, which will accumulate the results in a log file.
--   Run `python -m soil_id.tests.us.process_bulk_test_results $LOG_FILE_PATH` to view statistics calculated over that log file.
+-   Run `make generate_bulk_test_results` to run the algorithm over a collection of 3000 soil pits, which will accumulate the results in a log file.
+-   Run `RESULTS_FILE=$RESULTS_FILE make process_bulk_test_results` to view statistics calculated over that log file.
 
 ## Acknowledgements
 

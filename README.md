@@ -32,6 +32,8 @@ Input: a specific point in lat/lon, and a set of depth intervals.
 7. Query the local database for the component horizons.
 8. Return the individual probabilities of data at each horizon based on the weighted sum of each component's data at each horizon.
 
+## Resources
+
 ### SoilID Project Box Folder
 
 • This folder contains the data schema and processed soil database tables that are ingested into the mySQL database.
@@ -46,7 +48,20 @@ Input: a specific point in lat/lon, and a set of depth intervals.
 
 • https://nrcs.app.box.com/v/soils/folder/17971946225
 
-### Acknowledgements
+## Testing
+
+### Regular tests
+
+There is a small suite of integration tests which can be run with the `make test` command, and gets run regularly by CI.
+
+### Bulk test
+
+There is a large suite of integration tests which takes many hours to run. It comes in the format of two scripts:
+
+-   Run `make generate_bulk_test_results` to run the algorithm over a collection of 3000 soil pits, which will accumulate the results in a log file.
+-   Run `RESULTS_FILE=$RESULTS_FILE make process_bulk_test_results` to view statistics calculated over that log file.
+
+## Acknowledgements
 
 * Beaudette, D., Roudier, P., Brown, A. (2023). [aqp: Algorithms for Quantitative Pedology](https://CRAN.R-project.org/package=aqp). R package version 2.0.
  

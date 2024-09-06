@@ -15,6 +15,11 @@ test_locations = [
     {"lon": -69.28246582, "lat": 47.21392200},
     {"lon": -158.4018264, "lat": 60.42282639},
     {"lon": -121.8166, "lat": 48.6956},
+    {"lat": 34.92816, "lon": -114.80764},  # NOTCOM
+    {"lat": 35.599180, "lon": -120.491439},  # previous crash: no objects to concatenate
+    {"lon": -122.084000, "lat": 37.422000},  # missing LCC
+    # {"lat": 42.494912, "lon": -123.064531},  # crash: could not broadcast input array
+    # {"lat": 40.79861, "lon": -112.35477},  # crash: str object has no attribute rank_data_csv
 ]
 
 
@@ -34,7 +39,7 @@ def test_soil_location():
         start_time = time.perf_counter()
         list_soils_result = list_soils(item["lon"], item["lat"])
         logging.info(f"...time: {(time.perf_counter()-start_time):.2f}s")
-        rank_soils_result = rank_soils(
+        rank_soils(
             item["lon"],
             item["lat"],
             list_soils_result,
@@ -47,8 +52,6 @@ def test_soil_location():
             bedrock,
             cracks,
         )
-        print(list_soils_result)
-        print(rank_soils_result)
 
 
 def test_empty_rank():

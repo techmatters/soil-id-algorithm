@@ -116,8 +116,8 @@ charset-normalizer==3.3.2 \
 composition-stats==2.0.0 \
     --hash=sha256:d0f741ca968ef45a0c70d7a4ed68f4d140e82fddb4664a33f34ce213ddc66f6c
     # via -r requirements/base.in
-gdal==3.9.1 \
-    --hash=sha256:6d8a8f162ed32c5cb58839fa9198def477c68b670eed4cbce9eeef387ac3c8da
+gdal==3.9.2 \
+    --hash=sha256:cf9c1add09ce152975c94d48a1a89dd300c292e0761fd3d22a8071a98852e129
     # via -r requirements/base.in
 geopandas==1.0.1 \
     --hash=sha256:01e147d9420cc374d26f51fc23716ac307f32b49406e4bd8462c07e82ed1d3d6 \
@@ -335,9 +335,9 @@ pillow==10.4.0 \
     # via
     #   imageio
     #   scikit-image
-platformdirs==4.2.2 \
-    --hash=sha256:2d7a1657e36a80ea911db832a8a6ece5ee53d8de21edd5cc5879af6530b1bfee \
-    --hash=sha256:38b7b51f512eed9e84a22788b4bce1de17c0adb134d6becb09836e37d8654cd3
+platformdirs==4.3.2 \
+    --hash=sha256:9e5e27a08aa095dd127b9f2e764d74254f482fef22b0970773bfba79d091ab8c \
+    --hash=sha256:eb1c8582560b34ed4ba105009a4badf7f6f85768b30126f351328507b2beb617
     # via
     #   -r requirements/base.in
     #   requests-cache

@@ -5,7 +5,7 @@ numpy
 pandas
 platformdirs
 profilehooks
-psycopg
+psycopg[binary]
 pyogrio
 python-dotenv
 requests

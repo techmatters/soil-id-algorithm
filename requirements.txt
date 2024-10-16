@@ -370,7 +370,7 @@ profilehooks==1.13.0 \
     --hash=sha256:54a541cad49ddccee97b61a617404d7d736bf0bf79d36fbe2ac7caa3a1d9daaf \
     --hash=sha256:869f63862b3d85e8af44ad7eb01a00203cc7a27a376ed3a51e409399062659c6
     # via -r requirements/base.in
-psycopg[binary]==3.2.3 \
+psycopg==3.2.3 \
     --hash=sha256:644d3973fe26908c73d4be746074f6e5224b03c1101d302d9a53bf565ad64907 \
     --hash=sha256:a5764f67c27bec8bfac85764d23c534af2c27b893550377e37ce59c12aac47a2
     # via -r requirements/base.in

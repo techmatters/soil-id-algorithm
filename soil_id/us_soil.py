@@ -1341,13 +1341,11 @@ def list_soils(lon, lat):
     soilIDRank_output_pd = pd.concat(soilIDRank_output).reset_index(drop=True)
 
     # Create a new column that maps each 'cokey' value to its corresponding index value
-    mucompdata_pd['cokey_order'] = mucompdata_pd['cokey'].map(cokey_Index)
+    mucompdata_pd["cokey_order"] = mucompdata_pd["cokey"].map(cokey_Index)
 
     # Sort the DataFrame by the 'cokey_order' column
-    mucompdata_cond_prob = mucompdata_pd.sort_values(by='cokey_order').reset_index(
-        drop=True
-    )
-    mucompdata_cond_prob = mucompdata_cond_prob.drop(columns=['cokey_order'])
+    mucompdata_cond_prob = mucompdata_pd.sort_values(by="cokey_order").reset_index(drop=True)
+    mucompdata_cond_prob = mucompdata_cond_prob.drop(columns=["cokey_order"])
 
     # Generate the Rank_Loc column values
     rank_id = 1

@@ -20,7 +20,7 @@ import sys
 import pandas as pd
 
 # Third-party libraries
-import psycopg2
+import psycopg
 
 # local libraries
 import soil_id.config
@@ -34,7 +34,7 @@ def get_datastore_connection():
         Connection object if successful, otherwise exits the program.
     """
     try:
-        conn = psycopg2.connect(
+        conn = psycopg.connect(
             host=soil_id.config.DB_HOST,
             user=soil_id.config.DB_USERNAME,
             passwd=soil_id.config.DB_PASSWORD,

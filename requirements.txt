@@ -142,9 +142,9 @@ idna==3.10 \
     --hash=sha256:12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9 \
     --hash=sha256:946d195a0d259cbba61165e88e65941f16e9b36ea6ddb97f00452bae8b1287d3
     # via requests
-imageio==2.36.0 \
-    --hash=sha256:1c8f294db862c256e9562354d65aa54725b8dafed7f10f02bb3ec20ec1678850 \
-    --hash=sha256:471f1eda55618ee44a3c9960911c35e647d9284c68f077e868df633398f137f0
+imageio==2.36.1 \
+    --hash=sha256:20abd2cae58e55ca1af8a8dcf43293336a59adf0391f1917bf8518633cfc2cdf \
+    --hash=sha256:e4e1d231f47f9a9e16100b0f7ce1a86e8856fb4d1c0fa2c4365a316f1746be62
     # via scikit-image
 joblib==1.4.2 \
     --hash=sha256:06d478d5674cbc267e7496a410ee875abd68e4340feff4490bcb7afb88060ae6 \

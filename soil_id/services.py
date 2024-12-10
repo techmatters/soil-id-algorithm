@@ -17,10 +17,10 @@ import json
 import logging
 import re
 
-import config
 import pandas as pd
 import requests
 
+from .config import SOILWEB_URL
 from .db import save_soilgrids_output
 
 
@@ -163,7 +163,7 @@ def get_soilweb_data(lon, lat):
     Returns:
     dict: A dictionary containing soil data or error information if the request fails.
     """
-    base_url = config.SOILWEB_URL
+    base_url = SOILWEB_URL
     params = {
         "q": "spn",  # Query type - static for this function's purpose
         "lon": lon,

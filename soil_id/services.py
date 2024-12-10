@@ -17,6 +17,7 @@ import json
 import logging
 import re
 
+import config
 import pandas as pd
 import requests
 
@@ -162,7 +163,7 @@ def get_soilweb_data(lon, lat):
     Returns:
     dict: A dictionary containing soil data or error information if the request fails.
     """
-    base_url = "https://soilmap4-1.lawr.ucdavis.edu/api/landPKS.php"
+    base_url = config.SOILWEB_URL
     params = {
         "q": "spn",  # Query type - static for this function's purpose
         "lon": lon,

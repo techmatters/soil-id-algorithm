@@ -44,18 +44,38 @@ from .db import get_WISE30sec_data
 from .services import sda_return
 
 
+def get_utm_crs(lon, lat):
+    """
+    Determine the UTM CRS based on longitude and latitude.
+    """
+    zone_number = int((lon + 180) / 6) + 1  # UTM zone calculation
+    hemisphere = "6" if lat >= 0 else "7"  # 6 for North, 7 for South
+    return f"EPSG:326{zone_number}" if lat >= 0 else f"EPSG:327{zone_number}"
+
+
 # global
-def extract_WISE_data(lon, lat, file_path, buffer_size=0.5):
+def extract_WISE_data(lon, lat, file_path, buffer_dist=10000):
     # Create LPKS point
-    point_geo = Point(lon, lat)
-    point_geo.crs = {"init": "epsg:4326"}
+    point_geo = gpd.GeoDataFrame(
+        geometry=[Point(lon, lat)],
+        crs="EPSG:4326"  # Assign CRS
+    )
+    
+    # Get the appropriate UTM CRS for the location
+    utm_crs = get_utm_crs(lon, lat)
+    print(f"Using UTM CRS: {utm_crs}")  # Log the CRS being used
+    
+    # Reproject to the UTM CRS
+    projected_geo = point_geo.to_crs(utm_crs)
 
-    # Create bounding box to clip HWSD data around the point
-    bounding_box = create_bounding_box(lon, lat, buffer_dist=10000)
-    box_geom = shapely.geometry.box(*bounding_box)
-
-    # Load HWSD data from the provided file_path
-    hwsd = gpd.read_file(file_path, bbox=box_geom.bounds, driver="GPKG")
+    # Create a buffer in meters and get the bounding box
+    bounding_box = projected_geo.buffer(buffer_dist).envelope
+    
+    # Reproject the bounding box back to geographic CRS (WGS84)
+    bounding_box = bounding_box.to_crs("EPSG:4326")
+    
+    # Read and clip the data using the bounding box
+    hwsd = gpd.read_file(file_path, bbox=bounding_box)
 
     # Filter data to consider unique map units
     mu_geo = hwsd[["MUGLB_NEW", "geometry"]].drop_duplicates(subset="MUGLB_NEW")
@@ -124,58 +144,63 @@ def silt_calc(row):
     return silt
 
 
-def getTexture(row, sand=None, silt=None, clay=None):
-    sand = (
-        sand
-        if sand is not None
-        else row.get("sandtotal_r") or row.get("sand") or row.get("sand_total")
-    )
-    silt = (
-        silt
-        if silt is not None
-        else row.get("silttotal_r") or row.get("silt") or row.get("silt_total")
-    )
-    clay = (
-        clay
-        if clay is not None
-        else row.get("claytotal_r") or row.get("clay") or row.get("clay_total")
-    )
+def getTexture(row=None, sand=None, silt=None, clay=None):
+    """
+    Classify soil texture based on sand, silt, and clay proportions.
 
+    Parameters:
+    - row (dict): Dictionary-like object with 'sandtotal_r', 'silttotal_r', 'claytotal_r' keys.
+    - sand (float): Percentage of sand.
+    - silt (float): Percentage of silt.
+    - clay (float): Percentage of clay.
+
+    Returns:
+    - str: Soil texture classification.
+    """
+
+    # Handle missing inputs
     if sand is None or silt is None or clay is None:
-        return None
+        if row is not None:
+            sand = row.get('sandtotal_r', np.nan)
+            silt = row.get('silttotal_r', np.nan)
+            clay = row.get('claytotal_r', np.nan)
+    sand = np.nan_to_num(sand, nan=0)
+    silt = np.nan_to_num(silt, nan=0)
+    clay = np.nan_to_num(clay, nan=0)
 
+    # Calculate derived values
     silt_clay = silt + 1.5 * clay
     silt_2x_clay = silt + 2.0 * clay
 
-    if silt_clay < 15:
-        return "Sand"
-    elif silt_clay < 30:
-        return "Loamy sand"
-    elif (7 <= clay <= 20 and sand > 52) or (clay < 7 and silt < 50):
-        if silt_2x_clay >= 30:
-            return "Sandy loam"
-    elif 7 <= clay <= 27 and 28 <= silt < 50 and sand <= 52:
-        return "Loam"
-    elif silt >= 50 and ((12 <= clay < 27) or (silt < 80 and clay < 12)):
-        return "Silt loam"
-    elif silt >= 80 and clay < 12:
-        return "Silt"
-    elif 20 <= clay < 35 and silt < 28 and sand > 45:
-        return "Sandy clay loam"
-    elif 27 <= clay < 40 and sand <= 45:
-        if sand > 20:
-            return "Clay loam"
-        else:
-            return "Silty clay loam"
-    elif clay >= 35 and sand >= 45:
-        return "Sandy clay"
-    elif clay >= 40:
-        if silt >= 40:
-            return "Silty clay"
-        elif sand <= 45:
-            return "Clay"
+    # Define conditions and choices
+    conditions = [
+        silt_clay < 15,
+        (silt_clay >= 15) & (silt_clay < 30),
+        ((7 <= clay) & (clay <= 20) & (sand > 52)) | ((clay < 7) & (silt < 50) & (silt_2x_clay >= 30)),
+        (7 <= clay) & (clay <= 27) & (28 <= silt) & (silt < 50) & (sand <= 52),
+        (silt >= 50) & ((12 <= clay) & (clay < 27)) | ((silt < 80) & (clay < 12)),
+        (silt >= 80) & (clay < 12),
+        (20 <= clay) & (clay < 35) & (silt < 28) & (sand > 45),
+        (27 <= clay) & (clay < 40) & (sand <= 45) & (sand > 20),
+        (clay >= 35) & (sand >= 45),
+        (clay >= 40) & (silt >= 40) & (sand <= 45),
+    ]
 
-    return None  # Default return value
+    choices = [
+        "Sand",
+        "Loamy sand",
+        "Sandy loam",
+        "Loam",
+        "Silt loam",
+        "Silt",
+        "Sandy clay loam",
+        "Clay loam",
+        "Sandy clay",
+        "Clay",
+    ]
+
+    # Return texture classification
+    return np.select(conditions, choices, default="Unknown")
 
 
 def getCF(cf):
@@ -304,6 +329,36 @@ def agg_data_layer(data, bottom, sd=2, depth=False):
 
 
 def aggregate_data(data, bottom_depths, sd=2):
+    """
+    Aggregate values of a given data series into segments defined by depth intervals 
+    and return their mean values, rounded to a specified number of decimal places.
+
+    This function partitions the data index into depth intervals determined by 
+    the provided `bottom_depths`. Each interval starts at one of the `top_depths` 
+    (which is derived from `bottom_depths` by shifting them up by one) and ends 
+    at the corresponding bottom depth. For each interval, the function extracts 
+    the data values within that depth range and computes their mean. The results 
+    are rounded to `sd` decimal places and returned as a Series, where each element 
+    corresponds to the aggregated mean for the respective depth interval.
+
+    Parameters
+    ----------
+    data : pandas.Series
+        A series indexed by depth (or a comparable numeric index), which 
+        will be aggregated over the defined depth intervals.
+    bottom_depths : list or array-like
+        A list or array of numerical values representing the lower boundaries 
+        of depth intervals. The top boundary for the first interval is implicitly 0.
+    sd : int, optional, default 2
+        Number of decimal places to which the computed mean values will be rounded.
+
+    Returns
+    -------
+    pandas.Series
+        A series of aggregated mean values for each depth interval, indexed by 
+        the order of the intervals. If any interval does not contain data values, 
+        NaN is returned for that interval.
+    """
     if not bottom_depths or np.isnan(bottom_depths[0]):
         return pd.Series([np.nan])
 

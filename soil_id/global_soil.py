@@ -242,9 +242,11 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
             .drop_duplicates(keep="first")
             .reset_index(drop=True)
         )
-
+        
+        # profile depth
         c_very_bottom = max_comp_depth(profile)
 
+        # extract information to be combined later with site soil measurements
         sand_pct_intpl = getProfile(profile, "sandtotal_r")
         sand_pct_intpl.columns = ["c_sandpct_intpl", "c_sandpct_intpl_grp"]
         clay_pct_intpl = getProfile(profile, "claytotal_r")

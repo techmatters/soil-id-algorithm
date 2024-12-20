@@ -20,13 +20,15 @@ import io
 import json
 import re
 
-# local libraries
-import config
-
 # Third-party libraries
 import numpy as np
 import pandas as pd
-from db import (
+from scipy.stats import norm
+
+# local libraries
+import soil_id.config
+
+from .db import (
     get_WRB_descriptions,
     getSG_descriptions,
     load_model_output,
@@ -34,9 +36,9 @@ from db import (
     save_rank_output,
     save_soilgrids_output,
 )
-from scipy.stats import norm
-from services import get_soilgrids_classification_data, get_soilgrids_property_data
-from utils import (
+
+from .services import get_soilgrids_classification_data, get_soilgrids_property_data
+from .utils import (
     agg_data_layer,
     assign_max_distance_scores,
     calculate_deltaE2000,
@@ -233,29 +235,32 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
         profile = (
             group.sort_values(by="hzdept_r").drop_duplicates(keep="first").reset_index(drop=True)
         )
+        
+        # profile depth
+        c_very_bottom = max_comp_depth(profile)
 
-        c_very_bottom, sand_pct_intpl = getProfile(profile, "sandtotal_r", c_bot=True)
+        # extract information to be combined later with site soil measurements
+        sand_pct_intpl = getProfile(profile, "sandtotal_r")
         sand_pct_intpl.columns = ["c_sandpct_intpl", "c_sandpct_intpl_grp"]
-
-        def process_profile(param):
-            result = getProfile(profile, param)
-            result.columns = [f"c_{param}_intpl", f"c_{param}_intpl_grp"]
-            return result
-
-        clay_pct_intpl = process_profile("claytotal_r")
-        cf_pct_intpl = process_profile("total_frag_volume")
-        cec_intpl = process_profile("CEC")
-        ph_intpl = process_profile("pH")
-        ec_intpl = process_profile("EC")
+        clay_pct_intpl = getProfile(profile, "claytotal_r")
+        clay_pct_intpl.columns = ["c_claypct_intpl", "c_claypct_intpl_grp"]
+        cf_pct_intpl = getProfile(profile, "total_frag_volume")
+        cf_pct_intpl.columns = ["c_cfpct_intpl", "c_cfpct_intpl_grp"]
+        cec_intpl = getProfile(profile, "CEC")
+        cec_intpl.columns = ["c_cec_intpl"]
+        ph_intpl = getProfile(profile, "pH")
+        ph_intpl.columns = ["c_ph_intpl"]
+        ec_intpl = getProfile(profile, "EC")
+        ec_intpl.columns = ["c_ec_intpl"]
 
         combined_data = pd.concat(
             [
-                sand_pct_intpl[["c_sandpct_intpl_grp"]],
-                clay_pct_intpl[["c_claypct_intpl_grp"]],
-                cf_pct_intpl[["c_cfpct_intpl_grp"]],
-                profile.compname.unique(),
-                profile.cokey.unique(),
-                profile.comppct_r.unique(),
+                sand_pct_intpl[["c_sandpct_intpl_grp"]],  # DataFrame
+                clay_pct_intpl[["c_claypct_intpl_grp"]],  # DataFrame
+                cf_pct_intpl[["c_cfpct_intpl_grp"]],     # DataFrame
+                pd.DataFrame(profile.compname.unique(), columns=["compname"]),  # Convert to DataFrame
+                pd.DataFrame(profile.cokey.unique(), columns=["cokey"]),        # Convert to DataFrame
+                pd.DataFrame(profile.comppct_r.unique(), columns=["comppct"]),  # Convert to DataFrame
             ],
             axis=1,
         )
@@ -277,22 +282,17 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
             }
         )
 
-        def aggregated_data_layer(data, column_name):
-            return agg_data_layer(
-                data=data[column_name], bottom=c_bottom_temp["c_very_bottom"].iloc[0], depth=True
-            )
-
-        snd_d, hz_depb = aggregated_data_layer(sand_pct_intpl, "c_sandpct_intpl")
-        cly_d = aggregated_data_layer(clay_pct_intpl, "c_claypct_intpl")
+        snd_d, hz_depb = agg_data_layer(sand_pct_intpl.c_sandpct_intpl, bottom=c_bottom_temp["c_very_bottom"].iloc[0], depth=True)
+        cly_d = agg_data_layer(clay_pct_intpl.c_claypct_intpl, bottom=c_bottom_temp["c_very_bottom"].iloc[0], depth=False)
         txt_d = [
             getTexture(row=None, sand=s, silt=(100 - (s + c)), clay=c) for s, c in zip(snd_d, cly_d)
         ]
         txt_d = pd.Series(txt_d, index=snd_d.index)
 
-        rf_d = aggregated_data_layer(cf_pct_intpl, "c_cfpct_intpl_grp")
-        cec_d = aggregated_data_layer(cec_intpl, "c_cec_intpl")
-        ph_d = aggregated_data_layer(ph_intpl, "c_ph_intpl")
-        ec_d = aggregated_data_layer(ec_intpl, "c_ec_intpl")
+        rf_d = agg_data_layer(cf_pct_intpl.c_cfpct_intpl, bottom=c_bottom_temp["c_very_bottom"].iloc[0], depth=False)
+        cec_d = agg_data_layer(cec_intpl.c_cec_intpl, bottom=c_bottom_temp["c_very_bottom"].iloc[0], depth=False)
+        ph_d = agg_data_layer(ph_intpl.c_ph_intpl, bottom=c_bottom_temp["c_very_bottom"].iloc[0], depth=False)
+        ec_d = agg_data_layer(ec_intpl.c_ec_intpl, bottom=c_bottom_temp["c_very_bottom"].iloc[0], depth=False)
 
         # Fill NaN values and append to lists
         for data_list, data in zip(

@@ -2355,8 +2355,8 @@ def update_esd_data(df):
             # Fill all missing values if all are missing within the group
             group.fillna(
                 {
-                    "ecoclassid": unique_ids[0] if unique_ids else "",
-                    "ecoclassname": unique_names[0] if unique_names else "",
+                    "ecoclassid": unique_ids[0] if unique_ids.size > 0 else "",
+                    "ecoclassname": unique_names[0] if unique_names.size > 0 else "",
                 },
                 inplace=True,
             )

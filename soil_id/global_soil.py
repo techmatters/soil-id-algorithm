@@ -80,9 +80,11 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
     wise_data = extract_WISE_data(
         lon,
         lat,
-        file_path=config.WISE_PATH,
-        layer_name=None,
-        buffer_size=0.5,
+        # Temporarily change file path
+        file_path = '/mnt/c/LandPKS_API_SoilID-master/global/wise30sec_poly_simp_soil.gpkg',
+        #file_path=config.WISE_PATH,
+        #layer_name=None,
+        buffer_dist=10000,
     )
 
     # Component Data
@@ -91,7 +93,7 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
     mucompdata_pd["distance"] = pd.to_numeric(mucompdata_pd["distance"])
     mucompdata_pd["share"] = pd.to_numeric(mucompdata_pd["share"])
     mucompdata_pd = mucompdata_pd.drop_duplicates().reset_index(drop=True)
-
+ 
     ##############################################################################################
     # Individual probability
     # Based on Fan et al 2018 EQ 1, the conditional probability for each component is calculated
@@ -107,18 +109,16 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
 
     for (mukey, cokey), group in mucompdata_grouped:
         loc_score = calculate_location_score(group, ExpCoeff)
-        loc_scores.append({"Cokey": cokey, "Mukey": mukey, "distance_score": round(loc_score, 3)})
+        loc_scores.append({"cokey": cokey, "mukey": mukey, "distance_score": round(loc_score, 3)})
 
     loc_top_pd = pd.DataFrame(loc_scores)
-    loc_top_comp_prob = loc_top_pd.groupby("Cokey").distance_score.sum()
+    loc_top_comp_prob = loc_top_pd.groupby("cokey").distance_score.sum()
     loc_bot_prob_sum = loc_top_pd.distance_score.sum()
     cond_prob = (loc_top_comp_prob / loc_bot_prob_sum).reset_index(name="distance_score")
 
     mucompdata_pd = pd.merge(mucompdata_pd, cond_prob, on="cokey", how="left")
     mucompdata_pd = mucompdata_pd.sort_values("distance_score", ascending=False)
-    mucompdata_pd["distance_score_norm"] = (
-        mucompdata_pd.distance_score / mucompdata_pd.distance_score.max()
-    ) * 0.25
+    
     mucompdata_pd = mucompdata_pd.reset_index(drop=True)
     mucompdata_pd["distance"] = mucompdata_pd["distance"].round(4)
     mucompdata_pd["Index"] = mucompdata_pd.index
@@ -179,6 +179,9 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
         muhorzdata_pd[["hzdept_r", "hzdepb_r"]].fillna(0).astype(int)
     )
     muhorzdata_pd["texture"] = muhorzdata_pd.apply(getTexture, axis=1)
+    muhorzdata_pd["texture"] = muhorzdata_pd["texture"].apply(
+        lambda x: str(x) if isinstance(x, np.ndarray) else x
+    )
 
     # Rank components and sort by rank and depth
     cokey_Index = {key: rank for rank, key in enumerate(comp_key)}
@@ -195,10 +198,12 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
     # Update comp_key
     comp_key = muhorzdata_pd["cokey"].unique().tolist()
 
-    # Subset mucompdata_pd by new comp_key and add suffix to name if there are duplicates
-    mucompdata_pd = mucompdata_pd[mucompdata_pd["cokey"].isin(comp_key)]
-    mucompdata_pd.sort_values(["distance_score", "distance"], ascending=[False, True], inplace=True)
-    mucompdata_pd.reset_index(drop=True, inplace=True)
+    # Subset mucompdata_pd by new compname_key and add suffix to name if there are duplicates
+    mucompdata_pd = mucompdata_pd.loc[mucompdata_pd['cokey'].isin(comp_key)].reset_index(drop=True)
+    mucompdata_pd["compname_grp"] = mucompdata_pd["compname"]
+    
+    # Sort by 'distance_score' (descending) and 'distance' (ascending), then reset the index
+    mucompdata_pd = mucompdata_pd.sort_values(['distance_score', 'distance'], ascending=[False, True]).reset_index(drop=True)
 
     # Add suffix to duplicate names
     name_counts = collections.Counter(mucompdata_pd["compname"])
@@ -231,15 +236,15 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
     ph_lyrs = []
     ec_lyrs = []
 
-    for group in muhorzdata_group_cokey:
+    for group_key, group in muhorzdata_group_cokey:
         profile = (
-            group.sort_values(by="hzdept_r").drop_duplicates(keep="first").reset_index(drop=True)
+            group.sort_values(by="hzdept_r")
+            .drop_duplicates(keep="first")
+            .reset_index(drop=True)
         )
-        
-        # profile depth
+
         c_very_bottom = max_comp_depth(profile)
 
-        # extract information to be combined later with site soil measurements
         sand_pct_intpl = getProfile(profile, "sandtotal_r")
         sand_pct_intpl.columns = ["c_sandpct_intpl", "c_sandpct_intpl_grp"]
         clay_pct_intpl = getProfile(profile, "claytotal_r")
@@ -314,7 +319,7 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
     # Concatenate lists to form DataFrames
     c_bottom_depths = pd.concat(c_bottom_depths, axis=0)
     clay_texture = pd.concat(clay_texture, axis=0)
-
+    
     # Subset mucompdata and muhorzdata DataFrames
     mucompdata_pd = mucompdata_pd[mucompdata_pd["cokey"].isin(c_bottom_depths.cokey)]
     muhorzdata_pd = muhorzdata_pd[muhorzdata_pd["cokey"].isin(c_bottom_depths.cokey)]
@@ -352,7 +357,7 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
     soilIDRank_output_pd = pd.concat(soilIDRank_output, axis=0).reset_index(drop=True)
 
     mucompdata_cond_prob = mucompdata_pd.sort_values(
-        "distance_score_norm", ascending=False
+        "distance_score", ascending=False
     ).reset_index(drop=True)
 
     # Determine rank location
@@ -369,14 +374,16 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
     # Handle NaN values
     mucompdata_cond_prob.replace([np.nan, "nan", "None", [None]], "", inplace=True)
 
-    mucomp_index = mucompdata_cond_prob.sort_values(
-        ["soilID_rank", "distance_score_norm"], ascending=[False, False], inplace=True
+    # Sort mucompdata_cond_prob by soilID_rank and distance_score
+    mucompdata_cond_prob = mucompdata_cond_prob.sort_values(
+        ["soilID_rank", "distance_score"], ascending=[False, False]
     )
-
+    mucomp_index = mucompdata_cond_prob.index
+    
     # Extract lists for constructing ID dictionary
     siteName = mucompdata_cond_prob["compname"].apply(lambda x: x.capitalize()).tolist()
     compName = mucompdata_cond_prob["compname_grp"].apply(lambda x: x.capitalize()).tolist()
-    score = mucompdata_cond_prob["distance_score_norm"].round(3).tolist()
+    score = mucompdata_cond_prob["distance_score"].round(3).tolist()
     rank_loc = mucompdata_cond_prob["Rank_Loc"].tolist()
     model_version = 3
 
@@ -395,6 +402,7 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
     WRB_Comp_Desc = get_WRB_descriptions(
         mucompdata_cond_prob["compname_grp"].drop_duplicates().tolist()
     )
+
     mucompdata_cond_prob = pd.merge(
         mucompdata_cond_prob, WRB_Comp_Desc, left_on="compname_grp", right_on="WRB_tax", how="left"
     )
@@ -461,6 +469,22 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
         )
     ]
 
+    def convert_to_serializable(obj):
+        if isinstance(obj, dict):
+            return {k: convert_to_serializable(v) for k, v in obj.items()}
+        elif isinstance(obj, list):
+            return [convert_to_serializable(v) for v in obj]
+        elif isinstance(obj, np.integer):  # Convert NumPy integers to Python int
+            return int(obj)
+        elif isinstance(obj, np.floating):  # Convert NumPy floats to Python float
+            return float(obj)
+        elif isinstance(obj, np.ndarray):  # Convert NumPy arrays to lists
+            return obj.tolist()
+        else:
+            return obj
+        
+    output_SoilList_cleaned = convert_to_serializable(output_SoilList)
+
     # Save data
     if plot_id is None:
         soilIDRank_output_pd.to_csv(config.SOIL_ID_RANK_PATH, index=None, header=True)
@@ -484,7 +508,7 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
                             "ec": "ds/m",
                         },
                     },
-                    "soilList": output_SoilList,
+                    "soilList": output_SoilList_cleaned,
                 }
             ),
             soilIDRank_output_pd.to_csv(index=None, header=True),
@@ -506,7 +530,7 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
                 "ec": "ds/m",
             },
         },
-        "soilList": output_SoilList,
+        "soilList": output_SoilList_cleaned,
     }
 
 

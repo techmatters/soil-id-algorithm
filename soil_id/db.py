@@ -37,8 +37,8 @@ def get_datastore_connection():
         conn = psycopg.connect(
             host=soil_id.config.DB_HOST,
             user=soil_id.config.DB_USERNAME,
-            passwd=soil_id.config.DB_PASSWORD,
-            database=soil_id.config.DB_NAME,
+            password=soil_id.config.DB_PASSWORD,
+            dbname=soil_id.config.DB_NAME,
         )
         return conn
     except Exception as err:
@@ -163,14 +163,20 @@ def get_WISE30sec_data(MUGLB_NEW_Select):
     try:
         conn = get_datastore_connection()
         cur = conn.cursor()
+
+        # Create placeholders for the SQL IN clause
         placeholders = ", ".join(["%s"] * len(MUGLB_NEW_Select))
-        sql = """SELECT MUGLB_NEW, COMPID, id, MU_GLOBAL, NEWSUID, SCID, PROP, CLAF,
-                       PRID, Layer, TopDep, BotDep,  CFRAG,  SDTO,  STPC,  CLPC, CECS,
-                       PHAQ, ELCO, SU_name, FAO_SYS
-                  FROM  wise_soil_data
-                  WHERE MUGLB_NEW IN (%s)"""
-        cur.execute(sql, placeholders)
+        sql = f"""SELECT MUGLB_NEW, COMPID, id, MU_GLOBAL, NEWSUID, SCID, PROP, CLAF,
+                         PRID, Layer, TopDep, BotDep,  CFRAG,  SDTO,  STPC,  CLPC, CECS,
+                         PHAQ, ELCO, SU_name, FAO_SYS
+                  FROM wise_soil_data
+                  WHERE MUGLB_NEW IN ({placeholders})"""
+
+        # Execute the query with the parameters
+        cur.execute(sql, tuple(MUGLB_NEW_Select))
         results = cur.fetchall()
+
+        # Convert the results to a pandas DataFrame
         data = pd.DataFrame(
             results,
             columns=[
@@ -197,12 +203,16 @@ def get_WISE30sec_data(MUGLB_NEW_Select):
                 "FAO_SYS",
             ],
         )
+
         return data
+
     except Exception as err:
-        logging.error(err)
+        logging.error(f"Error querying PostgreSQL: {err}")
         return None
+
     finally:
-        conn.close()
+        if conn:
+            conn.close()
 
 
 # global
@@ -213,13 +223,19 @@ def get_WRB_descriptions(WRB_Comp_List):
     try:
         conn = get_datastore_connection()
         cur = conn.cursor()
+
+        # Create placeholders for the SQL IN clause
         placeholders = ", ".join(["%s"] * len(WRB_Comp_List))
-        sql = """SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es,
-                       Description_ks, Management_ks, Description_fr, Management_fr
-                FROM wrb_fao90_desc
-                WHERE WRB_tax IN %s"""
-        cur.execute(sql, placeholders)
+        sql = f"""SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es,
+                         Description_ks, Management_ks, Description_fr, Management_fr
+                  FROM wrb_fao90_desc
+                  WHERE WRB_tax IN ({placeholders})"""
+
+        # Execute the query with the parameters
+        cur.execute(sql, tuple(WRB_Comp_List))
         results = cur.fetchall()
+
+        # Convert the results to a pandas DataFrame
         data = pd.DataFrame(
             results,
             columns=[
@@ -234,12 +250,16 @@ def get_WRB_descriptions(WRB_Comp_List):
                 "Management_fr",
             ],
         )
+
         return data
+
     except Exception as err:
-        logging.error(err)
+        logging.error(f"Error querying PostgreSQL: {err}")
         return None
+
     finally:
-        conn.close()
+        if conn:
+            conn.close()
 
 
 # global only
@@ -258,11 +278,11 @@ def getSG_descriptions(WRB_Comp_List):
                   FROM wrb2006_to_fao90 AS lu
                   WHERE lu.WRB_2006_Full IN %s"""
         names = execute_query(sql1, (tuple(WRB_Comp_List),))
-        WRB_Comp_List = [item for t in list(names) for item in t]
+        WRB_Comp_List = [item for t in names for item in t]
 
         # Second SQL query
         sql2 = """SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es,
-                  Description_ks, Management_ks, Description_fr, Management_fr
+                         Description_ks, Management_ks, Description_fr, Management_fr
                   FROM wrb_fao90_desc
                   WHERE WRB_tax IN %s"""
         results = execute_query(sql2, (tuple(WRB_Comp_List),))
@@ -285,8 +305,9 @@ def getSG_descriptions(WRB_Comp_List):
         return data
 
     except Exception as err:
-        logging.error(err)
+        logging.error(f"Error querying PostgreSQL: {err}")
         return None
 
     finally:
-        conn.close()
+        if conn:
+            conn.close()

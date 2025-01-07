@@ -1320,18 +1320,28 @@ def calculate_distances_and_intersections(mu_geo, point):
         DataFrame: Contains mapunit keys, distances, and intersection flags.
     """
 
-    # Project the data to a suitable UTM zone based on the point's location
+    # Ensure the point is wrapped in a GeoDataFrame and projected correctly
     point_utm, epsg_code = convert_geometry_to_utm(point)
-
-    # Ensure both the point and GeoDataFrame are transformed to the same CRS
+    
+    # Ensure the point is a GeoDataFrame (for compatibility)
+    if not isinstance(point_utm, gpd.GeoDataFrame):
+        point_utm = gpd.GeoDataFrame(geometry=[point_utm], crs=epsg_code)
+    
+    # Transform the GeoDataFrame to the same UTM CRS
     mu_geo_utm = mu_geo.to_crs(epsg_code)
-
+    
+    # Reset index for clean operations
+    mu_geo_utm = mu_geo_utm.reset_index(drop=True)
+    point_utm = point_utm.reset_index(drop=True)
+    
+    # Extract the single geometry for the point
+    point_geometry = point_utm.geometry.iloc[0]
+    
     # Calculate distances and intersections
-    distances = mu_geo_utm["geometry"].distance(point_utm)
-    intersects = mu_geo_utm["geometry"].intersects(point_utm)
-
+    distances = mu_geo_utm["geometry"].distance(point_geometry)
+    intersects = mu_geo_utm["geometry"].intersects(point_geometry)
     return pd.DataFrame(
-        {"mukey": mu_geo_utm["MUKEY"], "dist_meters": distances, "pt_intersect": intersects}
+        {"MUGLB_NEW": mu_geo_utm["MUGLB_NEW"], "dist_meters": distances, "pt_intersect": intersects}
     )
 
 
@@ -1381,19 +1391,29 @@ def convert_geometry_to_utm(geometry, src_crs="epsg:4326", target_crs=None):
     - This function assumes the geometry is already in the specified source CRS and will
       convert it directly to the target CRS without additional CRS transformations.
     """
-    if target_crs is None:
-        lon, lat = geometry.centroid.x, geometry.centroid.y
-        utm_zone = int((lon + 180) / 6) + 1
-        hemisphere = "north" if lat >= 0 else "south"
-        epsg_code = f"326{utm_zone:02d}" if hemisphere == "north" else f"327{utm_zone:02d}"
-        target_crs = f"epsg:{epsg_code}"
+    # If geometry is not a GeoDataFrame, wrap it into one
+    if isinstance(geometry, Point):
+        geometry = gpd.GeoDataFrame(geometry=[geometry], crs=src_crs)
+    elif isinstance(geometry, gpd.GeoSeries):
+        geometry = geometry.to_frame(name='geometry')
 
-    # Wrap the shapely geometry in a GeoSeries to use the to_crs() method
-    geo_series = gpd.GeoSeries([geometry], crs=src_crs)
-    transformed_geo_series = geo_series.to_crs(target_crs)
+    # Project to source CRS (ensure proper handling)
+    geometry = geometry.to_crs(src_crs)
 
-    # Return the first (and only) geometry in the transformed GeoSeries and the new EPSG code
-    return transformed_geo_series.iloc[0], target_crs
+    # Calculate the centroid
+    centroid = geometry.centroid.iloc[0]
+    lon, lat = centroid.x, centroid.y
+
+    # Determine the UTM zone dynamically
+    utm_zone = int((lon + 180) / 6) + 1
+    hemisphere = "north" if lat >= 0 else "south"
+    epsg_code = f"326{utm_zone:02d}" if hemisphere == "north" else f"327{utm_zone:02d}"
+    target_crs = f"EPSG:{epsg_code}"
+
+    # Reproject geometry to the UTM CRS
+    geometry_utm = geometry.to_crs(target_crs)
+
+    return geometry_utm, target_crs
 
 
 def create_bounding_box(lon, lat, buffer_dist):

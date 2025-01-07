@@ -28,7 +28,7 @@ RANDOM_SEED = os.environ.get("RANDOM_SEED", 19)
 
 # Output
 APP_NAME = os.environ.get("APP_NAME", "org.terraso.soilid")
-TEMP_DIR = tempfile.TemporaryDirectory(delete=False)
+TEMP_DIR = tempfile.TemporaryDirectory()
 CACHE_DIR = user_cache_dir(APP_NAME)
 OUTPUT_PATH = TEMP_DIR.name
 SOIL_ID_RANK_PATH = f"{OUTPUT_PATH}/soil_id_rank.csv"
@@ -47,9 +47,16 @@ HWSD_PATH = f"{DATA_PATH}/HWSD_global_noWater_no_country.shp"
 WISE_PATH = f"{DATA_PATH}/wise30sec_poly_simp_soil.shp"
 NORM_DIST_1_PATH = f"{DATA_PATH}/NormDist1.csv"
 NORM_DIST_2_PATH = f"{DATA_PATH}/NormDist2.csv"
-
+'''
 # Database
 DB_NAME = os.environ.get("DB_NAME", "terraso_backend")
 DB_HOST = os.environ.get("DB_HOST")
 DB_USERNAME = os.environ.get("DB_USERNAME")
 DB_PASSWORD = os.environ.get("DB_PASSWORD")
+'''
+# Database for testing
+DB_NAME = os.environ.get("DB_NAME", "soilid")
+DB_HOST = os.environ.get("DB_HOST", "localhost")  # Default to localhost if not set
+DB_PORT = os.environ.get("DB_PORT", "5432")      # Default PostgreSQL port
+DB_USERNAME = os.environ.get("DB_USERNAME", "postgres")
+DB_PASSWORD = os.environ.get("DB_PASSWORD", "password")

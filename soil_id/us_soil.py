@@ -2048,19 +2048,10 @@ def rank_soils(
     if D_horz is None and D_site is None:
         Score_Data_Loc = [0.0 for _ in range(len(D_final_loc))]
     else:
-        # Scale location and data scores for equal weighting
-        D_final_loc["Score_Data_scale"] = D_final_loc["Score_Data"] / np.nanmax(
-            D_final_loc["Score_Data"]
-        )
-        D_final_loc["distance_score_scale"] = D_final_loc["distance_score"] / np.nanmax(
-            D_final_loc["distance_score"]
-        )
-
         # Calculate the combined score
-        Score_Data_Loc = (D_final_loc["Score_Data_scale"] + D_final_loc["distance_score_scale"]) / (
+        Score_Data_Loc = (D_final_loc["Score_Data"] + D_final_loc["distance_score"]) / (
             D_final_loc["data_weight"] + location_weight
         )
-        Score_Data_Loc /= np.nanmax(Score_Data_Loc)
 
     # Assign the final combined score to the dataframe
     D_final_loc["Score_Data_Loc"] = Score_Data_Loc

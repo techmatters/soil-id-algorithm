@@ -54,10 +54,7 @@ def get_utm_crs(lon, lat):
 # global
 def extract_WISE_data(lon, lat, file_path, buffer_dist=10000):
     # Create LPKS point
-    point_geo = gpd.GeoDataFrame(
-        geometry=[Point(lon, lat)],
-        crs="EPSG:4326"  # Assign CRS
-    )
+    point_geo = gpd.GeoDataFrame(geometry=[Point(lon, lat)], crs="EPSG:4326")  # Assign CRS
 
     # Get the appropriate UTM CRS for the location
     utm_crs = get_utm_crs(lon, lat)
@@ -176,9 +173,9 @@ def getTexture(row=None, sand=None, silt=None, clay=None):
     # Handle missing inputs: if not provided individually, try to get from row.
     if sand is None or silt is None or clay is None:
         if row is not None:
-            sand = row.get('sandtotal_r', np.nan)
-            silt = row.get('silttotal_r', np.nan)
-            clay = row.get('claytotal_r', np.nan)
+            sand = row.get("sandtotal_r", np.nan)
+            silt = row.get("silttotal_r", np.nan)
+            clay = row.get("claytotal_r", np.nan)
 
     # Replace any NaN with 0 for the calculation.
     sand = np.nan_to_num(sand, nan=0)
@@ -193,7 +190,8 @@ def getTexture(row=None, sand=None, silt=None, clay=None):
     conditions = [
         silt_clay < 15,
         (silt_clay >= 15) & (silt_clay < 30),
-        (((7 <= clay) & (clay <= 20)) & (sand > 52)) | ((clay < 7) & (silt < 50) & (silt_2x_clay >= 30)),
+        (((7 <= clay) & (clay <= 20)) & (sand > 52))
+        | ((clay < 7) & (silt < 50) & (silt_2x_clay >= 30)),
         (7 <= clay) & (clay <= 27) & (28 <= silt) & (silt < 50) & (sand <= 52),
         (silt >= 50) & (((12 <= clay) & (clay < 27)) | ((silt < 80) & (clay < 12))),
         (silt >= 80) & (clay < 12),
@@ -1421,7 +1419,7 @@ def convert_geometry_to_utm(geometry, src_crs="epsg:4326", target_crs=None):
     if isinstance(geometry, Point):
         geometry = gpd.GeoDataFrame(geometry=[geometry], crs=src_crs)
     elif isinstance(geometry, gpd.GeoSeries):
-        geometry = geometry.to_frame(name='geometry')
+        geometry = geometry.to_frame(name="geometry")
 
     # Project to source CRS (ensure proper handling)
     geometry = geometry.to_crs(src_crs)

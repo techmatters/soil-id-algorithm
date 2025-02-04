@@ -19,6 +19,14 @@ import csv
 import io
 import json
 import re
+import sys
+import os
+import psycopg
+from dataclasses import dataclass
+
+# Load .env file
+from dotenv import load_dotenv
+load_dotenv()
 
 # Third-party libraries
 import numpy as np
@@ -31,19 +39,17 @@ import soil_id.config
 from .db import (
     get_WRB_descriptions,
     getSG_descriptions,
-    load_model_output,
-    save_model_output,
-    save_rank_output,
-    save_soilgrids_output,
+)
+
+from .color import(
+    calculate_deltaE2000,
 )
 
 from .services import get_soilgrids_classification_data, get_soilgrids_property_data
 from .utils import (
     agg_data_layer,
     assign_max_distance_scores,
-    calculate_deltaE2000,
     calculate_location_score,
-    compute_data_completeness,
     drop_cokey_horz,
     extract_values,
     extract_WISE_data,
@@ -56,7 +62,14 @@ from .utils import (
     pedon_color,
     sg_get_and_agg,
     silt_calc,
+    max_comp_depth,   
 )
+
+@dataclass
+class SoilListOutputData:
+    soil_list_json: dict
+    rank_data_csv: str
+    map_unit_component_data_csv: str
 
 # entry points
 # getSoilLocationBasedGlobal
@@ -74,7 +87,7 @@ from .utils import (
 ##################################################################################################
 #                                 getSoilLocationBasedGlobal                                     #
 ##################################################################################################
-def getSoilLocationBasedGlobal(lon, lat, plot_id):
+def list_soils_global(lon, lat):
     # Extract HWSD-WISE Data
     # Note: Need to convert HWSD shp to gpkg file
     wise_data = extract_WISE_data(
@@ -188,12 +201,12 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
     muhorzdata_pd["Comp_Rank"] = muhorzdata_pd["cokey"].map(cokey_Index)
     muhorzdata_pd.sort_values(["Comp_Rank", "hzdept_r"], inplace=True)
     muhorzdata_pd.drop(columns="Comp_Rank", inplace=True)
-    muhorzdata_pd = muhorzdata_pd.drop_duplicates().reset_index(drop=True)
 
     # Check for duplicate component instances
     hz_drop = drop_cokey_horz(muhorzdata_pd)
     if hz_drop is not None:
         muhorzdata_pd = muhorzdata_pd[~muhorzdata_pd.cokey.isin(hz_drop)]
+    muhorzdata_pd = muhorzdata_pd.drop_duplicates().reset_index(drop=True)
 
     # Update comp_key
     comp_key = muhorzdata_pd["cokey"].unique().tolist()
@@ -362,12 +375,16 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
         "distance_score", ascending=False
     ).reset_index(drop=True)
 
-    # Determine rank location
+    # Generate the Rank_Loc column values
     rank_id = 1
     Rank_Loc = []
-    for rank in mucompdata_cond_prob["soilID_rank"]:
-        Rank_Loc.append(str(rank_id) if rank else "Not Displayed")
-        rank_id += rank  # Increase rank_id only if rank is True
+    for rank, displayed in mucompdata_cond_prob["soilID_rank"].items():
+        if displayed:
+            Rank_Loc.append(str(rank_id))
+            rank_id += 1
+        else:
+            Rank_Loc.append("Not Displayed")
+
     mucompdata_cond_prob["Rank_Loc"] = Rank_Loc
 
     # --------------------------------------------------------------------------------------------------------------------------
@@ -381,24 +398,25 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
         ["soilID_rank", "distance_score"], ascending=[False, False]
     )
     mucomp_index = mucompdata_cond_prob.index
-    
-    # Extract lists for constructing ID dictionary
-    siteName = mucompdata_cond_prob["compname"].apply(lambda x: x.capitalize()).tolist()
-    compName = mucompdata_cond_prob["compname_grp"].apply(lambda x: x.capitalize()).tolist()
-    score = mucompdata_cond_prob["distance_score"].round(3).tolist()
-    rank_loc = mucompdata_cond_prob["Rank_Loc"].tolist()
-    model_version = 3
 
-    # Step 3: Construct ID list directly from the sorted and cleaned DataFrame
-    ID = []
-    for i, idx in enumerate(mucompdata_cond_prob.index):
-        idT = {
-            "name": siteName[i],
-            "component": compName[i],
-            "score_loc": score[i],
-            "rank_loc": rank_loc[i],
+    # Generate the ID list
+    ID = [
+        {
+            "name": site.capitalize(),
+            "component": comp.capitalize(),
+            "score_loc": sc,
+            "rank_loc": rank,
         }
-        ID.append(idT)
+        for site, comp, sc, rank in zip(
+            mucompdata_cond_prob["compname"],
+            mucompdata_cond_prob["compname_grp"],
+            mucompdata_cond_prob["distance_score"].round(3),
+            mucompdata_cond_prob["Rank_Loc"],
+        )
+    ]
+
+    # Replace NaN values with an empty string
+    mucompdata_cond_prob = mucompdata_cond_prob.fillna("")
 
     # Merge component descriptions
     WRB_Comp_Desc = get_WRB_descriptions(
@@ -438,16 +456,32 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
         for _, row in mucompdata_cond_prob.iterrows()
     ]
 
-    # Reorder lists based on mucomp_index
-    hz_lyrs = [hz_lyrs[i] for i in mucomp_index]
-    snd_lyrs = [snd_lyrs[i] for i in mucomp_index]
-    cly_lyrs = [cly_lyrs[i] for i in mucomp_index]
-    txt_lyrs = [txt_lyrs[i] for i in mucomp_index]
-    rf_lyrs = [rf_lyrs[i] for i in mucomp_index]
-    cec_lyrs = [cec_lyrs[i] for i in mucomp_index]
-    ph_lyrs = [ph_lyrs[i] for i in mucomp_index]
-    ec_lyrs = [ec_lyrs[i] for i in mucomp_index]
+    # Reordering lists using list comprehension and mucomp_index
+    lists_to_reorder = [
+        hz_lyrs,
+        snd_lyrs,
+        cly_lyrs,
+        txt_lyrs,
+        rf_lyrs,
+        cec_lyrs,
+        ph_lyrs,
+        ec_lyrs,
+    ]
+    reordered_lists = [[lst[i] for i in mucomp_index] for lst in lists_to_reorder]
 
+    # Destructuring reordered lists for clarity
+    (
+        hz_lyrs,
+        snd_lyrs,
+        cly_lyrs,
+        txt_lyrs,
+        rf_lyrs,
+        cec_lyrs,
+        ph_lyrs,
+        ec_lyrs,
+    ) = reordered_lists
+
+    # Generating output_SoilList
     output_SoilList = [
         dict(
             zip(
@@ -463,11 +497,20 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
                     "ph",
                     "ec",
                 ],
-                item,
+                row,
             )
         )
-        for item in zip(
-            ID, Site, hz_lyrs, snd_lyrs, cly_lyrs, txt_lyrs, rf_lyrs, cec_lyrs, ph_lyrs, ec_lyrs
+        for row in zip(
+            ID,
+            Site,
+            hz_lyrs,
+            snd_lyrs,
+            cly_lyrs,
+            txt_lyrs,
+            rf_lyrs,
+            cec_lyrs,
+            ph_lyrs,
+            ec_lyrs
         )
     ]
 
@@ -486,42 +529,11 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
             return obj
         
     output_SoilList_cleaned = convert_to_serializable(output_SoilList)
-
-    # Save data
-    if plot_id is None:
-        soilIDRank_output_pd.to_csv(config.SOIL_ID_RANK_PATH, index=None, header=True)
-        mucompdata_cond_prob.to_csv(config.SOIL_ID_PROB_PATH, index=None, header=True)
-    else:
-        save_model_output(
-            plot_id,
-            model_version,
-            json.dumps(
-                {
-                    "metadata": {
-                        "location": "global",
-                        "model": "v2",
-                        "unit_measure": {
-                            "distance": "m",
-                            "depth": "cm",
-                            "cec": "cmol(c)/kg",
-                            "clay": "%",
-                            "rock_fragments": "cm3/100cm3",
-                            "sand": "%",
-                            "ec": "ds/m",
-                        },
-                    },
-                    "soilList": output_SoilList_cleaned,
-                }
-            ),
-            soilIDRank_output_pd.to_csv(index=None, header=True),
-            mucompdata_cond_prob.to_csv(index=None, header=True),
-        )
-
-    # Return the JSON output
-    return {
+ 
+    soil_list_json = {
         "metadata": {
-            "location": "global",
-            "model": "v2",
+            "location": "us",
+            "model": "v3",
             "unit_measure": {
                 "distance": "m",
                 "depth": "cm",
@@ -532,20 +544,36 @@ def getSoilLocationBasedGlobal(lon, lat, plot_id):
                 "ec": "ds/m",
             },
         },
+        #"AWS_PIW90": aws_PIW90,
+        #"Soil Data Value": var_imp,
         "soilList": output_SoilList_cleaned,
     }
+
+    return SoilListOutputData(
+        soil_list_json=soil_list_json,
+        rank_data_csv=soilIDRank_output_pd.to_csv(index=None, header=True),
+        map_unit_component_data_csv=mucompdata_cond_prob.to_csv(index=None, header=True),
+    )
+    
 
 
 ##############################################################################################
 #                                   rankPredictionGlobal                                     #
 ##############################################################################################
-def rankPredictionGlobal(
-    lon, lat, soilHorizon, horizonDepth, rfvDepth, lab_Color, bedrock, cracks, plot_id=None
+def rank_soils_global(
+    lon,
+    lat,
+    list_output_data: SoilListOutputData,
+    soilHorizon,
+    horizonDepth,
+    rfvDepth,
+    lab_Color,
+    bedrock,
+    cracks
 ):
     # ------------------------------------------------------------------------------------------------
     # ------ Load in user data --------#
-
-    # Create the dataframe
+    # Initialize the DataFrame from the input data
     soil_df = pd.DataFrame(
         {
             "soilHorizon": soilHorizon,
@@ -555,76 +583,60 @@ def rankPredictionGlobal(
         }
     )
 
-    # Cleanup the dataframe
+    # Drop rows where all values are NaN
     soil_df.dropna(how="all", inplace=True)
+
+    # Set the bottom of each horizon
     soil_df["bottom"] = soil_df["horizonDepth"]
 
-    # Replace NaN values with None for consistency
-    soil_df = soil_df.where(pd.notna(soil_df), None)
+    # Replace NaNs with None for consistency
+    # soil_df.fillna(value=None, inplace=True)
 
-    # Compute the 'top' column
-    top = [0] + [int(depth) for depth in soil_df["horizonDepth"][:-1]]
-    soil_df["top"] = top
+    # Calculate the top depth for each horizon
+    soil_df["top"] = [0] + soil_df["horizonDepth"].iloc[:-1].tolist()
 
-    # Set 'horizonDepth' as the index
-    soil_df.set_index("horizonDepth", inplace=True)
+    # Adjust the bottom depth based on bedrock depth
+    if bedrock is not None:
+        if bedrock is not soil_df.empty and soil_df["bottom"].iloc[-1] > bedrock:
+            # Find the last valid index where bottom depth is less than or equal to bedrock
+            last_valid_index = soil_df.loc[soil_df["bottom"] <= bedrock].index[-1]
+            # Filter the DataFrame up to the last valid index
+            soil_df = soil_df.loc[:last_valid_index].copy()
+            # Set the bottom depth of the last row to the bedrock depth
+            soil_df.at[last_valid_index, "bottom"] = bedrock
 
-    # Drop rows where 'soilHorizon' and 'rfvDepth' are both missing
-    soil_df_slice = soil_df.dropna(subset=["soilHorizon", "rfvDepth"], how="all")
+    # Drop the original horizonDepth column
+    soil_df.drop(columns=["horizonDepth"], inplace=True)
 
-    # If the slice is not empty, reset its index
-    if not soil_df_slice.empty:
-        soil_df_slice.reset_index(inplace=True)
-        soil_df_slice.rename(columns={"horizonDepth": "index"}, inplace=True)
-        soil_df_slice.set_index("index", inplace=True)
+    # Filter out rows without valid horizon data
+    relevant_columns = ["soilHorizon", "rfvDepth", "lab_Color"]
+    soil_df_slice = soil_df.dropna(how="all", subset=relevant_columns)
+
+    if soil_df_slice.empty:
+        soil_df_slice = None
 
     if soil_df_slice is not None:
-        # If bedrock has been recorded and the lowest soil depth associated with data is
-        # greater than bedrock, then change lowest soil depth to bedrock depth
-        if bedrock and soil_df_slice["bottom"].iloc[-1] > bedrock:
-            soil_df_slice["bottom"].iloc[-1] = bedrock
-            soil_df["bottom"][soil_df_slice.index[-1]] = bedrock
-            soil_df.reset_index(drop=True, inplace=True)
-
-            # Infill missing horizons
-            for j in range(len(soil_df) - 1):
-                if soil_df["top"].iloc[j + 1] > soil_df["bottom"].iloc[j]:
-                    layer_add = pd.DataFrame(
-                        {
-                            "soilHorizon": [None],
-                            "rfvDepth": [None],
-                            "lab_Color": [None],
-                            "bottom": [soil_df["top"].iloc[j + 1]],
-                            "top": [soil_df["bottom"].iloc[j]],
-                        }
-                    )
-                    soil_df = (
-                        pd.concat([soil_df, layer_add], axis=0)
-                        .sort_values("top")
-                        .reset_index(drop=True)
-                    )
-
-            soil_df.where(pd.notnull(soil_df), None, inplace=True)
+        soil_df_slice = soil_df_slice.reset_index(drop=True)
 
         # Create index list of soil slices where user data exists
-        soil_df_slice.reset_index(drop=True, inplace=True)
         pedon_slice_index = [
             j
             for i in range(len(soil_df_slice))
-            for j in range(int(soil_df_slice["top"].iloc[i]), int(soil_df_slice["bottom"].iloc[i]))
-            if j < 120
+            for j in range(int(soil_df_slice.top[i]), int(soil_df_slice.bottom[i]))
         ]
-        if bedrock:
-            pedon_slice_index.extend(range(bedrock, 120))
+        pedon_slice_index = [x for x in pedon_slice_index if x < 200]
 
-        # Soil properties to lists
-        soilHorizon, rfvDepth = soil_df["soilHorizon"].tolist(), soil_df["rfvDepth"].tolist()
-        horizonDepthB, horizonDepthT = list(map(int, soil_df["bottom"])), list(
-            map(int, soil_df["top"])
-        )
-        lab_Color = soil_df["lab_Color"]
+        if bedrock is not None:
+            pedon_slice_index.extend(range(bedrock, 200))
 
-        # Format and generate user data
+        # Convert soil properties to lists
+        soilHorizon = soil_df.soilHorizon.tolist()
+        rfvDepth = soil_df.rfvDepth.tolist()
+        horizonDepthB = [int(x) for x in soil_df.bottom.tolist()]
+        horizonDepthT = [int(x) for x in soil_df.top.tolist()]
+        lab_Color = soil_df.lab_Color
+
+        # Generate user specified percent clay, sand, and rfv distributions
         spt = [getSand(sh) for sh in soilHorizon]
         cpt = [getClay(sh) for sh in soilHorizon]
         p_cfg = [getCF_fromClass(rf) for rf in rfvDepth]
@@ -645,80 +657,85 @@ def rankPredictionGlobal(
             for _ in range(horizonDepthT[i], horizonDepthB[i])
         ]
 
-        # Adjust depth interval of user data
-        for data_list in [p_sandpct_intpl, p_claypct_intpl, p_cfg_intpl]:
-            if len(data_list) > 120:
-                data_list = data_list[:120]
+        # Length of interpolated texture and RF depth
+        p_bottom_depth = pd.DataFrame([-999, "sample_pedon", soil_df_slice.bottom.iloc[-1]]).T
+        p_bottom_depth.columns = ["cokey", "compname", "bottom_depth"]
+
+        # Pedon color data
+        lab_Color = pd.Series(lab_Color)
+        if not lab_Color.isnull().all():
+            lab_Color = [[np.nan, np.nan, np.nan] if x is None else x for x in lab_Color]
+            lab_Color = pd.DataFrame(lab_Color)
+            pedon_LAB = pedon_color(lab_Color, horizonDepth)
+
+            if not np.isnan(pedon_LAB).all():
+                refs = {
+                    "white": [100.0, 0.0, 0.0],
+                    "red": [53.2, 80.1, 67.2],
+                    "yellow": [97.1, -21.6, 94.5],
+                }
+
+                cr_df = [calculate_deltaE2000(pedon_LAB, refs[color]) for color in refs]
+                cr_df = pd.Series(cr_df)
             else:
-                data_list.extend([np.nan] * (120 - len(data_list)))
+                cr_df = pd.Series([np.nan])
+        else:
+            cr_df = pd.Series([np.nan])
 
-        p_hz_data = pd.DataFrame(
-            {
-                "compname": "sample_pedon",
-                "sandpct_intpl": p_sandpct_intpl,
-                "claypct_intpl": p_claypct_intpl,
-                "rfv_intpl": p_cfg_intpl,
-            }
+        # Adjust depth interval for each dataset
+        p_sandpct_intpl = adjust_depth_interval(p_sandpct_intpl)
+        p_claypct_intpl = adjust_depth_interval(p_claypct_intpl)
+        p_cfg_intpl = adjust_depth_interval(p_cfg_intpl)
+        p_lab_intpl = adjust_depth_interval(p_lab_intpl)
+
+        # Construct final dataframe with adjusted data
+        p_compname = pd.Series("sample_pedon", index=np.arange(len(p_sandpct_intpl)))
+        p_hz_data = pd.concat(
+            [p_compname, p_sandpct_intpl, p_claypct_intpl, p_cfg_intpl, p_lab_intpl], axis=1
         )
+        p_hz_data.columns = [
+            "compname",
+            "sandpct_intpl",
+            "claypct_intpl",
+            "rfv_intpl",
+            "l",
+            "a",
+            "b",
+        ]
 
-        # Drop empty data columns and depth slices
-        p_hz_data.dropna(axis=1, how="all", inplace=True)
+        # Clean up the final data
+        p_hz_data = p_hz_data.loc[:, ~p_hz_data.isnull().all()]
         p_hz_data = p_hz_data[p_hz_data.index.isin(pedon_slice_index)]
+
+        # List of user entered variables
         p_hz_data_names = p_hz_data.columns.tolist()
 
     else:
-        p_hz_data, p_sandpct_intpl, p_claypct_intpl, p_cfg_intpl = None, [], [], []
-        p_bottom_depth = pd.DataFrame(
-            {"cokey": [-999], "compname": ["sample_pedon"], "bottom_depth": [0]}
-        )
+        # Initialize primary data containers to default or empty values
+        p_hz_data = None
 
-    lab_Color = pd.Series(lab_Color)
-    if not lab_Color.isnull().all():
-        lab_Color = [[np.nan, np.nan, np.nan] if x is None else x for x in lab_Color]
-        lab_Color = pd.DataFrame(lab_Color)
-        pedon_LAB = pedon_color(lab_Color, horizonDepth)
+        # Initialize interpolated soil property lists
+        p_sandpct_intpl = []
+        p_claypct_intpl = []
+        p_cfg_intpl = []
 
-        if not np.isnan(pedon_LAB).all():
-            refs = {
-                "white": [100.0, 0.0, 0.0],
-                "red": [53.2, 80.1, 67.2],
-                "yellow": [97.1, -21.6, 94.5],
-            }
-
-            cr_df = [calculate_deltaE2000(pedon_LAB, refs[color]) for color in refs]
-            cr_df = pd.Series(cr_df)
-        else:
-            cr_df = pd.Series([np.nan])
-    else:
+        # Initialize lab interpolation data with NaNs
+        p_lab_intpl = pd.DataFrame(np.nan, index=np.arange(1), columns=np.arange(3))
         cr_df = pd.Series([np.nan])
+        
+        # Set default bottom depth data
+        if bedrock is not None:
+            p_bottom_depth = pd.DataFrame([-999, "sample_pedon", bedrock]).T
+        else:
+            p_bottom_depth = pd.DataFrame([-999, "sample_pedon", 0]).T
+        p_bottom_depth.columns = ["cokey", "compname", "bottom_depth"]
 
-    # Calculate Data Completeness Score
-    data_completeness, text_completeness = compute_data_completeness(
-        bedrock, p_sandpct_intpl, soilHorizon, p_cfg_intpl, rfvDepth, cracks, cr_df
-    )
 
     # --------------------------------------------------------------------------------------------------------------------------------------
     # Load in component data from soilIDList
-    # Initialize
-    record_id = None
-
-    # If no plot_id is provided, load data from file
-    if plot_id is None:
-        soilIDRank_output_pd = pd.read_csv(config.SOIL_ID_RANK_PATH)
-        mucompdata_pd = pd.read_csv(config.SOIL_ID_PROB_PATH)
-
-    # If plot_id is provided, load data from the database
-    else:
-        modelRun = load_model_output(plot_id)
-
-        # Check if modelRun data was successfully fetched
-        if modelRun:
-            record_id = modelRun[0]
-            soilIDRank_output_pd = pd.read_csv(io.StringIO(modelRun[2]))
-            mucompdata_pd = pd.read_csv(io.StringIO(modelRun[3]))
-        else:
-            return "Cannot find a plot with this ID"
-
+    soilIDRank_output_pd = pd.read_csv(io.StringIO(list_output_data.rank_data_csv))
+    mucompdata_pd = pd.read_csv(io.StringIO(list_output_data.map_unit_component_data_csv))
+    
     # Create soil depth DataFrame and subset component depths based on max user depth
     # if no bedrock specified
     c_bottom_depths = mucompdata_pd[["compname", "c_very_bottom"]].rename(
@@ -746,6 +763,7 @@ def rankPredictionGlobal(
     soil_matrix = pd.DataFrame(
         np.nan, index=np.arange(max_depth), columns=np.arange(len(slices_of_soil))
     )
+
     for i in range(len(slices_of_soil)):
         slice_end = slices_of_soil.bottom_depth.iloc[i]
         soil_matrix.iloc[:slice_end, i] = 1
@@ -912,7 +930,7 @@ def rankPredictionGlobal(
     wmf2, wsf2, rmf2, rsf2, ymf2, ysf2 = ([] for _ in range(6))
 
     # Load color distribution data from NormDist1.csv
-    with open(config.NORM_DIST_1_PATH, "r") as csvfile:
+    with open(soil_id.config.NORM_DIST_1_PATH, "r") as csvfile:
         readCSV = csv.reader(csvfile, delimiter=",")
         for row_id, row in enumerate(readCSV):
             if row_id == 0:
@@ -929,7 +947,7 @@ def rankPredictionGlobal(
                 ysf1 = [float(i) for i in row]
 
     # Load color distribution data from NormDist2.csv
-    with open(config.NORM_DIST_2_PATH, "r") as csvfile:
+    with open(soil_id.config.NORM_DIST_2_PATH, "r") as csvfile:
         readCSV = csv.reader(csvfile, delimiter=",")
         for row_id, row in enumerate(readCSV):
             if row_id == 0:
@@ -1105,7 +1123,7 @@ def rankPredictionGlobal(
 
     D_final_loc = pd.merge(
         D_final_horz,
-        mucompdata_pd[["compname", "clay", "distance_score_norm"]],
+        mucompdata_pd[["compname", "clay"]],
         on="compname",
         how="left",
     )
@@ -1114,11 +1132,14 @@ def rankPredictionGlobal(
     # If Score_Data returns NA, assign 0 to weight
     D_final_loc.loc[D_final_loc.Score_Data.isnull(), "weight"] = 0
 
-    # Adjust Data Score weight by the data completeness
+    # Calculate the final score incorporating the location score
+    location_weight = 1
+
+    # Calculate the combined score
     Score_Data_Loc = (D_final_loc[["Score_Data", "distance_score"]].sum(axis=1)) / (
-        D_final_loc.weight + 1
+        D_final_loc.weight + location_weight
     )
-    Score_Data_Loc = Score_Data_Loc / np.nanmax(Score_Data_Loc)
+    
     D_final_loc["Score_Data_Loc"] = Score_Data_Loc
 
     # Rule-based final score adjustment
@@ -1126,32 +1147,39 @@ def rankPredictionGlobal(
         if cracks and row["clay"] == "Yes" and "vert" in row["compname"].lower():
             D_final_loc.at[i, "Score_Data_Loc"] = 1.001
         elif (
-            0 <= bedrock <= 10
+            bedrock is not None
+            and 0 <= bedrock <= 10
             and row["fss"].lower() == "fao74"
             and "lithosols" in row["compname"].lower()
         ):
             D_final_loc.at[i, "Score_Data_Loc"] = 1.001
         elif (
-            0 <= bedrock <= 10
+            bedrock is not None
+            and 0 <= bedrock <= 10
             and row["fss"].lower() == "fao90"
             and "lithic leptosols" in row["compname"].lower()
         ):
             D_final_loc.at[i, "Score_Data_Loc"] = 1.001
         elif (
-            10 < bedrock <= 30
+            bedrock is not None
+            and 10 < bedrock <= 30
             and row["fss"].lower() == "fao74"
             and ("rendzinas" in row["compname"].lower() or "rankers" in row["compname"].lower())
         ):
             D_final_loc.at[i, "Score_Data_Loc"] = 1.001
         elif (
-            10 < bedrock <= 30
+            bedrock is not None
+            and 10 < bedrock <= 30
             and row["fss"].lower() == "fao90"
             and "leptosols" in row["compname"].lower()
         ):
             D_final_loc.at[i, "Score_Data_Loc"] = 1.001
-        elif (bedrock is None or bedrock > 50) and any(
-            term in row["compname"].lower()
-            for term in ["lithosols", "leptosols", "rendzinas", "rankers"]
+        elif (
+            (bedrock is None or bedrock > 50)
+            and any(
+                term in row["compname"].lower()
+                for term in ["lithosols", "leptosols", "rendzinas", "rankers"]
+            )
         ):
             D_final_loc.at[i, "Score_Data_Loc"] = 0.001
 
@@ -1185,259 +1213,327 @@ def rankPredictionGlobal(
         ["Score_Data_Loc", "compname"], ascending=[False, True]
     ).reset_index(drop=True)
 
-    # Assign final rank
+    # Create a Rank_Data_Loc column
     rank_id = 1
     Rank_DataLoc = []
-    for is_rank_final in D_final_loc["soilID_rank_final"]:
-        if is_rank_final:
+
+    for i, row in D_final_loc.iterrows():
+        if not row["soilID_rank_final"]:
+            Rank_DataLoc.append("Not Displayed")
+        elif row["rank_status"] == "Not Ranked":
+            Rank_DataLoc.append("Not ranked")
+        else:
             Rank_DataLoc.append(str(rank_id))
             rank_id += 1
-        else:
-            Rank_DataLoc.append("Not Displayed")
 
     D_final_loc["Rank_Data_Loc"] = Rank_DataLoc
+
+    # Sort dataframe based on soilID_rank_final and Score_Data_Loc
     D_final_loc = D_final_loc.sort_values(
         ["soilID_rank_final", "Score_Data_Loc"], ascending=[False, False]
     ).reset_index(drop=True)
+
+    # Replace NaN values in the specified columns with 0.0
     D_final_loc[
-        ["Score_Data", "horz_score", "Score_Data_Loc", "distance_score", "distance_score_norm"]
+        [
+            "Score_Data",
+            "horz_score",
+            "Score_Data_Loc",
+            "distance_score",
+        ]
     ] = D_final_loc[
-        ["Score_Data", "horz_score", "Score_Data_Loc", "distance_score", "distance_score_norm"]
+        [
+            "Score_Data",
+            "horz_score",
+            "Score_Data_Loc",
+            "distance_score",
+        ]
     ].fillna(
         0.0
     )
+ 
+    # Construct the output format
+    Rank = [
+        {
+            "name": row.compname.capitalize(),
+            "component": row.compname_grp.capitalize(),
+            "componentID": row.cokey,
+            "score_data_loc": (
+                "" if row.missing_status == "Location data only" else round(row.Score_Data_Loc, 3)
+            ),
+            "rank_data_loc": (
+                "" if row.missing_status == "Location data only" else row.Rank_Data_Loc
+            ),
+            "score_data": (
+                "" if row.missing_status == "Location data only" else round(row.Score_Data, 3)
+            ),
+            "rank_data": "" if row.missing_status == "Location data only" else row.Rank_Data,
+            "score_loc": round(row.distance_score, 3),
+            "rank_loc": row.Rank_Loc,
+            "componentData": row.missing_status,
+        }
+        for _, row in D_final_loc.iterrows()
+    ]
 
-    # Final scaling of similarity score by 'data_completeness'
-    D_final_loc.Score_Data_Loc = D_final_loc.Score_Data_Loc * (
-        0.25 if data_completeness < 25 else float(data_completeness) / 100
-    )
-
-    # Constructing rank list
-    rank_list = []
-
-    is_location_only = D_final_loc.missing_status.all() == "Location data only"
-    for idx, row in D_final_loc.iterrows():
-        if is_location_only:
-            rank_entry = {
-                "name": row.compname.capitalize(),
-                "component": row.compname_grp.capitalize(),
-                "mapunitID": row.mukey,
-                "componentID": row.cokey,
-                "score_data_loc": "",
-                "rank_data_loc": "",
-                "score_data": "",
-                "rank_data": "",
-                "score_loc": round(row.distance_score_norm, 3),
-                "rank_loc": row.Rank_Loc,
-                "componentData": row.missing_status,
-            }
-        else:
-            rank_entry = {
-                "name": row.compname.capitalize(),
-                "component": row.compname_grp.capitalize(),
-                "mapunitID": row.mukey,
-                "componentID": row.cokey,
-                "score_data_loc": round(row.Score_Data_Loc, 3),
-                "rank_data_loc": row.Rank_Data_Loc,
-                "score_data": round(row.Score_Data, 3),
-                "rank_data": row.Rank_Data,
-                "score_loc": round(row.distance_score_norm, 3),
-                "rank_loc": row.Rank_Loc,
-                "componentData": row.missing_status,
-            }
-        rank_list.append(rank_entry)
-
-    # Setting up the return data structure
-    model_version = 3
-    metadata = {
-        "location": "global",
-        "model": "v3",
-        "dataCompleteness": {"score": data_completeness, "text": text_completeness},
+    output_data = {
+        "metadata": {
+            "location": "global",
+            "model": "v2",
+        },
+        "soilRank": Rank,
     }
 
-    result = {"metadata": metadata, "soilRank": rank_list}
-
-    # Save data if record_id is provided
-    if record_id:
-        save_rank_output(record_id, model_version, json.dumps(result))
-
-    return result
-
+    return output_data
 
 ##################################################################################################
 #                                          getSoilGridsGlobal                                    #
 ##################################################################################################
-def getSoilGridsGlobal(lon, lat, plot_id=None):
+def sg_list(lon, lat):
+    """
+    Query the SoilGrids API (via get_soilgrids_property_data) and post-process
+    the returned JSON into a structured dictionary that includes:
+    
+    1. Soil horizons data (sand, clay, cfvo, pH, cec, silt, texture) at multiple depths.
+    2. Classification probabilities and descriptions (WRB taxonomy).
+    3. Summarized or aggregated soil variables, with depth tracking.
+    
+    Args:
+        lon (float): Longitude in decimal degrees (WGS84).
+        lat (float): Latitude in decimal degrees (WGS84).
 
-    # Call soildgrids API
+    Returns:
+        dict: A nested dictionary with:
+            - "status": "unavailable" if needed columns are missing or data is invalid
+            - "metadata": Info about location, model version, and units
+            - "soilGrids": Detailed data on horizons, classification, etc.
+    """
+    # 1. Call the SoilGrids API for the specified lon/lat
     sg_out = get_soilgrids_property_data(lon, lat)
 
-    # Use the 'extract_values' function to extract specific keys from the JSON
-    top_depths = extract_values(sg_out, "top_depth")
-    bottom_depths = extract_values(sg_out, "bottom_depth")
-    bottom = bottom_depths["bottom_depth"].iloc[-1]
-    values = extract_values(sg_out, "mean")
-    names = extract_values(sg_out, "name")
+    if not sg_out or (isinstance(sg_out, dict) and sg_out.get("status") == "unavailable"):
+        logging.warning("No data returned from SoilGrids API.")
+        return {"status": "unavailable"}
 
-    # Convert extracted lists to DataFrames
+    # 2. Extract arrays/lists of relevant data from the JSON.
+    #    The new JSON structure nests data under properties -> layers -> depths.
+    try:
+        layers = sg_out.get("properties", {}).get("layers", [])
+        top_depths = []
+        bottom_depths = []
+        values = []
+        names = []
+        for layer in layers:
+            prop_name = layer.get("name")
+            for depth in layer.get("depths", []):
+                depth_range = depth.get("range", {})
+                # Append the top and bottom depths
+                top_depths.append(depth_range.get("top_depth"))
+                bottom_depths.append(depth_range.get("bottom_depth"))
+                # Append the mean value (from the "values" dict)
+                mean_value = depth.get("values", {}).get("mean")
+                values.append(mean_value)
+                # Save the property name (e.g., "cec", "cfvo", "clay", etc.)
+                names.append(prop_name)
+    except Exception as e:
+        logging.error(f"Error extracting values from SoilGrids JSON: {e}")
+        return {"status": "unavailable"}
+
+    # 3. Basic checks to ensure we have enough data
+    if not top_depths or not bottom_depths or not names or not values:
+        logging.warning("Missing required depth or property data in SoilGrids response.")
+        return {"status": "unavailable"}
+
+    # In case bottom_depths is too short to do iloc[-1], handle gracefully
+    try:
+        bottom = pd.Series(bottom_depths, name="bottom_depth").iloc[-1]
+    except IndexError:
+        logging.warning("No bottom_depth found in the data.")
+        return {"status": "unavailable"}
+
+    # 4. Convert extracted lists to DataFrames
     df_top_depth = pd.DataFrame(top_depths, columns=["top_depth"])
     df_bottom_depth = pd.DataFrame(bottom_depths, columns=["bottom_depth"])
     df_values = pd.DataFrame(values, columns=["value"])
+    
+    # The code assumes each property repeats over the same set of depths.
+    n_depths = len(df_top_depth)
+    if len(names) % n_depths != 0:
+        logging.warning("Number of property names isn't a multiple of the number of depths. Check data.")
+    df_names = pd.DataFrame(names, columns=["prop"])
 
-    # Repeat names for each 6 rows since there are 6 depths
-    df_names = pd.DataFrame(names * 6, columns=["prop"])
+    # 5. Combine everything into a single DataFrame.
+    #    If the lengths differ, take the minimum length.
+    min_len = min(len(df_names), len(df_top_depth), len(df_bottom_depth), len(df_values))
+    df_names = df_names.iloc[:min_len].reset_index(drop=True)
+    df_top_depth = df_top_depth.iloc[:min_len].reset_index(drop=True)
+    df_bottom_depth = df_bottom_depth.iloc[:min_len].reset_index(drop=True)
+    df_values = df_values.iloc[:min_len].reset_index(drop=True)
 
-    # Concatenate the DataFrames to form a single DataFrame
     sg_data = pd.concat([df_names, df_top_depth, df_bottom_depth, df_values], axis=1)
 
-    # Pivot the data based on bottom depth and property name, setting values to
-    # be the 'value' column
-    sg_data_w = sg_data.pivot(index="bottom_depth", columns="prop", values="value")
+    # 6. Pivot the data into a wide form with each property as a column.
+    try:
+        sg_data_w = sg_data.pivot_table(
+            index="bottom_depth", 
+            columns="prop", 
+            values="value", 
+            aggfunc="first"  # Change the aggregator if needed
+        )
+    except Exception as e:
+        logging.error(f"Error pivoting the data: {e}")
+        return {"status": "unavailable"}
 
-    # Add the top and bottom depth columns to the wide DataFrame
-    sg_data_w["hzdept_r"] = df_top_depth["top_depth"].head(6).tolist()
-    sg_data_w["hzdepb_r"] = df_bottom_depth["bottom_depth"].head(6).tolist()
-
-    # Reset the index for the resulting DataFrame
+    # 7. Attach the 'hzdept_r' and 'hzdepb_r' columns (the top & bottom depths)
+    unique_depths = sg_data.drop_duplicates(subset="bottom_depth")
+    bottom_to_top_map = dict(zip(unique_depths["bottom_depth"], unique_depths["top_depth"]))
+    sg_data_w["hzdept_r"] = sg_data_w.index.map(bottom_to_top_map)
+    sg_data_w["hzdepb_r"] = sg_data_w.index
     sg_data_w.reset_index(drop=True, inplace=True)
 
-    # Check if all values in the specified columns are NaN
-    if sg_data_w[["sand", "clay", "cfvo"]].isnull().all().all():
-        if plot_id is not None:
-            save_soilgrids_output(plot_id, 1, json.dumps({"status": "unavailable"}))
+    # 8. Check if we have valid data for key columns (e.g., sand, clay, cfvo).
+    needed_cols = {"sand", "clay", "cfvo"}
+    missing_cols = needed_cols - set(sg_data_w.columns)
+    if missing_cols:
+        logging.warning(f"Missing columns: {missing_cols}. Data might be incomplete.")
+        if len(missing_cols) == len(needed_cols):
+            return {"status": "unavailable"}
+    existing_needed_cols = needed_cols & set(sg_data_w.columns)
+    if sg_data_w[list(existing_needed_cols)].isnull().all().all():
         return {"status": "unavailable"}
-    else:
-        # Apply the factor to the specific columns
-        cols_to_multiply = ["sand", "clay", "cfvo", "phh2o", "cec"]
-        sg_data_w[cols_to_multiply] = sg_data_w[cols_to_multiply].multiply(0.1)
-        # Calculate silt and texture for the DataFrame
+
+    # 9. Scale certain columns by 0.1 (as in the original code)
+    cols_to_multiply = ["sand", "clay", "cfvo", "phh2o", "cec"]
+    for col in cols_to_multiply:
+        if col in sg_data_w.columns:
+            sg_data_w[col] = sg_data_w[col] * 0.1
+
+    # 10. Calculate silt and texture if not already present.
+    if "silt" not in sg_data_w.columns:
         sg_data_w["silt"] = sg_data_w.apply(silt_calc, axis=1)
+    if "texture" not in sg_data_w.columns:
         sg_data_w["texture"] = sg_data_w.apply(getTexture, axis=1)
 
-        sg_tax = get_soilgrids_classification_data(lon, lat, plot_id)
-
-        # If data was successfully fetched, process it
-        if sg_tax:
-            # Create DataFrame from fetched data
+    # 11. Get WRB classification & probabilities
+    sg_tax = get_soilgrids_classification_data(lon, lat)
+    if sg_tax:
+        try:
             sg_tax_prob = pd.DataFrame(sg_tax["wrb_class_probability"], columns=["WRB_tax", "Prob"])
-
-            # Sort DataFrame by probability
             sg_tax_prob.sort_values("Prob", ascending=False, inplace=True)
 
-            # Fetch descriptions for the soil classifications
-            # Assuming the function `getSG_descriptions` exists elsewhere in the code
+            # Merge with descriptive info
             WRB_Comp_Desc = getSG_descriptions(sg_tax_prob["WRB_tax"].tolist())
-
-            # Merge the descriptions with the data
             TAXNWRB_pd = pd.merge(sg_tax_prob, WRB_Comp_Desc, on="WRB_tax", how="left")
-            TAXNWRB_pd.index = ["Rank1", "Rank2", "Rank3"]
-        else:
-            # If data wasn't fetched, create an unavailable status DataFrame
-            TAXNWRB_pd = pd.DataFrame(
-                {
-                    "WRB_tax": [""],
-                    "Prob": [""],
-                    "Description_en": [""],
-                    "Management_en": [""],
-                    "Description_es": [""],
-                    "Management_es": [""],
-                    "Description_ks": [""],
-                    "Management_ks": [""],
-                    "Description_fr": [""],
-                    "Management_fr": [""],
-                }
-            )
 
-        sand_pd_lpks, lpks_depths = sg_get_and_agg("sand", sg_data_w, bottom, return_depth=True)
+            # Only handle top 3 entries (or fewer if less are returned)
+            ranks_needed = min(3, len(TAXNWRB_pd))
+            TAXNWRB_pd = TAXNWRB_pd.head(ranks_needed)
+            TAXNWRB_pd.index = [f"Rank{i+1}" for i in range(ranks_needed)]
+        except Exception as e:
+            logging.error(f"Error processing WRB classification: {e}")
+            TAXNWRB_pd = pd.DataFrame({
+                "WRB_tax": [""],
+                "Prob": [""],
+                "Description_en": [""],
+                "Management_en": [""],
+                "Description_es": [""],
+                "Management_es": [""],
+                "Description_ks": [""],
+                "Management_ks": [""],
+                "Description_fr": [""],
+                "Management_fr": [""],
+            })
+    else:
+        TAXNWRB_pd = pd.DataFrame({
+            "WRB_tax": [""],
+            "Prob": [""],
+            "Description_en": [""],
+            "Management_en": [""],
+            "Description_es": [""],
+            "Management_es": [""],
+            "Description_ks": [""],
+            "Management_ks": [""],
+            "Description_fr": [""],
+            "Management_fr": [""],
+        })
 
-        variables = ["clay", "cfvo", "phh2o", "cec"]
-        dataframes = {var: sg_get_and_agg(var, sg_data_w, bottom) for var in variables}
+    # 12. Gather aggregated values for each property
+    depths = sg_data_w["hzdepb_r"]
+    sand_pd = sg_data_w["sand"]
+    clay_pd = sg_data_w["clay"]
+    rfv_pd = sg_data_w["cfvo"]
+    pH_pd  = sg_data_w["phh2o"]
+    cec_pd = sg_data_w["cec"]
+    # 13. Additional texture calculations from aggregated values
+    texture_pd = pd.DataFrame({
+        "sand": sand_pd,
+        "clay": clay_pd
+    })
+    texture_pd["sand"] = pd.to_numeric(texture_pd["sand"], errors="coerce")
+    texture_pd["clay"] = pd.to_numeric(texture_pd["clay"], errors="coerce")
+    texture_pd["silt"] = texture_pd.apply(silt_calc, axis=1)
+    texture_pd = texture_pd.apply(getTexture, axis=1).replace([None], "")
 
-        clay_pd_lpks = dataframes["clay"]
-        rfv_pd_lpks = dataframes["cfvo"]
-        pH_pd_lpks = dataframes["phh2o"]
-        cec_pd_lpks = dataframes["cec"]
+    # 14. Build the WRB classification dictionary (components)
+    component_keys = [
+        "compname",
+        "probability",
+        "descriptionEN",
+        "managementEN",
+        "descriptionES",
+        "managementES",
+        "descriptionKS",
+        "managementKS",
+        "descriptionFR",
+        "managementFR",
+    ]
+    component_values = [
+        TAXNWRB_pd["WRB_tax"],
+        TAXNWRB_pd["Prob"],
+        TAXNWRB_pd.get("Description_en", ""),
+        TAXNWRB_pd.get("Management_en", ""),
+        TAXNWRB_pd.get("Description_es", ""),
+        TAXNWRB_pd.get("Management_es", ""),
+        TAXNWRB_pd.get("Description_ks", ""),
+        TAXNWRB_pd.get("Management_ks", ""),
+        TAXNWRB_pd.get("Description_fr", ""),
+        TAXNWRB_pd.get("Management_fr", ""),
+    ]
+    components_dict = {}
+    for k, v in zip(component_keys, component_values):
+        components_dict[k] = dict(zip(v.index, v.values))
 
-        # Additional texture calculation
-        texture_pd = pd.DataFrame([sand_pd_lpks, clay_pd_lpks]).T
-        texture_pd.columns = ["sand", "clay"]
-        texture_pd["silt"] = texture_pd.apply(silt_calc, axis=1)
-        texture_pd_lpks = texture_pd.apply(getTexture, axis=1).replace([None], "")
+    # 15. Create the final SoilGrids dictionary.
+    SoilGrids = {
+        "components": components_dict,
+        "bottom_depth": dict(zip(depths.index, depths)),
+        "bedrock": bottom,
+    }
+    remaining_keys = ["texture", "sand", "clay", "rock_fragments", "ph", "cec"]
+    remaining_values = [
+        texture_pd,
+        sand_pd,
+        clay_pd,
+        rfv_pd,
+        pH_pd,
+        cec_pd,
+    ]
+    for k, v in zip(remaining_keys, remaining_values):
+        SoilGrids[k] = dict(zip(v.index, v.values))
 
-        # SoilGrids API call version 1
-        model_version = 1
+    # 16. Define metadata and return the final dictionary.
+    metadata = {
+        "location": "global",
+        "model": "v1",
+        "unit_measure": {
+            "depth": "cm",
+            "cec": "cmol(c)/kg",
+            "clay": "%",
+            "rock_fragments": "cm3/100cm3",
+            "sand": "%",
+        },
+    }
 
-        # Define keys and corresponding values for the 'components' dictionary
-        component_keys = [
-            "compname",
-            "probability",
-            "descriptionEN",
-            "managementEN",
-            "descriptionES",
-            "managementES",
-            "descriptionKS",
-            "managementKS",
-            "descriptionFR",
-            "managementFR",
-        ]
-        component_values = [
-            TAXNWRB_pd.WRB_tax,
-            TAXNWRB_pd.Prob,
-            TAXNWRB_pd.Description_en,
-            TAXNWRB_pd.Management_en,
-            TAXNWRB_pd.Description_es,
-            TAXNWRB_pd.Management_es,
-            TAXNWRB_pd.Description_ks,
-            TAXNWRB_pd.Management_ks,
-            TAXNWRB_pd.Description_fr,
-            TAXNWRB_pd.Management_fr,
-        ]
-
-        # Create 'components' dictionary using a loop
-        components_dict = {
-            k: dict(zip(TAXNWRB_pd.index, v)) for k, v in zip(component_keys, component_values)
-        }
-
-        # Create remaining dictionaries for the SoilGrids dictionary
-        remaining_keys = ["bottom_depth", "texture", "sand", "clay", "rock_fragments", "ph", "cec"]
-        remaining_values = [
-            lpks_depths,
-            texture_pd_lpks,
-            sand_pd_lpks,
-            clay_pd_lpks,
-            rfv_pd_lpks,
-            pH_pd_lpks,
-            cec_pd_lpks,
-        ]
-
-        # Create the overall SoilGrids dictionary
-        SoilGrids = {
-            "components": components_dict,
-            "bottom_depth": dict(list(zip(lpks_depths.index, lpks_depths))),
-            "bedrock": bottom,
-        }
-        SoilGrids.update(
-            {k: dict(list(zip(v.index, v))) for k, v in zip(remaining_keys, remaining_values)}
-        )
-
-        # Define the metadata dictionary
-        metadata = {
-            "location": "global",
-            "model": "v1",
-            "unit_measure": {
-                "depth": "cm",
-                "cec": "cmol(c)/kg",
-                "clay": "%",
-                "rock_fragments": "cm3/100cm3",
-                "sand": "%",
-            },
-        }
-
-        # If a plot_id is provided, save the SoilGrids output
-        if plot_id is not None:
-            save_soilgrids_output(
-                plot_id, model_version, json.dumps({"metadata": metadata, "soilGrids": SoilGrids})
-            )
-
-        # Return the final result
-        return {"metadata": metadata, "soilGrids": SoilGrids}
+    return {
+        "metadata": metadata,
+        "soilGrids": SoilGrids
+    }

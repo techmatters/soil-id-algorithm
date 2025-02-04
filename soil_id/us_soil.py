@@ -2060,7 +2060,6 @@ def rank_soils(
         Score_Data_Loc = (D_final_loc["Score_Data_scale"] + D_final_loc["distance_score_scale"]) / (
             D_final_loc["data_weight"] + location_weight
         )
-        Score_Data_Loc /= np.nanmax(Score_Data_Loc)
 
     # Assign the final combined score to the dataframe
     D_final_loc["Score_Data_Loc"] = Score_Data_Loc

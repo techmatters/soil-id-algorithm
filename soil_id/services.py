@@ -13,14 +13,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see https://www.gnu.org/licenses/.
 
-import json
 import logging
 import re
 
 import pandas as pd
 import requests
-
-from .db import save_soilgrids_output
 
 
 def get_elev_data(lon, lat):

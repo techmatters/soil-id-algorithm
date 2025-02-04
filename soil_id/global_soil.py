@@ -13,21 +13,31 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see https://www.gnu.org/licenses/.
 
+import collections
+import csv
+import io
+
+# Standard libraries
+import logging
+import re
+from dataclasses import dataclass
+
+# Third-party libraries
+import numpy as np
+import pandas as pd
+
+# Load .env file
+from dotenv import load_dotenv
+from scipy.stats import norm
+
 # local libraries
 import soil_id.config
 
-from .db import (
-    get_WRB_descriptions,
-    getSG_descriptions,
-)
-
-from .color import (
-    calculate_deltaE2000,
-)
-
+from .color import calculate_deltaE2000
+from .db import get_WRB_descriptions, getSG_descriptions
 from .services import get_soilgrids_classification_data, get_soilgrids_property_data
-
 from .utils import (
+    adjust_depth_interval,
     agg_data_layer,
     assign_max_distance_scores,
     calculate_location_score,
@@ -39,27 +49,11 @@ from .utils import (
     getSand,
     getTexture,
     gower_distances,
+    max_comp_depth,
     pedon_color,
     silt_calc,
-    max_comp_depth,
-    adjust_depth_interval,
 )
 
-# Standard libraries
-import logging
-import collections
-import csv
-import io
-import re
-from dataclasses import dataclass
-
-# Third-party libraries
-import numpy as np
-import pandas as pd
-from scipy.stats import norm
-
-# Load .env file
-from dotenv import load_dotenv
 load_dotenv()
 
 
@@ -93,7 +87,7 @@ def list_soils_global(lon, lat):
         lon,
         lat,
         # Temporarily change file path
-        file_path='/mnt/c/LandPKS_API_SoilID-master/global/wise30sec_poly_simp_soil.gpkg',
+        file_path="/mnt/c/LandPKS_API_SoilID-master/global/wise30sec_poly_simp_soil.gpkg",
         # file_path=config.WISE_PATH,
         # layer_name=None,
         buffer_dist=10000,
@@ -211,11 +205,13 @@ def list_soils_global(lon, lat):
     comp_key = muhorzdata_pd["cokey"].unique().tolist()
 
     # Subset mucompdata_pd by new compname_key and add suffix to name if there are duplicates
-    mucompdata_pd = mucompdata_pd.loc[mucompdata_pd['cokey'].isin(comp_key)].reset_index(drop=True)
+    mucompdata_pd = mucompdata_pd.loc[mucompdata_pd["cokey"].isin(comp_key)].reset_index(drop=True)
     mucompdata_pd["compname_grp"] = mucompdata_pd["compname"]
 
     # Sort by 'distance_score' (descending) and 'distance' (ascending), then reset the index
-    mucompdata_pd = mucompdata_pd.sort_values(['distance_score', 'distance'], ascending=[False, True]).reset_index(drop=True)
+    mucompdata_pd = mucompdata_pd.sort_values(
+        ["distance_score", "distance"], ascending=[False, True]
+    ).reset_index(drop=True)
 
     # Add suffix to duplicate names
     name_counts = collections.Counter(mucompdata_pd["compname"])
@@ -250,9 +246,7 @@ def list_soils_global(lon, lat):
 
     for group_key, group in muhorzdata_group_cokey:
         profile = (
-            group.sort_values(by="hzdept_r")
-            .drop_duplicates(keep="first")
-            .reset_index(drop=True)
+            group.sort_values(by="hzdept_r").drop_duplicates(keep="first").reset_index(drop=True)
         )
 
         # profile depth
@@ -276,10 +270,14 @@ def list_soils_global(lon, lat):
             [
                 sand_pct_intpl[["c_sandpct_intpl_grp"]],  # DataFrame
                 clay_pct_intpl[["c_claypct_intpl_grp"]],  # DataFrame
-                cf_pct_intpl[["c_cfpct_intpl_grp"]],     # DataFrame
-                pd.DataFrame(profile.compname.unique(), columns=["compname"]),  # Convert to DataFrame
-                pd.DataFrame(profile.cokey.unique(), columns=["cokey"]),        # Convert to DataFrame
-                pd.DataFrame(profile.comppct_r.unique(), columns=["comppct"]),  # Convert to DataFrame
+                cf_pct_intpl[["c_cfpct_intpl_grp"]],  # DataFrame
+                pd.DataFrame(
+                    profile.compname.unique(), columns=["compname"]
+                ),  # Convert to DataFrame
+                pd.DataFrame(profile.cokey.unique(), columns=["cokey"]),  # Convert to DataFrame
+                pd.DataFrame(
+                    profile.comppct_r.unique(), columns=["comppct"]
+                ),  # Convert to DataFrame
             ],
             axis=1,
         )
@@ -301,17 +299,33 @@ def list_soils_global(lon, lat):
             }
         )
 
-        snd_d, hz_depb = agg_data_layer(sand_pct_intpl.c_sandpct_intpl, bottom=c_bottom_temp["c_very_bottom"].iloc[0], depth=True)
-        cly_d = agg_data_layer(clay_pct_intpl.c_claypct_intpl, bottom=c_bottom_temp["c_very_bottom"].iloc[0], depth=False)
+        snd_d, hz_depb = agg_data_layer(
+            sand_pct_intpl.c_sandpct_intpl,
+            bottom=c_bottom_temp["c_very_bottom"].iloc[0],
+            depth=True,
+        )
+        cly_d = agg_data_layer(
+            clay_pct_intpl.c_claypct_intpl,
+            bottom=c_bottom_temp["c_very_bottom"].iloc[0],
+            depth=False,
+        )
         txt_d = [
             getTexture(row=None, sand=s, silt=(100 - (s + c)), clay=c) for s, c in zip(snd_d, cly_d)
         ]
         txt_d = pd.Series(txt_d, index=snd_d.index)
 
-        rf_d = agg_data_layer(cf_pct_intpl.c_cfpct_intpl, bottom=c_bottom_temp["c_very_bottom"].iloc[0], depth=False)
-        cec_d = agg_data_layer(cec_intpl.c_cec_intpl, bottom=c_bottom_temp["c_very_bottom"].iloc[0], depth=False)
-        ph_d = agg_data_layer(ph_intpl.c_ph_intpl, bottom=c_bottom_temp["c_very_bottom"].iloc[0], depth=False)
-        ec_d = agg_data_layer(ec_intpl.c_ec_intpl, bottom=c_bottom_temp["c_very_bottom"].iloc[0], depth=False)
+        rf_d = agg_data_layer(
+            cf_pct_intpl.c_cfpct_intpl, bottom=c_bottom_temp["c_very_bottom"].iloc[0], depth=False
+        )
+        cec_d = agg_data_layer(
+            cec_intpl.c_cec_intpl, bottom=c_bottom_temp["c_very_bottom"].iloc[0], depth=False
+        )
+        ph_d = agg_data_layer(
+            ph_intpl.c_ph_intpl, bottom=c_bottom_temp["c_very_bottom"].iloc[0], depth=False
+        )
+        ec_d = agg_data_layer(
+            ec_intpl.c_ec_intpl, bottom=c_bottom_temp["c_very_bottom"].iloc[0], depth=False
+        )
 
         # Fill NaN values and append to lists
         for data_list, data in zip(
@@ -370,9 +384,9 @@ def list_soils_global(lon, lat):
     ]
     soilIDRank_output_pd = pd.concat(soilIDRank_output, axis=0).reset_index(drop=True)
 
-    mucompdata_cond_prob = mucompdata_pd.sort_values(
-        "distance_score", ascending=False
-    ).reset_index(drop=True)
+    mucompdata_cond_prob = mucompdata_pd.sort_values("distance_score", ascending=False).reset_index(
+        drop=True
+    )
 
     # Generate the Rank_Loc column values
     rank_id = 1
@@ -500,16 +514,7 @@ def list_soils_global(lon, lat):
             )
         )
         for row in zip(
-            ID,
-            Site,
-            hz_lyrs,
-            snd_lyrs,
-            cly_lyrs,
-            txt_lyrs,
-            rf_lyrs,
-            cec_lyrs,
-            ph_lyrs,
-            ec_lyrs
+            ID, Site, hz_lyrs, snd_lyrs, cly_lyrs, txt_lyrs, rf_lyrs, cec_lyrs, ph_lyrs, ec_lyrs
         )
     ]
 
@@ -567,7 +572,7 @@ def rank_soils_global(
     rfvDepth,
     lab_Color,
     bedrock,
-    cracks
+    cracks,
 ):
     # ------------------------------------------------------------------------------------------------
     # ------ Load in user data --------#
@@ -687,9 +692,7 @@ def rank_soils_global(
 
         # Construct final dataframe with adjusted data
         p_compname = pd.Series("sample_pedon", index=np.arange(len(p_sandpct_intpl)))
-        p_hz_data = pd.concat(
-            [p_compname, p_sandpct_intpl, p_claypct_intpl, p_cfg_intpl], axis=1
-        )
+        p_hz_data = pd.concat([p_compname, p_sandpct_intpl, p_claypct_intpl, p_cfg_intpl], axis=1)
         p_hz_data.columns = [
             "compname",
             "sandpct_intpl",
@@ -1169,12 +1172,9 @@ def rank_soils_global(
             and "leptosols" in row["compname"].lower()
         ):
             D_final_loc.at[i, "Score_Data_Loc"] = 1.001
-        elif (
-            (bedrock is None or bedrock > 50)
-            and any(
-                term in row["compname"].lower()
-                for term in ["lithosols", "leptosols", "rendzinas", "rankers"]
-            )
+        elif (bedrock is None or bedrock > 50) and any(
+            term in row["compname"].lower()
+            for term in ["lithosols", "leptosols", "rendzinas", "rankers"]
         ):
             D_final_loc.at[i, "Score_Data_Loc"] = 0.001
 
@@ -1243,9 +1243,7 @@ def rank_soils_global(
             "Score_Data_Loc",
             "distance_score",
         ]
-    ].fillna(
-        0.0
-    )
+    ].fillna(0.0)
 
     # Construct the output format
     Rank = [
@@ -1279,6 +1277,7 @@ def rank_soils_global(
     }
 
     return output_data
+
 
 ##################################################################################################
 #                                          getSoilGridsGlobal                                    #
@@ -1355,7 +1354,9 @@ def sg_list(lon, lat):
     # The code assumes each property repeats over the same set of depths.
     n_depths = len(df_top_depth)
     if len(names) % n_depths != 0:
-        logging.warning("Number of property names isn't a multiple of the number of depths. Check data.")
+        logging.warning(
+            "Number of property names isn't a multiple of the number of depths. Check data."
+        )
     df_names = pd.DataFrame(names, columns=["prop"])
 
     # 5. Combine everything into a single DataFrame.
@@ -1374,7 +1375,7 @@ def sg_list(lon, lat):
             index="bottom_depth",
             columns="prop",
             values="value",
-            aggfunc="first"  # Change the aggregator if needed
+            aggfunc="first",  # Change the aggregator if needed
         )
     except Exception as e:
         logging.error(f"Error pivoting the data: {e}")
@@ -1427,7 +1428,23 @@ def sg_list(lon, lat):
             TAXNWRB_pd.index = [f"Rank{i+1}" for i in range(ranks_needed)]
         except Exception as e:
             logging.error(f"Error processing WRB classification: {e}")
-            TAXNWRB_pd = pd.DataFrame({
+            TAXNWRB_pd = pd.DataFrame(
+                {
+                    "WRB_tax": [""],
+                    "Prob": [""],
+                    "Description_en": [""],
+                    "Management_en": [""],
+                    "Description_es": [""],
+                    "Management_es": [""],
+                    "Description_ks": [""],
+                    "Management_ks": [""],
+                    "Description_fr": [""],
+                    "Management_fr": [""],
+                }
+            )
+    else:
+        TAXNWRB_pd = pd.DataFrame(
+            {
                 "WRB_tax": [""],
                 "Prob": [""],
                 "Description_en": [""],
@@ -1438,20 +1455,8 @@ def sg_list(lon, lat):
                 "Management_ks": [""],
                 "Description_fr": [""],
                 "Management_fr": [""],
-            })
-    else:
-        TAXNWRB_pd = pd.DataFrame({
-            "WRB_tax": [""],
-            "Prob": [""],
-            "Description_en": [""],
-            "Management_en": [""],
-            "Description_es": [""],
-            "Management_es": [""],
-            "Description_ks": [""],
-            "Management_ks": [""],
-            "Description_fr": [""],
-            "Management_fr": [""],
-        })
+            }
+        )
 
     # 12. Gather aggregated values for each property
     depths = sg_data_w["hzdepb_r"]
@@ -1461,10 +1466,7 @@ def sg_list(lon, lat):
     pH_pd = sg_data_w["phh2o"]
     cec_pd = sg_data_w["cec"]
     # 13. Additional texture calculations from aggregated values
-    texture_pd = pd.DataFrame({
-        "sand": sand_pd,
-        "clay": clay_pd
-    })
+    texture_pd = pd.DataFrame({"sand": sand_pd, "clay": clay_pd})
     texture_pd["sand"] = pd.to_numeric(texture_pd["sand"], errors="coerce")
     texture_pd["clay"] = pd.to_numeric(texture_pd["clay"], errors="coerce")
     texture_pd["silt"] = texture_pd.apply(silt_calc, axis=1)
@@ -1530,7 +1532,4 @@ def sg_list(lon, lat):
         },
     }
 
-    return {
-        "metadata": metadata,
-        "soilGrids": SoilGrids
-    }
+    return {"metadata": metadata, "soilGrids": SoilGrids}

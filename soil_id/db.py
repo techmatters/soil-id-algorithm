@@ -20,11 +20,10 @@ import pandas as pd
 
 # Third-party libraries
 import psycopg
+from dotenv import load_dotenv
 
 # local libraries
 import soil_id.config
-
-from dotenv import load_dotenv
 
 # Load .env file
 load_dotenv()
@@ -325,11 +324,19 @@ def getSG_descriptions(WRB_Comp_List):
         if not WRB_Comp_List_mapped:
             # If no mapping found, return an empty DataFrame or None
             logging.warning("No mapped WRB_1984_Full names found for given WRB_2006_Full values.")
-            return pd.DataFrame(columns=[
-                "WRB_tax", "Description_en", "Management_en", "Description_es",
-                "Management_es", "Description_ks", "Management_ks",
-                "Description_fr", "Management_fr"
-            ])
+            return pd.DataFrame(
+                columns=[
+                    "WRB_tax",
+                    "Description_en",
+                    "Management_en",
+                    "Description_es",
+                    "Management_es",
+                    "Description_ks",
+                    "Management_ks",
+                    "Description_fr",
+                    "Management_fr",
+                ]
+            )
 
         # 3. Get descriptions from wrb_fao90_desc where WRB_tax IN ...
         sql2 = """

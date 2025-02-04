@@ -99,7 +99,19 @@ def extract_WISE_data(lon, lat, file_path, buffer_dist=10000):
 ###################################################################################################
 
 
-def getSand(field):
+def getSand(field: str) -> float:
+    """
+    Given a soil texture name (e.g. "loam", "sand", "clay"), return the approximate
+    sand percentage based on a predefined lookup table.
+
+    Args:
+        field (str): The soil texture name (e.g. "sandy loam", "clay", etc.).
+                     Case-insensitive. May be None or an empty string.
+
+    Returns:
+        float: The sand percentage for that texture, or numpy.nan if the texture
+               is unrecognized or field is None.
+    """
     sand_percentages = {
         "sand": 92.0,
         "loamy sand": 80.0,
@@ -115,7 +127,12 @@ def getSand(field):
         "clay": 22.5,
     }
 
-    return sand_percentages.get(field.lower() if field else None, np.nan)
+    if field is None:
+        # If field is None, return nan immediately
+        return np.nan
+
+    # Convert field to lowercase, then do the lookup in the dictionary
+    return sand_percentages.get(field.lower(), np.nan)
 
 
 def getClay(field):
@@ -157,35 +174,37 @@ def getTexture(row=None, sand=None, silt=None, clay=None):
     Returns:
     - str: Soil texture classification.
     """
-
-    # Handle missing inputs
+    
+    # Handle missing inputs: if not provided individually, try to get from row.
     if sand is None or silt is None or clay is None:
         if row is not None:
             sand = row.get('sandtotal_r', np.nan)
             silt = row.get('silttotal_r', np.nan)
             clay = row.get('claytotal_r', np.nan)
+    
+    # Replace any NaN with 0 for the calculation.
     sand = np.nan_to_num(sand, nan=0)
     silt = np.nan_to_num(silt, nan=0)
     clay = np.nan_to_num(clay, nan=0)
-
-    # Calculate derived values
+    
+    # Calculate derived values.
     silt_clay = silt + 1.5 * clay
     silt_2x_clay = silt + 2.0 * clay
-
-    # Define conditions and choices
+    
+    # Define conditions and corresponding texture classifications.
     conditions = [
         silt_clay < 15,
         (silt_clay >= 15) & (silt_clay < 30),
-        ((7 <= clay) & (clay <= 20) & (sand > 52)) | ((clay < 7) & (silt < 50) & (silt_2x_clay >= 30)),
+        (((7 <= clay) & (clay <= 20)) & (sand > 52)) | ((clay < 7) & (silt < 50) & (silt_2x_clay >= 30)),
         (7 <= clay) & (clay <= 27) & (28 <= silt) & (silt < 50) & (sand <= 52),
-        (silt >= 50) & ((12 <= clay) & (clay < 27)) | ((silt < 80) & (clay < 12)),
+        (silt >= 50) & (((12 <= clay) & (clay < 27)) | ((silt < 80) & (clay < 12))),
         (silt >= 80) & (clay < 12),
         (20 <= clay) & (clay < 35) & (silt < 28) & (sand > 45),
         (27 <= clay) & (clay < 40) & (sand <= 45) & (sand > 20),
         (clay >= 35) & (sand >= 45),
         (clay >= 40) & (silt >= 40) & (sand <= 45),
     ]
-
+    
     choices = [
         "Sand",
         "Loamy sand",
@@ -198,9 +217,18 @@ def getTexture(row=None, sand=None, silt=None, clay=None):
         "Sandy clay",
         "Clay",
     ]
-
-    # Return texture classification
-    return np.select(conditions, choices, default="Unknown")
+    
+    # Compute the texture classification.
+    result = np.select(conditions, choices, default="Unknown")
+    
+    # Ensure that a plain Python string is returned.
+    if isinstance(result, np.ndarray):
+        try:
+            result = result.item()  # Extract single element from an array of size 1.
+        except Exception:
+            result = str(result)
+    
+    return result
 
 
 def getCF(cf):

@@ -15,7 +15,6 @@
 
 # Standard libraries
 import logging
-import sys
 
 import pandas as pd
 
@@ -25,11 +24,11 @@ import psycopg
 # local libraries
 import soil_id.config
 
-import os
 from dotenv import load_dotenv
 
 # Load .env file
 load_dotenv()
+
 
 def get_datastore_connection():
     """
@@ -236,6 +235,7 @@ def get_WISE30sec_data(MUGLB_NEW_Select):
         if conn:
             conn.close()
 
+
 # global
 def get_WRB_descriptions(WRB_Comp_List):
     """
@@ -290,10 +290,10 @@ def getSG_descriptions(WRB_Comp_List):
     Fetch WRB descriptions from a PostgreSQL database using wrb2006_to_fao90
     and wrb_fao90_desc tables. Returns a pandas DataFrame with columns:
     [WRB_tax, Description_en, Management_en, Description_es, ...]
-    
+
     Args:
         WRB_Comp_List (list[str]): List of WRB_2006_Full values (e.g. ["Chernozem","Gleysol"]).
-    
+
     Returns:
         pandas.DataFrame or None if an error occurs.
     """
@@ -302,13 +302,13 @@ def getSG_descriptions(WRB_Comp_List):
     try:
         # 1. Get a connection to your datastore (replace with your actual function):
         conn = get_datastore_connection()
-        
+
         def execute_query(query, params):
             with conn.cursor() as cur:
                 # Execute the query with the parameters
                 cur.execute(query, params)
                 return cur.fetchall()
-        
+
         # 2. Map WRB_2006_Full -> WRB_1984_Full using wrb2006_to_fao90
         #    Make sure we pass (tuple(WRB_Comp_List),) so psycopg2 can fill IN ('A','B','C')
         #    Example: WHERE lu.WRB_2006_Full IN ('Chernozem','Gleysol',...)
@@ -321,7 +321,7 @@ def getSG_descriptions(WRB_Comp_List):
 
         # Flatten from [(x,), (y,)] => [x, y]
         WRB_Comp_List_mapped = [item for (item,) in names]
-        
+
         if not WRB_Comp_List_mapped:
             # If no mapping found, return an empty DataFrame or None
             logging.warning("No mapped WRB_1984_Full names found for given WRB_2006_Full values.")
@@ -346,7 +346,7 @@ def getSG_descriptions(WRB_Comp_List):
             WHERE WRB_tax = ANY(%s)
         """
         results = execute_query(sql2, ([WRB_Comp_List_mapped],))
-        
+
         # 4. Convert the raw query results to a DataFrame
         data = pd.DataFrame(
             results,
@@ -371,4 +371,3 @@ def getSG_descriptions(WRB_Comp_List):
     finally:
         if conn:
             conn.close()
-

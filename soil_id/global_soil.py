@@ -13,26 +13,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see https://www.gnu.org/licenses/.
 
-# Standard libraries
-import collections
-import csv
-import io
-import json
-import re
-import sys
-import os
-import psycopg
-from dataclasses import dataclass
-
-# Load .env file
-from dotenv import load_dotenv
-load_dotenv()
-
-# Third-party libraries
-import numpy as np
-import pandas as pd
-from scipy.stats import norm
-
 # local libraries
 import soil_id.config
 
@@ -41,17 +21,17 @@ from .db import (
     getSG_descriptions,
 )
 
-from .color import(
+from .color import (
     calculate_deltaE2000,
 )
 
 from .services import get_soilgrids_classification_data, get_soilgrids_property_data
+
 from .utils import (
     agg_data_layer,
     assign_max_distance_scores,
     calculate_location_score,
     drop_cokey_horz,
-    extract_values,
     extract_WISE_data,
     getCF_fromClass,
     getClay,
@@ -60,16 +40,35 @@ from .utils import (
     getTexture,
     gower_distances,
     pedon_color,
-    sg_get_and_agg,
     silt_calc,
-    max_comp_depth,   
+    max_comp_depth,
+    adjust_depth_interval,
 )
+
+# Standard libraries
+import logging
+import collections
+import csv
+import io
+import re
+from dataclasses import dataclass
+
+# Third-party libraries
+import numpy as np
+import pandas as pd
+from scipy.stats import norm
+
+# Load .env file
+from dotenv import load_dotenv
+load_dotenv()
+
 
 @dataclass
 class SoilListOutputData:
     soil_list_json: dict
     rank_data_csv: str
     map_unit_component_data_csv: str
+
 
 # entry points
 # getSoilLocationBasedGlobal
@@ -94,9 +93,9 @@ def list_soils_global(lon, lat):
         lon,
         lat,
         # Temporarily change file path
-        file_path = '/mnt/c/LandPKS_API_SoilID-master/global/wise30sec_poly_simp_soil.gpkg',
-        #file_path=config.WISE_PATH,
-        #layer_name=None,
+        file_path='/mnt/c/LandPKS_API_SoilID-master/global/wise30sec_poly_simp_soil.gpkg',
+        # file_path=config.WISE_PATH,
+        # layer_name=None,
         buffer_dist=10000,
     )
 
@@ -106,7 +105,7 @@ def list_soils_global(lon, lat):
     mucompdata_pd["distance"] = pd.to_numeric(mucompdata_pd["distance"])
     mucompdata_pd["share"] = pd.to_numeric(mucompdata_pd["share"])
     mucompdata_pd = mucompdata_pd.drop_duplicates().reset_index(drop=True)
- 
+
     ##############################################################################################
     # Individual probability
     # Based on Fan et al 2018 EQ 1, the conditional probability for each component is calculated
@@ -131,7 +130,7 @@ def list_soils_global(lon, lat):
 
     mucompdata_pd = pd.merge(mucompdata_pd, cond_prob, on="cokey", how="left")
     mucompdata_pd = mucompdata_pd.sort_values("distance_score", ascending=False)
-    
+
     mucompdata_pd = mucompdata_pd.reset_index(drop=True)
     mucompdata_pd["distance"] = mucompdata_pd["distance"].round(4)
     mucompdata_pd["Index"] = mucompdata_pd.index
@@ -214,7 +213,7 @@ def list_soils_global(lon, lat):
     # Subset mucompdata_pd by new compname_key and add suffix to name if there are duplicates
     mucompdata_pd = mucompdata_pd.loc[mucompdata_pd['cokey'].isin(comp_key)].reset_index(drop=True)
     mucompdata_pd["compname_grp"] = mucompdata_pd["compname"]
-    
+
     # Sort by 'distance_score' (descending) and 'distance' (ascending), then reset the index
     mucompdata_pd = mucompdata_pd.sort_values(['distance_score', 'distance'], ascending=[False, True]).reset_index(drop=True)
 
@@ -255,7 +254,7 @@ def list_soils_global(lon, lat):
             .drop_duplicates(keep="first")
             .reset_index(drop=True)
         )
-        
+
         # profile depth
         c_very_bottom = max_comp_depth(profile)
 
@@ -334,7 +333,7 @@ def list_soils_global(lon, lat):
     # Concatenate lists to form DataFrames
     c_bottom_depths = pd.concat(c_bottom_depths, axis=0)
     clay_texture = pd.concat(clay_texture, axis=0)
-    
+
     # Subset mucompdata and muhorzdata DataFrames
     mucompdata_pd = mucompdata_pd[mucompdata_pd["cokey"].isin(c_bottom_depths.cokey)]
     muhorzdata_pd = muhorzdata_pd[muhorzdata_pd["cokey"].isin(c_bottom_depths.cokey)]
@@ -527,9 +526,9 @@ def list_soils_global(lon, lat):
             return obj.tolist()
         else:
             return obj
-        
+
     output_SoilList_cleaned = convert_to_serializable(output_SoilList)
- 
+
     soil_list_json = {
         "metadata": {
             "location": "us",
@@ -544,8 +543,8 @@ def list_soils_global(lon, lat):
                 "ec": "ds/m",
             },
         },
-        #"AWS_PIW90": aws_PIW90,
-        #"Soil Data Value": var_imp,
+        # "AWS_PIW90": aws_PIW90,
+        # "Soil Data Value": var_imp,
         "soilList": output_SoilList_cleaned,
     }
 
@@ -554,7 +553,6 @@ def list_soils_global(lon, lat):
         rank_data_csv=soilIDRank_output_pd.to_csv(index=None, header=True),
         map_unit_component_data_csv=mucompdata_cond_prob.to_csv(index=None, header=True),
     )
-    
 
 
 ##############################################################################################
@@ -686,12 +684,11 @@ def rank_soils_global(
         p_sandpct_intpl = adjust_depth_interval(p_sandpct_intpl)
         p_claypct_intpl = adjust_depth_interval(p_claypct_intpl)
         p_cfg_intpl = adjust_depth_interval(p_cfg_intpl)
-        p_lab_intpl = adjust_depth_interval(p_lab_intpl)
 
         # Construct final dataframe with adjusted data
         p_compname = pd.Series("sample_pedon", index=np.arange(len(p_sandpct_intpl)))
         p_hz_data = pd.concat(
-            [p_compname, p_sandpct_intpl, p_claypct_intpl, p_cfg_intpl, p_lab_intpl], axis=1
+            [p_compname, p_sandpct_intpl, p_claypct_intpl, p_cfg_intpl], axis=1
         )
         p_hz_data.columns = [
             "compname",
@@ -720,9 +717,8 @@ def rank_soils_global(
         p_cfg_intpl = []
 
         # Initialize lab interpolation data with NaNs
-        p_lab_intpl = pd.DataFrame(np.nan, index=np.arange(1), columns=np.arange(3))
         cr_df = pd.Series([np.nan])
-        
+
         # Set default bottom depth data
         if bedrock is not None:
             p_bottom_depth = pd.DataFrame([-999, "sample_pedon", bedrock]).T
@@ -730,12 +726,11 @@ def rank_soils_global(
             p_bottom_depth = pd.DataFrame([-999, "sample_pedon", 0]).T
         p_bottom_depth.columns = ["cokey", "compname", "bottom_depth"]
 
-
     # --------------------------------------------------------------------------------------------------------------------------------------
     # Load in component data from soilIDList
     soilIDRank_output_pd = pd.read_csv(io.StringIO(list_output_data.rank_data_csv))
     mucompdata_pd = pd.read_csv(io.StringIO(list_output_data.map_unit_component_data_csv))
-    
+
     # Create soil depth DataFrame and subset component depths based on max user depth
     # if no bedrock specified
     c_bottom_depths = mucompdata_pd[["compname", "c_very_bottom"]].rename(
@@ -1139,7 +1134,7 @@ def rank_soils_global(
     Score_Data_Loc = (D_final_loc[["Score_Data", "distance_score"]].sum(axis=1)) / (
         D_final_loc.weight + location_weight
     )
-    
+
     D_final_loc["Score_Data_Loc"] = Score_Data_Loc
 
     # Rule-based final score adjustment
@@ -1251,7 +1246,7 @@ def rank_soils_global(
     ].fillna(
         0.0
     )
- 
+
     # Construct the output format
     Rank = [
         {
@@ -1288,15 +1283,17 @@ def rank_soils_global(
 ##################################################################################################
 #                                          getSoilGridsGlobal                                    #
 ##################################################################################################
+
+
 def sg_list(lon, lat):
     """
     Query the SoilGrids API (via get_soilgrids_property_data) and post-process
     the returned JSON into a structured dictionary that includes:
-    
+
     1. Soil horizons data (sand, clay, cfvo, pH, cec, silt, texture) at multiple depths.
     2. Classification probabilities and descriptions (WRB taxonomy).
     3. Summarized or aggregated soil variables, with depth tracking.
-    
+
     Args:
         lon (float): Longitude in decimal degrees (WGS84).
         lat (float): Latitude in decimal degrees (WGS84).
@@ -1354,7 +1351,7 @@ def sg_list(lon, lat):
     df_top_depth = pd.DataFrame(top_depths, columns=["top_depth"])
     df_bottom_depth = pd.DataFrame(bottom_depths, columns=["bottom_depth"])
     df_values = pd.DataFrame(values, columns=["value"])
-    
+
     # The code assumes each property repeats over the same set of depths.
     n_depths = len(df_top_depth)
     if len(names) % n_depths != 0:
@@ -1374,9 +1371,9 @@ def sg_list(lon, lat):
     # 6. Pivot the data into a wide form with each property as a column.
     try:
         sg_data_w = sg_data.pivot_table(
-            index="bottom_depth", 
-            columns="prop", 
-            values="value", 
+            index="bottom_depth",
+            columns="prop",
+            values="value",
             aggfunc="first"  # Change the aggregator if needed
         )
     except Exception as e:
@@ -1461,7 +1458,7 @@ def sg_list(lon, lat):
     sand_pd = sg_data_w["sand"]
     clay_pd = sg_data_w["clay"]
     rfv_pd = sg_data_w["cfvo"]
-    pH_pd  = sg_data_w["phh2o"]
+    pH_pd = sg_data_w["phh2o"]
     cec_pd = sg_data_w["cec"]
     # 13. Additional texture calculations from aggregated values
     texture_pd = pd.DataFrame({

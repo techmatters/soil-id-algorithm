@@ -25,7 +25,6 @@ import re
 import geopandas as gpd
 import numpy as np
 import pandas as pd
-import shapely
 from numpy.linalg import cholesky
 from osgeo import ogr
 from rosetta import SoilData, rosetta
@@ -48,8 +47,7 @@ def get_utm_crs(lon, lat):
     """
     Determine the UTM CRS based on longitude and latitude.
     """
-    zone_number = int((lon + 180) / 6) + 1  # UTM zone calculation
-    hemisphere = "6" if lat >= 0 else "7"  # 6 for North, 7 for South
+    zone_number = int((lon + 180) / 6) + 1  # Calculate UTM zone
     return f"EPSG:326{zone_number}" if lat >= 0 else f"EPSG:327{zone_number}"
 
 
@@ -60,20 +58,20 @@ def extract_WISE_data(lon, lat, file_path, buffer_dist=10000):
         geometry=[Point(lon, lat)],
         crs="EPSG:4326"  # Assign CRS
     )
-    
+
     # Get the appropriate UTM CRS for the location
     utm_crs = get_utm_crs(lon, lat)
     print(f"Using UTM CRS: {utm_crs}")  # Log the CRS being used
-    
+
     # Reproject to the UTM CRS
     projected_geo = point_geo.to_crs(utm_crs)
 
     # Create a buffer in meters and get the bounding box
     bounding_box = projected_geo.buffer(buffer_dist).envelope
-    
+
     # Reproject the bounding box back to geographic CRS (WGS84)
     bounding_box = bounding_box.to_crs("EPSG:4326")
-    
+
     # Read and clip the data using the bounding box
     hwsd = gpd.read_file(file_path, bbox=bounding_box)
 
@@ -174,23 +172,23 @@ def getTexture(row=None, sand=None, silt=None, clay=None):
     Returns:
     - str: Soil texture classification.
     """
-    
+
     # Handle missing inputs: if not provided individually, try to get from row.
     if sand is None or silt is None or clay is None:
         if row is not None:
             sand = row.get('sandtotal_r', np.nan)
             silt = row.get('silttotal_r', np.nan)
             clay = row.get('claytotal_r', np.nan)
-    
+
     # Replace any NaN with 0 for the calculation.
     sand = np.nan_to_num(sand, nan=0)
     silt = np.nan_to_num(silt, nan=0)
     clay = np.nan_to_num(clay, nan=0)
-    
+
     # Calculate derived values.
     silt_clay = silt + 1.5 * clay
     silt_2x_clay = silt + 2.0 * clay
-    
+
     # Define conditions and corresponding texture classifications.
     conditions = [
         silt_clay < 15,
@@ -204,7 +202,7 @@ def getTexture(row=None, sand=None, silt=None, clay=None):
         (clay >= 35) & (sand >= 45),
         (clay >= 40) & (silt >= 40) & (sand <= 45),
     ]
-    
+
     choices = [
         "Sand",
         "Loamy sand",
@@ -217,17 +215,17 @@ def getTexture(row=None, sand=None, silt=None, clay=None):
         "Sandy clay",
         "Clay",
     ]
-    
+
     # Compute the texture classification.
     result = np.select(conditions, choices, default="Unknown")
-    
+
     # Ensure that a plain Python string is returned.
     if isinstance(result, np.ndarray):
         try:
             result = result.item()  # Extract single element from an array of size 1.
         except Exception:
             result = str(result)
-    
+
     return result
 
 
@@ -358,24 +356,24 @@ def agg_data_layer(data, bottom, sd=2, depth=False):
 
 def aggregate_data(data, bottom_depths, sd=2):
     """
-    Aggregate values of a given data series into segments defined by depth intervals 
+    Aggregate values of a given data series into segments defined by depth intervals
     and return their mean values, rounded to a specified number of decimal places.
 
-    This function partitions the data index into depth intervals determined by 
-    the provided `bottom_depths`. Each interval starts at one of the `top_depths` 
-    (which is derived from `bottom_depths` by shifting them up by one) and ends 
-    at the corresponding bottom depth. For each interval, the function extracts 
-    the data values within that depth range and computes their mean. The results 
-    are rounded to `sd` decimal places and returned as a Series, where each element 
+    This function partitions the data index into depth intervals determined by
+    the provided `bottom_depths`. Each interval starts at one of the `top_depths`
+    (which is derived from `bottom_depths` by shifting them up by one) and ends
+    at the corresponding bottom depth. For each interval, the function extracts
+    the data values within that depth range and computes their mean. The results
+    are rounded to `sd` decimal places and returned as a Series, where each element
     corresponds to the aggregated mean for the respective depth interval.
 
     Parameters
     ----------
     data : pandas.Series
-        A series indexed by depth (or a comparable numeric index), which 
+        A series indexed by depth (or a comparable numeric index), which
         will be aggregated over the defined depth intervals.
     bottom_depths : list or array-like
-        A list or array of numerical values representing the lower boundaries 
+        A list or array of numerical values representing the lower boundaries
         of depth intervals. The top boundary for the first interval is implicitly 0.
     sd : int, optional, default 2
         Number of decimal places to which the computed mean values will be rounded.
@@ -383,8 +381,8 @@ def aggregate_data(data, bottom_depths, sd=2):
     Returns
     -------
     pandas.Series
-        A series of aggregated mean values for each depth interval, indexed by 
-        the order of the intervals. If any interval does not contain data values, 
+        A series of aggregated mean values for each depth interval, indexed by
+        the order of the intervals. If any interval does not contain data values,
         NaN is returned for that interval.
     """
     if not bottom_depths or np.isnan(bottom_depths[0]):
@@ -1350,21 +1348,21 @@ def calculate_distances_and_intersections(mu_geo, point):
 
     # Ensure the point is wrapped in a GeoDataFrame and projected correctly
     point_utm, epsg_code = convert_geometry_to_utm(point)
-    
+
     # Ensure the point is a GeoDataFrame (for compatibility)
     if not isinstance(point_utm, gpd.GeoDataFrame):
         point_utm = gpd.GeoDataFrame(geometry=[point_utm], crs=epsg_code)
-    
+
     # Transform the GeoDataFrame to the same UTM CRS
     mu_geo_utm = mu_geo.to_crs(epsg_code)
-    
+
     # Reset index for clean operations
     mu_geo_utm = mu_geo_utm.reset_index(drop=True)
     point_utm = point_utm.reset_index(drop=True)
-    
+
     # Extract the single geometry for the point
     point_geometry = point_utm.geometry.iloc[0]
-    
+
     # Calculate distances and intersections
     distances = mu_geo_utm["geometry"].distance(point_geometry)
     intersects = mu_geo_utm["geometry"].intersects(point_geometry)

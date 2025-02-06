@@ -54,7 +54,10 @@ def get_utm_crs(lon, lat):
 # global
 def extract_WISE_data(lon, lat, file_path, buffer_dist=10000):
     # Create LPKS point
-    point_geo = gpd.GeoDataFrame(geometry=[Point(lon, lat)], crs="EPSG:4326")  # Assign CRS
+    point_geo = gpd.GeoDataFrame(
+        geometry=[Point(lon, lat)],
+        crs="EPSG:4326"  # Assign CRS
+    )
 
     # Get the appropriate UTM CRS for the location
     utm_crs = get_utm_crs(lon, lat)
@@ -173,9 +176,9 @@ def getTexture(row=None, sand=None, silt=None, clay=None):
     # Handle missing inputs: if not provided individually, try to get from row.
     if sand is None or silt is None or clay is None:
         if row is not None:
-            sand = row.get("sandtotal_r", np.nan)
-            silt = row.get("silttotal_r", np.nan)
-            clay = row.get("claytotal_r", np.nan)
+            sand = row.get('sandtotal_r', np.nan)
+            silt = row.get('silttotal_r', np.nan)
+            clay = row.get('claytotal_r', np.nan)
 
     # Replace any NaN with 0 for the calculation.
     sand = np.nan_to_num(sand, nan=0)
@@ -190,8 +193,7 @@ def getTexture(row=None, sand=None, silt=None, clay=None):
     conditions = [
         silt_clay < 15,
         (silt_clay >= 15) & (silt_clay < 30),
-        (((7 <= clay) & (clay <= 20)) & (sand > 52))
-        | ((clay < 7) & (silt < 50) & (silt_2x_clay >= 30)),
+        (((7 <= clay) & (clay <= 20)) & (sand > 52)) | ((clay < 7) & (silt < 50) & (silt_2x_clay >= 30)),
         (7 <= clay) & (clay <= 27) & (28 <= silt) & (silt < 50) & (sand <= 52),
         (silt >= 50) & (((12 <= clay) & (clay < 27)) | ((silt < 80) & (clay < 12))),
         (silt >= 80) & (clay < 12),
@@ -1419,7 +1421,7 @@ def convert_geometry_to_utm(geometry, src_crs="epsg:4326", target_crs=None):
     if isinstance(geometry, Point):
         geometry = gpd.GeoDataFrame(geometry=[geometry], crs=src_crs)
     elif isinstance(geometry, gpd.GeoSeries):
-        geometry = geometry.to_frame(name="geometry")
+        geometry = geometry.to_frame(name='geometry')
 
     # Project to source CRS (ensure proper handling)
     geometry = geometry.to_crs(src_crs)
@@ -2365,6 +2367,100 @@ def sg_get_and_agg(variable, sg_data_w, bottom, return_depth=False):
     else:
         pd_lpks = agg_data_layer(data=pd_int.var_pct_intpl, bottom=bottom, depth=False)
         return pd_lpks.replace(np.nan, "")
+
+
+def adjust_depth_interval(data, target_length=200):
+    """Adjusts the depth interval of user data."""
+
+    # Convert input to a DataFrame
+    if isinstance(data, list):
+        data = pd.DataFrame(data)
+    elif isinstance(data, pd.Series):
+        data = data.to_frame()
+
+    # Ensure data is a DataFrame at this point
+    if not isinstance(data, pd.DataFrame):
+        raise TypeError("Data must be a list, Series, or DataFrame")
+
+    length = len(data)
+
+    if length > target_length:
+        # Truncate data if it exceeds the target length
+        data = data.iloc[:target_length]
+    elif length < target_length:
+        # Extend data if it's shorter than the target length
+        add_length = target_length - length
+        add_data = pd.DataFrame(np.nan, index=np.arange(add_length), columns=data.columns)
+        data = pd.concat([data, add_data])
+
+    data.reset_index(drop=True, inplace=True)
+    return data
+
+
+# Helper function to update dataframes based on depth conditions
+def update_intpl_data(
+    df, col_names, values, very_bottom, OSD_depth_add, OSD_depth_remove, OSD_max_bottom_int
+):
+    if OSD_depth_add:
+        layer_add = very_bottom - OSD_max_bottom_int
+        pd_add = pd.DataFrame([values] * layer_add, columns=col_names)
+        df = pd.concat([df.loc[: OSD_max_bottom_int - 1], pd_add], axis=0).reset_index(drop=True)
+    elif OSD_depth_remove:
+        df = df.loc[:very_bottom].reset_index(drop=True)
+    return df
+
+
+# Creates a new soil horizon layer row in the soil horizon table
+def create_new_layer(row, hzdept, hzdepb):
+    return pd.DataFrame(
+        {
+            "cokey": row["cokey"],
+            "hzdept_r": hzdepb,
+            "hzdepb_r": hzdept,
+            "chkey": row["chkey"],
+            "hzname": None,
+            "sandtotal_r": np.nan,
+            "silttotal_r": np.nan,
+            "claytotal_r": np.nan,
+            "total_frag_volume": np.nan,
+            "CEC": np.nan,
+            "pH": np.nan,
+            "EC": np.nan,
+            "lep_r": np.nan,
+            "comppct_r": row["comppct_r"],
+            "compname": row["compname"],
+            "slope_r": np.nan,
+            "texture": None,
+        },
+        index=[0],
+    )
+
+
+# Creates a new row entry in the OSD (Official Series Description) soil horizon table
+def create_new_layer_osd(row, top, bottom):
+    """Create a new layer with specified top and bottom depths."""
+    new_row = row.copy()
+    new_row["top"] = top
+    new_row["bottom"] = bottom
+    for col in [
+        "hzname",
+        "texture_class",
+        "cf_class",
+        "matrix_dry_color_hue",
+        "matrix_dry_color_value",
+        "matrix_dry_color_chroma",
+    ]:
+        new_row[col] = None
+    for col in [
+        "srgb_r",
+        "srgb_g",
+        "srgb_b",
+        "total_frag_volume",
+        "claytotal_r",
+        "sandtotal_r",
+    ]:
+        new_row[col] = np.nan
+    return new_row
 
 
 ##################################################################################################

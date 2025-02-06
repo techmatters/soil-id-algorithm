@@ -49,7 +49,11 @@ from .utils import (
     process_distance_scores,
     process_horizon_data,
     process_site_data,
+    update_intpl_data,
+    adjust_depth_interval,
     update_esd_data,
+    create_new_layer,
+    create_new_layer_osd,
 )
 
 # entry points
@@ -2164,97 +2168,3 @@ def rank_soils(
     }
 
     return output_data
-
-
-def adjust_depth_interval(data, target_length=200):
-    """Adjusts the depth interval of user data."""
-
-    # Convert input to a DataFrame
-    if isinstance(data, list):
-        data = pd.DataFrame(data)
-    elif isinstance(data, pd.Series):
-        data = data.to_frame()
-
-    # Ensure data is a DataFrame at this point
-    if not isinstance(data, pd.DataFrame):
-        raise TypeError("Data must be a list, Series, or DataFrame")
-
-    length = len(data)
-
-    if length > target_length:
-        # Truncate data if it exceeds the target length
-        data = data.iloc[:target_length]
-    elif length < target_length:
-        # Extend data if it's shorter than the target length
-        add_length = target_length - length
-        add_data = pd.DataFrame(np.nan, index=np.arange(add_length), columns=data.columns)
-        data = pd.concat([data, add_data])
-
-    data.reset_index(drop=True, inplace=True)
-    return data
-
-
-# Helper function to update dataframes based on depth conditions
-def update_intpl_data(
-    df, col_names, values, very_bottom, OSD_depth_add, OSD_depth_remove, OSD_max_bottom_int
-):
-    if OSD_depth_add:
-        layer_add = very_bottom - OSD_max_bottom_int
-        pd_add = pd.DataFrame([values] * layer_add, columns=col_names)
-        df = pd.concat([df.loc[: OSD_max_bottom_int - 1], pd_add], axis=0).reset_index(drop=True)
-    elif OSD_depth_remove:
-        df = df.loc[:very_bottom].reset_index(drop=True)
-    return df
-
-
-# Creates a new soil horizon layer row in the soil horizon table
-def create_new_layer(row, hzdept, hzdepb):
-    return pd.DataFrame(
-        {
-            "cokey": row["cokey"],
-            "hzdept_r": hzdepb,
-            "hzdepb_r": hzdept,
-            "chkey": row["chkey"],
-            "hzname": None,
-            "sandtotal_r": np.nan,
-            "silttotal_r": np.nan,
-            "claytotal_r": np.nan,
-            "total_frag_volume": np.nan,
-            "CEC": np.nan,
-            "pH": np.nan,
-            "EC": np.nan,
-            "lep_r": np.nan,
-            "comppct_r": row["comppct_r"],
-            "compname": row["compname"],
-            "slope_r": np.nan,
-            "texture": None,
-        },
-        index=[0],
-    )
-
-
-# Creates a new row entry in the OSD (Official Series Description) soil horizon table
-def create_new_layer_osd(row, top, bottom):
-    """Create a new layer with specified top and bottom depths."""
-    new_row = row.copy()
-    new_row["top"] = top
-    new_row["bottom"] = bottom
-    for col in [
-        "hzname",
-        "texture_class",
-        "cf_class",
-        "matrix_dry_color_hue",
-        "matrix_dry_color_value",
-        "matrix_dry_color_chroma",
-    ]:
-        new_row[col] = None
-    for col in [
-        "srgb_r",
-        "srgb_g",
-        "srgb_b",
-        "total_frag_volume",
-        "claytotal_r",
-        "sandtotal_r",
-    ]:
-        new_row[col] = np.nan
-    return new_row

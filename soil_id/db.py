@@ -44,7 +44,6 @@ def get_datastore_connection():
             password=soil_id.config.DB_PASSWORD,
             dbname=soil_id.config.DB_NAME,
         )
-        logging.info("Database connection successful.")
         return conn
     except Exception as err:
         logging.error(f"Database connection failed: {err}")

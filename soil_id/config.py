@@ -28,7 +28,7 @@ RANDOM_SEED = os.environ.get("RANDOM_SEED", 19)
 
 # Output
 APP_NAME = os.environ.get("APP_NAME", "org.terraso.soilid")
-TEMP_DIR = tempfile.TemporaryDirectory(delete=False)
+TEMP_DIR = tempfile.TemporaryDirectory()
 CACHE_DIR = user_cache_dir(APP_NAME)
 OUTPUT_PATH = TEMP_DIR.name
 SOIL_ID_RANK_PATH = f"{OUTPUT_PATH}/soil_id_rank.csv"

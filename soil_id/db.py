@@ -38,12 +38,6 @@ def get_datastore_connection():
     """
     conn = None  # Initialize variable
     try:
-        # conn = psycopg.connect(
-        #     host=os.getenv("DB_HOST"),
-        #     user=os.getenv("DB_USERNAME"),
-        #     password=os.getenv("DB_PASSWORD"),
-        #     dbname=os.getenv("DB_NAME"),
-        # )
         conn = psycopg.connect(
             host=soil_id.config.DB_HOST,
             user=soil_id.config.DB_USERNAME,
@@ -236,6 +230,30 @@ def get_WISE30sec_data(MUGLB_NEW_Select):
 
 
 # global
+
+# Function to fetch data from a PostgreSQL table
+def fetch_table_from_db(table_name):
+    conn = None
+    try:
+        conn = get_datastore_connection()
+        cur = conn.cursor()
+
+        query = f"SELECT * FROM {table_name} ORDER BY id ASC;"
+        cur.execute(query)
+        rows = cur.fetchall()
+        
+        # Transpose rows to access them in the same format as the CSV
+        return list(map(list, zip(*rows[1:])))  # Skip 'id' column, Transpose to get lists
+
+    except Exception as err:
+        logging.error(f"Error querying PostgreSQL: {err}")
+        return None
+
+    finally:
+        if conn:
+            conn.close()
+
+
 def get_WRB_descriptions(WRB_Comp_List):
     """
     Retrieve WRB descriptions based on provided WRB component list.

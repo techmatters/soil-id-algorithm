@@ -45,8 +45,6 @@ MUNSELL_RGB_LAB_PATH = f"{DATA_PATH}/LandPKS_munsell_rgb_lab.csv"
 # Global Soil ID
 HWSD_PATH = f"{DATA_PATH}/HWSD_global_noWater_no_country.shp"
 WISE_PATH = f"{DATA_PATH}/wise30sec_poly_simp_soil.shp"
-NORM_DIST_1_PATH = f"{DATA_PATH}/NormDist1.csv"
-NORM_DIST_2_PATH = f"{DATA_PATH}/NormDist2.csv"
 
 # Database
 DB_NAME = os.environ.get("DB_NAME", "terraso_backend")

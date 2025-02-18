@@ -30,9 +30,6 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5
 
-      - name: test
-        run: env
-
       - name: Install Python dependencies
         run: make install-dev
 

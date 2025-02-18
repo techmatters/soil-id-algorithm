@@ -923,43 +923,11 @@ def rank_soils_global(
 
     # Start of soil color
 
-    # Initialize lists to store the color distribution data
-    wmf1, wsf1, rmf1, rsf1, ymf1, ysf1 = ([] for _ in range(6))
-    wmf2, wsf2, rmf2, rsf2, ymf2, ysf2 = ([] for _ in range(6))
+    # Load color distribution data from NormDist1 table
+    wmf1, wsf1, rmf1, rsf1, ymf1, ysf1 = fetch_table_from_db("NormDist1")
 
-    # Load color distribution data from NormDist1.csv
-    with open(soil_id.config.NORM_DIST_1_PATH, "r") as csvfile:
-        readCSV = csv.reader(csvfile, delimiter=",")
-        for row_id, row in enumerate(readCSV):
-            if row_id == 0:
-                wmf1 = [float(i) for i in row]
-            elif row_id == 1:
-                wsf1 = [float(i) for i in row]
-            elif row_id == 2:
-                rmf1 = [float(i) for i in row]
-            elif row_id == 3:
-                rsf1 = [float(i) for i in row]
-            elif row_id == 4:
-                ymf1 = [float(i) for i in row]
-            elif row_id == 5:
-                ysf1 = [float(i) for i in row]
-
-    # Load color distribution data from NormDist2.csv
-    with open(soil_id.config.NORM_DIST_2_PATH, "r") as csvfile:
-        readCSV = csv.reader(csvfile, delimiter=",")
-        for row_id, row in enumerate(readCSV):
-            if row_id == 0:
-                wmf2 = [float(i) for i in row]
-            elif row_id == 1:
-                wsf2 = [float(i) for i in row]
-            elif row_id == 2:
-                rmf2 = [float(i) for i in row]
-            elif row_id == 3:
-                rsf2 = [float(i) for i in row]
-            elif row_id == 4:
-                ymf2 = [float(i) for i in row]
-            elif row_id == 5:
-                ysf2 = [float(i) for i in row]
+    # Load color distribution data from NormDist2 table
+    wmf2, wsf2, rmf2, rsf2, ymf2, ysf2 = fetch_table_from_db("NormDist2")
 
     fao74 = [
         "Acrisols",

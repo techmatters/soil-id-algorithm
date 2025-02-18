@@ -10,7 +10,7 @@ on:
       - main
 
 env:
-  UV_PROJECT_ENVIRONMENT: $pythonLocation
+  UV_PROJECT_ENVIRONMENT: ${{ env.pythonLocation }}
 
 jobs:
   lint:

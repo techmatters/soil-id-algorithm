@@ -5,19 +5,19 @@ format:
 	black soil_id
 
 install:
-	pip install -r requirements.txt
+	uv pip install -r requirements.txt
 
 install-dev:
-	pip install -r requirements-dev.txt
+	uv pip install -r requirements-dev.txt
 
 lint:
 	flake8 soil_id && isort -c soil_id && black --check soil_id
 
 lock: pip-tools
-	CUSTOM_COMPILE_COMMAND="make lock" pip-compile --upgrade --generate-hashes --strip-extras --resolver=backtracking --output-file requirements.txt requirements/base.in
+	CUSTOM_COMPILE_COMMAND="make lock" uv pip compile --generate-hashes requirements/base.in -o requirements.txt
 
 lock-dev: pip-tools
-	CUSTOM_COMPILE_COMMAND="make lock-dev" pip-compile --upgrade --generate-hashes --strip-extras --resolver=backtracking --output-file requirements-dev.txt requirements/dev.in
+	CUSTOM_COMPILE_COMMAND="make lock-dev" uv pip compile --generate-hashes requirements/dev.in -o requirements-dev.txt
 
 build:
 	echo "Building TK..."
@@ -69,4 +69,4 @@ download-soil-data:
 	gdown 1K0GkqxhZiVUND6yfFmaI7tYanLktekyp \
 
 ${VIRTUAL_ENV}/scripts/pip-sync:
-	pip install pip-tools
+	uv pip install pip-tools

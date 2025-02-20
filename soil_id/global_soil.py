@@ -593,8 +593,9 @@ def rankPredictionGlobal(
 
         # Soil properties to lists
         soilHorizon, rfvDepth = soil_df["soilHorizon"].tolist(), soil_df["rfvDepth"].tolist()
-        horizonDepthB, horizonDepthT = list(map(int, soil_df["bottom"])), list(
-            map(int, soil_df["top"])
+        horizonDepthB, horizonDepthT = (
+            list(map(int, soil_df["bottom"])),
+            list(map(int, soil_df["top"])),
         )
         lab_Color = soil_df["lab_Color"]
 
@@ -1177,9 +1178,7 @@ def rankPredictionGlobal(
         ["Score_Data", "horz_score", "Score_Data_Loc", "distance_score", "distance_score_norm"]
     ] = D_final_loc[
         ["Score_Data", "horz_score", "Score_Data_Loc", "distance_score", "distance_score_norm"]
-    ].fillna(
-        0.0
-    )
+    ].fillna(0.0)
 
     # Final scaling of similarity score by 'data_completeness'
     D_final_loc.Score_Data_Loc = D_final_loc.Score_Data_Loc * (
@@ -1242,7 +1241,6 @@ def rankPredictionGlobal(
 #                                          getSoilGridsGlobal                                    #
 ##################################################################################################
 def getSoilGridsGlobal(lon, lat, plot_id=None):
-
     # Call soildgrids API
     sg_out = get_soilgrids_property_data(lon, lat)
 

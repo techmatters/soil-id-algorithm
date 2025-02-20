@@ -53,7 +53,7 @@ def test_soil_location():
         logging.info(f"Testing {item['lon']}, {item['lat']}")
         start_time = time.perf_counter()
         list_soils_result = list_soils(item["lon"], item["lat"])
-        logging.info(f"...time: {(time.perf_counter()-start_time):.2f}s")
+        logging.info(f"...time: {(time.perf_counter() - start_time):.2f}s")
         rank_soils(
             item["lon"],
             item["lat"],

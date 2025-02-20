@@ -1416,7 +1416,7 @@ def extract_mucompdata_STATSGO(lon, lat):
                         component.irrcapscl, component.irrcapunit, component.taxorder,
                         component.taxsubgrp
                         FROM component
-                        WHERE mukey IN ({','.join(map(str, mukey_list))})"""
+                        WHERE mukey IN ({",".join(map(str, mukey_list))})"""
     mucompdata_out = sda_return(propQry=mucompdataQry)
 
     if not mucompdata_out.empty:

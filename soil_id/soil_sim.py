@@ -144,7 +144,6 @@ def soil_sim(muhorzdata_pd):
         aws_PIW90 = "Data not available"
         var_imp = "Data not available"
     else:
-
         # Extract columns with names ending in '_r'
         agg_data_r = agg_data_df[[col for col in agg_data_df.columns if col.endswith("_r")]]
 

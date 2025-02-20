@@ -1,8 +1,7 @@
 pip-tools: ${VIRTUAL_ENV}/scripts/pip-sync
 
 format:
-	isort --atomic soil_id
-	black soil_id
+	ruff format soil_id
 
 install:
 	uv pip install -r requirements.txt
@@ -11,7 +10,7 @@ install-dev:
 	uv pip install -r requirements-dev.txt
 
 lint:
-	flake8 soil_id && isort -c soil_id && black --check soil_id
+	ruff check soil_id
 
 lock: pip-tools
 	CUSTOM_COMPILE_COMMAND="make lock" uv pip compile --generate-hashes requirements/base.in -o requirements.txt

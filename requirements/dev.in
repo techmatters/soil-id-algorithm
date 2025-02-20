@@ -1,7 +1,5 @@
-black
-flake8
 flameprof
 gdown
-isort
+ruff
 pytest
 pytest-profiling

@@ -1800,9 +1800,7 @@ def rank_soils(
 
         # Calculate similarity for each depth slice
         dis_mat_list = []
-        for (
-            i
-        ) in (
+        for i in (
             soil_matrix.index
         ):  # i should be an index of p_hz_data depth slices, e.g. if user only enters
             # 100-120cm data, then i = 100:120
@@ -2132,9 +2130,7 @@ def rank_soils(
             "Score_Data_Loc",
             "distance_score",
         ]
-    ].fillna(
-        0.0
-    )
+    ].fillna(0.0)
 
     # Construct the output format
     Rank = [

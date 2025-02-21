@@ -1,5 +1,3 @@
-pip-tools: ${VIRTUAL_ENV}/scripts/pip-sync
-
 format:
 	ruff format soil_id
 
@@ -12,11 +10,11 @@ install-dev:
 lint:
 	ruff check soil_id
 
-lock: pip-tools
-	CUSTOM_COMPILE_COMMAND="make lock" uv pip compile --generate-hashes requirements/base.in -o requirements.txt
+lock:
+	CUSTOM_COMPILE_COMMAND="make lock" uv pip compile --upgrade --generate-hashes requirements/base.in -o requirements.txt
 
-lock-dev: pip-tools
-	CUSTOM_COMPILE_COMMAND="make lock-dev" uv pip compile --generate-hashes requirements/dev.in -o requirements-dev.txt
+lock-dev:
+	CUSTOM_COMPILE_COMMAND="make lock-dev" uv pip compile --upgrade --generate-hashes requirements/dev.in -o requirements-dev.txt
 
 build:
 	echo "Building TK..."
@@ -66,6 +64,3 @@ download-soil-data:
 	gdown 185Qjb9pJJn4AzOissiTz283tINrDqgI0; \
 	gdown 1P3xl1YRlfcMjfO_4PM39tkrrlL3hoLzv; \
 	gdown 1K0GkqxhZiVUND6yfFmaI7tYanLktekyp \
-
-${VIRTUAL_ENV}/scripts/pip-sync:
-	uv pip install pip-tools

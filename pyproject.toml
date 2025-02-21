@@ -14,7 +14,7 @@ exclude = ["migrations"]
 line-length = 100
 
 [tool.ruff.lint.isort]
-known-first-party = ["apps"]
+known-first-party = ["soil_id"]
 
 [tool.ruff.lint]
 extend-ignore = ["E203"]

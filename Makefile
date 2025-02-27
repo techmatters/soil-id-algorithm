@@ -1,8 +1,12 @@
+ifeq ($(DC_ENV),ci)
+	UV_FLAGS = "--system"
+endif
+
 install:
-	uv pip install -r requirements.txt
+	uv pip install -r requirements.txt $(UV_FLAGS)
 
 install-dev:
-	uv pip install -r requirements-dev.txt
+	uv pip install -r requirements-dev.txt $(UV_FLAGS)
 
 setup-git-hooks:
 	@cp scripts/commit-msg.sample .git/hooks/commit-msg

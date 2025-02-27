@@ -6,15 +6,19 @@
 
 # Contributing
 
-Before contributing to the project, it's recommended that you set up
-your local git running the following command:
+Configure git to automatically lint your code and validate validate your commit messages:
 
 ```sh
 $ make setup-git-hooks
 ```
 
-This will activate two git hooks to automatically check Python code
-style and commit message structure before each commit.
+Set up a virtual environment and install dependencies:
+
+```sh
+$ uv venv
+$ source .venv/bin/activate
+$ make install && make install-dev
+```
 
 ## explanation of algorithm
 

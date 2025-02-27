@@ -13,9 +13,6 @@ on:
       - edited
       - synchronize
 
-env:
-  UV_PROJECT_ENVIRONMENT: ${{ env.pythonLocation }}
-
 jobs:
   lint:
     runs-on: ubuntu-24.04
@@ -38,7 +35,7 @@ jobs:
           cache-dependency-glob: 'requirements**.txt'
 
       - name: Install Python dependencies
-        run: make install-dev
+        run: make install-dev DC_ENV=ci
 
       - name: Run lint checks
         run: make lint
@@ -74,8 +71,8 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          make install
-          make install-dev
+          make install DC_ENV=ci
+          make install-dev DC_ENV=ci
 
       - name: Restore data cache
         uses: actions/cache@v4

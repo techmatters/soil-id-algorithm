@@ -4,6 +4,11 @@ install:
 install-dev:
 	uv pip install -r requirements-dev.txt
 
+setup-git-hooks:
+	@cp scripts/commit-msg.sample .git/hooks/commit-msg
+	@pre-commit install
+	@echo "git hooks installed"
+
 lint:
 	ruff check soil_id
 

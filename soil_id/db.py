@@ -15,18 +15,19 @@
 
 # Standard libraries
 import logging
-
 import pandas as pd
 
 # Third-party libraries
 import psycopg
-from dotenv import load_dotenv
+from shapely.geometry import Point
+import geopandas as gpd
 
 # local libraries
 import soil_id.config
-
-# Load .env file
-load_dotenv()
+from .utils import (
+    calculate_distances_and_intersections,
+    create_circular_buffer,
+)
 
 
 def get_datastore_connection():
@@ -36,7 +37,7 @@ def get_datastore_connection():
     Returns:
         Connection object if successful, otherwise exits the program.
     """
-    conn = None  # Initialize variable
+    conn = None
     try:
         conn = psycopg.connect(
             host=soil_id.config.DB_HOST,
@@ -163,7 +164,76 @@ def save_soilgrids_output(plot_id, model_version, soilgrids_blob):
         conn.close()
 
 
-# global (via extract_WISE_data)
+def extract_WISE_data(lon, lat, table_name='hwsdv2', buffer_dist=10000):
+    """
+    Extracts WISE data by querying a PostGIS table using psycopg2.
+
+    Args:
+        lon (float): Longitude of the point.
+        lat (float): Latitude of the point.
+        table_name (str): Name of the PostGIS table.
+        buffer_dist (int, optional): Buffer distance in meters. Default is 10,000m.
+
+    Returns:
+        DataFrame: Filtered WISE data from PostGIS.
+    """
+    
+    # Create a buffer around point
+    buffer = create_circular_buffer(lon, lat, buffer_dist=10000)
+
+    # Convert buffer to WKT for SQL query
+    buffer_wkt = buffer.wkt  # ✅ Use buffer.wkt directly
+
+    # Construct SQL query to retrieve features **inside** the buffer
+    query = f"""
+        SELECT MUGLB_NEW, ST_AsEWKB(geom) AS geom
+        FROM {table_name}
+        WHERE ST_Intersects(geom, ST_GeomFromText('{buffer_wkt}', 4326));
+    """
+    try:
+        # Establish connection
+        conn = get_datastore_connection()
+        cur = conn.cursor()
+
+        # Execute query
+        cur.execute(query)
+
+        # Fetch results
+        rows = cur.fetchall()
+
+        # Convert results into a GeoDataFrame
+        hwsd = gpd.GeoDataFrame(rows, columns=["hwsd2", "geom"], crs="EPSG:4326")
+
+        # Ensure only unique map units are considered
+        mu_geo = hwsd.drop_duplicates(subset="hwsd2")
+
+        # Calculate distances and intersections
+        mu_id_dist = calculate_distances_and_intersections(mu_geo, point_geo)
+        mu_id_dist.loc[mu_id_dist["pt_intersect"], "dist_meters"] = 0
+        mu_id_dist["distance"] = mu_id_dist.groupby("hwsd2")["dist_meters"].transform(min)
+        mu_id_dist = mu_id_dist.nsmallest(2, "distance")
+
+        # Merge results and remove duplicates
+        hwsd = hwsd.drop(columns=["geom"])
+        hwsd = pd.merge(mu_id_dist, hwsd, on="hwsd2", how="left").drop_duplicates()
+
+        # Query WISE data based on MUGLB_NEW values
+        MUGLB_NEW_Select = hwsd["hwsd2"].tolist()
+        wise_data = get_WISE30sec_data(MUGLB_NEW_Select)
+        wise_data = pd.merge(wise_data, mu_id_dist, on="MUGLB_NEW", how="left")
+
+        return wise_data
+
+    except Exception as e:
+        print(f"Error querying PostGIS: {e}")
+        return None
+
+    finally:
+        # Ensure the database connection is closed
+        cur.close()
+        conn.close()
+
+
 def get_WISE30sec_data(MUGLB_NEW_Select):
     """
     Retrieve WISE 30 second data based on selected MUGLB_NEW values.
@@ -240,7 +310,7 @@ def fetch_table_from_db(table_name):
         query = f"SELECT * FROM {table_name} ORDER BY id ASC;"
         cur.execute(query)
         rows = cur.fetchall()
-        
+
         # Transpose rows to access them in the same format as the CSV
         return list(map(list, zip(*rows[1:])))  # Skip 'id' column, Transpose to get lists
 

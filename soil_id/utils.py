@@ -39,57 +39,7 @@ from sklearn.utils import validation
 # local libraries
 import soil_id.config
 
-from .db import get_WISE30sec_data
 from .services import sda_return
-
-
-def get_utm_crs(lon, lat):
-    """
-    Determine the UTM CRS based on longitude and latitude.
-    """
-    zone_number = int((lon + 180) / 6) + 1  # Calculate UTM zone
-    return f"EPSG:326{zone_number}" if lat >= 0 else f"EPSG:327{zone_number}"
-
-
-# global
-def extract_WISE_data(lon, lat, file_path, buffer_dist=10000):
-    # Create LPKS point
-    point_geo = gpd.GeoDataFrame(
-        geometry=[Point(lon, lat)],
-        crs="EPSG:4326"  # Assign CRS
-    )
-
-    # Get the appropriate UTM CRS for the location
-    utm_crs = get_utm_crs(lon, lat)
-    print(f"Using UTM CRS: {utm_crs}")  # Log the CRS being used
-
-    # Reproject to the UTM CRS
-    projected_geo = point_geo.to_crs(utm_crs)
-
-    # Create a buffer in meters and get the bounding box
-    bounding_box = projected_geo.buffer(buffer_dist).envelope
-
-    # Reproject the bounding box back to geographic CRS (WGS84)
-    bounding_box = bounding_box.to_crs("EPSG:4326")
-
-    # Read and clip the data using the bounding box
-    hwsd = gpd.read_file(file_path, bbox=bounding_box)
-
-    # Filter data to consider unique map units
-    mu_geo = hwsd[["MUGLB_NEW", "geometry"]].drop_duplicates(subset="MUGLB_NEW")
-    mu_id_dist = calculate_distances_and_intersections(mu_geo, point_geo)
-    mu_id_dist.loc[mu_id_dist["pt_intersect"], "dist_meters"] = 0
-    mu_id_dist["distance"] = mu_id_dist.groupby("MUGLB_NEW")["dist_meters"].transform(min)
-    mu_id_dist = mu_id_dist.nsmallest(2, "distance")
-
-    hwsd = hwsd.drop(columns=["geometry"])
-    hwsd = pd.merge(mu_id_dist, hwsd, on="MUGLB_NEW", how="left").drop_duplicates()
-
-    MUGLB_NEW_Select = hwsd["MUGLB_NEW"].tolist()
-    wise_data = get_WISE30sec_data(MUGLB_NEW_Select)
-    wise_data = pd.merge(wise_data, mu_id_dist, on="MUGLB_NEW", how="left")
-
-    return wise_data
 
 
 ###################################################################################################
@@ -126,7 +76,6 @@ def getSand(field: str) -> float:
     }
 
     if field is None:
-        # If field is None, return nan immediately
         return np.nan
 
     # Convert field to lowercase, then do the lookup in the dictionary
@@ -1390,89 +1339,66 @@ def load_statsgo_data(box):
         return None
 
 
-def convert_geometry_to_utm(geometry, src_crs="epsg:4326", target_crs=None):
+def convert_geometry_to_utm(geometry, src_crs="EPSG:4326", target_crs=None):
     """
     Transforms a given geometry from its source coordinate reference system (CRS)
     to an appropriate Universal Transverse Mercator (UTM) CRS based on the geometry's
     centroid location.
 
     Parameters:
-    - geometry (shapely.geometry.base.BaseGeometry): The geometry to transform, which
-      could be any type of geometry, e.g., Point, Polygon.
-    - src_crs (str, optional): The EPSG code of the source CRS of the geometry. Defaults
-      to 'epsg:4326'.
-    - target_crs (str, optional): The EPSG code of the target CRS to which the geometry
-      should be transformed. If None, the appropriate UTM CRS based on the geometry's
-      centroid will be calculated.
+    - geometry (shapely.geometry.base.BaseGeometry): The geometry to transform (Point, Polygon, etc.).
+    - src_crs (str, optional): The source CRS of the geometry. Defaults to "EPSG:4326".
+    - target_crs (str, optional): The target CRS. If None, the function calculates the appropriate UTM CRS.
 
     Returns:
-    - tuple: A tuple containing the transformed geometry and the EPSG code of the
-      target UTM CRS. The transformed geometry is in the new CRS, and distances from
-      this geometry can be accurately calculated in linear units (meters).
-
-    Notes:
-    - If the target_crs is not provided, the function calculates the correct UTM zone
-      based on the longitude (from -180 to 180 degrees) and adjusts for the northern or
-      southern hemisphere based on the latitude.
-    - This function assumes the geometry is already in the specified source CRS and will
-      convert it directly to the target CRS without additional CRS transformations.
+    - tuple: (GeoDataFrame with geometry reprojected to UTM, target CRS string)
     """
-    # If geometry is not a GeoDataFrame, wrap it into one
+    # If geometry is a Point, wrap it into a GeoDataFrame
     if isinstance(geometry, Point):
         geometry = gpd.GeoDataFrame(geometry=[geometry], crs=src_crs)
     elif isinstance(geometry, gpd.GeoSeries):
-        geometry = geometry.to_frame(name='geometry')
+        geometry = geometry.to_frame(name="geometry")
+        geometry.set_crs(src_crs, inplace=True)
 
-    # Project to source CRS (ensure proper handling)
+    # Ensure the geometry is in the source CRS
     geometry = geometry.to_crs(src_crs)
 
-    # Calculate the centroid
+    # Compute the centroid for UTM zone calculation
     centroid = geometry.centroid.iloc[0]
     lon, lat = centroid.x, centroid.y
 
-    # Determine the UTM zone dynamically
+    # Determine the UTM zone
     utm_zone = int((lon + 180) / 6) + 1
     hemisphere = "north" if lat >= 0 else "south"
     epsg_code = f"326{utm_zone:02d}" if hemisphere == "north" else f"327{utm_zone:02d}"
     target_crs = f"EPSG:{epsg_code}"
 
-    # Reproject geometry to the UTM CRS
+    # Reproject the geometry to the UTM CRS
     geometry_utm = geometry.to_crs(target_crs)
 
     return geometry_utm, target_crs
 
 
-def create_bounding_box(lon, lat, buffer_dist):
+def create_circular_buffer(lon, lat, buffer_dist):
     """
-    Creates a geographic bounding box around a given latitude and longitude,
-    buffered by a specified distance in meters.
-
-    Parameters:
-    - lon (float): Longitude of the center point.
-    - lat (float): Latitude of the center point.
-    - buffer_dist (float): Buffer distance in meters.
-
-    Returns:
-    - Shapely Polygon: Geographic bounding box as a shapely polygon.
+    Creates a circular buffer in meters around a point and converts it to EPSG:4326.
     """
-    # Convert geographic coordinates to a Point geometry
     point_geo = Point(lon, lat)
-
-    # Use the convert_geometry_to_utm function to transform the point
     point_utm, epsg_code = convert_geometry_to_utm(point_geo)
 
-    # Create a GeoDataFrame with the UTM point
-    point_gdf = gpd.GeoDataFrame([{"geometry": point_utm}], crs=epsg_code)
+    # Ensure geometry is singular
+    if isinstance(point_utm, gpd.GeoDataFrame):
+        point_utm = point_utm.geometry.iloc[0]  # ✅ Extract first geometry
+    
+    # Create buffer
+    buffered_circle = point_utm.buffer(buffer_dist)
+    
+    # Convert buffer back to geographic CRS
+    circle_gdf = gpd.GeoDataFrame(geometry=[buffered_circle], crs=epsg_code)
+    geographic_circle = circle_gdf.to_crs("EPSG:4326").geometry.iloc[0]
 
-    # Buffer the point in UTM coordinates
-    buffered_point = point_gdf.buffer(buffer_dist)[0]
-    utm_box = box(*buffered_point.bounds)
+    return geographic_circle
 
-    # Convert the UTM box back to geographic coordinates
-    point_gdf = gpd.GeoDataFrame([{"geometry": utm_box}], crs=epsg_code)
-    geographic_box = point_gdf.to_crs("epsg:4326").geometry.iloc[0]
-
-    return geographic_box
 
 
 def extract_mucompdata_STATSGO(lon, lat):
@@ -1492,9 +1418,9 @@ def extract_mucompdata_STATSGO(lon, lat):
     """
 
     point = Point(lon, lat)
-    box = create_bounding_box(lon, lat, buffer_dist=5000)
+    buffer = create_circular_buffer(lon, lat, buffer_dist=5000)
 
-    statsgo_mukey = load_statsgo_data(box)
+    statsgo_mukey = load_statsgo_data(buffer)
     if statsgo_mukey is None:
         logging.warning(f"Soil ID not available in this area: {lon}.{lat}")
         return None

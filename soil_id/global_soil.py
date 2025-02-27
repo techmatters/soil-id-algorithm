@@ -14,7 +14,6 @@
 # along with this program. If not, see https://www.gnu.org/licenses/.
 
 import collections
-import csv
 import io
 
 # Standard libraries
@@ -26,15 +25,18 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 
-# Load .env file
-from dotenv import load_dotenv
 from scipy.stats import norm
 
 # local libraries
 import soil_id.config
 
 from .color import calculate_deltaE2000
-from .db import get_WRB_descriptions, getSG_descriptions
+from .db import (
+    get_WRB_descriptions,
+    getSG_descriptions,
+    fetch_table_from_db,
+    extract_WISE_data,
+)
 from .services import get_soilgrids_classification_data, get_soilgrids_property_data
 from .utils import (
     adjust_depth_interval,
@@ -42,7 +44,6 @@ from .utils import (
     assign_max_distance_scores,
     calculate_location_score,
     drop_cokey_horz,
-    extract_WISE_data,
     getCF_fromClass,
     getClay,
     getProfile,
@@ -53,8 +54,6 @@ from .utils import (
     pedon_color,
     silt_calc,
 )
-
-load_dotenv()
 
 
 @dataclass
@@ -86,10 +85,7 @@ def list_soils_global(lon, lat):
     wise_data = extract_WISE_data(
         lon,
         lat,
-        # Temporarily change file path
-        file_path="/mnt/c/LandPKS_API_SoilID-master/global/wise30sec_poly_simp_soil.gpkg",
-        # file_path=config.WISE_PATH,
-        # layer_name=None,
+        table_name='hwsdv2',
         buffer_dist=10000,
     )
 

@@ -1,5 +1,21 @@
 # Soil ID Algorithm
 
+## Requirements
+
+-   Python: 3.12 or better
+
+# Contributing
+
+Before contributing to the project, it's recommended that you set up
+your local git running the following command:
+
+```sh
+$ make setup-git-hooks
+```
+
+This will activate two git hooks to automatically check Python code
+style and commit message structure before each commit.
+
 ## explanation of algorithm
 
 ### terminology
@@ -63,8 +79,8 @@ There is a large suite of integration tests which takes many hours to run. It co
 
 ## Acknowledgements
 
-* Beaudette, D., Roudier, P., Brown, A. (2023). [aqp: Algorithms for Quantitative Pedology](https://CRAN.R-project.org/package=aqp). R package version 2.0.
- 
-* Beaudette, D.E., Roudier, P., O'Geen, A.T. [Algorithms for quantitative pedology: A toolkit for soil scientists, Computers & Geosciences](http://dx.doi.org/10.1016/j.cageo.2012.10.020), Volume 52, March 2013, Pages 258-268, ISSN 0098-3004.
- 
-* soilDB: Beaudette, D., Skovlin, J., Roecker, S., Brown, A. (2024). [soilDB: Soil Database Interface](https://CRAN.R-project.org/package=soilDB). R package version 2.8.3.
+-   Beaudette, D., Roudier, P., Brown, A. (2023). [aqp: Algorithms for Quantitative Pedology](https://CRAN.R-project.org/package=aqp). R package version 2.0.
+
+-   Beaudette, D.E., Roudier, P., O'Geen, A.T. [Algorithms for quantitative pedology: A toolkit for soil scientists, Computers & Geosciences](http://dx.doi.org/10.1016/j.cageo.2012.10.020), Volume 52, March 2013, Pages 258-268, ISSN 0098-3004.
+
+-   soilDB: Beaudette, D., Skovlin, J., Roecker, S., Brown, A. (2024). [soilDB: Soil Database Interface](https://CRAN.R-project.org/package=soilDB). R package version 2.8.3.

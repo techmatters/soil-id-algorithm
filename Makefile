@@ -1,14 +1,19 @@
-format:
-	ruff format soil_id
-
 install:
 	uv pip install -r requirements.txt
 
 install-dev:
 	uv pip install -r requirements-dev.txt
 
+setup-git-hooks:
+	@cp scripts/commit-msg.sample .git/hooks/commit-msg
+	@pre-commit install
+	@echo "git hooks installed"
+
 lint:
 	ruff check soil_id
+
+format:
+	ruff format soil_id
 
 lock:
 	CUSTOM_COMPILE_COMMAND="make lock" uv pip compile --upgrade --generate-hashes requirements/base.in -o requirements.txt

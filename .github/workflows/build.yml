@@ -8,6 +8,10 @@ on:
   pull_request:
     branches:
       - main
+    types:
+      - opened
+      - edited
+      - synchronize
 
 env:
   UV_PROJECT_ENVIRONMENT: ${{ env.pythonLocation }}

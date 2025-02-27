@@ -1,5 +1,6 @@
 flameprof
 gdown
 ruff
+pre-commit
 pytest
 pytest-profiling

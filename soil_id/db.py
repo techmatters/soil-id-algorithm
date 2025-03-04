@@ -317,8 +317,7 @@ def fetch_table_from_db(table_name):
         cur.execute(query)
         rows = cur.fetchall()
 
-        # Transpose rows to access them in the same format as the CSV
-        return list(map(list, zip(*rows[1:])))  # Skip 'id' column, Transpose to get lists
+        return rows
 
     except Exception as err:
         logging.error(f"Error querying PostgreSQL: {err}")

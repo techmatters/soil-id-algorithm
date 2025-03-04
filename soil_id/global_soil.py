@@ -912,12 +912,57 @@ def rank_soils_global(
     # --------------------------------------------------------------------------------------------
 
     # Start of soil color
-
+    #Load in SRG color distribution data
+    wmf1 = []
+    wsf1 = []
+    rmf1 = []
+    rsf1 = []
+    ymf1 = []
+    ysf1 = []
+    wmf2 = []
+    wsf2 = []
+    rmf2 = []
+    rsf2 = []
+    ymf2 = []
+    ysf2 = []
     # Load color distribution data from NormDist1 table
-    wmf1, wsf1, rmf1, rsf1, ymf1, ysf1 = fetch_table_from_db("NormDist1")
-
+    rows1 = fetch_table_from_db("NormDist1")
+    row_id = 0
+    for row in rows1:
+        # row is a tuple; iterate over its values.
+        for value in row:
+            if row_id == 0:
+                wmf1.append(value)
+            elif row_id == 1:
+                wsf1.append(value)
+            elif row_id == 2:
+                rmf1.append(value)
+            elif row_id == 3:
+                rsf1.append(value)
+            elif row_id == 4:
+                ymf1.append(value)
+            elif row_id == 5:
+                ysf1.append(value)
+        row_id += 1
     # Load color distribution data from NormDist2 table
-    wmf2, wsf2, rmf2, rsf2, ymf2, ysf2 = fetch_table_from_db("NormDist2")
+    rows2 = fetch_table_from_db("NormDist2")
+    row_id = 0
+    for row in rows2:
+        # row is a tuple; iterate over its values.
+        for value in row:
+            if row_id == 0:
+                wmf2.append(value)
+            elif row_id == 1:
+                wsf2.append(value)
+            elif row_id == 2:
+                rmf2.append(value)
+            elif row_id == 3:
+                rsf2.append(value)
+            elif row_id == 4:
+                ymf2.append(value)
+            elif row_id == 5:
+                ysf2.append(value)
+    row_id = row_id + 1
 
     fao90 = [
         "Acrisols",

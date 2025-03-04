@@ -24,18 +24,14 @@ from dataclasses import dataclass
 # Third-party libraries
 import numpy as np
 import pandas as pd
-
 from scipy.stats import norm
-
-# local libraries
-import soil_id.config
 
 from .color import calculate_deltaE2000
 from .db import (
+    extract_hwsd2_data,
+    fetch_table_from_db,
     get_WRB_descriptions,
     getSG_descriptions,
-    fetch_table_from_db,
-    extract_WISE_data,
 )
 from .services import get_soilgrids_classification_data, get_soilgrids_property_data
 from .utils import (
@@ -54,6 +50,8 @@ from .utils import (
     pedon_color,
     silt_calc,
 )
+
+# local libraries
 
 
 @dataclass
@@ -80,18 +78,17 @@ class SoilListOutputData:
 #                                 getSoilLocationBasedGlobal                                     #
 ##################################################################################################
 def list_soils_global(lon, lat):
-    # Extract HWSD-WISE Data
-    # Note: Need to convert HWSD shp to gpkg file
-    wise_data = extract_WISE_data(
+    # Extract HWSD2 Data
+    hwsd2_data = extract_hwsd2_data(
         lon,
         lat,
-        table_name='hwsdv2',
+        table_name="hwsdv2",
         buffer_dist=10000,
     )
 
     # Component Data
-    mucompdata_pd = wise_data[["MUGLB_NEW", "SU_name", "distance", "PROP", "COMPID", "FAO_SYS"]]
-    mucompdata_pd.columns = ["mukey", "compname", "distance", "share", "cokey", "fss"]
+    mucompdata_pd = hwsd2_data[["hwsd2", "fao90_name", "distance", "share", "compid"]]
+    mucompdata_pd.columns = ["mukey", "compname", "distance", "share", "cokey"]
     mucompdata_pd["distance"] = pd.to_numeric(mucompdata_pd["distance"])
     mucompdata_pd["share"] = pd.to_numeric(mucompdata_pd["share"])
     mucompdata_pd = mucompdata_pd.drop_duplicates().reset_index(drop=True)
@@ -140,21 +137,20 @@ def list_soils_global(lon, lat):
     # -----------------------------------------------------------------------------------------------------------------
     # Create horizon data table
     columns_to_select = [
-        "COMPID",
-        "TopDep",
-        "BotDep",
+        "compid",
+        "topdep",
+        "botdep",
         "id",
-        "Layer",
-        "SDTO",
-        "STPC",
-        "CLPC",
-        "CFRAG",
-        "CECS",
-        "PHAQ",
-        "ELCO",
-        "PROP",
-        "SU_name",
-        "FAO_SYS",
+        "layer",
+        "sand",
+        "silt",
+        "clay",
+        "coarse",
+        "cec_soil",
+        "ph_water",
+        "elec_cond",
+        "share",
+        "fao90_name",
     ]
     new_column_names = [
         "cokey",
@@ -171,10 +167,9 @@ def list_soils_global(lon, lat):
         "EC",
         "comppct_r",
         "compname",
-        "fss",
     ]
 
-    muhorzdata_pd = wise_data[columns_to_select]
+    muhorzdata_pd = hwsd2_data[columns_to_select]
     muhorzdata_pd.columns = new_column_names
     muhorzdata_pd = muhorzdata_pd[muhorzdata_pd["cokey"].isin(comp_key)]
     muhorzdata_pd[["hzdept_r", "hzdepb_r"]] = (
@@ -442,7 +437,6 @@ def list_soils_global(lon, lat):
             "siteData": {
                 "mapunitID": row.mukey,
                 "componentID": row.cokey,
-                "fao": row.fss,
                 "share": row.share,
                 "distance": round(row.distance, 3),
                 "minCompDistance": row.min_dist,
@@ -870,7 +864,7 @@ def rank_soils_global(
             D_final_horz.columns = ["compname", "compname_grp", "horz_score", "weight"]
             D_final_horz = pd.merge(
                 D_final_horz,
-                mucompdata_pd[["compname", "mukey", "cokey", "distance_score", "Rank_Loc", "fss"]],
+                mucompdata_pd[["compname", "mukey", "cokey", "distance_score", "Rank_Loc"]],
                 on="compname",
                 how="left",
             )
@@ -886,7 +880,7 @@ def rank_soils_global(
         D_final_horz.columns = ["compname", "compname_grp", "horz_score", "weight"]
         D_final_horz = pd.merge(
             D_final_horz,
-            mucompdata_pd[["compname", "mukey", "cokey", "distance_score", "Rank_Loc", "fss"]],
+            mucompdata_pd[["compname", "mukey", "cokey", "distance_score", "Rank_Loc"]],
             on="compname",
             how="left",
         )
@@ -925,32 +919,6 @@ def rank_soils_global(
     # Load color distribution data from NormDist2 table
     wmf2, wsf2, rmf2, rsf2, ymf2, ysf2 = fetch_table_from_db("NormDist2")
 
-    fao74 = [
-        "Acrisols",
-        "Andosols",
-        "Arenosols",
-        "Cambisols",
-        "Chernozems",
-        "Ferralsols",
-        "Fluvisols",
-        "Gleysols",
-        "Greyzems",
-        "Histosols",
-        "Kastanozems",
-        "Luvisols",
-        "Nitosols",
-        "Phaeozems",
-        "Planosols",
-        "Podzols",
-        "Podzoluvisols",
-        "Regosols",
-        "Solonchaks",
-        "Solonetz",
-        "Vertisols",
-        "Xerosols",
-        "Yermosols",
-    ]
-
     fao90 = [
         "Acrisols",
         "Alisols",
@@ -986,18 +954,15 @@ def rank_soils_global(
     if not cr_df.isnull().values.any():
         color_sim = []
         w_df, r_df, y_df = cr_df.iloc[0], cr_df.iloc[1], cr_df.iloc[2]
-        fao74 = [item.lower() for item in fao74]
         fao90 = [item.lower() for item in fao90]
 
-        for compname, fss in zip(D_final_horz.compname, D_final_horz.fss):
+        for compname in D_final_horz.compname:
             soilgroup = re.sub(r"\d+$", "", " ".join(compname.split()[1:])).lower()
 
             prob_w, prob_r, prob_y = [], [], []
 
-            if fss.lower() == "fao74":
-                fao_list, wmf, wsf, rmf, rsf, ymf, ysf = fao74, wmf1, wsf1, rmf1, rsf1, ymf1, ysf1
-            else:
-                fao_list, wmf, wsf, rmf, rsf, ymf, ysf = fao90, wmf2, wsf2, rmf2, rsf2, ymf2, ysf2
+            # Use FAO90 data only
+            fao_list, wmf, wsf, rmf, rsf, ymf, ysf = fao90, wmf2, wsf2, rmf2, rsf2, ymf2, ysf2
 
             idx = fao_list.index(soilgroup) if soilgroup in fao_list else -1
 
@@ -1111,30 +1076,10 @@ def rank_soils_global(
         elif (
             bedrock is not None
             and 0 <= bedrock <= 10
-            and row["fss"].lower() == "fao74"
-            and "lithosols" in row["compname"].lower()
-        ):
-            D_final_loc.at[i, "Score_Data_Loc"] = 1.001
-        elif (
-            bedrock is not None
-            and 0 <= bedrock <= 10
-            and row["fss"].lower() == "fao90"
             and "lithic leptosols" in row["compname"].lower()
         ):
             D_final_loc.at[i, "Score_Data_Loc"] = 1.001
-        elif (
-            bedrock is not None
-            and 10 < bedrock <= 30
-            and row["fss"].lower() == "fao74"
-            and ("rendzinas" in row["compname"].lower() or "rankers" in row["compname"].lower())
-        ):
-            D_final_loc.at[i, "Score_Data_Loc"] = 1.001
-        elif (
-            bedrock is not None
-            and 10 < bedrock <= 30
-            and row["fss"].lower() == "fao90"
-            and "leptosols" in row["compname"].lower()
-        ):
+        elif bedrock is not None and 10 < bedrock <= 30 and "leptosols" in row["compname"].lower():
             D_final_loc.at[i, "Score_Data_Loc"] = 1.001
         elif (bedrock is None or bedrock > 50) and any(
             term in row["compname"].lower()

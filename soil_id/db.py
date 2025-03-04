@@ -15,19 +15,19 @@
 
 # Standard libraries
 import logging
+
+import geopandas as gpd
 import pandas as pd
 
 # Third-party libraries
 import psycopg
+from shapely import wkb
 from shapely.geometry import Point
-import geopandas as gpd
 
 # local libraries
 import soil_id.config
-from .utils import (
-    calculate_distances_and_intersections,
-    create_circular_buffer,
-)
+
+from .utils import calculate_distances_and_intersections, create_circular_buffer
 
 
 def get_datastore_connection():
@@ -164,9 +164,9 @@ def save_soilgrids_output(plot_id, model_version, soilgrids_blob):
         conn.close()
 
 
-def extract_WISE_data(lon, lat, table_name='hwsdv2', buffer_dist=10000):
+def extract_hwsd2_data(lon, lat, table_name="hwsdv2", buffer_dist=10000):
     """
-    Extracts WISE data by querying a PostGIS table using psycopg2.
+    Extracts HWSD v2 data by querying a PostGIS table using psycopg2.
 
     Args:
         lon (float): Longitude of the point.
@@ -175,20 +175,21 @@ def extract_WISE_data(lon, lat, table_name='hwsdv2', buffer_dist=10000):
         buffer_dist (int, optional): Buffer distance in meters. Default is 10,000m.
 
     Returns:
-        DataFrame: Filtered WISE data from PostGIS.
+        DataFrame: Filtered HWSD v2 data from PostGIS.
     """
-    
+
     # Create a buffer around point
     buffer = create_circular_buffer(lon, lat, buffer_dist=10000)
 
     # Convert buffer to WKT for SQL query
-    buffer_wkt = buffer.wkt  # ✅ Use buffer.wkt directly
+    buffer_wkt = buffer.wkt
 
     # Construct SQL query to retrieve features **inside** the buffer
     query = f"""
-        SELECT MUGLB_NEW, ST_AsEWKB(geom) AS geom
+        SELECT hwsd2, ST_AsEWKB(geom) AS geom
         FROM {table_name}
-        WHERE ST_Intersects(geom, ST_GeomFromText('{buffer_wkt}', 4326));
+        WHERE geom && ST_GeomFromText('{buffer_wkt}', 4326)
+        AND ST_Intersects(geom, ST_GeomFromText('{buffer_wkt}', 4326));
     """
     try:
         # Establish connection
@@ -201,13 +202,20 @@ def extract_WISE_data(lon, lat, table_name='hwsdv2', buffer_dist=10000):
         # Fetch results
         rows = cur.fetchall()
 
-        # Convert results into a GeoDataFrame
-        hwsd = gpd.GeoDataFrame(rows, columns=["hwsd2", "geom"], crs="EPSG:4326")
+        data = []
+        for hwsd2, geom_binary in rows:
+            # Convert the binary geometry to a shapely geometry
+            geometry = wkb.loads(geom_binary)
+            data.append({"hwsd2": hwsd2, "geom": geometry})
+
+        hwsd = gpd.GeoDataFrame(data, crs="EPSG:4326", geometry="geom")
 
         # Ensure only unique map units are considered
         mu_geo = hwsd.drop_duplicates(subset="hwsd2")
 
         # Calculate distances and intersections
+        point_geo = Point(lon, lat)
+
         mu_id_dist = calculate_distances_and_intersections(mu_geo, point_geo)
         mu_id_dist.loc[mu_id_dist["pt_intersect"], "dist_meters"] = 0
         mu_id_dist["distance"] = mu_id_dist.groupby("hwsd2")["dist_meters"].transform(min)
@@ -217,12 +225,12 @@ def extract_WISE_data(lon, lat, table_name='hwsdv2', buffer_dist=10000):
         hwsd = hwsd.drop(columns=["geom"])
         hwsd = pd.merge(mu_id_dist, hwsd, on="hwsd2", how="left").drop_duplicates()
 
-        # Query WISE data based on MUGLB_NEW values
-        MUGLB_NEW_Select = hwsd["hwsd2"].tolist()
-        wise_data = get_WISE30sec_data(MUGLB_NEW_Select)
-        wise_data = pd.merge(wise_data, mu_id_dist, on="MUGLB_NEW", how="left")
+        # Query hwsd data based on hwsd v2 MU ids
+        hwsd2_mu_select = hwsd["hwsd2"].tolist()
+        hwsd_data = get_hwsd2_data(hwsd2_mu_select)
+        hwsd_data = pd.merge(hwsd_data, mu_id_dist, on="hwsd2", how="left")
 
-        return wise_data
+        return hwsd_data
 
     except Exception as e:
         print(f"Error querying PostGIS: {e}")
@@ -234,12 +242,12 @@ def extract_WISE_data(lon, lat, table_name='hwsdv2', buffer_dist=10000):
         conn.close()
 
 
-def get_WISE30sec_data(MUGLB_NEW_Select):
+def get_hwsd2_data(hwsd2_mu_select):
     """
-    Retrieve WISE 30 second data based on selected MUGLB_NEW values.
+    Retrieve HWSD v2 data based on selected hwsd2 (map unit) values.
     """
-    if not MUGLB_NEW_Select:  # Handle empty list case
-        logging.warning("MUGLB_NEW_Select is empty. Returning empty DataFrame.")
+    if not hwsd2_mu_select:  # Handle empty list case
+        logging.warning("HWSD2 map unit selection is empty. Returning empty DataFrame.")
         return pd.DataFrame()  # Return an empty DataFrame
 
     conn = None
@@ -248,42 +256,39 @@ def get_WISE30sec_data(MUGLB_NEW_Select):
         cur = conn.cursor()
 
         # Create placeholders for the SQL IN clause
-        placeholders = ", ".join(["%s"] * len(MUGLB_NEW_Select))
-        sql_query = f"""SELECT MUGLB_NEW, COMPID, id, MU_GLOBAL, NEWSUID, SCID, PROP, CLAF,
-                               PRID, Layer, TopDep, BotDep, CFRAG, SDTO, STPC, CLPC, CECS,
-                               PHAQ, ELCO, SU_name, FAO_SYS
-                        FROM wise_soil_data
-                        WHERE MUGLB_NEW IN ({placeholders})"""
+        placeholders = ", ".join(["%s"] * len(hwsd2_mu_select))
+        sql_query = f"""SELECT hwsd2_smu_id, compid, id, wise30s_smu_id, sequence, share, fao90,
+                        layer, topdep, botdep, coarse, sand, silt, clay, cec_soil,
+                        ph_water, elec_cond, fao90_name
+                        FROM hwsd2_data
+                        WHERE hwsd2_smu_id IN ({placeholders})"""
 
         # Execute the query only if the list is non-empty
-        cur.execute(sql_query, tuple(MUGLB_NEW_Select))
+        cur.execute(sql_query, tuple(hwsd2_mu_select))
         results = cur.fetchall()
 
         # Convert the results to a pandas DataFrame
         data = pd.DataFrame(
             results,
             columns=[
-                "MUGLB_NEW",
-                "COMPID",
+                "hwsd2",
+                "compid",
                 "id",
-                "MU_GLOBAL",
-                "NEWSUID",
-                "SCID",
-                "PROP",
-                "CLAF",
-                "PRID",
-                "Layer",
-                "TopDep",
-                "BotDep",
-                "CFRAG",
-                "SDTO",
-                "STPC",
-                "CLPC",
-                "CECS",
-                "PHAQ",
-                "ELCO",
-                "SU_name",
-                "FAO_SYS",
+                "wise30s_smu_id",
+                "sequence",
+                "share",
+                "fao90",
+                "layer",
+                "topdep",
+                "botdep",
+                "coarse",
+                "sand",
+                "silt",
+                "clay",
+                "cec_soil",
+                "ph_water",
+                "elec_cond",
+                "fao90_name",
             ],
         )
 
@@ -299,6 +304,7 @@ def get_WISE30sec_data(MUGLB_NEW_Select):
 
 
 # global
+
 
 # Function to fetch data from a PostgreSQL table
 def fetch_table_from_db(table_name):

@@ -31,7 +31,7 @@ from rosetta import SoilData, rosetta
 from scipy.interpolate import UnivariateSpline
 from scipy.sparse import issparse
 from scipy.stats import entropy, norm
-from shapely.geometry import Point, box
+from shapely.geometry import Point
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import pairwise
 from sklearn.utils import validation
@@ -40,7 +40,6 @@ from sklearn.utils import validation
 import soil_id.config
 
 from .services import sda_return
-
 
 ###################################################################################################
 #                                       Utility Functions                                         #
@@ -125,9 +124,9 @@ def getTexture(row=None, sand=None, silt=None, clay=None):
     # Handle missing inputs: if not provided individually, try to get from row.
     if sand is None or silt is None or clay is None:
         if row is not None:
-            sand = row.get('sandtotal_r', np.nan)
-            silt = row.get('silttotal_r', np.nan)
-            clay = row.get('claytotal_r', np.nan)
+            sand = row.get("sandtotal_r", np.nan)
+            silt = row.get("silttotal_r", np.nan)
+            clay = row.get("claytotal_r", np.nan)
 
     # Replace any NaN with 0 for the calculation.
     sand = np.nan_to_num(sand, nan=0)
@@ -142,7 +141,8 @@ def getTexture(row=None, sand=None, silt=None, clay=None):
     conditions = [
         silt_clay < 15,
         (silt_clay >= 15) & (silt_clay < 30),
-        (((7 <= clay) & (clay <= 20)) & (sand > 52)) | ((clay < 7) & (silt < 50) & (silt_2x_clay >= 30)),
+        (((7 <= clay) & (clay <= 20)) & (sand > 52))
+        | ((clay < 7) & (silt < 50) & (silt_2x_clay >= 30)),
         (7 <= clay) & (clay <= 27) & (28 <= silt) & (silt < 50) & (sand <= 52),
         (silt >= 50) & (((12 <= clay) & (clay < 27)) | ((silt < 80) & (clay < 12))),
         (silt >= 80) & (clay < 12),
@@ -1313,10 +1313,10 @@ def calculate_distances_and_intersections(mu_geo, point):
     point_geometry = point_utm.geometry.iloc[0]
 
     # Calculate distances and intersections
-    distances = mu_geo_utm["geometry"].distance(point_geometry)
-    intersects = mu_geo_utm["geometry"].intersects(point_geometry)
+    distances = mu_geo_utm["geom"].distance(point_geometry)
+    intersects = mu_geo_utm["geom"].intersects(point_geometry)
     return pd.DataFrame(
-        {"MUGLB_NEW": mu_geo_utm["MUGLB_NEW"], "dist_meters": distances, "pt_intersect": intersects}
+        {"hwsd2": mu_geo_utm["hwsd2"], "dist_meters": distances, "pt_intersect": intersects}
     )
 
 
@@ -1339,41 +1339,47 @@ def load_statsgo_data(box):
         return None
 
 
-def convert_geometry_to_utm(geometry, src_crs="EPSG:4326", target_crs=None):
+def convert_geometry_to_utm(geometry, src_crs="EPSG:4326"):
     """
-    Transforms a given geometry from its source coordinate reference system (CRS)
-    to an appropriate Universal Transverse Mercator (UTM) CRS based on the geometry's
-    centroid location.
+    Converts a geometry from a geographic CRS to a UTM CRS based on its centroid.
 
     Parameters:
-    - geometry (shapely.geometry.base.BaseGeometry): The geometry to transform (Point, Polygon, etc.).
-    - src_crs (str, optional): The source CRS of the geometry. Defaults to "EPSG:4326".
-    - target_crs (str, optional): The target CRS. If None, the function calculates the appropriate UTM CRS.
+    - geometry (shapely.geometry or geopandas.GeoDataFrame): The input geometry.
+    - src_crs (str, optional): The source CRS, default is "EPSG:4326".
 
     Returns:
-    - tuple: (GeoDataFrame with geometry reprojected to UTM, target CRS string)
+    - tuple: (GeoDataFrame with transformed geometry, target CRS string)
     """
-    # If geometry is a Point, wrap it into a GeoDataFrame
+    # Ensure the geometry is a GeoDataFrame
     if isinstance(geometry, Point):
-        geometry = gpd.GeoDataFrame(geometry=[geometry], crs=src_crs)
+        geometry = gpd.GeoDataFrame(geometry=[geometry], columns=["geometry"], crs=src_crs)
     elif isinstance(geometry, gpd.GeoSeries):
         geometry = geometry.to_frame(name="geometry")
+
+    if "geometry" not in geometry:
+        raise ValueError("Input does not contain a valid geometry column.")
+
+    # Ensure the CRS is correctly assigned before transformation
+    if geometry.crs is None:
         geometry.set_crs(src_crs, inplace=True)
 
-    # Ensure the geometry is in the source CRS
+    # Convert to source CRS (to ensure consistency)
     geometry = geometry.to_crs(src_crs)
 
-    # Compute the centroid for UTM zone calculation
-    centroid = geometry.centroid.iloc[0]
+    # Compute the centroid
+    centroid = geometry.geometry.centroid.iloc[0]  # Extract the first centroid
+    if centroid.is_empty:
+        raise ValueError("Geometry centroid is empty. Check input geometries.")
+
     lon, lat = centroid.x, centroid.y
 
-    # Determine the UTM zone
+    # Determine UTM zone
     utm_zone = int((lon + 180) / 6) + 1
     hemisphere = "north" if lat >= 0 else "south"
     epsg_code = f"326{utm_zone:02d}" if hemisphere == "north" else f"327{utm_zone:02d}"
     target_crs = f"EPSG:{epsg_code}"
 
-    # Reproject the geometry to the UTM CRS
+    # Transform to UTM CRS
     geometry_utm = geometry.to_crs(target_crs)
 
     return geometry_utm, target_crs
@@ -1388,17 +1394,16 @@ def create_circular_buffer(lon, lat, buffer_dist):
 
     # Ensure geometry is singular
     if isinstance(point_utm, gpd.GeoDataFrame):
-        point_utm = point_utm.geometry.iloc[0]  # ✅ Extract first geometry
-    
+        point_utm = point_utm.geometry.iloc[0]
+
     # Create buffer
     buffered_circle = point_utm.buffer(buffer_dist)
-    
+
     # Convert buffer back to geographic CRS
     circle_gdf = gpd.GeoDataFrame(geometry=[buffered_circle], crs=epsg_code)
     geographic_circle = circle_gdf.to_crs("EPSG:4326").geometry.iloc[0]
 
     return geographic_circle
-
 
 
 def extract_mucompdata_STATSGO(lon, lat):

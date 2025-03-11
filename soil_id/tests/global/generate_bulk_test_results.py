@@ -1,4 +1,4 @@
-# Copyright © 2024 Technology Matters
+# Copyright © 2025 Technology Matters
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -20,12 +20,12 @@ import time
 import traceback
 
 import pandas
-from soil_id.us_soil import list_soils, rank_soils
+from soil_id.global_soil import list_soils_global, rank_soils_global, sg_list
 
 test_data_df = pandas.read_csv(
-    os.path.join(os.path.dirname(__file__), "US_SoilID_KSSL_LPKS_Testing.csv")
+    os.path.join(os.path.dirname(__file__), "global_pedon_test_dataset.csv")
 )
-pedons = test_data_df.groupby(by=["pedon_key"])
+pedons = test_data_df.groupby(by=["ID"])
 
 current_time_filename = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
 result_file_name = os.path.join(
@@ -34,33 +34,33 @@ result_file_name = os.path.join(
 )
 
 print(f"logging results to {result_file_name}")
-with open(result_file_name, "w") as result_file:
+# buffering=1 is line buffering
+with open(result_file_name, "w", buffering=1) as result_file:
     result_agg = {}
 
     for pedon_key, pedon in pedons:
-        lat = pedon["y"].values[0]
-        lon = pedon["x"].values[0]
+        lat = pedon["Y_LatDD"].values[0]
+        lon = pedon["X_LonDD"].values[0]
         result_record = {
             "pedon_key": pedon_key[0],
-            "pedon_name": pedon["taxonname"].values[0],
+            "pedon_name": pedon["Description_fao90"].values[0],
             "lat": lat,
             "lon": lon,
         }
 
         start_time = time.perf_counter()
         try:
-            list_result = list_soils(lat=lat, lon=lon)
 
-            result_record["rank_result"] = rank_soils(
+            list_result = list_soils_global(lat=lat, lon=lon)
+
+            result_record["rank_result"] = rank_soils_global(
                 lat=lat,
                 lon=lon,
                 list_output_data=list_result,
-                horizonDepth=pedon["hzdepb"].values.tolist(),
-                soilHorizon=pedon["textclass"].values.tolist(),
-                rfvDepth=pedon["fragvoltot"].values.tolist(),
-                lab_Color=pedon[["L", "a", "b"]].values.tolist(),
-                pSlope=pedon["slope"].values[0],
-                pElev=None,
+                horizonDepth=pedon["BOTDEP"].values.tolist(),
+                soilHorizon=pedon["textClass"].values.tolist(),
+                rfvDepth=pedon["RFV"].values.tolist(),
+                lab_Color=pedon[["L", "A", "B"]].values.tolist(),
                 bedrock=None,
                 cracks=None,
             )
@@ -85,5 +85,7 @@ with open(result_file_name, "w") as result_file:
         if result_record["result"] not in result_agg:
             result_agg[result_record["result"]] = 0
         result_agg[result_record["result"]] = result_agg[result_record["result"]] + 1
+
+        print(result_agg)
 
         result_file.write(json.dumps(result_record) + "\n")

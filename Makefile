@@ -54,10 +54,16 @@ graphs:
 	gprof2dot -f pstats  prof/test_soil_location.prof | dot -Tsvg -o prof/test_soil_location.svg
 	flameprof prof/test_soil_location.prof > prof/test_soil_location_flame.svg
 
-generate_bulk_test_results:
+generate_bulk_test_results_us:
 	python -m soil_id.tests.us.generate_bulk_test_results
 
-process_bulk_test_results:
+process_bulk_test_results_us:
+	python -m soil_id.tests.us.process_bulk_test_results $(RESULTS_FILE)
+
+generate_bulk_test_results_global:
+	python -m soil_id.tests.us.generate_bulk_test_results
+
+process_bulk_test_results_global:
 	python -m soil_id.tests.us.process_bulk_test_results $(RESULTS_FILE)
 
 # Donwload Munsell CSV, SHX, SHP, SBX, SBN, PRJ, DBF

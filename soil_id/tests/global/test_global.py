@@ -20,6 +20,9 @@ from soil_id.global_soil import list_soils_global, rank_soils_global, sg_list
 
 test_locations = [
     {"lon": -1.4631, "lat": 7.3318},
+    {"lat": -10.950086, "lon": 17.573093},
+    {"lat": 34.5, "lon": 69.16667},
+    {"lat": -10.07856, "lon": 15.107436},
 ]
 
 
@@ -34,10 +37,10 @@ def test_soil_location():
             item["lon"],
             item["lat"],
             list_output_data=list_soils_result,
-            soilHorizon=[],
-            horizonDepth=[],
-            rfvDepth=[],
-            lab_Color=[],
+            soilHorizon=["Loam"],
+            horizonDepth=[15],
+            rfvDepth=[20],
+            lab_Color=[[41.23035939, 3.623018224, 13.27654356]],
             bedrock=None,
             cracks=None,
         )

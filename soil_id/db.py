@@ -21,11 +21,11 @@ import pandas as pd
 
 # Third-party libraries
 import psycopg
-from shapely import wkb
-from shapely.geometry import Point
 
 # local libraries
 import soil_id.config
+from shapely import wkb
+from shapely.geometry import Point
 
 from .utils import calculate_distances_and_intersections, create_circular_buffer
 
@@ -164,7 +164,7 @@ def save_soilgrids_output(plot_id, model_version, soilgrids_blob):
         conn.close()
 
 
-def extract_hwsd2_data(lon, lat, table_name="hwsdv2", buffer_dist=10000):
+def extract_hwsd2_data(lon, lat, connection, table_name="hwsdv2", buffer_dist=10000):
     """
     Extracts HWSD v2 data by querying a PostGIS table using psycopg2.
 
@@ -193,8 +193,7 @@ def extract_hwsd2_data(lon, lat, table_name="hwsdv2", buffer_dist=10000):
     """
     try:
         # Establish connection
-        conn = get_datastore_connection()
-        cur = conn.cursor()
+        cur = connection.cursor()
 
         # Execute query
         cur.execute(query)
@@ -237,12 +236,11 @@ def extract_hwsd2_data(lon, lat, table_name="hwsdv2", buffer_dist=10000):
         return None
 
     finally:
-        # Ensure the database connection is closed
+        # Ensure the cursor is closed
         cur.close()
-        conn.close()
 
 
-def get_hwsd2_data(hwsd2_mu_select):
+def get_hwsd2_data(connection, hwsd2_mu_select):
     """
     Retrieve HWSD v2 data based on selected hwsd2 (map unit) values.
     """
@@ -250,10 +248,8 @@ def get_hwsd2_data(hwsd2_mu_select):
         logging.warning("HWSD2 map unit selection is empty. Returning empty DataFrame.")
         return pd.DataFrame()  # Return an empty DataFrame
 
-    conn = None
     try:
-        conn = get_datastore_connection()
-        cur = conn.cursor()
+        cur = connection.cursor()
 
         # Create placeholders for the SQL IN clause
         placeholders = ", ".join(["%s"] * len(hwsd2_mu_select))
@@ -299,19 +295,16 @@ def get_hwsd2_data(hwsd2_mu_select):
         return None
 
     finally:
-        if conn:
-            conn.close()
+        cur.close()
 
 
 # global
 
 
 # Function to fetch data from a PostgreSQL table
-def fetch_table_from_db(table_name):
-    conn = None
+def fetch_table_from_db(connection, table_name):
     try:
-        conn = get_datastore_connection()
-        cur = conn.cursor()
+        cur = connection.cursor()
 
         query = f"SELECT * FROM {table_name} ORDER BY id ASC;"
         cur.execute(query)
@@ -324,18 +317,15 @@ def fetch_table_from_db(table_name):
         return None
 
     finally:
-        if conn:
-            conn.close()
+        cur.close()
 
 
-def get_WRB_descriptions(WRB_Comp_List):
+def get_WRB_descriptions(connection, WRB_Comp_List):
     """
     Retrieve WRB descriptions based on provided WRB component list.
     """
-    conn = None
     try:
-        conn = get_datastore_connection()
-        cur = conn.cursor()
+        cur = connection.cursor()
 
         # Create placeholders for the SQL IN clause
         placeholders = ", ".join(["%s"] * len(WRB_Comp_List))
@@ -371,12 +361,11 @@ def get_WRB_descriptions(WRB_Comp_List):
         return None
 
     finally:
-        if conn:
-            conn.close()
+        cur.close()
 
 
 # global only
-def getSG_descriptions(WRB_Comp_List):
+def getSG_descriptions(connection, WRB_Comp_List):
     """
     Fetch WRB descriptions from a PostgreSQL database using wrb2006_to_fao90
     and wrb_fao90_desc tables. Returns a pandas DataFrame with columns:
@@ -389,13 +378,10 @@ def getSG_descriptions(WRB_Comp_List):
         pandas.DataFrame or None if an error occurs.
     """
 
-    conn = None
     try:
-        # 1. Get a connection to your datastore (replace with your actual function):
-        conn = get_datastore_connection()
 
         def execute_query(query, params):
-            with conn.cursor() as cur:
+            with connection.cursor() as cur:
                 # Execute the query with the parameters
                 cur.execute(query, params)
                 return cur.fetchall()
@@ -466,7 +452,3 @@ def getSG_descriptions(WRB_Comp_List):
     except Exception as err:
         logging.error(f"Error querying PostgreSQL: {err}")
         return None
-
-    finally:
-        if conn:
-            conn.close()

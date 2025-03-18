@@ -30,6 +30,7 @@ from .color import calculate_deltaE2000
 from .db import (
     extract_hwsd2_data,
     fetch_table_from_db,
+    get_datastore_connection,
     get_WRB_descriptions,
     getSG_descriptions,
 )
@@ -77,9 +78,10 @@ class SoilListOutputData:
 ##################################################################################################
 #                                 getSoilLocationBasedGlobal                                     #
 ##################################################################################################
-def list_soils_global(lon, lat):
+def list_soils_global(connection, lon, lat):
     # Extract HWSD2 Data
     hwsd2_data = extract_hwsd2_data(
+        connection,
         lon,
         lat,
         table_name="hwsdv2",
@@ -554,6 +556,7 @@ def list_soils_global(lon, lat):
 #                                   rankPredictionGlobal                                     #
 ##############################################################################################
 def rank_soils_global(
+    connection,
     lon,
     lat,
     list_output_data: SoilListOutputData,
@@ -912,7 +915,7 @@ def rank_soils_global(
     # --------------------------------------------------------------------------------------------
 
     # Start of soil color
-    #Load in SRG color distribution data
+    # Load in SRG color distribution data
     wmf1 = []
     wsf1 = []
     rmf1 = []
@@ -925,8 +928,8 @@ def rank_soils_global(
     rsf2 = []
     ymf2 = []
     ysf2 = []
-    # Load color distribution data from NormDist1 table
-    rows1 = fetch_table_from_db("NormDist1")
+    # Load color distribution data from normdist1 table
+    rows1 = fetch_table_from_db(connection, "normdist1")
     row_id = 0
     for row in rows1:
         # row is a tuple; iterate over its values.
@@ -944,8 +947,8 @@ def rank_soils_global(
             elif row_id == 5:
                 ysf1.append(value)
         row_id += 1
-    # Load color distribution data from NormDist2 table
-    rows2 = fetch_table_from_db("NormDist2")
+    # Load color distribution data from normdist2 table
+    rows2 = fetch_table_from_db(connection, "normdist2")
     row_id = 0
     for row in rows2:
         # row is a tuple; iterate over its values.

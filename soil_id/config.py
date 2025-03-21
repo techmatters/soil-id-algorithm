@@ -12,14 +12,12 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see https://www.gnu.org/licenses/.
+from dotenv import load_dotenv
+load_dotenv(dotenv_path="/mnt/c/Users/jmaynard/Documents/GitHub/soil-id-algorithm/soil_id/.env")
 
 import os
 import tempfile
-
-from dotenv import load_dotenv
 from platformdirs import user_cache_dir
-
-load_dotenv()
 
 DATA_PATH = os.environ.get("DATA_PATH", "Data")
 

@@ -27,7 +27,7 @@ from shapely.geometry import Point
 # local libraries
 import soil_id.config
 
-from .utils import calculate_distances_and_intersections, create_circular_buffer
+from .utils import get_target_utm_srid
 
 
 def get_datastore_connection():
@@ -164,143 +164,135 @@ def save_soilgrids_output(plot_id, model_version, soilgrids_blob):
         conn.close()
 
 
-def extract_hwsd2_data(lon, lat, table_name="hwsdv2", buffer_dist=10000):
-    """
-    Extracts HWSD v2 data by querying a PostGIS table using psycopg2.
-
-    Args:
-        lon (float): Longitude of the point.
-        lat (float): Latitude of the point.
-        table_name (str): Name of the PostGIS table.
-        buffer_dist (int, optional): Buffer distance in meters. Default is 10,000m.
-
-    Returns:
-        DataFrame: Filtered HWSD v2 data from PostGIS.
-    """
-
-    # Create a buffer around point
-    buffer = create_circular_buffer(lon, lat, buffer_dist=10000)
-
-    # Convert buffer to WKT for SQL query
-    buffer_wkt = buffer.wkt
-
-    # Construct SQL query to retrieve features **inside** the buffer
-    query = f"""
-        SELECT hwsd2, ST_AsEWKB(geom) AS geom
-        FROM {table_name}
-        WHERE geom && ST_GeomFromText('{buffer_wkt}', 4326)
-        AND ST_Intersects(geom, ST_GeomFromText('{buffer_wkt}', 4326));
-    """
-    try:
-        # Establish connection
-        conn = get_datastore_connection()
-        cur = conn.cursor()
-
-        # Execute query
-        cur.execute(query)
-
-        # Fetch results
-        rows = cur.fetchall()
-
-        data = []
-        for hwsd2, geom_binary in rows:
-            # Convert the binary geometry to a shapely geometry
-            geometry = wkb.loads(geom_binary)
-            data.append({"hwsd2": hwsd2, "geom": geometry})
-
-        hwsd = gpd.GeoDataFrame(data, crs="EPSG:4326", geometry="geom")
-
-        # Ensure only unique map units are considered
-        mu_geo = hwsd.drop_duplicates(subset="hwsd2")
-
-        # Calculate distances and intersections
-        point_geo = Point(lon, lat)
-
-        mu_id_dist = calculate_distances_and_intersections(mu_geo, point_geo)
-        mu_id_dist.loc[mu_id_dist["pt_intersect"], "dist_meters"] = 0
-        mu_id_dist["distance"] = mu_id_dist.groupby("hwsd2")["dist_meters"].transform(min)
-        mu_id_dist = mu_id_dist.nsmallest(2, "distance")
-
-        # Merge results and remove duplicates
-        hwsd = hwsd.drop(columns=["geom"])
-        hwsd = pd.merge(mu_id_dist, hwsd, on="hwsd2", how="left").drop_duplicates()
-
-        # Query hwsd data based on hwsd v2 MU ids
-        hwsd2_mu_select = hwsd["hwsd2"].tolist()
-        hwsd_data = get_hwsd2_data(hwsd2_mu_select)
-        hwsd_data = pd.merge(hwsd_data, mu_id_dist, on="hwsd2", how="left")
-
-        return hwsd_data
-
-    except Exception as e:
-        print(f"Error querying PostGIS: {e}")
-        return None
-
-    finally:
-        # Ensure the database connection is closed
-        cur.close()
-        conn.close()
-
-
-def get_hwsd2_data(hwsd2_mu_select):
+def get_hwsd2_profile_data(conn, hwsd2_mu_select):
     """
     Retrieve HWSD v2 data based on selected hwsd2 (map unit) values.
+    This version reuses an existing connection.
+    
+    Parameters:
+        conn: A live database connection.
+        hwsd2_mu_select (list): List of selected hwsd2 values.
+    
+    Returns:
+        DataFrame: Data from hwsd2_data.
     """
-    if not hwsd2_mu_select:  # Handle empty list case
+    if not hwsd2_mu_select:
         logging.warning("HWSD2 map unit selection is empty. Returning empty DataFrame.")
-        return pd.DataFrame()  # Return an empty DataFrame
-
-    conn = None
+        return pd.DataFrame()
+    
     try:
-        conn = get_datastore_connection()
-        cur = conn.cursor()
-
-        # Create placeholders for the SQL IN clause
-        placeholders = ", ".join(["%s"] * len(hwsd2_mu_select))
-        sql_query = f"""SELECT hwsd2_smu_id, compid, id, wise30s_smu_id, sequence, share, fao90,
-                        layer, topdep, botdep, coarse, sand, silt, clay, cec_soil,
-                        ph_water, elec_cond, fao90_name
-                        FROM hwsd2_data
-                        WHERE hwsd2_smu_id IN ({placeholders})"""
-
-        # Execute the query only if the list is non-empty
-        cur.execute(sql_query, tuple(hwsd2_mu_select))
-        results = cur.fetchall()
-
-        # Convert the results to a pandas DataFrame
-        data = pd.DataFrame(
-            results,
-            columns=[
-                "hwsd2",
-                "compid",
-                "id",
-                "wise30s_smu_id",
-                "sequence",
-                "share",
-                "fao90",
-                "layer",
-                "topdep",
-                "botdep",
-                "coarse",
-                "sand",
-                "silt",
-                "clay",
-                "cec_soil",
-                "ph_water",
-                "elec_cond",
-                "fao90_name",
-            ],
-        )
-
-        return data
-
+        with conn.cursor() as cur:
+            # Create placeholders for the SQL IN clause
+            placeholders = ", ".join(["%s"] * len(hwsd2_mu_select))
+            sql_query = f"""
+                SELECT hwsd2_smu_id, compid, id, wise30s_smu_id, sequence, share, fao90,
+                       layer, topdep, botdep, coarse, sand, silt, clay, cec_soil,
+                       ph_water, elec_cond, fao90_name
+                FROM hwsd2_data
+                WHERE hwsd2_smu_id IN ({placeholders})
+            """
+            cur.execute(sql_query, tuple(hwsd2_mu_select))
+            results = cur.fetchall()
+            
+            # Convert the results to a pandas DataFrame.
+            data = pd.DataFrame(
+                results,
+                columns=[
+                    "hwsd2", "compid", "id", "wise30s_smu_id", "sequence", "share", "fao90",
+                    "layer", "topdep", "botdep", "coarse", "sand", "silt", "clay", "cec_soil",
+                    "ph_water", "elec_cond", "fao90_name"
+                ],
+            )
+            return data
     except Exception as err:
         logging.error(f"Error querying PostgreSQL: {err}")
-        return None
+        return pd.DataFrame()
 
-    finally:
-        if conn:
-            conn.close()
+def extract_hwsd2_data(lon, lat, buffer_dist, table_name):
+    """
+    Fetches HWSD soil data from a PostGIS table within a given buffer around a point.
+    
+    Parameters:
+        lon (float): Longitude of the problem point.
+        lat (float): Latitude of the problem point.
+        buffer_dist (int): Buffer distance in meters.
+        table_name (str): Name of the PostGIS table (e.g., "hwsdv2").
+    
+    Returns:
+        DataFrame: Merged data from hwsdv2 and hwsdv2_data.
+    """
+    # Determine target UTM SRID as an integer (e.g., 32642)
+    target_srid = get_target_utm_srid(lat, lon)
+    
+    # Use a single connection for both queries.
+    with get_datastore_connection() as conn:
+        # Compute the buffer polygon (in WKT) around the problem point.
+        buffer_query = """
+            WITH buffer AS (
+              SELECT ST_AsText(
+                       ST_Transform(
+                         ST_Buffer(
+                           ST_Transform(
+                             ST_SetSRID(ST_Point(%s, %s), 4326),
+                             %s
+                           ),
+                           %s
+                         ),
+                         4326
+                       )
+                     ) AS wkt
+            )
+            SELECT wkt FROM buffer;
+        """
+        with conn.cursor() as cur:
+            cur.execute(buffer_query, (lon, lat, target_srid, buffer_dist))
+            buffer_wkt = cur.fetchone()[0]
+            print("Buffer WKT:", buffer_wkt)
+        
+        # Build the main query that uses the computed buffer.
+        main_query = f"""
+            WITH valid_geom AS (
+              SELECT
+                hwsd2,
+                ST_MakeValid(geom) AS geom
+              FROM {table_name}
+              WHERE geom && ST_GeomFromText('{buffer_wkt}', 4326)
+                AND ST_Intersects(geom, ST_GeomFromText('{buffer_wkt}', 4326))
+            )
+            SELECT
+              hwsd2,
+              ST_AsEWKB(ST_Transform(geom, {target_srid})) AS geom,
+              ST_Distance(
+                ST_Transform(geom, {target_srid}),
+                ST_Transform(ST_SetSRID(ST_Point({lon}, {lat}), 4326), {target_srid})
+              ) AS distance,
+              ST_Intersects(
+                ST_Transform(geom, {target_srid}),
+                ST_Transform(ST_SetSRID(ST_Point({lon}, {lat}), 4326), {target_srid})
+              ) AS pt_intersect
+            FROM valid_geom
+            WHERE ST_Intersects(
+                ST_Transform(geom, {target_srid}),
+                ST_Transform(ST_SetSRID(ST_Point({lon}, {lat}), 4326), {target_srid})
+            );
+        """
+        
+        # Use GeoPandas to execute the main query and load results into a GeoDataFrame.
+        hwsd = gpd.read_postgis(main_query, conn, geom_col='geom')
+        print("Main query returned", len(hwsd), "rows.")
+        
+        # Remove the geometry column (if not needed) from this dataset.
+        hwsd = hwsd.drop(columns=["geom"])
+        
+        # Get the list of hwsd2 identifiers.
+        hwsd2_mu_select = hwsd["hwsd2"].tolist()
+        
+        # Call get_hwsd2_profile_data using the same connection.
+        hwsd_data = get_hwsd2_profile_data(conn, hwsd2_mu_select)
+        
+        # Merge the two datasets.
+        merged = pd.merge(hwsd_data, hwsd, on="hwsd2", how="left").drop_duplicates()
+        return merged
 
 
 # global

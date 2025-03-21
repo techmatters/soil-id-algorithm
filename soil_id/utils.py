@@ -1384,6 +1384,37 @@ def convert_geometry_to_utm(geometry, src_crs="EPSG:4326"):
 
     return geometry_utm, target_crs
 
+def get_target_utm_srid(lat, lon):
+    """
+    Determine the target UTM SRID (as an integer) based on latitude and longitude.
+    
+    Parameters:
+        lat (float): The latitude coordinate.
+        lon (float): The longitude coordinate.
+        
+    Returns:
+        int: The UTM EPSG code as an integer. For example, for a point in the northern
+             hemisphere in UTM zone 33, the function returns 32633.
+    
+    Raises:
+        ValueError: If the latitude is not in the valid range [-90, 90] or the longitude
+                    is not in the valid range [-180, 180].
+    """
+    # Basic input validation
+    if not (-90 <= lat <= 90):
+        raise ValueError("Latitude must be between -90 and 90.")
+    if not (-180 <= lon <= 180):
+        raise ValueError("Longitude must be between -180 and 180.")
+    
+    # Determine UTM zone: zones are 6° wide starting at -180.
+    utm_zone = int((lon + 180) / 6) + 1
+    
+    # For the northern hemisphere, UTM EPSG codes start at 32600; for the southern, 32700.
+    if lat >= 0:
+        return 32600 + utm_zone
+    else:
+        return 32700 + utm_zone
+
 
 def create_circular_buffer(lon, lat, buffer_dist):
     """
@@ -1795,7 +1826,8 @@ def pedon_color(lab_Color, horizonDepth):
     )
 
     # Check for None values
-    if None in (pedon_top, pedon_bottom, pedon_l, pedon_a, pedon_b):
+    if any(x is None for x in [pedon_top, pedon_bottom]) or \
+        any(s.isnull().any() for s in [pedon_l, pedon_a, pedon_b]):
         return np.nan
 
     if pedon_top[0] != 0:
@@ -1831,7 +1863,7 @@ def pedon_color(lab_Color, horizonDepth):
         pedon_l_mean, pedon_a_mean, pedon_b_mean = np.nan, np.nan, np.nan
 
     if np.isnan(pedon_l_mean) or np.isnan(pedon_a_mean) or np.isnan(pedon_b_mean):
-        return np.nan
+        return [np.nan, np.nan, np.nan]
     else:
         return [pedon_l_mean, pedon_a_mean, pedon_b_mean]
 

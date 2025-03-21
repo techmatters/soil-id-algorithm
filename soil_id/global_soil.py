@@ -257,18 +257,16 @@ def list_soils_global(lon, lat):
         ec_intpl = getProfile(profile, "EC")
         ec_intpl.columns = ["c_ec_intpl"]
 
+        n_rows = sand_pct_intpl.shape[0]  # assuming all have the same length
+
         combined_data = pd.concat(
             [
-                sand_pct_intpl[["c_sandpct_intpl_grp"]],  # DataFrame
-                clay_pct_intpl[["c_claypct_intpl_grp"]],  # DataFrame
-                cf_pct_intpl[["c_cfpct_intpl_grp"]],  # DataFrame
-                pd.DataFrame(
-                    profile.compname.unique(), columns=["compname"]
-                ),  # Convert to DataFrame
-                pd.DataFrame(profile.cokey.unique(), columns=["cokey"]),  # Convert to DataFrame
-                pd.DataFrame(
-                    profile.comppct_r.unique(), columns=["comppct"]
-                ),  # Convert to DataFrame
+                sand_pct_intpl[["c_sandpct_intpl_grp"]],
+                clay_pct_intpl[["c_claypct_intpl_grp"]],
+                cf_pct_intpl[["c_cfpct_intpl_grp"]],
+                pd.DataFrame({"compname": [profile.compname.unique()[0]] * n_rows}),
+                pd.DataFrame({"cokey": [profile.cokey.unique()[0]] * n_rows}),
+                pd.DataFrame({"comppct": [profile.comppct_r.unique()[0]] * n_rows}),
             ],
             axis=1,
         )
@@ -688,9 +686,6 @@ def rank_soils_global(
             "sandpct_intpl",
             "claypct_intpl",
             "rfv_intpl",
-            "l",
-            "a",
-            "b",
         ]
 
         # Clean up the final data
@@ -733,16 +728,11 @@ def rank_soils_global(
 
     compnames = mucompdata_pd[["compname", "compname_grp"]]
 
-    # If bedrock is not specified, determine max_depth based on
-    # user-recorded depth (limited to 120 cm)
-    max_depth = (
-        120
-        if bedrock is None and p_bottom_depth.bottom_depth.values[0] > 120
-        else p_bottom_depth.bottom_depth.values[0]
-    )
-
-    # If bedrock is specified, truncate to the app's max depth of 120 cm
-    max_depth = 120 if bedrock is not None else max_depth
+     # Determine the maximum depth based on bedrock and user input
+    if bedrock is None:
+        max_depth = min(p_bottom_depth.bottom_depth.values[0], 200)
+    else:
+        max_depth = 200
 
     # Adjust slices of soil if they exceed the determined max_depth
     slices_of_soil.loc[slices_of_soil.bottom_depth > max_depth, "bottom_depth"] = max_depth
@@ -751,7 +741,7 @@ def rank_soils_global(
     soil_matrix = pd.DataFrame(
         np.nan, index=np.arange(max_depth), columns=np.arange(len(slices_of_soil))
     )
-
+    
     for i in range(len(slices_of_soil)):
         slice_end = slices_of_soil.bottom_depth.iloc[i]
         soil_matrix.iloc[:slice_end, i] = 1
@@ -759,115 +749,134 @@ def rank_soils_global(
 
     # Determine if user has entered horizon data and if so, subset component horizon
     # data based on user input data
-    if p_hz_data:
+    if p_hz_data is None or p_hz_data.empty or p_bottom_depth.bottom_depth.le(0).any():
+        soilIDRank_output_pd = None
+    else:
         # Subset component soil properties to match user measured properties
         soilIDRank_output_pd = soilIDRank_output_pd[p_hz_data_names]
+
         # Subset soil_matrix to user measured slices
         soil_matrix = soil_matrix.loc[pedon_slice_index]
 
-        # Horizon Data Similarity
-        if p_bottom_depth.bottom_depth.any() > 0:
-            horz_vars_group_cokey = [
-                group for _, group in soilIDRank_output_pd.groupby("compname", sort=False)
-            ]
+    # Horizon Data Similarity
+    if soilIDRank_output_pd is not None:
+        cokey_groups = [
+            group for _, group in soilIDRank_output_pd.groupby("compname", sort=False)
+        ]
 
-            # Create lists to store component statuses
-            Comp_Rank_Status, Comp_Missing_Status, Comp_name = [], [], []
+        # Create lists to store component statuses
+        Comp_Rank_Status, Comp_Missing_Status, Comp_name = [], [], []
 
-            # Check component status
-            for group in horz_vars_group_cokey:
-                subset_group = group[p_hz_data_names].drop(columns="compname")
-                if subset_group.isnull().values.all():
-                    Comp_Rank_Status.append("Not Ranked")
-                    Comp_Missing_Status.append("No Data")
-                else:
-                    Comp_Rank_Status.append("Ranked")
-                    Comp_Missing_Status.append(
-                        "Missing Data" if subset_group.isnull().values.any() else "Data Complete"
-                    )
-                Comp_name.append(group["compname"].unique()[0])
+        # Check component status
+        for group in cokey_groups:
+            subset_group = group[p_hz_data_names].drop(columns="compname")
+            if subset_group.isnull().values.all():
+                Comp_Rank_Status.append("Not Ranked")
+                Comp_Missing_Status.append("No Data")
+            else:
+                Comp_Rank_Status.append("Ranked")
+                Comp_Missing_Status.append(
+                    "Missing Data" if subset_group.isnull().values.any() else "Data Complete"
+                )
+            Comp_name.append(group["compname"].unique()[0])
 
-            Rank_Filter = pd.DataFrame(
-                {
-                    "compname": Comp_name,
-                    "rank_status": Comp_Rank_Status,
-                    "missing_status": Comp_Missing_Status,
-                }
-            )
+        Rank_Filter = pd.DataFrame(
+            {
+                "compname": Comp_name,
+                "rank_status": Comp_Rank_Status,
+                "missing_status": Comp_Missing_Status,
+            }
+        )
 
-            horz_vars = [p_hz_data]
-            for group in horz_vars_group_cokey:
-                horz_vars.append(group.reset_index(drop=True).loc[pedon_slice_index])
+        # Horizon Data Matrix
 
-            dis_mat_list = []
-            for i in soil_matrix.index:
-                slice_temp = [var.loc[i] for var in horz_vars]
-                sliceT = pd.concat(slice_temp, axis=1).T
-                slice_mat = sliceT.drop(columns="compname")
+        # Subset depth intervals to match user measured intervals
+        horz_vars = [p_hz_data]
+        for i in range(len(cokey_groups)):
+            horz_vars_temp = cokey_groups[i]
+            horz_vars_temp = horz_vars_temp.reset_index(drop=True)
+            horz_vars_temp = horz_vars_temp[horz_vars_temp.index.isin(pedon_slice_index)]
+            horz_vars.append(horz_vars_temp)
 
-                if i < bedrock:
-                    sample_pedon_slice_vars = (
-                        sliceT.dropna(axis="columns").drop(columns="compname").columns.to_list()
-                    )
-                    if len(sample_pedon_slice_vars) < 2:
-                        sample_pedon_slice_vars = (
-                            sliceT[sliceT["compname"] == "sample_pedon"]
-                            .dropna(axis="columns")
-                            .drop(columns="compname")
-                            .columns.to_list()
-                        )
-                    slice_mat = sliceT[sample_pedon_slice_vars]
+        dis_mat_list = []
 
-                D = gower_distances(slice_mat)  # Equal weighting given to all soil variables
-                dis_mat_list.append(D)
+        for depth in soil_matrix.index:  # depth represents a user-recorded depth slice (e.g. 100, 101, …, 120)
+            # Gather the slice from each horizon variable
+            slice_list = [horizon.loc[depth] for horizon in horz_vars]
+            
+            # Concatenate slices horizontally then transpose so that each row is one component's data
+            slice_df = pd.concat(slice_list, axis=1).T
 
-            # Check if any components have all NaNs at every slice
-            dis_mat_nan_check = np.ma.MaskedArray(dis_mat_list, mask=np.isnan(dis_mat_list))
-            D_check = np.ma.average(dis_mat_nan_check, axis=0)
-            rank_status = ["Not Ranked" if np.ma.is_masked(x) else "Ranked" for x in D_check[0][1:]]
-            Rank_Filter["rank_status"] = rank_status
+            # If bedrock is specified and the depth is less than bedrock, filter out columns with missing data
+            if bedrock is not None and depth < bedrock:
+                # Get columns that are non-null after dropping compname
+                sample_vars = slice_df.dropna(axis='columns').drop('compname', axis=1).columns.tolist()
+                
+                # If there are fewer than 2 variables available, use the "sample_pedon" row to decide
+                if len(sample_vars) < 2:
+                    sample_vars = (slice_df.loc[slice_df['compname'] == "sample_pedon"]
+                                .dropna(axis='columns')
+                                .drop('compname', axis=1)
+                                .columns.tolist())
+                
+                # Subset slice_df to only include the sample variables that were kept
+                slice_mat = slice_df.loc[:, slice_df.columns.isin(sample_vars)]
+            else:
+                slice_mat = slice_df.drop('compname', axis=1)
 
-            # Calculate max dissimilarity per depth slice
-            dis_max = max(map(np.nanmax, dis_mat_list))
+            # Compute the Gower distance on the prepared slice matrix.
+            D = gower_distances(slice_mat)
+            
+            dis_mat_list.append(D)
 
-            # Apply depth weight
-            depth_weight = np.concatenate([np.repeat(0.2, 20), np.repeat(1.0, 80)])
-            depth_weight = depth_weight[: len(soil_matrix)]
+        # Check if any components have all NaNs at every slice
+        dis_mat_nan_check = np.ma.MaskedArray(dis_mat_list, mask=np.isnan(dis_mat_list))
+        D_check = np.ma.average(dis_mat_nan_check, axis=0)
+        Rank_Filter["rank_status"] = [
+            "Not Ranked" if np.ma.is_masked(x) else "Ranked" for x in D_check[0][1:]
+        ]
 
-            # Infill NaN data
-            for idx, dis_mat in enumerate(dis_mat_list):
-                soil_slice = soil_matrix.iloc[idx]
-                for j in range(len(dis_mat)):
-                    for k in range(len(dis_mat[j])):
-                        if np.isnan(dis_mat[j, k]):
-                            if (soil_slice[j] and not soil_slice[k]) or (
-                                not soil_slice[j] and soil_slice[k]
-                            ):
-                                dis_mat[j, k] = dis_max
-                            elif not (soil_slice[j] or soil_slice[k]):
-                                dis_mat[j, k] = 0
+        # Calculate max dissimilarity per depth slice
+        dis_max = max(map(np.nanmax, dis_mat_list))
 
-            # Weighted average of depth-wise dissimilarity matrices
-            dis_mat_list_masked = np.ma.MaskedArray(dis_mat_list, mask=np.isnan(dis_mat_list))
-            D_sum = np.ma.average(dis_mat_list_masked, axis=0, weights=depth_weight)
-            D_sum = np.ma.filled(D_sum, fill_value=np.nan)
-            D_horz = 1 - D_sum
+        # Apply depth weight
+        depth_weight = np.concatenate([np.repeat(0.2, 20), np.repeat(1.0, 80)])
+        depth_weight = depth_weight[: len(soil_matrix)]
 
-            D_final_horz = pd.concat(
-                [
-                    compnames.reset_index(drop=True),
-                    pd.Series(D_horz[0][1:]),
-                    pd.Series(np.repeat(1.0, len(compnames))),
-                ],
-                axis=1,
-            )
-            D_final_horz.columns = ["compname", "compname_grp", "horz_score", "weight"]
-            D_final_horz = pd.merge(
-                D_final_horz,
-                mucompdata_pd[["compname", "mukey", "cokey", "distance_score", "Rank_Loc"]],
-                on="compname",
-                how="left",
-            )
+        # Infill NaN data
+        for idx, dis_mat in enumerate(dis_mat_list):
+            soil_slice = soil_matrix.iloc[idx]
+            for j in range(len(dis_mat)):
+                for k in range(len(dis_mat[j])):
+                    if np.isnan(dis_mat[j, k]):
+                        if (soil_slice[j] and not soil_slice[k]) or (
+                            not soil_slice[j] and soil_slice[k]
+                        ):
+                            dis_mat[j, k] = dis_max
+                        elif not (soil_slice[j] or soil_slice[k]):
+                            dis_mat[j, k] = 0
+
+        # Weighted average of depth-wise dissimilarity matrices
+        dis_mat_list_masked = np.ma.MaskedArray(dis_mat_list, mask=np.isnan(dis_mat_list))
+        D_sum = np.ma.average(dis_mat_list_masked, axis=0, weights=depth_weight)
+        D_sum = np.ma.filled(D_sum, fill_value=np.nan)
+        D_horz = 1 - D_sum
+
+        D_final_horz = pd.concat(
+            [
+                compnames.reset_index(drop=True),
+                pd.Series(D_horz[0][1:]),
+                pd.Series(np.repeat(1.0, len(compnames))),
+            ],
+            axis=1,
+        )
+        D_final_horz.columns = ["compname", "compname_grp", "horz_score", "weight"]
+        D_final_horz = pd.merge(
+            D_final_horz,
+            mucompdata_pd[["compname", "mukey", "cokey", "distance_score", "Rank_Loc"]],
+            on="compname",
+            how="left",
+        )
     else:
         D_final_horz = pd.concat(
             [
@@ -913,56 +922,32 @@ def rank_soils_global(
 
     # Start of soil color
     #Load in SRG color distribution data
-    wmf1 = []
-    wsf1 = []
-    rmf1 = []
-    rsf1 = []
-    ymf1 = []
-    ysf1 = []
-    wmf2 = []
-    wsf2 = []
-    rmf2 = []
-    rsf2 = []
-    ymf2 = []
-    ysf2 = []
-    # Load color distribution data from NormDist1 table
-    rows1 = fetch_table_from_db("NormDist1")
+    wmf = []
+    wsf = []
+    rmf = []
+    rsf = []
+    ymf = []
+    ysf = []
+
+    # Load color distribution data from NormDist2 (FAO90) table
+    rows = fetch_table_from_db("NormDist2")
     row_id = 0
-    for row in rows1:
+    for row in rows:
         # row is a tuple; iterate over its values.
         for value in row:
             if row_id == 0:
-                wmf1.append(value)
+                wmf.append(value)
             elif row_id == 1:
-                wsf1.append(value)
+                wsf.append(value)
             elif row_id == 2:
-                rmf1.append(value)
+                rmf.append(value)
             elif row_id == 3:
-                rsf1.append(value)
+                rsf.append(value)
             elif row_id == 4:
-                ymf1.append(value)
+                ymf.append(value)
             elif row_id == 5:
-                ysf1.append(value)
+                ysf.append(value)
         row_id += 1
-    # Load color distribution data from NormDist2 table
-    rows2 = fetch_table_from_db("NormDist2")
-    row_id = 0
-    for row in rows2:
-        # row is a tuple; iterate over its values.
-        for value in row:
-            if row_id == 0:
-                wmf2.append(value)
-            elif row_id == 1:
-                wsf2.append(value)
-            elif row_id == 2:
-                rmf2.append(value)
-            elif row_id == 3:
-                rsf2.append(value)
-            elif row_id == 4:
-                ymf2.append(value)
-            elif row_id == 5:
-                ysf2.append(value)
-    row_id = row_id + 1
 
     fao90 = [
         "Acrisols",
@@ -999,15 +984,12 @@ def rank_soils_global(
     if not cr_df.isnull().values.any():
         color_sim = []
         w_df, r_df, y_df = cr_df.iloc[0], cr_df.iloc[1], cr_df.iloc[2]
-        fao90 = [item.lower() for item in fao90]
+        fao_list = [item.lower() for item in fao90]
 
         for compname in D_final_horz.compname:
             soilgroup = re.sub(r"\d+$", "", " ".join(compname.split()[1:])).lower()
 
             prob_w, prob_r, prob_y = [], [], []
-
-            # Use FAO90 data only
-            fao_list, wmf, wsf, rmf, rsf, ymf, ysf = fao90, wmf2, wsf2, rmf2, rsf2, ymf2, ysf2
 
             idx = fao_list.index(soilgroup) if soilgroup in fao_list else -1
 

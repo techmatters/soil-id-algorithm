@@ -45,4 +45,3 @@ def test_soil_location():
             cracks=None,
         )
         sg_soils_result = sg_list(item["lon"], item["lat"])
-        return (list_soils_result, rank_soils_result, sg_soils_result)

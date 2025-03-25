@@ -20,7 +20,7 @@ import time
 import traceback
 
 import pandas
-from soil_id.global_soil import list_soils_global, rank_soils_global, sg_list
+from soil_id.global_soil import list_soils_global, rank_soils_global
 
 test_data_df = pandas.read_csv(
     os.path.join(os.path.dirname(__file__), "global_pedon_test_dataset.csv")
@@ -48,39 +48,43 @@ with open(result_file_name, "w", buffering=1) as result_file:
             "lon": lon,
         }
 
-        start_time = time.perf_counter()
-        try:
-
-            list_result = list_soils_global(lat=lat, lon=lon)
-
-            result_record["rank_result"] = rank_soils_global(
-                lat=lat,
-                lon=lon,
-                list_output_data=list_result,
-                horizonDepth=pedon["BOTDEP"].values.tolist(),
-                soilHorizon=pedon["textClass"].values.tolist(),
-                rfvDepth=pedon["RFV"].values.tolist(),
-                lab_Color=pedon[["L", "A", "B"]].values.tolist(),
-                bedrock=None,
-                cracks=None,
-            )
-        except Exception:
-            result_record["traceback"] = traceback.format_exc()
-        result_record["execution_time_s"] = time.perf_counter() - start_time
-
-        if "rank_result" in result_record:
-            matches = result_record["rank_result"]["soilRank"]
-            index = [
-                i
-                for i, match in enumerate(matches)
-                if match["component"].lower() == result_record["pedon_name"].lower()
-            ]
-            if len(index) == 0:
-                result_record["result"] = "missing"
-            else:
-                result_record["result"] = index[0] + 1
+        if not isinstance(result_record["pedon_name"], str):
+            result_record["result"] = "unknown"
         else:
-            result_record["result"] = "crash"
+            start_time = time.perf_counter()
+            try:
+
+                list_result = list_soils_global(lat=lat, lon=lon)
+
+                result_record["rank_result"] = rank_soils_global(
+                    lat=lat,
+                    lon=lon,
+                    list_output_data=list_result,
+                    horizonDepth=pedon["BOTDEP"].values.tolist(),
+                    soilHorizon=pedon["textClass"].values.tolist(),
+                    rfvDepth=pedon["RFV"].values.tolist(),
+                    lab_Color=pedon[["L", "A", "B"]].values.tolist(),
+                    bedrock=None,
+                    cracks=None,
+                )
+            except Exception:
+                result_record["traceback"] = traceback.format_exc()
+            result_record["execution_time_s"] = time.perf_counter() - start_time
+
+            if "rank_result" in result_record:
+                matches = result_record["rank_result"]["soilRank"]
+                index = [
+                    i
+                    for i, match in enumerate(matches)
+                    if match["component"].lower() == result_record["pedon_name"].lower()
+                    or match["component"].lower() == (result_record["pedon_name"].lower() + "s")
+                ]
+                if len(index) == 0:
+                    result_record["result"] = "missing"
+                else:
+                    result_record["result"] = index[0] + 1
+            else:
+                result_record["result"] = "crash"
 
         if result_record["result"] not in result_agg:
             result_agg[result_record["result"]] = 0

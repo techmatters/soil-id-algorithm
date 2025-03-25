@@ -26,22 +26,30 @@ result_lines = args.file.readlines()
 result_dicts = [json.loads(line) for line in result_lines]
 df = pandas.DataFrame.from_records(result_dicts)
 
+result_groups = df.groupby(by=["result"])
+
+print(f"# Total results: {len(df)}\n")
 print("# Result proportions:\n")
-print(df.groupby(by=["result"]).count()["pedon_key"] / len(df) * 100)
-print("\n# Execution time deciles:\n")
-print(pandas.qcut(df["execution_time_s"], q=10, retbins=True)[1])
+print(result_groups.count()["pedon_key"] / len(df) * 100)
+if len(df) < 11:
+    print("\n# Execution times:\n")
+    print(df["execution_time_s"].to_list())
+else:
+    print("\n# Execution time deciles:\n")
+    print(pandas.qcut(df["execution_time_s"], q=10, retbins=True)[1])
 
 
-crashes = df.groupby(by=["result"]).get_group(("crash",))
-counts = df.value_counts(subset="traceback").sort_values(ascending=False)
+if "crash" in result_groups.groups:
+    crashes = result_groups.get_group(("crash",))
+    counts = df.value_counts(subset="traceback").sort_values(ascending=False)
 
-print(f"\n# Unique crash tracebacks ({len(counts)} unique, {len(crashes)} total):")
+    print(f"\n# Unique crash tracebacks ({len(counts)} unique, {len(crashes)} total):\n")
 
-for idx, (traceback, count) in enumerate(counts.to_dict().items()):
-    example = crashes.loc[crashes["traceback"] == traceback].iloc[0]
-    print(
-        f"Traceback #{idx + 1}, occurred {count} times. Example pedon: {example["pedon_key"]}, lat: {example["lat"]}, lon: {example["lon"]}"
-    )
-    lines = traceback.splitlines()
-    indented_lines = ["  " + line for line in lines]
-    print("\n".join(indented_lines) + "\n")
+    for idx, (traceback, count) in enumerate(counts.to_dict().items()):
+        example = crashes.loc[crashes["traceback"] == traceback].iloc[0]
+        print(
+            f"Traceback #{idx + 1}, occurred {count} times. Example pedon: {example["pedon_key"]}, lat: {example["lat"]}, lon: {example["lon"]}"
+        )
+        lines = traceback.splitlines()
+        indented_lines = ["  " + line for line in lines]
+        print("\n".join(indented_lines) + "\n")

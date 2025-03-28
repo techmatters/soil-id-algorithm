@@ -35,6 +35,9 @@ from shapely.geometry import Point
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import pairwise
 from sklearn.utils import validation
+import pyproj
+from pyproj.database import query_utm_crs_info
+from pyproj import CRS
 
 # local libraries
 import soil_id.config
@@ -1384,36 +1387,53 @@ def convert_geometry_to_utm(geometry, src_crs="EPSG:4326"):
 
     return geometry_utm, target_crs
 
-def get_target_utm_srid(lat, lon):
-    """
-    Determine the target UTM SRID (as an integer) based on latitude and longitude.
+
+# def get_utm_crs(lat, lon):
+#     # Define an area of interest that is just the point (or a small buffer around it)
+#     aoi = pyproj.aoi.AreaOfInterest(
+#         west_lon_degree=lon, south_lat_degree=lat,
+#         east_lon_degree=lon, north_lat_degree=lat
+#     )
+#     # Query for UTM CRS candidates covering the area of interest
+#     utm_crs_list = query_utm_crs_info(datum_name="WGS84", area_of_interest=aoi)
+#     if not utm_crs_list:
+#         raise ValueError("No UTM CRS found for the specified location.")
     
-    Parameters:
-        lat (float): The latitude coordinate.
-        lon (float): The longitude coordinate.
+#     # Select the first matching CRS
+#     crs = CRS.from_epsg(utm_crs_list[0].code)
+#     return crs
+
+
+# def get_target_utm_srid(lat, lon):
+#     """
+#     Determine the target UTM SRID (as an integer) based on latitude and longitude.
+    
+#     Parameters:
+#         lat (float): The latitude coordinate.
+#         lon (float): The longitude coordinate.
         
-    Returns:
-        int: The UTM EPSG code as an integer. For example, for a point in the northern
-             hemisphere in UTM zone 33, the function returns 32633.
+#     Returns:
+#         int: The UTM EPSG code as an integer. For example, for a point in the northern
+#              hemisphere in UTM zone 33, the function returns 32633.
     
-    Raises:
-        ValueError: If the latitude is not in the valid range [-90, 90] or the longitude
-                    is not in the valid range [-180, 180].
-    """
-    # Basic input validation
-    if not (-90 <= lat <= 90):
-        raise ValueError("Latitude must be between -90 and 90.")
-    if not (-180 <= lon <= 180):
-        raise ValueError("Longitude must be between -180 and 180.")
+#     Raises:
+#         ValueError: If the latitude is not in the valid range [-90, 90] or the longitude
+#                     is not in the valid range [-180, 180].
+#     """
+#     # Basic input validation
+#     if not (-90 <= lat <= 90):
+#         raise ValueError("Latitude must be between -90 and 90.")
+#     if not (-180 <= lon <= 180):
+#         raise ValueError("Longitude must be between -180 and 180.")
     
-    # Determine UTM zone: zones are 6° wide starting at -180.
-    utm_zone = int((lon + 180) / 6) + 1
+#     # Determine UTM zone: zones are 6° wide starting at -180.
+#     utm_zone = int((lon + 180) / 6) + 1
     
-    # For the northern hemisphere, UTM EPSG codes start at 32600; for the southern, 32700.
-    if lat >= 0:
-        return 32600 + utm_zone
-    else:
-        return 32700 + utm_zone
+#     # For the northern hemisphere, UTM EPSG codes start at 32600; for the southern, 32700.
+#     if lat >= 0:
+#         return 32600 + utm_zone
+#     else:
+#         return 32700 + utm_zone
 
 
 def create_circular_buffer(lon, lat, buffer_dist):
@@ -1814,11 +1834,8 @@ def process_distance_scores(mucompdata_pd, ExpCoeff):
 ###################################################################################################
 
 
-def pedon_color(lab_Color, horizonDepth):
-    lbIdx = len(horizonDepth) - 1
-    pedon_top = [0] + [horizonDepth[i] for i in range(lbIdx)]
+def pedon_color(lab_Color, top, bottom):
 
-    pedon_bottom = horizonDepth
     pedon_l, pedon_a, pedon_b = (
         lab_Color.iloc[:, 0],
         lab_Color.iloc[:, 1],
@@ -1826,29 +1843,29 @@ def pedon_color(lab_Color, horizonDepth):
     )
 
     # Check for None values
-    if any(x is None for x in [pedon_top, pedon_bottom]) or \
+    if any(x is None for x in [top, bottom]) or \
         any(s.isnull().any() for s in [pedon_l, pedon_a, pedon_b]):
         return np.nan
 
-    if pedon_top[0] != 0:
+    if top[0] != 0:
         return np.nan
 
     # Check for missing horizons
-    pedon_MisHrz = any(pedon_top[i + 1] != pedon_bottom[i] for i in range(len(pedon_top) - 1))
+    pedon_MisHrz = any(top[i + 1] != bottom[i] for i in range(len(top) - 1))
     if pedon_MisHrz:
         return np.nan
 
     pedon_l_intpl, pedon_a_intpl, pedon_b_intpl = [], [], []
 
-    if len(pedon_top) == 1:
-        pedon_l_intpl = [pedon_l[0]] * (pedon_bottom[0] - pedon_top[0])
-        pedon_a_intpl = [pedon_a[0]] * (pedon_bottom[0] - pedon_top[0])
-        pedon_b_intpl = [pedon_b[0]] * (pedon_bottom[0] - pedon_top[0])
+    if len(top) == 1:
+        pedon_l_intpl = [pedon_l[0]] * (bottom[0] - top[0])
+        pedon_a_intpl = [pedon_a[0]] * (bottom[0] - top[0])
+        pedon_b_intpl = [pedon_b[0]] * (bottom[0] - top[0])
     else:
-        for i in range(len(pedon_bottom)):
-            pedon_l_intpl.extend([pedon_l[i]] * (pedon_bottom[i] - pedon_top[i]))
-            pedon_a_intpl.extend([pedon_a[i]] * (pedon_bottom[i] - pedon_top[i]))
-            pedon_b_intpl.extend([pedon_b[i]] * (pedon_bottom[i] - pedon_top[i]))
+        for i in range(len(bottom)):
+            pedon_l_intpl.extend([pedon_l[i]] * (bottom[i] - top[i]))
+            pedon_a_intpl.extend([pedon_a[i]] * (bottom[i] - top[i]))
+            pedon_b_intpl.extend([pedon_b[i]] * (bottom[i] - top[i]))
 
     pedon_len = len(pedon_l_intpl)
     if pedon_len >= 37:
@@ -1934,14 +1951,14 @@ def simulate_correlated_triangular(n, params, correlation_matrix):
         normal_var = correlated_normal[:, i]
         u = norm.cdf(normal_var)  # Transform to uniform [0, 1] range
 
-        # Transform the uniform values into triangularly distributed values
-        try:
-            condition = u <= (b - a) / (c - a)
-        except ZeroDivisionError:
-            # Handle the zero-division case
-            condition = None  # or some other default value
+        # Check for degenerate case where c - a == 0
+        if c - a == 0:
+            samples[:, i] = a
+            continue
 
-        # condition = u <= (b - a) / (c - a)
+        # Compute the condition for the triangular distribution
+        condition = u <= ((b - a) / (c - a))
+        # Compute the two branches of the inverse CDF
         samples[condition, i] = a + np.sqrt(u[condition] * (c - a) * (b - a))
         samples[~condition, i] = c - np.sqrt((1 - u[~condition]) * (c - a) * (c - b))
 

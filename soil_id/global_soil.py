@@ -87,8 +87,11 @@ def list_soils_global(lon, lat):
             buffer_dist=10000,
         )
     except KeyError:
-        return("Soil map information is not available at this location")
-
+        return("Data_unavailable")
+    
+    if hwsd2_data.empty:
+        return("Data_unavailable")
+ 
     # Component Data
     mucompdata_pd = hwsd2_data[["hwsd2", "fao90_name", "distance", "share", "compid"]]
     mucompdata_pd.columns = ["mukey", "compname", "distance", "share", "cokey"]

@@ -27,9 +27,6 @@ from shapely.geometry import Point
 # local libraries
 import soil_id.config
 
-from .utils import get_target_utm_srid
-
-
 def get_datastore_connection():
     """
     Establish a connection to the datastore using app configurations.
@@ -208,9 +205,11 @@ def get_hwsd2_profile_data(conn, hwsd2_mu_select):
         logging.error(f"Error querying PostgreSQL: {err}")
         return pd.DataFrame()
 
+
 def extract_hwsd2_data(lon, lat, buffer_dist, table_name):
     """
-    Fetches HWSD soil data from a PostGIS table within a given buffer around a point.
+    Fetches HWSD soil data from a PostGIS table within a given buffer around a point,
+    performing distance and intersection calculations directly on geographic coordinates.
     
     Parameters:
         lon (float): Longitude of the problem point.
@@ -221,35 +220,30 @@ def extract_hwsd2_data(lon, lat, buffer_dist, table_name):
     Returns:
         DataFrame: Merged data from hwsdv2 and hwsdv2_data.
     """
-    # Determine target UTM SRID as an integer (e.g., 32642)
-    target_srid = get_target_utm_srid(lat, lon)
-    
     # Use a single connection for both queries.
     with get_datastore_connection() as conn:
         # Compute the buffer polygon (in WKT) around the problem point.
+        # Here, we use the geography type to compute a buffer in meters,
+        # then cast it back to geometry in EPSG:4326.
         buffer_query = """
             WITH buffer AS (
               SELECT ST_AsText(
-                       ST_Transform(
-                         ST_Buffer(
-                           ST_Transform(
-                             ST_SetSRID(ST_Point(%s, %s), 4326),
-                             %s
-                           ),
-                           %s
-                         ),
-                         4326
-                       )
+                       ST_Buffer(
+                         ST_SetSRID(ST_Point(%s, %s), 4326)::geography,
+                         %s
+                       )::geometry
                      ) AS wkt
             )
             SELECT wkt FROM buffer;
         """
         with conn.cursor() as cur:
-            cur.execute(buffer_query, (lon, lat, target_srid, buffer_dist))
+            cur.execute(buffer_query, (lon, lat, buffer_dist))
             buffer_wkt = cur.fetchone()[0]
             print("Buffer WKT:", buffer_wkt)
         
         # Build the main query that uses the computed buffer.
+        # Distance is computed by casting geometries to geography,
+        # which returns the geodesic distance in meters.
         main_query = f"""
             WITH valid_geom AS (
               SELECT
@@ -261,19 +255,19 @@ def extract_hwsd2_data(lon, lat, buffer_dist, table_name):
             )
             SELECT
               hwsd2,
-              ST_AsEWKB(ST_Transform(geom, {target_srid})) AS geom,
+              ST_AsEWKB(geom) AS geom,
               ST_Distance(
-                ST_Transform(geom, {target_srid}),
-                ST_Transform(ST_SetSRID(ST_Point({lon}, {lat}), 4326), {target_srid})
+                geom::geography,
+                ST_SetSRID(ST_Point({lon}, {lat}), 4326)::geography
               ) AS distance,
               ST_Intersects(
-                ST_Transform(geom, {target_srid}),
-                ST_Transform(ST_SetSRID(ST_Point({lon}, {lat}), 4326), {target_srid})
+                geom,
+                ST_SetSRID(ST_Point({lon}, {lat}), 4326)
               ) AS pt_intersect
             FROM valid_geom
             WHERE ST_Intersects(
-                ST_Transform(geom, {target_srid}),
-                ST_Transform(ST_SetSRID(ST_Point({lon}, {lat}), 4326), {target_srid})
+                geom,
+                ST_SetSRID(ST_Point({lon}, {lat}), 4326)
             );
         """
         

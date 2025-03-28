@@ -79,12 +79,15 @@ class SoilListOutputData:
 ##################################################################################################
 def list_soils_global(lon, lat):
     # Extract HWSD2 Data
-    hwsd2_data = extract_hwsd2_data(
-        lon,
-        lat,
-        table_name="hwsdv2",
-        buffer_dist=10000,
-    )
+    try:
+        hwsd2_data = extract_hwsd2_data(
+            lon,
+            lat,
+            table_name="hwsdv2",
+            buffer_dist=10000,
+        )
+    except KeyError:
+        return("Soil map information is not available at this location")
 
     # Component Data
     mucompdata_pd = hwsd2_data[["hwsd2", "fao90_name", "distance", "share", "compid"]]
@@ -556,7 +559,8 @@ def rank_soils_global(
     lat,
     list_output_data: SoilListOutputData,
     soilHorizon,
-    horizonDepth,
+    topDepth,
+    bottomDepth,
     rfvDepth,
     lab_Color,
     bedrock,
@@ -568,7 +572,8 @@ def rank_soils_global(
     soil_df = pd.DataFrame(
         {
             "soilHorizon": soilHorizon,
-            "horizonDepth": horizonDepth,
+            "top": topDepth,
+            "bottom": bottomDepth,
             "rfvDepth": rfvDepth,
             "lab_Color": lab_Color,
         }
@@ -577,14 +582,8 @@ def rank_soils_global(
     # Drop rows where all values are NaN
     soil_df.dropna(how="all", inplace=True)
 
-    # Set the bottom of each horizon
-    soil_df["bottom"] = soil_df["horizonDepth"]
-
     # Replace NaNs with None for consistency
     # soil_df.fillna(value=None, inplace=True)
-
-    # Calculate the top depth for each horizon
-    soil_df["top"] = [0] + soil_df["horizonDepth"].iloc[:-1].tolist()
 
     # Adjust the bottom depth based on bedrock depth
     if bedrock is not None:
@@ -595,9 +594,6 @@ def rank_soils_global(
             soil_df = soil_df.loc[:last_valid_index].copy()
             # Set the bottom depth of the last row to the bedrock depth
             soil_df.at[last_valid_index, "bottom"] = bedrock
-
-    # Drop the original horizonDepth column
-    soil_df.drop(columns=["horizonDepth"], inplace=True)
 
     # Filter out rows without valid horizon data
     relevant_columns = ["soilHorizon", "rfvDepth", "lab_Color"]
@@ -623,8 +619,8 @@ def rank_soils_global(
         # Convert soil properties to lists
         soilHorizon = soil_df.soilHorizon.tolist()
         rfvDepth = soil_df.rfvDepth.tolist()
-        horizonDepthB = [int(x) for x in soil_df.bottom.tolist()]
-        horizonDepthT = [int(x) for x in soil_df.top.tolist()]
+        bottom = [int(x) for x in soil_df.bottom.tolist()]
+        top = [int(x) for x in soil_df.top.tolist()]
         lab_Color = soil_df.lab_Color
 
         # Generate user specified percent clay, sand, and rfv distributions
@@ -635,17 +631,17 @@ def rank_soils_global(
         p_sandpct_intpl = [
             spt[i]
             for i in range(len(soilHorizon))
-            for _ in range(horizonDepthT[i], horizonDepthB[i])
+            for _ in range(top[i], bottom[i])
         ]
         p_claypct_intpl = [
             cpt[i]
             for i in range(len(soilHorizon))
-            for _ in range(horizonDepthT[i], horizonDepthB[i])
+            for _ in range(top[i], bottom[i])
         ]
         p_cfg_intpl = [
             p_cfg[i]
             for i in range(len(soilHorizon))
-            for _ in range(horizonDepthT[i], horizonDepthB[i])
+            for _ in range(top[i], bottom[i])
         ]
 
         # Length of interpolated texture and RF depth
@@ -657,7 +653,7 @@ def rank_soils_global(
         if not lab_Color.isnull().all():
             lab_Color = [[np.nan, np.nan, np.nan] if x is None else x for x in lab_Color]
             lab_Color = pd.DataFrame(lab_Color)
-            pedon_LAB = pedon_color(lab_Color, horizonDepth)
+            pedon_LAB = pedon_color(lab_Color, top, bottom)
 
             if not np.isnan(pedon_LAB).all():
                 refs = {
@@ -840,8 +836,8 @@ def rank_soils_global(
         dis_max = max(map(np.nanmax, dis_mat_list))
 
         # Apply depth weight
-        depth_weight = np.concatenate([np.repeat(0.2, 20), np.repeat(1.0, 80)])
-        depth_weight = depth_weight[: len(soil_matrix)]
+        depth_weight = np.concatenate([np.repeat(0.2, 20), np.repeat(1.0, 180)])
+        depth_weight = depth_weight[soil_matrix.index]
 
         # Infill NaN data
         for idx, dis_mat in enumerate(dis_mat_list):

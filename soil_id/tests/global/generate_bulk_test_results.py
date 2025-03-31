@@ -20,6 +20,7 @@ import time
 import traceback
 
 import pandas
+
 from soil_id.global_soil import list_soils_global, rank_soils_global
 
 test_data_df = pandas.read_csv(

@@ -32,8 +32,11 @@ from .color import getProfileLAB, lab2munsell, munsell2rgb
 from .services import get_soil_series_data, get_soilweb_data, sda_return
 from .soil_sim import soil_sim
 from .utils import (
+    adjust_depth_interval,
     aggregate_data,
     compute_site_similarity,
+    create_new_layer,
+    create_new_layer_osd,
     drop_cokey_horz,
     extract_mucompdata_STATSGO,
     extract_muhorzdata_STATSGO,
@@ -49,11 +52,8 @@ from .utils import (
     process_distance_scores,
     process_horizon_data,
     process_site_data,
-    update_intpl_data,
-    adjust_depth_interval,
     update_esd_data,
-    create_new_layer,
-    create_new_layer_osd,
+    update_intpl_data,
 )
 
 # entry points

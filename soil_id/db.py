@@ -27,6 +27,7 @@ from shapely.geometry import Point
 # local libraries
 import soil_id.config
 
+
 def get_datastore_connection():
     """
     Establish a connection to the datastore using app configurations.
@@ -165,18 +166,18 @@ def get_hwsd2_profile_data(conn, hwsd2_mu_select):
     """
     Retrieve HWSD v2 data based on selected hwsd2 (map unit) values.
     This version reuses an existing connection.
-    
+
     Parameters:
         conn: A live database connection.
         hwsd2_mu_select (list): List of selected hwsd2 values.
-    
+
     Returns:
         DataFrame: Data from hwsd2_data.
     """
     if not hwsd2_mu_select:
         logging.warning("HWSD2 map unit selection is empty. Returning empty DataFrame.")
         return pd.DataFrame()
-    
+
     try:
         with conn.cursor() as cur:
             # Create placeholders for the SQL IN clause
@@ -190,14 +191,29 @@ def get_hwsd2_profile_data(conn, hwsd2_mu_select):
             """
             cur.execute(sql_query, tuple(hwsd2_mu_select))
             results = cur.fetchall()
-            
+
             # Convert the results to a pandas DataFrame.
             data = pd.DataFrame(
                 results,
                 columns=[
-                    "hwsd2", "compid", "id", "wise30s_smu_id", "sequence", "share", "fao90",
-                    "layer", "topdep", "botdep", "coarse", "sand", "silt", "clay", "cec_soil",
-                    "ph_water", "elec_cond", "fao90_name"
+                    "hwsd2",
+                    "compid",
+                    "id",
+                    "wise30s_smu_id",
+                    "sequence",
+                    "share",
+                    "fao90",
+                    "layer",
+                    "topdep",
+                    "botdep",
+                    "coarse",
+                    "sand",
+                    "silt",
+                    "clay",
+                    "cec_soil",
+                    "ph_water",
+                    "elec_cond",
+                    "fao90_name",
                 ],
             )
             return data
@@ -210,13 +226,13 @@ def extract_hwsd2_data(lon, lat, buffer_dist, table_name):
     """
     Fetches HWSD soil data from a PostGIS table within a given buffer around a point,
     performing distance and intersection calculations directly on geographic coordinates.
-    
+
     Parameters:
         lon (float): Longitude of the problem point.
         lat (float): Latitude of the problem point.
         buffer_dist (int): Buffer distance in meters.
         table_name (str): Name of the PostGIS table (e.g., "hwsdv2").
-    
+
     Returns:
         DataFrame: Merged data from hwsdv2 and hwsdv2_data.
     """
@@ -240,7 +256,7 @@ def extract_hwsd2_data(lon, lat, buffer_dist, table_name):
             cur.execute(buffer_query, (lon, lat, buffer_dist))
             buffer_wkt = cur.fetchone()[0]
             print("Buffer WKT:", buffer_wkt)
-        
+
         # Build the main query that uses the computed buffer.
         # Distance is computed by casting geometries to geography,
         # which returns the geodesic distance in meters.
@@ -270,20 +286,20 @@ def extract_hwsd2_data(lon, lat, buffer_dist, table_name):
                 ST_SetSRID(ST_Point({lon}, {lat}), 4326)
             );
         """
-        
+
         # Use GeoPandas to execute the main query and load results into a GeoDataFrame.
-        hwsd = gpd.read_postgis(main_query, conn, geom_col='geom')
+        hwsd = gpd.read_postgis(main_query, conn, geom_col="geom")
         print("Main query returned", len(hwsd), "rows.")
-        
+
         # Remove the geometry column (if not needed) from this dataset.
         hwsd = hwsd.drop(columns=["geom"])
-        
+
         # Get the list of hwsd2 identifiers.
         hwsd2_mu_select = hwsd["hwsd2"].tolist()
-        
+
         # Call get_hwsd2_profile_data using the same connection.
         hwsd_data = get_hwsd2_profile_data(conn, hwsd2_mu_select)
-        
+
         # Merge the two datasets.
         merged = pd.merge(hwsd_data, hwsd, on="hwsd2", how="left").drop_duplicates()
         return merged

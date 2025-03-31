@@ -25,8 +25,11 @@ import re
 import geopandas as gpd
 import numpy as np
 import pandas as pd
+import pyproj
 from numpy.linalg import cholesky
 from osgeo import ogr
+from pyproj import CRS
+from pyproj.database import query_utm_crs_info
 from rosetta import SoilData, rosetta
 from scipy.interpolate import UnivariateSpline
 from scipy.sparse import issparse
@@ -35,9 +38,6 @@ from shapely.geometry import Point
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import pairwise
 from sklearn.utils import validation
-import pyproj
-from pyproj.database import query_utm_crs_info
-from pyproj import CRS
 
 # local libraries
 import soil_id.config
@@ -1398,7 +1398,7 @@ def convert_geometry_to_utm(geometry, src_crs="EPSG:4326"):
 #     utm_crs_list = query_utm_crs_info(datum_name="WGS84", area_of_interest=aoi)
 #     if not utm_crs_list:
 #         raise ValueError("No UTM CRS found for the specified location.")
-    
+
 #     # Select the first matching CRS
 #     crs = CRS.from_epsg(utm_crs_list[0].code)
 #     return crs
@@ -1407,15 +1407,15 @@ def convert_geometry_to_utm(geometry, src_crs="EPSG:4326"):
 # def get_target_utm_srid(lat, lon):
 #     """
 #     Determine the target UTM SRID (as an integer) based on latitude and longitude.
-    
+
 #     Parameters:
 #         lat (float): The latitude coordinate.
 #         lon (float): The longitude coordinate.
-        
+
 #     Returns:
 #         int: The UTM EPSG code as an integer. For example, for a point in the northern
 #              hemisphere in UTM zone 33, the function returns 32633.
-    
+
 #     Raises:
 #         ValueError: If the latitude is not in the valid range [-90, 90] or the longitude
 #                     is not in the valid range [-180, 180].
@@ -1425,10 +1425,10 @@ def convert_geometry_to_utm(geometry, src_crs="EPSG:4326"):
 #         raise ValueError("Latitude must be between -90 and 90.")
 #     if not (-180 <= lon <= 180):
 #         raise ValueError("Longitude must be between -180 and 180.")
-    
+
 #     # Determine UTM zone: zones are 6° wide starting at -180.
 #     utm_zone = int((lon + 180) / 6) + 1
-    
+
 #     # For the northern hemisphere, UTM EPSG codes start at 32600; for the southern, 32700.
 #     if lat >= 0:
 #         return 32600 + utm_zone
@@ -1843,8 +1843,9 @@ def pedon_color(lab_Color, top, bottom):
     )
 
     # Check for None values
-    if any(x is None for x in [top, bottom]) or \
-        any(s.isnull().any() for s in [pedon_l, pedon_a, pedon_b]):
+    if any(x is None for x in [top, bottom]) or any(
+        s.isnull().any() for s in [pedon_l, pedon_a, pedon_b]
+    ):
         return np.nan
 
     if top[0] != 0:

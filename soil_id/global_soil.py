@@ -87,11 +87,11 @@ def list_soils_global(lon, lat):
             buffer_dist=10000,
         )
     except KeyError:
-        return("Data_unavailable")
-    
+        return "Data_unavailable"
+
     if hwsd2_data.empty:
-        return("Data_unavailable")
- 
+        return "Data_unavailable"
+
     # Component Data
     mucompdata_pd = hwsd2_data[["hwsd2", "fao90_name", "distance", "share", "compid"]]
     mucompdata_pd.columns = ["mukey", "compname", "distance", "share", "cokey"]
@@ -632,20 +632,12 @@ def rank_soils_global(
         p_cfg = [getCF_fromClass(rf) for rf in rfvDepth]
 
         p_sandpct_intpl = [
-            spt[i]
-            for i in range(len(soilHorizon))
-            for _ in range(top[i], bottom[i])
+            spt[i] for i in range(len(soilHorizon)) for _ in range(top[i], bottom[i])
         ]
         p_claypct_intpl = [
-            cpt[i]
-            for i in range(len(soilHorizon))
-            for _ in range(top[i], bottom[i])
+            cpt[i] for i in range(len(soilHorizon)) for _ in range(top[i], bottom[i])
         ]
-        p_cfg_intpl = [
-            p_cfg[i]
-            for i in range(len(soilHorizon))
-            for _ in range(top[i], bottom[i])
-        ]
+        p_cfg_intpl = [p_cfg[i] for i in range(len(soilHorizon)) for _ in range(top[i], bottom[i])]
 
         # Length of interpolated texture and RF depth
         p_bottom_depth = pd.DataFrame([-999, "sample_pedon", soil_df_slice.bottom.iloc[-1]]).T
@@ -727,7 +719,7 @@ def rank_soils_global(
 
     compnames = mucompdata_pd[["compname", "compname_grp"]]
 
-     # Determine the maximum depth based on bedrock and user input
+    # Determine the maximum depth based on bedrock and user input
     if bedrock is None:
         max_depth = min(p_bottom_depth.bottom_depth.values[0], 200)
     else:
@@ -740,7 +732,7 @@ def rank_soils_global(
     soil_matrix = pd.DataFrame(
         np.nan, index=np.arange(max_depth), columns=np.arange(len(slices_of_soil))
     )
-    
+
     for i in range(len(slices_of_soil)):
         slice_end = slices_of_soil.bottom_depth.iloc[i]
         soil_matrix.iloc[:slice_end, i] = 1
@@ -759,9 +751,7 @@ def rank_soils_global(
 
     # Horizon Data Similarity
     if soilIDRank_output_pd is not None:
-        cokey_groups = [
-            group for _, group in soilIDRank_output_pd.groupby("compname", sort=False)
-        ]
+        cokey_groups = [group for _, group in soilIDRank_output_pd.groupby("compname", sort=False)]
 
         # Create lists to store component statuses
         Comp_Rank_Status, Comp_Missing_Status, Comp_name = [], [], []
@@ -799,33 +789,41 @@ def rank_soils_global(
 
         dis_mat_list = []
 
-        for depth in soil_matrix.index:  # depth represents a user-recorded depth slice (e.g. 100, 101, …, 120)
+        for (
+            depth
+        ) in (
+            soil_matrix.index
+        ):  # depth represents a user-recorded depth slice (e.g. 100, 101, …, 120)
             # Gather the slice from each horizon variable
             slice_list = [horizon.loc[depth] for horizon in horz_vars]
-            
+
             # Concatenate slices horizontally then transpose so that each row is one component's data
             slice_df = pd.concat(slice_list, axis=1).T
 
             # If bedrock is specified and the depth is less than bedrock, filter out columns with missing data
             if bedrock is not None and depth < bedrock:
                 # Get columns that are non-null after dropping compname
-                sample_vars = slice_df.dropna(axis='columns').drop('compname', axis=1).columns.tolist()
-                
+                sample_vars = (
+                    slice_df.dropna(axis="columns").drop("compname", axis=1).columns.tolist()
+                )
+
                 # If there are fewer than 2 variables available, use the "sample_pedon" row to decide
                 if len(sample_vars) < 2:
-                    sample_vars = (slice_df.loc[slice_df['compname'] == "sample_pedon"]
-                                .dropna(axis='columns')
-                                .drop('compname', axis=1)
-                                .columns.tolist())
-                
+                    sample_vars = (
+                        slice_df.loc[slice_df["compname"] == "sample_pedon"]
+                        .dropna(axis="columns")
+                        .drop("compname", axis=1)
+                        .columns.tolist()
+                    )
+
                 # Subset slice_df to only include the sample variables that were kept
                 slice_mat = slice_df.loc[:, slice_df.columns.isin(sample_vars)]
             else:
-                slice_mat = slice_df.drop('compname', axis=1)
+                slice_mat = slice_df.drop("compname", axis=1)
 
             # Compute the Gower distance on the prepared slice matrix.
             D = gower_distances(slice_mat)
-            
+
             dis_mat_list.append(D)
 
         # Check if any components have all NaNs at every slice
@@ -920,7 +918,7 @@ def rank_soils_global(
     # --------------------------------------------------------------------------------------------
 
     # Start of soil color
-    #Load in SRG color distribution data
+    # Load in SRG color distribution data
     wmf = []
     wsf = []
     rmf = []

@@ -17,6 +17,7 @@ import logging
 import time
 import pytest
 
+from soil_id.db import get_datastore_connection
 from soil_id.global_soil import list_soils_global, rank_soils_global, sg_list
 
 test_locations = [
@@ -28,21 +29,22 @@ test_locations = [
 
 @pytest.mark.skip
 def test_soil_location():
-    for item in test_locations:
-        logging.info(f"Testing {item['lon']}, {item['lat']}")
-        start_time = time.perf_counter()
-        list_soils_result = list_soils_global(item["lon"], item["lat"])
-        logging.info(f"...time: {(time.perf_counter() - start_time):.2f}s")
-        rank_soils_global(
-            item["lon"],
-            item["lat"],
-            list_output_data=list_soils_result,
-            soilHorizon=["Loam"],
-            topDepth=[15],
-            bottomDepth=[45],
-            rfvDepth=[20],
-            lab_Color=[[41.23035939, 3.623018224, 13.27654356]],
-            bedrock=None,
-            cracks=None,
-        )
-        sg_list(item["lon"], item["lat"])
+    with get_datastore_connection() as connection:
+        for item in test_locations:
+            logging.info(f"Testing {item['lon']}, {item['lat']}")
+            start_time = time.perf_counter()
+            list_soils_result = list_soils_global(connection, item["lon"], item["lat"])
+            logging.info(f"...time: {(time.perf_counter()-start_time):.2f}s")
+            rank_soils_result = rank_soils_global(
+                connection,
+                item["lon"],
+                item["lat"],
+                list_output_data=list_soils_result,
+                soilHorizon=["Loam"],
+                horizonDepth=[15],
+                rfvDepth=[20],
+                lab_Color=[[41.23035939, 3.623018224, 13.27654356]],
+                bedrock=None,
+                cracks=None,
+            )
+            sg_soils_result = sg_list(item["lon"], item["lat"])

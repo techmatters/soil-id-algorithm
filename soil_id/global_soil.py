@@ -27,12 +27,7 @@ import pandas as pd
 from scipy.stats import norm
 
 from .color import calculate_deltaE2000
-from .db import (
-    extract_hwsd2_data,
-    fetch_table_from_db,
-    get_WRB_descriptions,
-    getSG_descriptions,
-)
+from .db import extract_hwsd2_data, fetch_table_from_db, get_WRB_descriptions, getSG_descriptions
 from .services import get_soilgrids_classification_data, get_soilgrids_property_data
 from .utils import (
     adjust_depth_interval,
@@ -77,10 +72,11 @@ class SoilListOutputData:
 ##################################################################################################
 #                                 getSoilLocationBasedGlobal                                     #
 ##################################################################################################
-def list_soils_global(lon, lat):
+def list_soils_global(connection, lon, lat):
     # Extract HWSD2 Data
     try:
         hwsd2_data = extract_hwsd2_data(
+            connection,
             lon,
             lat,
             table_name="hwsdv2",
@@ -444,6 +440,7 @@ def list_soils_global(lon, lat):
 
     # Merge component descriptions
     WRB_Comp_Desc = get_WRB_descriptions(
+        connection,
         mucompdata_cond_prob["compname_grp"].drop_duplicates().tolist()
     )
 
@@ -582,6 +579,7 @@ def list_soils_global(lon, lat):
 #                                   rankPredictionGlobal                                     #
 ##############################################################################################
 def rank_soils_global(
+    connection,
     lon,
     lat,
     list_output_data: SoilListOutputData,
@@ -949,7 +947,7 @@ def rank_soils_global(
     ysf = []
 
     # Load color distribution data from NormDist2 (FAO90) table
-    rows = fetch_table_from_db("NormDist2")
+    rows = fetch_table_from_db(connection, "NormDist2")
     row_id = 0
     for row in rows:
         # row is a tuple; iterate over its values.

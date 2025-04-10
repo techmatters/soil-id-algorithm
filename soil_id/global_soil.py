@@ -186,47 +186,64 @@ def list_soils_global(lon, lat):
         lambda x: str(x) if isinstance(x, np.ndarray) else x
     )
 
-    # Rank components and sort by rank and depth
-    cokey_Index = {key: rank for rank, key in enumerate(comp_key)}
-    muhorzdata_pd["Comp_Rank"] = muhorzdata_pd["cokey"].map(cokey_Index)
-    muhorzdata_pd.sort_values(["Comp_Rank", "hzdept_r"], inplace=True)
-    muhorzdata_pd.drop(columns="Comp_Rank", inplace=True)
-
     # Check for duplicate component instances
     hz_drop = drop_cokey_horz(muhorzdata_pd)
     if hz_drop is not None:
         muhorzdata_pd = muhorzdata_pd[~muhorzdata_pd.cokey.isin(hz_drop)]
-    muhorzdata_pd = muhorzdata_pd.drop_duplicates().reset_index(drop=True)
 
-    # Update comp_key
+    muhorzdata_pd.reset_index(drop=True, inplace=True)
+
+    # Extract unique cokeys and subset mucompdata_pd
     comp_key = muhorzdata_pd["cokey"].unique().tolist()
+    mucompdata_pd = mucompdata_pd[mucompdata_pd["cokey"].isin(comp_key)]
 
-    # Subset mucompdata_pd by new compname_key and add suffix to name if there are duplicates
-    mucompdata_pd = mucompdata_pd.loc[mucompdata_pd["cokey"].isin(comp_key)].reset_index(drop=True)
+    # Sort mucompdata_pd based on 'distance_score' and 'distance'
+    mucompdata_pd.sort_values(["distance_score", "distance"], ascending=[False, True], inplace=True)
+    mucompdata_pd.reset_index(drop=True, inplace=True)
+
+    # Duplicate the 'compname' column for grouping purposes
     mucompdata_pd["compname_grp"] = mucompdata_pd["compname"]
 
-    # Sort by 'distance_score' (descending) and 'distance' (ascending), then reset the index
-    mucompdata_pd = mucompdata_pd.sort_values(
-        ["distance_score", "distance"], ascending=[False, True]
-    ).reset_index(drop=True)
+    # Extract unique cokeys and create a ranking dictionary
+    comp_key = mucompdata_pd["cokey"].unique().tolist()
+    cokey_index = {key: index for index, key in enumerate(comp_key)}
 
-    # Add suffix to duplicate names
-    name_counts = collections.Counter(mucompdata_pd["compname"])
+    # Apply the ranking to muhorzdata_pd for sorting
+    muhorzdata_pd["Comp_Rank"] = muhorzdata_pd["cokey"].map(cokey_index)
+
+    # Sort muhorzdata_pd by 'Comp_Rank' and 'hzdept_r', and clean up
+    muhorzdata_pd.sort_values(["Comp_Rank", "hzdept_r"], ascending=[True, True], inplace=True)
+    muhorzdata_pd.drop("Comp_Rank", axis=1, inplace=True)
+    muhorzdata_pd.reset_index(drop=True, inplace=True)
+
+    mucompdata_pd = mucompdata_pd.drop_duplicates().reset_index(drop=True)
+
+    # Update component names in mucompdata_pd to handle duplicates
+    component_names = mucompdata_pd["compname"].tolist()
+    name_counts = collections.Counter(component_names)
+
     for name, count in name_counts.items():
-        if count > 1:
-            for suffix in range(1, count + 1):
-                mucompdata_pd.loc[mucompdata_pd["compname"] == name, "compname"] = name + str(
-                    suffix
-                )
+        if count > 1:  # If a component name is duplicated
+            suffixes = range(1, count + 1)  # Generate suffixes for the duplicate names
+            for suffix in suffixes:
+                index = component_names.index(
+                    name
+                )  # Find the index of the first occurrence of the duplicate name
+                component_names[index] = name + str(suffix)  # Append the suffix
 
-    # Add modified compname to muhorzdata
-    muhorzdata_name = muhorzdata_pd[["cokey"]].merge(
-        mucompdata_pd[["cokey", "compname"]], on="cokey"
+    mucompdata_pd["compname"] = component_names
+    muhorzdata_pd.rename(columns={"compname": "compname_grp"}, inplace=True)
+    # Merge the modified component names from mucompdata_pd to muhorzdata_pd
+    muhorzdata_pd = muhorzdata_pd.merge(
+        mucompdata_pd[["cokey", "compname"]], on="cokey", how="left"
     )
-    muhorzdata_pd["compname"] = muhorzdata_name["compname"]
 
     # Group data by cokey for texture
     muhorzdata_group_cokey = list(muhorzdata_pd.groupby("cokey", sort=False))
+    pd.set_option('display.max_rows', None)
+    pd.set_option('display.max_columns', None)
+    pd.set_option('display.width', None)
+    pd.set_option('display.max_colwidth', None)
 
     # Initialize lists for storing data
     getProfile_cokey = []
@@ -405,7 +422,6 @@ def list_soils_global(lon, lat):
     mucompdata_cond_prob = mucompdata_cond_prob.sort_values(
         ["soilID_rank", "distance_score"], ascending=[False, False]
     )
-    mucomp_index = mucompdata_cond_prob.index
 
     # Generate the ID list
     ID = [
@@ -434,6 +450,9 @@ def list_soils_global(lon, lat):
     mucompdata_cond_prob = pd.merge(
         mucompdata_cond_prob, WRB_Comp_Desc, left_on="compname_grp", right_on="WRB_tax", how="left"
     )
+
+    mucompdata_cond_prob = mucompdata_cond_prob.drop_duplicates().reset_index(drop=True)
+    mucomp_index = mucompdata_cond_prob.index
 
     # Extract site information
     Site = [
@@ -474,6 +493,9 @@ def list_soils_global(lon, lat):
         ph_lyrs,
         ec_lyrs,
     ]
+    for idx, lst in enumerate(lists_to_reorder):
+        if len(lst) < max(mucomp_index) + 1:
+            print(f"List at index {idx} is too short: len={len(lst)}, max index in mucomp_index={max(mucomp_index)}")
     reordered_lists = [[lst[i] for i in mucomp_index] for lst in lists_to_reorder]
 
     # Destructuring reordered lists for clarity

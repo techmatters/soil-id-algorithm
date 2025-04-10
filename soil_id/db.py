@@ -160,7 +160,7 @@ def save_soilgrids_output(plot_id, model_version, soilgrids_blob):
         conn.close()
 
 
-def get_hwsd2_profile_data(conn, hwsd2_mu_select):
+def get_hwsd2_profile_data(connection, hwsd2_mu_select):
     """
     Retrieve HWSD v2 data based on selected hwsd2 (map unit) values.
     This version reuses an existing connection.
@@ -177,7 +177,7 @@ def get_hwsd2_profile_data(conn, hwsd2_mu_select):
         return pd.DataFrame()
 
     try:
-        with conn.cursor() as cur:
+        with connection.cursor() as cur:
             # Create placeholders for the SQL IN clause
             placeholders = ", ".join(["%s"] * len(hwsd2_mu_select))
             sql_query = f"""
@@ -220,7 +220,7 @@ def get_hwsd2_profile_data(conn, hwsd2_mu_select):
         return pd.DataFrame()
 
 
-def extract_hwsd2_data(lon, lat, buffer_dist, table_name):
+def extract_hwsd2_data(connection, lon, lat, buffer_dist, table_name):
     """
     Fetches HWSD soil data from a PostGIS table within a given buffer around a point,
     performing distance and intersection calculations directly on geographic coordinates.
@@ -234,26 +234,24 @@ def extract_hwsd2_data(lon, lat, buffer_dist, table_name):
     Returns:
         DataFrame: Merged data from hwsdv2 and hwsdv2_data.
     """
-    # Use a single connection for both queries.
-    with get_datastore_connection() as conn:
-        # Compute the buffer polygon (in WKT) around the problem point.
-        # Here, we use the geography type to compute a buffer in meters,
-        # then cast it back to geometry in EPSG:4326.
-        buffer_query = """
-            WITH buffer AS (
-              SELECT ST_AsText(
-                       ST_Buffer(
-                         ST_SetSRID(ST_Point(%s, %s), 4326)::geography,
-                         %s
-                       )::geometry
-                     ) AS wkt
-            )
-            SELECT wkt FROM buffer;
-        """
-        with conn.cursor() as cur:
-            cur.execute(buffer_query, (lon, lat, buffer_dist))
-            buffer_wkt = cur.fetchone()[0]
-            print("Buffer WKT:", buffer_wkt)
+    # Compute the buffer polygon (in WKT) around the problem point.
+    # Here, we use the geography type to compute a buffer in meters,
+    # then cast it back to geometry in EPSG:4326.
+    buffer_query = """
+        WITH buffer AS (
+          SELECT ST_AsText(
+                   ST_Buffer(
+                     ST_SetSRID(ST_Point(%s, %s), 4326)::geography,
+                     %s
+                   )::geometry
+                 ) AS wkt
+        )
+        SELECT wkt FROM buffer;
+    """
+    with connection.cursor() as cur:
+        cur.execute(buffer_query, (lon, lat, buffer_dist))
+        buffer_wkt = cur.fetchone()[0]
+        print("Buffer WKT:", buffer_wkt)
 
         # Build the main query that uses the computed buffer.
         # Distance is computed by casting geometries to geography,
@@ -344,7 +342,7 @@ def extract_hwsd2_data(lon, lat, buffer_dist, table_name):
         # """
 
         # Use GeoPandas to execute the main query and load results into a GeoDataFrame.
-        hwsd = gpd.read_postgis(main_query, conn, geom_col="geom")
+        hwsd = gpd.read_postgis(main_query, connection, geom_col="geom")
         print("Main query returned", len(hwsd), "rows.")
 
         # Remove the geometry column (if not needed) from this dataset.
@@ -354,7 +352,7 @@ def extract_hwsd2_data(lon, lat, buffer_dist, table_name):
         hwsd2_mu_select = hwsd["hwsd2"].tolist()
 
         # Call get_hwsd2_profile_data using the same connection.
-        hwsd_data = get_hwsd2_profile_data(conn, hwsd2_mu_select)
+        hwsd_data = get_hwsd2_profile_data(connection, hwsd2_mu_select)
 
         # Merge the two datasets.
         merged = pd.merge(hwsd_data, hwsd, on="hwsd2", how="left").drop_duplicates()
@@ -365,46 +363,37 @@ def extract_hwsd2_data(lon, lat, buffer_dist, table_name):
 
 
 # Function to fetch data from a PostgreSQL table
-def fetch_table_from_db(table_name):
-    conn = None
+def fetch_table_from_db(connection, table_name):
     try:
-        conn = get_datastore_connection()
-        cur = conn.cursor()
+        with connection.cursor() as cur:
+            query = f"SELECT * FROM {table_name} ORDER BY id ASC;"
+            cur.execute(query)
+            rows = cur.fetchall()
 
-        query = f"SELECT * FROM {table_name} ORDER BY id ASC;"
-        cur.execute(query)
-        rows = cur.fetchall()
-
-        return rows
+            return rows
 
     except Exception as err:
         logging.error(f"Error querying PostgreSQL: {err}")
         return None
 
-    finally:
-        if conn:
-            conn.close()
 
-
-def get_WRB_descriptions(WRB_Comp_List):
+def get_WRB_descriptions(connection, WRB_Comp_List):
     """
     Retrieve WRB descriptions based on provided WRB component list.
     """
-    conn = None
     try:
-        conn = get_datastore_connection()
-        cur = conn.cursor()
+        with connection.cursor() as cur:
 
-        # Create placeholders for the SQL IN clause
-        placeholders = ", ".join(["%s"] * len(WRB_Comp_List))
-        sql = f"""SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es,
-                         Description_ks, Management_ks, Description_fr, Management_fr
-                  FROM wrb_fao90_desc
-                  WHERE WRB_tax IN ({placeholders})"""
+            # Create placeholders for the SQL IN clause
+            placeholders = ", ".join(["%s"] * len(WRB_Comp_List))
+            sql = f"""SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es,
+                             Description_ks, Management_ks, Description_fr, Management_fr
+                      FROM wrb_fao90_desc
+                      WHERE WRB_tax IN ({placeholders})"""
 
-        # Execute the query with the parameters
-        cur.execute(sql, tuple(WRB_Comp_List))
-        results = cur.fetchall()
+            # Execute the query with the parameters
+            cur.execute(sql, tuple(WRB_Comp_List))
+            results = cur.fetchall()
 
         # Convert the results to a pandas DataFrame
         data = pd.DataFrame(
@@ -423,18 +412,13 @@ def get_WRB_descriptions(WRB_Comp_List):
         )
 
         return data
-
     except Exception as err:
         logging.error(f"Error querying PostgreSQL: {err}")
         return None
 
-    finally:
-        if conn:
-            conn.close()
-
 
 # global only
-def getSG_descriptions(WRB_Comp_List):
+def getSG_descriptions(connection, WRB_Comp_List):
     """
     Fetch WRB descriptions from a PostgreSQL database using wrb2006_to_fao90
     and wrb_fao90_desc tables. Returns a pandas DataFrame with columns:
@@ -447,13 +431,10 @@ def getSG_descriptions(WRB_Comp_List):
         pandas.DataFrame or None if an error occurs.
     """
 
-    conn = None
     try:
-        # 1. Get a connection to your datastore (replace with your actual function):
-        conn = get_datastore_connection()
 
         def execute_query(query, params):
-            with conn.cursor() as cur:
+            with connection.cursor() as cur:
                 # Execute the query with the parameters
                 cur.execute(query, params)
                 return cur.fetchall()
@@ -524,7 +505,3 @@ def getSG_descriptions(WRB_Comp_List):
     except Exception as err:
         logging.error(f"Error querying PostgreSQL: {err}")
         return None
-
-    finally:
-        if conn:
-            conn.close()

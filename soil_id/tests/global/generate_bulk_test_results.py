@@ -20,7 +20,7 @@ import time
 import traceback
 
 import pandas
-
+from soil_id.db import get_datastore_connection
 from soil_id.global_soil import list_soils_global, rank_soils_global
 
 test_data_df = pandas.read_csv(
@@ -36,7 +36,10 @@ result_file_name = os.path.join(
 
 print(f"logging results to {result_file_name}")
 # buffering=1 is line buffering
-with open(result_file_name, "w", buffering=1) as result_file:
+with (
+    open(result_file_name, "w", buffering=1) as result_file,
+    get_datastore_connection() as connection,
+):
     result_agg = {}
 
     for pedon_key, pedon in pedons:
@@ -54,9 +57,11 @@ with open(result_file_name, "w", buffering=1) as result_file:
         else:
             start_time = time.perf_counter()
             try:
-                list_result = list_soils_global(lat=lat, lon=lon)
+
+                list_result = list_soils_global(connection=connection, lat=lat, lon=lon)
 
                 result_record["rank_result"] = rank_soils_global(
+                    connection=connection,
                     lat=lat,
                     lon=lon,
                     list_output_data=list_result,

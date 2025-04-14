@@ -40,7 +40,7 @@ print(f"\n# Unique crash tracebacks ({len(counts)} unique, {len(crashes)} total)
 for idx, (traceback, count) in enumerate(counts.to_dict().items()):
     example = crashes.loc[crashes["traceback"] == traceback].iloc[0]
     print(
-        f"Traceback #{idx + 1}, occurred {count} times. Example pedon: {example["pedon_key"]}, lat: {example["lat"]}, lon: {example["lon"]}"
+        f"Traceback #{idx + 1}, occurred {count} times. Example pedon: {example['pedon_key']}, lat: {example['lat']}, lon: {example['lon']}"
     )
     lines = traceback.splitlines()
     indented_lines = ["  " + line for line in lines]

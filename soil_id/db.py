@@ -21,8 +21,6 @@ import pandas as pd
 
 # Third-party libraries
 import psycopg
-from shapely import wkb
-from shapely.geometry import Point
 
 # local libraries
 import soil_id.config
@@ -299,7 +297,6 @@ def extract_hwsd2_data(lon, lat, buffer_dist, table_name):
             ST_Intersects(vg.geom, ST_SetSRID(ST_Point({lon}, {lat}), 4326))
             OR ST_Intersects(vg.geom, pp.geom);
         """
-
 
         # Use GeoPandas to execute the main query and load results into a GeoDataFrame.
         hwsd = gpd.read_postgis(main_query, conn, geom_col="geom")

@@ -54,7 +54,6 @@ with open(result_file_name, "w", buffering=1) as result_file:
         else:
             start_time = time.perf_counter()
             try:
-
                 list_result = list_soils_global(lat=lat, lon=lon)
 
                 result_record["rank_result"] = rank_soils_global(

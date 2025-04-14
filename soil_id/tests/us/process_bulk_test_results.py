@@ -33,9 +33,15 @@ print(pandas.qcut(df["execution_time_s"], q=10, retbins=True)[1])
 
 
 crashes = df.groupby(by=["result"]).get_group(("crash",))
-tracebacks = crashes["traceback"].unique().tolist()
+counts = df.value_counts(subset="traceback").sort_values(ascending=False)
 
-print(f"\n# Unique crash tracebacks ({len(tracebacks)} unique, {len(crashes)} total):")
+print(f"\n# Unique crash tracebacks ({len(counts)} unique, {len(crashes)} total):")
 
-for t in tracebacks:
-    print(t)
+for idx, (traceback, count) in enumerate(counts.to_dict().items()):
+    example = crashes.loc[crashes["traceback"] == traceback].iloc[0]
+    print(
+        f"Traceback #{idx + 1}, occurred {count} times. Example pedon: {example['pedon_key']}, lat: {example['lat']}, lon: {example['lon']}"
+    )
+    lines = traceback.splitlines()
+    indented_lines = ["  " + line for line in lines]
+    print("\n".join(indented_lines) + "\n")

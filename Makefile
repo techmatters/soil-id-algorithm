@@ -1,23 +1,27 @@
-pip-tools: ${VIRTUAL_ENV}/scripts/pip-sync
-
-format:
-	isort --atomic soil_id
-	black soil_id
+ifeq ($(DC_ENV),ci)
+	UV_FLAGS = "--system"
+endif
 
 install:
-	pip install -r requirements.txt
+	uv pip install -r requirements.txt $(UV_FLAGS)
 
 install-dev:
-	pip install -r requirements-dev.txt
+	uv pip install -r requirements-dev.txt $(UV_FLAGS)
+
+setup-git-hooks:
+	@pre-commit install
 
 lint:
-	flake8 soil_id && isort -c soil_id && black --check soil_id
+	ruff check soil_id
 
-lock: pip-tools
-	CUSTOM_COMPILE_COMMAND="make lock" pip-compile --upgrade --generate-hashes --strip-extras --resolver=backtracking --output-file requirements.txt requirements/base.in
+format:
+	ruff format soil_id
 
-lock-dev: pip-tools
-	CUSTOM_COMPILE_COMMAND="make lock-dev" pip-compile --upgrade --generate-hashes --strip-extras --resolver=backtracking --output-file requirements-dev.txt requirements/dev.in
+lock:
+	CUSTOM_COMPILE_COMMAND="make lock" uv pip compile --upgrade --generate-hashes requirements/base.in -o requirements.txt
+
+lock-dev:
+	CUSTOM_COMPILE_COMMAND="make lock-dev" uv pip compile --upgrade --generate-hashes requirements/dev.in -o requirements-dev.txt
 
 build:
 	echo "Building TK..."
@@ -50,17 +54,11 @@ graphs:
 	gprof2dot -f pstats  prof/test_soil_location.prof | dot -Tsvg -o prof/test_soil_location.svg
 	flameprof prof/test_soil_location.prof > prof/test_soil_location_flame.svg
 
-generate_bulk_test_results_us:
+generate_bulk_test_results:
 	python -m soil_id.tests.us.generate_bulk_test_results
 
-process_bulk_test_results_us:
+process_bulk_test_results:
 	python -m soil_id.tests.us.process_bulk_test_results $(RESULTS_FILE)
-
-generate_bulk_test_results_global:
-	python -m soil_id.tests.global.generate_bulk_test_results
-
-process_bulk_test_results_global:
-	python -m soil_id.tests.global.process_bulk_test_results $(RESULTS_FILE)
 
 # Donwload Munsell CSV, SHX, SHP, SBX, SBN, PRJ, DBF
 download-soil-data:
@@ -73,6 +71,3 @@ download-soil-data:
 	gdown 185Qjb9pJJn4AzOissiTz283tINrDqgI0; \
 	gdown 1P3xl1YRlfcMjfO_4PM39tkrrlL3hoLzv; \
 	gdown 1K0GkqxhZiVUND6yfFmaI7tYanLktekyp \
-
-${VIRTUAL_ENV}/scripts/pip-sync:
-	pip install pip-tools

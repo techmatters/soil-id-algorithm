@@ -9,12 +9,15 @@ authors = [
 ]
 dynamic = ["version", "description", "classifiers", "dependencies"]
 
-[tool.black]
+[tool.ruff]
+exclude = ["migrations"]
 line-length = 100
 
-[tool.isort]
-profile = "black"
-known_first_party = "soil_id"
+[tool.ruff.lint.isort]
+known-first-party = ["soil_id"]
+
+[tool.ruff.lint]
+extend-ignore = ["E203"]
 
 [tool.pytest.ini_options]
 log_cli = true

@@ -25,5 +25,5 @@ prof/
 
 # reference and output files
 Data/
-
+soil_id/tests/
 get-pip.py*

@@ -1499,7 +1499,7 @@ def extract_mucompdata_STATSGO(lon, lat):
                         component.irrcapscl, component.irrcapunit, component.taxorder,
                         component.taxsubgrp
                         FROM component
-                        WHERE mukey IN ({','.join(map(str, mukey_list))})"""
+                        WHERE mukey IN ({",".join(map(str, mukey_list))})"""
     mucompdata_out = sda_return(propQry=mucompdataQry)
 
     if not mucompdata_out.empty:
@@ -1835,7 +1835,6 @@ def process_distance_scores(mucompdata_pd, ExpCoeff):
 
 
 def pedon_color(lab_Color, top, bottom):
-
     pedon_l, pedon_a, pedon_b = (
         lab_Color.iloc[:, 0],
         lab_Color.iloc[:, 1],
@@ -2531,8 +2530,8 @@ def update_esd_data(df):
             # Fill all missing values if all are missing within the group
             group.fillna(
                 {
-                    "ecoclassid": unique_ids[0] if unique_ids else "",
-                    "ecoclassname": unique_names[0] if unique_names else "",
+                    "ecoclassid": unique_ids[0] if unique_ids.size > 0 else "",
+                    "ecoclassname": unique_names[0] if unique_names.size > 0 else "",
                 },
                 inplace=True,
             )

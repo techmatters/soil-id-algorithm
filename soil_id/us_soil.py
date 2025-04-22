@@ -1804,9 +1804,7 @@ def rank_soils(
 
         # Calculate similarity for each depth slice
         dis_mat_list = []
-        for (
-            i
-        ) in (
+        for i in (
             soil_matrix.index
         ):  # i should be an index of p_hz_data depth slices, e.g. if user only enters
             # 100-120cm data, then i = 100:120
@@ -2052,16 +2050,8 @@ def rank_soils(
     if D_horz is None and D_site is None:
         Score_Data_Loc = [0.0 for _ in range(len(D_final_loc))]
     else:
-        # Scale location and data scores for equal weighting
-        D_final_loc["Score_Data_scale"] = D_final_loc["Score_Data"] / np.nanmax(
-            D_final_loc["Score_Data"]
-        )
-        D_final_loc["distance_score_scale"] = D_final_loc["distance_score"] / np.nanmax(
-            D_final_loc["distance_score"]
-        )
-
         # Calculate the combined score
-        Score_Data_Loc = (D_final_loc["Score_Data_scale"] + D_final_loc["distance_score_scale"]) / (
+        Score_Data_Loc = (D_final_loc["Score_Data"] + D_final_loc["distance_score"]) / (
             D_final_loc["data_weight"] + location_weight
         )
 
@@ -2144,9 +2134,7 @@ def rank_soils(
             "Score_Data_Loc",
             "distance_score",
         ]
-    ].fillna(
-        0.0
-    )
+    ].fillna(0.0)
 
     # Construct the output format
     Rank = [

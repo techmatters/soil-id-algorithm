@@ -240,10 +240,10 @@ def list_soils_global(lon, lat):
 
     # Group data by cokey for texture
     muhorzdata_group_cokey = list(muhorzdata_pd.groupby("cokey", sort=False))
-    pd.set_option('display.max_rows', None)
-    pd.set_option('display.max_columns', None)
-    pd.set_option('display.width', None)
-    pd.set_option('display.max_colwidth', None)
+    pd.set_option("display.max_rows", None)
+    pd.set_option("display.max_columns", None)
+    pd.set_option("display.width", None)
+    pd.set_option("display.max_colwidth", None)
 
     # Initialize lists for storing data
     getProfile_cokey = []
@@ -495,7 +495,9 @@ def list_soils_global(lon, lat):
     ]
     for idx, lst in enumerate(lists_to_reorder):
         if len(lst) < max(mucomp_index) + 1:
-            print(f"List at index {idx} is too short: len={len(lst)}, max index in mucomp_index={max(mucomp_index)}")
+            print(
+                f"List at index {idx} is too short: len={len(lst)}, max index in mucomp_index={max(mucomp_index)}"
+            )
     reordered_lists = [[lst[i] for i in mucomp_index] for lst in lists_to_reorder]
 
     # Destructuring reordered lists for clarity
@@ -811,9 +813,7 @@ def rank_soils_global(
 
         dis_mat_list = []
 
-        for (
-            depth
-        ) in (
+        for depth in (
             soil_matrix.index
         ):  # depth represents a user-recorded depth slice (e.g. 100, 101, …, 120)
             # Gather the slice from each horizon variable
@@ -1380,7 +1380,7 @@ def sg_list(lon, lat):
             # Only handle top 3 entries (or fewer if less are returned)
             ranks_needed = min(3, len(TAXNWRB_pd))
             TAXNWRB_pd = TAXNWRB_pd.head(ranks_needed)
-            TAXNWRB_pd.index = [f"Rank{i+1}" for i in range(ranks_needed)]
+            TAXNWRB_pd.index = [f"Rank{i + 1}" for i in range(ranks_needed)]
         except Exception as e:
             logging.error(f"Error processing WRB classification: {e}")
             TAXNWRB_pd = pd.DataFrame(

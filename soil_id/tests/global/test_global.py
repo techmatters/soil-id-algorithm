@@ -27,13 +27,12 @@ test_locations = [
 
 
 def test_soil_location():
-
     for item in test_locations:
         logging.info(f"Testing {item['lon']}, {item['lat']}")
         start_time = time.perf_counter()
         list_soils_result = list_soils_global(item["lon"], item["lat"])
-        logging.info(f"...time: {(time.perf_counter()-start_time):.2f}s")
-        rank_soils_result = rank_soils_global(
+        logging.info(f"...time: {(time.perf_counter() - start_time):.2f}s")
+        rank_soils_global(
             item["lon"],
             item["lat"],
             list_output_data=list_soils_result,
@@ -45,4 +44,4 @@ def test_soil_location():
             bedrock=None,
             cracks=None,
         )
-        sg_soils_result = sg_list(item["lon"], item["lat"])
+        sg_list(item["lon"], item["lat"])

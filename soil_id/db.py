@@ -21,8 +21,6 @@ import pandas as pd
 
 # Third-party libraries
 import psycopg
-from shapely import wkb
-from shapely.geometry import Point
 
 # local libraries
 import soil_id.config

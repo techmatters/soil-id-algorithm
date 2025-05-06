@@ -25,11 +25,8 @@ import re
 import geopandas as gpd
 import numpy as np
 import pandas as pd
-import pyproj
 from numpy.linalg import cholesky
 from osgeo import ogr
-from pyproj import CRS
-from pyproj.database import query_utm_crs_info
 from rosetta import SoilData, rosetta
 from scipy.interpolate import UnivariateSpline
 from scipy.sparse import issparse

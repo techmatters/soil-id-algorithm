@@ -23,8 +23,6 @@ import requests
 import pandas
 import numpy
 
-from soil_id.global_soil import list_soils_global, rank_soils_global
-
 def get_rfv(cf):
     if 0 <= cf < 2:
         return "0-1%"

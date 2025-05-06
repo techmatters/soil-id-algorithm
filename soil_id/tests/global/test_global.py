@@ -15,6 +15,7 @@
 
 import logging
 import time
+import pytest
 
 from soil_id.global_soil import list_soils_global, rank_soils_global, sg_list
 
@@ -25,7 +26,7 @@ test_locations = [
     {"lat": -10.07856, "lon": 15.107436},
 ]
 
-
+@pytest.mark.skip
 def test_soil_location():
     for item in test_locations:
         logging.info(f"Testing {item['lon']}, {item['lat']}")

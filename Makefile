@@ -66,6 +66,12 @@ generate_bulk_test_results_global:
 process_bulk_test_results_global:
 	python -m soil_id.tests.global.process_bulk_test_results $(RESULTS_FILE)
 
+generate_bulk_test_results_legacy:
+	python -m soil_id.tests.legacy.generate_bulk_test_results
+
+process_bulk_test_results_legacy:
+	python -m soil_id.tests.legacy.process_bulk_test_results $(RESULTS_FILE)
+
 # Donwload Munsell CSV, SHX, SHP, SBX, SBN, PRJ, DBF
 download-soil-data:
 	mkdir -p Data

@@ -29,7 +29,7 @@ for result_record in result_dicts:
     if "result" in result_record and result_record["result"] == "unknown":
         continue
 
-    if "rank_result" in result_record:
+    if "rank_result" in result_record and "soilRank" in result_record["rank_result"]:
         matches = result_record["rank_result"]["soilRank"]
         index = [
             i
@@ -77,26 +77,21 @@ if len(df) < 11:
     print("\n# Execution times:\n")
     print(df["execution_time_s"].to_list())
 else:
-    print("\n# Execution time quantiles:\n")
-    print("50th percentile execution time:", df["execution_time_s"].quantile(0.50))
-    print("90th percentile execution time:", df["execution_time_s"].quantile(0.90))
-    print("99th percentile execution time:", df["execution_time_s"].quantile(0.99))
-    print("99.9th percentile execution time:", df["execution_time_s"].quantile(0.999))
+    print("\n# Execution time deciles:\n")
+    print(pandas.qcut(df["execution_time_s"], q=10, retbins=True)[1])
 
 
 if "crash" in result_groups.groups:
     crashes = result_groups.get_group(("crash",))
-    counts = df.value_counts(subset="traceback").sort_values(ascending=False)
+    # counts = df.value_counts(subset="traceback").sort_values(ascending=False)
 
-    print(f"\n# Unique crash tracebacks ({len(counts)} unique, {len(crashes)} total):\n")
+    # print(f"\n# Unique crash tracebacks ({len(counts)} unique, {len(crashes)} total):\n")
 
-    for idx, (traceback, count) in enumerate(counts.to_dict().items()):
-        example = crashes.loc[crashes["traceback"] == traceback].iloc[0]
-        print(
-            f"Traceback #{idx + 1}, occurred {count} times. Example pedon: {example['pedon_key']}, lat: {example['lat']}, lon: {example['lon']}"
-        )
-        lines = traceback.splitlines()
-        indented_lines = ["  " + line for line in lines]
-        print("\n".join(indented_lines) + "\n")
-
-df[['pedon_key', 'pedon_name', 'lat', 'lon', 'result', 'secondary_result', 'all_soils']].to_csv('global_algorithm_results.csv', index=False)
+    # for idx, (traceback, count) in enumerate(counts.to_dict().items()):
+    #     example = crashes.loc[crashes["traceback"] == traceback].iloc[0]
+    #     print(
+    #         f"Traceback #{idx + 1}, occurred {count} times. Example pedon: {example['pedon_key']}, lat: {example['lat']}, lon: {example['lon']}"
+    #     )
+    #     lines = traceback.splitlines()
+    #     indented_lines = ["  " + line for line in lines]
+    #     print("\n".join(indented_lines) + "\n")

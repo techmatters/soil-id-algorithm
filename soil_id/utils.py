@@ -25,14 +25,13 @@ import re
 import geopandas as gpd
 import numpy as np
 import pandas as pd
-import shapely
 from numpy.linalg import cholesky
 from osgeo import ogr
 from rosetta import SoilData, rosetta
 from scipy.interpolate import UnivariateSpline
 from scipy.sparse import issparse
 from scipy.stats import entropy, norm
-from shapely.geometry import Point, box
+from shapely.geometry import Point
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import pairwise
 from sklearn.utils import validation
@@ -40,46 +39,26 @@ from sklearn.utils import validation
 # local libraries
 import soil_id.config
 
-from .db import get_WISE30sec_data
 from .services import sda_return
-
-
-# global
-def extract_WISE_data(lon, lat, file_path, buffer_size=0.5):
-    # Create LPKS point
-    point_geo = Point(lon, lat)
-    point_geo.crs = {"init": "epsg:4326"}
-
-    # Create bounding box to clip HWSD data around the point
-    bounding_box = create_bounding_box(lon, lat, buffer_dist=10000)
-    box_geom = shapely.geometry.box(*bounding_box)
-
-    # Load HWSD data from the provided file_path
-    hwsd = gpd.read_file(file_path, bbox=box_geom.bounds, driver="GPKG")
-
-    # Filter data to consider unique map units
-    mu_geo = hwsd[["MUGLB_NEW", "geometry"]].drop_duplicates(subset="MUGLB_NEW")
-    mu_id_dist = calculate_distances_and_intersections(mu_geo, point_geo)
-    mu_id_dist.loc[mu_id_dist["pt_intersect"], "dist_meters"] = 0
-    mu_id_dist["distance"] = mu_id_dist.groupby("MUGLB_NEW")["dist_meters"].transform(min)
-    mu_id_dist = mu_id_dist.nsmallest(2, "distance")
-
-    hwsd = hwsd.drop(columns=["geometry"])
-    hwsd = pd.merge(mu_id_dist, hwsd, on="MUGLB_NEW", how="left").drop_duplicates()
-
-    MUGLB_NEW_Select = hwsd["MUGLB_NEW"].tolist()
-    wise_data = get_WISE30sec_data(MUGLB_NEW_Select)
-    wise_data = pd.merge(wise_data, mu_id_dist, on="MUGLB_NEW", how="left")
-
-    return wise_data
-
 
 ###################################################################################################
 #                                       Utility Functions                                         #
 ###################################################################################################
 
 
-def getSand(field):
+def getSand(field: str) -> float:
+    """
+    Given a soil texture name (e.g. "loam", "sand", "clay"), return the approximate
+    sand percentage based on a predefined lookup table.
+
+    Args:
+        field (str): The soil texture name (e.g. "sandy loam", "clay", etc.).
+                     Case-insensitive. May be None or an empty string.
+
+    Returns:
+        float: The sand percentage for that texture, or numpy.nan if the texture
+               is unrecognized or field is None.
+    """
     sand_percentages = {
         "sand": 92.0,
         "loamy sand": 80.0,
@@ -95,7 +74,11 @@ def getSand(field):
         "clay": 22.5,
     }
 
-    return sand_percentages.get(field.lower() if field else None, np.nan)
+    if field is None:
+        return np.nan
+
+    # Convert field to lowercase, then do the lookup in the dictionary
+    return sand_percentages.get(field.lower(), np.nan)
 
 
 def getClay(field):
@@ -124,58 +107,75 @@ def silt_calc(row):
     return silt
 
 
-def getTexture(row, sand=None, silt=None, clay=None):
-    sand = (
-        sand
-        if sand is not None
-        else row.get("sandtotal_r") or row.get("sand") or row.get("sand_total")
-    )
-    silt = (
-        silt
-        if silt is not None
-        else row.get("silttotal_r") or row.get("silt") or row.get("silt_total")
-    )
-    clay = (
-        clay
-        if clay is not None
-        else row.get("claytotal_r") or row.get("clay") or row.get("clay_total")
-    )
+def getTexture(row=None, sand=None, silt=None, clay=None):
+    """
+    Classify soil texture based on sand, silt, and clay proportions.
 
+    Parameters:
+    - row (dict): Dictionary-like object with 'sandtotal_r', 'silttotal_r', 'claytotal_r' keys.
+    - sand (float): Percentage of sand.
+    - silt (float): Percentage of silt.
+    - clay (float): Percentage of clay.
+
+    Returns:
+    - str: Soil texture classification.
+    """
+
+    # Handle missing inputs: if not provided individually, try to get from row.
     if sand is None or silt is None or clay is None:
-        return None
+        if row is not None:
+            sand = row.get("sandtotal_r", np.nan)
+            silt = row.get("silttotal_r", np.nan)
+            clay = row.get("claytotal_r", np.nan)
 
+    # Replace any NaN with 0 for the calculation.
+    sand = np.nan_to_num(sand, nan=0)
+    silt = np.nan_to_num(silt, nan=0)
+    clay = np.nan_to_num(clay, nan=0)
+
+    # Calculate derived values.
     silt_clay = silt + 1.5 * clay
     silt_2x_clay = silt + 2.0 * clay
 
-    if silt_clay < 15:
-        return "Sand"
-    elif silt_clay < 30:
-        return "Loamy sand"
-    elif (7 <= clay <= 20 and sand > 52) or (clay < 7 and silt < 50):
-        if silt_2x_clay >= 30:
-            return "Sandy loam"
-    elif 7 <= clay <= 27 and 28 <= silt < 50 and sand <= 52:
-        return "Loam"
-    elif silt >= 50 and ((12 <= clay < 27) or (silt < 80 and clay < 12)):
-        return "Silt loam"
-    elif silt >= 80 and clay < 12:
-        return "Silt"
-    elif 20 <= clay < 35 and silt < 28 and sand > 45:
-        return "Sandy clay loam"
-    elif 27 <= clay < 40 and sand <= 45:
-        if sand > 20:
-            return "Clay loam"
-        else:
-            return "Silty clay loam"
-    elif clay >= 35 and sand >= 45:
-        return "Sandy clay"
-    elif clay >= 40:
-        if silt >= 40:
-            return "Silty clay"
-        elif sand <= 45:
-            return "Clay"
+    # Define conditions and corresponding texture classifications.
+    conditions = [
+        silt_clay < 15,
+        (silt_clay >= 15) & (silt_clay < 30),
+        (((7 <= clay) & (clay <= 20)) & (sand > 52))
+        | ((clay < 7) & (silt < 50) & (silt_2x_clay >= 30)),
+        (7 <= clay) & (clay <= 27) & (28 <= silt) & (silt < 50) & (sand <= 52),
+        (silt >= 50) & (((12 <= clay) & (clay < 27)) | ((silt < 80) & (clay < 12))),
+        (silt >= 80) & (clay < 12),
+        (20 <= clay) & (clay < 35) & (silt < 28) & (sand > 45),
+        (27 <= clay) & (clay < 40) & (sand <= 45) & (sand > 20),
+        (clay >= 35) & (sand >= 45),
+        (clay >= 40) & (silt >= 40) & (sand <= 45),
+    ]
 
-    return None  # Default return value
+    choices = [
+        "Sand",
+        "Loamy sand",
+        "Sandy loam",
+        "Loam",
+        "Silt loam",
+        "Silt",
+        "Sandy clay loam",
+        "Clay loam",
+        "Sandy clay",
+        "Clay",
+    ]
+
+    # Compute the texture classification.
+    result = np.select(conditions, choices, default="Unknown")
+
+    # Ensure that a plain Python string is returned.
+    if isinstance(result, np.ndarray):
+        try:
+            result = result.item()  # Extract single element from an array of size 1.
+        except Exception:
+            result = str(result)
+
+    return result
 
 
 def getCF(cf):
@@ -304,6 +304,36 @@ def agg_data_layer(data, bottom, sd=2, depth=False):
 
 
 def aggregate_data(data, bottom_depths, sd=2):
+    """
+    Aggregate values of a given data series into segments defined by depth intervals
+    and return their mean values, rounded to a specified number of decimal places.
+
+    This function partitions the data index into depth intervals determined by
+    the provided `bottom_depths`. Each interval starts at one of the `top_depths`
+    (which is derived from `bottom_depths` by shifting them up by one) and ends
+    at the corresponding bottom depth. For each interval, the function extracts
+    the data values within that depth range and computes their mean. The results
+    are rounded to `sd` decimal places and returned as a Series, where each element
+    corresponds to the aggregated mean for the respective depth interval.
+
+    Parameters
+    ----------
+    data : pandas.Series
+        A series indexed by depth (or a comparable numeric index), which
+        will be aggregated over the defined depth intervals.
+    bottom_depths : list or array-like
+        A list or array of numerical values representing the lower boundaries
+        of depth intervals. The top boundary for the first interval is implicitly 0.
+    sd : int, optional, default 2
+        Number of decimal places to which the computed mean values will be rounded.
+
+    Returns
+    -------
+    pandas.Series
+        A series of aggregated mean values for each depth interval, indexed by
+        the order of the intervals. If any interval does not contain data values,
+        NaN is returned for that interval.
+    """
     if not bottom_depths or np.isnan(bottom_depths[0]):
         return pd.Series([np.nan])
 
@@ -1265,18 +1295,28 @@ def calculate_distances_and_intersections(mu_geo, point):
         DataFrame: Contains mapunit keys, distances, and intersection flags.
     """
 
-    # Project the data to a suitable UTM zone based on the point's location
+    # Ensure the point is wrapped in a GeoDataFrame and projected correctly
     point_utm, epsg_code = convert_geometry_to_utm(point)
 
-    # Ensure both the point and GeoDataFrame are transformed to the same CRS
+    # Ensure the point is a GeoDataFrame (for compatibility)
+    if not isinstance(point_utm, gpd.GeoDataFrame):
+        point_utm = gpd.GeoDataFrame(geometry=[point_utm], crs=epsg_code)
+
+    # Transform the GeoDataFrame to the same UTM CRS
     mu_geo_utm = mu_geo.to_crs(epsg_code)
 
-    # Calculate distances and intersections
-    distances = mu_geo_utm["geometry"].distance(point_utm)
-    intersects = mu_geo_utm["geometry"].intersects(point_utm)
+    # Reset index for clean operations
+    mu_geo_utm = mu_geo_utm.reset_index(drop=True)
+    point_utm = point_utm.reset_index(drop=True)
 
+    # Extract the single geometry for the point
+    point_geometry = point_utm.geometry.iloc[0]
+
+    # Calculate distances and intersections
+    distances = mu_geo_utm["geom"].distance(point_geometry)
+    intersects = mu_geo_utm["geom"].intersects(point_geometry)
     return pd.DataFrame(
-        {"mukey": mu_geo_utm["MUKEY"], "dist_meters": distances, "pt_intersect": intersects}
+        {"hwsd2": mu_geo_utm["hwsd2"], "dist_meters": distances, "pt_intersect": intersects}
     )
 
 
@@ -1299,79 +1339,119 @@ def load_statsgo_data(box):
         return None
 
 
-def convert_geometry_to_utm(geometry, src_crs="epsg:4326", target_crs=None):
+def convert_geometry_to_utm(geometry, src_crs="EPSG:4326"):
     """
-    Transforms a given geometry from its source coordinate reference system (CRS)
-    to an appropriate Universal Transverse Mercator (UTM) CRS based on the geometry's
-    centroid location.
+    Converts a geometry from a geographic CRS to a UTM CRS based on its centroid.
 
     Parameters:
-    - geometry (shapely.geometry.base.BaseGeometry): The geometry to transform, which
-      could be any type of geometry, e.g., Point, Polygon.
-    - src_crs (str, optional): The EPSG code of the source CRS of the geometry. Defaults
-      to 'epsg:4326'.
-    - target_crs (str, optional): The EPSG code of the target CRS to which the geometry
-      should be transformed. If None, the appropriate UTM CRS based on the geometry's
-      centroid will be calculated.
+    - geometry (shapely.geometry or geopandas.GeoDataFrame): The input geometry.
+    - src_crs (str, optional): The source CRS, default is "EPSG:4326".
 
     Returns:
-    - tuple: A tuple containing the transformed geometry and the EPSG code of the
-      target UTM CRS. The transformed geometry is in the new CRS, and distances from
-      this geometry can be accurately calculated in linear units (meters).
-
-    Notes:
-    - If the target_crs is not provided, the function calculates the correct UTM zone
-      based on the longitude (from -180 to 180 degrees) and adjusts for the northern or
-      southern hemisphere based on the latitude.
-    - This function assumes the geometry is already in the specified source CRS and will
-      convert it directly to the target CRS without additional CRS transformations.
+    - tuple: (GeoDataFrame with transformed geometry, target CRS string)
     """
-    if target_crs is None:
-        lon, lat = geometry.centroid.x, geometry.centroid.y
-        utm_zone = int((lon + 180) / 6) + 1
-        hemisphere = "north" if lat >= 0 else "south"
-        epsg_code = f"326{utm_zone:02d}" if hemisphere == "north" else f"327{utm_zone:02d}"
-        target_crs = f"epsg:{epsg_code}"
+    # Ensure the geometry is a GeoDataFrame
+    if isinstance(geometry, Point):
+        geometry = gpd.GeoDataFrame(geometry=[geometry], columns=["geometry"], crs=src_crs)
+    elif isinstance(geometry, gpd.GeoSeries):
+        geometry = geometry.to_frame(name="geometry")
 
-    # Wrap the shapely geometry in a GeoSeries to use the to_crs() method
-    geo_series = gpd.GeoSeries([geometry], crs=src_crs)
-    transformed_geo_series = geo_series.to_crs(target_crs)
+    if "geometry" not in geometry:
+        raise ValueError("Input does not contain a valid geometry column.")
 
-    # Return the first (and only) geometry in the transformed GeoSeries and the new EPSG code
-    return transformed_geo_series.iloc[0], target_crs
+    # Ensure the CRS is correctly assigned before transformation
+    if geometry.crs is None:
+        geometry.set_crs(src_crs, inplace=True)
+
+    # Convert to source CRS (to ensure consistency)
+    geometry = geometry.to_crs(src_crs)
+
+    # Compute the centroid
+    centroid = geometry.geometry.centroid.iloc[0]  # Extract the first centroid
+    if centroid.is_empty:
+        raise ValueError("Geometry centroid is empty. Check input geometries.")
+
+    lon, lat = centroid.x, centroid.y
+
+    # Determine UTM zone
+    utm_zone = int((lon + 180) / 6) + 1
+    hemisphere = "north" if lat >= 0 else "south"
+    epsg_code = f"326{utm_zone:02d}" if hemisphere == "north" else f"327{utm_zone:02d}"
+    target_crs = f"EPSG:{epsg_code}"
+
+    # Transform to UTM CRS
+    geometry_utm = geometry.to_crs(target_crs)
+
+    return geometry_utm, target_crs
 
 
-def create_bounding_box(lon, lat, buffer_dist):
+# def get_utm_crs(lat, lon):
+#     # Define an area of interest that is just the point (or a small buffer around it)
+#     aoi = pyproj.aoi.AreaOfInterest(
+#         west_lon_degree=lon, south_lat_degree=lat,
+#         east_lon_degree=lon, north_lat_degree=lat
+#     )
+#     # Query for UTM CRS candidates covering the area of interest
+#     utm_crs_list = query_utm_crs_info(datum_name="WGS84", area_of_interest=aoi)
+#     if not utm_crs_list:
+#         raise ValueError("No UTM CRS found for the specified location.")
+
+#     # Select the first matching CRS
+#     crs = CRS.from_epsg(utm_crs_list[0].code)
+#     return crs
+
+
+# def get_target_utm_srid(lat, lon):
+#     """
+#     Determine the target UTM SRID (as an integer) based on latitude and longitude.
+
+#     Parameters:
+#         lat (float): The latitude coordinate.
+#         lon (float): The longitude coordinate.
+
+#     Returns:
+#         int: The UTM EPSG code as an integer. For example, for a point in the northern
+#              hemisphere in UTM zone 33, the function returns 32633.
+
+#     Raises:
+#         ValueError: If the latitude is not in the valid range [-90, 90] or the longitude
+#                     is not in the valid range [-180, 180].
+#     """
+#     # Basic input validation
+#     if not (-90 <= lat <= 90):
+#         raise ValueError("Latitude must be between -90 and 90.")
+#     if not (-180 <= lon <= 180):
+#         raise ValueError("Longitude must be between -180 and 180.")
+
+#     # Determine UTM zone: zones are 6° wide starting at -180.
+#     utm_zone = int((lon + 180) / 6) + 1
+
+#     # For the northern hemisphere, UTM EPSG codes start at 32600; for the southern, 32700.
+#     if lat >= 0:
+#         return 32600 + utm_zone
+#     else:
+#         return 32700 + utm_zone
+
+
+def create_circular_buffer(lon, lat, buffer_dist):
     """
-    Creates a geographic bounding box around a given latitude and longitude,
-    buffered by a specified distance in meters.
-
-    Parameters:
-    - lon (float): Longitude of the center point.
-    - lat (float): Latitude of the center point.
-    - buffer_dist (float): Buffer distance in meters.
-
-    Returns:
-    - Shapely Polygon: Geographic bounding box as a shapely polygon.
+    Creates a circular buffer in meters around a point and converts it to EPSG:4326.
     """
-    # Convert geographic coordinates to a Point geometry
     point_geo = Point(lon, lat)
-
-    # Use the convert_geometry_to_utm function to transform the point
     point_utm, epsg_code = convert_geometry_to_utm(point_geo)
 
-    # Create a GeoDataFrame with the UTM point
-    point_gdf = gpd.GeoDataFrame([{"geometry": point_utm}], crs=epsg_code)
+    # Ensure geometry is singular
+    if isinstance(point_utm, gpd.GeoDataFrame):
+        point_utm = point_utm.geometry.iloc[0]
 
-    # Buffer the point in UTM coordinates
-    buffered_point = point_gdf.buffer(buffer_dist)[0]
-    utm_box = box(*buffered_point.bounds)
+    # Create buffer
+    buffered_circle = point_utm.buffer(buffer_dist)
 
-    # Convert the UTM box back to geographic coordinates
-    point_gdf = gpd.GeoDataFrame([{"geometry": utm_box}], crs=epsg_code)
-    geographic_box = point_gdf.to_crs("epsg:4326").geometry.iloc[0]
+    # Convert buffer back to geographic CRS
+    circle_gdf = gpd.GeoDataFrame(geometry=[buffered_circle], crs=epsg_code)
+    geographic_circle = circle_gdf.to_crs("EPSG:4326").geometry.iloc[0]
 
-    return geographic_box
+    return geographic_circle
 
 
 def extract_mucompdata_STATSGO(lon, lat):
@@ -1391,9 +1471,9 @@ def extract_mucompdata_STATSGO(lon, lat):
     """
 
     point = Point(lon, lat)
-    box = create_bounding_box(lon, lat, buffer_dist=5000)
+    buffer = create_circular_buffer(lon, lat, buffer_dist=5000)
 
-    statsgo_mukey = load_statsgo_data(box)
+    statsgo_mukey = load_statsgo_data(buffer)
     if statsgo_mukey is None:
         logging.warning(f"Soil ID not available in this area: {lon}.{lat}")
         return None
@@ -1751,11 +1831,7 @@ def process_distance_scores(mucompdata_pd, ExpCoeff):
 ###################################################################################################
 
 
-def pedon_color(lab_Color, horizonDepth):
-    lbIdx = len(horizonDepth) - 1
-    pedon_top = [0] + [horizonDepth[i] for i in range(lbIdx)]
-
-    pedon_bottom = horizonDepth
+def pedon_color(lab_Color, top, bottom):
     pedon_l, pedon_a, pedon_b = (
         lab_Color.iloc[:, 0],
         lab_Color.iloc[:, 1],
@@ -1763,28 +1839,30 @@ def pedon_color(lab_Color, horizonDepth):
     )
 
     # Check for None values
-    if None in (pedon_top, pedon_bottom, pedon_l, pedon_a, pedon_b):
+    if any(x is None for x in [top, bottom]) or any(
+        s.isnull().any() for s in [pedon_l, pedon_a, pedon_b]
+    ):
         return np.nan
 
-    if pedon_top[0] != 0:
+    if top[0] != 0:
         return np.nan
 
     # Check for missing horizons
-    pedon_MisHrz = any(pedon_top[i + 1] != pedon_bottom[i] for i in range(len(pedon_top) - 1))
+    pedon_MisHrz = any(top[i + 1] != bottom[i] for i in range(len(top) - 1))
     if pedon_MisHrz:
         return np.nan
 
     pedon_l_intpl, pedon_a_intpl, pedon_b_intpl = [], [], []
 
-    if len(pedon_top) == 1:
-        pedon_l_intpl = [pedon_l[0]] * (pedon_bottom[0] - pedon_top[0])
-        pedon_a_intpl = [pedon_a[0]] * (pedon_bottom[0] - pedon_top[0])
-        pedon_b_intpl = [pedon_b[0]] * (pedon_bottom[0] - pedon_top[0])
+    if len(top) == 1:
+        pedon_l_intpl = [pedon_l[0]] * (bottom[0] - top[0])
+        pedon_a_intpl = [pedon_a[0]] * (bottom[0] - top[0])
+        pedon_b_intpl = [pedon_b[0]] * (bottom[0] - top[0])
     else:
-        for i in range(len(pedon_bottom)):
-            pedon_l_intpl.extend([pedon_l[i]] * (pedon_bottom[i] - pedon_top[i]))
-            pedon_a_intpl.extend([pedon_a[i]] * (pedon_bottom[i] - pedon_top[i]))
-            pedon_b_intpl.extend([pedon_b[i]] * (pedon_bottom[i] - pedon_top[i]))
+        for i in range(len(bottom)):
+            pedon_l_intpl.extend([pedon_l[i]] * (bottom[i] - top[i]))
+            pedon_a_intpl.extend([pedon_a[i]] * (bottom[i] - top[i]))
+            pedon_b_intpl.extend([pedon_b[i]] * (bottom[i] - top[i]))
 
     pedon_len = len(pedon_l_intpl)
     if pedon_len >= 37:
@@ -1799,7 +1877,7 @@ def pedon_color(lab_Color, horizonDepth):
         pedon_l_mean, pedon_a_mean, pedon_b_mean = np.nan, np.nan, np.nan
 
     if np.isnan(pedon_l_mean) or np.isnan(pedon_a_mean) or np.isnan(pedon_b_mean):
-        return np.nan
+        return [np.nan, np.nan, np.nan]
     else:
         return [pedon_l_mean, pedon_a_mean, pedon_b_mean]
 
@@ -1870,14 +1948,14 @@ def simulate_correlated_triangular(n, params, correlation_matrix):
         normal_var = correlated_normal[:, i]
         u = norm.cdf(normal_var)  # Transform to uniform [0, 1] range
 
-        # Transform the uniform values into triangularly distributed values
-        try:
-            condition = u <= (b - a) / (c - a)
-        except ZeroDivisionError:
-            # Handle the zero-division case
-            condition = None  # or some other default value
+        # Check for degenerate case where c - a == 0
+        if c - a == 0:
+            samples[:, i] = a
+            continue
 
-        # condition = u <= (b - a) / (c - a)
+        # Compute the condition for the triangular distribution
+        condition = u <= ((b - a) / (c - a))
+        # Compute the two branches of the inverse CDF
         samples[condition, i] = a + np.sqrt(u[condition] * (c - a) * (b - a))
         samples[~condition, i] = c - np.sqrt((1 - u[~condition]) * (c - a) * (c - b))
 
@@ -2266,6 +2344,100 @@ def sg_get_and_agg(variable, sg_data_w, bottom, return_depth=False):
     else:
         pd_lpks = agg_data_layer(data=pd_int.var_pct_intpl, bottom=bottom, depth=False)
         return pd_lpks.replace(np.nan, "")
+
+
+def adjust_depth_interval(data, target_length=200):
+    """Adjusts the depth interval of user data."""
+
+    # Convert input to a DataFrame
+    if isinstance(data, list):
+        data = pd.DataFrame(data)
+    elif isinstance(data, pd.Series):
+        data = data.to_frame()
+
+    # Ensure data is a DataFrame at this point
+    if not isinstance(data, pd.DataFrame):
+        raise TypeError("Data must be a list, Series, or DataFrame")
+
+    length = len(data)
+
+    if length > target_length:
+        # Truncate data if it exceeds the target length
+        data = data.iloc[:target_length]
+    elif length < target_length:
+        # Extend data if it's shorter than the target length
+        add_length = target_length - length
+        add_data = pd.DataFrame(np.nan, index=np.arange(add_length), columns=data.columns)
+        data = pd.concat([data, add_data])
+
+    data.reset_index(drop=True, inplace=True)
+    return data
+
+
+# Helper function to update dataframes based on depth conditions
+def update_intpl_data(
+    df, col_names, values, very_bottom, OSD_depth_add, OSD_depth_remove, OSD_max_bottom_int
+):
+    if OSD_depth_add:
+        layer_add = very_bottom - OSD_max_bottom_int
+        pd_add = pd.DataFrame([values] * layer_add, columns=col_names)
+        df = pd.concat([df.loc[: OSD_max_bottom_int - 1], pd_add], axis=0).reset_index(drop=True)
+    elif OSD_depth_remove:
+        df = df.loc[:very_bottom].reset_index(drop=True)
+    return df
+
+
+# Creates a new soil horizon layer row in the soil horizon table
+def create_new_layer(row, hzdept, hzdepb):
+    return pd.DataFrame(
+        {
+            "cokey": row["cokey"],
+            "hzdept_r": hzdepb,
+            "hzdepb_r": hzdept,
+            "chkey": row["chkey"],
+            "hzname": None,
+            "sandtotal_r": np.nan,
+            "silttotal_r": np.nan,
+            "claytotal_r": np.nan,
+            "total_frag_volume": np.nan,
+            "CEC": np.nan,
+            "pH": np.nan,
+            "EC": np.nan,
+            "lep_r": np.nan,
+            "comppct_r": row["comppct_r"],
+            "compname": row["compname"],
+            "slope_r": np.nan,
+            "texture": None,
+        },
+        index=[0],
+    )
+
+
+# Creates a new row entry in the OSD (Official Series Description) soil horizon table
+def create_new_layer_osd(row, top, bottom):
+    """Create a new layer with specified top and bottom depths."""
+    new_row = row.copy()
+    new_row["top"] = top
+    new_row["bottom"] = bottom
+    for col in [
+        "hzname",
+        "texture_class",
+        "cf_class",
+        "matrix_dry_color_hue",
+        "matrix_dry_color_value",
+        "matrix_dry_color_chroma",
+    ]:
+        new_row[col] = None
+    for col in [
+        "srgb_r",
+        "srgb_g",
+        "srgb_b",
+        "total_frag_volume",
+        "claytotal_r",
+        "sandtotal_r",
+    ]:
+        new_row[col] = np.nan
+    return new_row
 
 
 ##################################################################################################

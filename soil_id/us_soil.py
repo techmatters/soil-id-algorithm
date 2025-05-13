@@ -29,7 +29,7 @@ from pandas import json_normalize
 import soil_id.config
 
 from .color import getProfileLAB, lab2munsell, munsell2rgb
-from .services import get_soil_series_data, get_soilweb_data, sda_return
+from .services import get_soil_series_data, get_soilweb_data, sda_return, get_elev_data
 from .soil_sim import soil_sim
 from .utils import (
     aggregate_data,
@@ -1884,19 +1884,16 @@ def rank_soils(
     if pElev is None:
         pElev_dict = get_elev_data(lon, lat)
     try:
-        pElev = float(pElev_dict['value'])
+        pElev = float(pElev_dict["value"])
     except (KeyError, TypeError, ValueError):
         pElev = None  # or some default
 
     # 0) “Raw” guard on the three possible site inputs:
-    provided = {
-        "slope_r": pSlope,
-        "elev_r":  pElev,
-        "bedrock": bedrock
-    }
+    provided = {"slope_r": pSlope, "elev_r": pElev, "bedrock": bedrock}
     # count only non‑None, non‑NaN
     available_raw = [
-        k for k, v in provided.items()
+        k
+        for k, v in provided.items()
         if v is not None and not (isinstance(v, float) and np.isnan(v))
     ]
 
@@ -1907,38 +1904,32 @@ def rank_soils(
         # (which ensures pedon bottom_depth is always set)
 
         # 1) Build pedon-only DataFrame
-        p_slope = pd.DataFrame({
-            "compname": ["sample_pedon"],
-            "slope_r":  [pSlope],
-            "elev_r":   [pElev],
-        })
+        p_slope = pd.DataFrame(
+            {
+                "compname": ["sample_pedon"],
+                "slope_r": [pSlope],
+                "elev_r": [pElev],
+            }
+        )
 
         # 2) Stack and merge in bottom_depth
-        site_base = pd.concat([
-            p_slope,
-            mucompdata_pd[["compname", "slope_r", "elev_r"]]
-        ], ignore_index=True)
+        site_base = pd.concat(
+            [p_slope, mucompdata_pd[["compname", "slope_r", "elev_r"]]], ignore_index=True
+        )
 
         compiled = pd.merge(
-            site_base,
-            slices_of_soil[["compname", "bottom_depth"]],
-            on="compname",
-            how="left"
+            site_base, slices_of_soil[["compname", "bottom_depth"]], on="compname", how="left"
         )
 
         # 3) Build final feature list from whichever of the three are non-null
         pedon = compiled.loc[compiled["compname"] == "sample_pedon"].iloc[0]
-        raw   = {
-            "slope_r":      pedon.slope_r,
-            "elev_r":       pedon.elev_r,
-            "bottom_depth": pedon.bottom_depth
-        }
+        raw = {"slope_r": pedon.slope_r, "elev_r": pedon.elev_r, "bottom_depth": pedon.bottom_depth}
         features = [k for k, v in raw.items() if pd.notnull(v)]
 
         # 4) We know len(features) ≥ 2, so we can go straight to computing similarity
         DEFAULT_WEIGHTS = {"slope_r": 1.0, "elev_r": 0.5, "bottom_depth": 1.5}
-        weights  = np.array([DEFAULT_WEIGHTS[f] for f in features])
- 
+        weights = np.array([DEFAULT_WEIGHTS[f] for f in features])
+
         D_site = compute_site_similarity(compiled, features, weights)
         # Adjust the distances and apply weight
         site_wt = 0.5

@@ -1005,9 +1005,7 @@ def _gower_distance_row(
 
 
 def compute_site_similarity(
-    data: pd.DataFrame,
-    features: list[str],
-    feature_weight: np.ndarray
+    data: pd.DataFrame, features: list[str], feature_weight: np.ndarray
 ) -> np.ndarray:
     """
     Compute Gower distances among the rows of `data` using only `features`

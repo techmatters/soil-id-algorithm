@@ -1534,7 +1534,8 @@ def rank_soils(
     lat,
     list_output_data: SoilListOutputData,
     soilHorizon,
-    horizonDepth,
+    topDepth,
+    bottomDepth,
     rfvDepth,
     lab_Color,
     pSlope,
@@ -1553,7 +1554,8 @@ def rank_soils(
     soil_df = pd.DataFrame(
         {
             "soilHorizon": soilHorizon,
-            "horizonDepth": horizonDepth,
+            "top": topDepth,
+            "bottom": bottomDepth,
             "rfvDepth": rfvDepth,
             "lab_Color": lab_Color,
         }
@@ -1562,14 +1564,8 @@ def rank_soils(
     # Drop rows where all values are NaN
     soil_df.dropna(how="all", inplace=True)
 
-    # Set the bottom of each horizon
-    soil_df["bottom"] = soil_df["horizonDepth"]
-
     # Replace NaNs with None for consistency
     # soil_df.fillna(value=None, inplace=True)
-
-    # Calculate the top depth for each horizon
-    soil_df["top"] = [0] + soil_df["horizonDepth"].iloc[:-1].tolist()
 
     # Adjust the bottom depth based on bedrock depth
     if bedrock is not None:
@@ -1580,9 +1576,6 @@ def rank_soils(
             soil_df = soil_df.loc[:last_valid_index].copy()
             # Set the bottom depth of the last row to the bedrock depth
             soil_df.at[last_valid_index, "bottom"] = bedrock
-
-    # Drop the original horizonDepth column
-    soil_df.drop(columns=["horizonDepth"], inplace=True)
 
     # Filter out rows without valid horizon data
     relevant_columns = ["soilHorizon", "rfvDepth", "lab_Color"]
@@ -1888,32 +1881,72 @@ def rank_soils(
         D_horz = None
 
     # ---Site Data Similarity---
+    if pElev is None:
+        pElev_dict = get_elev_data(lon, lat)
+    try:
+        pElev = float(pElev_dict['value'])
+    except (KeyError, TypeError, ValueError):
+        pElev = None  # or some default
 
-    # Initialize variables for site similarity
-    p_slope = pd.DataFrame(["sample_pedon", pSlope, pElev]).T
-    p_slope.columns = ["compname", "slope_r", "elev_r"]
+    # 0) “Raw” guard on the three possible site inputs:
+    provided = {
+        "slope_r": pSlope,
+        "elev_r":  pElev,
+        "bedrock": bedrock
+    }
+    # count only non‑None, non‑NaN
+    available_raw = [
+        k for k, v in provided.items()
+        if v is not None and not (isinstance(v, float) and np.isnan(v))
+    ]
 
-    # Check conditions to determine the data columns and feature weights
-    if (pSlope is not None) and (p_bottom_depth.bottom_depth.any() > 0):
-        D_site = compute_site_similarity(
-            p_slope,
-            mucompdata_pd,
-            slices_of_soil,
-            ["slope_r", "elev_r", "bottom_depth"],
-            feature_weight=np.array([1.0, 0.5, 0.5]),
-        )
+    if len(available_raw) < 2:
+        D_site = None
     else:
-        D_site = compute_site_similarity(
-            p_slope, mucompdata_pd, slices_of_soil, feature_weight=np.array([1.0, 0.5])
+        # … your existing code to build `compiled` …
+        # (which ensures pedon bottom_depth is always set)
+
+        # 1) Build pedon-only DataFrame
+        p_slope = pd.DataFrame({
+            "compname": ["sample_pedon"],
+            "slope_r":  [pSlope],
+            "elev_r":   [pElev],
+        })
+
+        # 2) Stack and merge in bottom_depth
+        site_base = pd.concat([
+            p_slope,
+            mucompdata_pd[["compname", "slope_r", "elev_r"]]
+        ], ignore_index=True)
+
+        compiled = pd.merge(
+            site_base,
+            slices_of_soil[["compname", "bottom_depth"]],
+            on="compname",
+            how="left"
         )
 
-    # Adjust the distances and apply weight
-    site_wt = 0.5
-    D_site = (1 - D_site) * site_wt
+        # 3) Build final feature list from whichever of the three are non-null
+        pedon = compiled.loc[compiled["compname"] == "sample_pedon"].iloc[0]
+        raw   = {
+            "slope_r":      pedon.slope_r,
+            "elev_r":       pedon.elev_r,
+            "bottom_depth": pedon.bottom_depth
+        }
+        features = [k for k, v in raw.items() if pd.notnull(v)]
+
+        # 4) We know len(features) ≥ 2, so we can go straight to computing similarity
+        DEFAULT_WEIGHTS = {"slope_r": 1.0, "elev_r": 0.5, "bottom_depth": 1.5}
+        weights  = np.array([DEFAULT_WEIGHTS[f] for f in features])
+ 
+        D_site = compute_site_similarity(compiled, features, weights)
+        # Adjust the distances and apply weight
+        site_wt = 0.5
+        D_site = (1 - D_site) * site_wt
 
     # Create the D_final dataframe based on the availability of D_horz and D_site data
 
-    # When both D_horz and D_site are available
+    # When both D_horz and D_site are available (relative weights: 66% horz, 33% site)
     if D_horz is not None and D_site is not None:
         D_site_hz = np.sum([D_site, D_horz], axis=0) / (1 + site_wt)
         D_final = pd.concat(

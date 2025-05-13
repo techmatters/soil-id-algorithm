@@ -2443,7 +2443,7 @@ def create_new_layer_osd(row, top, bottom):
 ##################################################################################################
 #                                       Database and API Functions                               #
 ##################################################################################################
-def findSoilLocation(lon, lat):
+def find_region_for_location(lon, lat):
     """
     Determines the location type (US, Global, or None) of the given longitude and latitude
     based on soil datasets.
@@ -2458,35 +2458,28 @@ def findSoilLocation(lon, lat):
                    None otherwise.
     """
 
-    drv_h = ogr.GetDriverByName("ESRI Shapefile")
-    ds_in_h = drv_h.Open(soil_id.config.HWSD_PATH, 0)
-    layer_global = ds_in_h.GetLayer(0)
-
     drv_us = ogr.GetDriverByName("ESRI Shapefile")
     ds_in_us = drv_us.Open(soil_id.config.US_AREA_PATH, 0)
     layer_us = ds_in_us.GetLayer(0)
 
     # Setup coordinate transformation
-    geo_ref = layer_global.GetSpatialRef()
+    geo_ref = layer_us.GetSpatialRef()
     pt_ref = ogr.osr.SpatialReference()
     pt_ref.ImportFromEPSG(4326)
     coord_transform = ogr.osr.CoordinateTransformation(pt_ref, geo_ref)
 
     # Transform the coordinate system of the input point
-    lon, lat, _ = coord_transform.TransformPoint(lon, lat)
+    lon, lat, _ = coord_transform.TransformPoint(lat, lon)
 
     # Create a point geometry
     pt = ogr.Geometry(ogr.wkbPoint)
     pt.SetPoint_2D(0, lon, lat)
 
     # Filter layers using the point
-    layer_global.SetSpatialFilter(pt)
     layer_us.SetSpatialFilter(pt)
 
     # Determine location type
-    if not (len(layer_global) or len(layer_us)):
-        return None
-    elif len(layer_us):
+    if len(layer_us) > 0:
         return "US"
     else:
         return "Global"

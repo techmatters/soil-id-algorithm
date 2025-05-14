@@ -16,7 +16,6 @@
 # Standard libraries
 import logging
 
-import geopandas as gpd
 import pandas as pd
 
 # Third-party libraries
@@ -237,65 +236,65 @@ def extract_hwsd2_data(connection, lon, lat, buffer_dist, table_name):
     # Compute the buffer polygon (in WKT) around the problem point.
     # Here, we use the geography type to compute a buffer in meters,
     # then cast it back to geometry in EPSG:4326.
-    buffer_query = """
-        WITH buffer AS (
-          SELECT ST_AsText(
-                   ST_Buffer(
-                     ST_SetSRID(ST_Point(%s, %s), 4326)::geography,
-                     %s
-                   )::geometry
-                 ) AS wkt
-        )
-        SELECT wkt FROM buffer;
-    """
-    with connection.cursor() as cur:
-        cur.execute(buffer_query, (lon, lat, buffer_dist))
-        buffer_wkt = cur.fetchone()[0]
-        print("Buffer WKT:", buffer_wkt)
+    # buffer_query = """
+    #     WITH buffer AS (
+    #       SELECT ST_AsText(
+    #                ST_Buffer(
+    #                  ST_SetSRID(ST_Point(%s, %s), 4326)::geography,
+    #                  %s
+    #                )::geometry
+    #              ) AS wkt
+    #     )
+    #     SELECT wkt FROM buffer;
+    # """
+    with connection.cursor():
+        # cur.execute(buffer_query, (lon, lat, buffer_dist))
+        # buffer_wkt = cur.fetchone()[0]
+        # print("Buffer WKT:", buffer_wkt)
 
         # Build the main query that uses the computed buffer.
         # Distance is computed by casting geometries to geography,
         # which returns the geodesic distance in meters.
         # Q1
-        main_query = f"""
-            WITH
-            -- Step 1: Get the polygon that contains the point
-            point_poly AS (
-                SELECT geom
-                FROM {table_name}
-                WHERE ST_Intersects(
-                    geom,
-                    ST_SetSRID(ST_Point({lon}, {lat}), 4326)
-                )
-            ),
+        # main_query = f"""
+        #     WITH
+        #     -- Step 1: Get the polygon that contains the point
+        #     point_poly AS (
+        #         SELECT geom
+        #         FROM {table_name}
+        #         WHERE ST_Intersects(
+        #             geom,
+        #             ST_SetSRID(ST_Point({lon}, {lat}), 4326)
+        #         )
+        #     ),
 
-            -- Step 2: Get polygons that intersect the buffer
-            valid_geom AS (
-                SELECT
-                    hwsd2,
-                    geom
-                FROM {table_name}
-                WHERE geom && ST_GeomFromText('{buffer_wkt}', 4326)
-                AND ST_Intersects(geom, ST_GeomFromText('{buffer_wkt}', 4326))
-            )
+        #     -- Step 2: Get polygons that intersect the buffer
+        #     valid_geom AS (
+        #         SELECT
+        #             hwsd2,
+        #             geom
+        #         FROM {table_name}
+        #         WHERE geom && ST_GeomFromText('{buffer_wkt}', 4326)
+        #         AND ST_Intersects(geom, ST_GeomFromText('{buffer_wkt}', 4326))
+        #     )
 
-            -- Step 3: Filter to those that either contain the point or border the point's polygon
-            SELECT
-                vg.hwsd2,
-                ST_AsEWKB(vg.geom) AS geom,
-                ST_Distance(
-                    vg.geom::geography,
-                    ST_SetSRID(ST_Point({lon}, {lat}), 4326)::geography
-                ) AS distance,
-                ST_Intersects(
-                    vg.geom,
-                    ST_SetSRID(ST_Point({lon}, {lat}), 4326)
-                ) AS pt_intersect
-            FROM valid_geom vg, point_poly pp
-            WHERE
-                ST_Intersects(vg.geom, ST_SetSRID(ST_Point({lon}, {lat}), 4326))
-                OR ST_Intersects(vg.geom, pp.geom);
-        """
+        #     -- Step 3: Filter to those that either contain the point or border the point's polygon
+        #     SELECT
+        #         vg.hwsd2,
+        #         ST_AsEWKB(vg.geom) AS geom,
+        #         ST_Distance(
+        #             vg.geom::geography,
+        #             ST_SetSRID(ST_Point({lon}, {lat}), 4326)::geography
+        #         ) AS distance,
+        #         ST_Intersects(
+        #             vg.geom,
+        #             ST_SetSRID(ST_Point({lon}, {lat}), 4326)
+        #         ) AS pt_intersect
+        #     FROM valid_geom vg, point_poly pp
+        #     WHERE
+        #         ST_Intersects(vg.geom, ST_SetSRID(ST_Point({lon}, {lat}), 4326))
+        #         OR ST_Intersects(vg.geom, pp.geom);
+        # """
  
         # # Q2
         # main_query = f"""
@@ -326,7 +325,7 @@ def extract_hwsd2_data(connection, lon, lat, buffer_dist, table_name):
         #     FROM valid_geom vg, inputs;
         # """
 
-        # # Q3
+        # Q3
         # point = f"ST_SetSRID(ST_Point({lon}, {lat}), 4326)"
         # main_query = f"""
         #     SELECT
@@ -341,12 +340,24 @@ def extract_hwsd2_data(connection, lon, lat, buffer_dist, table_name):
         #     WHERE ST_DWithin(geom::geography, {point}::geography, {buffer_dist});
         # """
 
-        # Use GeoPandas to execute the main query and load results into a GeoDataFrame.
-        hwsd = gpd.read_postgis(main_query, connection, geom_col="geom")
-        print("Main query returned", len(hwsd), "rows.")
 
-        # Remove the geometry column (if not needed) from this dataset.
-        hwsd = hwsd.drop(columns=["geom"])
+        # Q4
+        point = f"ST_SetSRID(ST_Point({lon}, {lat}), 4326)::geography"
+        main_query = f"""
+            SELECT
+                hwsd2_id as hwsd2,
+                MIN(ST_Distance(
+                    shape,
+                    {point}
+                )) AS distance,
+                BOOL_OR(ST_Intersects(shape, {point})) AS pt_intersect
+            FROM hwsd2_segment
+            WHERE ST_DWithin(shape, {point}, {buffer_dist})
+            GROUP BY hwsd2_id;
+        """
+        
+        # Use GeoPandas to execute the main query and load results into a GeoDataFrame.
+        hwsd = pd.read_sql_query(main_query, connection)
 
         # Get the list of hwsd2 identifiers.
         hwsd2_mu_select = hwsd["hwsd2"].tolist()

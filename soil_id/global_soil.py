@@ -72,7 +72,7 @@ class SoilListOutputData:
 ##################################################################################################
 #                                 getSoilLocationBasedGlobal                                     #
 ##################################################################################################
-def list_soils_global(connection, lon, lat):
+def list_soils_global(connection, lon, lat, buffer_dist=100000):
     # Extract HWSD2 Data
     try:
         hwsd2_data = extract_hwsd2_data(
@@ -80,7 +80,7 @@ def list_soils_global(connection, lon, lat):
             lon,
             lat,
             table_name="hwsdv2",
-            buffer_dist=10000,
+            buffer_dist=buffer_dist,
         )
     except KeyError:
         return "Data_unavailable"

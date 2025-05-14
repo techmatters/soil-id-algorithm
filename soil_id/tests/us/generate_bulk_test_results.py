@@ -52,6 +52,7 @@ with open(result_file_name, "w") as result_file:
         try:
             list_result = list_soils(lat=lat, lon=lon)
 
+            result_record["list_result"] = list_result.list_output_json
             result_record["rank_result"] = rank_soils(
                 lat=lat,
                 lon=lon,

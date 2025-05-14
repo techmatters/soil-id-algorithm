@@ -2,7 +2,7 @@ name: soil_data
 
 services:
   db:
-    image: postgis/postgis
+    image: postgis/postgis:16-3.5
     ports: 
       - "5432:5432"
     environment:

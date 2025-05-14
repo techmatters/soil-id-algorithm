@@ -1,0 +1,16 @@
+name: soil_data
+
+services:
+  db:
+    image: postgis/postgis:16-3.5
+    ports: 
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: soil_data # default database
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:

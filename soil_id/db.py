@@ -257,45 +257,45 @@ def extract_hwsd2_data(connection, lon, lat, buffer_dist, table_name):
         # Distance is computed by casting geometries to geography,
         # which returns the geodesic distance in meters.
         # Q1
-        main_query = f"""
-            WITH
-            -- Step 1: Get the polygon that contains the point
-            point_poly AS (
-                SELECT geom
-                FROM {table_name}
-                WHERE ST_Intersects(
-                    geom,
-                    ST_SetSRID(ST_Point({lon}, {lat}), 4326)
-                )
-            ),
+        # main_query = f"""
+        #     WITH
+        #     -- Step 1: Get the polygon that contains the point
+        #     point_poly AS (
+        #         SELECT geom
+        #         FROM {table_name}
+        #         WHERE ST_Intersects(
+        #             geom,
+        #             ST_SetSRID(ST_Point({lon}, {lat}), 4326)
+        #         )
+        #     ),
 
-            -- Step 2: Get polygons that intersect the buffer
-            valid_geom AS (
-                SELECT
-                    hwsd2,
-                    geom
-                FROM {table_name}
-                WHERE geom && ST_GeomFromText('{buffer_wkt}', 4326)
-                AND ST_Intersects(geom, ST_GeomFromText('{buffer_wkt}', 4326))
-            )
+        #     -- Step 2: Get polygons that intersect the buffer
+        #     valid_geom AS (
+        #         SELECT
+        #             hwsd2,
+        #             geom
+        #         FROM {table_name}
+        #         WHERE geom && ST_GeomFromText('{buffer_wkt}', 4326)
+        #         AND ST_Intersects(geom, ST_GeomFromText('{buffer_wkt}', 4326))
+        #     )
 
-            -- Step 3: Filter to those that either contain the point or border the point's polygon
-            SELECT
-                vg.hwsd2,
-                ST_AsEWKB(vg.geom) AS geom,
-                ST_Distance(
-                    vg.geom::geography,
-                    ST_SetSRID(ST_Point({lon}, {lat}), 4326)::geography
-                ) AS distance,
-                ST_Intersects(
-                    vg.geom,
-                    ST_SetSRID(ST_Point({lon}, {lat}), 4326)
-                ) AS pt_intersect
-            FROM valid_geom vg, point_poly pp
-            WHERE
-                ST_Intersects(vg.geom, ST_SetSRID(ST_Point({lon}, {lat}), 4326))
-                OR ST_Intersects(vg.geom, pp.geom);
-        """
+        #     -- Step 3: Filter to those that either contain the point or border the point's polygon
+        #     SELECT
+        #         vg.hwsd2,
+        #         ST_AsEWKB(vg.geom) AS geom,
+        #         ST_Distance(
+        #             vg.geom::geography,
+        #             ST_SetSRID(ST_Point({lon}, {lat}), 4326)::geography
+        #         ) AS distance,
+        #         ST_Intersects(
+        #             vg.geom,
+        #             ST_SetSRID(ST_Point({lon}, {lat}), 4326)
+        #         ) AS pt_intersect
+        #     FROM valid_geom vg, point_poly pp
+        #     WHERE
+        #         ST_Intersects(vg.geom, ST_SetSRID(ST_Point({lon}, {lat}), 4326))
+        #         OR ST_Intersects(vg.geom, pp.geom);
+        # """
  
         # # Q2
         # main_query = f"""
@@ -326,20 +326,20 @@ def extract_hwsd2_data(connection, lon, lat, buffer_dist, table_name):
         #     FROM valid_geom vg, inputs;
         # """
 
-        # # Q3
-        # point = f"ST_SetSRID(ST_Point({lon}, {lat}), 4326)"
-        # main_query = f"""
-        #     SELECT
-        #         geom,
-        #         hwsd2,
-        #         ST_Distance(
-        #             geom::geography,
-        #             {point}::geography
-        #         ) AS distance,
-        #         ST_Intersects(geom, {point}) AS pt_intersect
-        #     FROM {table_name}
-        #     WHERE ST_DWithin(geom::geography, {point}::geography, {buffer_dist});
-        # """
+        # Q3
+        point = f"ST_SetSRID(ST_Point({lon}, {lat}), 4326)"
+        main_query = f"""
+            SELECT
+                geom,
+                hwsd2,
+                ST_Distance(
+                    geom::geography,
+                    {point}::geography
+                ) AS distance,
+                ST_Intersects(geom, {point}) AS pt_intersect
+            FROM {table_name}
+            WHERE ST_DWithin(geom::geography, {point}::geography, {buffer_dist});
+        """
 
         # Use GeoPandas to execute the main query and load results into a GeoDataFrame.
         hwsd = gpd.read_postgis(main_query, connection, geom_col="geom")

@@ -2443,7 +2443,7 @@ def create_new_layer_osd(row, top, bottom):
 ##################################################################################################
 #                                       Database and API Functions                               #
 ##################################################################################################
-def findSoilLocation(lon, lat):
+def find_region_for_location(lon, lat):
     """
     Determines the location type (US, Global, or None) of the given longitude and latitude
     based on soil datasets.
@@ -2473,7 +2473,7 @@ def findSoilLocation(lon, lat):
     coord_transform = ogr.osr.CoordinateTransformation(pt_ref, geo_ref)
 
     # Transform the coordinate system of the input point
-    lon, lat, _ = coord_transform.TransformPoint(lon, lat)
+    lon, lat, _ = coord_transform.TransformPoint(lat, lon)
 
     # Create a point geometry
     pt = ogr.Geometry(ogr.wkbPoint)

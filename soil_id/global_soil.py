@@ -24,7 +24,6 @@ from dataclasses import dataclass
 # Third-party libraries
 import numpy as np
 import pandas as pd
-from scipy.stats import norm
 
 from .color import calculate_deltaE2000
 from .db import extract_hwsd2_data, fetch_table_from_db, get_WRB_descriptions, getSG_descriptions
@@ -1007,33 +1006,49 @@ def rank_soils_global(
 
     # Calculate color similarity
     if not cr_df.isnull().values.any():
-        color_sim = []
         w_df, r_df, y_df = cr_df.iloc[0], cr_df.iloc[1], cr_df.iloc[2]
+
+        # Vectorized computation of color probabilities
+        def norm_pdf_vec(x, mean_arr, std_arr):
+            var = np.square(std_arr)
+            denom = np.sqrt(2 * np.pi * var)
+            num = np.exp(-np.square(x - mean_arr) / (2 * var))
+            return num / denom
+
+        # Convert to numpy arrays
+        wmf, wsf = np.array(wmf, dtype=np.float64), np.array(wsf, dtype=np.float64)
+        rmf, rsf = np.array(rmf, dtype=np.float64), np.array(rsf, dtype=np.float64)
+        ymf, ysf = np.array(ymf, dtype=np.float64), np.array(ysf, dtype=np.float64)
+
+        prob_w = norm_pdf_vec(float(w_df), wmf, wsf)
+        prob_r = norm_pdf_vec(float(r_df), rmf, rsf)
+        prob_y = norm_pdf_vec(float(y_df), ymf, ysf)
+
+        # Normalize probabilities
+        def normalize(arr):
+            min_val, max_val = np.min(arr), np.max(arr)
+            return (arr - min_val) / (max_val - min_val) if max_val != min_val else np.ones_like(arr)
+
+        prob_w = normalize(prob_w)
+        prob_r = normalize(prob_r)
+        prob_y = normalize(prob_y)
+
+        # Prepare FAO soil groups for lookup
         fao_list = [item.lower() for item in fao90]
+        fao_index_map = {name: i for i, name in enumerate(fao_list)}
 
-        for compname in D_final_horz.compname:
-            soilgroup = re.sub(r"\d+$", "", " ".join(compname.split()[1:])).lower()
+        # Vectorized scoring loop
+        compnames = D_final_horz.compname.str.lower()
+        color_sim = []
 
-            prob_w, prob_r, prob_y = [], [], []
-
-            idx = fao_list.index(soilgroup) if soilgroup in fao_list else -1
-
-            for mw, sw, mr, sr, my, sy in zip(wmf, wsf, rmf, rsf, ymf, ysf):
-                prob_w.append(norm(float(mw), float(sw)).pdf(float(w_df)))
-                prob_r.append(norm(float(mr), float(sr)).pdf(float(r_df)))
-                prob_y.append(norm(float(my), float(sy)).pdf(float(y_df)))
-
-            max_prob_w, min_prob_w = max(prob_w), min(prob_w)
-            max_prob_r, min_prob_r = max(prob_r), min(prob_r)
-            max_prob_y, min_prob_y = max(prob_y), min(prob_y)
-
-            for j in range(len(fao_list)):
-                prob_w[j] = (prob_w[j] - min_prob_w) / (max_prob_w - min_prob_w)
-                prob_r[j] = (prob_r[j] - min_prob_r) / (max_prob_r - min_prob_r)
-                prob_y[j] = (prob_y[j] - min_prob_y) / (max_prob_y - min_prob_y)
-
-            crsr = (prob_w[idx] + prob_r[idx] + prob_y[idx]) / 3.0 if idx != -1 else 1.0
-            color_sim.append(crsr)
+        for name in compnames:
+            soilgroup = re.sub(r"\d+$", "", " ".join(name.split()[1:])).strip()
+            idx = fao_index_map.get(soilgroup, -1)
+            if idx != -1:
+                score = (prob_w[idx] + prob_r[idx] + prob_y[idx]) / 3.0
+            else:
+                score = 1.0
+            color_sim.append(score)
 
         color_sim = pd.Series(color_sim)
 

@@ -862,16 +862,24 @@ def rank_soils_global(
 
         # Infill NaN data
         for idx, dis_mat in enumerate(dis_mat_list):
-            soil_slice = soil_matrix.iloc[idx]
-            for j in range(len(dis_mat)):
-                for k in range(len(dis_mat[j])):
-                    if np.isnan(dis_mat[j, k]):
-                        if (soil_slice[j] and not soil_slice[k]) or (
-                            not soil_slice[j] and soil_slice[k]
-                        ):
-                            dis_mat[j, k] = dis_max
-                        elif not (soil_slice[j] or soil_slice[k]):
-                            dis_mat[j, k] = 0
+            soil_slice = soil_matrix.iloc[idx].to_numpy(dtype=bool)
+
+            # Mask of NaNs in dis_mat
+            nan_mask = np.isnan(dis_mat)
+
+            # Broadcast soil slice to row and column vectors
+            soil_row = soil_slice[:, np.newaxis]  # column vector
+            soil_col = soil_slice[np.newaxis, :]  # row vector
+
+            # Matrix where one is soil and the other isn't
+            mismatch_mask = (soil_row & ~soil_col) | (~soil_row & soil_col)
+
+            # Matrix where neither is soil
+            nonsoil_mask = ~soil_row & ~soil_col
+
+            # Set values for NaNs based on condition
+            dis_mat[nan_mask & mismatch_mask] = dis_max
+            dis_mat[nan_mask & nonsoil_mask] = 0
 
         # Weighted average of depth-wise dissimilarity matrices
         dis_mat_list_masked = np.ma.MaskedArray(dis_mat_list, mask=np.isnan(dis_mat_list))

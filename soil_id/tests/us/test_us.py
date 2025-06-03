@@ -19,6 +19,7 @@ import time
 from soil_id.us_soil import list_soils, rank_soils
 
 test_locations = [
+    {"lon": -121.5111084, "lat": 45.6508331},
     {"lon": -101.9733687, "lat": 33.81246789},
     {"lon": -121.0347381, "lat": 45.88932423},
     {"lon": -85.50621214, "lat": 39.26009312},
@@ -33,8 +34,8 @@ test_locations = [
     {"lat": 34.92816, "lon": -114.80764},  # NOTCOM
     {"lat": 35.599180, "lon": -120.491439},  # previous crash: no objects to concatenate
     {"lon": -122.084000, "lat": 37.422000},  # missing LCC
-    # {"lat": 42.494912, "lon": -123.064531},  # crash: could not broadcast input array
-    # {"lat": 40.79861, "lon": -112.35477},  # crash: str object has no attribute rank_data_csv
+    {"lat": 42.494912, "lon": -123.064531},  # crash: could not broadcast input array
+    {"lat": 40.79861, "lon": -112.35477},  # crash: str object has no attribute rank_data_csv
 ]
 
 

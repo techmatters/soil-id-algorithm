@@ -686,9 +686,6 @@ def drop_cokey_horz(df):
       (2) generic compname identifier ('compname')
     Can handle dataframes that include a 'slope_r' column as well as those that do not.
     """
-    drop_instances = []
-
-    # Base columns to compare
     columns_to_compare = [
         "hzdept_r",
         "hzdepb_r",
@@ -698,39 +695,25 @@ def drop_cokey_horz(df):
         "total_frag_volume",
         "texture",
     ]
-
-    # Check if 'slope_r' column exists, and if so, add it to the columns to compare
     if "slope_r" in df.columns:
         columns_to_compare.append("slope_r")
 
-    # Group by 'compname'
+    # Generate a hashable representation of each cokey's horizon data
+    df["_group_key"] = df[columns_to_compare].astype(str).agg("|".join, axis=1)
+    df["_cokey_grouped"] = df.groupby("cokey")["_group_key"].transform(lambda x: "|".join(x))
+
+    drop_instances = []
+
+    # Group by compname
     for _, comp_group in df.groupby("compname", sort=False):
-        # Group the component group by 'cokey'
-        grouped_by_cokey = [group for _, group in comp_group.groupby("cokey", sort=False)]
+        # Get unique cokeys and their data signature within this compname group
+        cokey_map = comp_group.groupby("cokey")["_cokey_grouped"].first()
 
-        # Iterate over combinations of the component instances
-        for j, group_j in enumerate(grouped_by_cokey):
-            for k, group_k in enumerate(grouped_by_cokey):
-                if j >= k:
-                    continue
+        # Find duplicates
+        duplicated = cokey_map.duplicated(keep="first")
+        drop_instances.extend(cokey_map[duplicated].index.tolist())
 
-                # Check if the two groups are the same based on specified columns
-                if (
-                    group_j[columns_to_compare]
-                    .reset_index(drop=True)
-                    .equals(group_k[columns_to_compare].reset_index(drop=True))
-                ):
-                    drop_instances.append(group_k["cokey"])
-
-    # Drop duplicates and reset index
-    if drop_instances:
-        drop_instances = (
-            pd.concat(drop_instances).drop_duplicates(keep="first").reset_index(drop=True)
-        )
-    else:
-        drop_instances = None
-
-    return drop_instances
+    return pd.Series(drop_instances, name="cokey_to_drop")
 
 
 def calculate_location_score(group, ExpCoeff):

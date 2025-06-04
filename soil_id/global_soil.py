@@ -466,12 +466,9 @@ def list_soils_global(connection, lon, lat, buffer_dist=100000):
                 for key in [
                     "Description_en",
                     "Management_en",
+                    "WRB_tax_es",
                     "Description_es",
                     "Management_es",
-                    "Description_ks",
-                    "Management_ks",
-                    "Description_fr",
-                    "Management_fr",
                 ]
             },
         }

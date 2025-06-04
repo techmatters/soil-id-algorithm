@@ -397,8 +397,7 @@ def get_WRB_descriptions(connection, WRB_Comp_List):
 
             # Create placeholders for the SQL IN clause
             placeholders = ", ".join(["%s"] * len(WRB_Comp_List))
-            sql = f"""SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es,
-                             Description_ks, Management_ks, Description_fr, Management_fr
+            sql = f"""SELECT WRB_tax, Description_en, Management_en, WRB_tax_es, Description_es, Management_es
                       FROM wrb_fao90_desc
                       WHERE WRB_tax IN ({placeholders})"""
 
@@ -413,12 +412,9 @@ def get_WRB_descriptions(connection, WRB_Comp_List):
                 "WRB_tax",
                 "Description_en",
                 "Management_en",
+                "WRB_tax_es",
                 "Description_es",
                 "Management_es",
-                "Description_ks",
-                "Management_ks",
-                "Description_fr",
-                "Management_fr",
             ],
         )
 

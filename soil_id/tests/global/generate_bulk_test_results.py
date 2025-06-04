@@ -60,7 +60,7 @@ with (
 
                 list_result = list_soils_global(connection=connection, lat=lat, lon=lon)
 
-                result_record["list_result"] = list_result.list_output_json
+                result_record["list_result"] = list_result.soil_list_json
                 result_record["rank_result"] = rank_soils_global(
                     connection=connection,
                     lat=lat,

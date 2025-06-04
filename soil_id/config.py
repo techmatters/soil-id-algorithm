@@ -41,6 +41,7 @@ US_AREA_PATH = f"{DATA_PATH}/SoilID_US_Areas.shp"
 # US Soil ID
 STATSGO_PATH = f"{DATA_PATH}/gsmsoilmu_a_us.shp"
 MUNSELL_RGB_LAB_PATH = f"{DATA_PATH}/LandPKS_munsell_rgb_lab.csv"
+SOILWEB_URL = os.environ.get("SOILWEB_URL", "https://soilmap4-1.lawr.ucdavis.edu/api/landPKS.php")
 
 # Global Soil ID
 HWSD_PATH = f"{DATA_PATH}/HWSD_global_noWater_no_country.shp"

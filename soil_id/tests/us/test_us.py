@@ -16,6 +16,8 @@
 import logging
 import time
 
+import pytest
+
 from soil_id.us_soil import list_soils, rank_soils
 
 test_locations = [
@@ -39,7 +41,8 @@ test_locations = [
 ]
 
 
-def test_soil_location():
+@pytest.mark.parametrize("location", test_locations)
+def test_soil_location(location):
     # Dummy Soil Profile Data (replicating the structure provided)
     soilHorizon = ["LOAM"] * 7
     horizonDepth = [1, 10, 20, 50, 70, 100, 120]
@@ -50,24 +53,23 @@ def test_soil_location():
     pElev = None
     cracks = False
 
-    for item in test_locations:
-        logging.info(f"Testing {item['lon']}, {item['lat']}")
-        start_time = time.perf_counter()
-        list_soils_result = list_soils(item["lon"], item["lat"])
-        logging.info(f"...time: {(time.perf_counter() - start_time):.2f}s")
-        rank_soils(
-            item["lon"],
-            item["lat"],
-            list_soils_result,
-            soilHorizon,
-            horizonDepth,
-            rfvDepth,
-            lab_Color,
-            pSlope,
-            pElev,
-            bedrock,
-            cracks,
-        )
+    logging.info(f"Testing {location['lon']}, {location['lat']}")
+    start_time = time.perf_counter()
+    list_soils_result = list_soils(location["lon"], location["lat"])
+    logging.info(f"...time: {(time.perf_counter() - start_time):.2f}s")
+    rank_soils(
+        location["lon"],
+        location["lat"],
+        list_soils_result,
+        soilHorizon,
+        horizonDepth,
+        rfvDepth,
+        lab_Color,
+        pSlope,
+        pElev,
+        bedrock,
+        cracks,
+    )
 
 
 def test_empty_rank():

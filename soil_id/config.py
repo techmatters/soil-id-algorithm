@@ -38,10 +38,6 @@ US_AREA_PATH = f"{DATA_PATH}/SoilID_US_Areas.shz"
 STATSGO_PATH = f"{DATA_PATH}/gsmsoilmu_a_us.shp"
 MUNSELL_RGB_LAB_PATH = f"{DATA_PATH}/LandPKS_munsell_rgb_lab.csv"
 
-# Global Soil ID
-HWSD_PATH = f"{DATA_PATH}/HWSD_global_noWater_no_country.shz"
-WISE_PATH = f"{DATA_PATH}/wise30sec_poly_simp_soil.shp"
-
 # Database
 DB_NAME = os.environ.get("DB_NAME", "terraso_backend")
 DB_HOST = os.environ.get("DB_HOST")

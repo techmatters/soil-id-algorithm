@@ -24,15 +24,9 @@ from dataclasses import dataclass
 # Third-party libraries
 import numpy as np
 import pandas as pd
-from scipy.stats import norm
 
 from .color import calculate_deltaE2000
-from .db import (
-    extract_hwsd2_data,
-    fetch_table_from_db,
-    get_WRB_descriptions,
-    getSG_descriptions,
-)
+from .db import extract_hwsd2_data, fetch_table_from_db, get_WRB_descriptions, getSG_descriptions
 from .services import get_soilgrids_classification_data, get_soilgrids_property_data
 from .utils import (
     adjust_depth_interval,
@@ -77,14 +71,15 @@ class SoilListOutputData:
 ##################################################################################################
 #                                 getSoilLocationBasedGlobal                                     #
 ##################################################################################################
-def list_soils_global(lon, lat):
+def list_soils_global(connection, lon, lat, buffer_dist=100000):
     # Extract HWSD2 Data
     try:
         hwsd2_data = extract_hwsd2_data(
+            connection,
             lon,
             lat,
             table_name="hwsdv2",
-            buffer_dist=10000,
+            buffer_dist=buffer_dist,
         )
     except KeyError:
         return "Data_unavailable"
@@ -444,6 +439,7 @@ def list_soils_global(lon, lat):
 
     # Merge component descriptions
     WRB_Comp_Desc = get_WRB_descriptions(
+        connection,
         mucompdata_cond_prob["compname_grp"].drop_duplicates().tolist()
     )
 
@@ -470,12 +466,9 @@ def list_soils_global(lon, lat):
                 for key in [
                     "Description_en",
                     "Management_en",
+                    "WRB_tax_es",
                     "Description_es",
                     "Management_es",
-                    "Description_ks",
-                    "Management_ks",
-                    "Description_fr",
-                    "Management_fr",
                 ]
             },
         }
@@ -582,6 +575,7 @@ def list_soils_global(lon, lat):
 #                                   rankPredictionGlobal                                     #
 ##############################################################################################
 def rank_soils_global(
+    connection,
     lon,
     lat,
     list_output_data: SoilListOutputData,
@@ -864,16 +858,24 @@ def rank_soils_global(
 
         # Infill NaN data
         for idx, dis_mat in enumerate(dis_mat_list):
-            soil_slice = soil_matrix.iloc[idx]
-            for j in range(len(dis_mat)):
-                for k in range(len(dis_mat[j])):
-                    if np.isnan(dis_mat[j, k]):
-                        if (soil_slice[j] and not soil_slice[k]) or (
-                            not soil_slice[j] and soil_slice[k]
-                        ):
-                            dis_mat[j, k] = dis_max
-                        elif not (soil_slice[j] or soil_slice[k]):
-                            dis_mat[j, k] = 0
+            soil_slice = soil_matrix.iloc[idx].to_numpy(dtype=bool)
+
+            # Mask of NaNs in dis_mat
+            nan_mask = np.isnan(dis_mat)
+
+            # Broadcast soil slice to row and column vectors
+            soil_row = soil_slice[:, np.newaxis]  # column vector
+            soil_col = soil_slice[np.newaxis, :]  # row vector
+
+            # Matrix where one is soil and the other isn't
+            mismatch_mask = (soil_row & ~soil_col) | (~soil_row & soil_col)
+
+            # Matrix where neither is soil
+            nonsoil_mask = ~soil_row & ~soil_col
+
+            # Set values for NaNs based on condition
+            dis_mat[nan_mask & mismatch_mask] = dis_max
+            dis_mat[nan_mask & nonsoil_mask] = 0
 
         # Weighted average of depth-wise dissimilarity matrices
         dis_mat_list_masked = np.ma.MaskedArray(dis_mat_list, mask=np.isnan(dis_mat_list))
@@ -949,7 +951,7 @@ def rank_soils_global(
     ysf = []
 
     # Load color distribution data from NormDist2 (FAO90) table
-    rows = fetch_table_from_db("NormDist2")
+    rows = fetch_table_from_db(connection, "NormDist2")
     row_id = 0
     for row in rows:
         # row is a tuple; iterate over its values.
@@ -1001,33 +1003,49 @@ def rank_soils_global(
 
     # Calculate color similarity
     if not cr_df.isnull().values.any():
-        color_sim = []
         w_df, r_df, y_df = cr_df.iloc[0], cr_df.iloc[1], cr_df.iloc[2]
+
+        # Vectorized computation of color probabilities
+        def norm_pdf_vec(x, mean_arr, std_arr):
+            var = np.square(std_arr)
+            denom = np.sqrt(2 * np.pi * var)
+            num = np.exp(-np.square(x - mean_arr) / (2 * var))
+            return num / denom
+
+        # Convert to numpy arrays
+        wmf, wsf = np.array(wmf, dtype=np.float64), np.array(wsf, dtype=np.float64)
+        rmf, rsf = np.array(rmf, dtype=np.float64), np.array(rsf, dtype=np.float64)
+        ymf, ysf = np.array(ymf, dtype=np.float64), np.array(ysf, dtype=np.float64)
+
+        prob_w = norm_pdf_vec(float(w_df), wmf, wsf)
+        prob_r = norm_pdf_vec(float(r_df), rmf, rsf)
+        prob_y = norm_pdf_vec(float(y_df), ymf, ysf)
+
+        # Normalize probabilities
+        def normalize(arr):
+            min_val, max_val = np.min(arr), np.max(arr)
+            return (arr - min_val) / (max_val - min_val) if max_val != min_val else np.ones_like(arr)
+
+        prob_w = normalize(prob_w)
+        prob_r = normalize(prob_r)
+        prob_y = normalize(prob_y)
+
+        # Prepare FAO soil groups for lookup
         fao_list = [item.lower() for item in fao90]
+        fao_index_map = {name: i for i, name in enumerate(fao_list)}
 
-        for compname in D_final_horz.compname:
-            soilgroup = re.sub(r"\d+$", "", " ".join(compname.split()[1:])).lower()
+        # Vectorized scoring loop
+        compnames = D_final_horz.compname.str.lower()
+        color_sim = []
 
-            prob_w, prob_r, prob_y = [], [], []
-
-            idx = fao_list.index(soilgroup) if soilgroup in fao_list else -1
-
-            for mw, sw, mr, sr, my, sy in zip(wmf, wsf, rmf, rsf, ymf, ysf):
-                prob_w.append(norm(float(mw), float(sw)).pdf(float(w_df)))
-                prob_r.append(norm(float(mr), float(sr)).pdf(float(r_df)))
-                prob_y.append(norm(float(my), float(sy)).pdf(float(y_df)))
-
-            max_prob_w, min_prob_w = max(prob_w), min(prob_w)
-            max_prob_r, min_prob_r = max(prob_r), min(prob_r)
-            max_prob_y, min_prob_y = max(prob_y), min(prob_y)
-
-            for j in range(len(fao_list)):
-                prob_w[j] = (prob_w[j] - min_prob_w) / (max_prob_w - min_prob_w)
-                prob_r[j] = (prob_r[j] - min_prob_r) / (max_prob_r - min_prob_r)
-                prob_y[j] = (prob_y[j] - min_prob_y) / (max_prob_y - min_prob_y)
-
-            crsr = (prob_w[idx] + prob_r[idx] + prob_y[idx]) / 3.0 if idx != -1 else 1.0
-            color_sim.append(crsr)
+        for name in compnames:
+            soilgroup = re.sub(r"\d+$", "", " ".join(name.split()[1:])).strip()
+            idx = fao_index_map.get(soilgroup, -1)
+            if idx != -1:
+                score = (prob_w[idx] + prob_r[idx] + prob_y[idx]) / 3.0
+            else:
+                score = 1.0
+            color_sim.append(score)
 
         color_sim = pd.Series(color_sim)
 

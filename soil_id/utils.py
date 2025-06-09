@@ -815,11 +815,7 @@ def check_pairwise_arrays(X, Y, precomputed=False, dtype=None):
 
 
 def gower_distances(
-    X,
-    Y=None,
-    feature_weight=None,
-    categorical_features=None,
-    theoretical_ranges=None
+    X, Y=None, feature_weight=None, categorical_features=None, theoretical_ranges=None
 ):
     """
     Computes the Gower distances between X and Y using mixed-type data,
@@ -891,11 +887,7 @@ def gower_distances(
         Y_cat = Y[:, categorical_features]
         Y_num = Y[:, ~categorical_features]
         if theoretical_ranges is None:
-            Y_num = np.where(
-                denom != 0,
-                (Y_num - slice_min) / denom,
-                Y_num
-            )
+            Y_num = np.where(denom != 0, (Y_num - slice_min) / denom, Y_num)
         else:
             Y_num = (Y_num - slice_min) / denom
     else:
@@ -914,7 +906,7 @@ def gower_distances(
             Y_num[start:],
             feature_weight_cat,
             feature_weight_num,
-            total_weight
+            total_weight,
         )
         dm[i, start:] = row
         if Y is None:
@@ -923,13 +915,7 @@ def gower_distances(
 
 
 def _gower_distance_row(
-    xi_cat,
-    xi_num,
-    xj_cat,
-    xj_num,
-    feature_weight_cat,
-    feature_weight_num,
-    feature_weight_sum
+    xi_cat, xi_num, xj_cat, xj_num, feature_weight_cat, feature_weight_num, feature_weight_sum
 ):
     """
     Compute Gower distance between one row xi and rows xj. xi_num and xj_num
@@ -946,11 +932,8 @@ def _gower_distance_row(
     return (sum_cat + sum_num) / feature_weight_sum
 
 
-
 def compute_site_similarity(
-    data: pd.DataFrame,
-    features: list[str],
-    feature_weight: np.ndarray
+    data: pd.DataFrame, features: list[str], feature_weight: np.ndarray
 ) -> np.ndarray:
     """
     Compute Gower distances among the rows of `data` using only `features`

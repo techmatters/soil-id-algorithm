@@ -29,11 +29,10 @@ from pandas import json_normalize
 import soil_id.config
 
 from .color import getProfileLAB, lab2munsell, munsell2rgb
-from .services import get_soil_series_data, get_soilweb_data, sda_return
+from .services import get_soil_series_data, get_soilweb_data, sda_return, get_elev_data
 from .soil_sim import soil_sim
 from .utils import (
     aggregate_data,
-    compute_site_similarity,
     drop_cokey_horz,
     extract_mucompdata_STATSGO,
     extract_muhorzdata_STATSGO,
@@ -1617,7 +1616,7 @@ def rank_soils(
             max_user_depth = max(horizonDepthB)
         if bedrock is not None:
             max_user_depth = min(bedrock, max_user_depth)
-      
+
         # Generate user specified percent clay, sand, and rfv distributions
         spt = [getSand(sh) for sh in soilHorizon]
         cpt = [getClay(sh) for sh in soilHorizon]
@@ -1643,7 +1642,6 @@ def rank_soils(
         p_claypct_intpl = pd.DataFrame(clay_array)
         p_cfg_intpl = pd.DataFrame(cfg_array)
 
-
         # Length of interpolated texture and RF depth
         p_bottom_depth = pd.DataFrame([-999, "sample_pedon", max_user_depth]).T
         p_bottom_depth.columns = ["cokey", "compname", "bottom_depth"]
@@ -1653,13 +1651,12 @@ def rank_soils(
 
         # Force correct structure
         lab_cleaned = [
-            row if (isinstance(row, (list, tuple)) and len(row)==3) 
-                else [np.nan, np.nan, np.nan]
+            row if (isinstance(row, (list, tuple)) and len(row) == 3) else [np.nan, np.nan, np.nan]
             for row in lab_series
         ]
 
         # now unpack into three columns
-        lab_Color = pd.DataFrame(lab_cleaned, columns=["L","A","B"])
+        lab_Color = pd.DataFrame(lab_cleaned, columns=["L", "A", "B"])
 
         # Interpolate colors across depth
         for i in range(len(lab_Color)):
@@ -1668,7 +1665,11 @@ def rank_soils(
             if t >= max_user_depth:
                 continue
             b = min(b, max_user_depth)
-            color_val = lab_Color.iloc[i].tolist() if not pd.isnull(lab_Color.iloc[i]).all() else [np.nan, np.nan, np.nan]
+            color_val = (
+                lab_Color.iloc[i].tolist()
+                if not pd.isnull(lab_Color.iloc[i]).all()
+                else [np.nan, np.nan, np.nan]
+            )
             for d in range(t, b):
                 lab_array[d] = color_val
 
@@ -1806,21 +1807,19 @@ def rank_soils(
         # Subset depth intervals to match user measured intervals
         horz_vars = [p_hz_data]
         horz_vars.extend([group.reset_index(drop=True).loc[pedon_slice_index] for group in groups])
-        
+
         global_prop_bounds = {
             "sandpct_intpl": (10.0, 92.0),
-            "claypct_intpl":  (5.0, 70.0),
-            "rfv_intpl":      (0.0, 80.0),
-            "l":              (10.0, 95.0),
-            "a":              (-10.0, 35.0),
-            "b":              (-10.0, 60.0),
+            "claypct_intpl": (5.0, 70.0),
+            "rfv_intpl": (0.0, 80.0),
+            "l": (10.0, 95.0),
+            "a": (-10.0, 35.0),
+            "b": (-10.0, 60.0),
         }
 
         # numeric range (upper – lower):
         global_prop_ranges = {
-            prop: upper - lower
-            for prop, (lower, upper) in global_prop_bounds.items()
-
+            prop: upper - lower for prop, (lower, upper) in global_prop_bounds.items()
         }
 
         # Calculate similarity for each depth slice
@@ -1850,13 +1849,15 @@ def rank_soils(
                         .drop(["compname"], axis=1)
                         .columns.tolist()
                     )
-            sliceT  = sliceT[sample_pedon_slice_vars]
+            sliceT = sliceT[sample_pedon_slice_vars]
 
             theoretical_prop_ranges = [global_prop_ranges[c] for c in sample_pedon_slice_vars]
-            D = gower_distances(sliceT, theoretical_ranges=theoretical_prop_ranges)  # Equal weighting given to all soil variables
+            D = gower_distances(
+                sliceT, theoretical_ranges=theoretical_prop_ranges
+            )  # Equal weighting given to all soil variables
 
             dis_mat_list.append(D)
-     
+
         # Determine if any components have all NaNs at every slice
         dis_mat_nan_check = np.ma.MaskedArray(dis_mat_list, mask=np.isnan(dis_mat_list))
         D_check = np.ma.average(dis_mat_nan_check, axis=0)
@@ -1874,7 +1875,7 @@ def rank_soils(
         # Infill Nan data: soil vs non‑soil logic
         for i, dis_mat in enumerate(dis_mat_list):
             soil_slice = soil_matrix.iloc[i, :].values.astype(bool)
-            pedon_idx  = 0                 # assuming sample_pedon is always row 0
+            pedon_idx = 0  # assuming sample_pedon is always row 0
 
             # 1) If pedon has data here, any NaN in pedon↔component → max dissimilarity
             if soil_slice[pedon_idx]:
@@ -1907,17 +1908,17 @@ def rank_soils(
     if pElev is None:
         pElev_dict = get_elev_data(lon, lat)
     try:
-        pElev = float(pElev_dict['value'])
+        pElev = float(pElev_dict["value"])
     except (KeyError, TypeError, ValueError):
         pElev = None  # or some default
 
     # 1) “Raw” guard on the three possible site inputs:
     provided = {
         "slope_r": pSlope,
-        "elev_r":  pElev,
-        "bottom_depth": bedrock #this determines if bottom_depth is set
+        "elev_r": pElev,
+        "bottom_depth": bedrock,  # this determines if bottom_depth is set
     }
-    
+
     # 2) Figure out which of those are actually non-null
     features = [
         name
@@ -1934,12 +1935,12 @@ def rank_soils(
         if "slope_r" in features:
             pedon_dict["slope_r"] = pSlope
         if "elev_r" in features:
-            pedon_dict["elev_r"]  = pElev
+            pedon_dict["elev_r"] = pElev
         pedon_df = pd.DataFrame([pedon_dict])
 
         # 5) Build your map‐unit library (only the columns you need)
         lib_cols = ["compname"] + [f for f in features if f in ("slope_r", "elev_r")]
-        lib_df   = mucompdata_pd[lib_cols].copy()
+        lib_df = mucompdata_pd[lib_cols].copy()
 
         # 6) Stack them together
         full_df = pd.concat([pedon_df, lib_df], ignore_index=True)
@@ -1947,9 +1948,7 @@ def rank_soils(
         # 7) If you need bottom_depth, merge it in for *all* rows
         if "bottom_depth" in features:
             full_df = full_df.merge(
-                slices_of_soil[["compname", "bottom_depth"]],
-                on="compname",
-                how="left"
+                slices_of_soil[["compname", "bottom_depth"]], on="compname", how="left"
             )
 
         # 8) Build your weight vector
@@ -1958,7 +1957,7 @@ def rank_soils(
 
         # 9) Compute Gower distances on exactly those feature columns
         site_mat = full_df.set_index("compname")[features]
-        D_raw   = gower_distances(site_mat, feature_weight=weights)
+        D_raw = gower_distances(site_mat, feature_weight=weights)
 
         # 10 Replace any NaNs with the max distance, then (optionally) convert to similarity
         D_site = np.where(np.isnan(D_raw), np.nanmax(D_raw), D_raw)
@@ -2219,6 +2218,7 @@ def rank_soils(
     }
 
     return output_data
+
 
 # Helper function to update dataframes based on depth conditions
 def update_intpl_data(

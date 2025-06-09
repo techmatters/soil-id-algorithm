@@ -1534,7 +1534,8 @@ def rank_soils(
     lat,
     list_output_data: SoilListOutputData,
     soilHorizon,
-    horizonDepth,
+    topDepth,
+    bottomDepth,
     rfvDepth,
     lab_Color,
     pSlope,
@@ -1553,7 +1554,8 @@ def rank_soils(
     soil_df = pd.DataFrame(
         {
             "soilHorizon": soilHorizon,
-            "horizonDepth": horizonDepth,
+            "top": topDepth,
+            "bottom": bottomDepth,
             "rfvDepth": rfvDepth,
             "lab_Color": lab_Color,
         }
@@ -1562,14 +1564,8 @@ def rank_soils(
     # Drop rows where all values are NaN
     soil_df.dropna(how="all", inplace=True)
 
-    # Set the bottom of each horizon
-    soil_df["bottom"] = soil_df["horizonDepth"]
-
     # Replace NaNs with None for consistency
     # soil_df.fillna(value=None, inplace=True)
-
-    # Calculate the top depth for each horizon
-    soil_df["top"] = [0] + soil_df["horizonDepth"].iloc[:-1].tolist()
 
     # Adjust the bottom depth based on bedrock depth
     if bedrock is not None:
@@ -1580,9 +1576,6 @@ def rank_soils(
             soil_df = soil_df.loc[:last_valid_index].copy()
             # Set the bottom depth of the last row to the bedrock depth
             soil_df.at[last_valid_index, "bottom"] = bedrock
-
-    # Drop the original horizonDepth column
-    soil_df.drop(columns=["horizonDepth"], inplace=True)
 
     # Filter out rows without valid horizon data
     relevant_columns = ["soilHorizon", "rfvDepth", "lab_Color"]

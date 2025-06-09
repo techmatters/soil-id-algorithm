@@ -1574,12 +1574,10 @@ def rank_soils(
     # Adjust the bottom depth based on bedrock depth
     if bedrock is not None:
         if bedrock is not soil_df.empty and soil_df["bottom"].iloc[-1] > bedrock:
-            # Find the last valid index where bottom depth is less than or equal to bedrock
-            last_valid_index = soil_df.loc[soil_df["bottom"] <= bedrock].index[-1]
-            # Filter the DataFrame up to the last valid index
-            soil_df = soil_df.loc[:last_valid_index].copy()
-            # Set the bottom depth of the last row to the bedrock depth
-            soil_df.at[last_valid_index, "bottom"] = bedrock
+            # Remove rows where top depth is already below bedrock
+            soil_df = soil_df[soil_df["top"] < bedrock].copy()
+            # If any remaining row has bottom depth exceeding bedrock, truncate it
+            soil_df.loc[soil_df["bottom"] > bedrock, "bottom"] = bedrock
 
     # Drop the original horizonDepth column
     soil_df.drop(columns=["horizonDepth"], inplace=True)
@@ -1610,60 +1608,71 @@ def rank_soils(
         rfvDepth = soil_df.rfvDepth.tolist()
         horizonDepthB = [int(x) for x in soil_df.bottom.tolist()]
         horizonDepthT = [int(x) for x in soil_df.top.tolist()]
-        lab_Color = soil_df.lab_Color
+        lab_series = soil_df.lab_Color
 
+        # Determine the maximum depth for user specified horizons
+        if not horizonDepthB:
+            max_user_depth = 0
+        else:
+            max_user_depth = max(horizonDepthB)
+        if bedrock is not None:
+            max_user_depth = min(bedrock, max_user_depth)
+      
         # Generate user specified percent clay, sand, and rfv distributions
         spt = [getSand(sh) for sh in soilHorizon]
         cpt = [getClay(sh) for sh in soilHorizon]
         p_cfg = [getCF_fromClass(rf) for rf in rfvDepth]
 
-        p_sandpct_intpl = [
-            spt[i]
-            for i in range(len(soilHorizon))
-            for _ in range(horizonDepthT[i], horizonDepthB[i])
-        ]
-        p_claypct_intpl = [
-            cpt[i]
-            for i in range(len(soilHorizon))
-            for _ in range(horizonDepthT[i], horizonDepthB[i])
-        ]
-        p_cfg_intpl = [
-            p_cfg[i]
-            for i in range(len(soilHorizon))
-            for _ in range(horizonDepthT[i], horizonDepthB[i])
-        ]
+        # Initialize full-length property arrays with NaNs
+        sand_array = [np.nan] * max_user_depth
+        clay_array = [np.nan] * max_user_depth
+        cfg_array = [np.nan] * max_user_depth
+
+        for i in range(len(soilHorizon)):
+            t = horizonDepthT[i]
+            b = horizonDepthB[i]
+            if t >= max_user_depth:
+                continue
+            b = min(b, max_user_depth)
+            for d in range(t, b):
+                sand_array[d] = spt[i]
+                clay_array[d] = cpt[i]
+                cfg_array[d] = p_cfg[i]
+
+        p_sandpct_intpl = pd.DataFrame(sand_array)
+        p_claypct_intpl = pd.DataFrame(clay_array)
+        p_cfg_intpl = pd.DataFrame(cfg_array)
+
 
         # Length of interpolated texture and RF depth
-        p_bottom_depth = pd.DataFrame([-999, "sample_pedon", soil_df_slice.bottom.iloc[-1]]).T
+        p_bottom_depth = pd.DataFrame([-999, "sample_pedon", max_user_depth]).T
         p_bottom_depth.columns = ["cokey", "compname", "bottom_depth"]
 
         # Pedon color data
-        if not isinstance(lab_Color, pd.DataFrame):
-            lab_Color = pd.DataFrame(lab_Color)
-        if not lab_Color.isnull().all().all():  # Use all().all() to check the entire DataFrame
-            lab_Color = lab_Color.apply(
-                lambda x: [np.nan, np.nan, np.nan] if x.isnull().all() else x, axis=1
-            )
-            p_lab_intpl = [
-                lab_Color.iloc[i].tolist()
-                for i in range(len(lab_Color))
-                for _ in range(horizonDepthT[i], horizonDepthB[i])
-            ]
-            p_lab_intpl_list = [item[0] for item in p_lab_intpl]  # Access the inner list
-            p_lab_intpl = pd.DataFrame(p_lab_intpl_list, columns=["L", "A", "B"]).reset_index(
-                drop=True
-            )
-        else:
-            lab_Color = lab_Color.dropna()  # Remove rows where all elements are None
-            p_lab_intpl = pd.DataFrame(
-                np.nan, index=np.arange(200), columns=["L", "A", "B"]
-            ).reset_index(drop=True)
+        lab_array = [[np.nan, np.nan, np.nan] for _ in range(max_user_depth)]
 
-        # Adjust depth interval for each dataset
-        p_sandpct_intpl = adjust_depth_interval(p_sandpct_intpl)
-        p_claypct_intpl = adjust_depth_interval(p_claypct_intpl)
-        p_cfg_intpl = adjust_depth_interval(p_cfg_intpl)
-        p_lab_intpl = adjust_depth_interval(p_lab_intpl)
+        # Force correct structure
+        lab_cleaned = [
+            row if (isinstance(row, (list, tuple)) and len(row)==3) 
+                else [np.nan, np.nan, np.nan]
+            for row in lab_series
+        ]
+
+        # now unpack into three columns
+        lab_Color = pd.DataFrame(lab_cleaned, columns=["L","A","B"])
+
+        # Interpolate colors across depth
+        for i in range(len(lab_Color)):
+            t = horizonDepthT[i]
+            b = horizonDepthB[i]
+            if t >= max_user_depth:
+                continue
+            b = min(b, max_user_depth)
+            color_val = lab_Color.iloc[i].tolist() if not pd.isnull(lab_Color.iloc[i]).all() else [np.nan, np.nan, np.nan]
+            for d in range(t, b):
+                lab_array[d] = color_val
+
+        p_lab_intpl = pd.DataFrame(lab_array, columns=["L", "A", "B"]).reset_index(drop=True)
 
         # Construct final dataframe with adjusted data
         p_compname = pd.Series("sample_pedon", index=np.arange(len(p_sandpct_intpl)))
@@ -1797,6 +1806,12 @@ def rank_soils(
         # Subset depth intervals to match user measured intervals
         horz_vars = [p_hz_data]
         horz_vars.extend([group.reset_index(drop=True).loc[pedon_slice_index] for group in groups])
+        
+        global_prop_ranges = {
+            "sandpct_intpl": 92.0 - 10.0,   # 82.0
+            "claypct_intpl": 70.0 - 5.0,    # 65.0
+            "rfv_intpl":      80.0 - 0.0,   # 80.0
+        }
 
         # Calculate similarity for each depth slice
         dis_mat_list = []
@@ -1825,11 +1840,12 @@ def rank_soils(
                         .drop(["compname"], axis=1)
                         .columns.tolist()
                     )
-                sliceT = sliceT[sample_pedon_slice_vars]
-
+            sliceT  = sliceT[sample_pedon_slice_vars]
+            theoretical_ranges = [global_prop_ranges[c] for c in sample_pedon_slice_vars]
             D = gower_distances(sliceT)  # Equal weighting given to all soil variables
-            dis_mat_list.append(D)
 
+            dis_mat_list.append(D)
+     
         # Determine if any components have all NaNs at every slice
         dis_mat_nan_check = np.ma.MaskedArray(dis_mat_list, mask=np.isnan(dis_mat_list))
         D_check = np.ma.average(dis_mat_nan_check, axis=0)
@@ -1837,40 +1853,29 @@ def rank_soils(
             "Not Ranked" if np.ma.is_masked(x) else "Ranked" for x in D_check[0][1:]
         ]
 
-        # Calculate maximum dissimilarity
-        dis_max_slice = [
-            np.nanmax(matrix) if not np.isnan(matrix).all() else np.nan for matrix in dis_mat_list
-        ]
-        dis_max = np.nanmax(dis_max_slice)
-        dis_max_slice = [dis_max if np.isnan(x) else x for x in dis_max_slice]
+        # Maximum dissimilarity
+        dis_max = 1.0
 
         # Apply depth weight
         depth_weight = np.concatenate((np.repeat(0.2, 20), np.repeat(1.0, 180)), axis=0)
         depth_weight = depth_weight[pedon_slice_index]
 
-        # Infill Nan data
-
-        # Update dis_mat_list using numpy operations
+        # Infill Nan data: soil vs non‑soil logic
         for i, dis_mat in enumerate(dis_mat_list):
-            soil_slice = soil_matrix.iloc[i, :]
+            soil_slice = soil_matrix.iloc[i, :].values.astype(bool)
+            pedon_idx  = 0                 # assuming sample_pedon is always row 0
 
-            # Identify where NaN values exist and where the corresponding soil_slice is 1
-            nan_and_soil_slice_is_one = np.isnan(dis_mat) & np.isin(
-                np.arange(dis_mat.shape[1]), np.where(soil_slice == 1)[0]
-            )
+            # 1) If pedon has data here, any NaN in pedon↔component → max dissimilarity
+            if soil_slice[pedon_idx]:
+                # components are those indices where soil_slice[j] is False
+                nonsoil_j = np.where(~soil_slice)[0]
+                for j in nonsoil_j:
+                    if np.isnan(dis_mat[pedon_idx, j]):
+                        dis_mat[pedon_idx, j] = dis_max
+                        dis_mat[j, pedon_idx] = dis_max
 
-            # Identify where NaN values exist and both corresponding values in soil_slice are 0
-            rows, cols = np.where(np.isnan(dis_mat))
-            both_zero_rows_cols = [
-                (row, col)
-                for row, col in zip(rows, cols)
-                if soil_slice[row] == 0 and soil_slice[col] == 0
-            ]
-
-            # Assign max dissimilarity or 0 based on conditions
-            dis_mat[nan_and_soil_slice_is_one] = dis_max
-            for row, col in both_zero_rows_cols:
-                dis_mat[row, col] = 0
+            # 2) Every other NaN (component–component or missing–missing) → zero
+            dis_mat[np.isnan(dis_mat)] = 0.0
 
             dis_mat_list[i] = dis_mat
 
@@ -2204,34 +2209,6 @@ def rank_soils(
     }
 
     return output_data
-
-
-def adjust_depth_interval(data, target_length=200):
-    """Adjusts the depth interval of user data."""
-
-    # Convert input to a DataFrame
-    if isinstance(data, list):
-        data = pd.DataFrame(data)
-    elif isinstance(data, pd.Series):
-        data = data.to_frame()
-
-    # Ensure data is a DataFrame at this point
-    if not isinstance(data, pd.DataFrame):
-        raise TypeError("Data must be a list, Series, or DataFrame")
-
-    length = len(data)
-
-    if length > target_length:
-        # Truncate data if it exceeds the target length
-        data = data.iloc[:target_length]
-    elif length < target_length:
-        # Extend data if it's shorter than the target length
-        add_length = target_length - length
-        add_data = pd.DataFrame(np.nan, index=np.arange(add_length), columns=data.columns)
-        data = pd.concat([data, add_data])
-
-    data.reset_index(drop=True, inplace=True)
-    return data
 
 
 # Helper function to update dataframes based on depth conditions

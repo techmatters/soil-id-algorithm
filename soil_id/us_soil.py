@@ -2169,6 +2169,7 @@ def rank_soils(
 
     return output_data
 
+
 def adjust_depth_interval(data, target_length=200):
     """Adjusts the depth interval of user data."""
 
@@ -2195,6 +2196,7 @@ def adjust_depth_interval(data, target_length=200):
 
     data.reset_index(drop=True, inplace=True)
     return data
+
 
 # Helper function to update dataframes based on depth conditions
 def update_intpl_data(

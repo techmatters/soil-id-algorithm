@@ -1005,40 +1005,31 @@ def _gower_distance_row(
 
 
 def compute_site_similarity(
-    p_slope, mucompdata, slices, additional_columns=None, feature_weight=None
-):
+    data: pd.DataFrame,
+    features: list[str],
+    feature_weight: np.ndarray
+) -> np.ndarray:
     """
-    Compute gower distances for site similarity based on the provided feature weights.
+    Compute Gower distances among the rows of `data` using only `features`
+    and the matching weights in `feature_weight`.
 
     Parameters:
-    - p_slope: DataFrame containing sample_pedon information.
-    - mucompdata: DataFrame containing component data.
-    - slices: DataFrame containing slices of soil.
-    - additional_columns: List of additional columns to consider.
-    - feature_weight: Array of weights for features.
+    - data: DataFrame with columns "compname" + at least all names in `features`.
+    - features: list of column names to include in the distance.
+    - feature_weight: 1D array of floats, same length as `features`.
 
     Returns:
-    - D_site: Gower distances array for site similarity.
+    - (n×n) numpy array of Gower distances, with NaNs replaced by the max distance.
     """
-    # Combine pedon slope data with component data
-    site_vars = pd.concat([p_slope, mucompdata[["compname", "slope_r", "elev_r"]]], axis=0)
+    # 1) subset & index by compname
+    site_mat = data.set_index("compname")[features]
 
-    # If additional columns are specified, merge them
-    if additional_columns:
-        site_vars = pd.merge(slices, site_vars, on="compname", how="left")
-        site_mat = site_vars[additional_columns]
-    else:
-        site_mat = site_vars[["slope_r", "elev_r"]]
+    # 2) compute
+    D = gower_distances(site_mat, feature_weight=feature_weight)
 
-    site_mat = site_mat.set_index(slices.compname.values)
-
-    # Compute the gower distances
-    D_site = gower_distances(site_mat, feature_weight=feature_weight)
-
-    # Replace NaN values with the maximum value in the array
-    D_site = np.where(np.isnan(D_site), np.nanmax(D_site), D_site)
-
-    return D_site
+    # 3) fill NaNs
+    D = np.where(np.isnan(D), np.nanmax(D), D)
+    return D
 
 
 def compute_text_comp(bedrock, p_sandpct_intpl, soilHorizon):

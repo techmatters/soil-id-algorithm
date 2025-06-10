@@ -1986,9 +1986,12 @@ def rank_soils(
 
     # Concatenate the sorted and ranked groups
     D_final = pd.concat(soilIDList_data).reset_index(drop=True)
-
+    
     # Merge with the Rank_Filter data
     D_final = pd.merge(D_final, Rank_Filter, on="compname", how="left")
+
+    # Sort dataframe to correctly assign Rank_Data
+    D_final = D_final.sort_values(by=["soilID_rank_data", "Score_Data"], ascending=[False, False])
 
     # Assigning rank based on the soilID rank and rank status
     rank_id = 1
@@ -2003,6 +2006,7 @@ def rank_soils(
             rank_id += 1
 
     D_final["Rank_Data"] = Rank_Data
+
     """
     Code options for production API/testing output
     # ----------------------------------------------------------------

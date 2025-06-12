@@ -39,13 +39,17 @@ with open(result_file_name, "w") as result_file:
     result_agg = {}
 
     for pedon_key, pedon in pedons:
-        result_record = {"pedon_key": pedon_key[0], "pedon_name": pedon["taxonname"].values[0]}
+        lat = pedon["y"].values[0]
+        lon = pedon["x"].values[0]
+        result_record = {
+            "pedon_key": pedon_key[0],
+            "pedon_name": pedon["taxonname"].values[0],
+            "lat": lat,
+            "lon": lon,
+        }
 
         start_time = time.perf_counter()
         try:
-            lat = pedon["y"].values[0]
-            lon = pedon["x"].values[0]
-
             list_result = list_soils(lat=lat, lon=lon)
 
             result_record["rank_result"] = rank_soils(

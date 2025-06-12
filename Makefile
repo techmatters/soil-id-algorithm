@@ -92,3 +92,12 @@ download-soil-data:
 	gdown 1P3xl1YRlfcMjfO_4PM39tkrrlL3hoLzv; \
 	gdown 1K0GkqxhZiVUND6yfFmaI7tYanLktekyp; \
 	gdown 1z7foFFHv_mTsuxMYnfOQRvXT5LKYlYFN \
+
+DOCKER_IMAGE_TAG ?= ghcr.io/techmatters/soil-id-db:latest
+build_docker_image:
+	@echo "Building to tag $(DOCKER_IMAGE_TAG)"
+	docker build -t $(DOCKER_IMAGE_TAG) .
+
+push_docker_image:
+	@echo "Pushing tag $(DOCKER_IMAGE_TAG). Make sure to provide a versioned tag in addition to updating latest!"
+	docker push $(DOCKER_IMAGE_TAG)

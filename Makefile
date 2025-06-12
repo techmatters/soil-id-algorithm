@@ -73,6 +73,14 @@ process_bulk_test_results_legacy:
 	python -m soil_id.tests.legacy.process_bulk_test_results $(RESULTS_FILE)
 
 # Donwload Munsell CSV, SHX, SHP, SBX, SBN, PRJ, DBF
+# 1tN23iVe6X1fcomcfveVp4w3Pwd0HJuTe: LandPKS_munsell_rgb_lab.csv
+# 1WUa9e3vTWPi6G8h4OI3CBUZP5y7tf1Li: gsmsoilmu_a_us.shx
+# 1l9MxC0xENGmI_NmGlBY74EtlD6SZid_a: gsmsoilmu_a_us.shp
+# 1asGnnqe0zI2v8xuOszlsNmZkOSl7cJ2n: gsmsoilmu_a_us.sbx
+# 185Qjb9pJJn4AzOissiTz283tINrDqgI0: gsmsoilmu_a_us.sbn
+# 1P3xl1YRlfcMjfO_4PM39tkrrlL3hoLzv: gsmsoilmu_a_us.prj
+# 1K0GkqxhZiVUND6yfFmaI7tYanLktekyp: gsmsoilmu_a_us.dbf
+# 1z7foFFHv_mTsuxMYnfOQRvXT5LKYlYFN: SoilID_US_Areas.shz
 download-soil-data:
 	mkdir -p Data
 	cd Data; \
@@ -82,4 +90,14 @@ download-soil-data:
 	gdown 1asGnnqe0zI2v8xuOszlsNmZkOSl7cJ2n; \
 	gdown 185Qjb9pJJn4AzOissiTz283tINrDqgI0; \
 	gdown 1P3xl1YRlfcMjfO_4PM39tkrrlL3hoLzv; \
-	gdown 1K0GkqxhZiVUND6yfFmaI7tYanLktekyp \
+	gdown 1K0GkqxhZiVUND6yfFmaI7tYanLktekyp; \
+	gdown 1z7foFFHv_mTsuxMYnfOQRvXT5LKYlYFN \
+
+DOCKER_IMAGE_TAG ?= ghcr.io/techmatters/soil-id-db:latest
+build_docker_image:
+	@echo "Building to tag $(DOCKER_IMAGE_TAG)"
+	docker build -t $(DOCKER_IMAGE_TAG) .
+
+push_docker_image:
+	@echo "Pushing tag $(DOCKER_IMAGE_TAG). Make sure to provide a versioned tag in addition to updating latest!"
+	docker push $(DOCKER_IMAGE_TAG)

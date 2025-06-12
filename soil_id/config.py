@@ -32,15 +32,11 @@ SOIL_ID_PROB_PATH = f"{OUTPUT_PATH}/soil_id_cond_prob.csv"
 REQUESTS_CACHE_PATH = f"{CACHE_DIR}/requests_cache"
 
 # Determines if in/out of US
-US_AREA_PATH = f"{DATA_PATH}/SoilID_US_Areas.shp"
+US_AREA_PATH = f"{DATA_PATH}/SoilID_US_Areas.shz"
 
 # US Soil ID
 STATSGO_PATH = f"{DATA_PATH}/gsmsoilmu_a_us.shp"
 MUNSELL_RGB_LAB_PATH = f"{DATA_PATH}/LandPKS_munsell_rgb_lab.csv"
-
-# Global Soil ID
-HWSD_PATH = f"{DATA_PATH}/HWSD_global_noWater_no_country.shp"
-WISE_PATH = f"{DATA_PATH}/wise30sec_poly_simp_soil.shp"
 
 # Database
 DB_NAME = os.environ.get("DB_NAME", "terraso_backend")

@@ -1260,7 +1260,7 @@ def rank_soils_global(
 ##################################################################################################
 
 
-def sg_list(lon, lat):
+def sg_list(connection, lon, lat):
     """
     Query the SoilGrids API (via get_soilgrids_property_data) and post-process
     the returned JSON into a structured dictionary that includes:
@@ -1395,7 +1395,7 @@ def sg_list(lon, lat):
             sg_tax_prob.sort_values("Prob", ascending=False, inplace=True)
 
             # Merge with descriptive info
-            WRB_Comp_Desc = getSG_descriptions(sg_tax_prob["WRB_tax"].tolist())
+            WRB_Comp_Desc = getSG_descriptions(connection, sg_tax_prob["WRB_tax"].tolist())
             TAXNWRB_pd = pd.merge(sg_tax_prob, WRB_Comp_Desc, on="WRB_tax", how="left")
 
             # Only handle top 3 entries (or fewer if less are returned)

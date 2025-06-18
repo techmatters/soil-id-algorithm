@@ -81,5 +81,13 @@ jobs:
         if: ${{ hashFiles('Data/*') == '' }}
         run: make download-soil-data
 
+      - name: Start soil id DB
+        run: docker compose up -d
+
       - name: Run tests
+        env:
+          DB_NAME: soil_id
+          DB_HOST: localhost
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
         run: make test

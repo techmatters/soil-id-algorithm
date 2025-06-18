@@ -41,7 +41,8 @@ test_locations = [
 def test_soil_location():
     # Dummy Soil Profile Data (replicating the structure provided)
     soilHorizon = ["LOAM"] * 7
-    horizonDepth = [1, 10, 20, 50, 70, 100, 120]
+    topDepth = [0, 1, 10, 20, 50, 70, 100]
+    bottomDepth = [1, 10, 20, 50, 70, 100, 120]
     rfvDepth = ["0-1%"] * 7
     lab_Color = [[41.24, 2.54, 21.17]] * 7
     bedrock = None
@@ -59,7 +60,8 @@ def test_soil_location():
             item["lat"],
             list_soils_result,
             soilHorizon,
-            horizonDepth,
+            topDepth,
+            bottomDepth,
             rfvDepth,
             lab_Color,
             pSlope,
@@ -76,7 +78,8 @@ def test_empty_rank():
         test_locations[0]["lat"],
         SoilListOutputData,
         soilHorizon=[],
-        horizonDepth=[],
+        topDepth=[],
+        bottomDepth=[],
         rfvDepth=[],
         lab_Color=[],
         pSlope=None,

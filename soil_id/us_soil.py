@@ -275,7 +275,8 @@ def list_soils(lon, lat):
     snd_lyrs = []
     cly_lyrs = []
     txt_lyrs = []
-    hz_lyrs = []
+    hzt_lyrs = []
+    hzb_lyrs = []
     rf_lyrs = []
     cec_lyrs = []
     ph_lyrs = []
@@ -328,6 +329,7 @@ def list_soils(lon, lat):
             OSD_rfv_int.append("No")
 
         # extract horizon data
+        hz_dept = group_sorted["hzdept_r"]
         hz_depb = group_sorted["hzdepb_r"]
         snd_d = group_sorted["sandtotal_r"]
         cly_d = group_sorted["claytotal_r"]
@@ -337,6 +339,7 @@ def list_soils(lon, lat):
         ec_d = group_sorted["EC"]
         ph_d = group_sorted["pH"]
 
+        hz_dept = hz_dept.fillna("")
         hz_depb = hz_depb.fillna("")
         snd_d = snd_d.fillna("")
         cly_d = cly_d.fillna("")
@@ -352,7 +355,8 @@ def list_soils(lon, lat):
         cec_lyrs.append(dict(zip(cec_d.index, cec_d)))
         ph_lyrs.append(dict(zip(ph_d.index, ph_d)))
         ec_lyrs.append(dict(zip(ec_d.index, ec_d)))
-        hz_lyrs.append(dict(zip(hz_depb.index, hz_depb)))
+        hzt_lyrs.append(dict(zip(hz_dept.index, hz_dept)))
+        hzb_lyrs.append(dict(zip(hz_depb.index, hz_depb)))
 
         cokey_group = group_sorted["cokey"].iloc[0]
         compname_group = group_sorted["compname"].iloc[0]
@@ -932,8 +936,8 @@ def list_soils(lon, lat):
                         # empty string
                         for lyr in [cec_lyrs, ph_lyrs, ec_lyrs]:
                             if len(lyr[index]) == 1 and lyr[index][0] == "":
-                                empty_values = [""] * len(hz_lyrs[index])
-                                lyr[index] = dict(zip(hz_lyrs[index], empty_values))
+                                empty_values = [""] * len(hzb_lyrs[index])
+                                lyr[index] = dict(zip(hzb_lyrs[index], empty_values))
 
                 else:
                     OSDhorzdata_group_cokey[index] = group_sorted
@@ -947,12 +951,12 @@ def list_soils(lon, lat):
                     lab_intpl_lyrs.append(lab_intpl)
 
                     # Create dummy data for lab_lyrs
-                    lab_dummy = [["", "", ""] for _ in range(len(hz_lyrs[index]))]
-                    lab_lyrs.append(dict(zip(hz_lyrs[index].keys(), lab_dummy)))
+                    lab_dummy = [["", "", ""] for _ in range(len(hzb_lyrs[index]))]
+                    lab_lyrs.append(dict(zip(hzb_lyrs[index].keys(), lab_dummy)))
 
                     # Create dummy data for munsell_lyrs
-                    munsell_dummy = [""] * len(hz_lyrs[index])
-                    munsell_lyrs.append(dict(zip(hz_lyrs[index].keys(), munsell_dummy)))
+                    munsell_dummy = [""] * len(hzb_lyrs[index])
+                    munsell_lyrs.append(dict(zip(hzb_lyrs[index].keys(), munsell_dummy)))
 
             # Series URL Generation
             # Initialize lists to store series URLs
@@ -1000,7 +1004,7 @@ def list_soils(lon, lat):
                 lab_intpl_lyrs.append(lab_intpl)
 
                 # Create dummy data for lab and munsell layers
-                keys = list(hz_lyrs[i].keys())
+                keys = list(hzb_lyrs[i].keys())
                 lab_dummy = [{"", "", ""} for _ in range(len(keys))]
                 munsell_dummy = [""] * len(keys)
 
@@ -1031,7 +1035,7 @@ def list_soils(lon, lat):
             lab_intpl_lyrs.append(lab_intpl)
 
             # Create dummy data for lab and munsell layers
-            keys = list(hz_lyrs[i].keys())
+            keys = list(hzb_lyrs[i].keys())
             lab_dummy = [{"", "", ""} for _ in range(len(keys))]
             munsell_dummy = [""] * len(keys)
 
@@ -1077,7 +1081,8 @@ def list_soils(lon, lat):
             cec_lyrs,
             ph_lyrs,
             ec_lyrs,
-            hz_lyrs,
+            hzt_lyrs,
+            hzb_lyrs,
             lab_lyrs,
             munsell_lyrs,
         ]
@@ -1097,7 +1102,8 @@ def list_soils(lon, lat):
             cec_lyrs,
             ph_lyrs,
             ec_lyrs,
-            hz_lyrs,
+            hzt_lyrs,
+            hzb_lyrs,
             lab_lyrs,
             munsell_lyrs,
         ) = layer_lists
@@ -1432,7 +1438,8 @@ def list_soils(lon, lat):
     # Reordering lists using list comprehension and mucomp_index
     lists_to_reorder = [
         esd_comp_list,
-        hz_lyrs,
+        hzt_lyrs,
+        hzb_lyrs,
         snd_lyrs,
         cly_lyrs,
         txt_lyrs,
@@ -1448,7 +1455,8 @@ def list_soils(lon, lat):
     # Destructuring reordered lists for clarity
     (
         esd_comp_list,
-        hz_lyrs,
+        hzt_lyrs,
+        hzb_lyrs,
         snd_lyrs,
         cly_lyrs,
         txt_lyrs,
@@ -1468,6 +1476,7 @@ def list_soils(lon, lat):
                     "id",
                     "site",
                     "esd",
+                    "top_depth",
                     "bottom_depth",
                     "sand",
                     "clay",
@@ -1486,7 +1495,8 @@ def list_soils(lon, lat):
             ID,
             Site,
             esd_comp_list,
-            hz_lyrs,
+            hzt_lyrs,
+            hzb_lyrs,
             snd_lyrs,
             cly_lyrs,
             txt_lyrs,
@@ -1533,7 +1543,8 @@ def rank_soils(
     lat,
     list_output_data: SoilListOutputData,
     soilHorizon,
-    horizonDepth,
+    topDepth,
+    bottomDepth,
     rfvDepth,
     lab_Color,
     pSlope,
@@ -1552,7 +1563,8 @@ def rank_soils(
     soil_df = pd.DataFrame(
         {
             "soilHorizon": soilHorizon,
-            "horizonDepth": horizonDepth,
+            "top": topDepth,
+            "bottom": bottomDepth,
             "rfvDepth": rfvDepth,
             "lab_Color": lab_Color,
         }
@@ -1561,14 +1573,8 @@ def rank_soils(
     # Drop rows where all values are NaN
     soil_df.dropna(how="all", inplace=True)
 
-    # Set the bottom of each horizon
-    soil_df["bottom"] = soil_df["horizonDepth"]
-
     # Replace NaNs with None for consistency
     # soil_df.fillna(value=None, inplace=True)
-
-    # Calculate the top depth for each horizon
-    soil_df["top"] = [0] + soil_df["horizonDepth"].iloc[:-1].tolist()
 
     # Adjust the bottom depth based on bedrock depth
     if bedrock is not None:
@@ -1577,9 +1583,6 @@ def rank_soils(
             soil_df = soil_df[soil_df["top"] < bedrock].copy()
             # If any remaining row has bottom depth exceeding bedrock, truncate it
             soil_df.loc[soil_df["bottom"] > bedrock, "bottom"] = bedrock
-
-    # Drop the original horizonDepth column
-    soil_df.drop(columns=["horizonDepth"], inplace=True)
 
     # Filter out rows without valid horizon data
     relevant_columns = ["soilHorizon", "rfvDepth", "lab_Color"]

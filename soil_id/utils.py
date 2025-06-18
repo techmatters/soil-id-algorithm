@@ -844,231 +844,148 @@ def check_pairwise_arrays(X, Y, precomputed=False, dtype=None):
     return X, Y
 
 
-def gower_distances(X, Y=None, feature_weight=None, categorical_features=None):
+def gower_distances(
+    X, Y=None, feature_weight=None, categorical_features=None, theoretical_ranges=None
+):
     """
-    Computes the gower distances between X and Y.
-    Gower is a similarity measure for categorical, boolean, and numerical mixed data.
+    Computes the Gower distances between X and Y using mixed-type data,
+    with optional hybrid normalization: per-slice min/max with a floor
+    based on theoretical feature ranges.
 
     Parameters:
     ----------
-    X : array-like, or pd.DataFrame
-        Shape (n_samples, n_features)
-    Y : array-like, or pd.DataFrame, optional
-        Shape (n_samples, n_features)
-    feature_weight : array-like, optional
-        Shape (n_features). According to the Gower formula, it's an attribute weight.
-    categorical_features : array-like, optional
-        Shape (n_features). Indicates whether a column is a categorical attribute.
-
-    Returns:
-    -------
-    ndarray : Gower distances. Shape (n_samples, n_samples)
+    X : array-like or pd.DataFrame, shape (n_samples, n_features)
+    Y : array-like or pd.DataFrame, shape (m_samples, n_features), optional
+    feature_weight : array-like, shape (n_features,), optional
+    categorical_features : array-like of bools or indices, optional
+    theoretical_ranges : array-like, shape (n_numeric_features,), optional
+        If provided, the floor for each numeric feature's denominator is
+        set to 10%% of its theoretical span.
     """
-
+    # Reject sparse inputs
     if issparse(X) or (Y is not None and issparse(Y)):
         raise TypeError("Sparse matrices are not supported for gower distance")
 
-    # Ensure arrays are numpy arrays
+    # Ensure numpy arrays and pairwise shape
     X = np.asarray(X)
-
     dtype = (
         object
-        if not np.issubdtype(X.dtype, np.number) or np.isnan(X.sum())
+        if not np.issubdtype(X.dtype, np.number) or np.isnan(X).any()
         else type(np.zeros(1, X.dtype).flat[0])
     )
     X, Y = check_pairwise_arrays(X, Y, dtype=dtype)
-
     n_rows, n_cols = X.shape
 
+    # Determine categorical features mask
     if categorical_features is None:
-        categorical_features = np.array(
-            [not np.issubdtype(type(val), np.number) for val in X[0, :]]
-        )
+        mask = [not np.issubdtype(type(val), np.number) for val in X[0]]
+        categorical_features = np.array(mask, dtype=bool)
     else:
         categorical_features = np.array(categorical_features)
+        if categorical_features.dtype == int:
+            mask = np.zeros(n_cols, dtype=bool)
+            mask[categorical_features] = True
+            categorical_features = mask
 
-    if np.issubdtype(categorical_features.dtype, int):
-        new_categorical_features = np.zeros(n_cols, dtype=bool)
-        new_categorical_features[categorical_features] = True
-        categorical_features = new_categorical_features
-
-    # Split data into categorical and numeric
+    # Split data
     X_cat = X[:, categorical_features]
     X_num = X[:, ~categorical_features]
 
-    # Calculate ranges and max values for normalization
-    max_of_numeric = np.nanmax(X_num, axis=0)
-    min_of_numeric = np.nanmin(X_num, axis=0)
-    ranges_of_numeric = max_of_numeric - min_of_numeric
-    ranges_of_numeric[ranges_of_numeric == 0] = 1
+    # Hybrid numeric normalization
+    slice_max = np.nanmax(X_num, axis=0)
+    slice_min = np.nanmin(X_num, axis=0)
+    slice_range = slice_max - slice_min
 
-    # Normalize numeric data
-    X_num = (X_num - min_of_numeric) / ranges_of_numeric
+    if theoretical_ranges is None:
+        # avoid division by zero
+        denom = np.where(slice_range == 0, 1.0, slice_range)
+    else:
+        theo = np.array(theoretical_ranges, dtype=float)
+        floor = 0.1 * theo
+        denom = np.maximum(slice_range, floor)
+
+    X_num = (X_num - slice_min) / denom
 
     # Handle feature weights
     if feature_weight is None:
-        feature_weight = np.ones(X_num.shape[1])
-
+        feature_weight = np.ones(X_num.shape[1], dtype=float)
     feature_weight_num = feature_weight[~categorical_features]
+    feature_weight_cat = feature_weight[categorical_features]
 
-    # Conditional processing for Y
+    # Process Y
     if Y is not None:
         Y_cat = Y[:, categorical_features]
         Y_num = Y[:, ~categorical_features]
-        # Normalize numeric data safely for Y_num
-        Y_num = np.where(
-            ranges_of_numeric != 0, (Y_num - min_of_numeric) / ranges_of_numeric, Y_num
-        )
+        if theoretical_ranges is None:
+            Y_num = np.where(denom != 0, (Y_num - slice_min) / denom, Y_num)
+        else:
+            Y_num = (Y_num - slice_min) / denom
     else:
         Y_cat = X_cat.copy()
         Y_num = X_num.copy()
 
-    # Ensure feature_weight_cat is defined
-    feature_weight_cat = feature_weight[categorical_features]
-
-    # # Handle feature weights
-    # if feature_weight is None:
-    #     feature_weight = np.ones(n_cols)
-
-    # feature_weight_cat = feature_weight[categorical_features]
-    # feature_weight_num = feature_weight[~categorical_features]
-
-    # Y_cat = X_cat if Y is None else Y[:, categorical_features]
-    # Y_num = X_num if Y is None else Y[:, ~categorical_features]
-    # Y_num /= max_of_numeric
-
+    # Compute pairwise distances
     dm = np.zeros((n_rows, Y.shape[0]), dtype=np.float32)
-
-    # Calculate pairwise gower distances
-    for i in range(X_num.shape[0]):
+    total_weight = feature_weight.sum()
+    for i in range(n_rows):
         start = i if Y is None else 0
-        result = _gower_distance_row(
-            X_cat[i, :],
-            X_num[i, :],
-            Y_cat[start:, :],
-            Y_num[start:, :],
+        row = _gower_distance_row(
+            X_cat[i],
+            X_num[i],
+            Y_cat[start:],
+            Y_num[start:],
             feature_weight_cat,
             feature_weight_num,
-            feature_weight.sum(),
-            categorical_features,
-            ranges_of_numeric,
-            max_of_numeric,
+            total_weight,
         )
-        dm[i, start:] = result
-        if Y is None:  # If Y is not provided, the matrix is symmetric
-            dm[start:, i] = result
-
+        dm[i, start:] = row
+        if Y is None:
+            dm[start:, i] = row
     return dm
-    # # Calculate pairwise gower distances
-    # for i in range(n_rows):
-    #     start = i if Y is None else 0
-    #     result = _gower_distance_row(
-    #         X_cat[i, :],
-    #         X_num[i, :],
-    #         Y_cat[start:, :],
-    #         Y_num[start:, :],
-    #         feature_weight_cat,
-    #         feature_weight_num,
-    #         feature_weight.sum(),
-    #         categorical_features,
-    #         ranges_of_numeric,
-    #         max_of_numeric,
-    #     )
-    #     dm[i, start:] = result
-    #     if Y is None:  # If Y is not provided, the matrix is symmetric
-    #         dm[start:, i] = result
-
-    # return dm
 
 
 def _gower_distance_row(
-    xi_cat,
-    xi_num,
-    xj_cat,
-    xj_num,
-    feature_weight_cat,
-    feature_weight_num,
-    feature_weight_sum,
-    categorical_features,
-    ranges_of_numeric,
-    max_of_numeric,
+    xi_cat, xi_num, xj_cat, xj_num, feature_weight_cat, feature_weight_num, feature_weight_sum
 ):
     """
-    Compute the Gower distance between a single row and a set of rows.
-
-    This function calculates the Gower distance between a single data point (xi)
-    and a set of data points (xj). Both categorical and numerical features are
-    considered in the calculation.
-
-    Parameters:
-    - xi_cat: Categorical data for xi.
-    - xi_num: Numerical data for xi.
-    - xj_cat: Categorical data for xj.
-    - xj_num: Numerical data for xj.
-    - feature_weight_cat: Weights for categorical features.
-    - feature_weight_num: Weights for numerical features.
-    - feature_weight_sum: Sum of all feature weights.
-    - ranges_of_numeric: Normalized ranges for numeric features.
-
-    Returns:
-    - Gower distance between xi and each row in xj.
+    Compute Gower distance between one row xi and rows xj. xi_num and xj_num
+    are already normalized to [0,1] using the hybrid approach.
     """
+    # Categorical distance (0 if equal, 1 if not)
+    sij_cat = (xi_cat != xj_cat).astype(int)
+    sum_cat = np.dot(sij_cat, feature_weight_cat)
 
-    # Calculate distance for categorical data
-    sij_cat = np.where(xi_cat == xj_cat, 0, 1)
-    sum_cat = np.sum(feature_weight_cat * sij_cat, axis=1)
+    # Numeric distance (absolute difference, already normalized)
+    sum_num = np.dot(np.abs(xi_num - xj_num), feature_weight_num)
 
-    # Calculate distance for numerical data
-    abs_delta = np.abs(xi_num - xj_num)
-    sij_num = np.divide(
-        abs_delta,
-        ranges_of_numeric,
-        out=np.zeros_like(abs_delta),
-        where=ranges_of_numeric != 0,
-    )
-    sum_num = np.sum(feature_weight_num * sij_num, axis=1)
-
-    # Combine distances for categorical and numerical data
-    sum_sij = (sum_cat + sum_num) / feature_weight_sum
-
-    return sum_sij
+    # Combined
+    return (sum_cat + sum_num) / feature_weight_sum
 
 
 def compute_site_similarity(
-    p_slope, mucompdata, slices, additional_columns=None, feature_weight=None
-):
+    data: pd.DataFrame, features: list[str], feature_weight: np.ndarray
+) -> np.ndarray:
     """
-    Compute gower distances for site similarity based on the provided feature weights.
+    Compute Gower distances among the rows of `data` using only `features`
+    and the matching weights in `feature_weight`.
 
     Parameters:
-    - p_slope: DataFrame containing sample_pedon information.
-    - mucompdata: DataFrame containing component data.
-    - slices: DataFrame containing slices of soil.
-    - additional_columns: List of additional columns to consider.
-    - feature_weight: Array of weights for features.
+    - data: DataFrame with columns "compname" + at least all names in `features`.
+    - features: list of column names to include in the distance.
+    - feature_weight: 1D array of floats, same length as `features`.
 
     Returns:
-    - D_site: Gower distances array for site similarity.
+    - (n×n) numpy array of Gower distances, with NaNs replaced by the max distance.
     """
-    # Combine pedon slope data with component data
-    site_vars = pd.concat([p_slope, mucompdata[["compname", "slope_r", "elev_r"]]], axis=0)
+    # 1) subset & index by compname
+    site_mat = data.set_index("compname")[features]
 
-    # If additional columns are specified, merge them
-    if additional_columns:
-        site_vars = pd.merge(slices, site_vars, on="compname", how="left")
-        site_mat = site_vars[additional_columns]
-    else:
-        site_mat = site_vars[["slope_r", "elev_r"]]
+    # 2) compute
+    D = gower_distances(site_mat, feature_weight=feature_weight)
 
-    site_mat = site_mat.set_index(slices.compname.values)
-
-    # Compute the gower distances
-    D_site = gower_distances(site_mat, feature_weight=feature_weight)
-
-    # Replace NaN values with the maximum value in the array
-    D_site = np.where(np.isnan(D_site), np.nanmax(D_site), D_site)
-
-    return D_site
+    # 3) fill NaNs
+    D = np.where(np.isnan(D), np.nanmax(D), D)
+    return D
 
 
 def compute_text_comp(bedrock, p_sandpct_intpl, soilHorizon):

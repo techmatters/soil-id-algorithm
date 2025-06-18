@@ -18,7 +18,7 @@ import time
 import pytest
 
 from soil_id.db import get_datastore_connection
-from soil_id.global_soil import list_soils_global, rank_soils_global, sg_list
+from soil_id.global_soil import list_soils_global, rank_soils_global
 
 test_locations = [
     {"lon": -1.4631, "lat": 7.3318},
@@ -27,7 +27,6 @@ test_locations = [
     {"lat": -10.07856, "lon": 15.107436},
 ]
 
-@pytest.mark.skip
 @pytest.mark.parametrize("location", test_locations)
 def test_soil_location(location):
     with get_datastore_connection() as connection:
@@ -41,10 +40,10 @@ def test_soil_location(location):
             location["lat"],
             list_output_data=list_soils_result,
             soilHorizon=["Loam"],
-            horizonDepth=[15],
+            topDepth=[0],
+            bottomDepth=[15],
             rfvDepth=[20],
             lab_Color=[[41.23035939, 3.623018224, 13.27654356]],
             bedrock=None,
             cracks=None,
         )
-        sg_list(location["lon"], location["lat"])

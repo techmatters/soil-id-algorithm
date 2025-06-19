@@ -35,7 +35,7 @@ result_file_name = os.path.join(
 )
 
 print(f"logging results to {result_file_name}")
-with open(result_file_name, "w") as result_file:
+with open(result_file_name, "w", buffering=1) as result_file:
     result_agg = {}
 
     for pedon_key, pedon in pedons:
@@ -52,12 +52,13 @@ with open(result_file_name, "w") as result_file:
         try:
             list_result = list_soils(lat=lat, lon=lon)
 
-            result_record["list_result"] = list_result.list_output_json
+            result_record["list_result"] = list_result.soil_list_json
             result_record["rank_result"] = rank_soils(
                 lat=lat,
                 lon=lon,
                 list_output_data=list_result,
-                horizonDepth=pedon["hzdepb"].values.tolist(),
+                topDepth=pedon["hzdept"].values.tolist(),
+                bottomDepth=pedon["hzdepb"].values.tolist(),
                 soilHorizon=pedon["textclass"].values.tolist(),
                 rfvDepth=pedon["fragvoltot"].values.tolist(),
                 lab_Color=pedon[["L", "a", "b"]].values.tolist(),
@@ -70,22 +71,15 @@ with open(result_file_name, "w") as result_file:
             result_record["traceback"] = traceback.format_exc()
         result_record["execution_time_s"] = time.perf_counter() - start_time
 
-        if "rank_result" in result_record:
-            matches = result_record["rank_result"]["soilRank"]
-            index = [
-                i
-                for i, match in enumerate(matches)
-                if match["component"].lower() == result_record["pedon_name"].lower()
-            ]
-            if len(index) == 0:
-                result_record["result"] = "missing"
-            else:
-                result_record["result"] = index[0] + 1
-        else:
-            result_record["result"] = "crash"
-
-        if result_record["result"] not in result_agg:
-            result_agg[result_record["result"]] = 0
-        result_agg[result_record["result"]] = result_agg[result_record["result"]] + 1
-
-        result_file.write(json.dumps(result_record) + "\n")
+        try:
+            result_file.write(json.dumps(result_record) + "\n")
+        except Exception:
+            result_record = {
+                "pedon_key": pedon_key[0],
+                "pedon_name": pedon["taxonname"].values[0],
+                "lat": lat,
+                "lon": lon,
+                "execution_time_s": time.perf_counter() - start_time,
+                "traceback": traceback.format_exc()
+            }
+            result_file.write(json.dumps(result_record) + "\n")

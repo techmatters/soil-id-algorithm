@@ -1230,10 +1230,10 @@ def calculate_distances_and_intersections(mu_geo, point):
     point_geometry = point_utm.geometry.iloc[0]
 
     # Calculate distances and intersections
-    distances = mu_geo_utm["geom"].distance(point_geometry)
-    intersects = mu_geo_utm["geom"].intersects(point_geometry)
+    distances = mu_geo_utm["geometry"].distance(point_geometry)
+    intersects = mu_geo_utm["geometry"].intersects(point_geometry)
     return pd.DataFrame(
-        {"hwsd2": mu_geo_utm["hwsd2"], "dist_meters": distances, "pt_intersect": intersects}
+        {"mukey": mu_geo_utm["MUKEY"], "dist_meters": distances, "pt_intersect": intersects}
     )
 
 

@@ -15,6 +15,7 @@
 
 import datetime
 import json
+import math
 import os
 import time
 import traceback
@@ -22,6 +23,16 @@ import traceback
 import pandas
 
 from soil_id.us_soil import list_soils, rank_soils
+
+
+def clean_soil_list_json(obj):
+    if isinstance(obj, float) and math.isnan(obj):
+        return None
+    elif isinstance(obj, dict):
+        return dict((k, clean_soil_list_json(v)) for k, v in obj.items())
+    elif isinstance(obj, (list, set, tuple)):
+        return list(map(clean_soil_list_json, obj))
+    return obj
 
 test_data_df = pandas.read_csv(
     os.path.join(os.path.dirname(__file__), "US_SoilID_KSSL_LPKS_Testing.csv")
@@ -71,15 +82,4 @@ with open(result_file_name, "w", buffering=1) as result_file:
             result_record["traceback"] = traceback.format_exc()
         result_record["execution_time_s"] = time.perf_counter() - start_time
 
-        try:
-            result_file.write(json.dumps(result_record) + "\n")
-        except Exception:
-            result_record = {
-                "pedon_key": pedon_key[0],
-                "pedon_name": pedon["taxonname"].values[0],
-                "lat": lat,
-                "lon": lon,
-                "execution_time_s": time.perf_counter() - start_time,
-                "traceback": traceback.format_exc()
-            }
-            result_file.write(json.dumps(result_record) + "\n")
+        result_file.write(json.dumps(clean_soil_list_json(result_record)) + "\n")

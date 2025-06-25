@@ -93,11 +93,32 @@ download-soil-data:
 	gdown 1K0GkqxhZiVUND6yfFmaI7tYanLktekyp; \
 	gdown 1z7foFFHv_mTsuxMYnfOQRvXT5LKYlYFN \
 
+DATABASE_DUMP_FILE ?= Data/soil_id_db.dump
 DOCKER_IMAGE_TAG ?= ghcr.io/techmatters/soil-id-db:latest
 build_docker_image:
 	@echo "Building to tag $(DOCKER_IMAGE_TAG)"
-	docker build -t $(DOCKER_IMAGE_TAG) .
+	docker build \
+	  --build-arg DATABASE_DUMP_FILE=$(DATABASE_DUMP_FILE) \
+	  -t $(DOCKER_IMAGE_TAG) \
+	  .
 
 push_docker_image:
 	@echo "Pushing tag $(DOCKER_IMAGE_TAG). Make sure to provide a versioned tag in addition to updating latest!"
 	docker push $(DOCKER_IMAGE_TAG)
+
+start_db:
+	docker compose up -d
+
+stop_db:
+	docker compose down
+
+connect_db:
+	docker compose exec db psql -U postgres -d soil_id
+
+dump_soil_id_db:
+	pg_dump --format=custom $(DATABASE_URL)  -t hwsd2_segment -t hwsd2_data -t landpks_munsell_rgb_lab -t normdist1 -t normdist2 -t wise_soil_data -t wrb2006_to_fao90 -t wrb_fao90_desc -f $(DATABASE_DUMP_FILE)
+
+restore_soil_id_db:
+	pg_restore --dbname=$(DATABASE_URL) --single-transaction --clean --if-exists --no-owner $(DATABASE_DUMP_FILE)
+	psql $(DATABASE_URL) -c "CLUSTER hwsd2_segment USING hwsd2_segment_shape_idx;"
+	psql $(DATABASE_URL) -c "ANALYZE;"

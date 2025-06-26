@@ -89,59 +89,6 @@ def get_soil_series_data(mucompdata_pd, OSD_compkind):
     return result
 
 
-def get_soilgrids_property_data(lon, lat):
-    # SoilGrids250
-    base_url = "https://rest.isric.org/soilgrids/v2.0/properties/query"
-    params = [
-        ("lon", lon),
-        ("lat", lat),
-        ("property", "cfvo"),
-        ("property", "cec"),
-        ("property", "clay"),
-        ("property", "phh2o"),
-        ("property", "sand"),
-        ("value", "mean"),
-    ]
-    result = None
-
-    try:
-        response = requests.get(base_url, params=params, timeout=160)
-        logging.info(f"{round(response.elapsed.total_seconds(), 2)}: {base_url}")
-        response.raise_for_status()
-        result = response.json()
-
-    except requests.ConnectionError as err:
-        logging.error(f"Soilgrids properties: failed to connect: {err}")
-    except requests.Timeout:
-        logging.error("Soilgrids properties: timed out")
-    except requests.RequestException as err:
-        logging.error(f"Soilgrids properties: error: {err}")
-
-    return result if result is not None else {"status": "unavailable"}
-
-
-def get_soilgrids_classification_data(lon, lat):
-    # Fetch SG wRB Taxonomy
-    base_url = "https://rest.isric.org/soilgrids/v2.0/classification/query"
-    params = [("lon", lon), ("lat", lat), ("number_classes", 3)]
-    result = None
-
-    try:
-        response = requests.get(base_url, params=params, timeout=160)
-        logging.info(f"{round(response.elapsed.total_seconds(), 2)}: {base_url}")
-        response.raise_for_status()
-        result = response.json()
-
-    except requests.ConnectionError as err:
-        logging.error(f"Soilgrids classification: failed to connect: {err}")
-    except requests.Timeout:
-        logging.error("Soilgrids classification: timed out")
-    except requests.RequestException as err:
-        logging.error(f"Soilgrids classification: error: {err}")
-
-    return result
-
-
 def get_soilweb_data(lon, lat):
     """
     Fetch SSURGO data from the SoilWeb API for a specified longitude and latitude.

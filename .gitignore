@@ -27,5 +27,6 @@ prof/
 
 # reference and output files
 Data/
+bulk_test_result*
 
 get-pip.py*

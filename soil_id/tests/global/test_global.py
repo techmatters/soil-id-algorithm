@@ -13,6 +13,37 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see https://www.gnu.org/licenses/.
 
+import logging
+import time
+import pytest
 
-def test_true():
-    assert True
+from soil_id.db import get_datastore_connection
+from soil_id.global_soil import list_soils_global, rank_soils_global
+
+test_locations = [
+    {"lon": -1.4631, "lat": 7.3318},
+    {"lat": -10.950086, "lon": 17.573093},
+    {"lat": 34.5, "lon": 69.16667},
+    {"lat": -10.07856, "lon": 15.107436},
+]
+
+@pytest.mark.parametrize("location", test_locations)
+def test_soil_location(location):
+    with get_datastore_connection() as connection:
+        logging.info(f"Testing {location['lon']}, {location['lat']}")
+        start_time = time.perf_counter()
+        list_soils_result = list_soils_global(connection, location["lon"], location["lat"])
+        logging.info(f"...time: {(time.perf_counter()-start_time):.2f}s")
+        rank_soils_global(
+            connection,
+            location["lon"],
+            location["lat"],
+            list_output_data=list_soils_result,
+            soilHorizon=["Loam"],
+            topDepth=[0],
+            bottomDepth=[15],
+            rfvDepth=[20],
+            lab_Color=[[41.23035939, 3.623018224, 13.27654356]],
+            bedrock=None,
+            cracks=None,
+        )

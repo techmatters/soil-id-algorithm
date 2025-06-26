@@ -13,14 +13,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see https://www.gnu.org/licenses/.
 
-import json
 import logging
 import re
 
 import pandas as pd
 import requests
-
-from .db import save_soilgrids_output
 
 
 def get_elev_data(lon, lat):
@@ -92,7 +89,7 @@ def get_soil_series_data(mucompdata_pd, OSD_compkind):
     return result
 
 
-def get_soilgrids_property_data(lon, lat, plot_id):
+def get_soilgrids_property_data(lon, lat):
     # SoilGrids250
     base_url = "https://rest.isric.org/soilgrids/v2.0/properties/query"
     params = [
@@ -119,14 +116,11 @@ def get_soilgrids_property_data(lon, lat, plot_id):
         logging.error("Soilgrids properties: timed out")
     except requests.RequestException as err:
         logging.error(f"Soilgrids properties: error: {err}")
-        if plot_id is not None:
-            # Assuming the function `save_soilgrids_output` exists elsewhere in the code
-            save_soilgrids_output(plot_id, 1, json.dumps({"status": "unavailable"}))
 
     return result if result is not None else {"status": "unavailable"}
 
 
-def get_soilgrids_classification_data(lon, lat, plot_id):
+def get_soilgrids_classification_data(lon, lat):
     # Fetch SG wRB Taxonomy
     base_url = "https://rest.isric.org/soilgrids/v2.0/classification/query"
     params = [("lon", lon), ("lat", lat), ("number_classes", 3)]
@@ -144,9 +138,6 @@ def get_soilgrids_classification_data(lon, lat, plot_id):
         logging.error("Soilgrids classification: timed out")
     except requests.RequestException as err:
         logging.error(f"Soilgrids classification: error: {err}")
-        if plot_id is not None:
-            # Assuming the function `save_soilgrids_output` exists elsewhere in the code
-            save_soilgrids_output(plot_id, 1, json.dumps({"status": "unavailable"}))
 
     return result
 

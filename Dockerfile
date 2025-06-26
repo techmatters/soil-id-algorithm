@@ -45,7 +45,7 @@ RUN echo "local   all             all                                     trust"
  && chown ${POSTGRES_USER}:${POSTGRES_USER} /var/lib/postgresql/data/pg_hba.conf
 
 ENV POSTGRES_DB=${POSTGRES_DB}
-ENV POSTGRES_USER={POSTGRES_USER}
+ENV POSTGRES_USER=${POSTGRES_USER}
 ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 
 USER ${POSTGRES_USER}

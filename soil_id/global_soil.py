@@ -17,7 +17,6 @@ import collections
 import io
 
 # Standard libraries
-import logging
 import re
 from dataclasses import dataclass
 
@@ -26,8 +25,7 @@ import numpy as np
 import pandas as pd
 
 from .color import calculate_deltaE2000
-from .db import extract_hwsd2_data, fetch_table_from_db, get_WRB_descriptions, getSG_descriptions
-from .services import get_soilgrids_classification_data, get_soilgrids_property_data
+from .db import extract_hwsd2_data, fetch_normdist
 from .utils import (
     adjust_depth_interval,
     agg_data_layer,
@@ -42,10 +40,7 @@ from .utils import (
     gower_distances,
     max_comp_depth,
     pedon_color,
-    silt_calc,
 )
-
-# local libraries
 
 
 @dataclass
@@ -56,21 +51,13 @@ class SoilListOutputData:
 
 
 # entry points
-# getSoilLocationBasedGlobal
-# list_soils
-# rank_soils
-# rankPredictionGlobal
-# getSoilGridsGlobal
-# getSoilGridsUS
+# list_soils_global
+# rank_soils_global
 
-# when a site is created, call list_soils/getSoilLocationBasedGlobal.
-# when a site is created, call getSoilGridsGlobal
-# after user has collected data, call rank_soils/rankPredictionGlobal.
+# when a site is created, call list_soils_global
+# after user has collected data, call rank_soils_global
 
 
-##################################################################################################
-#                                 getSoilLocationBasedGlobal                                     #
-##################################################################################################
 def list_soils_global(connection, lon, lat, buffer_dist=100000):
     # Extract HWSD2 Data
     try:
@@ -78,7 +65,6 @@ def list_soils_global(connection, lon, lat, buffer_dist=100000):
             connection,
             lon,
             lat,
-            table_name="hwsdv2",
             buffer_dist=buffer_dist,
         )
     except KeyError:
@@ -437,16 +423,6 @@ def list_soils_global(connection, lon, lat, buffer_dist=100000):
     # Replace NaN values with an empty string
     mucompdata_cond_prob = mucompdata_cond_prob.fillna("")
 
-    # Merge component descriptions
-    WRB_Comp_Desc = get_WRB_descriptions(
-        connection,
-        mucompdata_cond_prob["compname_grp"].drop_duplicates().tolist()
-    )
-
-    mucompdata_cond_prob = pd.merge(
-        mucompdata_cond_prob, WRB_Comp_Desc, left_on="compname_grp", right_on="WRB_tax", how="left"
-    )
-
     mucompdata_cond_prob = mucompdata_cond_prob.drop_duplicates().reset_index(drop=True)
     mucomp_index = mucompdata_cond_prob.index
 
@@ -460,19 +436,6 @@ def list_soils_global(connection, lon, lat, buffer_dist=100000):
                 "distance": round(row.distance, 3),
                 "minCompDistance": row.min_dist,
                 "soilDepth": row.c_very_bottom,
-            },
-            "siteDescription": {
-                key: row[key]
-                for key in [
-                    "Description_en",
-                    "Management_en",
-                    "Description_es",
-                    "Management_es",
-                    "Description_ks",
-                    "Management_ks",
-                    "Description_fr",
-                    "Management_fr",
-                ]
             },
         }
         for _, row in mucompdata_cond_prob.iterrows()
@@ -574,13 +537,8 @@ def list_soils_global(connection, lon, lat, buffer_dist=100000):
     )
 
 
-##############################################################################################
-#                                   rankPredictionGlobal                                     #
-##############################################################################################
 def rank_soils_global(
     connection,
-    lon,
-    lat,
     list_output_data: SoilListOutputData,
     soilHorizon,
     topDepth,
@@ -954,7 +912,7 @@ def rank_soils_global(
     ysf = []
 
     # Load color distribution data from NormDist2 (FAO90) table
-    rows = fetch_table_from_db(connection, "NormDist2")
+    rows = fetch_normdist(connection)
     row_id = 0
     for row in rows:
         # row is a tuple; iterate over its values.
@@ -1027,7 +985,9 @@ def rank_soils_global(
         # Normalize probabilities
         def normalize(arr):
             min_val, max_val = np.min(arr), np.max(arr)
-            return (arr - min_val) / (max_val - min_val) if max_val != min_val else np.ones_like(arr)
+            return (
+                (arr - min_val) / (max_val - min_val) if max_val != min_val else np.ones_like(arr)
+            )
 
         prob_w = normalize(prob_w)
         prob_r = normalize(prob_r)
@@ -1253,259 +1213,3 @@ def rank_soils_global(
     }
 
     return output_data
-
-
-##################################################################################################
-#                                          getSoilGridsGlobal                                    #
-##################################################################################################
-
-
-def sg_list(connection, lon, lat):
-    """
-    Query the SoilGrids API (via get_soilgrids_property_data) and post-process
-    the returned JSON into a structured dictionary that includes:
-
-    1. Soil horizons data (sand, clay, cfvo, pH, cec, silt, texture) at multiple depths.
-    2. Classification probabilities and descriptions (WRB taxonomy).
-    3. Summarized or aggregated soil variables, with depth tracking.
-
-    Args:
-        lon (float): Longitude in decimal degrees (WGS84).
-        lat (float): Latitude in decimal degrees (WGS84).
-
-    Returns:
-        dict: A nested dictionary with:
-            - "status": "unavailable" if needed columns are missing or data is invalid
-            - "metadata": Info about location, model version, and units
-            - "soilGrids": Detailed data on horizons, classification, etc.
-    """
-    # 1. Call the SoilGrids API for the specified lon/lat
-    sg_out = get_soilgrids_property_data(lon, lat)
-
-    if not sg_out or (isinstance(sg_out, dict) and sg_out.get("status") == "unavailable"):
-        logging.warning("No data returned from SoilGrids API.")
-        return {"status": "unavailable"}
-
-    # 2. Extract arrays/lists of relevant data from the JSON.
-    #    The new JSON structure nests data under properties -> layers -> depths.
-    try:
-        layers = sg_out.get("properties", {}).get("layers", [])
-        top_depths = []
-        bottom_depths = []
-        values = []
-        names = []
-        for layer in layers:
-            prop_name = layer.get("name")
-            for depth in layer.get("depths", []):
-                depth_range = depth.get("range", {})
-                # Append the top and bottom depths
-                top_depths.append(depth_range.get("top_depth"))
-                bottom_depths.append(depth_range.get("bottom_depth"))
-                # Append the mean value (from the "values" dict)
-                mean_value = depth.get("values", {}).get("mean")
-                values.append(mean_value)
-                # Save the property name (e.g., "cec", "cfvo", "clay", etc.)
-                names.append(prop_name)
-    except Exception as e:
-        logging.error(f"Error extracting values from SoilGrids JSON: {e}")
-        return {"status": "unavailable"}
-
-    # 3. Basic checks to ensure we have enough data
-    if not top_depths or not bottom_depths or not names or not values:
-        logging.warning("Missing required depth or property data in SoilGrids response.")
-        return {"status": "unavailable"}
-
-    # In case bottom_depths is too short to do iloc[-1], handle gracefully
-    try:
-        bottom = pd.Series(bottom_depths, name="bottom_depth").iloc[-1]
-    except IndexError:
-        logging.warning("No bottom_depth found in the data.")
-        return {"status": "unavailable"}
-
-    # 4. Convert extracted lists to DataFrames
-    df_top_depth = pd.DataFrame(top_depths, columns=["top_depth"])
-    df_bottom_depth = pd.DataFrame(bottom_depths, columns=["bottom_depth"])
-    df_values = pd.DataFrame(values, columns=["value"])
-
-    # The code assumes each property repeats over the same set of depths.
-    n_depths = len(df_top_depth)
-    if len(names) % n_depths != 0:
-        logging.warning(
-            "Number of property names isn't a multiple of the number of depths. Check data."
-        )
-    df_names = pd.DataFrame(names, columns=["prop"])
-
-    # 5. Combine everything into a single DataFrame.
-    #    If the lengths differ, take the minimum length.
-    min_len = min(len(df_names), len(df_top_depth), len(df_bottom_depth), len(df_values))
-    df_names = df_names.iloc[:min_len].reset_index(drop=True)
-    df_top_depth = df_top_depth.iloc[:min_len].reset_index(drop=True)
-    df_bottom_depth = df_bottom_depth.iloc[:min_len].reset_index(drop=True)
-    df_values = df_values.iloc[:min_len].reset_index(drop=True)
-
-    sg_data = pd.concat([df_names, df_top_depth, df_bottom_depth, df_values], axis=1)
-
-    # 6. Pivot the data into a wide form with each property as a column.
-    try:
-        sg_data_w = sg_data.pivot_table(
-            index="bottom_depth",
-            columns="prop",
-            values="value",
-            aggfunc="first",  # Change the aggregator if needed
-        )
-    except Exception as e:
-        logging.error(f"Error pivoting the data: {e}")
-        return {"status": "unavailable"}
-
-    # 7. Attach the 'hzdept_r' and 'hzdepb_r' columns (the top & bottom depths)
-    unique_depths = sg_data.drop_duplicates(subset="bottom_depth")
-    bottom_to_top_map = dict(zip(unique_depths["bottom_depth"], unique_depths["top_depth"]))
-    sg_data_w["hzdept_r"] = sg_data_w.index.map(bottom_to_top_map)
-    sg_data_w["hzdepb_r"] = sg_data_w.index
-    sg_data_w.reset_index(drop=True, inplace=True)
-
-    # 8. Check if we have valid data for key columns (e.g., sand, clay, cfvo).
-    needed_cols = {"sand", "clay", "cfvo"}
-    missing_cols = needed_cols - set(sg_data_w.columns)
-    if missing_cols:
-        logging.warning(f"Missing columns: {missing_cols}. Data might be incomplete.")
-        if len(missing_cols) == len(needed_cols):
-            return {"status": "unavailable"}
-    existing_needed_cols = needed_cols & set(sg_data_w.columns)
-    if sg_data_w[list(existing_needed_cols)].isnull().all().all():
-        return {"status": "unavailable"}
-
-    # 9. Scale certain columns by 0.1 (as in the original code)
-    cols_to_multiply = ["sand", "clay", "cfvo", "phh2o", "cec"]
-    for col in cols_to_multiply:
-        if col in sg_data_w.columns:
-            sg_data_w[col] = sg_data_w[col] * 0.1
-
-    # 10. Calculate silt and texture if not already present.
-    if "silt" not in sg_data_w.columns:
-        sg_data_w["silt"] = sg_data_w.apply(silt_calc, axis=1)
-    if "texture" not in sg_data_w.columns:
-        sg_data_w["texture"] = sg_data_w.apply(getTexture, axis=1)
-
-    # 11. Get WRB classification & probabilities
-    sg_tax = get_soilgrids_classification_data(lon, lat)
-    if sg_tax:
-        try:
-            sg_tax_prob = pd.DataFrame(sg_tax["wrb_class_probability"], columns=["WRB_tax", "Prob"])
-            sg_tax_prob.sort_values("Prob", ascending=False, inplace=True)
-
-            # Merge with descriptive info
-            WRB_Comp_Desc = getSG_descriptions(connection, sg_tax_prob["WRB_tax"].tolist())
-            TAXNWRB_pd = pd.merge(sg_tax_prob, WRB_Comp_Desc, on="WRB_tax", how="left")
-
-            # Only handle top 3 entries (or fewer if less are returned)
-            ranks_needed = min(3, len(TAXNWRB_pd))
-            TAXNWRB_pd = TAXNWRB_pd.head(ranks_needed)
-            TAXNWRB_pd.index = [f"Rank{i + 1}" for i in range(ranks_needed)]
-        except Exception as e:
-            logging.error(f"Error processing WRB classification: {e}")
-            TAXNWRB_pd = pd.DataFrame(
-                {
-                    "WRB_tax": [""],
-                    "Prob": [""],
-                    "Description_en": [""],
-                    "Management_en": [""],
-                    "Description_es": [""],
-                    "Management_es": [""],
-                    "Description_ks": [""],
-                    "Management_ks": [""],
-                    "Description_fr": [""],
-                    "Management_fr": [""],
-                }
-            )
-    else:
-        TAXNWRB_pd = pd.DataFrame(
-            {
-                "WRB_tax": [""],
-                "Prob": [""],
-                "Description_en": [""],
-                "Management_en": [""],
-                "Description_es": [""],
-                "Management_es": [""],
-                "Description_ks": [""],
-                "Management_ks": [""],
-                "Description_fr": [""],
-                "Management_fr": [""],
-            }
-        )
-
-    # 12. Gather aggregated values for each property
-    depths = sg_data_w["hzdepb_r"]
-    sand_pd = sg_data_w["sand"]
-    clay_pd = sg_data_w["clay"]
-    rfv_pd = sg_data_w["cfvo"]
-    pH_pd = sg_data_w["phh2o"]
-    cec_pd = sg_data_w["cec"]
-    # 13. Additional texture calculations from aggregated values
-    texture_pd = pd.DataFrame({"sand": sand_pd, "clay": clay_pd})
-    texture_pd["sand"] = pd.to_numeric(texture_pd["sand"], errors="coerce")
-    texture_pd["clay"] = pd.to_numeric(texture_pd["clay"], errors="coerce")
-    texture_pd["silt"] = texture_pd.apply(silt_calc, axis=1)
-    texture_pd = texture_pd.apply(getTexture, axis=1).replace([None], "")
-
-    # 14. Build the WRB classification dictionary (components)
-    component_keys = [
-        "compname",
-        "probability",
-        "descriptionEN",
-        "managementEN",
-        "descriptionES",
-        "managementES",
-        "descriptionKS",
-        "managementKS",
-        "descriptionFR",
-        "managementFR",
-    ]
-    component_values = [
-        TAXNWRB_pd["WRB_tax"],
-        TAXNWRB_pd["Prob"],
-        TAXNWRB_pd.get("Description_en", ""),
-        TAXNWRB_pd.get("Management_en", ""),
-        TAXNWRB_pd.get("Description_es", ""),
-        TAXNWRB_pd.get("Management_es", ""),
-        TAXNWRB_pd.get("Description_ks", ""),
-        TAXNWRB_pd.get("Management_ks", ""),
-        TAXNWRB_pd.get("Description_fr", ""),
-        TAXNWRB_pd.get("Management_fr", ""),
-    ]
-    components_dict = {}
-    for k, v in zip(component_keys, component_values):
-        components_dict[k] = dict(zip(v.index, v.values))
-
-    # 15. Create the final SoilGrids dictionary.
-    SoilGrids = {
-        "components": components_dict,
-        "bottom_depth": dict(zip(depths.index, depths)),
-        "bedrock": bottom,
-    }
-    remaining_keys = ["texture", "sand", "clay", "rock_fragments", "ph", "cec"]
-    remaining_values = [
-        texture_pd,
-        sand_pd,
-        clay_pd,
-        rfv_pd,
-        pH_pd,
-        cec_pd,
-    ]
-    for k, v in zip(remaining_keys, remaining_values):
-        SoilGrids[k] = dict(zip(v.index, v.values))
-
-    # 16. Define metadata and return the final dictionary.
-    metadata = {
-        "location": "global",
-        "model": "v1",
-        "unit_measure": {
-            "depth": "cm",
-            "cec": "cmol(c)/kg",
-            "clay": "%",
-            "rock_fragments": "cm3/100cm3",
-            "sand": "%",
-        },
-    }
-
-    return {"metadata": metadata, "soilGrids": SoilGrids}

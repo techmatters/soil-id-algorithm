@@ -25,10 +25,9 @@ import numpy as np
 import pandas as pd
 from pandas import json_normalize
 
-# local libraries
-import soil_id.config
 
 from .color import getProfileLAB, lab2munsell, munsell2rgb
+from .db import fetch_munsell_rgb_lab
 from .services import get_soil_series_data, get_soilweb_data, sda_return, get_elev_data
 from .soil_sim import soil_sim
 from .utils import (
@@ -79,9 +78,9 @@ class SoilListOutputData:
 ############################################################################################
 #                                   list_soils                                 #
 ############################################################################################
-def list_soils(lon, lat):
+def list_soils(connection, lon, lat):
     # Load in LAB to Munsell conversion look-up table
-    color_ref = pd.read_csv(soil_id.config.MUNSELL_RGB_LAB_PATH)
+    color_ref = fetch_munsell_rgb_lab(connection)
     LAB_ref = color_ref[["cielab_l", "cielab_a", "cielab_b"]]
     munsell_ref = color_ref[["hue", "value", "chroma"]]
 

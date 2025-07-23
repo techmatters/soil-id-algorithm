@@ -18,6 +18,7 @@ import time
 
 import pytest
 
+from soil_id.db import get_datastore_connection
 from soil_id.us_soil import list_soils, rank_soils
 
 test_locations = [
@@ -55,7 +56,7 @@ def test_soil_location(location):
     cracks = False
 
     start_time = time.perf_counter()
-    list_soils_result = list_soils(location["lon"], location["lat"])
+    list_soils_result = list_soils(get_datastore_connection(), location["lon"], location["lat"])
     logging.info(f"...time: {(time.perf_counter() - start_time):.2f}s")
     rank_soils(
         location["lon"],
@@ -74,7 +75,9 @@ def test_soil_location(location):
 
 
 def test_empty_rank():
-    SoilListOutputData = list_soils(test_locations[0]["lon"], test_locations[0]["lat"])
+    SoilListOutputData = list_soils(
+        get_datastore_connection(), test_locations[0]["lon"], test_locations[0]["lat"]
+    )
     rank_soils(
         test_locations[0]["lon"],
         test_locations[0]["lat"],

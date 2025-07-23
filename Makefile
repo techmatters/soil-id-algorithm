@@ -73,7 +73,6 @@ process_bulk_test_results_legacy:
 	python -m soil_id.tests.legacy.process_bulk_test_results $(RESULTS_FILE)
 
 # Donwload Munsell CSV, SHX, SHP, SBX, SBN, PRJ, DBF
-# 1tN23iVe6X1fcomcfveVp4w3Pwd0HJuTe: LandPKS_munsell_rgb_lab.csv
 # 1WUa9e3vTWPi6G8h4OI3CBUZP5y7tf1Li: gsmsoilmu_a_us.shx
 # 1l9MxC0xENGmI_NmGlBY74EtlD6SZid_a: gsmsoilmu_a_us.shp
 # 1asGnnqe0zI2v8xuOszlsNmZkOSl7cJ2n: gsmsoilmu_a_us.sbx
@@ -84,7 +83,6 @@ process_bulk_test_results_legacy:
 download-soil-data:
 	mkdir -p Data
 	cd Data; \
-	gdown 1tN23iVe6X1fcomcfveVp4w3Pwd0HJuTe; \
 	gdown 1WUa9e3vTWPi6G8h4OI3CBUZP5y7tf1Li; \
 	gdown 1l9MxC0xENGmI_NmGlBY74EtlD6SZid_a; \
 	gdown 1asGnnqe0zI2v8xuOszlsNmZkOSl7cJ2n; \

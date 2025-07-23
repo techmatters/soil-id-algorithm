@@ -26,7 +26,7 @@ import numpy as np
 import pandas as pd
 
 from .color import calculate_deltaE2000
-from .db import extract_hwsd2_data, fetch_table_from_db, get_WRB_descriptions, getSG_descriptions
+from .db import extract_hwsd2_data, fetch_normdist, get_WRB_descriptions, getSG_descriptions
 from .services import get_soilgrids_classification_data, get_soilgrids_property_data
 from .utils import (
     adjust_depth_interval,
@@ -954,7 +954,7 @@ def rank_soils_global(
     ysf = []
 
     # Load color distribution data from NormDist2 (FAO90) table
-    rows = fetch_table_from_db(connection, "NormDist2")
+    rows = fetch_normdist(connection)
     row_id = 0
     for row in rows:
         # row is a tuple; iterate over its values.

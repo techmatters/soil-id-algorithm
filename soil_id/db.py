@@ -374,10 +374,9 @@ def extract_hwsd2_data(connection, lon, lat, buffer_dist, table_name):
 
 
 # Function to fetch data from a PostgreSQL table
-def fetch_table_from_db(connection, table_name):
+def query_db(connection, query):
     try:
         with connection.cursor() as cur:
-            query = f"SELECT * FROM {table_name} ORDER BY id ASC;"
             cur.execute(query)
             rows = cur.fetchall()
 
@@ -426,6 +425,8 @@ def get_WRB_descriptions(connection, WRB_Comp_List):
     except Exception as err:
         logging.error(f"Error querying PostgreSQL: {err}")
         return None
+def fetch_normdist(connection):
+    return query_db(connection, "SELECT * FROM normdist2 ORDER BY id ASC;")
 
 
 # global only
@@ -516,3 +517,5 @@ def getSG_descriptions(connection, WRB_Comp_List):
     except Exception as err:
         logging.error(f"Error querying PostgreSQL: {err}")
         return None
+def fetch_munsell_rgb_lab(connection):
+    return pd.read_sql_query("SELECT * FROM landpks_munsell_rgb_lab;", connection)

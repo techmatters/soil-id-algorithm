@@ -118,6 +118,7 @@ dump_soil_id_db:
 	pg_dump --format=custom $(DATABASE_URL)  -t hwsd2_segment -t hwsd2_data -t landpks_munsell_rgb_lab -t normdist1 -t normdist2 -t wise_soil_data -t wrb2006_to_fao90 -t wrb_fao90_desc -f $(DATABASE_DUMP_FILE)
 
 restore_soil_id_db:
-	pg_restore --dbname=$(DATABASE_URL) --single-transaction --clean --if-exists --no-owner $(DATABASE_DUMP_FILE)
+	psql $(DATABASE_URL) -c "CREATE EXTENSION IF NOT EXISTS postgis;"
+	pg_restore --dbname=$(DATABASE_URL) --clean --if-exists --no-owner --verbose $(DATABASE_DUMP_FILE)
 	psql $(DATABASE_URL) -c "CLUSTER hwsd2_segment USING hwsd2_segment_shape_idx;"
 	psql $(DATABASE_URL) -c "ANALYZE;"

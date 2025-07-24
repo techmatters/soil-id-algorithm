@@ -25,10 +25,8 @@ import numpy as np
 import pandas as pd
 from pandas import json_normalize
 
-# local libraries
-import soil_id.config
-
 from .color import getProfileLAB, lab2munsell, munsell2rgb
+from .db import fetch_munsell_rgb_lab
 from .services import get_soil_series_data, get_soilweb_data, sda_return, get_elev_data
 from .soil_sim import soil_sim
 from .utils import (
@@ -55,15 +53,11 @@ from .utils import (
 )
 
 # entry points
-# getSoilLocationBasedGlobal
 # list_soils
 # rank_soils
-# rankPredictionGlobal
-# getSoilGridsGlobal
 
-# when a site is created, call list_soils/getSoilLocationBasedGlobal.
-# when a site is created, call getSoilGridsGlobal
-# after user has collected data, call rank_soils/rankPredictionGlobal.
+# when a site is created, call list_soils
+# after user has collected data, call rank_soils
 
 # set Pandas dataframe options
 pd.set_option("future.no_silent_downcasting", True)
@@ -76,12 +70,9 @@ class SoilListOutputData:
     map_unit_component_data_csv: str
 
 
-############################################################################################
-#                                   list_soils                                 #
-############################################################################################
-def list_soils(lon, lat):
+def list_soils(connection, lon, lat):
     # Load in LAB to Munsell conversion look-up table
-    color_ref = pd.read_csv(soil_id.config.MUNSELL_RGB_LAB_PATH)
+    color_ref = fetch_munsell_rgb_lab(connection)
     LAB_ref = color_ref[["cielab_l", "cielab_a", "cielab_b"]]
     munsell_ref = color_ref[["hue", "value", "chroma"]]
 
@@ -1538,9 +1529,6 @@ def list_soils(lon, lat):
     )
 
 
-##############################################################################################
-#                                   rank_soils                                         #
-##############################################################################################
 def rank_soils(
     lon,
     lat,
@@ -2046,7 +2034,7 @@ def rank_soils(
 
     # Concatenate the sorted and ranked groups
     D_final = pd.concat(soilIDList_data).reset_index(drop=True)
-    
+
     # Merge with the Rank_Filter data
     D_final = pd.merge(D_final, Rank_Filter, on="compname", how="left")
 

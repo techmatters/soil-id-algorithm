@@ -32,131 +32,16 @@ def get_datastore_connection():
     Returns:
         Connection object if successful, otherwise exits the program.
     """
-    conn = None
     try:
-        conn = psycopg.connect(
+        return psycopg.connect(
             host=soil_id.config.DB_HOST,
             user=soil_id.config.DB_USERNAME,
             password=soil_id.config.DB_PASSWORD,
             dbname=soil_id.config.DB_NAME,
         )
-        return conn
     except Exception as err:
         logging.error(f"Database connection failed: {err}")
         raise
-
-
-# us, global
-def save_model_output(
-    plot_id, model_version, result_blob, soilIDRank_output_pd, mucompdata_cond_prob
-):
-    """
-    Save the output of the model to the 'landpks_soil_model' table.
-    """
-    conn = None
-    try:
-        conn = get_datastore_connection()
-        cur = conn.cursor()
-
-        sql = """
-        INSERT INTO landpks_soil_model
-        (plot_id, model_version, result_blob, soilIDRank_output_pd, mucompdata_cond_prob)
-        VALUES (%s, %s, %s, %s, %s)
-        """
-        cur.execute(
-            sql,
-            (
-                plot_id,
-                model_version,
-                result_blob,
-                soilIDRank_output_pd,
-                mucompdata_cond_prob,
-            ),
-        )
-        conn.commit()
-
-    except Exception as err:
-        logging.error(err)
-        conn.rollback()
-        return None
-    finally:
-        conn.close()
-
-
-# us, global
-def save_rank_output(record_id, model_version, rank_blob):
-    """
-    Update the rank of the soil model in the 'landpks_soil_model' table.
-    """
-    conn = None
-    try:
-        conn = get_datastore_connection()
-        cur = conn.cursor()
-
-        sql = """UPDATE landpks_soil_model
-                 SET soilrank = %s
-                 WHERE ID = %s AND model_version = %s"""
-        cur.execute(sql, (rank_blob, record_id, model_version))
-        conn.commit()
-
-    except Exception as err:
-        logging.error(err)
-        conn.rollback()
-        return None
-    finally:
-        conn.close()
-
-
-# us, global
-def load_model_output(plot_id):
-    """
-    Load model output based on plot ID and model version.
-    """
-    conn = None
-    try:
-        conn = get_datastore_connection()
-        cur = conn.cursor()
-        model_version = 2
-        sql = """SELECT ID, result_blob, soilIDRank_output_pd, mucompdata_cond_prob
-                  FROM  landpks_soil_model
-                  WHERE plot_id = %s AND model_version = %s
-                  ORDER BY ID DESC LIMIT 1"""
-        cur.execute(sql, plot_id, model_version)
-        results = cur.fetchall()
-        for row in results:
-            model_run = [row[0], row[1], row[2], row[3]]
-        return model_run
-    except Exception as err:
-        logging.error(err)
-        return None
-    finally:
-        conn.close()
-
-
-# global only
-def save_soilgrids_output(plot_id, model_version, soilgrids_blob):
-    """
-    Save the output of the soil grids to the 'landpks_soilgrids_model' table.
-    """
-    conn = None
-    try:
-        conn = get_datastore_connection()
-        cur = conn.cursor()
-
-        sql = """
-        INSERT INTO landpks_soilgrids_model
-        (plot_id, model_version, soilgrids_blob)
-        VALUES (%s, %s, %s)
-        """
-        cur.execute(sql, (plot_id, model_version, soilgrids_blob))
-        conn.commit()
-
-    except Exception as err:
-        logging.error(err)
-        conn.rollback()
-        return None
-    finally:
-        conn.close()
 
 
 def get_hwsd2_profile_data(connection, hwsd2_mu_select):
@@ -219,7 +104,7 @@ def get_hwsd2_profile_data(connection, hwsd2_mu_select):
         return pd.DataFrame()
 
 
-def extract_hwsd2_data(connection, lon, lat, buffer_dist, table_name):
+def extract_hwsd2_data(connection, lon, lat, buffer_dist):
     """
     Fetches HWSD soil data from a PostGIS table within a given buffer around a point,
     performing distance and intersection calculations directly on geographic coordinates.
@@ -228,149 +113,36 @@ def extract_hwsd2_data(connection, lon, lat, buffer_dist, table_name):
         lon (float): Longitude of the problem point.
         lat (float): Latitude of the problem point.
         buffer_dist (int): Buffer distance in meters.
-        table_name (str): Name of the PostGIS table (e.g., "hwsdv2").
 
     Returns:
-        DataFrame: Merged data from hwsdv2 and hwsdv2_data.
+        DataFrame: Merged data from hwsd2_segment and hwsd2_data.
     """
-    # Compute the buffer polygon (in WKT) around the problem point.
-    # Here, we use the geography type to compute a buffer in meters,
-    # then cast it back to geometry in EPSG:4326.
-    # buffer_query = """
-    #     WITH buffer AS (
-    #       SELECT ST_AsText(
-    #                ST_Buffer(
-    #                  ST_SetSRID(ST_Point(%s, %s), 4326)::geography,
-    #                  %s
-    #                )::geometry
-    #              ) AS wkt
-    #     )
-    #     SELECT wkt FROM buffer;
-    # """
-    with connection.cursor():
-        # cur.execute(buffer_query, (lon, lat, buffer_dist))
-        # buffer_wkt = cur.fetchone()[0]
-        # print("Buffer WKT:", buffer_wkt)
+    point = f"ST_SetSRID(ST_Point({lon}, {lat}), 4326)::geography"
+    main_query = f"""
+        SELECT
+            hwsd2_id as hwsd2,
+            MIN(ST_Distance(
+                shape,
+                {point}
+            )) AS distance,
+            BOOL_OR(ST_Intersects(shape, {point})) AS pt_intersect
+        FROM hwsd2_segment
+        WHERE ST_DWithin(shape, {point}, {buffer_dist})
+        GROUP BY hwsd2_id;
+    """
 
-        # Build the main query that uses the computed buffer.
-        # Distance is computed by casting geometries to geography,
-        # which returns the geodesic distance in meters.
-        # Q1
-        # main_query = f"""
-        #     WITH
-        #     -- Step 1: Get the polygon that contains the point
-        #     point_poly AS (
-        #         SELECT geom
-        #         FROM {table_name}
-        #         WHERE ST_Intersects(
-        #             geom,
-        #             ST_SetSRID(ST_Point({lon}, {lat}), 4326)
-        #         )
-        #     ),
+    # Use GeoPandas to execute the main query and load results into a GeoDataFrame.
+    hwsd = pd.read_sql_query(main_query, connection)
 
-        #     -- Step 2: Get polygons that intersect the buffer
-        #     valid_geom AS (
-        #         SELECT
-        #             hwsd2,
-        #             geom
-        #         FROM {table_name}
-        #         WHERE geom && ST_GeomFromText('{buffer_wkt}', 4326)
-        #         AND ST_Intersects(geom, ST_GeomFromText('{buffer_wkt}', 4326))
-        #     )
+    # Get the list of hwsd2 identifiers.
+    hwsd2_mu_select = hwsd["hwsd2"].tolist()
 
-        #     -- Step 3: Filter to those that either contain the point or border the point's polygon
-        #     SELECT
-        #         vg.hwsd2,
-        #         ST_AsEWKB(vg.geom) AS geom,
-        #         ST_Distance(
-        #             vg.geom::geography,
-        #             ST_SetSRID(ST_Point({lon}, {lat}), 4326)::geography
-        #         ) AS distance,
-        #         ST_Intersects(
-        #             vg.geom,
-        #             ST_SetSRID(ST_Point({lon}, {lat}), 4326)
-        #         ) AS pt_intersect
-        #     FROM valid_geom vg, point_poly pp
-        #     WHERE
-        #         ST_Intersects(vg.geom, ST_SetSRID(ST_Point({lon}, {lat}), 4326))
-        #         OR ST_Intersects(vg.geom, pp.geom);
-        # """
- 
-        # # Q2
-        # main_query = f"""
-        #     WITH 
-        #     inputs AS (
-        #         SELECT
-        #             ST_GeomFromText('{buffer_wkt}', 4326) AS buffer_geom,
-        #             ST_SetSRID(ST_Point({lon}, {lat}), 4326) AS pt_geom
-        #     ),
+    # Call get_hwsd2_profile_data using the same connection.
+    hwsd_data = get_hwsd2_profile_data(connection, hwsd2_mu_select)
 
-        #     valid_geom AS (
-        #         SELECT
-        #             hwsd2,
-        #             geom
-        #         FROM {table_name}, inputs
-        #         WHERE geom && inputs.buffer_geom
-        #         AND ST_Intersects(geom, inputs.buffer_geom)
-        #     )
-
-        #     SELECT
-        #         vg.hwsd2,
-        #         ST_AsEWKB(vg.geom) AS geom,
-        #         ST_Distance(
-        #             ST_ClosestPoint(vg.geom::geography, inputs.pt_geom::geography),
-        #             inputs.pt_geom::geography
-        #         ) AS distance,
-        #         ST_Intersects(vg.geom, inputs.pt_geom) AS pt_intersect
-        #     FROM valid_geom vg, inputs;
-        # """
-
-        # Q3
-        # point = f"ST_SetSRID(ST_Point({lon}, {lat}), 4326)"
-        # main_query = f"""
-        #     SELECT
-        #         geom,
-        #         hwsd2,
-        #         ST_Distance(
-        #             geom::geography,
-        #             {point}::geography
-        #         ) AS distance,
-        #         ST_Intersects(geom, {point}) AS pt_intersect
-        #     FROM {table_name}
-        #     WHERE ST_DWithin(geom::geography, {point}::geography, {buffer_dist});
-        # """
-
-
-        # Q4
-        point = f"ST_SetSRID(ST_Point({lon}, {lat}), 4326)::geography"
-        main_query = f"""
-            SELECT
-                hwsd2_id as hwsd2,
-                MIN(ST_Distance(
-                    shape,
-                    {point}
-                )) AS distance,
-                BOOL_OR(ST_Intersects(shape, {point})) AS pt_intersect
-            FROM hwsd2_segment
-            WHERE ST_DWithin(shape, {point}, {buffer_dist})
-            GROUP BY hwsd2_id;
-        """
-        
-        # Use GeoPandas to execute the main query and load results into a GeoDataFrame.
-        hwsd = pd.read_sql_query(main_query, connection)
-
-        # Get the list of hwsd2 identifiers.
-        hwsd2_mu_select = hwsd["hwsd2"].tolist()
-
-        # Call get_hwsd2_profile_data using the same connection.
-        hwsd_data = get_hwsd2_profile_data(connection, hwsd2_mu_select)
-
-        # Merge the two datasets.
-        merged = pd.merge(hwsd_data, hwsd, on="hwsd2", how="left").drop_duplicates()
-        return merged
-
-
-# global
+    # Merge the two datasets.
+    merged = pd.merge(hwsd_data, hwsd, on="hwsd2", how="left").drop_duplicates()
+    return merged
 
 
 # Function to fetch data from a PostgreSQL table
@@ -387,44 +159,6 @@ def query_db(connection, query):
         return None
 
 
-def get_WRB_descriptions(connection, WRB_Comp_List):
-    """
-    Retrieve WRB descriptions based on provided WRB component list.
-    """
-    try:
-        with connection.cursor() as cur:
-
-            # Create placeholders for the SQL IN clause
-            placeholders = ", ".join(["%s"] * len(WRB_Comp_List))
-            sql = f"""SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es,
-                             Description_ks, Management_ks, Description_fr, Management_fr
-                      FROM wrb_fao90_desc
-                      WHERE WRB_tax IN ({placeholders})"""
-
-            # Execute the query with the parameters
-            cur.execute(sql, tuple(WRB_Comp_List))
-            results = cur.fetchall()
-
-        # Convert the results to a pandas DataFrame
-        data = pd.DataFrame(
-            results,
-            columns=[
-                "WRB_tax",
-                "Description_en",
-                "Management_en",
-                "Description_es",
-                "Management_es",
-                "Description_ks",
-                "Management_ks",
-                "Description_fr",
-                "Management_fr",
-            ],
-        )
-
-        return data
-    except Exception as err:
-        logging.error(f"Error querying PostgreSQL: {err}")
-        return None
 def fetch_normdist(connection):
     return query_db(connection, "SELECT * FROM normdist2 ORDER BY id ASC;")
 
@@ -517,5 +251,7 @@ def getSG_descriptions(connection, WRB_Comp_List):
     except Exception as err:
         logging.error(f"Error querying PostgreSQL: {err}")
         return None
+
+
 def fetch_munsell_rgb_lab(connection):
     return pd.read_sql_query("SELECT * FROM landpks_munsell_rgb_lab;", connection)

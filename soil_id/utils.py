@@ -945,32 +945,6 @@ def _gower_distance_row(
     return (sum_cat + sum_num) / feature_weight_sum
 
 
-def compute_site_similarity(
-    data: pd.DataFrame, features: list[str], feature_weight: np.ndarray
-) -> np.ndarray:
-    """
-    Compute Gower distances among the rows of `data` using only `features`
-    and the matching weights in `feature_weight`.
-
-    Parameters:
-    - data: DataFrame with columns "compname" + at least all names in `features`.
-    - features: list of column names to include in the distance.
-    - feature_weight: 1D array of floats, same length as `features`.
-
-    Returns:
-    - (n×n) numpy array of Gower distances, with NaNs replaced by the max distance.
-    """
-    # 1) subset & index by compname
-    site_mat = data.set_index("compname")[features]
-
-    # 2) compute
-    D = gower_distances(site_mat, feature_weight=feature_weight)
-
-    # 3) fill NaNs
-    D = np.where(np.isnan(D), np.nanmax(D), D)
-    return D
-
-
 def compute_text_comp(bedrock, p_sandpct_intpl, soilHorizon):
     """
     Computes a value based on the depth of bedrock and length of sand percentages.
@@ -1063,48 +1037,6 @@ def compute_crack_comp(cracks):
 
 def compute_lab_comp(cr_df):
     return 20 if not cr_df.dropna().empty else 0
-
-
-def compute_data_completeness(
-    bedrock, p_sandpct_intpl, soilHorizon, p_cfg_intpl, rfvDepth, cracks, cr_df
-):
-    text_comp = compute_text_comp(bedrock, p_sandpct_intpl, soilHorizon)
-    rf_comp = compute_rf_comp(bedrock, p_cfg_intpl, rfvDepth)
-    crack_comp = compute_crack_comp(cracks)
-    lab_comp = compute_lab_comp(cr_df)
-
-    data_completeness = text_comp + rf_comp + crack_comp + lab_comp
-
-    # Generate data completeness comment
-    if text_comp < 45:
-        text_comment = " soil texture,"
-    else:
-        text_comment = ""
-    if rf_comp < 30:
-        rf_comment = " soil rock fragments,"
-    else:
-        rf_comment = ""
-    if lab_comp < 20:
-        lab_comment = " soil color (20-50cm),"
-    else:
-        lab_comment = ""
-    if crack_comp < 5:
-        crack_comment = " soil cracking,"
-    else:
-        crack_comment = ""
-    if data_completeness < 100:
-        text_completeness = (
-            "To improve predictions, complete data entry for:"
-            + crack_comment
-            + text_comment
-            + rf_comment
-            + lab_comment
-            + " and re-sync."
-        )
-    else:
-        text_completeness = "SoilID data entry for this site is complete."
-
-    return data_completeness, text_completeness
 
 
 def trim_fraction(text):
@@ -1782,35 +1714,6 @@ def pedon_color(lab_Color, top, bottom):
         return [pedon_l_mean, pedon_a_mean, pedon_b_mean]
 
 
-def extract_values(obj, key):
-    """
-    Pull all values of the specified key from a nested dictionary or list.
-
-    Parameters:
-    - obj (dict or list): The nested dictionary or list to search.
-    - key: The key to look for.
-
-    Returns:
-    - list: A list of values associated with the specified key.
-    """
-
-    arr = []
-
-    def extract(obj, key):
-        if isinstance(obj, dict):
-            if key in obj:
-                arr.append(obj[key])
-            for k, v in obj.items():
-                if isinstance(v, (dict, list)):
-                    extract(v, key)
-        elif isinstance(obj, list):
-            for item in obj:
-                extract(item, key)
-
-    extract(obj, key)
-    return arr
-
-
 # Functions for AWC simulation
 
 
@@ -2233,17 +2136,6 @@ def information_gain(data, target_col, feature_cols):
     sorted_information_gains = sorted(information_gains.items(), key=lambda x: x[1], reverse=True)
 
     return sorted_information_gains
-
-
-# function to get data and aggregate SG data
-def sg_get_and_agg(variable, sg_data_w, bottom, return_depth=False):
-    pd_int = getProfile_SG(sg_data_w, variable, c_bot=False)
-    if return_depth:
-        pd_lpks, lpks_depths = agg_data_layer(data=pd_int.var_pct_intpl, bottom=bottom, depth=True)
-        return (pd_lpks.replace(np.nan, ""), lpks_depths)
-    else:
-        pd_lpks = agg_data_layer(data=pd_int.var_pct_intpl, bottom=bottom, depth=False)
-        return pd_lpks.replace(np.nan, "")
 
 
 def adjust_depth_interval(data, target_length=200):

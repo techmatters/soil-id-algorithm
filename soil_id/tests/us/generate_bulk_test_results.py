@@ -35,6 +35,7 @@ def clean_soil_list_json(obj):
         return list(map(clean_soil_list_json, obj))
     return obj
 
+
 test_data_df = pandas.read_csv(
     os.path.join(os.path.dirname(__file__), "US_SoilID_KSSL_LPKS_Testing.csv")
 )

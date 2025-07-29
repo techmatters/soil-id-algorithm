@@ -1154,9 +1154,6 @@ def rank_soils_global(
         ):
             D_final_loc.at[i, "Score_Data_Loc"] = 0.001
 
-    D_final_loc["Score_Data_Loc"] = D_final_loc["Score_Data_Loc"] / np.nanmax(
-        D_final_loc["Score_Data_Loc"]
-    )
     D_final_loc = D_final_loc.sort_values("Score_Data_Loc", ascending=False)
 
     # Sorting and reindexing of final dataframe

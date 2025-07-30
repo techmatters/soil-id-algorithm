@@ -1,0 +1,998 @@
+{
+  "list": {
+    "AWS_PIW90": 9.5,
+    "Soil Data Value": [
+      [
+        "rfv_class_0",
+        1.382609666499055
+      ],
+      [
+        "rfv_class_30",
+        1.3411411272079812
+      ],
+      [
+        "texture_0",
+        0.0
+      ],
+      [
+        "texture_30",
+        0.0
+      ]
+    ],
+    "metadata": {
+      "location": "us",
+      "model": "v3",
+      "unit_measure": {
+        "cec": "cmol(c)/kg",
+        "clay": "%",
+        "depth": "cm",
+        "distance": "m",
+        "ec": "ds/m",
+        "rock_fragments": "cm3/100cm3",
+        "sand": "%"
+      }
+    },
+    "soilList": [
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F005XZ018CA"
+            ],
+            "ecoclassname": [
+              "Moderately Deep Gravelly Mesic Mountains 40-60Ppt"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/005X/F005XZ018CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Ruch",
+          "name": "Ruch",
+          "rank_loc": "1",
+          "score_loc": 0.8
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25443415",
+            "componentKind": "Series",
+            "componentPct": 80,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "4",
+            "irrcapscl": "e",
+            "irrcapunit": "None",
+            "mapunitID": "469633",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "4",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=ruch",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#ruch",
+            "slope": 14.0,
+            "taxsubgrp": "Mollic Palexeralfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Ruch series consists of very deep, well drained soils that formed in mixed alluvium.  Ruch soils are on high stream terraces, alluvial fans and footslopes and have slopes of 2 to 60 percent.  The mean annual precipitation is about 30 inches and the mean annual temperature is about 52 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F005XZ018CA"
+            ],
+            "ecoclassname": [
+              "Moderately Deep Gravelly Mesic Mountains 40-60Ppt"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/005X/F005XZ018CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Vannoy",
+          "name": "Vannoy1",
+          "rank_loc": "2",
+          "score_loc": 0.528
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25443533",
+            "componentKind": "Series",
+            "componentPct": 80,
+            "dataSource": "SSURGO",
+            "distance": 52.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "469685",
+            "minCompDistance": 52.0,
+            "nirrcapcl": "4",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=vannoy",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#vannoy",
+            "slope": 24.0,
+            "taxsubgrp": "Mollic Haploxeralfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Vannoy series consists of moderately deep, well drained soils that formed in colluvium weathered from metamorphic and sedimentary rocks.  Vannoy soils are on uplands and have slopes of 2 to 60 percent.  The mean annual precipitation is about 30 inches.  The mean annual temperature is about 50 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F005XZ003CA"
+            ],
+            "ecoclassname": [
+              "Terraces"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/005X/F005XZ003CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Abegg",
+          "name": "Abegg",
+          "rank_loc": "3",
+          "score_loc": 0.207
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25443548",
+            "componentKind": "Series",
+            "componentPct": 83,
+            "dataSource": "SSURGO",
+            "distance": 310.0,
+            "irrcapcl": "4",
+            "irrcapscl": "e",
+            "irrcapunit": "None",
+            "mapunitID": "469691",
+            "minCompDistance": 310.0,
+            "nirrcapcl": "3",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=abegg",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#abegg",
+            "slope": 10.0,
+            "taxsubgrp": "Ultic Haploxeralfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Abegg series consists of very deep, well drained soils that formed in alluvium and colluvium weathered from metamorphosed sedimentary and volcanic bedrock.  Abegg soils are on stream terraces and alluvial fans and have slopes of 2 to 30 percent. The mean annual precipitation is about 45 inches and the mean annual temperature is about 52 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F005XZ007CA"
+            ],
+            "ecoclassname": [
+              "Moderately Deep Mesic Hills 40-60Ppt"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/005X/F005XZ007CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Caris",
+          "name": "Caris",
+          "rank_loc": "4",
+          "score_loc": 0.15
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25443598",
+            "componentKind": "Series",
+            "componentPct": 60,
+            "dataSource": "SSURGO",
+            "distance": 347.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "469709",
+            "minCompDistance": 347.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=caris",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#caris",
+            "slope": 63.0,
+            "taxsubgrp": "Typic Xerochrepts",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Caris series consists of moderately deep, well drained soils that formed in colluvium weathered from altered sedimentary and extrusive igneous rocks.  Caris soils are on mountains and have slopes of 50 to 90 percent.  The mean annual temperature is about 50 degrees F and the mean annual precipitation is about 32 inches."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F005XZ024CA"
+            ],
+            "ecoclassname": [
+              "Ridges"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/005X/F005XZ024CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Beekman",
+          "name": "Beekman",
+          "rank_loc": "5",
+          "score_loc": 0.138
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25443287",
+            "componentKind": "Series",
+            "componentPct": 55,
+            "dataSource": "SSURGO",
+            "distance": 497.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "469583",
+            "minCompDistance": 497.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=beekman",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#beekman",
+            "slope": 65.0,
+            "taxsubgrp": "Dystric Xerochrepts",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Beekman series consists of moderately deep, well drained soils that formed in colluvium weathered from altered sedimentary and extrusive igneous rocks.  Beekman soils are on steep mountainous slopes ranging from 30 to 100 percent.  The mean annual precipitation is about 50 inches and the mean annual temperature is about 50 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F005XZ014CA"
+            ],
+            "ecoclassname": [
+              "Mesic Mountains <40Ppt"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/005X/F005XZ014CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Josephine",
+          "name": "Josephine1",
+          "rank_loc": "6",
+          "score_loc": 0.138
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25443480",
+            "componentKind": "Series",
+            "componentPct": 40,
+            "dataSource": "SSURGO",
+            "distance": 712.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "469660",
+            "minCompDistance": 712.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=josephine",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#josephine",
+            "slope": 45.0,
+            "taxsubgrp": "Typic Haploxerults",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Josephine series consists of deep, well drained soils that formed in colluvium and residuum weathered from altered sedimentary and extrusive igneous rocks.  Josephine soils are on broad ridgetops, toeslopes, footslopes, and side slopes of mountains.  Slopes are 2 to 75 percent.  The mean annual precipitation is about 45 inches and the mean annual temperature is about 50 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F005XZ014CA"
+            ],
+            "ecoclassname": [
+              "Mesic Mountains <40Ppt"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/005X/F005XZ014CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Voorhies",
+          "name": "Voorhies",
+          "rank_loc": "7",
+          "score_loc": 0.135
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25443535",
+            "componentKind": "Series",
+            "componentPct": 30,
+            "dataSource": "SSURGO",
+            "distance": 100.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "469686",
+            "minCompDistance": 100.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=voorhies",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#voorhies",
+            "slope": 45.0,
+            "taxsubgrp": "Mollic Haploxeralfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Voorhies series consists of moderately deep, well drained soils that formed in colluvium weathered from altered sedimentary and extrusive igneous rocks.  Voorhies soils are on mountain slopes and have slopes of 35 to 55 percent.  Mean annual precipitation is about 30 inches and mean annual temperature is about 50 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F005XZ003CA"
+            ],
+            "ecoclassname": [
+              "Terraces"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/005X/F005XZ003CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Speaker",
+          "name": "Speaker",
+          "rank_loc": "8",
+          "score_loc": 0.113
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25443479",
+            "componentKind": "Series",
+            "componentPct": 45,
+            "dataSource": "SSURGO",
+            "distance": 712.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "469660",
+            "minCompDistance": 712.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=speaker",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#speaker",
+            "slope": 45.0,
+            "taxsubgrp": "Ultic Haploxeralfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Speaker series consists of moderately deep, well drained soils that formed in colluvium weathered from sedimentary and metamorphic rocks.  Speaker soils are on low rolling foot slopes and side slopes and have gradients of 2 to 75 percent.  The mean annual precipitation is about 45 inches and the mean annual temperature is about 50 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F005XZ014CA"
+            ],
+            "ecoclassname": [
+              "Mesic Mountains <40Ppt"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/005X/F005XZ014CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Colestine",
+          "name": "Colestine",
+          "rank_loc": "9",
+          "score_loc": 0.075
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25443286",
+            "componentKind": "Series",
+            "componentPct": 30,
+            "dataSource": "SSURGO",
+            "distance": 497.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "469583",
+            "minCompDistance": 497.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=colestine",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#colestine",
+            "slope": 65.0,
+            "taxsubgrp": "Dystric Xerochrepts",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Colestine series consists of moderately deep, well drained soils that formed in colluvium and residuum from altered sedimentary and extrusive igneous rocks.  Colestine soils are on mountain slopes of 20 to 90 percent. The mean annual precipitation is about 50 inches and the mean annual temperature is about 50 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F005XZ014CA"
+            ],
+            "ecoclassname": [
+              "Mesic Mountains <40Ppt"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/005X/F005XZ014CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Pollard",
+          "name": "Pollard",
+          "rank_loc": "10",
+          "score_loc": 0.075
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25443850",
+            "componentKind": "Series",
+            "componentPct": 30,
+            "dataSource": "SSURGO",
+            "distance": 829.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "469806",
+            "minCompDistance": 829.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=pollard",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#pollard",
+            "slope": 24.0,
+            "taxsubgrp": "Typic Haploxerults",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Pollard series consists of very deep, well drained soils that formed in colluvium and residuum weathered from altered sedimentary and extrusive igneous rocks.  Pollard soils are on hill slopes and toeslopes, foot slopes, saddles, ridges, and side slopes of mountains.  Slopes are 2 to 60 percent.  The mean annual precipitation is about 45 inches and the mean annual temperature is about 50 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F005XZ024CA"
+            ],
+            "ecoclassname": [
+              "Ridges"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/005X/F005XZ024CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Offenbacher",
+          "name": "Offenbacher",
+          "rank_loc": "11",
+          "score_loc": 0.05
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25443597",
+            "componentKind": "Series",
+            "componentPct": 20,
+            "dataSource": "SSURGO",
+            "distance": 347.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "469709",
+            "minCompDistance": 347.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=offenbacher",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#offenbacher",
+            "slope": 63.0,
+            "taxsubgrp": "Typic Xerochrepts",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Offenbacher series consists of moderately deep, well drained soils that formed in colluvium weathered from altered sedimentary and extrusive igneous rocks.  Offenbacher soils are on mountains and have slopes of 50 to 80 percent.  The mean annual temperature is about 47 degrees F, and the mean annual precipitation is about 32 inches."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F005XZ009CA"
+            ],
+            "ecoclassname": [
+              "Very Deep Mesic Hills 40-60Ppt"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/005X/F005XZ009CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Gregory",
+          "name": "Gregory",
+          "rank_loc": "12",
+          "score_loc": 0.02
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25443414",
+            "componentKind": "Series",
+            "componentPct": 2,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "2",
+            "irrcapscl": "w",
+            "irrcapunit": "None",
+            "mapunitID": "469633",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "4",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=gregory",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#gregory",
+            "slope": 2.0,
+            "taxsubgrp": "Pachic Argixerolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Gregory series consists of deep, poorly drained soils on terraces.  They formed in recent alluvium dominantly from sedimentary and metamorphic rocks.  Slopes are 0 to 3 percent.  The mean annual precipitation is about 24 inches and the mean annual temperature is about 52 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R005XY016OR"
+            ],
+            "ecoclassname": [
+              "Poorly Drained Bottom"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/005X/R005XY016OR"
+            ]
+          }
+        },
+        "id": {
+          "component": "Vannoy",
+          "name": "Vannoy2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.528
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25443534",
+            "componentKind": "Series",
+            "componentPct": 50,
+            "dataSource": "SSURGO",
+            "distance": 100.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "469686",
+            "minCompDistance": 52.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=vannoy",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#vannoy",
+            "slope": 45.0,
+            "taxsubgrp": "Mollic Haploxeralfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Vannoy series consists of moderately deep, well drained soils that formed in colluvium weathered from metamorphic and sedimentary rocks.  Vannoy soils are on uplands and have slopes of 2 to 60 percent.  The mean annual precipitation is about 30 inches.  The mean annual temperature is about 50 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F005XZ014CA"
+            ],
+            "ecoclassname": [
+              "Mesic Mountains <40Ppt"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/005X/F005XZ014CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Josephine",
+          "name": "Josephine2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.138
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25443848",
+            "componentKind": "Series",
+            "componentPct": 55,
+            "dataSource": "SSURGO",
+            "distance": 829.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "469806",
+            "minCompDistance": 712.0,
+            "nirrcapcl": "4",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=josephine",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#josephine",
+            "slope": 24.0,
+            "taxsubgrp": "Typic Haploxerults",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Josephine series consists of deep, well drained soils that formed in colluvium and residuum weathered from altered sedimentary and extrusive igneous rocks.  Josephine soils are on broad ridgetops, toeslopes, footslopes, and side slopes of mountains.  Slopes are 2 to 75 percent.  The mean annual precipitation is about 45 inches and the mean annual temperature is about 50 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      }
+    ]
+  },
+  "rank": {
+    "metadata": {
+      "location": "us",
+      "model": "v2"
+    },
+    "soilRank": [
+      {
+        "component": "Ruch",
+        "componentData": "Data Complete",
+        "componentID": 25443415,
+        "name": "Ruch",
+        "rank_data": "2",
+        "rank_data_loc": "1",
+        "rank_loc": "1",
+        "score_data": 0.704,
+        "score_data_loc": 0.752,
+        "score_loc": 0.8
+      },
+      {
+        "component": "Vannoy",
+        "componentData": "Data Complete",
+        "componentID": 25443534,
+        "name": "Vannoy2",
+        "rank_data": "5",
+        "rank_data_loc": "2",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.593,
+        "score_data_loc": 0.56,
+        "score_loc": 0.528
+      },
+      {
+        "component": "Abegg",
+        "componentData": "Data Complete",
+        "componentID": 25443548,
+        "name": "Abegg",
+        "rank_data": "4",
+        "rank_data_loc": "3",
+        "rank_loc": "3",
+        "score_data": 0.648,
+        "score_data_loc": 0.427,
+        "score_loc": 0.207
+      },
+      {
+        "component": "Josephine",
+        "componentData": "Data Complete",
+        "componentID": 25443848,
+        "name": "Josephine2",
+        "rank_data": "3",
+        "rank_data_loc": "4",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.671,
+        "score_data_loc": 0.404,
+        "score_loc": 0.138
+      },
+      {
+        "component": "Gregory",
+        "componentData": "Data Complete",
+        "componentID": 25443414,
+        "name": "Gregory",
+        "rank_data": "1",
+        "rank_data_loc": "5",
+        "rank_loc": "12",
+        "score_data": 0.731,
+        "score_data_loc": 0.376,
+        "score_loc": 0.02
+      },
+      {
+        "component": "Pollard",
+        "componentData": "Data Complete",
+        "componentID": 25443850,
+        "name": "Pollard",
+        "rank_data": "6",
+        "rank_data_loc": "6",
+        "rank_loc": "10",
+        "score_data": 0.538,
+        "score_data_loc": 0.306,
+        "score_loc": 0.075
+      },
+      {
+        "component": "Voorhies",
+        "componentData": "Data Complete",
+        "componentID": 25443535,
+        "name": "Voorhies",
+        "rank_data": "8",
+        "rank_data_loc": "7",
+        "rank_loc": "7",
+        "score_data": 0.442,
+        "score_data_loc": 0.288,
+        "score_loc": 0.135
+      },
+      {
+        "component": "Beekman",
+        "componentData": "Data Complete",
+        "componentID": 25443287,
+        "name": "Beekman",
+        "rank_data": "9",
+        "rank_data_loc": "8",
+        "rank_loc": "5",
+        "score_data": 0.432,
+        "score_data_loc": 0.285,
+        "score_loc": 0.138
+      },
+      {
+        "component": "Speaker",
+        "componentData": "Data Complete",
+        "componentID": 25443479,
+        "name": "Speaker",
+        "rank_data": "10",
+        "rank_data_loc": "9",
+        "rank_loc": "8",
+        "score_data": 0.432,
+        "score_data_loc": 0.272,
+        "score_loc": 0.113
+      },
+      {
+        "component": "Offenbacher",
+        "componentData": "Data Complete",
+        "componentID": 25443597,
+        "name": "Offenbacher",
+        "rank_data": "7",
+        "rank_data_loc": "10",
+        "rank_loc": "11",
+        "score_data": 0.487,
+        "score_data_loc": 0.268,
+        "score_loc": 0.05
+      },
+      {
+        "component": "Caris",
+        "componentData": "Data Complete",
+        "componentID": 25443598,
+        "name": "Caris",
+        "rank_data": "12",
+        "rank_data_loc": "11",
+        "rank_loc": "4",
+        "score_data": 0.382,
+        "score_data_loc": 0.266,
+        "score_loc": 0.15
+      },
+      {
+        "component": "Colestine",
+        "componentData": "Data Complete",
+        "componentID": 25443286,
+        "name": "Colestine",
+        "rank_data": "11",
+        "rank_data_loc": "12",
+        "rank_loc": "9",
+        "score_data": 0.405,
+        "score_data_loc": 0.24,
+        "score_loc": 0.075
+      },
+      {
+        "component": "Vannoy",
+        "componentData": "Data Complete",
+        "componentID": 25443533,
+        "name": "Vannoy1",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "2",
+        "score_data": 0.572,
+        "score_data_loc": 0.55,
+        "score_loc": 0.528
+      },
+      {
+        "component": "Josephine",
+        "componentData": "Data Complete",
+        "componentID": 25443480,
+        "name": "Josephine1",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "6",
+        "score_data": 0.509,
+        "score_data_loc": 0.323,
+        "score_loc": 0.138
+      }
+    ]
+  }
+}

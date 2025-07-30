@@ -1,0 +1,1162 @@
+{
+  "list": {
+    "AWS_PIW90": 5.71,
+    "Soil Data Value": [
+      [
+        "rfv_class_0",
+        0.976020648236615
+      ],
+      [
+        "rfv_class_30",
+        0.976020648236615
+      ],
+      [
+        "texture_0",
+        0.0
+      ],
+      [
+        "texture_30",
+        0.0
+      ]
+    ],
+    "metadata": {
+      "location": "us",
+      "model": "v3",
+      "unit_measure": {
+        "cec": "cmol(c)/kg",
+        "clay": "%",
+        "depth": "cm",
+        "distance": "m",
+        "ec": "ds/m",
+        "rock_fragments": "cm3/100cm3",
+        "sand": "%"
+      }
+    },
+    "soilList": [
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Andic cryumbrepts",
+          "name": "Andic cryumbrepts",
+          "rank_loc": "1",
+          "score_loc": 0.152
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14269504",
+            "componentKind": "Taxon above family",
+            "componentPct": 20,
+            "dataSource": "STATSGO",
+            "distance": 994.2109898924772,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "676031",
+            "minCompDistance": 994.2109898924772,
+            "nirrcapcl": "7",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 53.0,
+            "taxsubgrp": "None",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Nimue",
+          "name": "Nimue1",
+          "rank_loc": "2",
+          "score_loc": 0.13
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14268942",
+            "componentKind": "Series",
+            "componentPct": 13,
+            "dataSource": "STATSGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "675975",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 48.0,
+            "taxsubgrp": "Andic Haplocryods",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Cryorthods",
+          "name": "Cryorthods",
+          "rank_loc": "3",
+          "score_loc": 0.114
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14269505",
+            "componentKind": "Taxon above family",
+            "componentPct": 15,
+            "dataSource": "STATSGO",
+            "distance": 994.2109898924772,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "676031",
+            "minCompDistance": 994.2109898924772,
+            "nirrcapcl": "7",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 60.0,
+            "taxsubgrp": "None",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Playco",
+          "name": "Playco1",
+          "rank_loc": "4",
+          "score_loc": 0.09
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14268933",
+            "componentKind": "Series",
+            "componentPct": 9,
+            "dataSource": "STATSGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "675975",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 48.0,
+            "taxsubgrp": "Andic Haplocryods",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Cryumbrepts",
+          "name": "Cryumbrepts",
+          "rank_loc": "5",
+          "score_loc": 0.076
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14269506",
+            "componentKind": "Taxon above family",
+            "componentPct": 10,
+            "dataSource": "STATSGO",
+            "distance": 994.2109898924772,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "676031",
+            "minCompDistance": 994.2109898924772,
+            "nirrcapcl": "7",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 60.0,
+            "taxsubgrp": "None",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Getchell",
+          "name": "Getchell1",
+          "rank_loc": "6",
+          "score_loc": 0.06
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14268946",
+            "componentKind": "Series",
+            "componentPct": 6,
+            "dataSource": "STATSGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "675975",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 48.0,
+            "taxsubgrp": "Aquic Haplocryands",
+            "textureInfill": "Yes"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Oso",
+          "name": "Oso",
+          "rank_loc": "7",
+          "score_loc": 0.05
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14268939",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "STATSGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "675975",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 78.0,
+            "taxsubgrp": "Andic Haplocryods",
+            "textureInfill": "Yes"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Wollard",
+          "name": "Wollard",
+          "rank_loc": "8",
+          "score_loc": 0.05
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14268937",
+            "componentKind": "Series",
+            "componentPct": 4,
+            "dataSource": "STATSGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "675975",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 48.0,
+            "taxsubgrp": "Alic Haplocryands",
+            "textureInfill": "Yes"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Diobsud",
+          "name": "Diobsud",
+          "rank_loc": "9",
+          "score_loc": 0.04
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14268932",
+            "componentKind": "Series",
+            "componentPct": 4,
+            "dataSource": "STATSGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "675975",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 48.0,
+            "taxsubgrp": "Andic Humicryods",
+            "textureInfill": "Yes"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Shuksan",
+          "name": "Shuksan",
+          "rank_loc": "10",
+          "score_loc": 0.04
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14268938",
+            "componentKind": "Series",
+            "componentPct": 4,
+            "dataSource": "STATSGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "675975",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 45.0,
+            "taxsubgrp": "Andic Humicryods",
+            "textureInfill": "Yes"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Cryaquepts",
+          "name": "Cryaquepts",
+          "rank_loc": "11",
+          "score_loc": 0.038
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14269507",
+            "componentKind": "Taxon above family",
+            "componentPct": 5,
+            "dataSource": "STATSGO",
+            "distance": 994.2109898924772,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "676031",
+            "minCompDistance": 994.2109898924772,
+            "nirrcapcl": "7",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 2.0,
+            "taxsubgrp": "None",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Cryohumods",
+          "name": "Cryohumods",
+          "rank_loc": "12",
+          "score_loc": 0.038
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14269509",
+            "componentKind": "Taxon above family",
+            "componentPct": 5,
+            "dataSource": "STATSGO",
+            "distance": 994.2109898924772,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "676031",
+            "minCompDistance": 994.2109898924772,
+            "nirrcapcl": "7",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 60.0,
+            "taxsubgrp": "None",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Nimue",
+          "name": "Nimue2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.13
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14268930",
+            "componentKind": "Series",
+            "componentPct": 7,
+            "dataSource": "STATSGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "675975",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 45.0,
+            "taxsubgrp": "Andic Haplocryods",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Nimue",
+          "name": "Nimue3",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.13
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14268934",
+            "componentKind": "Series",
+            "componentPct": 3,
+            "dataSource": "STATSGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "675975",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 19.0,
+            "taxsubgrp": "Andic Haplocryods",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Playco",
+          "name": "Playco2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.09
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14268941",
+            "componentKind": "Series",
+            "componentPct": 7,
+            "dataSource": "STATSGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "675975",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 48.0,
+            "taxsubgrp": "Andic Haplocryods",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Playco",
+          "name": "Playco3",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.09
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14268940",
+            "componentKind": "Series",
+            "componentPct": 4,
+            "dataSource": "STATSGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "675975",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 19.0,
+            "taxsubgrp": "Andic Haplocryods",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Playco",
+          "name": "Playco4",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.09
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14268936",
+            "componentKind": "Series",
+            "componentPct": 3,
+            "dataSource": "STATSGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "675975",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 19.0,
+            "taxsubgrp": "Andic Haplocryods",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Getchell",
+          "name": "Getchell2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.06
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14268944",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "STATSGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "675975",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 17.0,
+            "taxsubgrp": "Aquic Haplocryands",
+            "textureInfill": "Yes"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      }
+    ]
+  },
+  "rank": {
+    "metadata": {
+      "location": "us",
+      "model": "v2"
+    },
+    "soilRank": [
+      {
+        "component": "Playco",
+        "componentData": "Missing Data",
+        "componentID": 14268936,
+        "name": "Playco4",
+        "rank_data": "1",
+        "rank_data_loc": "1",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.776,
+        "score_data_loc": 0.433,
+        "score_loc": 0.09
+      },
+      {
+        "component": "Nimue",
+        "componentData": "Missing Data",
+        "componentID": 14268942,
+        "name": "Nimue1",
+        "rank_data": "5",
+        "rank_data_loc": "2",
+        "rank_loc": "2",
+        "score_data": 0.578,
+        "score_data_loc": 0.354,
+        "score_loc": 0.13
+      },
+      {
+        "component": "Shuksan",
+        "componentData": "Missing Data",
+        "componentID": 14268938,
+        "name": "Shuksan",
+        "rank_data": "2",
+        "rank_data_loc": "3",
+        "rank_loc": "10",
+        "score_data": 0.663,
+        "score_data_loc": 0.351,
+        "score_loc": 0.04
+      },
+      {
+        "component": "Getchell",
+        "componentData": "Missing Data",
+        "componentID": 14268946,
+        "name": "Getchell1",
+        "rank_data": "3",
+        "rank_data_loc": "4",
+        "rank_loc": "6",
+        "score_data": 0.606,
+        "score_data_loc": 0.333,
+        "score_loc": 0.06
+      },
+      {
+        "component": "Cryorthods",
+        "componentData": "Missing Data",
+        "componentID": 14269505,
+        "name": "Cryorthods",
+        "rank_data": "7",
+        "rank_data_loc": "5",
+        "rank_loc": "3",
+        "score_data": 0.543,
+        "score_data_loc": 0.329,
+        "score_loc": 0.114
+      },
+      {
+        "component": "Diobsud",
+        "componentData": "Missing Data",
+        "componentID": 14268932,
+        "name": "Diobsud",
+        "rank_data": "4",
+        "rank_data_loc": "6",
+        "rank_loc": "9",
+        "score_data": 0.606,
+        "score_data_loc": 0.323,
+        "score_loc": 0.04
+      },
+      {
+        "component": "Wollard",
+        "componentData": "Missing Data",
+        "componentID": 14268937,
+        "name": "Wollard",
+        "rank_data": "6",
+        "rank_data_loc": "7",
+        "rank_loc": "8",
+        "score_data": 0.56,
+        "score_data_loc": 0.305,
+        "score_loc": 0.05
+      },
+      {
+        "component": "Oso",
+        "componentData": "Missing Data",
+        "componentID": 14268939,
+        "name": "Oso",
+        "rank_data": "9",
+        "rank_data_loc": "8",
+        "rank_loc": "7",
+        "score_data": 0.463,
+        "score_data_loc": 0.256,
+        "score_loc": 0.05
+      },
+      {
+        "component": "Cryaquepts",
+        "componentData": "Missing Data",
+        "componentID": 14269507,
+        "name": "Cryaquepts",
+        "rank_data": "8",
+        "rank_data_loc": "9",
+        "rank_loc": "11",
+        "score_data": 0.473,
+        "score_data_loc": 0.255,
+        "score_loc": 0.038
+      },
+      {
+        "component": "Andic cryumbrepts",
+        "componentData": "Missing Data",
+        "componentID": 14269504,
+        "name": "Andic cryumbrepts",
+        "rank_data": "12",
+        "rank_data_loc": "10",
+        "rank_loc": "1",
+        "score_data": 0.333,
+        "score_data_loc": 0.242,
+        "score_loc": 0.152
+      },
+      {
+        "component": "Cryumbrepts",
+        "componentData": "Missing Data",
+        "componentID": 14269506,
+        "name": "Cryumbrepts",
+        "rank_data": "10",
+        "rank_data_loc": "11",
+        "rank_loc": "5",
+        "score_data": 0.379,
+        "score_data_loc": 0.228,
+        "score_loc": 0.076
+      },
+      {
+        "component": "Cryohumods",
+        "componentData": "Missing Data",
+        "componentID": 14269509,
+        "name": "Cryohumods",
+        "rank_data": "11",
+        "rank_data_loc": "12",
+        "rank_loc": "12",
+        "score_data": 0.379,
+        "score_data_loc": 0.209,
+        "score_loc": 0.038
+      },
+      {
+        "component": "Playco",
+        "componentData": "Missing Data",
+        "componentID": 14268933,
+        "name": "Playco1",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "4",
+        "score_data": 0.614,
+        "score_data_loc": 0.352,
+        "score_loc": 0.09
+      },
+      {
+        "component": "Nimue",
+        "componentData": "Missing Data",
+        "componentID": 14268934,
+        "name": "Nimue3",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.48,
+        "score_data_loc": 0.305,
+        "score_loc": 0.13
+      },
+      {
+        "component": "Playco",
+        "componentData": "Missing Data",
+        "componentID": 14268940,
+        "name": "Playco3",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.516,
+        "score_data_loc": 0.303,
+        "score_loc": 0.09
+      },
+      {
+        "component": "Getchell",
+        "componentData": "Missing Data",
+        "componentID": 14268944,
+        "name": "Getchell2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.505,
+        "score_data_loc": 0.283,
+        "score_loc": 0.06
+      },
+      {
+        "component": "Nimue",
+        "componentData": "Missing Data",
+        "componentID": 14268930,
+        "name": "Nimue2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.404,
+        "score_data_loc": 0.267,
+        "score_loc": 0.13
+      },
+      {
+        "component": "Playco",
+        "componentData": "Missing Data",
+        "componentID": 14268941,
+        "name": "Playco2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.431,
+        "score_data_loc": 0.26,
+        "score_loc": 0.09
+      }
+    ]
+  }
+}

@@ -1,0 +1,1066 @@
+{
+  "list": {
+    "AWS_PIW90": 5.79,
+    "Soil Data Value": [
+      [
+        "rfv_class_30",
+        0.2682995614938375
+      ],
+      [
+        "rfv_class_0",
+        0.22974042594081867
+      ],
+      [
+        "texture_0",
+        0.0
+      ],
+      [
+        "texture_30",
+        0.0
+      ]
+    ],
+    "metadata": {
+      "location": "us",
+      "model": "v3",
+      "unit_measure": {
+        "cec": "cmol(c)/kg",
+        "clay": "%",
+        "depth": "cm",
+        "distance": "m",
+        "ec": "ds/m",
+        "rock_fragments": "cm3/100cm3",
+        "sand": "%"
+      }
+    },
+    "soilList": [
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R073XY101KS"
+            ],
+            "ecoclassname": [
+              "Limy Slopes"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/073X/R073XY101KS"
+            ]
+          }
+        },
+        "id": {
+          "component": "Uly",
+          "name": "Uly1",
+          "rank_loc": "1",
+          "score_loc": 0.9
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25865345",
+            "componentKind": "Series",
+            "componentPct": 90,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "3",
+            "irrcapscl": "e",
+            "irrcapunit": "None",
+            "mapunitID": "2669027",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "3",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=uly",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#uly",
+            "slope": 5.0,
+            "taxsubgrp": "Typic Haplustolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Uly series includes very deep, well drained formed in loess on uplands.  Slopes range from 0 to 30 percent.  Mean annual temperature is 10 degrees C. (50 degrees F), and mean annual precipitation is 53 centimeters (21 inches) at the type location."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R073XY100KS"
+            ],
+            "ecoclassname": [
+              "Loamy Plains"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/073X/R073XY100KS"
+            ]
+          }
+        },
+        "id": {
+          "component": "Harney",
+          "name": "Harney1",
+          "rank_loc": "2",
+          "score_loc": 0.753
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25865346",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "3",
+            "irrcapscl": "e",
+            "irrcapunit": "None",
+            "mapunitID": "2669027",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "3",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=harney",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#harney",
+            "slope": 5.0,
+            "taxsubgrp": "Typic Argiustolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Harney series consists of deep, well drained, moderately slowly permeable soils that formed in loess.  These soils are on uplands on slopes that range from 0 to 8 percent."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R073XY108KS"
+            ],
+            "ecoclassname": [
+              "Loamy Floodplain"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/073X/R073XY108KS"
+            ]
+          }
+        },
+        "id": {
+          "component": "Coly",
+          "name": "Coly1",
+          "rank_loc": "3",
+          "score_loc": 0.38
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25865492",
+            "componentKind": "Series",
+            "componentPct": 40,
+            "dataSource": "SSURGO",
+            "distance": 42.0,
+            "irrcapcl": "4",
+            "irrcapscl": "e",
+            "irrcapunit": "None",
+            "mapunitID": "1380503",
+            "minCompDistance": 42.0,
+            "nirrcapcl": "4",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=coly",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#coly",
+            "slope": 6.0,
+            "taxsubgrp": "Typic Ustorthents",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Coly series consists of very deep, well drained, moderately permeable soils formed in loess. Coly soils are on sideslopes of uplands in MLRA  73-Rolling Plains and Breaks. Slopes range from 1 to 60 percent. Mean annual temperature is 10 degrees C ( 50 degrees F), and mean annual precipitation is 53 centimeters ( 21 inches) at the type location."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R073XY108KS"
+            ],
+            "ecoclassname": [
+              "Loamy Floodplain"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/073X/R073XY108KS"
+            ]
+          }
+        },
+        "id": {
+          "component": "Holdrege",
+          "name": "Holdrege",
+          "rank_loc": "4",
+          "score_loc": 0.322
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25865493",
+            "componentKind": "Taxadjunct",
+            "componentPct": 45,
+            "dataSource": "SSURGO",
+            "distance": 42.0,
+            "irrcapcl": "4",
+            "irrcapscl": "e",
+            "irrcapunit": "None",
+            "mapunitID": "1380503",
+            "minCompDistance": 42.0,
+            "nirrcapcl": "4",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=holdrege",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#holdrege",
+            "slope": 6.0,
+            "taxsubgrp": "Typic Haplustalfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Holdrege series consists of very deep, well drained, moderately permeable soils formed in calcareous loess.  These upland soils have slopes ranging from 0 to 15 percent.  Mean annual temperature is about 54 degrees F, and mean annual precipitation is about 23 inches at the type location."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R073XY112KS"
+            ],
+            "ecoclassname": [
+              "Shallow Limy"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/073X/R073XY112KS"
+            ]
+          }
+        },
+        "id": {
+          "component": "Tobin",
+          "name": "Tobin",
+          "rank_loc": "5",
+          "score_loc": 0.176
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25865519",
+            "componentKind": "Series",
+            "componentPct": 30,
+            "dataSource": "SSURGO",
+            "distance": 67.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "1380504",
+            "minCompDistance": 67.0,
+            "nirrcapcl": "5",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=tobin",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#tobin",
+            "slope": 1.0,
+            "taxsubgrp": "Cumulic Haplustolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Tobin series consists of very deep, well drained soils that formed in silty alluvium.  Tobin soils are on flood plains on river valleys in MLRA 73, Rolling Plains and Breaks.  Slopes range from 0 to 2 percent.  Mean annual precipitation is about 740 millimeters (29 inches) and the mean annual temperature is about 12 degrees C (54 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R073XY100KS"
+            ],
+            "ecoclassname": [
+              "Loamy Plains"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/073X/R073XY100KS"
+            ]
+          }
+        },
+        "id": {
+          "component": "Case",
+          "name": "Case",
+          "rank_loc": "6",
+          "score_loc": 0.071
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25865495",
+            "componentKind": "Series",
+            "componentPct": 10,
+            "dataSource": "SSURGO",
+            "distance": 42.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "1380503",
+            "minCompDistance": 42.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=case",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#case",
+            "slope": 6.0,
+            "taxsubgrp": "Typic Calciustepts",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Case series consists of very deep, well drained, moderately permeable soils formed in calcareous old alluvium of Tertiary age on uplands of the Southern High Plains Breaks (MLRA-77E).  Slopes range from 1 to 15 percent.  Mean annual temperature is about 58 degrees F, and mean annual precipitation is about 24 inches."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R073XY100KS"
+            ],
+            "ecoclassname": [
+              "Loamy Plains"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/073X/R073XY100KS"
+            ]
+          }
+        },
+        "id": {
+          "component": "Penden",
+          "name": "Penden",
+          "rank_loc": "7",
+          "score_loc": 0.05
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25865344",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "3",
+            "irrcapscl": "e",
+            "irrcapunit": "None",
+            "mapunitID": "2669027",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "3",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=penden",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#penden",
+            "slope": 5.0,
+            "taxsubgrp": "Typic Calciustolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Penden series consists of deep, well drained soils formed in calcareous loamy sediments on uplands.  Slope ranges from 0 to 15 percent.  Mean annual temperature is 13 degrees C. (56 degrees F.), and mean annual precipitation is 48 centimeters (19 inches)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R073XY101KS"
+            ],
+            "ecoclassname": [
+              "Limy Slopes"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/073X/R073XY101KS"
+            ]
+          }
+        },
+        "id": {
+          "component": "Bridgeport",
+          "name": "Bridgeport",
+          "rank_loc": "8",
+          "score_loc": 0.036
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25865494",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "SSURGO",
+            "distance": 42.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "1380503",
+            "minCompDistance": 42.0,
+            "nirrcapcl": "5",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=bridgeport",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#bridgeport",
+            "slope": 3.0,
+            "taxsubgrp": "Fluventic Haplustolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Bridgeport series consists of deep, well drained, moderately permeable soils that formed in calcareous alluvial sediments.  These soils are on flood plains or low stream terraces."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R073XY100KS"
+            ],
+            "ecoclassname": [
+              "Loamy Plains"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/073X/R073XY100KS"
+            ]
+          }
+        },
+        "id": {
+          "component": "Wakeen",
+          "name": "Wakeen",
+          "rank_loc": "9",
+          "score_loc": 0.032
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25865551",
+            "componentKind": "Series",
+            "componentPct": 4,
+            "dataSource": "SSURGO",
+            "distance": 29.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "2605949",
+            "minCompDistance": 29.0,
+            "nirrcapcl": "3",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=wakeen",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#wakeen",
+            "slope": 2.0,
+            "taxsubgrp": "Entic Haplustolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Wakeen series consists of well drained soils that are moderately deep over chalky limestone.  These soils are on plains, knolls and ridgetops in the Rolling Plains and Breaks (MLRA 73).  Slopes range from 1 to 20 percent.  Mean annual temperature is about 12 degrees C. (54 degrees F.), and mean annual precipitation is about 58 centimeters (23 inches)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R073XY101KS"
+            ],
+            "ecoclassname": [
+              "Limy Slopes"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/073X/R073XY101KS"
+            ]
+          }
+        },
+        "id": {
+          "component": "Aquolls",
+          "name": "Aquolls",
+          "rank_loc": "10",
+          "score_loc": 0.008
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25865552",
+            "componentKind": "Taxon above family",
+            "componentPct": 1,
+            "dataSource": "SSURGO",
+            "distance": 29.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "2605949",
+            "minCompDistance": 29.0,
+            "nirrcapcl": "nan",
+            "nirrcapscl": "None",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 1.0,
+            "taxsubgrp": "None",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R073XY103KS"
+            ],
+            "ecoclassname": [
+              "Subirrigated"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/073X/R073XY103KS"
+            ]
+          }
+        },
+        "id": {
+          "component": "Canlon",
+          "name": "Canlon",
+          "rank_loc": "11",
+          "score_loc": 0.006
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25865520",
+            "componentKind": "Series",
+            "componentPct": 1,
+            "dataSource": "SSURGO",
+            "distance": 67.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "1380504",
+            "minCompDistance": 67.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=canlon",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#canlon",
+            "slope": 12.0,
+            "taxsubgrp": "Lithic Ustorthents",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Canlon series consist of shallow, well drained and somewhat excessively drained, moderately permeable soils on uplands.  They formed in residuum weathered from lime-cemented sandstone or caliche and have slopes ranging from 2 to 50 percent.  The average annual precipitation is about 24 inches, and the mean annual temperature is about 54 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R073XY100KS"
+            ],
+            "ecoclassname": [
+              "Loamy Plains"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/073X/R073XY100KS"
+            ]
+          }
+        },
+        "id": {
+          "component": "Uly",
+          "name": "Uly2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.9
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25865522",
+            "componentKind": "Series",
+            "componentPct": 2,
+            "dataSource": "SSURGO",
+            "distance": 67.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "1380504",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "3",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=uly",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#uly",
+            "slope": 5.0,
+            "taxsubgrp": "Typic Haplustolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Uly series includes very deep, well drained formed in loess on uplands.  Slopes range from 0 to 30 percent.  Mean annual temperature is 10 degrees C. (50 degrees F), and mean annual precipitation is 53 centimeters (21 inches) at the type location."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R073XY101KS"
+            ],
+            "ecoclassname": [
+              "Limy Slopes"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/073X/R073XY101KS"
+            ]
+          }
+        },
+        "id": {
+          "component": "Harney",
+          "name": "Harney2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.753
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25865550",
+            "componentKind": "Series",
+            "componentPct": 95,
+            "dataSource": "SSURGO",
+            "distance": 29.0,
+            "irrcapcl": "2",
+            "irrcapscl": "e",
+            "irrcapunit": "None",
+            "mapunitID": "2605949",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=harney",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#harney",
+            "slope": 2.0,
+            "taxsubgrp": "Typic Argiustolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Harney series consists of deep, well drained, moderately slowly permeable soils that formed in loess.  These soils are on uplands on slopes that range from 0 to 8 percent."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R073XY100KS"
+            ],
+            "ecoclassname": [
+              "Loamy Plains"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/073X/R073XY100KS"
+            ]
+          }
+        },
+        "id": {
+          "component": "Harney",
+          "name": "Harney3",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.753
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25865521",
+            "componentKind": "Series",
+            "componentPct": 2,
+            "dataSource": "SSURGO",
+            "distance": 67.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "1380504",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "3",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=harney",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#harney",
+            "slope": 4.0,
+            "taxsubgrp": "Typic Argiustolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Harney series consists of deep, well drained, moderately slowly permeable soils that formed in loess.  These soils are on uplands on slopes that range from 0 to 8 percent."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R079XY112KS"
+            ],
+            "ecoclassname": [
+              "Limy Plains"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/079X/R079XY112KS"
+            ]
+          }
+        },
+        "id": {
+          "component": "Coly",
+          "name": "Coly2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.38
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25865523",
+            "componentKind": "Series",
+            "componentPct": 65,
+            "dataSource": "SSURGO",
+            "distance": 67.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "1380504",
+            "minCompDistance": 42.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=coly",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#coly",
+            "slope": 12.0,
+            "taxsubgrp": "Typic Ustorthents",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Coly series consists of very deep, well drained, moderately permeable soils formed in loess. Coly soils are on sideslopes of uplands in MLRA  73-Rolling Plains and Breaks. Slopes range from 1 to 60 percent. Mean annual temperature is 10 degrees C ( 50 degrees F), and mean annual precipitation is 53 centimeters ( 21 inches) at the type location."
+        },
+        "texture": {},
+        "top_depth": {}
+      }
+    ]
+  },
+  "rank": {
+    "metadata": {
+      "location": "us",
+      "model": "v2"
+    },
+    "soilRank": [
+      {
+        "component": "Uly",
+        "componentData": "Data Complete",
+        "componentID": 25865345,
+        "name": "Uly1",
+        "rank_data": "6",
+        "rank_data_loc": "1",
+        "rank_loc": "1",
+        "score_data": 0.598,
+        "score_data_loc": 0.749,
+        "score_loc": 0.9
+      },
+      {
+        "component": "Harney",
+        "componentData": "Data Complete",
+        "componentID": 25865346,
+        "name": "Harney1",
+        "rank_data": "7",
+        "rank_data_loc": "2",
+        "rank_loc": "2",
+        "score_data": 0.598,
+        "score_data_loc": 0.675,
+        "score_loc": 0.753
+      },
+      {
+        "component": "Coly",
+        "componentData": "Data Complete",
+        "componentID": 25865523,
+        "name": "Coly2",
+        "rank_data": "2",
+        "rank_data_loc": "3",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.697,
+        "score_data_loc": 0.538,
+        "score_loc": 0.38
+      },
+      {
+        "component": "Holdrege",
+        "componentData": "Data Complete",
+        "componentID": 25865493,
+        "name": "Holdrege",
+        "rank_data": "5",
+        "rank_data_loc": "4",
+        "rank_loc": "4",
+        "score_data": 0.611,
+        "score_data_loc": 0.467,
+        "score_loc": 0.322
+      },
+      {
+        "component": "Tobin",
+        "componentData": "Data Complete",
+        "componentID": 25865519,
+        "name": "Tobin",
+        "rank_data": "9",
+        "rank_data_loc": "5",
+        "rank_loc": "5",
+        "score_data": 0.561,
+        "score_data_loc": 0.369,
+        "score_loc": 0.176
+      },
+      {
+        "component": "Canlon",
+        "componentData": "Data Complete",
+        "componentID": 25865520,
+        "name": "Canlon",
+        "rank_data": "1",
+        "rank_data_loc": "6",
+        "rank_loc": "11",
+        "score_data": 0.71,
+        "score_data_loc": 0.358,
+        "score_loc": 0.006
+      },
+      {
+        "component": "Penden",
+        "componentData": "Data Complete",
+        "componentID": 25865344,
+        "name": "Penden",
+        "rank_data": "3",
+        "rank_data_loc": "7",
+        "rank_loc": "7",
+        "score_data": 0.649,
+        "score_data_loc": 0.35,
+        "score_loc": 0.05
+      },
+      {
+        "component": "Case",
+        "componentData": "Data Complete",
+        "componentID": 25865495,
+        "name": "Case",
+        "rank_data": "8",
+        "rank_data_loc": "8",
+        "rank_loc": "6",
+        "score_data": 0.593,
+        "score_data_loc": 0.332,
+        "score_loc": 0.071
+      },
+      {
+        "component": "Wakeen",
+        "componentData": "Data Complete",
+        "componentID": 25865551,
+        "name": "Wakeen",
+        "rank_data": "4",
+        "rank_data_loc": "9",
+        "rank_loc": "9",
+        "score_data": 0.612,
+        "score_data_loc": 0.322,
+        "score_loc": 0.032
+      },
+      {
+        "component": "Bridgeport",
+        "componentData": "Data Complete",
+        "componentID": 25865494,
+        "name": "Bridgeport",
+        "rank_data": "10",
+        "rank_data_loc": "10",
+        "rank_loc": "8",
+        "score_data": 0.523,
+        "score_data_loc": 0.279,
+        "score_loc": 0.036
+      },
+      {
+        "component": "Aquolls",
+        "componentData": "Missing Data",
+        "componentID": 25865552,
+        "name": "Aquolls",
+        "rank_data": "11",
+        "rank_data_loc": "11",
+        "rank_loc": "10",
+        "score_data": 0.393,
+        "score_data_loc": 0.201,
+        "score_loc": 0.008
+      },
+      {
+        "component": "Uly",
+        "componentData": "Data Complete",
+        "componentID": 25865522,
+        "name": "Uly2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.588,
+        "score_data_loc": 0.744,
+        "score_loc": 0.9
+      },
+      {
+        "component": "Harney",
+        "componentData": "Data Complete",
+        "componentID": 25865550,
+        "name": "Harney2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.551,
+        "score_data_loc": 0.652,
+        "score_loc": 0.753
+      },
+      {
+        "component": "Harney",
+        "componentData": "Data Complete",
+        "componentID": 25865521,
+        "name": "Harney3",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.483,
+        "score_data_loc": 0.618,
+        "score_loc": 0.753
+      },
+      {
+        "component": "Coly",
+        "componentData": "Data Complete",
+        "componentID": 25865492,
+        "name": "Coly1",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "3",
+        "score_data": 0.611,
+        "score_data_loc": 0.495,
+        "score_loc": 0.38
+      }
+    ]
+  }
+}

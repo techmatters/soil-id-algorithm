@@ -1,0 +1,233 @@
+{
+  "list": {
+    "AWS_PIW90": "Data not available",
+    "Soil Data Value": "Data not available",
+    "metadata": {
+      "location": "us",
+      "model": "v3",
+      "unit_measure": {
+        "cec": "cmol(c)/kg",
+        "clay": "%",
+        "depth": "cm",
+        "distance": "m",
+        "ec": "ds/m",
+        "rock_fragments": "cm3/100cm3",
+        "sand": "%"
+      }
+    },
+    "soilList": [
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F006XA804OR"
+            ],
+            "ecoclassname": [
+              "Mesic Xeric Maritime Foothills 30-50 Pz"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/006X/F006XA804OR"
+            ]
+          }
+        },
+        "id": {
+          "component": "Hood",
+          "name": "Hood1",
+          "rank_loc": "1",
+          "score_loc": 0.85
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25279329",
+            "componentKind": "Series",
+            "componentPct": 85,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "1",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "61998",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "1",
+            "nirrcapscl": "None",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=hood",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#hood",
+            "slope": 2.0,
+            "taxsubgrp": "Ultic Haploxeralfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Hood series consists of very deep, well drained soils formed in silty or loamy lacustrine deposits. Hood soils are on dissected terraces and terrace escarpments. Slopes are 0 to 65 percent. The mean annual precipitation is 38 inches and mean annual temperature is 50 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F006XA804OR"
+            ],
+            "ecoclassname": [
+              "Mesic Xeric Maritime Foothills 30-50 Pz"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/006X/F006XA804OR"
+            ]
+          }
+        },
+        "id": {
+          "component": "Hood",
+          "name": "Hood2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.85
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25279333",
+            "componentKind": "Series",
+            "componentPct": 85,
+            "dataSource": "SSURGO",
+            "distance": 52.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "62002",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=hood",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#hood",
+            "slope": 30.0,
+            "taxsubgrp": "Ultic Haploxeralfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Hood series consists of very deep, well drained soils formed in silty or loamy lacustrine deposits. Hood soils are on dissected terraces and terrace escarpments. Slopes are 0 to 65 percent. The mean annual precipitation is 38 inches and mean annual temperature is 50 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F006XA804OR"
+            ],
+            "ecoclassname": [
+              "Mesic Xeric Maritime Foothills 30-50 Pz"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/006X/F006XA804OR"
+            ]
+          }
+        },
+        "id": {
+          "component": "Hood",
+          "name": "Hood3",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.85
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25279330",
+            "componentKind": "Series",
+            "componentPct": 85,
+            "dataSource": "SSURGO",
+            "distance": 82.0,
+            "irrcapcl": "2",
+            "irrcapscl": "e",
+            "irrcapunit": "None",
+            "mapunitID": "61999",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=hood",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#hood",
+            "slope": 6.0,
+            "taxsubgrp": "Ultic Haploxeralfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Hood series consists of very deep, well drained soils formed in silty or loamy lacustrine deposits. Hood soils are on dissected terraces and terrace escarpments. Slopes are 0 to 65 percent. The mean annual precipitation is 38 inches and mean annual temperature is 50 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      }
+    ]
+  },
+  "rank": {
+    "metadata": {
+      "location": "us",
+      "model": "v2"
+    },
+    "soilRank": [
+      {
+        "component": "Hood",
+        "componentData": "Data Complete",
+        "componentID": 25279330,
+        "name": "Hood3",
+        "rank_data": "1",
+        "rank_data_loc": "1",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.588,
+        "score_data_loc": 0.719,
+        "score_loc": 0.85
+      },
+      {
+        "component": "Hood",
+        "componentData": "Data Complete",
+        "componentID": 25279329,
+        "name": "Hood1",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "1",
+        "score_data": 0.556,
+        "score_data_loc": 0.703,
+        "score_loc": 0.85
+      },
+      {
+        "component": "Hood",
+        "componentData": "Data Complete",
+        "componentID": 25279333,
+        "name": "Hood2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.54,
+        "score_data_loc": 0.695,
+        "score_loc": 0.85
+      }
+    ]
+  }
+}

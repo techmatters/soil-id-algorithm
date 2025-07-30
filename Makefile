@@ -41,9 +41,16 @@ clean:
 
 test: clean check_rebuild
 	if [ -z "$(PATTERN)" ]; then \
-		$(DC_RUN_CMD) pytest soil_id; \
+		$(DC_RUN_CMD) pytest soil_id -vv; \
 	else \
-		$(DC_RUN_CMD) pytest soil_id -k $(PATTERN); \
+		$(DC_RUN_CMD) pytest soil_id -vv -k $(PATTERN); \
+	fi
+
+test_update_snapshots: clean check_rebuild
+	if [ -z "$(PATTERN)" ]; then \
+		$(DC_RUN_CMD) pytest soil_id --snapshot-update; \
+	else \
+		$(DC_RUN_CMD) pytest soil_id --snapshot-update -k $(PATTERN); \
 	fi
 
 test-verbose:

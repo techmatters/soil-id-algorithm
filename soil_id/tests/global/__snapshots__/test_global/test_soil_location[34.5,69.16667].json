@@ -425,6 +425,106 @@
           "sl7": 120
         },
         "cec": {
+          "sl1": 16.0,
+          "sl2": 16.0,
+          "sl3": 16.0,
+          "sl4": 16.4,
+          "sl5": 16.29,
+          "sl6": 16.0,
+          "sl7": 15.67
+        },
+        "clay": {
+          "sl1": 20.0,
+          "sl2": 20.0,
+          "sl3": 20.0,
+          "sl4": 21.2,
+          "sl5": 21.29,
+          "sl6": 21.0,
+          "sl7": 20.83
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 0.86,
+          "sl6": 0.6,
+          "sl7": 0.67
+        },
+        "id": {
+          "component": "Rendzic leptosols",
+          "name": "Rendzic leptosols",
+          "rank_loc": "5",
+          "score_loc": 0.003
+        },
+        "ph": {
+          "sl1": 8.2,
+          "sl2": 8.2,
+          "sl3": 8.2,
+          "sl4": 8.22,
+          "sl5": 8.24,
+          "sl6": 8.26,
+          "sl7": 8.27
+        },
+        "rock_fragments": {
+          "sl1": 4.0,
+          "sl2": 4.0,
+          "sl3": 4.0,
+          "sl4": 5.0,
+          "sl5": 6.14,
+          "sl6": 7.4,
+          "sl7": 7.17
+        },
+        "sand": {
+          "sl1": 43.0,
+          "sl2": 43.0,
+          "sl3": 43.0,
+          "sl4": 41.2,
+          "sl5": 41.14,
+          "sl6": 41.6,
+          "sl7": 41.83
+        },
+        "site": {
+          "siteData": {
+            "componentID": 129097,
+            "distance": 47480.618,
+            "mapunitID": 33127,
+            "minCompDistance": 47480.6175,
+            "share": 82,
+            "soilDepth": 40
+          },
+          "siteDescription": {
+            "Description_en": "Rendzic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Rendzic Leptosols are highly calcareous at the soil surface. ",
+            "Description_es": "Los Leptosoles Rendzicos tienen un volumen de enraizamiento muy limitado debido a la roca continua, material altamente calcáreo, horizontes cementados, o muchas rocas y fragmentos gruesos en la parte superior del suelo. <br>Los leptosoles en pendientes pronunciadas son muy erosionables. <br>Los Leptosoles Rendzic son altamente calcáreos en la superficie del suelo. ",
+            "Description_fr": "Rendzic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Rendzic Leptosols are highly calcareous at the soil surface. ",
+            "Description_ks": "Rendzic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Rendzic Leptosols are highly calcareous at the soil surface. ",
+            "Management_en": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Soil pH will be high (> 7.0) in these soils, and no liming will be needed. <br> Any agricultural use should be for grazing or agroforestry, with cover continuously maintained. ",
+            "Management_es": "Debido a que estos suelos son poco profundos, rocosos y erosionables deben ser utilizados para cultivos perennes, y no deben ser labrados. <br>Deben utilizarse prácticas para mantener la materia orgánica y la cobertura. <br>Sólo deben considerarse los usos para pastoreo o agroforestales. <br>La preservación del suelo superficial con su materia orgánica es importante, y la prevención de la erosión es fundamental. <br>El pH del suelo será alto (> 7,0) en estos suelos, y no será necesario el encalado. <br>Cualquier uso agrícola debe ser para el pastoreo o la agrosilvicultura, con el mantenimiento continuo de la cubierta.",
+            "Management_fr": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Soil pH will be high (> 7.0) in these soils, and no liming will be needed. <br> Any agricultural use should be for grazing or agroforestry, with cover continuously maintained. ",
+            "Management_ks": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Soil pH will be high (> 7.0) in these soils, and no liming will be needed. <br> Any agricultural use should be for grazing or agroforestry, with cover continuously maintained. "
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Loam",
+          "sl5": "Loam",
+          "sl6": "Loam",
+          "sl7": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
           "sl1": 17.0,
           "sl2": 17.0,
           "sl3": 17.0,
@@ -452,9 +552,9 @@
           "sl7": 0.5
         },
         "id": {
-          "component": "Rendzic leptosols",
-          "name": "Rendzic leptosols",
-          "rank_loc": "5",
+          "component": "Calcaric arenosols",
+          "name": "Calcaric arenosols1",
+          "rank_loc": "6",
           "score_loc": 0.003
         },
         "ph": {
@@ -486,106 +586,6 @@
         },
         "site": {
           "siteData": {
-            "componentID": 129097,
-            "distance": 47480.618,
-            "mapunitID": 33127,
-            "minCompDistance": 47480.6175,
-            "share": 82,
-            "soilDepth": 40
-          },
-          "siteDescription": {
-            "Description_en": "Rendzic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Rendzic Leptosols are highly calcareous at the soil surface. ",
-            "Description_es": "Los Leptosoles Rendzicos tienen un volumen de enraizamiento muy limitado debido a la roca continua, material altamente calcáreo, horizontes cementados, o muchas rocas y fragmentos gruesos en la parte superior del suelo. <br>Los leptosoles en pendientes pronunciadas son muy erosionables. <br>Los Leptosoles Rendzic son altamente calcáreos en la superficie del suelo. ",
-            "Description_fr": "Rendzic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Rendzic Leptosols are highly calcareous at the soil surface. ",
-            "Description_ks": "Rendzic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Rendzic Leptosols are highly calcareous at the soil surface. ",
-            "Management_en": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Soil pH will be high (> 7.0) in these soils, and no liming will be needed. <br> Any agricultural use should be for grazing or agroforestry, with cover continuously maintained. ",
-            "Management_es": "Debido a que estos suelos son poco profundos, rocosos y erosionables deben ser utilizados para cultivos perennes, y no deben ser labrados. <br>Deben utilizarse prácticas para mantener la materia orgánica y la cobertura. <br>Sólo deben considerarse los usos para pastoreo o agroforestales. <br>La preservación del suelo superficial con su materia orgánica es importante, y la prevención de la erosión es fundamental. <br>El pH del suelo será alto (> 7,0) en estos suelos, y no será necesario el encalado. <br>Cualquier uso agrícola debe ser para el pastoreo o la agrosilvicultura, con el mantenimiento continuo de la cubierta.",
-            "Management_fr": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Soil pH will be high (> 7.0) in these soils, and no liming will be needed. <br> Any agricultural use should be for grazing or agroforestry, with cover continuously maintained. ",
-            "Management_ks": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Soil pH will be high (> 7.0) in these soils, and no liming will be needed. <br> Any agricultural use should be for grazing or agroforestry, with cover continuously maintained. "
-          }
-        },
-        "texture": {
-          "sl1": "Clay loam",
-          "sl2": "Clay loam",
-          "sl3": "Clay loam",
-          "sl4": "Clay loam",
-          "sl5": "Clay loam",
-          "sl6": "Clay loam",
-          "sl7": "Clay loam"
-        }
-      },
-      {
-        "bottom_depth": {
-          "sl1": 1,
-          "sl2": 10,
-          "sl3": 20,
-          "sl4": 50,
-          "sl5": 70,
-          "sl6": 100,
-          "sl7": 120
-        },
-        "cec": {
-          "sl1": 14.0,
-          "sl2": 14.0,
-          "sl3": 14.0,
-          "sl4": 13.4,
-          "sl5": 13.29,
-          "sl6": 13.0,
-          "sl7": 12.67
-        },
-        "clay": {
-          "sl1": 15.0,
-          "sl2": 15.0,
-          "sl3": 15.0,
-          "sl4": 15.4,
-          "sl5": 15.43,
-          "sl6": 15.8,
-          "sl7": 16.17
-        },
-        "ec": {
-          "sl1": 1.0,
-          "sl2": 1.0,
-          "sl3": 1.0,
-          "sl4": 1.6,
-          "sl5": 1.71,
-          "sl6": 1.6,
-          "sl7": 1.83
-        },
-        "id": {
-          "component": "Calcaric arenosols",
-          "name": "Calcaric arenosols1",
-          "rank_loc": "6",
-          "score_loc": 0.003
-        },
-        "ph": {
-          "sl1": 8.2,
-          "sl2": 8.2,
-          "sl3": 8.2,
-          "sl4": 8.26,
-          "sl5": 8.27,
-          "sl6": 8.28,
-          "sl7": 8.28
-        },
-        "rock_fragments": {
-          "sl1": 9.0,
-          "sl2": 9.0,
-          "sl3": 9.0,
-          "sl4": 9.4,
-          "sl5": 8.0,
-          "sl6": 7.4,
-          "sl7": 7.83
-        },
-        "sand": {
-          "sl1": 55.0,
-          "sl2": 55.0,
-          "sl3": 55.0,
-          "sl4": 54.0,
-          "sl5": 53.71,
-          "sl6": 52.8,
-          "sl7": 52.5
-        },
-        "site": {
-          "siteData": {
             "componentID": 130338,
             "distance": 94026.373,
             "mapunitID": 33860,
@@ -605,13 +605,13 @@
           }
         },
         "texture": {
-          "sl1": "Sandy loam",
-          "sl2": "Sandy loam",
-          "sl3": "Sandy loam",
-          "sl4": "Sandy loam",
-          "sl5": "Sandy loam",
-          "sl6": "Sandy loam",
-          "sl7": "Sandy loam"
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
         }
       },
       {
@@ -925,6 +925,106 @@
           "sl7": 120
         },
         "cec": {
+          "sl1": 14.0,
+          "sl2": 14.0,
+          "sl3": 14.0,
+          "sl4": 13.4,
+          "sl5": 13.29,
+          "sl6": 13.0,
+          "sl7": 12.67
+        },
+        "clay": {
+          "sl1": 15.0,
+          "sl2": 15.0,
+          "sl3": 15.0,
+          "sl4": 15.4,
+          "sl5": 15.43,
+          "sl6": 15.8,
+          "sl7": 16.17
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.6,
+          "sl5": 1.71,
+          "sl6": 1.6,
+          "sl7": 1.83
+        },
+        "id": {
+          "component": "Umbric leptosols",
+          "name": "Umbric leptosols",
+          "rank_loc": "10",
+          "score_loc": 0.001
+        },
+        "ph": {
+          "sl1": 8.2,
+          "sl2": 8.2,
+          "sl3": 8.2,
+          "sl4": 8.26,
+          "sl5": 8.27,
+          "sl6": 8.28,
+          "sl7": 8.28
+        },
+        "rock_fragments": {
+          "sl1": 9.0,
+          "sl2": 9.0,
+          "sl3": 9.0,
+          "sl4": 9.4,
+          "sl5": 8.0,
+          "sl6": 7.4,
+          "sl7": 7.83
+        },
+        "sand": {
+          "sl1": 55.0,
+          "sl2": 55.0,
+          "sl3": 55.0,
+          "sl4": 54.0,
+          "sl5": 53.71,
+          "sl6": 52.8,
+          "sl7": 52.5
+        },
+        "site": {
+          "siteData": {
+            "componentID": 132400,
+            "distance": 84530.897,
+            "mapunitID": 3503,
+            "minCompDistance": 84530.8969,
+            "share": 25,
+            "soilDepth": 40
+          },
+          "siteDescription": {
+            "Description_en": "Umbric Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Umbric Leptosols have a thick surface horizon with high organic matter and low base saturation overlying a root limiting layer. ",
+            "Description_es": "Los Leptosoles Úmbricos tienen un volumen de enraizamiento muy limitado debido a la presencia de roca continua, material altamente calcáreo, horizontes cementados o muchas rocas y fragmentos gruesos en la parte superior del suelo. <br>Los leptosoles en pendientes pronunciadas son muy erosionables. <br>Los leptosoles umbrosos tienen un horizonte superficial grueso con un alto contenido de materia orgánica y una baja saturación de la base que se superpone a una capa que limita las raíces. ",
+            "Description_fr": "Umbric Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Umbric Leptosols have a thick surface horizon with high organic matter and low base saturation overlying a root limiting layer. ",
+            "Description_ks": "Umbric Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Umbric Leptosols have a thick surface horizon with high organic matter and low base saturation overlying a root limiting layer. ",
+            "Management_en": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> The surface horizon soil pH will be low (< 5.0) and liming will be needed for grazing or agroforestry use. <br> Any agricultural use should be for grazing or agroforestry, with cover continuously maintained. ",
+            "Management_es": "Debido a que estos suelos son poco profundos, rocosos y erosionables, deben utilizarse para cultivos perennes y no deben ser labrados. <br>Deben utilizarse prácticas para mantener la materia orgánica y la cobertura. <br>Sólo deben considerarse los usos para pastoreo o agroforestales. <br>La preservación del suelo superficial con su materia orgánica es importante, y la prevención de la erosión es fundamental. <br>El pH del suelo del horizonte superficial será bajo (< 5,0) y se necesitará encalado para el uso de pastoreo o agroforestal. <br>Cualquier uso agrícola debe ser para el pastoreo o la agroforestería, con el mantenimiento continuo de la cubierta.",
+            "Management_fr": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> The surface horizon soil pH will be low (< 5.0) and liming will be needed for grazing or agroforestry use. <br> Any agricultural use should be for grazing or agroforestry, with cover continuously maintained. ",
+            "Management_ks": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> The surface horizon soil pH will be low (< 5.0) and liming will be needed for grazing or agroforestry use. <br> Any agricultural use should be for grazing or agroforestry, with cover continuously maintained. "
+          }
+        },
+        "texture": {
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy loam",
+          "sl5": "Sandy loam",
+          "sl6": "Sandy loam",
+          "sl7": "Sandy loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
           "sl1": 16.0,
           "sl2": 16.0,
           "sl3": 16.0,
@@ -952,9 +1052,9 @@
           "sl7": 1.5
         },
         "id": {
-          "component": "Umbric leptosols",
-          "name": "Umbric leptosols",
-          "rank_loc": "10",
+          "component": "Cambisols",
+          "name": "Cambisols",
+          "rank_loc": "11",
           "score_loc": 0.001
         },
         "ph": {
@@ -986,22 +1086,22 @@
         },
         "site": {
           "siteData": {
-            "componentID": 132400,
+            "componentID": 132402,
             "distance": 84530.897,
             "mapunitID": 3503,
             "minCompDistance": 84530.8969,
             "share": 25,
-            "soilDepth": 40
+            "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Umbric Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Umbric Leptosols have a thick surface horizon with high organic matter and low base saturation overlying a root limiting layer. ",
-            "Description_es": "Los Leptosoles Úmbricos tienen un volumen de enraizamiento muy limitado debido a la presencia de roca continua, material altamente calcáreo, horizontes cementados o muchas rocas y fragmentos gruesos en la parte superior del suelo. <br>Los leptosoles en pendientes pronunciadas son muy erosionables. <br>Los leptosoles umbrosos tienen un horizonte superficial grueso con un alto contenido de materia orgánica y una baja saturación de la base que se superpone a una capa que limita las raíces. ",
-            "Description_fr": "Umbric Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Umbric Leptosols have a thick surface horizon with high organic matter and low base saturation overlying a root limiting layer. ",
-            "Description_ks": "Umbric Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Umbric Leptosols have a thick surface horizon with high organic matter and low base saturation overlying a root limiting layer. ",
-            "Management_en": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> The surface horizon soil pH will be low (< 5.0) and liming will be needed for grazing or agroforestry use. <br> Any agricultural use should be for grazing or agroforestry, with cover continuously maintained. ",
-            "Management_es": "Debido a que estos suelos son poco profundos, rocosos y erosionables, deben utilizarse para cultivos perennes y no deben ser labrados. <br>Deben utilizarse prácticas para mantener la materia orgánica y la cobertura. <br>Sólo deben considerarse los usos para pastoreo o agroforestales. <br>La preservación del suelo superficial con su materia orgánica es importante, y la prevención de la erosión es fundamental. <br>El pH del suelo del horizonte superficial será bajo (< 5,0) y se necesitará encalado para el uso de pastoreo o agroforestal. <br>Cualquier uso agrícola debe ser para el pastoreo o la agroforestería, con el mantenimiento continuo de la cubierta.",
-            "Management_fr": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> The surface horizon soil pH will be low (< 5.0) and liming will be needed for grazing or agroforestry use. <br> Any agricultural use should be for grazing or agroforestry, with cover continuously maintained. ",
-            "Management_ks": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> The surface horizon soil pH will be low (< 5.0) and liming will be needed for grazing or agroforestry use. <br> Any agricultural use should be for grazing or agroforestry, with cover continuously maintained. "
+            "Description_en": "Cambisols are widely occurring soils with limited soil development. <br> These are productive soils with high base saturation (Ca, Mg and K) in the upper portion of soil. ",
+            "Description_es": "Los Cambisoles son suelos de amplia ocurrencia con un desarrollo limitado del suelo. <br>Son suelos productivos con alta saturación de bases (Ca, Mg y K) en la parte superior del suelo. ",
+            "Description_fr": "Cambisols are widely occurring soils with limited soil development. <br> These are productive soils with high base saturation (Ca, Mg and K) in the upper portion of soil. ",
+            "Description_ks": "Cambisols are widely occurring soils with limited soil development. <br> These are productive soils with high base saturation (Ca, Mg and K) in the upper portion of soil. ",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> Cambisols will have high base saturation, which means that the available soil nutrients will be predominantly calcium, potassium, and magnesium. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_es": "En regiones templadas los suelos tendrán un alto contenido de cationes básicos (potasio, calcio y magnesio), mientras que en regiones más húmedas pueden tener niveles más bajos de nutrientes en el suelo. <br>Los cambisoles tendrán una alta saturación de bases, lo que significa que los nutrientes disponibles en el suelo serán predominantemente calcio, potasio y magnesio. <br>Estos suelos son muy adecuados para la producción de cultivos y pueden utilizarse de forma intensiva. <br>La fertilización debe utilizarse para mejorar la productividad, y puede incluirse el riego para aumentar aún más la productividad.",
+            "Management_fr": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> Cambisols will have high base saturation, which means that the available soil nutrients will be predominantly calcium, potassium, and magnesium. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_ks": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> Cambisols will have high base saturation, which means that the available soil nutrients will be predominantly calcium, potassium, and magnesium. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
           }
         },
         "texture": {
@@ -1036,10 +1136,10 @@
           "sl3": 1.0
         },
         "id": {
-          "component": "Cambisols",
-          "name": "Cambisols",
-          "rank_loc": "11",
-          "score_loc": 0.001
+          "component": "Calcaric cambisols",
+          "name": "Calcaric cambisols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.007
         },
         "ph": {
           "sl1": 7.4,
@@ -1058,22 +1158,22 @@
         },
         "site": {
           "siteData": {
-            "componentID": 132402,
-            "distance": 84530.897,
-            "mapunitID": 3503,
-            "minCompDistance": 84530.8969,
-            "share": 25,
+            "componentID": 128926,
+            "distance": 8501.441,
+            "mapunitID": 33019,
+            "minCompDistance": 3776.1698,
+            "share": 21,
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Cambisols are widely occurring soils with limited soil development. <br> These are productive soils with high base saturation (Ca, Mg and K) in the upper portion of soil. ",
-            "Description_es": "Los Cambisoles son suelos de amplia ocurrencia con un desarrollo limitado del suelo. <br>Son suelos productivos con alta saturación de bases (Ca, Mg y K) en la parte superior del suelo. ",
-            "Description_fr": "Cambisols are widely occurring soils with limited soil development. <br> These are productive soils with high base saturation (Ca, Mg and K) in the upper portion of soil. ",
-            "Description_ks": "Cambisols are widely occurring soils with limited soil development. <br> These are productive soils with high base saturation (Ca, Mg and K) in the upper portion of soil. ",
-            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> Cambisols will have high base saturation, which means that the available soil nutrients will be predominantly calcium, potassium, and magnesium. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
-            "Management_es": "En regiones templadas los suelos tendrán un alto contenido de cationes básicos (potasio, calcio y magnesio), mientras que en regiones más húmedas pueden tener niveles más bajos de nutrientes en el suelo. <br>Los cambisoles tendrán una alta saturación de bases, lo que significa que los nutrientes disponibles en el suelo serán predominantemente calcio, potasio y magnesio. <br>Estos suelos son muy adecuados para la producción de cultivos y pueden utilizarse de forma intensiva. <br>La fertilización debe utilizarse para mejorar la productividad, y puede incluirse el riego para aumentar aún más la productividad.",
-            "Management_fr": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> Cambisols will have high base saturation, which means that the available soil nutrients will be predominantly calcium, potassium, and magnesium. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
-            "Management_ks": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> Cambisols will have high base saturation, which means that the available soil nutrients will be predominantly calcium, potassium, and magnesium. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
+            "Description_en": "Calcaric Cambisols are widely occurring soils with limited soil development. <br> These soils are calcareous in a soil layer below the surface.",
+            "Description_es": "Los Cambisoles Calcáreos son suelos muy extendidos con un desarrollo limitado del suelo. <br>Estos suelos son calcáreos en una capa del suelo por debajo de la superficie.",
+            "Description_fr": "Calcaric Cambisols are widely occurring soils with limited soil development. <br> These soils are calcareous in a soil layer below the surface.",
+            "Description_ks": "Calcaric Cambisols are widely occurring soils with limited soil development. <br> These soils are calcareous in a soil layer below the surface.",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_es": "En las regiones templadas los suelos tendrán un alto contenido de cationes básicos (potasio, calcio y magnesio), mientras que en las regiones más húmedas pueden tener niveles más bajos de nutrientes del suelo. <br>Estos suelos son muy adecuados para la producción de cultivos, y pueden utilizarse de forma intensiva. <br>La fertilización debe utilizarse para mejorar la productividad, y puede incluirse el riego para aumentar aún más la productividad.",
+            "Management_fr": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_ks": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
           }
         },
         "texture": {
@@ -1105,7 +1205,7 @@
         },
         "id": {
           "component": "Calcaric cambisols",
-          "name": "Calcaric cambisols2",
+          "name": "Calcaric cambisols3",
           "rank_loc": "Not Displayed",
           "score_loc": 0.007
         },
@@ -1126,11 +1226,11 @@
         },
         "site": {
           "siteData": {
-            "componentID": 128926,
-            "distance": 8501.441,
-            "mapunitID": 33019,
+            "componentID": 129002,
+            "distance": 17680.575,
+            "mapunitID": 33067,
             "minCompDistance": 3776.1698,
-            "share": 21,
+            "share": 90,
             "soilDepth": 200
           },
           "siteDescription": {
@@ -1189,7 +1289,7 @@
         },
         "id": {
           "component": "Calcaric cambisols",
-          "name": "Calcaric cambisols3",
+          "name": "Calcaric cambisols4",
           "rank_loc": "Not Displayed",
           "score_loc": 0.007
         },
@@ -1277,7 +1377,7 @@
         },
         "id": {
           "component": "Calcaric cambisols",
-          "name": "Calcaric cambisols4",
+          "name": "Calcaric cambisols5",
           "rank_loc": "Not Displayed",
           "score_loc": 0.007
         },
@@ -1365,7 +1465,7 @@
         },
         "id": {
           "component": "Calcaric cambisols",
-          "name": "Calcaric cambisols5",
+          "name": "Calcaric cambisols6",
           "rank_loc": "Not Displayed",
           "score_loc": 0.007
         },
@@ -2039,7 +2139,7 @@
         "componentData": "Data Complete",
         "componentID": 133064,
         "name": "Histosols",
-        "rank_data": "4",
+        "rank_data": "5",
         "rank_data_loc": "3",
         "rank_loc": "4",
         "score_data": 1.0,
@@ -2059,12 +2159,24 @@
         "score_loc": 0.003
       },
       {
+        "component": "Cambisols",
+        "componentData": "Data Complete",
+        "componentID": 132402,
+        "name": "Cambisols",
+        "rank_data": "4",
+        "rank_data_loc": "5",
+        "rank_loc": "11",
+        "score_data": 1.0,
+        "score_data_loc": 0.994,
+        "score_loc": 0.001
+      },
+      {
         "component": "Calcic luvisols",
         "componentData": "Data Complete",
         "componentID": 129392,
         "name": "Calcic luvisols",
         "rank_data": "9",
-        "rank_data_loc": "5",
+        "rank_data_loc": "6",
         "rank_loc": "7",
         "score_data": 0.613,
         "score_data_loc": 0.611,
@@ -2076,7 +2188,7 @@
         "componentID": 129425,
         "name": "Calcaric fluvisols",
         "rank_data": "8",
-        "rank_data_loc": "6",
+        "rank_data_loc": "7",
         "rank_loc": "8",
         "score_data": 0.613,
         "score_data_loc": 0.611,
@@ -2087,21 +2199,9 @@
         "componentData": "Data Complete",
         "componentID": 132579,
         "name": "Regosols",
-        "rank_data": "11",
-        "rank_data_loc": "7",
-        "rank_loc": "9",
-        "score_data": 0.613,
-        "score_data_loc": 0.609,
-        "score_loc": 0.001
-      },
-      {
-        "component": "Cambisols",
-        "componentData": "Data Complete",
-        "componentID": 132402,
-        "name": "Cambisols",
         "rank_data": "10",
         "rank_data_loc": "8",
-        "rank_loc": "11",
+        "rank_loc": "9",
         "score_data": 0.613,
         "score_data_loc": 0.609,
         "score_loc": 0.001
@@ -2109,11 +2209,11 @@
       {
         "component": "Lithic leptosols",
         "componentData": "Missing Data",
-        "componentID": 128898,
-        "name": "Lithic leptosols1",
-        "rank_data": "5",
+        "componentID": 129499,
+        "name": "Lithic leptosols2",
+        "rank_data": "Not Displayed",
         "rank_data_loc": "9",
-        "rank_loc": "3",
+        "rank_loc": "Not Displayed",
         "score_data": 1.0,
         "score_data_loc": 0.002,
         "score_loc": 0.006
@@ -2126,7 +2226,7 @@
         "rank_data": "7",
         "rank_data_loc": "10",
         "rank_loc": "5",
-        "score_data": 0.63,
+        "score_data": 1.0,
         "score_data_loc": 0.002,
         "score_loc": 0.003
       },
@@ -2135,18 +2235,18 @@
         "componentData": "Missing Data",
         "componentID": 132400,
         "name": "Umbric leptosols",
-        "rank_data": "6",
+        "rank_data": "11",
         "rank_data_loc": "11",
         "rank_loc": "10",
-        "score_data": 1.0,
+        "score_data": 0.613,
         "score_data_loc": 0.002,
         "score_loc": 0.001
       },
       {
         "component": "Calcaric cambisols",
         "componentData": "Data Complete",
-        "componentID": 128926,
-        "name": "Calcaric cambisols2",
+        "componentID": 129002,
+        "name": "Calcaric cambisols3",
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
@@ -2158,7 +2258,7 @@
         "component": "Calcaric cambisols",
         "componentData": "Data Complete",
         "componentID": 128910,
-        "name": "Calcaric cambisols4",
+        "name": "Calcaric cambisols5",
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
@@ -2182,12 +2282,36 @@
         "component": "Calcaric cambisols",
         "componentData": "Data Complete",
         "componentID": 128904,
-        "name": "Calcaric cambisols3",
+        "name": "Calcaric cambisols4",
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
         "score_data": 0.63,
         "score_data_loc": 0.633,
+        "score_loc": 0.007
+      },
+      {
+        "component": "Calcaric arenosols",
+        "componentData": "Data Complete",
+        "componentID": 130338,
+        "name": "Calcaric arenosols1",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "6",
+        "score_data": 0.63,
+        "score_data_loc": 0.629,
+        "score_loc": 0.003
+      },
+      {
+        "component": "Calcaric cambisols",
+        "componentData": "Data Complete",
+        "componentID": 128926,
+        "name": "Calcaric cambisols2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.613,
+        "score_data_loc": 0.616,
         "score_loc": 0.007
       },
       {
@@ -2215,22 +2339,10 @@
         "score_loc": 0.007
       },
       {
-        "component": "Calcaric arenosols",
-        "componentData": "Data Complete",
-        "componentID": 130338,
-        "name": "Calcaric arenosols1",
-        "rank_data": "Not Displayed",
-        "rank_data_loc": "Not Displayed",
-        "rank_loc": "6",
-        "score_data": 0.613,
-        "score_data_loc": 0.612,
-        "score_loc": 0.003
-      },
-      {
         "component": "Calcaric cambisols",
         "componentData": "Data Complete",
         "componentID": 129504,
-        "name": "Calcaric cambisols5",
+        "name": "Calcaric cambisols6",
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
@@ -2253,11 +2365,11 @@
       {
         "component": "Lithic leptosols",
         "componentData": "Missing Data",
-        "componentID": 129499,
-        "name": "Lithic leptosols2",
-        "rank_data": "Not Displayed",
+        "componentID": 128898,
+        "name": "Lithic leptosols1",
+        "rank_data": "6",
         "rank_data_loc": "Not Displayed",
-        "rank_loc": "Not Displayed",
+        "rank_loc": "3",
         "score_data": 1.0,
         "score_data_loc": 0.002,
         "score_loc": 0.006

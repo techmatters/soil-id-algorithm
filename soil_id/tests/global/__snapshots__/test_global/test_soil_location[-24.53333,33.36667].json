@@ -1152,8 +1152,8 @@
           "sl7": 0.0
         },
         "id": {
-          "component": "Umbric gleysols",
-          "name": "Umbric gleysols",
+          "component": "Haplic luvisols",
+          "name": "Haplic luvisols",
           "rank_loc": "12",
           "score_loc": 0.027
         },
@@ -1186,22 +1186,22 @@
         },
         "site": {
           "siteData": {
-            "componentID": 112974,
-            "distance": 54381.47,
-            "mapunitID": 18406,
-            "minCompDistance": 54381.47,
-            "share": 60,
+            "componentID": 113128,
+            "distance": 95990.463,
+            "mapunitID": 18450,
+            "minCompDistance": 95990.4626,
+            "share": 15,
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Umbric Gleysols have shallow groundwater and are saturated for significant portions of the year. <br> Deep drainage is necessary for cultivation.    <br> Umbric Gleysols have relatively higher organic matter but lower nutrients in surface horizons.",
-            "Description_es": "Los Gleysoles Úmbricos tienen aguas subterráneas poco profundas y están saturados durante gran parte del año. <br>El drenaje profundo es necesario para el cultivo.    <br>Los Gleysoles úmbricos tienen una materia orgánica relativamente alta, pero menos nutrientes en los horizontes superficiales. ",
-            "Description_fr": "Umbric Gleysols have shallow groundwater and are saturated for significant portions of the year. <br> Deep drainage is necessary for cultivation.    <br> Umbric Gleysols have relatively higher organic matter but lower nutrients in surface horizons.",
-            "Description_ks": "Umbric Gleysols have shallow groundwater and are saturated for significant portions of the year. <br> Deep drainage is necessary for cultivation.    <br> Umbric Gleysols have relatively higher organic matter but lower nutrients in surface horizons.",
-            "Management_en": "These soils are saturated, and if they are cultivated significant drainage is required. <br> Once drained, these soils can be highly productive. <br> The water table must be lowered using deep drainage. <br> Once drained, liming may be required as organic matter begins to decompose. <br> The surface soil pH is low in these soils, and liming will likely be required. ",
-            "Management_es": "Estos suelos están saturados y, si se cultivan, se requiere un drenaje importante. <br>Una vez drenados, estos suelos pueden ser muy productivos. <br>El nivel freático debe bajarse mediante un drenaje profundo. <br>Una vez drenados, puede ser necesario el encalado, ya que la materia orgánica comienza a descomponerse. <br>El pH superficial del suelo es bajo en estos suelos, y es probable que sea necesario el encalado.",
-            "Management_fr": "These soils are saturated, and if they are cultivated significant drainage is required. <br> Once drained, these soils can be highly productive. <br> The water table must be lowered using deep drainage. <br> Once drained, liming may be required as organic matter begins to decompose. <br> The surface soil pH is low in these soils, and liming will likely be required. ",
-            "Management_ks": "These soils are saturated, and if they are cultivated significant drainage is required. <br> Once drained, these soils can be highly productive. <br> The water table must be lowered using deep drainage. <br> Once drained, liming may be required as organic matter begins to decompose. <br> The surface soil pH is low in these soils, and liming will likely be required. "
+            "Description_en": "Haplic Luvisols are productive soils with high base saturation and relatively clayey subsoils.",
+            "Description_es": "Los Luvisoles Háplicos son suelos productivos con alta saturación de bases y subsuelos relativamente arcillosos.",
+            "Description_fr": "Haplic Luvisols are productive soils with high base saturation and relatively clayey subsoils.",
+            "Description_ks": "Haplic Luvisols are productive soils with high base saturation and relatively clayey subsoils.",
+            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops.",
+            "Management_es": "Estos suelos son fértiles y pueden utilizarse para una amplia gama de prácticas de cultivo. <br>Sin embargo, son sensibles a la pérdida de suelo por erosión y hay que tener cuidado para proteger el suelo de la pérdida. <br>Si el suelo ya está erosionado, pueden ser más adecuados para el pastoreo y/o los cultivos arbóreos.",
+            "Management_fr": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops.",
+            "Management_ks": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops."
           }
         },
         "texture": {
@@ -1725,31 +1725,31 @@
           "sl7": 120
         },
         "cec": {
-          "sl1": 28.0,
-          "sl2": 28.0,
-          "sl3": 28.0,
-          "sl4": 26.2,
-          "sl5": 24.71,
-          "sl6": 23.0,
-          "sl7": 21.5
+          "sl1": 12.0,
+          "sl2": 12.0,
+          "sl3": 12.0,
+          "sl4": 13.8,
+          "sl5": 14.0,
+          "sl6": 14.0,
+          "sl7": 13.83
         },
         "clay": {
-          "sl1": 46.0,
-          "sl2": 46.0,
-          "sl3": 46.0,
-          "sl4": 49.0,
-          "sl5": 48.43,
-          "sl6": 46.8,
-          "sl7": 46.33
+          "sl1": 16.0,
+          "sl2": 16.0,
+          "sl3": 16.0,
+          "sl4": 19.6,
+          "sl5": 20.14,
+          "sl6": 20.2,
+          "sl7": 20.17
         },
         "ec": {
           "sl1": 1.0,
           "sl2": 1.0,
           "sl3": 1.0,
-          "sl4": 0.8,
-          "sl5": 0.57,
-          "sl6": 0.4,
-          "sl7": 0.33
+          "sl4": 1.0,
+          "sl5": 1.0,
+          "sl6": 1.0,
+          "sl7": 1.0
         },
         "id": {
           "component": "Eutric planosols",
@@ -1758,31 +1758,31 @@
           "score_loc": 0.036
         },
         "ph": {
-          "sl1": 5.0,
-          "sl2": 5.0,
-          "sl3": 5.0,
-          "sl4": 4.9,
-          "sl5": 4.91,
-          "sl6": 4.9,
-          "sl7": 4.9
+          "sl1": 7.0,
+          "sl2": 7.0,
+          "sl3": 7.0,
+          "sl4": 7.14,
+          "sl5": 7.21,
+          "sl6": 7.34,
+          "sl7": 7.42
         },
         "rock_fragments": {
-          "sl1": 6.0,
-          "sl2": 6.0,
-          "sl3": 6.0,
-          "sl4": 10.0,
-          "sl5": 11.43,
-          "sl6": 13.4,
-          "sl7": 14.33
+          "sl1": 15.0,
+          "sl2": 15.0,
+          "sl3": 15.0,
+          "sl4": 15.8,
+          "sl5": 16.71,
+          "sl6": 17.8,
+          "sl7": 17.83
         },
         "sand": {
-          "sl1": 25.0,
-          "sl2": 25.0,
-          "sl3": 25.0,
-          "sl4": 25.0,
-          "sl5": 26.14,
-          "sl6": 27.6,
-          "sl7": 27.83
+          "sl1": 64.0,
+          "sl2": 64.0,
+          "sl3": 64.0,
+          "sl4": 61.2,
+          "sl5": 60.86,
+          "sl6": 60.8,
+          "sl7": 60.83
         },
         "site": {
           "siteData": {
@@ -1805,13 +1805,13 @@
           }
         },
         "texture": {
-          "sl1": "Unknown",
-          "sl2": "Unknown",
-          "sl3": "Unknown",
-          "sl4": "Unknown",
-          "sl5": "Unknown",
-          "sl6": "Unknown",
-          "sl7": "Unknown"
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
         }
       }
     ]
@@ -1827,7 +1827,7 @@
         "componentData": "Data Complete",
         "componentID": 113242,
         "name": "Salic fluvisols2",
-        "rank_data": "7",
+        "rank_data": "8",
         "rank_data_loc": "1",
         "rank_loc": "Not Displayed",
         "score_data": 0.9,
@@ -1851,7 +1851,7 @@
         "componentData": "Data Complete",
         "componentID": 113477,
         "name": "Mollic fluvisols",
-        "rank_data": "6",
+        "rank_data": "7",
         "rank_data_loc": "3",
         "rank_loc": "3",
         "score_data": 0.9,
@@ -1875,7 +1875,7 @@
         "componentData": "Data Complete",
         "componentID": 112871,
         "name": "Ferralic arenosols1",
-        "rank_data": "3",
+        "rank_data": "4",
         "rank_data_loc": "5",
         "rank_loc": "7",
         "score_data": 0.9,
@@ -1883,12 +1883,24 @@
         "score_loc": 0.039
       },
       {
+        "component": "Eutric planosols",
+        "componentData": "Missing Data",
+        "componentID": 113443,
+        "name": "Eutric planosols2",
+        "rank_data": "3",
+        "rank_data_loc": "6",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.9,
+        "score_data_loc": 0.945,
+        "score_loc": 0.036
+      },
+      {
         "component": "Haplic arenosols",
         "componentData": "Data Complete",
         "componentID": 113413,
         "name": "Haplic arenosols",
-        "rank_data": "5",
-        "rank_data_loc": "6",
+        "rank_data": "6",
+        "rank_data_loc": "7",
         "rank_loc": "9",
         "score_data": 0.9,
         "score_data_loc": 0.945,
@@ -1899,31 +1911,19 @@
         "componentData": "Data Complete",
         "componentID": 113054,
         "name": "Gleyic solonetz",
-        "rank_data": "4",
-        "rank_data_loc": "7",
+        "rank_data": "5",
+        "rank_data_loc": "8",
         "rank_loc": "11",
         "score_data": 0.9,
         "score_data_loc": 0.936,
         "score_loc": 0.027
       },
       {
-        "component": "Eutric planosols",
-        "componentData": "Missing Data",
-        "componentID": 113443,
-        "name": "Eutric planosols2",
-        "rank_data": "8",
-        "rank_data_loc": "8",
-        "rank_loc": "Not Displayed",
-        "score_data": 0.833,
-        "score_data_loc": 0.877,
-        "score_loc": 0.036
-      },
-      {
         "component": "Haplic solonetz",
         "componentData": "Data Complete",
         "componentID": 112902,
         "name": "Haplic solonetz2",
-        "rank_data": "10",
+        "rank_data": "11",
         "rank_data_loc": "9",
         "rank_loc": "Not Displayed",
         "score_data": 0.756,
@@ -1943,11 +1943,11 @@
         "score_loc": 0.045
       },
       {
-        "component": "Umbric gleysols",
-        "componentData": "Missing Data",
-        "componentID": 112974,
-        "name": "Umbric gleysols",
-        "rank_data": "11",
+        "component": "Haplic luvisols",
+        "componentData": "Data Complete",
+        "componentID": 113128,
+        "name": "Haplic luvisols",
+        "rank_data": "10",
         "rank_data_loc": "11",
         "rank_loc": "12",
         "score_data": 0.756,

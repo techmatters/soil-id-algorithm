@@ -434,39 +434,39 @@
     },
     "soilRank": [
       {
-        "component": "Xerorthents",
-        "componentData": "Missing Data",
-        "componentID": 26038503,
-        "name": "Xerorthents1",
-        "rank_data": "1",
-        "rank_data_loc": "1",
-        "rank_loc": "2",
-        "score_data": 0.757,
-        "score_data_loc": 0.53,
-        "score_loc": 0.304
-      },
-      {
         "component": "Hangerone",
         "componentData": "Data Complete",
         "componentID": 26038467,
         "name": "Hangerone",
-        "rank_data": "4",
-        "rank_data_loc": "2",
+        "rank_data": "1",
+        "rank_data_loc": "1",
         "rank_loc": "1",
-        "score_data": 0.709,
-        "score_data_loc": 0.51,
+        "score_data": 0.78,
+        "score_data_loc": 0.545,
         "score_loc": 0.311
+      },
+      {
+        "component": "Xerorthents",
+        "componentData": "Missing Data",
+        "componentID": 26038503,
+        "name": "Xerorthents1",
+        "rank_data": "3",
+        "rank_data_loc": "2",
+        "rank_loc": "2",
+        "score_data": 0.764,
+        "score_data_loc": 0.534,
+        "score_loc": 0.304
       },
       {
         "component": "Aquic xerorthents",
         "componentData": "Missing Data",
         "componentID": 26038456,
         "name": "Aquic xerorthents",
-        "rank_data": "3",
+        "rank_data": "4",
         "rank_data_loc": "3",
         "rank_loc": "3",
-        "score_data": 0.734,
-        "score_data_loc": 0.486,
+        "score_data": 0.764,
+        "score_data_loc": 0.501,
         "score_loc": 0.237
       },
       {
@@ -477,8 +477,8 @@
         "rank_data": "2",
         "rank_data_loc": "4",
         "rank_loc": "6",
-        "score_data": 0.735,
-        "score_data_loc": 0.372,
+        "score_data": 0.769,
+        "score_data_loc": 0.389,
         "score_loc": 0.01
       },
       {
@@ -489,8 +489,8 @@
         "rank_data": "5",
         "rank_data_loc": "5",
         "rank_loc": "4",
-        "score_data": 0.554,
-        "score_data_loc": 0.288,
+        "score_data": 0.548,
+        "score_data_loc": 0.285,
         "score_loc": 0.021
       },
       {
@@ -501,8 +501,8 @@
         "rank_data": "6",
         "rank_data_loc": "6",
         "rank_loc": "5",
-        "score_data": 0.478,
-        "score_data_loc": 0.249,
+        "score_data": 0.434,
+        "score_data_loc": 0.227,
         "score_loc": 0.02
       },
       {
@@ -513,8 +513,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.56,
-        "score_data_loc": 0.432,
+        "score_data": 0.612,
+        "score_data_loc": 0.458,
         "score_loc": 0.304
       }
     ]

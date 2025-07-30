@@ -1004,8 +1004,8 @@
           "sl3": 1.0
         },
         "id": {
-          "component": "Eutric planosols",
-          "name": "Eutric planosols",
+          "component": "Humic cambisols",
+          "name": "Humic cambisols",
           "rank_loc": "11",
           "score_loc": 0.018
         },
@@ -1026,22 +1026,22 @@
         },
         "site": {
           "siteData": {
-            "componentID": 157545,
-            "distance": 65551.867,
-            "mapunitID": 9722,
-            "minCompDistance": 65551.8665,
+            "componentID": 157468,
+            "distance": 37691.376,
+            "mapunitID": 9697,
+            "minCompDistance": 37691.3759,
             "share": 50,
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Eutric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil.<br> These soils are prone to compaction and require drainage for crop production.<br> Eutric Planosols are relatively productive soils with high base saturation in the subsoil.",
-            "Description_es": "Los Planosoles Éutricos están estacionalmente encharcados o saturados de agua en la parte superior debido a un subsuelo rico en arcilla y lentamente permeable.<br>Estos suelos son propensos a la compactación y requieren drenaje para la producción de cultivos.<br>Los Planosoles Eutricos son suelos relativamente productivos con una alta saturación de base en el subsuelo.",
-            "Description_fr": "Eutric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil.<br> These soils are prone to compaction and require drainage for crop production.<br> Eutric Planosols are relatively productive soils with high base saturation in the subsoil.",
-            "Description_ks": "Eutric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil.<br> These soils are prone to compaction and require drainage for crop production.<br> Eutric Planosols are relatively productive soils with high base saturation in the subsoil.",
-            "Management_en": "Located on flat land, these soils are best suited for paddy rice production.<br> Drainage will be required for production.<br> Highest yields will require additional fertilization.",
-            "Management_es": "Ubicados en terrenos planos, estos suelos son los más adecuados para la producción de arroz con cáscara.<br>Se requerirá el drenaje para la producción.<br>Los rendimientos más elevados requieren una fertilización adicional.",
-            "Management_fr": "Located on flat land, these soils are best suited for paddy rice production.<br> Drainage will be required for production.<br> Highest yields will require additional fertilization.",
-            "Management_ks": "Located on flat land, these soils are best suited for paddy rice production.<br> Drainage will be required for production.<br> Highest yields will require additional fertilization."
+            "Description_en": "Humic Cambisols are widely occurring soils with limited soil development. <br> These soils have higher organic matter in surface horizons. <br> When climate and landscape are favorable, these soils can be productive. ",
+            "Description_es": "Los Cambisoles Húmicos son suelos de amplia ocurrencia con un desarrollo limitado del suelo. <br>Estos suelos tienen más materia orgánica en los horizontes superficiales. <br>Cuando el clima y el paisaje son favorables, estos suelos pueden ser productivos. ",
+            "Description_fr": "Humic Cambisols are widely occurring soils with limited soil development. <br> These soils have higher organic matter in surface horizons. <br> When climate and landscape are favorable, these soils can be productive. ",
+            "Description_ks": "Humic Cambisols are widely occurring soils with limited soil development. <br> These soils have higher organic matter in surface horizons. <br> When climate and landscape are favorable, these soils can be productive. ",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_es": "En regiones templadas los suelos tendrán un alto contenido de cationes básicos (potasio, calcio y magnesio), mientras que en regiones más húmedas pueden tener niveles más bajos de nutrientes del suelo. <br>Estos suelos son muy adecuados para la producción de cultivos, y pueden utilizarse de forma intensiva. <br>La fertilización debe utilizarse para mejorar la productividad, y puede incluirse el riego para aumentar aún más la productividad.",
+            "Management_fr": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_ks": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
           }
         },
         "texture": {
@@ -1461,31 +1461,31 @@
           "sl7": 120
         },
         "cec": {
-          "sl1": 11.0,
-          "sl2": 11.0,
-          "sl3": 11.0,
-          "sl4": 13.6,
-          "sl5": 15.0,
-          "sl6": 16.4,
-          "sl7": 16.83
+          "sl1": 27.0,
+          "sl2": 27.0,
+          "sl3": 27.0,
+          "sl4": 21.6,
+          "sl5": 19.86,
+          "sl6": 18.2,
+          "sl7": 17.17
         },
         "clay": {
-          "sl1": 20.0,
-          "sl2": 20.0,
-          "sl3": 20.0,
-          "sl4": 24.4,
-          "sl5": 26.86,
-          "sl6": 29.2,
-          "sl7": 30.0
+          "sl1": 22.0,
+          "sl2": 22.0,
+          "sl3": 22.0,
+          "sl4": 22.0,
+          "sl5": 21.86,
+          "sl6": 21.4,
+          "sl7": 21.0
         },
         "ec": {
           "sl1": 1.0,
           "sl2": 1.0,
           "sl3": 1.0,
-          "sl4": 1.0,
-          "sl5": 1.0,
-          "sl6": 1.0,
-          "sl7": 1.0
+          "sl4": 0.4,
+          "sl5": 0.29,
+          "sl6": 0.2,
+          "sl7": 0.17
         },
         "id": {
           "component": "Chromic luvisols",
@@ -1494,31 +1494,31 @@
           "score_loc": 0.029
         },
         "ph": {
-          "sl1": 6.1,
-          "sl2": 6.1,
-          "sl3": 6.1,
-          "sl4": 6.26,
-          "sl5": 6.37,
-          "sl6": 6.52,
-          "sl7": 6.57
+          "sl1": 5.1,
+          "sl2": 5.1,
+          "sl3": 5.1,
+          "sl4": 5.18,
+          "sl5": 5.21,
+          "sl6": 5.26,
+          "sl7": 5.28
         },
         "rock_fragments": {
-          "sl1": 2.0,
-          "sl2": 2.0,
-          "sl3": 2.0,
-          "sl4": 2.6,
-          "sl5": 2.57,
-          "sl6": 2.4,
-          "sl7": 2.33
+          "sl1": 17.0,
+          "sl2": 17.0,
+          "sl3": 17.0,
+          "sl4": 18.4,
+          "sl5": 19.71,
+          "sl6": 22.0,
+          "sl7": 23.67
         },
         "sand": {
-          "sl1": 49.0,
-          "sl2": 49.0,
-          "sl3": 49.0,
-          "sl4": 46.0,
-          "sl5": 44.14,
-          "sl6": 42.2,
-          "sl7": 42.0
+          "sl1": 44.0,
+          "sl2": 44.0,
+          "sl3": 44.0,
+          "sl4": 44.2,
+          "sl5": 44.71,
+          "sl6": 45.8,
+          "sl7": 46.67
         },
         "site": {
           "siteData": {
@@ -1546,8 +1546,8 @@
           "sl3": "Loam",
           "sl4": "Loam",
           "sl5": "Loam",
-          "sl6": "Clay loam",
-          "sl7": "Clay loam"
+          "sl6": "Loam",
+          "sl7": "Loam"
         }
       },
       {
@@ -1683,10 +1683,10 @@
         "score_loc": 0.021
       },
       {
-        "component": "Eutric planosols",
+        "component": "Humic cambisols",
         "componentData": "Data Complete",
-        "componentID": 157545,
-        "name": "Eutric planosols",
+        "componentID": 157468,
+        "name": "Humic cambisols",
         "rank_data": "3",
         "rank_data_loc": "3",
         "rank_loc": "11",
@@ -1702,8 +1702,8 @@
         "rank_data": "4",
         "rank_data_loc": "4",
         "rank_loc": "Not Displayed",
-        "score_data": 0.737,
-        "score_data_loc": 0.77,
+        "score_data": 0.753,
+        "score_data_loc": 0.787,
         "score_loc": 0.029
       },
       {
@@ -1714,9 +1714,33 @@
         "rank_data": "5",
         "rank_data_loc": "5",
         "rank_loc": "3",
-        "score_data": 0.731,
-        "score_data_loc": 0.769,
+        "score_data": 0.748,
+        "score_data_loc": 0.785,
         "score_loc": 0.033
+      },
+      {
+        "component": "Chromic luvisols",
+        "componentData": "Data Complete",
+        "componentID": 157477,
+        "name": "Chromic luvisols2",
+        "rank_data": "7",
+        "rank_data_loc": "6",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.711,
+        "score_data_loc": 0.744,
+        "score_loc": 0.029
+      },
+      {
+        "component": "Calcaric fluvisols",
+        "componentData": "Data Complete",
+        "componentID": 157400,
+        "name": "Calcaric fluvisols",
+        "rank_data": "8",
+        "rank_data_loc": "7",
+        "rank_loc": "6",
+        "score_data": 0.697,
+        "score_data_loc": 0.73,
+        "score_loc": 0.029
       },
       {
         "component": "Calcaric cambisols",
@@ -1724,35 +1748,11 @@
         "componentID": 157401,
         "name": "Calcaric cambisols1",
         "rank_data": "11",
-        "rank_data_loc": "6",
-        "rank_loc": "2",
-        "score_data": 0.634,
-        "score_data_loc": 0.725,
-        "score_loc": 0.086
-      },
-      {
-        "component": "Calcaric fluvisols",
-        "componentData": "Data Complete",
-        "componentID": 157400,
-        "name": "Calcaric fluvisols",
-        "rank_data": "7",
-        "rank_data_loc": "7",
-        "rank_loc": "6",
-        "score_data": 0.681,
-        "score_data_loc": 0.714,
-        "score_loc": 0.029
-      },
-      {
-        "component": "Chromic luvisols",
-        "componentData": "Missing Data",
-        "componentID": 157483,
-        "name": "Chromic luvisols1",
-        "rank_data": "8",
         "rank_data_loc": "8",
-        "rank_loc": "7",
-        "score_data": 0.681,
-        "score_data_loc": 0.714,
-        "score_loc": 0.029
+        "rank_loc": "2",
+        "score_data": 0.614,
+        "score_data_loc": 0.704,
+        "score_loc": 0.086
       },
       {
         "component": "Calcic luvisols",
@@ -1762,8 +1762,8 @@
         "rank_data": "9",
         "rank_data_loc": "9",
         "rank_loc": "4",
-        "score_data": 0.643,
-        "score_data_loc": 0.676,
+        "score_data": 0.627,
+        "score_data_loc": 0.66,
         "score_loc": 0.029
       },
       {
@@ -1774,8 +1774,8 @@
         "rank_data": "10",
         "rank_data_loc": "10",
         "rank_loc": "12",
-        "score_data": 0.643,
-        "score_data_loc": 0.665,
+        "score_data": 0.627,
+        "score_data_loc": 0.649,
         "score_loc": 0.018
       },
       {
@@ -1786,8 +1786,8 @@
         "rank_data": "12",
         "rank_data_loc": "11",
         "rank_loc": "9",
-        "score_data": 0.634,
-        "score_data_loc": 0.664,
+        "score_data": 0.614,
+        "score_data_loc": 0.643,
         "score_loc": 0.025
       },
       {
@@ -1798,20 +1798,20 @@
         "rank_data": "6",
         "rank_data_loc": "12",
         "rank_loc": "8",
-        "score_data": 0.731,
+        "score_data": 0.748,
         "score_data_loc": 0.002,
         "score_loc": 0.029
       },
       {
         "component": "Chromic luvisols",
-        "componentData": "Data Complete",
-        "componentID": 157477,
-        "name": "Chromic luvisols2",
+        "componentData": "Missing Data",
+        "componentID": 157483,
+        "name": "Chromic luvisols1",
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
-        "rank_loc": "Not Displayed",
-        "score_data": 0.629,
-        "score_data_loc": 0.662,
+        "rank_loc": "7",
+        "score_data": 0.697,
+        "score_data_loc": 0.73,
         "score_loc": 0.029
       },
       {
@@ -1822,8 +1822,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "5",
-        "score_data": 0.625,
-        "score_data_loc": 0.658,
+        "score_data": 0.62,
+        "score_data_loc": 0.652,
         "score_loc": 0.029
       },
       {
@@ -1834,8 +1834,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.528,
-        "score_data_loc": 0.618,
+        "score_data": 0.548,
+        "score_data_loc": 0.638,
         "score_loc": 0.086
       },
       {
@@ -1846,8 +1846,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.291,
-        "score_data_loc": 0.321,
+        "score_data": 0.311,
+        "score_data_loc": 0.342,
         "score_loc": 0.029
       },
       {
@@ -1858,7 +1858,7 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.614,
+        "score_data": 0.594,
         "score_data_loc": 0.002,
         "score_loc": 0.029
       }

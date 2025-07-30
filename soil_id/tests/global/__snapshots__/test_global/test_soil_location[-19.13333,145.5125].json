@@ -1104,8 +1104,8 @@
           "sl3": 1.0
         },
         "id": {
-          "component": "Acrisols",
-          "name": "Acrisols1",
+          "component": "Haplic podzols",
+          "name": "Haplic podzols1",
           "rank_loc": "12",
           "score_loc": 0.011
         },
@@ -1126,22 +1126,22 @@
         },
         "site": {
           "siteData": {
-            "componentID": 148895,
-            "distance": 32877.453,
-            "mapunitID": 6017,
-            "minCompDistance": 32877.4526,
+            "componentID": 148915,
+            "distance": 3068.563,
+            "mapunitID": 6024,
+            "minCompDistance": 3068.5627,
             "share": 20,
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Acrisols are acidic and relatively infertile soils. <br> Supplemental fertilization and liming will be needed to create a productive soil for crop use. <br> These soils are also high in soluble aluminum (Al) which is toxic to plants.",
-            "Description_es": "Los Acrisoles son suelos ácidos y relativamente infértiles. <br>Se necesita una fertilización y un encalado suplementarios para crear un suelo productivo para los cultivos. <br>Estos suelos también tienen un alto contenido de aluminio soluble (Al), que es tóxico para las plantas. ",
-            "Description_fr": "Acrisols are acidic and relatively infertile soils. <br> Supplemental fertilization and liming will be needed to create a productive soil for crop use. <br> These soils are also high in soluble aluminum (Al) which is toxic to plants.",
-            "Description_ks": "Acrisols are acidic and relatively infertile soils. <br> Supplemental fertilization and liming will be needed to create a productive soil for crop use. <br> These soils are also high in soluble aluminum (Al) which is toxic to plants.",
-            "Management_en": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate, which will take Al out of solution) can help to reduce aluminum toxicity. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover, crop rotation and agroforestry. ",
-            "Management_es": "Debido a que el suelo tiende a ser ácido (tiene un pH bajo) y alto en Al, el fertilizante de fósforo es rápidamente \"fijado\" por el suelo, haciendo que no esté disponible para las plantas en la temporada de cultivo. <br>Las prácticas bien documentadas, como la aplicación en banda (directamente sobre la semilla o a un lado y abajo de la semilla) de fertilizantes fosfatados, ayudarán a reducir la fijación de P. <br>La aplicación de nitrógeno (N) es esencial, y esto puede lograrse mediante la aplicación de dosis correctas de fertilizantes (como la urea), o mediante el uso de cultivos de cobertura, abonos verdes y rotaciones. <br>Los cultivos de cobertura y las rotaciones que incluyen leguminosas y la inclusión de cultivos con alta biomasa serían beneficiosos, ya que añaden materia orgánica y nitrógeno para el cultivo posterior. <br>Incluso con cultivos de cobertura o prácticas similares, es probable que se necesite una fertilización suplementaria de N, ya que el N orgánico no se convertirá en el N inorgánico necesario para el cultivo en cantidades suficientes durante el año de cultivo. <br>La aplicación de cal (que aumenta el pH del suelo y retiene el aluminio soluble) o de yeso (sulfato de calcio, que extrae el aluminio de la solución) puede ayudar a reducir la toxicidad del aluminio. <br>La conservación del suelo superficial con su materia orgánica es importante, y la prevención de la erosión es fundamental. <br>Las prácticas de gestión de la tierra deben maximizar la cobertura del suelo, la rotación de cultivos y la agrosilvicultura. ",
-            "Management_fr": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate, which will take Al out of solution) can help to reduce aluminum toxicity. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover, crop rotation and agroforestry. ",
-            "Management_ks": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate, which will take Al out of solution) can help to reduce aluminum toxicity. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover, crop rotation and agroforestry. "
+            "Description_en": "Haplic Podzols are coarse textured, acidic, unproductive soils with highly leached surface horizons overlying subsoils containing accumulated organic matter and metals (aluminum and iron).<br>In flat coastal plain landscapes, these soils are also wet.",
+            "Description_es": "Los Podzoles Háplicos son suelos de textura gruesa, ácidos e improductivos, con horizontes superficiales muy lixiviados sobre los que se asientan subsuelos que contienen materia orgánica acumulada y metales (aluminio y hierro).*En los paisajes de llanura costera plana, estos suelos también son húmedos.",
+            "Description_fr": "Haplic Podzols are coarse textured, acidic, unproductive soils with highly leached surface horizons overlying subsoils containing accumulated organic matter and metals (aluminum and iron).<br>In flat coastal plain landscapes, these soils are also wet.",
+            "Description_ks": "Haplic Podzols are coarse textured, acidic, unproductive soils with highly leached surface horizons overlying subsoils containing accumulated organic matter and metals (aluminum and iron).<br>In flat coastal plain landscapes, these soils are also wet.",
+            "Management_en": "Podzols are highly leached, and as such are low in soil fertility.<br> The surface layers are usually quite acidic (pH < 4.5) and thus liming is needed.<br> Because of the high degree of weathering the soils are also high in soluble aluminum and will fix phosphorus, creating P deficiencies. Although not recommended, if these soils are used for cultivation they will need deep plowing (to break subsoil layers), liming and fertilization.<br> Specific care with P fertilization will be needed, and use of band on on-seed placement of P is recommended.",
+            "Management_es": "Los podzoles están muy lixiviados y, como tales, tienen una baja fertilidad.<br>Las capas superficiales suelen ser bastante ácidas (pH < 4,5), por lo que es necesario el encalado.<br>Debido al alto grado de meteorización, los suelos también tienen un alto contenido de aluminio soluble y fijan el fósforo, creando deficiencias de P. Aunque no se recomienda, si estos suelos se utilizan para el cultivo necesitarán un arado profundo (para romper las capas del subsuelo), encalado y fertilización.<br>Será necesario un cuidado específico con la fertilización de P, y se recomienda el uso de banda en la colocación de P en la semilla.",
+            "Management_fr": "Podzols are highly leached, and as such are low in soil fertility.<br> The surface layers are usually quite acidic (pH < 4.5) and thus liming is needed.<br> Because of the high degree of weathering the soils are also high in soluble aluminum and will fix phosphorus, creating P deficiencies. Although not recommended, if these soils are used for cultivation they will need deep plowing (to break subsoil layers), liming and fertilization.<br> Specific care with P fertilization will be needed, and use of band on on-seed placement of P is recommended.",
+            "Management_ks": "Podzols are highly leached, and as such are low in soil fertility.<br> The surface layers are usually quite acidic (pH < 4.5) and thus liming is needed.<br> Because of the high degree of weathering the soils are also high in soluble aluminum and will fix phosphorus, creating P deficiencies. Although not recommended, if these soils are used for cultivation they will need deep plowing (to break subsoil layers), liming and fertilization.<br> Specific care with P fertilization will be needed, and use of band on on-seed placement of P is recommended."
           }
         },
         "texture": {
@@ -2729,22 +2729,22 @@
           "sl7": 120
         },
         "cec": {
-          "sl1": 8.0,
-          "sl2": 8.0,
-          "sl3": 8.0,
-          "sl4": 6.8,
-          "sl5": 6.57,
-          "sl6": 6.6,
-          "sl7": 6.67
-        },
-        "clay": {
           "sl1": 25.0,
           "sl2": 25.0,
           "sl3": 25.0,
-          "sl4": 30.8,
-          "sl5": 33.14,
-          "sl6": 35.6,
-          "sl7": 36.67
+          "sl4": 17.4,
+          "sl5": 14.57,
+          "sl6": 11.8,
+          "sl7": 10.67
+        },
+        "clay": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 5.4,
+          "sl5": 5.43,
+          "sl6": 5.6,
+          "sl7": 5.67
         },
         "ec": {
           "sl1": 0.0,
@@ -2762,31 +2762,31 @@
           "score_loc": 0.013
         },
         "ph": {
-          "sl1": 5.1,
-          "sl2": 5.1,
-          "sl3": 5.1,
-          "sl4": 5.04,
-          "sl5": 5.03,
-          "sl6": 5.02,
-          "sl7": 5.02
+          "sl1": 4.6,
+          "sl2": 4.6,
+          "sl3": 4.6,
+          "sl4": 4.88,
+          "sl5": 4.99,
+          "sl6": 5.1,
+          "sl7": 5.17
         },
         "rock_fragments": {
-          "sl1": 15.0,
-          "sl2": 15.0,
-          "sl3": 15.0,
-          "sl4": 17.8,
-          "sl5": 19.14,
-          "sl6": 19.6,
-          "sl7": 20.0
+          "sl1": 13.0,
+          "sl2": 13.0,
+          "sl3": 13.0,
+          "sl4": 16.8,
+          "sl5": 18.71,
+          "sl6": 20.6,
+          "sl7": 21.5
         },
         "sand": {
-          "sl1": 54.0,
-          "sl2": 54.0,
-          "sl3": 54.0,
-          "sl4": 49.6,
-          "sl5": 47.71,
-          "sl6": 45.6,
-          "sl7": 44.5
+          "sl1": 58.0,
+          "sl2": 58.0,
+          "sl3": 58.0,
+          "sl4": 60.4,
+          "sl5": 61.57,
+          "sl6": 63.2,
+          "sl7": 64.17
         },
         "site": {
           "siteData": {
@@ -2809,13 +2809,13 @@
           }
         },
         "texture": {
-          "sl1": "Sandy clay loam",
-          "sl2": "Sandy clay loam",
-          "sl3": "Sandy clay loam",
-          "sl4": "Sandy clay loam",
-          "sl5": "Sandy clay loam",
-          "sl6": "Sandy clay",
-          "sl7": "Clay loam"
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy loam",
+          "sl5": "Sandy loam",
+          "sl6": "Sandy loam",
+          "sl7": "Sandy loam"
         }
       },
       {
@@ -2829,22 +2829,22 @@
           "sl7": 120
         },
         "cec": {
-          "sl1": 3.0,
-          "sl2": 3.0,
-          "sl3": 3.0,
-          "sl4": 3.6,
-          "sl5": 3.71,
-          "sl6": 3.8,
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 3.8,
+          "sl5": 3.86,
+          "sl6": 3.6,
           "sl7": 3.83
         },
         "clay": {
-          "sl1": 11.0,
-          "sl2": 11.0,
-          "sl3": 11.0,
-          "sl4": 15.4,
-          "sl5": 17.14,
-          "sl6": 18.6,
-          "sl7": 19.17
+          "sl1": 3.0,
+          "sl2": 3.0,
+          "sl3": 3.0,
+          "sl4": 2.8,
+          "sl5": 3.29,
+          "sl6": 3.8,
+          "sl7": 4.17
         },
         "ec": {
           "sl1": 0.0,
@@ -2856,66 +2856,66 @@
           "sl7": 0.0
         },
         "id": {
-          "component": "Acrisols",
-          "name": "Acrisols2",
+          "component": "Haplic podzols",
+          "name": "Haplic podzols2",
           "rank_loc": "Not Displayed",
           "score_loc": 0.011
         },
         "ph": {
-          "sl1": 5.4,
-          "sl2": 5.4,
-          "sl3": 5.4,
-          "sl4": 5.22,
-          "sl5": 5.19,
-          "sl6": 5.16,
-          "sl7": 5.17
+          "sl1": 4.7,
+          "sl2": 4.7,
+          "sl3": 4.7,
+          "sl4": 4.92,
+          "sl5": 4.94,
+          "sl6": 4.96,
+          "sl7": 4.95
         },
         "rock_fragments": {
-          "sl1": 19.0,
-          "sl2": 19.0,
-          "sl3": 19.0,
-          "sl4": 11.0,
-          "sl5": 9.14,
-          "sl6": 8.4,
-          "sl7": 9.17
+          "sl1": 13.0,
+          "sl2": 13.0,
+          "sl3": 13.0,
+          "sl4": 16.8,
+          "sl5": 18.71,
+          "sl6": 20.6,
+          "sl7": 19.5
         },
         "sand": {
-          "sl1": 77.0,
-          "sl2": 77.0,
-          "sl3": 77.0,
-          "sl4": 72.6,
-          "sl5": 71.0,
-          "sl6": 70.0,
-          "sl7": 69.33
+          "sl1": 87.0,
+          "sl2": 87.0,
+          "sl3": 87.0,
+          "sl4": 88.6,
+          "sl5": 88.57,
+          "sl6": 88.4,
+          "sl7": 88.33
         },
         "site": {
           "siteData": {
-            "componentID": 148909,
-            "distance": 35586.855,
-            "mapunitID": 6020,
-            "minCompDistance": 32877.4526,
-            "share": 20,
+            "componentID": 148893,
+            "distance": 32877.453,
+            "mapunitID": 6017,
+            "minCompDistance": 3068.5627,
+            "share": 30,
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Acrisols are acidic and relatively infertile soils. <br> Supplemental fertilization and liming will be needed to create a productive soil for crop use. <br> These soils are also high in soluble aluminum (Al) which is toxic to plants.",
-            "Description_es": "Los Acrisoles son suelos ácidos y relativamente infértiles. <br>Se necesita una fertilización y un encalado suplementarios para crear un suelo productivo para los cultivos. <br>Estos suelos también tienen un alto contenido de aluminio soluble (Al), que es tóxico para las plantas. ",
-            "Description_fr": "Acrisols are acidic and relatively infertile soils. <br> Supplemental fertilization and liming will be needed to create a productive soil for crop use. <br> These soils are also high in soluble aluminum (Al) which is toxic to plants.",
-            "Description_ks": "Acrisols are acidic and relatively infertile soils. <br> Supplemental fertilization and liming will be needed to create a productive soil for crop use. <br> These soils are also high in soluble aluminum (Al) which is toxic to plants.",
-            "Management_en": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate, which will take Al out of solution) can help to reduce aluminum toxicity. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover, crop rotation and agroforestry. ",
-            "Management_es": "Debido a que el suelo tiende a ser ácido (tiene un pH bajo) y alto en Al, el fertilizante de fósforo es rápidamente \"fijado\" por el suelo, haciendo que no esté disponible para las plantas en la temporada de cultivo. <br>Las prácticas bien documentadas, como la aplicación en banda (directamente sobre la semilla o a un lado y abajo de la semilla) de fertilizantes fosfatados, ayudarán a reducir la fijación de P. <br>La aplicación de nitrógeno (N) es esencial, y esto puede lograrse mediante la aplicación de dosis correctas de fertilizantes (como la urea), o mediante el uso de cultivos de cobertura, abonos verdes y rotaciones. <br>Los cultivos de cobertura y las rotaciones que incluyen leguminosas y la inclusión de cultivos con alta biomasa serían beneficiosos, ya que añaden materia orgánica y nitrógeno para el cultivo posterior. <br>Incluso con cultivos de cobertura o prácticas similares, es probable que se necesite una fertilización suplementaria de N, ya que el N orgánico no se convertirá en el N inorgánico necesario para el cultivo en cantidades suficientes durante el año de cultivo. <br>La aplicación de cal (que aumenta el pH del suelo y retiene el aluminio soluble) o de yeso (sulfato de calcio, que extrae el aluminio de la solución) puede ayudar a reducir la toxicidad del aluminio. <br>La conservación del suelo superficial con su materia orgánica es importante, y la prevención de la erosión es fundamental. <br>Las prácticas de gestión de la tierra deben maximizar la cobertura del suelo, la rotación de cultivos y la agrosilvicultura. ",
-            "Management_fr": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate, which will take Al out of solution) can help to reduce aluminum toxicity. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover, crop rotation and agroforestry. ",
-            "Management_ks": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate, which will take Al out of solution) can help to reduce aluminum toxicity. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover, crop rotation and agroforestry. "
+            "Description_en": "Haplic Podzols are coarse textured, acidic, unproductive soils with highly leached surface horizons overlying subsoils containing accumulated organic matter and metals (aluminum and iron).<br>In flat coastal plain landscapes, these soils are also wet.",
+            "Description_es": "Los Podzoles Háplicos son suelos de textura gruesa, ácidos e improductivos, con horizontes superficiales muy lixiviados sobre los que se asientan subsuelos que contienen materia orgánica acumulada y metales (aluminio y hierro).*En los paisajes de llanura costera plana, estos suelos también son húmedos.",
+            "Description_fr": "Haplic Podzols are coarse textured, acidic, unproductive soils with highly leached surface horizons overlying subsoils containing accumulated organic matter and metals (aluminum and iron).<br>In flat coastal plain landscapes, these soils are also wet.",
+            "Description_ks": "Haplic Podzols are coarse textured, acidic, unproductive soils with highly leached surface horizons overlying subsoils containing accumulated organic matter and metals (aluminum and iron).<br>In flat coastal plain landscapes, these soils are also wet.",
+            "Management_en": "Podzols are highly leached, and as such are low in soil fertility.<br> The surface layers are usually quite acidic (pH < 4.5) and thus liming is needed.<br> Because of the high degree of weathering the soils are also high in soluble aluminum and will fix phosphorus, creating P deficiencies. Although not recommended, if these soils are used for cultivation they will need deep plowing (to break subsoil layers), liming and fertilization.<br> Specific care with P fertilization will be needed, and use of band on on-seed placement of P is recommended.",
+            "Management_es": "Los podzoles están muy lixiviados y, como tales, tienen una baja fertilidad.<br>Las capas superficiales suelen ser bastante ácidas (pH < 4,5), por lo que es necesario el encalado.<br>Debido al alto grado de meteorización, los suelos también tienen un alto contenido de aluminio soluble y fijan el fósforo, creando deficiencias de P. Aunque no se recomienda, si estos suelos se utilizan para el cultivo necesitarán un arado profundo (para romper las capas del subsuelo), encalado y fertilización.<br>Será necesario un cuidado específico con la fertilización de P, y se recomienda el uso de banda en la colocación de P en la semilla.",
+            "Management_fr": "Podzols are highly leached, and as such are low in soil fertility.<br> The surface layers are usually quite acidic (pH < 4.5) and thus liming is needed.<br> Because of the high degree of weathering the soils are also high in soluble aluminum and will fix phosphorus, creating P deficiencies. Although not recommended, if these soils are used for cultivation they will need deep plowing (to break subsoil layers), liming and fertilization.<br> Specific care with P fertilization will be needed, and use of band on on-seed placement of P is recommended.",
+            "Management_ks": "Podzols are highly leached, and as such are low in soil fertility.<br> The surface layers are usually quite acidic (pH < 4.5) and thus liming is needed.<br> Because of the high degree of weathering the soils are also high in soluble aluminum and will fix phosphorus, creating P deficiencies. Although not recommended, if these soils are used for cultivation they will need deep plowing (to break subsoil layers), liming and fertilization.<br> Specific care with P fertilization will be needed, and use of band on on-seed placement of P is recommended."
           }
         },
         "texture": {
-          "sl1": "Loamy sand",
-          "sl2": "Loamy sand",
-          "sl3": "Loamy sand",
-          "sl4": "Sandy loam",
-          "sl5": "Sandy loam",
-          "sl6": "Sandy loam",
-          "sl7": "Sandy loam"
+          "sl1": "Sand",
+          "sl2": "Sand",
+          "sl3": "Sand",
+          "sl4": "Sand",
+          "sl5": "Sand",
+          "sl6": "Sand",
+          "sl7": "Sand"
         }
       }
     ]
@@ -2970,8 +2970,8 @@
         "rank_data": "5",
         "rank_data_loc": "4",
         "rank_loc": "Not Displayed",
-        "score_data": 0.805,
-        "score_data_loc": 0.901,
+        "score_data": 0.808,
+        "score_data_loc": 0.904,
         "score_loc": 0.05
       },
       {
@@ -2982,8 +2982,8 @@
         "rank_data": "4",
         "rank_data_loc": "5",
         "rank_loc": "Not Displayed",
-        "score_data": 0.805,
-        "score_data_loc": 0.861,
+        "score_data": 0.808,
+        "score_data_loc": 0.864,
         "score_loc": 0.013
       },
       {
@@ -2994,20 +2994,20 @@
         "rank_data": "6",
         "rank_data_loc": "6",
         "rank_loc": "11",
-        "score_data": 0.805,
-        "score_data_loc": 0.861,
+        "score_data": 0.808,
+        "score_data_loc": 0.864,
         "score_loc": 0.013
       },
       {
-        "component": "Acrisols",
-        "componentData": "Missing Data",
-        "componentID": 148895,
-        "name": "Acrisols1",
+        "component": "Haplic podzols",
+        "componentData": "Data Complete",
+        "componentID": 148915,
+        "name": "Haplic podzols1",
         "rank_data": "7",
         "rank_data_loc": "7",
         "rank_loc": "12",
-        "score_data": 0.802,
-        "score_data_loc": 0.856,
+        "score_data": 0.805,
+        "score_data_loc": 0.859,
         "score_loc": 0.011
       },
       {
@@ -3090,8 +3090,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.802,
-        "score_data_loc": 0.897,
+        "score_data": 0.805,
+        "score_data_loc": 0.901,
         "score_loc": 0.05
       },
       {
@@ -3102,8 +3102,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "10",
-        "score_data": 0.802,
-        "score_data_loc": 0.858,
+        "score_data": 0.805,
+        "score_data_loc": 0.861,
         "score_loc": 0.013
       },
       {
@@ -3141,6 +3141,18 @@
         "score_data": 0.753,
         "score_data_loc": 0.816,
         "score_loc": 0.022
+      },
+      {
+        "component": "Calcic luvisols",
+        "componentData": "Data Complete",
+        "componentID": 149440,
+        "name": "Calcic luvisols3",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.757,
+        "score_data_loc": 0.809,
+        "score_loc": 0.013
       },
       {
         "component": "Eutric planosols",
@@ -3203,18 +3215,6 @@
         "score_loc": 0.05
       },
       {
-        "component": "Acrisols",
-        "componentData": "Data Complete",
-        "componentID": 148909,
-        "name": "Acrisols2",
-        "rank_data": "Not Displayed",
-        "rank_data_loc": "Not Displayed",
-        "rank_loc": "Not Displayed",
-        "score_data": 0.657,
-        "score_data_loc": 0.703,
-        "score_loc": 0.011
-      },
-      {
         "component": "Dystric regosols",
         "componentData": "Data Complete",
         "componentID": 148956,
@@ -3225,18 +3225,6 @@
         "score_data": 0.622,
         "score_data_loc": 0.677,
         "score_loc": 0.021
-      },
-      {
-        "component": "Calcic luvisols",
-        "componentData": "Data Complete",
-        "componentID": 149440,
-        "name": "Calcic luvisols3",
-        "rank_data": "Not Displayed",
-        "rank_data_loc": "Not Displayed",
-        "rank_loc": "Not Displayed",
-        "score_data": 0.625,
-        "score_data_loc": 0.671,
-        "score_loc": 0.013
       },
       {
         "component": "Eutric planosols",
@@ -3261,6 +3249,18 @@
         "score_data": 0.557,
         "score_data_loc": 0.603,
         "score_loc": 0.016
+      },
+      {
+        "component": "Haplic podzols",
+        "componentData": "Data Complete",
+        "componentID": 148893,
+        "name": "Haplic podzols2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.413,
+        "score_data_loc": 0.445,
+        "score_loc": 0.011
       },
       {
         "component": "Lithic leptosols",

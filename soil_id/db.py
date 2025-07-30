@@ -352,7 +352,8 @@ def extract_hwsd2_data(connection, lon, lat, buffer_dist, table_name):
                 BOOL_OR(ST_Intersects(shape, {point})) AS pt_intersect
             FROM hwsd2_segment
             WHERE ST_DWithin(shape, {point}, {buffer_dist})
-            GROUP BY hwsd2_id;
+            GROUP BY hwsd2_id
+            ORDER BY hwsd2_id;
         """
 
         # Use GeoPandas to execute the main query and load results into a GeoDataFrame.

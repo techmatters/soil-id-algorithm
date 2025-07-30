@@ -26,7 +26,7 @@ import numpy as np
 import pandas as pd
 
 from .color import calculate_deltaE2000
-from .db import extract_hwsd2_data, fetch_table_from_db, get_WRB_descriptions, getSG_descriptions
+from .db import extract_hwsd2_data, fetch_normdist, getSG_descriptions
 from .services import get_soilgrids_classification_data, get_soilgrids_property_data
 from .utils import (
     adjust_depth_interval,
@@ -45,8 +45,6 @@ from .utils import (
     silt_calc,
 )
 
-# local libraries
-
 
 @dataclass
 class SoilListOutputData:
@@ -56,21 +54,13 @@ class SoilListOutputData:
 
 
 # entry points
-# getSoilLocationBasedGlobal
-# list_soils
-# rank_soils
-# rankPredictionGlobal
-# getSoilGridsGlobal
-# getSoilGridsUS
+# list_soils_global
+# rank_soils_global
 
-# when a site is created, call list_soils/getSoilLocationBasedGlobal.
-# when a site is created, call getSoilGridsGlobal
-# after user has collected data, call rank_soils/rankPredictionGlobal.
+# when a site is created, call list_soils_global
+# after user has collected data, call rank_soils_global
 
 
-##################################################################################################
-#                                 getSoilLocationBasedGlobal                                     #
-##################################################################################################
 def list_soils_global(connection, lon, lat, buffer_dist=100000):
     # Extract HWSD2 Data
     try:
@@ -78,7 +68,6 @@ def list_soils_global(connection, lon, lat, buffer_dist=100000):
             connection,
             lon,
             lat,
-            table_name="hwsdv2",
             buffer_dist=buffer_dist,
         )
     except KeyError:
@@ -437,16 +426,6 @@ def list_soils_global(connection, lon, lat, buffer_dist=100000):
     # Replace NaN values with an empty string
     mucompdata_cond_prob = mucompdata_cond_prob.fillna("")
 
-    # Merge component descriptions
-    WRB_Comp_Desc = get_WRB_descriptions(
-        connection,
-        mucompdata_cond_prob["compname_grp"].drop_duplicates().tolist()
-    )
-
-    mucompdata_cond_prob = pd.merge(
-        mucompdata_cond_prob, WRB_Comp_Desc, left_on="compname_grp", right_on="WRB_tax", how="left"
-    )
-
     mucompdata_cond_prob = mucompdata_cond_prob.drop_duplicates().reset_index(drop=True)
     mucomp_index = mucompdata_cond_prob.index
 
@@ -460,19 +439,6 @@ def list_soils_global(connection, lon, lat, buffer_dist=100000):
                 "distance": round(row.distance, 3),
                 "minCompDistance": row.min_dist,
                 "soilDepth": row.c_very_bottom,
-            },
-            "siteDescription": {
-                key: row[key]
-                for key in [
-                    "Description_en",
-                    "Management_en",
-                    "Description_es",
-                    "Management_es",
-                    "Description_ks",
-                    "Management_ks",
-                    "Description_fr",
-                    "Management_fr",
-                ]
             },
         }
         for _, row in mucompdata_cond_prob.iterrows()
@@ -574,13 +540,8 @@ def list_soils_global(connection, lon, lat, buffer_dist=100000):
     )
 
 
-##############################################################################################
-#                                   rankPredictionGlobal                                     #
-##############################################################################################
 def rank_soils_global(
     connection,
-    lon,
-    lat,
     list_output_data: SoilListOutputData,
     soilHorizon,
     topDepth,
@@ -954,7 +915,7 @@ def rank_soils_global(
     ysf = []
 
     # Load color distribution data from NormDist2 (FAO90) table
-    rows = fetch_table_from_db(connection, "NormDist2")
+    rows = fetch_normdist(connection)
     row_id = 0
     for row in rows:
         # row is a tuple; iterate over its values.
@@ -1027,7 +988,9 @@ def rank_soils_global(
         # Normalize probabilities
         def normalize(arr):
             min_val, max_val = np.min(arr), np.max(arr)
-            return (arr - min_val) / (max_val - min_val) if max_val != min_val else np.ones_like(arr)
+            return (
+                (arr - min_val) / (max_val - min_val) if max_val != min_val else np.ones_like(arr)
+            )
 
         prob_w = normalize(prob_w)
         prob_r = normalize(prob_r)
@@ -1253,11 +1216,6 @@ def rank_soils_global(
     }
 
     return output_data
-
-
-##################################################################################################
-#                                          getSoilGridsGlobal                                    #
-##################################################################################################
 
 
 def sg_list(connection, lon, lat):

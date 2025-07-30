@@ -13,33 +13,20 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see https://www.gnu.org/licenses/.
 import os
-import tempfile
-
-from platformdirs import user_cache_dir
 
 DATA_PATH = os.environ.get("DATA_PATH", "Data")
 
 # Numpy seeding
 RANDOM_SEED = os.environ.get("RANDOM_SEED", 19)
 
-# Output
-APP_NAME = os.environ.get("APP_NAME", "org.terraso.soilid")
-TEMP_DIR = tempfile.TemporaryDirectory()
-CACHE_DIR = user_cache_dir(APP_NAME)
-OUTPUT_PATH = TEMP_DIR.name
-SOIL_ID_RANK_PATH = f"{OUTPUT_PATH}/soil_id_rank.csv"
-SOIL_ID_PROB_PATH = f"{OUTPUT_PATH}/soil_id_cond_prob.csv"
-REQUESTS_CACHE_PATH = f"{CACHE_DIR}/requests_cache"
-
 # Determines if in/out of US
 US_AREA_PATH = f"{DATA_PATH}/SoilID_US_Areas.shz"
 
 # US Soil ID
 STATSGO_PATH = f"{DATA_PATH}/gsmsoilmu_a_us.shp"
-MUNSELL_RGB_LAB_PATH = f"{DATA_PATH}/LandPKS_munsell_rgb_lab.csv"
 
 # Database
-DB_NAME = os.environ.get("DB_NAME", "terraso_backend")
+DB_NAME = os.environ.get("DB_NAME", "soil_id")
 DB_HOST = os.environ.get("DB_HOST")
 DB_USERNAME = os.environ.get("DB_USERNAME")
 DB_PASSWORD = os.environ.get("DB_PASSWORD")

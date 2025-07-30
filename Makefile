@@ -13,6 +13,7 @@ setup-git-hooks:
 
 lint:
 	ruff check soil_id
+	ruff format soil_id --diff
 
 format:
 	ruff format soil_id
@@ -73,7 +74,6 @@ process_bulk_test_results_legacy:
 	python -m soil_id.tests.legacy.process_bulk_test_results $(RESULTS_FILE)
 
 # Donwload Munsell CSV, SHX, SHP, SBX, SBN, PRJ, DBF
-# 1tN23iVe6X1fcomcfveVp4w3Pwd0HJuTe: LandPKS_munsell_rgb_lab.csv
 # 1WUa9e3vTWPi6G8h4OI3CBUZP5y7tf1Li: gsmsoilmu_a_us.shx
 # 1l9MxC0xENGmI_NmGlBY74EtlD6SZid_a: gsmsoilmu_a_us.shp
 # 1asGnnqe0zI2v8xuOszlsNmZkOSl7cJ2n: gsmsoilmu_a_us.sbx
@@ -84,7 +84,6 @@ process_bulk_test_results_legacy:
 download-soil-data:
 	mkdir -p Data
 	cd Data; \
-	gdown 1tN23iVe6X1fcomcfveVp4w3Pwd0HJuTe; \
 	gdown 1WUa9e3vTWPi6G8h4OI3CBUZP5y7tf1Li; \
 	gdown 1l9MxC0xENGmI_NmGlBY74EtlD6SZid_a; \
 	gdown 1asGnnqe0zI2v8xuOszlsNmZkOSl7cJ2n; \
@@ -119,6 +118,7 @@ dump_soil_id_db:
 	pg_dump --format=custom $(DATABASE_URL)  -t hwsd2_segment -t hwsd2_data -t landpks_munsell_rgb_lab -t normdist1 -t normdist2 -t wise_soil_data -t wrb2006_to_fao90 -t wrb_fao90_desc -f $(DATABASE_DUMP_FILE)
 
 restore_soil_id_db:
-	pg_restore --dbname=$(DATABASE_URL) --single-transaction --clean --if-exists --no-owner $(DATABASE_DUMP_FILE)
+	psql $(DATABASE_URL) -c "CREATE EXTENSION IF NOT EXISTS postgis;"
+	pg_restore --dbname=$(DATABASE_URL) --clean --if-exists --no-owner --verbose $(DATABASE_DUMP_FILE)
 	psql $(DATABASE_URL) -c "CLUSTER hwsd2_segment USING hwsd2_segment_shape_idx;"
 	psql $(DATABASE_URL) -c "ANALYZE;"

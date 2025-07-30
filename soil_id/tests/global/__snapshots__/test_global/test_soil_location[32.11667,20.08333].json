@@ -1,0 +1,1195 @@
+{
+  "list": {
+    "metadata": {
+      "location": "us",
+      "model": "v3",
+      "unit_measure": {
+        "cec": "cmol(c)/kg",
+        "clay": "%",
+        "depth": "cm",
+        "distance": "m",
+        "ec": "ds/m",
+        "rock_fragments": "cm3/100cm3",
+        "sand": "%"
+      }
+    },
+    "soilList": [
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 16.0,
+          "sl2": 16.0,
+          "sl3": 16.0,
+          "sl4": 16.4,
+          "sl5": 16.14,
+          "sl6": 16.0,
+          "sl7": 15.83
+        },
+        "clay": {
+          "sl1": 20.0,
+          "sl2": 20.0,
+          "sl3": 20.0,
+          "sl4": 20.0,
+          "sl5": 20.0,
+          "sl6": 20.2,
+          "sl7": 20.17
+        },
+        "ec": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 1.4,
+          "sl5": 1.43,
+          "sl6": 1.6,
+          "sl7": 1.67
+        },
+        "id": {
+          "component": "Calcaric fluvisols",
+          "name": "Calcaric fluvisols",
+          "rank_loc": "1",
+          "score_loc": 0.172
+        },
+        "ph": {
+          "sl1": 8.2,
+          "sl2": 8.2,
+          "sl3": 8.2,
+          "sl4": 8.2,
+          "sl5": 8.2,
+          "sl6": 8.2,
+          "sl7": 8.2
+        },
+        "rock_fragments": {
+          "sl1": 3.0,
+          "sl2": 3.0,
+          "sl3": 3.0,
+          "sl4": 4.2,
+          "sl5": 5.0,
+          "sl6": 5.2,
+          "sl7": 5.33
+        },
+        "sand": {
+          "sl1": 40.0,
+          "sl2": 40.0,
+          "sl3": 40.0,
+          "sl4": 39.6,
+          "sl5": 39.86,
+          "sl6": 39.8,
+          "sl7": 39.67
+        },
+        "site": {
+          "siteData": {
+            "componentID": 101342,
+            "distance": 0.0,
+            "mapunitID": 103,
+            "minCompDistance": 0.0,
+            "share": 30,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Calcaric Fluvisols are mostly found in floodplains and coastal areas and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Calcaric Fluvisols have carbonates and high pH in the upper portion of soil.",
+            "Description_es": "Los Fluvisoles Calcáricos se encuentran sobre todo en llanuras de inundación y zonas costeras y tienen un desarrollo de perfil limitado con una serie de propiedades. <br>La gestión hidrológica es esencial para la producción.   <br>Los fluvisoles calcáricos tienen carbonatos y un pH elevado en la parte superior del suelo.",
+            "Description_fr": "Calcaric Fluvisols are mostly found in floodplains and coastal areas and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Calcaric Fluvisols have carbonates and high pH in the upper portion of soil.",
+            "Description_ks": "Calcaric Fluvisols are mostly found in floodplains and coastal areas and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Calcaric Fluvisols have carbonates and high pH in the upper portion of soil.",
+            "Management_en": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered.",
+            "Management_es": "Estos suelos son todos naturalmente fértiles y productivos. <br>El drenaje y/o el manejo de las aguas de inundación pueden hacerlos aptos para el cultivo continuo. <br>Una vez en cultivo continuo se debe tener cuidado para evitar la erosión del suelo. <br>Deben considerarse métodos de producción que protejan la superficie del suelo (mantillos, cultivos de cobertura), mejoren la infiltración del agua o proporcionen una vía para el movimiento del agua desde el campo a una velocidad no erosiva (terrazas, vías de drenaje).",
+            "Management_fr": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered.",
+            "Management_ks": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered."
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Loam",
+          "sl5": "Loam",
+          "sl6": "Loam",
+          "sl7": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 11.0,
+          "sl2": 11.0,
+          "sl3": 11.0,
+          "sl4": 12.2,
+          "sl5": 12.43,
+          "sl6": 13.0,
+          "sl7": 13.33
+        },
+        "clay": {
+          "sl1": 20.0,
+          "sl2": 20.0,
+          "sl3": 20.0,
+          "sl4": 22.8,
+          "sl5": 23.29,
+          "sl6": 23.4,
+          "sl7": 23.17
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 1.0,
+          "sl6": 1.0,
+          "sl7": 1.0
+        },
+        "id": {
+          "component": "Chromic cambisols",
+          "name": "Chromic cambisols",
+          "rank_loc": "2",
+          "score_loc": 0.114
+        },
+        "ph": {
+          "sl1": 6.7,
+          "sl2": 6.7,
+          "sl3": 6.7,
+          "sl4": 6.9,
+          "sl5": 6.96,
+          "sl6": 7.06,
+          "sl7": 7.13
+        },
+        "rock_fragments": {
+          "sl1": 9.0,
+          "sl2": 9.0,
+          "sl3": 9.0,
+          "sl4": 8.6,
+          "sl5": 10.14,
+          "sl6": 10.8,
+          "sl7": 12.17
+        },
+        "sand": {
+          "sl1": 61.0,
+          "sl2": 61.0,
+          "sl3": 61.0,
+          "sl4": 58.6,
+          "sl5": 58.43,
+          "sl6": 58.2,
+          "sl7": 58.5
+        },
+        "site": {
+          "siteData": {
+            "componentID": 101344,
+            "distance": 0.0,
+            "mapunitID": 103,
+            "minCompDistance": 0.0,
+            "share": 20,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Chromic Cambisols are widely occurring soils with limited soil development. <br> These are well drained soils, with intense color. <br> When climate and landscape are favorable, they can be productive soils. ",
+            "Description_es": "Los Cambisoles Crómicos son suelos de amplia ocurrencia con un desarrollo limitado del suelo. <br>Son suelos bien drenados, con un color intenso. <br>Cuando el clima y el paisaje son favorables, pueden ser suelos productivos. ",
+            "Description_fr": "Chromic Cambisols are widely occurring soils with limited soil development. <br> These are well drained soils, with intense color. <br> When climate and landscape are favorable, they can be productive soils. ",
+            "Description_ks": "Chromic Cambisols are widely occurring soils with limited soil development. <br> These are well drained soils, with intense color. <br> When climate and landscape are favorable, they can be productive soils. ",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_es": "En regiones templadas los suelos tendrán un alto contenido de cationes básicos (potasio, calcio y magnesio), mientras que en regiones más húmedas pueden tener niveles más bajos de nutrientes del suelo. <br>Estos suelos son muy adecuados para la producción de cultivos, y pueden utilizarse de forma intensiva. <br>La fertilización debe utilizarse para mejorar la productividad, y puede incluirse el riego para aumentar aún más la productividad.",
+            "Management_fr": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_ks": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
+          }
+        },
+        "texture": {
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy clay loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 14.0,
+          "sl2": 14.0,
+          "sl3": 14.0,
+          "sl4": 13.8,
+          "sl5": 13.43,
+          "sl6": 13.0,
+          "sl7": 12.67
+        },
+        "clay": {
+          "sl1": 18.0,
+          "sl2": 18.0,
+          "sl3": 18.0,
+          "sl4": 20.0,
+          "sl5": 20.43,
+          "sl6": 20.4,
+          "sl7": 20.17
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.4,
+          "sl5": 1.71,
+          "sl6": 1.8,
+          "sl7": 1.83
+        },
+        "id": {
+          "component": "Haplic calcisols",
+          "name": "Haplic calcisols",
+          "rank_loc": "3",
+          "score_loc": 0.114
+        },
+        "ph": {
+          "sl1": 8.2,
+          "sl2": 8.2,
+          "sl3": 8.2,
+          "sl4": 8.28,
+          "sl5": 8.31,
+          "sl6": 8.34,
+          "sl7": 8.35
+        },
+        "rock_fragments": {
+          "sl1": 12.0,
+          "sl2": 12.0,
+          "sl3": 12.0,
+          "sl4": 14.2,
+          "sl5": 15.29,
+          "sl6": 16.6,
+          "sl7": 17.33
+        },
+        "sand": {
+          "sl1": 49.0,
+          "sl2": 49.0,
+          "sl3": 49.0,
+          "sl4": 46.8,
+          "sl5": 46.14,
+          "sl6": 46.0,
+          "sl7": 46.5
+        },
+        "site": {
+          "siteData": {
+            "componentID": 101345,
+            "distance": 0.0,
+            "mapunitID": 103,
+            "minCompDistance": 0.0,
+            "share": 20,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Calcisols mostly occur in semiarid and arid climates.  They are calcareous soils, with high base saturation, pH, and P fixation. <br> Many have gravelly surface horizons. ",
+            "Description_es": "Los Calcisoles Háplicos se dan principalmente en climas semiáridos y áridos.  Son suelos calcáreos, con alta saturación de bases, pH y fijación de P. <br>Muchos tienen horizontes superficiales de grava. ",
+            "Description_fr": "Haplic Calcisols mostly occur in semiarid and arid climates.  They are calcareous soils, with high base saturation, pH, and P fixation. <br> Many have gravelly surface horizons. ",
+            "Description_ks": "Haplic Calcisols mostly occur in semiarid and arid climates.  They are calcareous soils, with high base saturation, pH, and P fixation. <br> Many have gravelly surface horizons. ",
+            "Management_en": "These soils have low organic matter content, are dry, and often stony. <br> They are calcareous, and will have high base saturation (Ca, Mg and K) and high soil pH. <br> If used, the soils are best suited for grazing or limited use with drought tolerant crops. <br> At best they could be cultivated every-other or every-third year, with fallow in the years in which the soils are not used for crops. <br> If irrigated, care must be taken so that the soils do not become high in salts (saline). High quality irrigation water that is low in salts would be needed to prevent salinization.",
+            "Management_es": "Estos suelos tienen un bajo contenido en materia orgánica, son secos y a menudo pedregosos. <br>Son calcáreos, y tendrán una alta saturación de bases (Ca, Mg y K) y un alto pH del suelo. <br>Si se utilizan, los suelos son más adecuados para el pastoreo o para un uso limitado con cultivos tolerantes a la sequía. <br>En el mejor de los casos, podrían cultivarse cada dos o tres años, con barbecho en los años en que no se utilicen los suelos para cultivos. <br>Si se riega, hay que tener cuidado para que los suelos no se vuelvan altos en sales (salinos). Para evitar la salinización sería necesario un agua de riego de alta calidad y bajo contenido en sales.",
+            "Management_fr": "These soils have low organic matter content, are dry, and often stony. <br> They are calcareous, and will have high base saturation (Ca, Mg and K) and high soil pH. <br> If used, the soils are best suited for grazing or limited use with drought tolerant crops. <br> At best they could be cultivated every-other or every-third year, with fallow in the years in which the soils are not used for crops. <br> If irrigated, care must be taken so that the soils do not become high in salts (saline). High quality irrigation water that is low in salts would be needed to prevent salinization.",
+            "Management_ks": "These soils have low organic matter content, are dry, and often stony. <br> They are calcareous, and will have high base saturation (Ca, Mg and K) and high soil pH. <br> If used, the soils are best suited for grazing or limited use with drought tolerant crops. <br> At best they could be cultivated every-other or every-third year, with fallow in the years in which the soils are not used for crops. <br> If irrigated, care must be taken so that the soils do not become high in salts (saline). High quality irrigation water that is low in salts would be needed to prevent salinization."
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Loam",
+          "sl5": "Loam",
+          "sl6": "Loam",
+          "sl7": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 13.0,
+          "sl2": 13.0,
+          "sl3": 13.0,
+          "sl4": 13.0,
+          "sl5": 12.86,
+          "sl6": 12.6,
+          "sl7": 12.17
+        },
+        "clay": {
+          "sl1": 23.0,
+          "sl2": 23.0,
+          "sl3": 23.0,
+          "sl4": 23.6,
+          "sl5": 23.71,
+          "sl6": 23.8,
+          "sl7": 23.67
+        },
+        "ec": {
+          "sl1": 14.0,
+          "sl2": 14.0,
+          "sl3": 14.0,
+          "sl4": 15.2,
+          "sl5": 16.14,
+          "sl6": 16.8,
+          "sl7": 16.67
+        },
+        "id": {
+          "component": "Solonchaks",
+          "name": "Solonchaks",
+          "rank_loc": "4",
+          "score_loc": 0.114
+        },
+        "ph": {
+          "sl1": 8.3,
+          "sl2": 8.3,
+          "sl3": 8.3,
+          "sl4": 8.36,
+          "sl5": 8.37,
+          "sl6": 8.38,
+          "sl7": 8.38
+        },
+        "rock_fragments": {
+          "sl1": 16.0,
+          "sl2": 16.0,
+          "sl3": 16.0,
+          "sl4": 19.0,
+          "sl5": 21.14,
+          "sl6": 22.8,
+          "sl7": 23.33
+        },
+        "sand": {
+          "sl1": 47.0,
+          "sl2": 47.0,
+          "sl3": 47.0,
+          "sl4": 47.6,
+          "sl5": 47.57,
+          "sl6": 47.6,
+          "sl7": 47.67
+        },
+        "site": {
+          "siteData": {
+            "componentID": 101343,
+            "distance": 0.0,
+            "mapunitID": 103,
+            "minCompDistance": 0.0,
+            "share": 20,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Solonchaks are soils that contain salts at or near the soil surface.  These soils form in either deserts or close to coastlines.",
+            "Description_es": "Los Solonchaks son suelos que contienen sales en la superficie del suelo o cerca de ella.  Estos suelos se forman en los desiertos o cerca de las costas.",
+            "Description_fr": "Solonchaks are soils that contain salts at or near the soil surface.  These soils form in either deserts or close to coastlines.",
+            "Description_ks": "Solonchaks are soils that contain salts at or near the soil surface.  These soils form in either deserts or close to coastlines.",
+            "Management_en": "These soils are typically high in total salts. <br> They have very poor productivity, and cannot be used unless high quality irrigation is available to remove accumulated salts. <br>These soils are not well suited for agriculture and are best used for grazing, or left fallow. ",
+            "Management_es": "Estos suelos suelen tener un alto contenido de sales totales. <br>Tienen una productividad muy pobre, y no pueden utilizarse a menos que se disponga de un riego de alta calidad para eliminar las sales acumuladas. *Estos suelos no son adecuados para la agricultura y es mejor utilizarlos para el pastoreo o dejarlos en barbecho.",
+            "Management_fr": "These soils are typically high in total salts. <br> They have very poor productivity, and cannot be used unless high quality irrigation is available to remove accumulated salts. <br>These soils are not well suited for agriculture and are best used for grazing, or left fallow. ",
+            "Management_ks": "These soils are typically high in total salts. <br> They have very poor productivity, and cannot be used unless high quality irrigation is available to remove accumulated salts. <br>These soils are not well suited for agriculture and are best used for grazing, or left fallow. "
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Loam",
+          "sl5": "Loam",
+          "sl6": "Loam",
+          "sl7": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20
+        },
+        "cec": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0
+        },
+        "clay": {
+          "sl1": 12.0,
+          "sl2": 12.0,
+          "sl3": 12.0
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0
+        },
+        "id": {
+          "component": "Lithic leptosols",
+          "name": "Lithic leptosols1",
+          "rank_loc": "5",
+          "score_loc": 0.049
+        },
+        "ph": {
+          "sl1": 7.4,
+          "sl2": 7.4,
+          "sl3": 7.4
+        },
+        "rock_fragments": {
+          "sl1": 18.0,
+          "sl2": 18.0,
+          "sl3": 18.0
+        },
+        "sand": {
+          "sl1": 66.0,
+          "sl2": 66.0,
+          "sl3": 66.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 101347,
+            "distance": 0.0,
+            "mapunitID": 103,
+            "minCompDistance": 0.0,
+            "share": 5,
+            "soilDepth": 20
+          },
+          "siteDescription": {
+            "Description_en": "Lithic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Lithic Leptosols have hard rock within 10 cm of the soil surface. ",
+            "Description_es": "Los leptosoles Líticos tienen un volumen de enraizamiento muy limitado debido a la presencia de roca continua, material altamente calcáreo, horizontes cementados o muchas rocas y fragmentos gruesos en la parte superior del suelo. <br>Los leptosoles en pendientes pronunciadas son muy erosionables. <br>Los leptosoles líticos tienen rocas duras a menos de 10 cm de la superficie del suelo. ",
+            "Description_fr": "Lithic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Lithic Leptosols have hard rock within 10 cm of the soil surface. ",
+            "Description_ks": "Lithic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Lithic Leptosols have hard rock within 10 cm of the soil surface. ",
+            "Management_en": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover. <br> Any agricultural use should be for grazing, with cover continuously maintained. ",
+            "Management_es": "Debido a que estos suelos son poco profundos, rocosos y erosionables, deben utilizarse para cultivos perennes, y no deben ser labrados. <br>Deben utilizarse prácticas para mantener la materia orgánica y la cobertura. <br>Sólo deben considerarse los usos para pastoreo o agroforestales. <br>La preservación del suelo superficial con su materia orgánica es importante, y la prevención de la erosión es fundamental. <br>Las prácticas de gestión de la tierra deben maximizar la cobertura del suelo. <br>Cualquier uso agrícola debe ser para el pastoreo, con el mantenimiento continuo de la cobertura.",
+            "Management_fr": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover. <br> Any agricultural use should be for grazing, with cover continuously maintained. ",
+            "Management_ks": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover. <br> Any agricultural use should be for grazing, with cover continuously maintained. "
+          }
+        },
+        "texture": {
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20
+        },
+        "cec": {
+          "sl1": 16.0,
+          "sl2": 16.0,
+          "sl3": 16.0
+        },
+        "clay": {
+          "sl1": 20.0,
+          "sl2": 20.0,
+          "sl3": 20.0
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0
+        },
+        "id": {
+          "component": "Vertic cambisols",
+          "name": "Vertic cambisols",
+          "rank_loc": "6",
+          "score_loc": 0.047
+        },
+        "ph": {
+          "sl1": 6.7,
+          "sl2": 6.7,
+          "sl3": 6.7
+        },
+        "rock_fragments": {
+          "sl1": 22.0,
+          "sl2": 22.0,
+          "sl3": 22.0
+        },
+        "sand": {
+          "sl1": 51.0,
+          "sl2": 51.0,
+          "sl3": 51.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 150228,
+            "distance": 72409.687,
+            "mapunitID": 67,
+            "minCompDistance": 72409.6869,
+            "share": 33,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Vertic Cambisols are widely occurring soils with limited soil development. <br> These soils are clayey soils that are sticky and plastic when wet, with poor soil physical properties. ",
+            "Description_es": "Los Cambisoles Vérticos son suelos muy extendidos con un desarrollo limitado del suelo. <br>Estos suelos son arcillosos, pegajosos y plásticos cuando están mojados, y tienen malas propiedades físicas. ",
+            "Description_fr": "Vertic Cambisols are widely occurring soils with limited soil development. <br> These soils are clayey soils that are sticky and plastic when wet, with poor soil physical properties. ",
+            "Description_ks": "Vertic Cambisols are widely occurring soils with limited soil development. <br> These soils are clayey soils that are sticky and plastic when wet, with poor soil physical properties. ",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> The clay type in this soil will expand when wetted and shrink when dry. <br> Although fertile, care should be taken to not excessively till these soils, as soil structure could be negatively affected. ",
+            "Management_es": "En regiones templadas los suelos tendrán un alto contenido de cationes básicos (potasio, calcio y magnesio), mientras que en regiones más húmedas pueden tener niveles más bajos de nutrientes del suelo. <br>El tipo de arcilla de este suelo se expande cuando se humedece y se encoge cuando se seca. <br>Aunque son fértiles, hay que tener cuidado de no labrar excesivamente estos suelos, ya que su estructura podría verse afectada negativamente.",
+            "Management_fr": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> The clay type in this soil will expand when wetted and shrink when dry. <br> Although fertile, care should be taken to not excessively till these soils, as soil structure could be negatively affected. ",
+            "Management_ks": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> The clay type in this soil will expand when wetted and shrink when dry. <br> Although fertile, care should be taken to not excessively till these soils, as soil structure could be negatively affected. "
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 31.0,
+          "sl2": 31.0,
+          "sl3": 31.0,
+          "sl4": 30.2,
+          "sl5": 29.71,
+          "sl6": 29.2,
+          "sl7": 28.83
+        },
+        "clay": {
+          "sl1": 47.0,
+          "sl2": 47.0,
+          "sl3": 47.0,
+          "sl4": 48.6,
+          "sl5": 48.57,
+          "sl6": 48.0,
+          "sl7": 46.83
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 0.4,
+          "sl5": 0.29,
+          "sl6": 0.2,
+          "sl7": 0.17
+        },
+        "id": {
+          "component": "Chromic luvisols",
+          "name": "Chromic luvisols",
+          "rank_loc": "7",
+          "score_loc": 0.047
+        },
+        "ph": {
+          "sl1": 7.3,
+          "sl2": 7.3,
+          "sl3": 7.3,
+          "sl4": 7.38,
+          "sl5": 7.43,
+          "sl6": 7.54,
+          "sl7": 7.57
+        },
+        "rock_fragments": {
+          "sl1": 4.0,
+          "sl2": 4.0,
+          "sl3": 4.0,
+          "sl4": 4.0,
+          "sl5": 3.86,
+          "sl6": 3.8,
+          "sl7": 4.17
+        },
+        "sand": {
+          "sl1": 17.0,
+          "sl2": 17.0,
+          "sl3": 17.0,
+          "sl4": 15.8,
+          "sl5": 15.43,
+          "sl6": 15.4,
+          "sl7": 15.83
+        },
+        "site": {
+          "siteData": {
+            "componentID": 150227,
+            "distance": 72409.687,
+            "mapunitID": 67,
+            "minCompDistance": 72409.6869,
+            "share": 33,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Chromic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Chromic Luvisols have an iron rich subsoil.",
+            "Description_es": "Los Luvisoles Crómicos son suelos productivos con alta saturación de bases y subsuelos relativamente arcillosos. <br>Los Luvisoles crómicos tienen un subsuelo rico en hierro.",
+            "Description_fr": "Chromic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Chromic Luvisols have an iron rich subsoil.",
+            "Description_ks": "Chromic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Chromic Luvisols have an iron rich subsoil.",
+            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops.",
+            "Management_es": "Estos suelos son fértiles y pueden utilizarse para una amplia gama de prácticas de cultivo. <br>Sin embargo, son sensibles a la pérdida de suelo por erosión, y hay que tener cuidado para proteger el suelo de la pérdida. <br>Si el suelo ya está erosionado, pueden ser más adecuados para el pastoreo y/o los cultivos arbóreos.",
+            "Management_fr": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops.",
+            "Management_ks": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops."
+          }
+        },
+        "texture": {
+          "sl1": "Unknown",
+          "sl2": "Unknown",
+          "sl3": "Unknown",
+          "sl4": "Unknown",
+          "sl5": "Unknown",
+          "sl6": "Unknown",
+          "sl7": "Unknown"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 18.0,
+          "sl2": 18.0,
+          "sl3": 18.0,
+          "sl4": 18.2,
+          "sl5": 18.43,
+          "sl6": 18.4,
+          "sl7": 17.83
+        },
+        "clay": {
+          "sl1": 30.0,
+          "sl2": 30.0,
+          "sl3": 30.0,
+          "sl4": 34.2,
+          "sl5": 35.86,
+          "sl6": 37.2,
+          "sl7": 37.5
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 1.0,
+          "sl6": 1.0,
+          "sl7": 1.0
+        },
+        "id": {
+          "component": "Calcaric regosols",
+          "name": "Calcaric regosols",
+          "rank_loc": "8",
+          "score_loc": 0.029
+        },
+        "ph": {
+          "sl1": 6.5,
+          "sl2": 6.5,
+          "sl3": 6.5,
+          "sl4": 6.56,
+          "sl5": 6.57,
+          "sl6": 6.58,
+          "sl7": 6.55
+        },
+        "rock_fragments": {
+          "sl1": 11.0,
+          "sl2": 11.0,
+          "sl3": 11.0,
+          "sl4": 10.6,
+          "sl5": 10.14,
+          "sl6": 9.8,
+          "sl7": 11.33
+        },
+        "sand": {
+          "sl1": 37.0,
+          "sl2": 37.0,
+          "sl3": 37.0,
+          "sl4": 34.4,
+          "sl5": 33.43,
+          "sl6": 32.6,
+          "sl7": 33.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 101346,
+            "distance": 0.0,
+            "mapunitID": 103,
+            "minCompDistance": 0.0,
+            "share": 5,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Calcaric Regosols are weakly developed soils that commonly are too dry, or are on steeper slopes which limit productivity.<br>Calcaric Regosols are calcareous in the upper portion of the subsoil. ",
+            "Description_es": "Regosoles Calcáreos son suelos débilmente desarrollados que comúnmente son demasiado secos, o están en pendientes más pronunciadas que limitan la productividad.*Los Regosoles Cálcicos son calcáreos en la parte superior del subsuelo. ",
+            "Description_fr": "Calcaric Regosols are weakly developed soils that commonly are too dry, or are on steeper slopes which limit productivity.<br>Calcaric Regosols are calcareous in the upper portion of the subsoil. ",
+            "Description_ks": "Calcaric Regosols are weakly developed soils that commonly are too dry, or are on steeper slopes which limit productivity.<br>Calcaric Regosols are calcareous in the upper portion of the subsoil. ",
+            "Management_en": "These soils have low water holding capacity, and are very sensitive to drought. <br> They are prone to erosion, especially in areas with slope. <br> The combination of drought sensitivity and high erosion potential makes these soils best suited for grazing or other uses with constant soil cover. <br> Even when used for grazing, irrigation will be needed due to the low water holding capacity and high permeability of these soils. ",
+            "Management_es": "Estos suelos tienen una baja capacidad de retención de agua, y son muy sensibles a la sequía. <br>Son propensos a la erosión, especialmente en zonas con pendiente. <br>La combinación de la sensibilidad a la sequía y el alto potencial de erosión hace que estos suelos sean los más adecuados para el pastoreo u otros usos con una cobertura constante del suelo. <br>Incluso cuando se utilicen para el pastoreo, será necesario el riego debido a la baja capacidad de retención de agua y la alta permeabilidad de estos suelos.",
+            "Management_fr": "These soils have low water holding capacity, and are very sensitive to drought. <br> They are prone to erosion, especially in areas with slope. <br> The combination of drought sensitivity and high erosion potential makes these soils best suited for grazing or other uses with constant soil cover. <br> Even when used for grazing, irrigation will be needed due to the low water holding capacity and high permeability of these soils. ",
+            "Management_ks": "These soils have low water holding capacity, and are very sensitive to drought. <br> They are prone to erosion, especially in areas with slope. <br> The combination of drought sensitivity and high erosion potential makes these soils best suited for grazing or other uses with constant soil cover. <br> Even when used for grazing, irrigation will be needed due to the low water holding capacity and high permeability of these soils. "
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 14.0,
+          "sl2": 14.0,
+          "sl3": 14.0,
+          "sl4": 13.4,
+          "sl5": 13.29,
+          "sl6": 13.0,
+          "sl7": 12.67
+        },
+        "clay": {
+          "sl1": 15.0,
+          "sl2": 15.0,
+          "sl3": 15.0,
+          "sl4": 15.4,
+          "sl5": 15.43,
+          "sl6": 15.8,
+          "sl7": 16.17
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.6,
+          "sl5": 1.71,
+          "sl6": 1.6,
+          "sl7": 1.83
+        },
+        "id": {
+          "component": "Gypsisols",
+          "name": "Gypsisols",
+          "rank_loc": "9",
+          "score_loc": 0.014
+        },
+        "ph": {
+          "sl1": 8.2,
+          "sl2": 8.2,
+          "sl3": 8.2,
+          "sl4": 8.26,
+          "sl5": 8.27,
+          "sl6": 8.28,
+          "sl7": 8.28
+        },
+        "rock_fragments": {
+          "sl1": 9.0,
+          "sl2": 9.0,
+          "sl3": 9.0,
+          "sl4": 9.4,
+          "sl5": 8.0,
+          "sl6": 7.4,
+          "sl7": 7.83
+        },
+        "sand": {
+          "sl1": 55.0,
+          "sl2": 55.0,
+          "sl3": 55.0,
+          "sl4": 54.0,
+          "sl5": 53.71,
+          "sl6": 52.8,
+          "sl7": 52.5
+        },
+        "site": {
+          "siteData": {
+            "componentID": 135084,
+            "distance": 35571.412,
+            "mapunitID": 374,
+            "minCompDistance": 35571.4122,
+            "share": 10,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": NaN,
+            "Description_es": NaN,
+            "Description_fr": NaN,
+            "Description_ks": NaN,
+            "Management_en": NaN,
+            "Management_es": NaN,
+            "Management_fr": NaN,
+            "Management_ks": NaN
+          }
+        },
+        "texture": {
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy loam",
+          "sl5": "Sandy loam",
+          "sl6": "Sandy loam",
+          "sl7": "Sandy loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 10.0,
+          "sl2": 10.0,
+          "sl3": 10.0,
+          "sl4": 8.8,
+          "sl5": 8.43,
+          "sl6": 8.0,
+          "sl7": 7.83
+        },
+        "clay": {
+          "sl1": 17.0,
+          "sl2": 17.0,
+          "sl3": 17.0,
+          "sl4": 18.2,
+          "sl5": 18.29,
+          "sl6": 18.0,
+          "sl7": 17.67
+        },
+        "ec": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 2.6,
+          "sl5": 2.71,
+          "sl6": 2.8,
+          "sl7": 3.0
+        },
+        "id": {
+          "component": "Haplic solonchaks",
+          "name": "Haplic solonchaks",
+          "rank_loc": "10",
+          "score_loc": 0.014
+        },
+        "ph": {
+          "sl1": 8.0,
+          "sl2": 8.0,
+          "sl3": 8.0,
+          "sl4": 8.06,
+          "sl5": 8.07,
+          "sl6": 8.08,
+          "sl7": 8.07
+        },
+        "rock_fragments": {
+          "sl1": 4.0,
+          "sl2": 4.0,
+          "sl3": 4.0,
+          "sl4": 3.4,
+          "sl5": 3.86,
+          "sl6": 7.2,
+          "sl7": 9.5
+        },
+        "sand": {
+          "sl1": 47.0,
+          "sl2": 47.0,
+          "sl3": 47.0,
+          "sl4": 45.8,
+          "sl5": 45.86,
+          "sl6": 46.0,
+          "sl7": 46.33
+        },
+        "site": {
+          "siteData": {
+            "componentID": 135083,
+            "distance": 35571.412,
+            "mapunitID": 374,
+            "minCompDistance": 35571.4122,
+            "share": 10,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Solonchaks are soils that contain salts at or near the soil surface.  These soils form in either deserts or close to coastlines.",
+            "Description_es": "Los Solonchaks Háplicos son suelos que contienen sales en la superficie del suelo o cerca de ella.  Estos suelos se forman en los desiertos o cerca de las costas.",
+            "Description_fr": "Haplic Solonchaks are soils that contain salts at or near the soil surface.  These soils form in either deserts or close to coastlines.",
+            "Description_ks": "Haplic Solonchaks are soils that contain salts at or near the soil surface.  These soils form in either deserts or close to coastlines.",
+            "Management_en": "These soils are typically high in total salts. <br> They have very poor productivity, and cannot be used unless high quality irrigation is available to remove accumulated salts. <br>These soils are not well suited for agriculture and are best used for grazing, or left fallow. ",
+            "Management_es": "Estos suelos suelen tener un alto contenido de sales totales. <br>Tienen una productividad muy pobre, y no pueden utilizarse a menos que se disponga de un riego de alta calidad para eliminar las sales acumuladas. *Estos suelos no son adecuados para la agricultura y es mejor utilizarlos para el pastoreo o dejarlos en barbecho.",
+            "Management_fr": "These soils are typically high in total salts. <br> They have very poor productivity, and cannot be used unless high quality irrigation is available to remove accumulated salts. <br>These soils are not well suited for agriculture and are best used for grazing, or left fallow. ",
+            "Management_ks": "These soils are typically high in total salts. <br> They have very poor productivity, and cannot be used unless high quality irrigation is available to remove accumulated salts. <br>These soils are not well suited for agriculture and are best used for grazing, or left fallow. "
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Loam",
+          "sl5": "Loam",
+          "sl6": "Loam",
+          "sl7": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 18.0,
+          "sl2": 18.0,
+          "sl3": 18.0,
+          "sl4": 17.0,
+          "sl5": 16.86,
+          "sl6": 16.8,
+          "sl7": 16.17
+        },
+        "clay": {
+          "sl1": 24.0,
+          "sl2": 24.0,
+          "sl3": 24.0,
+          "sl4": 24.4,
+          "sl5": 24.29,
+          "sl6": 24.0,
+          "sl7": 23.17
+        },
+        "ec": {
+          "sl1": 14.0,
+          "sl2": 14.0,
+          "sl3": 14.0,
+          "sl4": 15.2,
+          "sl5": 16.14,
+          "sl6": 16.8,
+          "sl7": 16.67
+        },
+        "id": {
+          "component": "Lithic leptosols",
+          "name": "Lithic leptosols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.049
+        },
+        "ph": {
+          "sl1": 8.1,
+          "sl2": 8.1,
+          "sl3": 8.1,
+          "sl4": 8.16,
+          "sl5": 8.17,
+          "sl6": 8.2,
+          "sl7": 8.23
+        },
+        "rock_fragments": {
+          "sl1": 14.0,
+          "sl2": 14.0,
+          "sl3": 14.0,
+          "sl4": 16.4,
+          "sl5": 16.57,
+          "sl6": 14.0,
+          "sl7": 14.0
+        },
+        "sand": {
+          "sl1": 50.0,
+          "sl2": 50.0,
+          "sl3": 50.0,
+          "sl4": 50.0,
+          "sl5": 49.86,
+          "sl6": 50.2,
+          "sl7": 51.5
+        },
+        "site": {
+          "siteData": {
+            "componentID": 150226,
+            "distance": 72409.687,
+            "mapunitID": 67,
+            "minCompDistance": 0.0,
+            "share": 34,
+            "soilDepth": 20
+          },
+          "siteDescription": {
+            "Description_en": "Lithic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Lithic Leptosols have hard rock within 10 cm of the soil surface. ",
+            "Description_es": "Los leptosoles Líticos tienen un volumen de enraizamiento muy limitado debido a la presencia de roca continua, material altamente calcáreo, horizontes cementados o muchas rocas y fragmentos gruesos en la parte superior del suelo. <br>Los leptosoles en pendientes pronunciadas son muy erosionables. <br>Los leptosoles líticos tienen rocas duras a menos de 10 cm de la superficie del suelo. ",
+            "Description_fr": "Lithic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Lithic Leptosols have hard rock within 10 cm of the soil surface. ",
+            "Description_ks": "Lithic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Lithic Leptosols have hard rock within 10 cm of the soil surface. ",
+            "Management_en": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover. <br> Any agricultural use should be for grazing, with cover continuously maintained. ",
+            "Management_es": "Debido a que estos suelos son poco profundos, rocosos y erosionables, deben utilizarse para cultivos perennes, y no deben ser labrados. <br>Deben utilizarse prácticas para mantener la materia orgánica y la cobertura. <br>Sólo deben considerarse los usos para pastoreo o agroforestales. <br>La preservación del suelo superficial con su materia orgánica es importante, y la prevención de la erosión es fundamental. <br>Las prácticas de gestión de la tierra deben maximizar la cobertura del suelo. <br>Cualquier uso agrícola debe ser para el pastoreo, con el mantenimiento continuo de la cobertura.",
+            "Management_fr": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover. <br> Any agricultural use should be for grazing, with cover continuously maintained. ",
+            "Management_ks": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover. <br> Any agricultural use should be for grazing, with cover continuously maintained. "
+          }
+        },
+        "texture": {
+          "sl1": "Sandy clay loam",
+          "sl2": "Sandy clay loam",
+          "sl3": "Sandy clay loam",
+          "sl4": "Sandy clay loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      }
+    ]
+  },
+  "rank": {
+    "metadata": {
+      "location": "global",
+      "model": "v2"
+    },
+    "soilRank": [
+      {
+        "component": "Gypsisols",
+        "componentData": "Data Complete",
+        "componentID": 135084,
+        "name": "Gypsisols",
+        "rank_data": "1",
+        "rank_data_loc": "1",
+        "rank_loc": "9",
+        "score_data": 0.59,
+        "score_data_loc": 1.0,
+        "score_loc": 0.014
+      },
+      {
+        "component": "Solonchaks",
+        "componentData": "Data Complete",
+        "componentID": 101343,
+        "name": "Solonchaks",
+        "rank_data": "2",
+        "rank_data_loc": "2",
+        "rank_loc": "4",
+        "score_data": 0.484,
+        "score_data_loc": 0.991,
+        "score_loc": 0.114
+      },
+      {
+        "component": "Chromic cambisols",
+        "componentData": "Data Complete",
+        "componentID": 101344,
+        "name": "Chromic cambisols",
+        "rank_data": "6",
+        "rank_data_loc": "3",
+        "rank_loc": "2",
+        "score_data": 0.334,
+        "score_data_loc": 0.742,
+        "score_loc": 0.114
+      },
+      {
+        "component": "Calcaric fluvisols",
+        "componentData": "Data Complete",
+        "componentID": 101342,
+        "name": "Calcaric fluvisols",
+        "rank_data": "9",
+        "rank_data_loc": "4",
+        "rank_loc": "1",
+        "score_data": 0.263,
+        "score_data_loc": 0.72,
+        "score_loc": 0.172
+      },
+      {
+        "component": "Haplic calcisols",
+        "componentData": "Data Complete",
+        "componentID": 101345,
+        "name": "Haplic calcisols",
+        "rank_data": "8",
+        "rank_data_loc": "5",
+        "rank_loc": "3",
+        "score_data": 0.302,
+        "score_data_loc": 0.69,
+        "score_loc": 0.114
+      },
+      {
+        "component": "Vertic cambisols",
+        "componentData": "Missing Data",
+        "componentID": 150228,
+        "name": "Vertic cambisols",
+        "rank_data": "4",
+        "rank_data_loc": "6",
+        "rank_loc": "6",
+        "score_data": 0.356,
+        "score_data_loc": 0.668,
+        "score_loc": 0.047
+      },
+      {
+        "component": "Calcaric regosols",
+        "componentData": "Data Complete",
+        "componentID": 101346,
+        "name": "Calcaric regosols",
+        "rank_data": "5",
+        "rank_data_loc": "7",
+        "rank_loc": "8",
+        "score_data": 0.348,
+        "score_data_loc": 0.624,
+        "score_loc": 0.029
+      },
+      {
+        "component": "Haplic solonchaks",
+        "componentData": "Data Complete",
+        "componentID": 135083,
+        "name": "Haplic solonchaks",
+        "rank_data": "7",
+        "rank_data_loc": "8",
+        "rank_loc": "10",
+        "score_data": 0.333,
+        "score_data_loc": 0.574,
+        "score_loc": 0.014
+      },
+      {
+        "component": "Chromic luvisols",
+        "componentData": "Missing Data",
+        "componentID": 150227,
+        "name": "Chromic luvisols",
+        "rank_data": "10",
+        "rank_data_loc": "9",
+        "rank_loc": "7",
+        "score_data": 0.242,
+        "score_data_loc": 0.479,
+        "score_loc": 0.047
+      },
+      {
+        "component": "Lithic leptosols",
+        "componentData": "Missing Data",
+        "componentID": 101347,
+        "name": "Lithic leptosols1",
+        "rank_data": "3",
+        "rank_data_loc": "10",
+        "rank_loc": "5",
+        "score_data": 0.377,
+        "score_data_loc": 0.003,
+        "score_loc": 0.049
+      },
+      {
+        "component": "Lithic leptosols",
+        "componentData": "Missing Data",
+        "componentID": 150226,
+        "name": "Lithic leptosols2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.354,
+        "score_data_loc": 0.003,
+        "score_loc": 0.049
+      }
+    ]
+  }
+}

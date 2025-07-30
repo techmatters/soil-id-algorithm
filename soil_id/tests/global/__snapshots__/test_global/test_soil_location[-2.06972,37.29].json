@@ -1,0 +1,3163 @@
+{
+  "list": {
+    "metadata": {
+      "location": "us",
+      "model": "v3",
+      "unit_measure": {
+        "cec": "cmol(c)/kg",
+        "clay": "%",
+        "depth": "cm",
+        "distance": "m",
+        "ec": "ds/m",
+        "rock_fragments": "cm3/100cm3",
+        "sand": "%"
+      }
+    },
+    "soilList": [
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 3.0,
+          "sl2": 3.0,
+          "sl3": 3.0,
+          "sl4": 2.4,
+          "sl5": 2.29,
+          "sl6": 2.2,
+          "sl7": 2.0
+        },
+        "clay": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 6.2,
+          "sl5": 6.43,
+          "sl6": 6.8,
+          "sl7": 7.0
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Ferralic arenosols",
+          "name": "Ferralic arenosols1",
+          "rank_loc": "1",
+          "score_loc": 0.03
+        },
+        "ph": {
+          "sl1": 5.3,
+          "sl2": 5.3,
+          "sl3": 5.3,
+          "sl4": 5.32,
+          "sl5": 5.34,
+          "sl6": 5.36,
+          "sl7": 5.37
+        },
+        "rock_fragments": {
+          "sl1": 4.0,
+          "sl2": 4.0,
+          "sl3": 4.0,
+          "sl4": 4.2,
+          "sl5": 4.43,
+          "sl6": 4.6,
+          "sl7": 4.5
+        },
+        "sand": {
+          "sl1": 87.0,
+          "sl2": 87.0,
+          "sl3": 87.0,
+          "sl4": 86.8,
+          "sl5": 86.57,
+          "sl6": 86.2,
+          "sl7": 86.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111242,
+            "distance": 45915.675,
+            "mapunitID": 17468,
+            "minCompDistance": 45915.6746,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Ferralic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are high in iron and have low nutrient retention.",
+            "Description_es": "Los Arenosoles Ferrálicos son suelos arenosos con un desarrollo mínimo del suelo. <br>Son inherentemente bajos en nutrientes y capacidad de retención de agua. <br>Estos suelos tienen un alto contenido en hierro y una baja retención de nutrientes.",
+            "Description_fr": "Ferralic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are high in iron and have low nutrient retention.",
+            "Description_ks": "Ferralic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are high in iron and have low nutrient retention.",
+            "Management_en": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> Increased attention to the supply of phosphorus may be needed, as excessive iron may increase P fixation in these soils. ",
+            "Management_es": "Dado que estos suelos tienen poca capacidad de retención de agua y nutrientes, deben ser fertilizados y regados para obtener una productividad óptima. <br>Las prácticas de gestión para mejorar el suministro de nutrientes y la capacidad de retención de agua incluyen la adición de materia orgánica, el uso de cultivos de cobertura y la rotación de cultivos. <br>La mejor productividad se logrará mediante el uso de riego suplementario, el uso de herramientas como mantillos o cubiertas para preservar la humedad del suelo, y la fertilización. <br>Puede ser necesario prestar más atención al suministro de fósforo, ya que el exceso de hierro puede aumentar la fijación de P en estos suelos.",
+            "Management_fr": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> Increased attention to the supply of phosphorus may be needed, as excessive iron may increase P fixation in these soils. ",
+            "Management_ks": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> Increased attention to the supply of phosphorus may be needed, as excessive iron may increase P fixation in these soils. "
+          }
+        },
+        "texture": {
+          "sl1": "Loamy sand",
+          "sl2": "Loamy sand",
+          "sl3": "Loamy sand",
+          "sl4": "Loamy sand",
+          "sl5": "Loamy sand",
+          "sl6": "Loamy sand",
+          "sl7": "Loamy sand"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 2.0,
+          "sl5": 2.0,
+          "sl6": 2.0,
+          "sl7": 2.0
+        },
+        "clay": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 6.6,
+          "sl5": 6.71,
+          "sl6": 6.8,
+          "sl7": 6.83
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Humic nitisols",
+          "name": "Humic nitisols",
+          "rank_loc": "2",
+          "score_loc": 0.024
+        },
+        "ph": {
+          "sl1": 5.9,
+          "sl2": 5.9,
+          "sl3": 5.9,
+          "sl4": 5.82,
+          "sl5": 5.77,
+          "sl6": 5.72,
+          "sl7": 5.72
+        },
+        "rock_fragments": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 3.2,
+          "sl5": 3.71,
+          "sl6": 4.4,
+          "sl7": 8.83
+        },
+        "sand": {
+          "sl1": 90.0,
+          "sl2": 90.0,
+          "sl3": 90.0,
+          "sl4": 89.4,
+          "sl5": 89.29,
+          "sl6": 89.4,
+          "sl7": 89.5
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111081,
+            "distance": 85305.924,
+            "mapunitID": 17379,
+            "minCompDistance": 85305.9237,
+            "share": 30,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Humic Nitisols are the most productive humid subtropical and tropical soils. <br> They have well developed structure with relatively clayey and iron enriched subsoils which retain water and nutrients. <br>Humic Nitisols have relatively higher organic matter in surface horizons.",
+            "Description_es": "Los Nitisoles Húmicos son los suelos subtropicales y tropicales húmedos más productivos. <br>Tienen una estructura bien desarrollada con subsuelos relativamente arcillosos y enriquecidos en hierro que retienen agua y nutrientes. *Los Nitisoles Húmicos tienen relativamente más materia orgánica en los horizontes superficiales.",
+            "Description_fr": "Humic Nitisols are the most productive humid subtropical and tropical soils. <br> They have well developed structure with relatively clayey and iron enriched subsoils which retain water and nutrients. <br>Humic Nitisols have relatively higher organic matter in surface horizons.",
+            "Description_ks": "Humic Nitisols are the most productive humid subtropical and tropical soils. <br> They have well developed structure with relatively clayey and iron enriched subsoils which retain water and nutrients. <br>Humic Nitisols have relatively higher organic matter in surface horizons.",
+            "Management_en": "These are productive soils, and can be used for crop production. <br> They have excellent internal drainage and good water holding capacity. <br> These soils do have a high degree of phosphorus sorption, and will fix phosphorus, making it unavailable for plant uptake during the cropping season. <br> Phosphorus fertilization will be needed for best productivity. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation.",
+            "Management_es": "Son suelos productivos y pueden utilizarse para la producción de cultivos. <br>Tienen un excelente drenaje interno y una buena capacidad de retención de agua. <br>Estos suelos tienen un alto grado de absorción de fósforo y fijan el fósforo, por lo que no está disponible para la planta durante la temporada de cultivo. <br>La fertilización con fósforo será necesaria para obtener la mejor productividad. <br>Las prácticas bien documentadas, como la aplicación de fertilizantes fosfatados en banda (directamente sobre la semilla o a un lado y abajo de la semilla), ayudarán a reducir la fijación de P.",
+            "Management_fr": "These are productive soils, and can be used for crop production. <br> They have excellent internal drainage and good water holding capacity. <br> These soils do have a high degree of phosphorus sorption, and will fix phosphorus, making it unavailable for plant uptake during the cropping season. <br> Phosphorus fertilization will be needed for best productivity. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation.",
+            "Management_ks": "These are productive soils, and can be used for crop production. <br> They have excellent internal drainage and good water holding capacity. <br> These soils do have a high degree of phosphorus sorption, and will fix phosphorus, making it unavailable for plant uptake during the cropping season. <br> Phosphorus fertilization will be needed for best productivity. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation."
+          }
+        },
+        "texture": {
+          "sl1": "Sand",
+          "sl2": "Sand",
+          "sl3": "Sand",
+          "sl4": "Sand",
+          "sl5": "Sand",
+          "sl6": "Sand",
+          "sl7": "Sand"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 22.0,
+          "sl2": 22.0,
+          "sl3": 22.0,
+          "sl4": 19.6,
+          "sl5": 18.43,
+          "sl6": 17.4,
+          "sl7": 16.67
+        },
+        "clay": {
+          "sl1": 45.0,
+          "sl2": 45.0,
+          "sl3": 45.0,
+          "sl4": 49.0,
+          "sl5": 51.14,
+          "sl6": 54.0,
+          "sl7": 56.0
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Haplic lixisols",
+          "name": "Haplic lixisols1",
+          "rank_loc": "3",
+          "score_loc": 0.015
+        },
+        "ph": {
+          "sl1": 5.2,
+          "sl2": 5.2,
+          "sl3": 5.2,
+          "sl4": 5.24,
+          "sl5": 5.31,
+          "sl6": 5.4,
+          "sl7": 5.43
+        },
+        "rock_fragments": {
+          "sl1": 5.0,
+          "sl2": 5.0,
+          "sl3": 5.0,
+          "sl4": 7.0,
+          "sl5": 6.71,
+          "sl6": 7.6,
+          "sl7": 8.33
+        },
+        "sand": {
+          "sl1": 28.0,
+          "sl2": 28.0,
+          "sl3": 28.0,
+          "sl4": 25.4,
+          "sl5": 24.14,
+          "sl6": 22.6,
+          "sl7": 21.33
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111208,
+            "distance": 36128.047,
+            "mapunitID": 17453,
+            "minCompDistance": 36128.0473,
+            "share": 30,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Lixisols form in warm climates with relatively clayey subsoils dominated by kaolinite and iron oxides, but relatively high base saturation. ",
+            "Description_es": "Los Lixisoles Háplicos se forman en climas cálidos con subsuelos relativamente arcillosos dominados por caolinita y óxidos de hierro, pero con una saturación de bases relativamente alta. ",
+            "Description_fr": "Haplic Lixisols form in warm climates with relatively clayey subsoils dominated by kaolinite and iron oxides, but relatively high base saturation. ",
+            "Description_ks": "Haplic Lixisols form in warm climates with relatively clayey subsoils dominated by kaolinite and iron oxides, but relatively high base saturation. ",
+            "Management_en": "These soils are heavily weathered soils, which means that fertilization (and possibly lime) will be needed for production. <br> Although they do have kaolinite clay and iron oxides, they have fairly low aluminum toxicity. <br> Best production practices for this soil will include regular fertilization, and consistent cropping in perennial crops or forestry. <br> The soils are sensitive to erosion, and so practices that maintain surface cover are important. ",
+            "Management_es": "Estos suelos están fuertemente meteorizados, lo que significa que la fertilización (y posiblemente la cal) será necesaria para la producción. <br>Aunque tienen arcilla caolinita y óxidos de hierro, tienen una toxicidad de aluminio bastante baja. <br>Las mejores prácticas de producción para este suelo incluirán la fertilización regular, y el cultivo consistente en cultivos perennes o la silvicultura. <br>Los suelos son sensibles a la erosión, por lo que son importantes las prácticas que mantienen la cobertura de la superficie.",
+            "Management_fr": "These soils are heavily weathered soils, which means that fertilization (and possibly lime) will be needed for production. <br> Although they do have kaolinite clay and iron oxides, they have fairly low aluminum toxicity. <br> Best production practices for this soil will include regular fertilization, and consistent cropping in perennial crops or forestry. <br> The soils are sensitive to erosion, and so practices that maintain surface cover are important. ",
+            "Management_ks": "These soils are heavily weathered soils, which means that fertilization (and possibly lime) will be needed for production. <br> Although they do have kaolinite clay and iron oxides, they have fairly low aluminum toxicity. <br> Best production practices for this soil will include regular fertilization, and consistent cropping in perennial crops or forestry. <br> The soils are sensitive to erosion, and so practices that maintain surface cover are important. "
+          }
+        },
+        "texture": {
+          "sl1": "Unknown",
+          "sl2": "Unknown",
+          "sl3": "Unknown",
+          "sl4": "Unknown",
+          "sl5": "Unknown",
+          "sl6": "Unknown",
+          "sl7": "Unknown"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 8.0,
+          "sl2": 8.0,
+          "sl3": 8.0,
+          "sl4": 6.8,
+          "sl5": 6.71,
+          "sl6": 6.8,
+          "sl7": 6.83
+        },
+        "clay": {
+          "sl1": 21.0,
+          "sl2": 21.0,
+          "sl3": 21.0,
+          "sl4": 27.2,
+          "sl5": 30.29,
+          "sl6": 33.2,
+          "sl7": 34.33
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Chromic cambisols",
+          "name": "Chromic cambisols1",
+          "rank_loc": "4",
+          "score_loc": 0.013
+        },
+        "ph": {
+          "sl1": 6.2,
+          "sl2": 6.2,
+          "sl3": 6.2,
+          "sl4": 6.12,
+          "sl5": 6.07,
+          "sl6": 6.02,
+          "sl7": 6.02
+        },
+        "rock_fragments": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 9.8,
+          "sl5": 10.43,
+          "sl6": 10.6,
+          "sl7": 10.5
+        },
+        "sand": {
+          "sl1": 65.0,
+          "sl2": 65.0,
+          "sl3": 65.0,
+          "sl4": 60.2,
+          "sl5": 57.57,
+          "sl6": 54.8,
+          "sl7": 53.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111105,
+            "distance": 54718.541,
+            "mapunitID": 17393,
+            "minCompDistance": 54718.5415,
+            "share": 50,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Chromic Cambisols are widely occurring soils with limited soil development. <br> These are well drained soils, with intense color. <br> When climate and landscape are favorable, they can be productive soils. ",
+            "Description_es": "Los Cambisoles Crómicos son suelos de amplia ocurrencia con un desarrollo limitado del suelo. <br>Son suelos bien drenados, con un color intenso. <br>Cuando el clima y el paisaje son favorables, pueden ser suelos productivos. ",
+            "Description_fr": "Chromic Cambisols are widely occurring soils with limited soil development. <br> These are well drained soils, with intense color. <br> When climate and landscape are favorable, they can be productive soils. ",
+            "Description_ks": "Chromic Cambisols are widely occurring soils with limited soil development. <br> These are well drained soils, with intense color. <br> When climate and landscape are favorable, they can be productive soils. ",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_es": "En regiones templadas los suelos tendrán un alto contenido de cationes básicos (potasio, calcio y magnesio), mientras que en regiones más húmedas pueden tener niveles más bajos de nutrientes del suelo. <br>Estos suelos son muy adecuados para la producción de cultivos, y pueden utilizarse de forma intensiva. <br>La fertilización debe utilizarse para mejorar la productividad, y puede incluirse el riego para aumentar aún más la productividad.",
+            "Management_fr": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_ks": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
+          }
+        },
+        "texture": {
+          "sl1": "Sandy clay loam",
+          "sl2": "Sandy clay loam",
+          "sl3": "Sandy clay loam",
+          "sl4": "Sandy clay loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 5.0,
+          "sl2": 5.0,
+          "sl3": 5.0,
+          "sl4": 5.0,
+          "sl5": 5.14,
+          "sl6": 5.2,
+          "sl7": 5.33
+        },
+        "clay": {
+          "sl1": 14.0,
+          "sl2": 14.0,
+          "sl3": 14.0,
+          "sl4": 18.8,
+          "sl5": 20.43,
+          "sl6": 22.2,
+          "sl7": 22.83
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Eutric vertisols",
+          "name": "Eutric vertisols1",
+          "rank_loc": "5",
+          "score_loc": 0.011
+        },
+        "ph": {
+          "sl1": 6.1,
+          "sl2": 6.1,
+          "sl3": 6.1,
+          "sl4": 6.0,
+          "sl5": 5.99,
+          "sl6": 6.0,
+          "sl7": 6.02
+        },
+        "rock_fragments": {
+          "sl1": 3.0,
+          "sl2": 3.0,
+          "sl3": 3.0,
+          "sl4": 2.8,
+          "sl5": 5.86,
+          "sl6": 9.2,
+          "sl7": 9.5
+        },
+        "sand": {
+          "sl1": 76.0,
+          "sl2": 76.0,
+          "sl3": 76.0,
+          "sl4": 71.4,
+          "sl5": 69.86,
+          "sl6": 68.2,
+          "sl7": 67.67
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111101,
+            "distance": 9085.201,
+            "mapunitID": 17390,
+            "minCompDistance": 9085.2006,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Eutric Vertisols are clayey soils that are sticky and plastic when wet and hard and massive when dry. <br> These soils generally have favorable chemical properties but the high amount of expansive clay presents challenging physical properties particularly with regard to water management. <br> Eutric Vertisols are relatively productive soils with high base saturation in the subsoil.",
+            "Description_es": "Los Vertisoles Éutricos son suelos arcillosos que son pegajosos y plásticos cuando están húmedos y duros y masivos cuando están secos. <br>En general, estos suelos tienen propiedades químicas favorables, pero la gran cantidad de arcilla expansiva presenta propiedades físicas desafiantes, especialmente en lo que respecta a la gestión del agua. <br>Los Vertisoles Eutricos son suelos relativamente productivos con una alta saturación de base en el subsuelo. ",
+            "Description_fr": "Eutric Vertisols are clayey soils that are sticky and plastic when wet and hard and massive when dry. <br> These soils generally have favorable chemical properties but the high amount of expansive clay presents challenging physical properties particularly with regard to water management. <br> Eutric Vertisols are relatively productive soils with high base saturation in the subsoil.",
+            "Description_ks": "Eutric Vertisols are clayey soils that are sticky and plastic when wet and hard and massive when dry. <br> These soils generally have favorable chemical properties but the high amount of expansive clay presents challenging physical properties particularly with regard to water management. <br> Eutric Vertisols are relatively productive soils with high base saturation in the subsoil.",
+            "Management_en": "Vertisols can be highly productive soils, yet the characteristics of the clay in this soil can make management an issue. <br> Due to the clay type these soils swell when wet and shrink when dry, creating issues for cultivation (avoid excessive tillage when wet), or other issues such as construction. <br> Their fertility makes them suitable for agriculture, but additional fertilization will be needed for best productivity. <br> Additionally, water management is a key, and practices that promote drainage and water infiltration are needed. <br> With proper drainage and water management, these soils can be highly productive, as the native soil fertility is high. ",
+            "Management_es": "Los Vertisoles pueden ser suelos altamente productivos, pero las características de la arcilla en este suelo pueden hacer que su manejo sea un problema. <br>Debido al tipo de arcilla, estos suelos se hinchan cuando se humedecen y se encogen cuando se secan, lo que crea problemas para el cultivo (evite la labranza excesiva cuando está húmedo), u otros problemas como la construcción. <br>Su fertilidad los hace aptos para la agricultura, pero será necesaria una fertilización adicional para obtener la mejor productividad. <br>Además, la gestión del agua es clave, y se necesitan prácticas que promuevan el drenaje y la infiltración del agua. <br>Con un drenaje y una gestión del agua adecuados, estos suelos pueden ser muy productivos, ya que la fertilidad del suelo nativo es alta.",
+            "Management_fr": "Vertisols can be highly productive soils, yet the characteristics of the clay in this soil can make management an issue. <br> Due to the clay type these soils swell when wet and shrink when dry, creating issues for cultivation (avoid excessive tillage when wet), or other issues such as construction. <br> Their fertility makes them suitable for agriculture, but additional fertilization will be needed for best productivity. <br> Additionally, water management is a key, and practices that promote drainage and water infiltration are needed. <br> With proper drainage and water management, these soils can be highly productive, as the native soil fertility is high. ",
+            "Management_ks": "Vertisols can be highly productive soils, yet the characteristics of the clay in this soil can make management an issue. <br> Due to the clay type these soils swell when wet and shrink when dry, creating issues for cultivation (avoid excessive tillage when wet), or other issues such as construction. <br> Their fertility makes them suitable for agriculture, but additional fertilization will be needed for best productivity. <br> Additionally, water management is a key, and practices that promote drainage and water infiltration are needed. <br> With proper drainage and water management, these soils can be highly productive, as the native soil fertility is high. "
+          }
+        },
+        "texture": {
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 6.0,
+          "sl5": 6.14,
+          "sl6": 6.4,
+          "sl7": 6.5
+        },
+        "clay": {
+          "sl1": 18.0,
+          "sl2": 18.0,
+          "sl3": 18.0,
+          "sl4": 25.0,
+          "sl5": 28.14,
+          "sl6": 30.6,
+          "sl7": 31.17
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Calcaric cambisols",
+          "name": "Calcaric cambisols1",
+          "rank_loc": "6",
+          "score_loc": 0.011
+        },
+        "ph": {
+          "sl1": 5.6,
+          "sl2": 5.6,
+          "sl3": 5.6,
+          "sl4": 5.68,
+          "sl5": 5.71,
+          "sl6": 5.74,
+          "sl7": 5.73
+        },
+        "rock_fragments": {
+          "sl1": 10.0,
+          "sl2": 10.0,
+          "sl3": 10.0,
+          "sl4": 10.8,
+          "sl5": 10.29,
+          "sl6": 11.4,
+          "sl7": 11.17
+        },
+        "sand": {
+          "sl1": 63.0,
+          "sl2": 63.0,
+          "sl3": 63.0,
+          "sl4": 56.8,
+          "sl5": 54.14,
+          "sl6": 52.2,
+          "sl7": 51.67
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111282,
+            "distance": 9861.436,
+            "mapunitID": 17486,
+            "minCompDistance": 9861.4358,
+            "share": 85,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Calcaric Cambisols are widely occurring soils with limited soil development. <br> These soils are calcareous in a soil layer below the surface.",
+            "Description_es": "Los Cambisoles Calcáreos son suelos muy extendidos con un desarrollo limitado del suelo. <br>Estos suelos son calcáreos en una capa del suelo por debajo de la superficie.",
+            "Description_fr": "Calcaric Cambisols are widely occurring soils with limited soil development. <br> These soils are calcareous in a soil layer below the surface.",
+            "Description_ks": "Calcaric Cambisols are widely occurring soils with limited soil development. <br> These soils are calcareous in a soil layer below the surface.",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_es": "En las regiones templadas los suelos tendrán un alto contenido de cationes básicos (potasio, calcio y magnesio), mientras que en las regiones más húmedas pueden tener niveles más bajos de nutrientes del suelo. <br>Estos suelos son muy adecuados para la producción de cultivos, y pueden utilizarse de forma intensiva. <br>La fertilización debe utilizarse para mejorar la productividad, y puede incluirse el riego para aumentar aún más la productividad.",
+            "Management_fr": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_ks": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
+          }
+        },
+        "texture": {
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy clay loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 20.0,
+          "sl2": 20.0,
+          "sl3": 20.0,
+          "sl4": 18.2,
+          "sl5": 18.29,
+          "sl6": 18.2,
+          "sl7": 17.67
+        },
+        "clay": {
+          "sl1": 29.0,
+          "sl2": 29.0,
+          "sl3": 29.0,
+          "sl4": 31.4,
+          "sl5": 31.71,
+          "sl6": 31.4,
+          "sl7": 31.5
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 0.86,
+          "sl6": 0.6,
+          "sl7": 0.5
+        },
+        "id": {
+          "component": "Humic cambisols",
+          "name": "Humic cambisols",
+          "rank_loc": "7",
+          "score_loc": 0.011
+        },
+        "ph": {
+          "sl1": 6.6,
+          "sl2": 6.6,
+          "sl3": 6.6,
+          "sl4": 6.56,
+          "sl5": 6.6,
+          "sl6": 6.68,
+          "sl7": 6.77
+        },
+        "rock_fragments": {
+          "sl1": 5.0,
+          "sl2": 5.0,
+          "sl3": 5.0,
+          "sl4": 12.0,
+          "sl5": 14.14,
+          "sl6": 12.6,
+          "sl7": 10.83
+        },
+        "sand": {
+          "sl1": 43.0,
+          "sl2": 43.0,
+          "sl3": 43.0,
+          "sl4": 41.8,
+          "sl5": 41.57,
+          "sl6": 42.0,
+          "sl7": 42.67
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111631,
+            "distance": 26306.421,
+            "mapunitID": 17694,
+            "minCompDistance": 26306.4211,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Humic Cambisols are widely occurring soils with limited soil development. <br> These soils have higher organic matter in surface horizons. <br> When climate and landscape are favorable, these soils can be productive. ",
+            "Description_es": "Los Cambisoles Húmicos son suelos de amplia ocurrencia con un desarrollo limitado del suelo. <br>Estos suelos tienen más materia orgánica en los horizontes superficiales. <br>Cuando el clima y el paisaje son favorables, estos suelos pueden ser productivos. ",
+            "Description_fr": "Humic Cambisols are widely occurring soils with limited soil development. <br> These soils have higher organic matter in surface horizons. <br> When climate and landscape are favorable, these soils can be productive. ",
+            "Description_ks": "Humic Cambisols are widely occurring soils with limited soil development. <br> These soils have higher organic matter in surface horizons. <br> When climate and landscape are favorable, these soils can be productive. ",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_es": "En regiones templadas los suelos tendrán un alto contenido de cationes básicos (potasio, calcio y magnesio), mientras que en regiones más húmedas pueden tener niveles más bajos de nutrientes del suelo. <br>Estos suelos son muy adecuados para la producción de cultivos, y pueden utilizarse de forma intensiva. <br>La fertilización debe utilizarse para mejorar la productividad, y puede incluirse el riego para aumentar aún más la productividad.",
+            "Management_fr": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_ks": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 20.0,
+          "sl2": 20.0,
+          "sl3": 20.0,
+          "sl4": 19.6,
+          "sl5": 19.0,
+          "sl6": 17.8,
+          "sl7": 17.67
+        },
+        "clay": {
+          "sl1": 36.0,
+          "sl2": 36.0,
+          "sl3": 36.0,
+          "sl4": 39.0,
+          "sl5": 39.57,
+          "sl6": 40.0,
+          "sl7": 40.33
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 0.4,
+          "sl5": 0.29,
+          "sl6": 0.2,
+          "sl7": 0.17
+        },
+        "id": {
+          "component": "Ferric luvisols",
+          "name": "Ferric luvisols1",
+          "rank_loc": "8",
+          "score_loc": 0.011
+        },
+        "ph": {
+          "sl1": 6.1,
+          "sl2": 6.1,
+          "sl3": 6.1,
+          "sl4": 6.18,
+          "sl5": 6.2,
+          "sl6": 6.2,
+          "sl7": 6.28
+        },
+        "rock_fragments": {
+          "sl1": 5.0,
+          "sl2": 5.0,
+          "sl3": 5.0,
+          "sl4": 9.4,
+          "sl5": 11.29,
+          "sl6": 16.4,
+          "sl7": 19.5
+        },
+        "sand": {
+          "sl1": 33.0,
+          "sl2": 33.0,
+          "sl3": 33.0,
+          "sl4": 31.4,
+          "sl5": 31.57,
+          "sl6": 32.4,
+          "sl7": 32.33
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111336,
+            "distance": 36837.751,
+            "mapunitID": 17518,
+            "minCompDistance": 36837.7515,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Ferric Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Ferric Luvisols have soft and cemented iron concentrations in subsoils, and poorly developed structure between iron concentrations which can be susceptible to compaction. ",
+            "Description_es": "Los Luvisoles Férricos son suelos productivos con alta saturación de la base y subsuelos relativamente arcillosos. <br>Los Luvisoles férricos tienen concentraciones de hierro blandas y cementadas en los subsuelos, y una estructura poco desarrollada entre las concentraciones de hierro que puede ser susceptible de compactación. ",
+            "Description_fr": "Ferric Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Ferric Luvisols have soft and cemented iron concentrations in subsoils, and poorly developed structure between iron concentrations which can be susceptible to compaction. ",
+            "Description_ks": "Ferric Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Ferric Luvisols have soft and cemented iron concentrations in subsoils, and poorly developed structure between iron concentrations which can be susceptible to compaction. ",
+            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops. <br> Soils with poorly developed structure may be further aided by the inclusion of deep rooted and perennial crops. ",
+            "Management_es": "Estos suelos son fértiles y pueden utilizarse para una amplia gama de prácticas de cultivo. <br>Sin embargo, son sensibles a la pérdida de suelo por erosión, y hay que tener cuidado para proteger el suelo de la pérdida. <br>Si el suelo ya está erosionado, puede ser más adecuado para el pastoreo y/o los cultivos arbóreos. <br>Los suelos con una estructura poco desarrollada pueden verse favorecidos por la inclusión de cultivos de raíces profundas y perennes.",
+            "Management_fr": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops. <br> Soils with poorly developed structure may be further aided by the inclusion of deep rooted and perennial crops. ",
+            "Management_ks": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops. <br> Soils with poorly developed structure may be further aided by the inclusion of deep rooted and perennial crops. "
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Unknown",
+          "sl7": "Unknown"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 11.0,
+          "sl2": 11.0,
+          "sl3": 11.0,
+          "sl4": 12.2,
+          "sl5": 12.43,
+          "sl6": 13.0,
+          "sl7": 13.33
+        },
+        "clay": {
+          "sl1": 20.0,
+          "sl2": 20.0,
+          "sl3": 20.0,
+          "sl4": 22.8,
+          "sl5": 23.29,
+          "sl6": 23.4,
+          "sl7": 23.17
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 1.0,
+          "sl6": 1.0,
+          "sl7": 1.0
+        },
+        "id": {
+          "component": "Haplic solonetz",
+          "name": "Haplic solonetz1",
+          "rank_loc": "9",
+          "score_loc": 0.011
+        },
+        "ph": {
+          "sl1": 6.7,
+          "sl2": 6.7,
+          "sl3": 6.7,
+          "sl4": 6.9,
+          "sl5": 6.96,
+          "sl6": 7.06,
+          "sl7": 7.13
+        },
+        "rock_fragments": {
+          "sl1": 9.0,
+          "sl2": 9.0,
+          "sl3": 9.0,
+          "sl4": 8.6,
+          "sl5": 10.14,
+          "sl6": 10.8,
+          "sl7": 12.17
+        },
+        "sand": {
+          "sl1": 61.0,
+          "sl2": 61.0,
+          "sl3": 61.0,
+          "sl4": 58.6,
+          "sl5": 58.43,
+          "sl6": 58.2,
+          "sl7": 58.5
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111044,
+            "distance": 38961.991,
+            "mapunitID": 17359,
+            "minCompDistance": 38961.9906,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Solonetzs have strongly structured clay rich subsoils with high exchangeable sodium. <br> Productivity of these soils depends on the depth of surface horizons above these subsoils.",
+            "Description_es": "Los Solonetz Háplicos tienen subsuelos ricos en arcilla fuertemente estructurados con un alto nivel de sodio intercambiable. <br>La productividad de estos suelos depende de la profundidad de los horizontes superficiales por encima de estos subsuelos.",
+            "Description_fr": "Haplic Solonetzs have strongly structured clay rich subsoils with high exchangeable sodium. <br> Productivity of these soils depends on the depth of surface horizons above these subsoils.",
+            "Description_ks": "Haplic Solonetzs have strongly structured clay rich subsoils with high exchangeable sodium. <br> Productivity of these soils depends on the depth of surface horizons above these subsoils.",
+            "Management_en": "These are likely to have high sodium in subsurface horizons which results in poor soil structure and poor infiltration. <br> The soils will appear wet, but plants will wilt. <br> To improve internal drainage, gypsum should be applied to displace the sodium, followed by leaching with higher quality water to move the displaced sodium from the rooting zone. <br> If the soils can be reclaimed by the application of gypsum and leaching of sodium, they may be suitable for grazing or cultivation. <br> Selection of sodium tolerant crops is also an option, and should be used for maintenance.<br> Cultivation is more suited when these soils are located in temperate regions, and the surface soil is higher in organic matter. ",
+            "Management_es": "Es probable que tengan un alto nivel de sodio en los horizontes subsuperficiales, lo que da lugar a una mala estructura del suelo y a una mala infiltración. <br>Los suelos parecerán húmedos, pero las plantas se marchitarán. <br>Para mejorar el drenaje interno, debe aplicarse yeso para desplazar el sodio, seguido de una lixiviación con agua de mayor calidad para desplazar el sodio desplazado de la zona de enraizamiento. <br>Si los suelos pueden recuperarse mediante la aplicación de yeso y la lixiviación del sodio, pueden ser aptos para el pastoreo o el cultivo. <br>La selección de cultivos tolerantes al sodio también es una opción, y debería utilizarse para el mantenimiento.<br>El cultivo es más adecuado cuando estos suelos están situados en regiones templadas, y el suelo superficial es más rico en materia orgánica.",
+            "Management_fr": "These are likely to have high sodium in subsurface horizons which results in poor soil structure and poor infiltration. <br> The soils will appear wet, but plants will wilt. <br> To improve internal drainage, gypsum should be applied to displace the sodium, followed by leaching with higher quality water to move the displaced sodium from the rooting zone. <br> If the soils can be reclaimed by the application of gypsum and leaching of sodium, they may be suitable for grazing or cultivation. <br> Selection of sodium tolerant crops is also an option, and should be used for maintenance.<br> Cultivation is more suited when these soils are located in temperate regions, and the surface soil is higher in organic matter. ",
+            "Management_ks": "These are likely to have high sodium in subsurface horizons which results in poor soil structure and poor infiltration. <br> The soils will appear wet, but plants will wilt. <br> To improve internal drainage, gypsum should be applied to displace the sodium, followed by leaching with higher quality water to move the displaced sodium from the rooting zone. <br> If the soils can be reclaimed by the application of gypsum and leaching of sodium, they may be suitable for grazing or cultivation. <br> Selection of sodium tolerant crops is also an option, and should be used for maintenance.<br> Cultivation is more suited when these soils are located in temperate regions, and the surface soil is higher in organic matter. "
+          }
+        },
+        "texture": {
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy clay loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 39.0,
+          "sl2": 39.0,
+          "sl3": 39.0,
+          "sl4": 39.8,
+          "sl5": 40.0,
+          "sl6": 39.8,
+          "sl7": 39.5
+        },
+        "clay": {
+          "sl1": 52.0,
+          "sl2": 52.0,
+          "sl3": 52.0,
+          "sl4": 54.6,
+          "sl5": 55.14,
+          "sl6": 55.4,
+          "sl7": 54.67
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.2,
+          "sl5": 0.43,
+          "sl6": 0.6,
+          "sl7": 0.83
+        },
+        "id": {
+          "component": "Calcic luvisols",
+          "name": "Calcic luvisols",
+          "rank_loc": "10",
+          "score_loc": 0.011
+        },
+        "ph": {
+          "sl1": 6.7,
+          "sl2": 6.7,
+          "sl3": 6.7,
+          "sl4": 6.78,
+          "sl5": 6.84,
+          "sl6": 6.94,
+          "sl7": 7.05
+        },
+        "rock_fragments": {
+          "sl1": 4.0,
+          "sl2": 4.0,
+          "sl3": 4.0,
+          "sl4": 3.6,
+          "sl5": 3.71,
+          "sl6": 4.0,
+          "sl7": 4.0
+        },
+        "sand": {
+          "sl1": 21.0,
+          "sl2": 21.0,
+          "sl3": 21.0,
+          "sl4": 19.8,
+          "sl5": 19.71,
+          "sl6": 19.8,
+          "sl7": 20.17
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111218,
+            "distance": 52061.241,
+            "mapunitID": 17457,
+            "minCompDistance": 52061.2413,
+            "share": 70,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Calcic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Calcic Luvisols have calcareous subsoils.",
+            "Description_es": "Los Luvisoles Cálcicos son suelos productivos con alta saturación de bases y subsuelos relativamente arcillosos. <br>Los Luvisoles cálcicos tienen subsuelos calcáreos.",
+            "Description_fr": "Calcic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Calcic Luvisols have calcareous subsoils.",
+            "Description_ks": "Calcic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Calcic Luvisols have calcareous subsoils.",
+            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops. <br> These soils will have large amounts of free calcium carbonate in the subsample, and thus the soil pH will be > 7.0. ",
+            "Management_es": "Estos suelos son fértiles y pueden utilizarse para una amplia gama de prácticas de cultivo. <br>Sin embargo, son sensibles a la pérdida de suelo por erosión, y hay que tener cuidado para proteger el suelo de la pérdida. <br>Si el suelo ya está erosionado, pueden ser más adecuados para el pastoreo y/o los cultivos arbóreos. <br>Estos suelos tendrán grandes cantidades de carbonato de calcio libre en la submuestra, por lo que el pH del suelo será superior a 7,0.",
+            "Management_fr": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops. <br> These soils will have large amounts of free calcium carbonate in the subsample, and thus the soil pH will be > 7.0. ",
+            "Management_ks": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops. <br> These soils will have large amounts of free calcium carbonate in the subsample, and thus the soil pH will be > 7.0. "
+          }
+        },
+        "texture": {
+          "sl1": "Unknown",
+          "sl2": "Unknown",
+          "sl3": "Unknown",
+          "sl4": "Unknown",
+          "sl5": "Unknown",
+          "sl6": "Unknown",
+          "sl7": "Unknown"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 39.0,
+          "sl2": 39.0,
+          "sl3": 39.0,
+          "sl4": 37.4,
+          "sl5": 36.0,
+          "sl6": 33.2,
+          "sl7": 32.0
+        },
+        "clay": {
+          "sl1": 43.0,
+          "sl2": 43.0,
+          "sl3": 43.0,
+          "sl4": 42.4,
+          "sl5": 40.14,
+          "sl6": 36.4,
+          "sl7": 34.33
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 0.86,
+          "sl6": 0.6,
+          "sl7": 0.67
+        },
+        "id": {
+          "component": "Gleyic solonchaks",
+          "name": "Gleyic solonchaks1",
+          "rank_loc": "11",
+          "score_loc": 0.011
+        },
+        "ph": {
+          "sl1": 7.6,
+          "sl2": 7.6,
+          "sl3": 7.6,
+          "sl4": 7.76,
+          "sl5": 7.83,
+          "sl6": 7.94,
+          "sl7": 8.02
+        },
+        "rock_fragments": {
+          "sl1": 11.0,
+          "sl2": 11.0,
+          "sl3": 11.0,
+          "sl4": 21.8,
+          "sl5": 24.0,
+          "sl6": 22.8,
+          "sl7": 22.83
+        },
+        "sand": {
+          "sl1": 30.0,
+          "sl2": 30.0,
+          "sl3": 30.0,
+          "sl4": 29.4,
+          "sl5": 30.43,
+          "sl6": 32.4,
+          "sl7": 33.5
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111319,
+            "distance": 53068.322,
+            "mapunitID": 17507,
+            "minCompDistance": 53068.3217,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Gleyic Solonchaks are soils that contain salts at or near the soil surface that form in either deserts or close to coastlines. <br> These soils are saturated with shallow groundwater within one meter of the soil surface.",
+            "Description_es": "Los Solonchaks Gléyicos son suelos que contienen sales en la superficie del suelo o cerca de ella y que se forman en los desiertos o cerca de las costas. <br>Estos suelos están saturados con aguas subterráneas poco profundas a un metro de la superficie del suelo.",
+            "Description_fr": "Gleyic Solonchaks are soils that contain salts at or near the soil surface that form in either deserts or close to coastlines. <br> These soils are saturated with shallow groundwater within one meter of the soil surface.",
+            "Description_ks": "Gleyic Solonchaks are soils that contain salts at or near the soil surface that form in either deserts or close to coastlines. <br> These soils are saturated with shallow groundwater within one meter of the soil surface.",
+            "Management_en": "These soils are typically high in total salts. <br> They have very poor productivity, and cannot be used unless high quality irrigation is available to remove accumulated salts. <br> Drainage of these soils will be needed, both to eliminate standing water and remediate salinity issues. <br>These soils are not well suited for agriculture and are best used for grazing, or left fallow.",
+            "Management_es": "Estos suelos suelen tener un alto contenido de sales totales. <br>Tienen una productividad muy baja y no pueden utilizarse a menos que se disponga de un riego de alta calidad para eliminar las sales acumuladas. <br>Será necesario el drenaje de estos suelos, tanto para eliminar el agua estancada como para remediar los problemas de salinidad. *Estos suelos no son adecuados para la agricultura y es mejor utilizarlos para el pastoreo o dejarlos en barbecho.",
+            "Management_fr": "These soils are typically high in total salts. <br> They have very poor productivity, and cannot be used unless high quality irrigation is available to remove accumulated salts. <br> Drainage of these soils will be needed, both to eliminate standing water and remediate salinity issues. <br>These soils are not well suited for agriculture and are best used for grazing, or left fallow.",
+            "Management_ks": "These soils are typically high in total salts. <br> They have very poor productivity, and cannot be used unless high quality irrigation is available to remove accumulated salts. <br> Drainage of these soils will be needed, both to eliminate standing water and remediate salinity issues. <br>These soils are not well suited for agriculture and are best used for grazing, or left fallow."
+          }
+        },
+        "texture": {
+          "sl1": "Unknown",
+          "sl2": "Unknown",
+          "sl3": "Unknown",
+          "sl4": "Unknown",
+          "sl5": "Unknown",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 25.0,
+          "sl2": 25.0,
+          "sl3": 25.0,
+          "sl4": 21.6,
+          "sl5": 20.29,
+          "sl6": 18.8,
+          "sl7": 18.17
+        },
+        "clay": {
+          "sl1": 35.0,
+          "sl2": 35.0,
+          "sl3": 35.0,
+          "sl4": 34.4,
+          "sl5": 34.14,
+          "sl6": 33.6,
+          "sl7": 33.0
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 0.86,
+          "sl6": 0.6,
+          "sl7": 0.5
+        },
+        "id": {
+          "component": "Eutric cambisols",
+          "name": "Eutric cambisols1",
+          "rank_loc": "12",
+          "score_loc": 0.011
+        },
+        "ph": {
+          "sl1": 5.0,
+          "sl2": 5.0,
+          "sl3": 5.0,
+          "sl4": 5.06,
+          "sl5": 5.09,
+          "sl6": 5.12,
+          "sl7": 5.13
+        },
+        "rock_fragments": {
+          "sl1": 15.0,
+          "sl2": 15.0,
+          "sl3": 15.0,
+          "sl4": 10.8,
+          "sl5": 11.14,
+          "sl6": 14.0,
+          "sl7": 16.17
+        },
+        "sand": {
+          "sl1": 37.0,
+          "sl2": 37.0,
+          "sl3": 37.0,
+          "sl4": 38.2,
+          "sl5": 38.57,
+          "sl6": 39.0,
+          "sl7": 39.33
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111337,
+            "distance": 70615.69,
+            "mapunitID": 17519,
+            "minCompDistance": 70615.6896,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Eutric Cambisols are widely occurring soils with limited soil development. <br> These are productive soils with high base saturation (Ca, Mg and K) in the upper portion of soil. ",
+            "Description_es": "Los Cambisoles Eútricos son suelos que se dan ampliamente con un desarrollo limitado del suelo. <br>Son suelos productivos con alta saturación de bases (Ca, Mg y K) en la parte superior del suelo. ",
+            "Description_fr": "Eutric Cambisols are widely occurring soils with limited soil development. <br> These are productive soils with high base saturation (Ca, Mg and K) in the upper portion of soil. ",
+            "Description_ks": "Eutric Cambisols are widely occurring soils with limited soil development. <br> These are productive soils with high base saturation (Ca, Mg and K) in the upper portion of soil. ",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> Eutric Cambisols will have high base saturation, which means that the available soil nutrients will be predominantly calcium, potassium, and magnesium. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_es": "En regiones templadas los suelos tendrán un alto contenido de cationes básicos (potasio, calcio y magnesio), mientras que en regiones más húmedas pueden tener niveles más bajos de nutrientes en el suelo. <br>Los Cambisoles eútricos tendrán una alta saturación de bases, lo que significa que los nutrientes disponibles en el suelo serán predominantemente calcio, potasio y magnesio. <br>Estos suelos son muy adecuados para la producción de cultivos y pueden utilizarse de forma intensiva. <br>La fertilización debe utilizarse para mejorar la productividad, y puede incluirse el riego para aumentar aún más la productividad.",
+            "Management_fr": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> Eutric Cambisols will have high base saturation, which means that the available soil nutrients will be predominantly calcium, potassium, and magnesium. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_ks": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> Eutric Cambisols will have high base saturation, which means that the available soil nutrients will be predominantly calcium, potassium, and magnesium. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 40.0,
+          "sl2": 40.0,
+          "sl3": 40.0,
+          "sl4": 40.0,
+          "sl5": 40.14,
+          "sl6": 40.2,
+          "sl7": 40.17
+        },
+        "clay": {
+          "sl1": 55.0,
+          "sl2": 55.0,
+          "sl3": 55.0,
+          "sl4": 55.8,
+          "sl5": 55.86,
+          "sl6": 55.6,
+          "sl7": 55.17
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.2,
+          "sl5": 0.43,
+          "sl6": 0.6,
+          "sl7": 0.83
+        },
+        "id": {
+          "component": "Ferralic arenosols",
+          "name": "Ferralic arenosols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.03
+        },
+        "ph": {
+          "sl1": 7.3,
+          "sl2": 7.3,
+          "sl3": 7.3,
+          "sl4": 7.46,
+          "sl5": 7.53,
+          "sl6": 7.58,
+          "sl7": 7.62
+        },
+        "rock_fragments": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 2.6,
+          "sl5": 2.71,
+          "sl6": 3.0,
+          "sl7": 3.0
+        },
+        "sand": {
+          "sl1": 21.0,
+          "sl2": 21.0,
+          "sl3": 21.0,
+          "sl4": 20.2,
+          "sl5": 20.0,
+          "sl6": 20.0,
+          "sl7": 20.17
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111264,
+            "distance": 72257.485,
+            "mapunitID": 17476,
+            "minCompDistance": 45915.6746,
+            "share": 30,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Ferralic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are high in iron and have low nutrient retention.",
+            "Description_es": "Los Arenosoles Ferrálicos son suelos arenosos con un desarrollo mínimo del suelo. <br>Son inherentemente bajos en nutrientes y capacidad de retención de agua. <br>Estos suelos tienen un alto contenido en hierro y una baja retención de nutrientes.",
+            "Description_fr": "Ferralic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are high in iron and have low nutrient retention.",
+            "Description_ks": "Ferralic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are high in iron and have low nutrient retention.",
+            "Management_en": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> Increased attention to the supply of phosphorus may be needed, as excessive iron may increase P fixation in these soils. ",
+            "Management_es": "Dado que estos suelos tienen poca capacidad de retención de agua y nutrientes, deben ser fertilizados y regados para obtener una productividad óptima. <br>Las prácticas de gestión para mejorar el suministro de nutrientes y la capacidad de retención de agua incluyen la adición de materia orgánica, el uso de cultivos de cobertura y la rotación de cultivos. <br>La mejor productividad se logrará mediante el uso de riego suplementario, el uso de herramientas como mantillos o cubiertas para preservar la humedad del suelo, y la fertilización. <br>Puede ser necesario prestar más atención al suministro de fósforo, ya que el exceso de hierro puede aumentar la fijación de P en estos suelos.",
+            "Management_fr": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> Increased attention to the supply of phosphorus may be needed, as excessive iron may increase P fixation in these soils. ",
+            "Management_ks": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> Increased attention to the supply of phosphorus may be needed, as excessive iron may increase P fixation in these soils. "
+          }
+        },
+        "texture": {
+          "sl1": "Unknown",
+          "sl2": "Unknown",
+          "sl3": "Unknown",
+          "sl4": "Unknown",
+          "sl5": "Unknown",
+          "sl6": "Unknown",
+          "sl7": "Unknown"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 39.0,
+          "sl2": 39.0,
+          "sl3": 39.0,
+          "sl4": 39.8,
+          "sl5": 40.0,
+          "sl6": 39.8,
+          "sl7": 39.5
+        },
+        "clay": {
+          "sl1": 52.0,
+          "sl2": 52.0,
+          "sl3": 52.0,
+          "sl4": 54.6,
+          "sl5": 55.14,
+          "sl6": 55.4,
+          "sl7": 54.67
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.2,
+          "sl5": 0.43,
+          "sl6": 0.6,
+          "sl7": 0.83
+        },
+        "id": {
+          "component": "Haplic lixisols",
+          "name": "Haplic lixisols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.015
+        },
+        "ph": {
+          "sl1": 6.7,
+          "sl2": 6.7,
+          "sl3": 6.7,
+          "sl4": 6.78,
+          "sl5": 6.84,
+          "sl6": 6.94,
+          "sl7": 7.05
+        },
+        "rock_fragments": {
+          "sl1": 4.0,
+          "sl2": 4.0,
+          "sl3": 4.0,
+          "sl4": 3.6,
+          "sl5": 3.71,
+          "sl6": 4.0,
+          "sl7": 4.0
+        },
+        "sand": {
+          "sl1": 21.0,
+          "sl2": 21.0,
+          "sl3": 21.0,
+          "sl4": 19.8,
+          "sl5": 19.71,
+          "sl6": 19.8,
+          "sl7": 20.17
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111216,
+            "distance": 41935.929,
+            "mapunitID": 17456,
+            "minCompDistance": 36128.0473,
+            "share": 30,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Lixisols form in warm climates with relatively clayey subsoils dominated by kaolinite and iron oxides, but relatively high base saturation. ",
+            "Description_es": "Los Lixisoles Háplicos se forman en climas cálidos con subsuelos relativamente arcillosos dominados por caolinita y óxidos de hierro, pero con una saturación de bases relativamente alta. ",
+            "Description_fr": "Haplic Lixisols form in warm climates with relatively clayey subsoils dominated by kaolinite and iron oxides, but relatively high base saturation. ",
+            "Description_ks": "Haplic Lixisols form in warm climates with relatively clayey subsoils dominated by kaolinite and iron oxides, but relatively high base saturation. ",
+            "Management_en": "These soils are heavily weathered soils, which means that fertilization (and possibly lime) will be needed for production. <br> Although they do have kaolinite clay and iron oxides, they have fairly low aluminum toxicity. <br> Best production practices for this soil will include regular fertilization, and consistent cropping in perennial crops or forestry. <br> The soils are sensitive to erosion, and so practices that maintain surface cover are important. ",
+            "Management_es": "Estos suelos están fuertemente meteorizados, lo que significa que la fertilización (y posiblemente la cal) será necesaria para la producción. <br>Aunque tienen arcilla caolinita y óxidos de hierro, tienen una toxicidad de aluminio bastante baja. <br>Las mejores prácticas de producción para este suelo incluirán la fertilización regular, y el cultivo consistente en cultivos perennes o la silvicultura. <br>Los suelos son sensibles a la erosión, por lo que son importantes las prácticas que mantienen la cobertura de la superficie.",
+            "Management_fr": "These soils are heavily weathered soils, which means that fertilization (and possibly lime) will be needed for production. <br> Although they do have kaolinite clay and iron oxides, they have fairly low aluminum toxicity. <br> Best production practices for this soil will include regular fertilization, and consistent cropping in perennial crops or forestry. <br> The soils are sensitive to erosion, and so practices that maintain surface cover are important. ",
+            "Management_ks": "These soils are heavily weathered soils, which means that fertilization (and possibly lime) will be needed for production. <br> Although they do have kaolinite clay and iron oxides, they have fairly low aluminum toxicity. <br> Best production practices for this soil will include regular fertilization, and consistent cropping in perennial crops or forestry. <br> The soils are sensitive to erosion, and so practices that maintain surface cover are important. "
+          }
+        },
+        "texture": {
+          "sl1": "Unknown",
+          "sl2": "Unknown",
+          "sl3": "Unknown",
+          "sl4": "Unknown",
+          "sl5": "Unknown",
+          "sl6": "Unknown",
+          "sl7": "Unknown"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 7.0,
+          "sl2": 7.0,
+          "sl3": 7.0,
+          "sl4": 7.8,
+          "sl5": 8.29,
+          "sl6": 9.0,
+          "sl7": 9.17
+        },
+        "clay": {
+          "sl1": 16.0,
+          "sl2": 16.0,
+          "sl3": 16.0,
+          "sl4": 18.4,
+          "sl5": 19.71,
+          "sl6": 21.2,
+          "sl7": 21.67
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 1.0,
+          "sl6": 1.0,
+          "sl7": 1.0
+        },
+        "id": {
+          "component": "Haplic lixisols",
+          "name": "Haplic lixisols3",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.015
+        },
+        "ph": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 6.06,
+          "sl5": 6.07,
+          "sl6": 6.08,
+          "sl7": 6.03
+        },
+        "rock_fragments": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 6.4,
+          "sl5": 6.29,
+          "sl6": 6.0,
+          "sl7": 5.83
+        },
+        "sand": {
+          "sl1": 72.0,
+          "sl2": 72.0,
+          "sl3": 72.0,
+          "sl4": 69.6,
+          "sl5": 68.43,
+          "sl6": 67.0,
+          "sl7": 66.67
+        },
+        "site": {
+          "siteData": {
+            "componentID": 116199,
+            "distance": 74794.646,
+            "mapunitID": 27168,
+            "minCompDistance": 36128.0473,
+            "share": 20,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Lixisols form in warm climates with relatively clayey subsoils dominated by kaolinite and iron oxides, but relatively high base saturation. ",
+            "Description_es": "Los Lixisoles Háplicos se forman en climas cálidos con subsuelos relativamente arcillosos dominados por caolinita y óxidos de hierro, pero con una saturación de bases relativamente alta. ",
+            "Description_fr": "Haplic Lixisols form in warm climates with relatively clayey subsoils dominated by kaolinite and iron oxides, but relatively high base saturation. ",
+            "Description_ks": "Haplic Lixisols form in warm climates with relatively clayey subsoils dominated by kaolinite and iron oxides, but relatively high base saturation. ",
+            "Management_en": "These soils are heavily weathered soils, which means that fertilization (and possibly lime) will be needed for production. <br> Although they do have kaolinite clay and iron oxides, they have fairly low aluminum toxicity. <br> Best production practices for this soil will include regular fertilization, and consistent cropping in perennial crops or forestry. <br> The soils are sensitive to erosion, and so practices that maintain surface cover are important. ",
+            "Management_es": "Estos suelos están fuertemente meteorizados, lo que significa que la fertilización (y posiblemente la cal) será necesaria para la producción. <br>Aunque tienen arcilla caolinita y óxidos de hierro, tienen una toxicidad de aluminio bastante baja. <br>Las mejores prácticas de producción para este suelo incluirán la fertilización regular, y el cultivo consistente en cultivos perennes o la silvicultura. <br>Los suelos son sensibles a la erosión, por lo que son importantes las prácticas que mantienen la cobertura de la superficie.",
+            "Management_fr": "These soils are heavily weathered soils, which means that fertilization (and possibly lime) will be needed for production. <br> Although they do have kaolinite clay and iron oxides, they have fairly low aluminum toxicity. <br> Best production practices for this soil will include regular fertilization, and consistent cropping in perennial crops or forestry. <br> The soils are sensitive to erosion, and so practices that maintain surface cover are important. ",
+            "Management_ks": "These soils are heavily weathered soils, which means that fertilization (and possibly lime) will be needed for production. <br> Although they do have kaolinite clay and iron oxides, they have fairly low aluminum toxicity. <br> Best production practices for this soil will include regular fertilization, and consistent cropping in perennial crops or forestry. <br> The soils are sensitive to erosion, and so practices that maintain surface cover are important. "
+          }
+        },
+        "texture": {
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy loam",
+          "sl5": "Sandy loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 17.0,
+          "sl2": 17.0,
+          "sl3": 17.0,
+          "sl4": 19.2,
+          "sl5": 19.29,
+          "sl6": 19.0,
+          "sl7": 18.67
+        },
+        "clay": {
+          "sl1": 21.0,
+          "sl2": 21.0,
+          "sl3": 21.0,
+          "sl4": 26.0,
+          "sl5": 26.29,
+          "sl6": 25.6,
+          "sl7": 24.67
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.8,
+          "sl5": 2.57,
+          "sl6": 3.8,
+          "sl7": 3.83
+        },
+        "id": {
+          "component": "Chromic cambisols",
+          "name": "Chromic cambisols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.013
+        },
+        "ph": {
+          "sl1": 8.3,
+          "sl2": 8.3,
+          "sl3": 8.3,
+          "sl4": 8.56,
+          "sl5": 8.63,
+          "sl6": 8.66,
+          "sl7": 8.65
+        },
+        "rock_fragments": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 5.0,
+          "sl5": 5.29,
+          "sl6": 7.4,
+          "sl7": 9.0
+        },
+        "sand": {
+          "sl1": 49.0,
+          "sl2": 49.0,
+          "sl3": 49.0,
+          "sl4": 44.6,
+          "sl5": 44.57,
+          "sl6": 45.4,
+          "sl7": 46.17
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111117,
+            "distance": 72048.113,
+            "mapunitID": 17400,
+            "minCompDistance": 54718.5415,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Chromic Cambisols are widely occurring soils with limited soil development. <br> These are well drained soils, with intense color. <br> When climate and landscape are favorable, they can be productive soils. ",
+            "Description_es": "Los Cambisoles Crómicos son suelos de amplia ocurrencia con un desarrollo limitado del suelo. <br>Son suelos bien drenados, con un color intenso. <br>Cuando el clima y el paisaje son favorables, pueden ser suelos productivos. ",
+            "Description_fr": "Chromic Cambisols are widely occurring soils with limited soil development. <br> These are well drained soils, with intense color. <br> When climate and landscape are favorable, they can be productive soils. ",
+            "Description_ks": "Chromic Cambisols are widely occurring soils with limited soil development. <br> These are well drained soils, with intense color. <br> When climate and landscape are favorable, they can be productive soils. ",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_es": "En regiones templadas los suelos tendrán un alto contenido de cationes básicos (potasio, calcio y magnesio), mientras que en regiones más húmedas pueden tener niveles más bajos de nutrientes del suelo. <br>Estos suelos son muy adecuados para la producción de cultivos, y pueden utilizarse de forma intensiva. <br>La fertilización debe utilizarse para mejorar la productividad, y puede incluirse el riego para aumentar aún más la productividad.",
+            "Management_fr": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_ks": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Loam",
+          "sl5": "Loam",
+          "sl6": "Loam",
+          "sl7": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 9.0,
+          "sl2": 9.0,
+          "sl3": 9.0,
+          "sl4": 9.4,
+          "sl5": 10.29,
+          "sl6": 11.6,
+          "sl7": 12.33
+        },
+        "clay": {
+          "sl1": 14.0,
+          "sl2": 14.0,
+          "sl3": 14.0,
+          "sl4": 19.0,
+          "sl5": 22.0,
+          "sl6": 25.4,
+          "sl7": 26.67
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 1.0,
+          "sl6": 1.0,
+          "sl7": 1.0
+        },
+        "id": {
+          "component": "Chromic cambisols",
+          "name": "Chromic cambisols3",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.013
+        },
+        "ph": {
+          "sl1": 6.5,
+          "sl2": 6.5,
+          "sl3": 6.5,
+          "sl4": 6.44,
+          "sl5": 6.43,
+          "sl6": 6.4,
+          "sl7": 6.4
+        },
+        "rock_fragments": {
+          "sl1": 8.0,
+          "sl2": 8.0,
+          "sl3": 8.0,
+          "sl4": 6.8,
+          "sl5": 6.43,
+          "sl6": 5.6,
+          "sl7": 5.17
+        },
+        "sand": {
+          "sl1": 67.0,
+          "sl2": 67.0,
+          "sl3": 67.0,
+          "sl4": 63.2,
+          "sl5": 60.43,
+          "sl6": 56.8,
+          "sl7": 55.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111267,
+            "distance": 73282.727,
+            "mapunitID": 17478,
+            "minCompDistance": 54718.5415,
+            "share": 40,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Chromic Cambisols are widely occurring soils with limited soil development. <br> These are well drained soils, with intense color. <br> When climate and landscape are favorable, they can be productive soils. ",
+            "Description_es": "Los Cambisoles Crómicos son suelos de amplia ocurrencia con un desarrollo limitado del suelo. <br>Son suelos bien drenados, con un color intenso. <br>Cuando el clima y el paisaje son favorables, pueden ser suelos productivos. ",
+            "Description_fr": "Chromic Cambisols are widely occurring soils with limited soil development. <br> These are well drained soils, with intense color. <br> When climate and landscape are favorable, they can be productive soils. ",
+            "Description_ks": "Chromic Cambisols are widely occurring soils with limited soil development. <br> These are well drained soils, with intense color. <br> When climate and landscape are favorable, they can be productive soils. ",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_es": "En regiones templadas los suelos tendrán un alto contenido de cationes básicos (potasio, calcio y magnesio), mientras que en regiones más húmedas pueden tener niveles más bajos de nutrientes del suelo. <br>Estos suelos son muy adecuados para la producción de cultivos, y pueden utilizarse de forma intensiva. <br>La fertilización debe utilizarse para mejorar la productividad, y puede incluirse el riego para aumentar aún más la productividad.",
+            "Management_fr": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_ks": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
+          }
+        },
+        "texture": {
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 41.0,
+          "sl2": 41.0,
+          "sl3": 41.0,
+          "sl4": 41.0,
+          "sl5": 41.0,
+          "sl6": 41.0,
+          "sl7": 40.5
+        },
+        "clay": {
+          "sl1": 55.0,
+          "sl2": 55.0,
+          "sl3": 55.0,
+          "sl4": 56.8,
+          "sl5": 57.14,
+          "sl6": 57.0,
+          "sl7": 56.5
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.2,
+          "sl5": 0.43,
+          "sl6": 0.6,
+          "sl7": 0.67
+        },
+        "id": {
+          "component": "Eutric vertisols",
+          "name": "Eutric vertisols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.011
+        },
+        "ph": {
+          "sl1": 6.8,
+          "sl2": 6.8,
+          "sl3": 6.8,
+          "sl4": 7.02,
+          "sl5": 7.13,
+          "sl6": 7.26,
+          "sl7": 7.33
+        },
+        "rock_fragments": {
+          "sl1": 4.0,
+          "sl2": 4.0,
+          "sl3": 4.0,
+          "sl4": 4.0,
+          "sl5": 4.14,
+          "sl6": 4.2,
+          "sl7": 4.0
+        },
+        "sand": {
+          "sl1": 13.0,
+          "sl2": 13.0,
+          "sl3": 13.0,
+          "sl4": 12.4,
+          "sl5": 12.29,
+          "sl6": 12.4,
+          "sl7": 12.5
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111286,
+            "distance": 34446.462,
+            "mapunitID": 17488,
+            "minCompDistance": 9085.2006,
+            "share": 85,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Eutric Vertisols are clayey soils that are sticky and plastic when wet and hard and massive when dry. <br> These soils generally have favorable chemical properties but the high amount of expansive clay presents challenging physical properties particularly with regard to water management. <br> Eutric Vertisols are relatively productive soils with high base saturation in the subsoil.",
+            "Description_es": "Los Vertisoles Éutricos son suelos arcillosos que son pegajosos y plásticos cuando están húmedos y duros y masivos cuando están secos. <br>En general, estos suelos tienen propiedades químicas favorables, pero la gran cantidad de arcilla expansiva presenta propiedades físicas desafiantes, especialmente en lo que respecta a la gestión del agua. <br>Los Vertisoles Eutricos son suelos relativamente productivos con una alta saturación de base en el subsuelo. ",
+            "Description_fr": "Eutric Vertisols are clayey soils that are sticky and plastic when wet and hard and massive when dry. <br> These soils generally have favorable chemical properties but the high amount of expansive clay presents challenging physical properties particularly with regard to water management. <br> Eutric Vertisols are relatively productive soils with high base saturation in the subsoil.",
+            "Description_ks": "Eutric Vertisols are clayey soils that are sticky and plastic when wet and hard and massive when dry. <br> These soils generally have favorable chemical properties but the high amount of expansive clay presents challenging physical properties particularly with regard to water management. <br> Eutric Vertisols are relatively productive soils with high base saturation in the subsoil.",
+            "Management_en": "Vertisols can be highly productive soils, yet the characteristics of the clay in this soil can make management an issue. <br> Due to the clay type these soils swell when wet and shrink when dry, creating issues for cultivation (avoid excessive tillage when wet), or other issues such as construction. <br> Their fertility makes them suitable for agriculture, but additional fertilization will be needed for best productivity. <br> Additionally, water management is a key, and practices that promote drainage and water infiltration are needed. <br> With proper drainage and water management, these soils can be highly productive, as the native soil fertility is high. ",
+            "Management_es": "Los Vertisoles pueden ser suelos altamente productivos, pero las características de la arcilla en este suelo pueden hacer que su manejo sea un problema. <br>Debido al tipo de arcilla, estos suelos se hinchan cuando se humedecen y se encogen cuando se secan, lo que crea problemas para el cultivo (evite la labranza excesiva cuando está húmedo), u otros problemas como la construcción. <br>Su fertilidad los hace aptos para la agricultura, pero será necesaria una fertilización adicional para obtener la mejor productividad. <br>Además, la gestión del agua es clave, y se necesitan prácticas que promuevan el drenaje y la infiltración del agua. <br>Con un drenaje y una gestión del agua adecuados, estos suelos pueden ser muy productivos, ya que la fertilidad del suelo nativo es alta.",
+            "Management_fr": "Vertisols can be highly productive soils, yet the characteristics of the clay in this soil can make management an issue. <br> Due to the clay type these soils swell when wet and shrink when dry, creating issues for cultivation (avoid excessive tillage when wet), or other issues such as construction. <br> Their fertility makes them suitable for agriculture, but additional fertilization will be needed for best productivity. <br> Additionally, water management is a key, and practices that promote drainage and water infiltration are needed. <br> With proper drainage and water management, these soils can be highly productive, as the native soil fertility is high. ",
+            "Management_ks": "Vertisols can be highly productive soils, yet the characteristics of the clay in this soil can make management an issue. <br> Due to the clay type these soils swell when wet and shrink when dry, creating issues for cultivation (avoid excessive tillage when wet), or other issues such as construction. <br> Their fertility makes them suitable for agriculture, but additional fertilization will be needed for best productivity. <br> Additionally, water management is a key, and practices that promote drainage and water infiltration are needed. <br> With proper drainage and water management, these soils can be highly productive, as the native soil fertility is high. "
+          }
+        },
+        "texture": {
+          "sl1": "Unknown",
+          "sl2": "Unknown",
+          "sl3": "Unknown",
+          "sl4": "Unknown",
+          "sl5": "Unknown",
+          "sl6": "Unknown",
+          "sl7": "Unknown"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 15.0,
+          "sl2": 15.0,
+          "sl3": 15.0,
+          "sl4": 16.0,
+          "sl5": 16.0,
+          "sl6": 16.0,
+          "sl7": 15.83
+        },
+        "clay": {
+          "sl1": 19.0,
+          "sl2": 19.0,
+          "sl3": 19.0,
+          "sl4": 22.2,
+          "sl5": 23.0,
+          "sl6": 23.6,
+          "sl7": 23.67
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 1.0,
+          "sl6": 1.0,
+          "sl7": 1.0
+        },
+        "id": {
+          "component": "Eutric vertisols",
+          "name": "Eutric vertisols3",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.011
+        },
+        "ph": {
+          "sl1": 7.4,
+          "sl2": 7.4,
+          "sl3": 7.4,
+          "sl4": 7.56,
+          "sl5": 7.64,
+          "sl6": 7.74,
+          "sl7": 7.82
+        },
+        "rock_fragments": {
+          "sl1": 15.0,
+          "sl2": 15.0,
+          "sl3": 15.0,
+          "sl4": 19.0,
+          "sl5": 21.0,
+          "sl6": 22.6,
+          "sl7": 22.83
+        },
+        "sand": {
+          "sl1": 57.0,
+          "sl2": 57.0,
+          "sl3": 57.0,
+          "sl4": 55.0,
+          "sl5": 54.57,
+          "sl6": 54.2,
+          "sl7": 54.17
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111202,
+            "distance": 35027.212,
+            "mapunitID": 17450,
+            "minCompDistance": 9085.2006,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Eutric Vertisols are clayey soils that are sticky and plastic when wet and hard and massive when dry. <br> These soils generally have favorable chemical properties but the high amount of expansive clay presents challenging physical properties particularly with regard to water management. <br> Eutric Vertisols are relatively productive soils with high base saturation in the subsoil.",
+            "Description_es": "Los Vertisoles Éutricos son suelos arcillosos que son pegajosos y plásticos cuando están húmedos y duros y masivos cuando están secos. <br>En general, estos suelos tienen propiedades químicas favorables, pero la gran cantidad de arcilla expansiva presenta propiedades físicas desafiantes, especialmente en lo que respecta a la gestión del agua. <br>Los Vertisoles Eutricos son suelos relativamente productivos con una alta saturación de base en el subsuelo. ",
+            "Description_fr": "Eutric Vertisols are clayey soils that are sticky and plastic when wet and hard and massive when dry. <br> These soils generally have favorable chemical properties but the high amount of expansive clay presents challenging physical properties particularly with regard to water management. <br> Eutric Vertisols are relatively productive soils with high base saturation in the subsoil.",
+            "Description_ks": "Eutric Vertisols are clayey soils that are sticky and plastic when wet and hard and massive when dry. <br> These soils generally have favorable chemical properties but the high amount of expansive clay presents challenging physical properties particularly with regard to water management. <br> Eutric Vertisols are relatively productive soils with high base saturation in the subsoil.",
+            "Management_en": "Vertisols can be highly productive soils, yet the characteristics of the clay in this soil can make management an issue. <br> Due to the clay type these soils swell when wet and shrink when dry, creating issues for cultivation (avoid excessive tillage when wet), or other issues such as construction. <br> Their fertility makes them suitable for agriculture, but additional fertilization will be needed for best productivity. <br> Additionally, water management is a key, and practices that promote drainage and water infiltration are needed. <br> With proper drainage and water management, these soils can be highly productive, as the native soil fertility is high. ",
+            "Management_es": "Los Vertisoles pueden ser suelos altamente productivos, pero las características de la arcilla en este suelo pueden hacer que su manejo sea un problema. <br>Debido al tipo de arcilla, estos suelos se hinchan cuando se humedecen y se encogen cuando se secan, lo que crea problemas para el cultivo (evite la labranza excesiva cuando está húmedo), u otros problemas como la construcción. <br>Su fertilidad los hace aptos para la agricultura, pero será necesaria una fertilización adicional para obtener la mejor productividad. <br>Además, la gestión del agua es clave, y se necesitan prácticas que promuevan el drenaje y la infiltración del agua. <br>Con un drenaje y una gestión del agua adecuados, estos suelos pueden ser muy productivos, ya que la fertilidad del suelo nativo es alta.",
+            "Management_fr": "Vertisols can be highly productive soils, yet the characteristics of the clay in this soil can make management an issue. <br> Due to the clay type these soils swell when wet and shrink when dry, creating issues for cultivation (avoid excessive tillage when wet), or other issues such as construction. <br> Their fertility makes them suitable for agriculture, but additional fertilization will be needed for best productivity. <br> Additionally, water management is a key, and practices that promote drainage and water infiltration are needed. <br> With proper drainage and water management, these soils can be highly productive, as the native soil fertility is high. ",
+            "Management_ks": "Vertisols can be highly productive soils, yet the characteristics of the clay in this soil can make management an issue. <br> Due to the clay type these soils swell when wet and shrink when dry, creating issues for cultivation (avoid excessive tillage when wet), or other issues such as construction. <br> Their fertility makes them suitable for agriculture, but additional fertilization will be needed for best productivity. <br> Additionally, water management is a key, and practices that promote drainage and water infiltration are needed. <br> With proper drainage and water management, these soils can be highly productive, as the native soil fertility is high. "
+          }
+        },
+        "texture": {
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy clay loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 25.0,
+          "sl2": 25.0,
+          "sl3": 25.0,
+          "sl4": 26.0,
+          "sl5": 25.43,
+          "sl6": 25.2,
+          "sl7": 24.17
+        },
+        "clay": {
+          "sl1": 35.0,
+          "sl2": 35.0,
+          "sl3": 35.0,
+          "sl4": 37.6,
+          "sl5": 38.71,
+          "sl6": 39.6,
+          "sl7": 39.0
+        },
+        "ec": {
+          "sl1": 16.0,
+          "sl2": 16.0,
+          "sl3": 16.0,
+          "sl4": 16.2,
+          "sl5": 16.86,
+          "sl6": 17.4,
+          "sl7": 17.5
+        },
+        "id": {
+          "component": "Eutric vertisols",
+          "name": "Eutric vertisols4",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.011
+        },
+        "ph": {
+          "sl1": 9.0,
+          "sl2": 9.0,
+          "sl3": 9.0,
+          "sl4": 8.96,
+          "sl5": 8.96,
+          "sl6": 8.94,
+          "sl7": 9.0
+        },
+        "rock_fragments": {
+          "sl1": 5.0,
+          "sl2": 5.0,
+          "sl3": 5.0,
+          "sl4": 11.4,
+          "sl5": 13.14,
+          "sl6": 10.4,
+          "sl7": 9.0
+        },
+        "sand": {
+          "sl1": 32.0,
+          "sl2": 32.0,
+          "sl3": 32.0,
+          "sl4": 30.6,
+          "sl5": 31.14,
+          "sl6": 30.8,
+          "sl7": 30.33
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111193,
+            "distance": 47856.589,
+            "mapunitID": 17448,
+            "minCompDistance": 9085.2006,
+            "share": 70,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Eutric Vertisols are clayey soils that are sticky and plastic when wet and hard and massive when dry. <br> These soils generally have favorable chemical properties but the high amount of expansive clay presents challenging physical properties particularly with regard to water management. <br> Eutric Vertisols are relatively productive soils with high base saturation in the subsoil.",
+            "Description_es": "Los Vertisoles Éutricos son suelos arcillosos que son pegajosos y plásticos cuando están húmedos y duros y masivos cuando están secos. <br>En general, estos suelos tienen propiedades químicas favorables, pero la gran cantidad de arcilla expansiva presenta propiedades físicas desafiantes, especialmente en lo que respecta a la gestión del agua. <br>Los Vertisoles Eutricos son suelos relativamente productivos con una alta saturación de base en el subsuelo. ",
+            "Description_fr": "Eutric Vertisols are clayey soils that are sticky and plastic when wet and hard and massive when dry. <br> These soils generally have favorable chemical properties but the high amount of expansive clay presents challenging physical properties particularly with regard to water management. <br> Eutric Vertisols are relatively productive soils with high base saturation in the subsoil.",
+            "Description_ks": "Eutric Vertisols are clayey soils that are sticky and plastic when wet and hard and massive when dry. <br> These soils generally have favorable chemical properties but the high amount of expansive clay presents challenging physical properties particularly with regard to water management. <br> Eutric Vertisols are relatively productive soils with high base saturation in the subsoil.",
+            "Management_en": "Vertisols can be highly productive soils, yet the characteristics of the clay in this soil can make management an issue. <br> Due to the clay type these soils swell when wet and shrink when dry, creating issues for cultivation (avoid excessive tillage when wet), or other issues such as construction. <br> Their fertility makes them suitable for agriculture, but additional fertilization will be needed for best productivity. <br> Additionally, water management is a key, and practices that promote drainage and water infiltration are needed. <br> With proper drainage and water management, these soils can be highly productive, as the native soil fertility is high. ",
+            "Management_es": "Los Vertisoles pueden ser suelos altamente productivos, pero las características de la arcilla en este suelo pueden hacer que su manejo sea un problema. <br>Debido al tipo de arcilla, estos suelos se hinchan cuando se humedecen y se encogen cuando se secan, lo que crea problemas para el cultivo (evite la labranza excesiva cuando está húmedo), u otros problemas como la construcción. <br>Su fertilidad los hace aptos para la agricultura, pero será necesaria una fertilización adicional para obtener la mejor productividad. <br>Además, la gestión del agua es clave, y se necesitan prácticas que promuevan el drenaje y la infiltración del agua. <br>Con un drenaje y una gestión del agua adecuados, estos suelos pueden ser muy productivos, ya que la fertilidad del suelo nativo es alta.",
+            "Management_fr": "Vertisols can be highly productive soils, yet the characteristics of the clay in this soil can make management an issue. <br> Due to the clay type these soils swell when wet and shrink when dry, creating issues for cultivation (avoid excessive tillage when wet), or other issues such as construction. <br> Their fertility makes them suitable for agriculture, but additional fertilization will be needed for best productivity. <br> Additionally, water management is a key, and practices that promote drainage and water infiltration are needed. <br> With proper drainage and water management, these soils can be highly productive, as the native soil fertility is high. ",
+            "Management_ks": "Vertisols can be highly productive soils, yet the characteristics of the clay in this soil can make management an issue. <br> Due to the clay type these soils swell when wet and shrink when dry, creating issues for cultivation (avoid excessive tillage when wet), or other issues such as construction. <br> Their fertility makes them suitable for agriculture, but additional fertilization will be needed for best productivity. <br> Additionally, water management is a key, and practices that promote drainage and water infiltration are needed. <br> With proper drainage and water management, these soils can be highly productive, as the native soil fertility is high. "
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 12.0,
+          "sl2": 12.0,
+          "sl3": 12.0,
+          "sl4": 15.0,
+          "sl5": 16.14,
+          "sl6": 17.2,
+          "sl7": 17.33
+        },
+        "clay": {
+          "sl1": 17.0,
+          "sl2": 17.0,
+          "sl3": 17.0,
+          "sl4": 21.6,
+          "sl5": 23.57,
+          "sl6": 25.2,
+          "sl7": 25.17
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.8,
+          "sl5": 2.57,
+          "sl6": 3.8,
+          "sl7": 3.83
+        },
+        "id": {
+          "component": "Eutric vertisols",
+          "name": "Eutric vertisols5",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.011
+        },
+        "ph": {
+          "sl1": 6.4,
+          "sl2": 6.4,
+          "sl3": 6.4,
+          "sl4": 6.86,
+          "sl5": 7.09,
+          "sl6": 7.36,
+          "sl7": 7.47
+        },
+        "rock_fragments": {
+          "sl1": 5.0,
+          "sl2": 5.0,
+          "sl3": 5.0,
+          "sl4": 5.0,
+          "sl5": 5.29,
+          "sl6": 7.2,
+          "sl7": 9.0
+        },
+        "sand": {
+          "sl1": 63.0,
+          "sl2": 63.0,
+          "sl3": 63.0,
+          "sl4": 60.0,
+          "sl5": 58.14,
+          "sl6": 56.4,
+          "sl7": 56.17
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111079,
+            "distance": 62588.145,
+            "mapunitID": 17378,
+            "minCompDistance": 9085.2006,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Eutric Vertisols are clayey soils that are sticky and plastic when wet and hard and massive when dry. <br> These soils generally have favorable chemical properties but the high amount of expansive clay presents challenging physical properties particularly with regard to water management. <br> Eutric Vertisols are relatively productive soils with high base saturation in the subsoil.",
+            "Description_es": "Los Vertisoles Éutricos son suelos arcillosos que son pegajosos y plásticos cuando están húmedos y duros y masivos cuando están secos. <br>En general, estos suelos tienen propiedades químicas favorables, pero la gran cantidad de arcilla expansiva presenta propiedades físicas desafiantes, especialmente en lo que respecta a la gestión del agua. <br>Los Vertisoles Eutricos son suelos relativamente productivos con una alta saturación de base en el subsuelo. ",
+            "Description_fr": "Eutric Vertisols are clayey soils that are sticky and plastic when wet and hard and massive when dry. <br> These soils generally have favorable chemical properties but the high amount of expansive clay presents challenging physical properties particularly with regard to water management. <br> Eutric Vertisols are relatively productive soils with high base saturation in the subsoil.",
+            "Description_ks": "Eutric Vertisols are clayey soils that are sticky and plastic when wet and hard and massive when dry. <br> These soils generally have favorable chemical properties but the high amount of expansive clay presents challenging physical properties particularly with regard to water management. <br> Eutric Vertisols are relatively productive soils with high base saturation in the subsoil.",
+            "Management_en": "Vertisols can be highly productive soils, yet the characteristics of the clay in this soil can make management an issue. <br> Due to the clay type these soils swell when wet and shrink when dry, creating issues for cultivation (avoid excessive tillage when wet), or other issues such as construction. <br> Their fertility makes them suitable for agriculture, but additional fertilization will be needed for best productivity. <br> Additionally, water management is a key, and practices that promote drainage and water infiltration are needed. <br> With proper drainage and water management, these soils can be highly productive, as the native soil fertility is high. ",
+            "Management_es": "Los Vertisoles pueden ser suelos altamente productivos, pero las características de la arcilla en este suelo pueden hacer que su manejo sea un problema. <br>Debido al tipo de arcilla, estos suelos se hinchan cuando se humedecen y se encogen cuando se secan, lo que crea problemas para el cultivo (evite la labranza excesiva cuando está húmedo), u otros problemas como la construcción. <br>Su fertilidad los hace aptos para la agricultura, pero será necesaria una fertilización adicional para obtener la mejor productividad. <br>Además, la gestión del agua es clave, y se necesitan prácticas que promuevan el drenaje y la infiltración del agua. <br>Con un drenaje y una gestión del agua adecuados, estos suelos pueden ser muy productivos, ya que la fertilidad del suelo nativo es alta.",
+            "Management_fr": "Vertisols can be highly productive soils, yet the characteristics of the clay in this soil can make management an issue. <br> Due to the clay type these soils swell when wet and shrink when dry, creating issues for cultivation (avoid excessive tillage when wet), or other issues such as construction. <br> Their fertility makes them suitable for agriculture, but additional fertilization will be needed for best productivity. <br> Additionally, water management is a key, and practices that promote drainage and water infiltration are needed. <br> With proper drainage and water management, these soils can be highly productive, as the native soil fertility is high. ",
+            "Management_ks": "Vertisols can be highly productive soils, yet the characteristics of the clay in this soil can make management an issue. <br> Due to the clay type these soils swell when wet and shrink when dry, creating issues for cultivation (avoid excessive tillage when wet), or other issues such as construction. <br> Their fertility makes them suitable for agriculture, but additional fertilization will be needed for best productivity. <br> Additionally, water management is a key, and practices that promote drainage and water infiltration are needed. <br> With proper drainage and water management, these soils can be highly productive, as the native soil fertility is high. "
+          }
+        },
+        "texture": {
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy clay loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 17.0,
+          "sl2": 17.0,
+          "sl3": 17.0,
+          "sl4": 16.6,
+          "sl5": 16.29,
+          "sl6": 16.4,
+          "sl7": 16.33
+        },
+        "clay": {
+          "sl1": 29.0,
+          "sl2": 29.0,
+          "sl3": 29.0,
+          "sl4": 29.0,
+          "sl5": 28.57,
+          "sl6": 28.8,
+          "sl7": 29.0
+        },
+        "ec": {
+          "sl1": 14.0,
+          "sl2": 14.0,
+          "sl3": 14.0,
+          "sl4": 15.2,
+          "sl5": 16.14,
+          "sl6": 16.8,
+          "sl7": 16.67
+        },
+        "id": {
+          "component": "Calcaric cambisols",
+          "name": "Calcaric cambisols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.011
+        },
+        "ph": {
+          "sl1": 8.5,
+          "sl2": 8.5,
+          "sl3": 8.5,
+          "sl4": 8.56,
+          "sl5": 8.51,
+          "sl6": 8.52,
+          "sl7": 8.52
+        },
+        "rock_fragments": {
+          "sl1": 14.0,
+          "sl2": 14.0,
+          "sl3": 14.0,
+          "sl4": 21.6,
+          "sl5": 22.29,
+          "sl6": 17.8,
+          "sl7": 18.17
+        },
+        "sand": {
+          "sl1": 43.0,
+          "sl2": 43.0,
+          "sl3": 43.0,
+          "sl4": 42.6,
+          "sl5": 43.0,
+          "sl6": 42.8,
+          "sl7": 42.5
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111641,
+            "distance": 63488.662,
+            "mapunitID": 17701,
+            "minCompDistance": 9861.4358,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Calcaric Cambisols are widely occurring soils with limited soil development. <br> These soils are calcareous in a soil layer below the surface.",
+            "Description_es": "Los Cambisoles Calcáreos son suelos muy extendidos con un desarrollo limitado del suelo. <br>Estos suelos son calcáreos en una capa del suelo por debajo de la superficie.",
+            "Description_fr": "Calcaric Cambisols are widely occurring soils with limited soil development. <br> These soils are calcareous in a soil layer below the surface.",
+            "Description_ks": "Calcaric Cambisols are widely occurring soils with limited soil development. <br> These soils are calcareous in a soil layer below the surface.",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_es": "En las regiones templadas los suelos tendrán un alto contenido de cationes básicos (potasio, calcio y magnesio), mientras que en las regiones más húmedas pueden tener niveles más bajos de nutrientes del suelo. <br>Estos suelos son muy adecuados para la producción de cultivos, y pueden utilizarse de forma intensiva. <br>La fertilización debe utilizarse para mejorar la productividad, y puede incluirse el riego para aumentar aún más la productividad.",
+            "Management_fr": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_ks": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 41.0,
+          "sl2": 41.0,
+          "sl3": 41.0,
+          "sl4": 41.0,
+          "sl5": 41.0,
+          "sl6": 41.0,
+          "sl7": 40.5
+        },
+        "clay": {
+          "sl1": 55.0,
+          "sl2": 55.0,
+          "sl3": 55.0,
+          "sl4": 56.8,
+          "sl5": 57.14,
+          "sl6": 57.0,
+          "sl7": 56.5
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.2,
+          "sl5": 0.43,
+          "sl6": 0.6,
+          "sl7": 0.67
+        },
+        "id": {
+          "component": "Ferric luvisols",
+          "name": "Ferric luvisols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.011
+        },
+        "ph": {
+          "sl1": 6.8,
+          "sl2": 6.8,
+          "sl3": 6.8,
+          "sl4": 7.02,
+          "sl5": 7.13,
+          "sl6": 7.26,
+          "sl7": 7.33
+        },
+        "rock_fragments": {
+          "sl1": 4.0,
+          "sl2": 4.0,
+          "sl3": 4.0,
+          "sl4": 4.0,
+          "sl5": 4.14,
+          "sl6": 4.2,
+          "sl7": 4.0
+        },
+        "sand": {
+          "sl1": 13.0,
+          "sl2": 13.0,
+          "sl3": 13.0,
+          "sl4": 12.4,
+          "sl5": 12.29,
+          "sl6": 12.4,
+          "sl7": 12.5
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111335,
+            "distance": 41456.411,
+            "mapunitID": 17517,
+            "minCompDistance": 36837.7515,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Ferric Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Ferric Luvisols have soft and cemented iron concentrations in subsoils, and poorly developed structure between iron concentrations which can be susceptible to compaction. ",
+            "Description_es": "Los Luvisoles Férricos son suelos productivos con alta saturación de la base y subsuelos relativamente arcillosos. <br>Los Luvisoles férricos tienen concentraciones de hierro blandas y cementadas en los subsuelos, y una estructura poco desarrollada entre las concentraciones de hierro que puede ser susceptible de compactación. ",
+            "Description_fr": "Ferric Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Ferric Luvisols have soft and cemented iron concentrations in subsoils, and poorly developed structure between iron concentrations which can be susceptible to compaction. ",
+            "Description_ks": "Ferric Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Ferric Luvisols have soft and cemented iron concentrations in subsoils, and poorly developed structure between iron concentrations which can be susceptible to compaction. ",
+            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops. <br> Soils with poorly developed structure may be further aided by the inclusion of deep rooted and perennial crops. ",
+            "Management_es": "Estos suelos son fértiles y pueden utilizarse para una amplia gama de prácticas de cultivo. <br>Sin embargo, son sensibles a la pérdida de suelo por erosión, y hay que tener cuidado para proteger el suelo de la pérdida. <br>Si el suelo ya está erosionado, puede ser más adecuado para el pastoreo y/o los cultivos arbóreos. <br>Los suelos con una estructura poco desarrollada pueden verse favorecidos por la inclusión de cultivos de raíces profundas y perennes.",
+            "Management_fr": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops. <br> Soils with poorly developed structure may be further aided by the inclusion of deep rooted and perennial crops. ",
+            "Management_ks": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops. <br> Soils with poorly developed structure may be further aided by the inclusion of deep rooted and perennial crops. "
+          }
+        },
+        "texture": {
+          "sl1": "Unknown",
+          "sl2": "Unknown",
+          "sl3": "Unknown",
+          "sl4": "Unknown",
+          "sl5": "Unknown",
+          "sl6": "Unknown",
+          "sl7": "Unknown"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 16.0,
+          "sl2": 16.0,
+          "sl3": 16.0,
+          "sl4": 16.4,
+          "sl5": 16.29,
+          "sl6": 16.0,
+          "sl7": 15.67
+        },
+        "clay": {
+          "sl1": 20.0,
+          "sl2": 20.0,
+          "sl3": 20.0,
+          "sl4": 21.2,
+          "sl5": 21.29,
+          "sl6": 21.0,
+          "sl7": 20.83
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 0.86,
+          "sl6": 0.6,
+          "sl7": 0.67
+        },
+        "id": {
+          "component": "Ferric luvisols",
+          "name": "Ferric luvisols3",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.011
+        },
+        "ph": {
+          "sl1": 8.2,
+          "sl2": 8.2,
+          "sl3": 8.2,
+          "sl4": 8.22,
+          "sl5": 8.24,
+          "sl6": 8.26,
+          "sl7": 8.27
+        },
+        "rock_fragments": {
+          "sl1": 4.0,
+          "sl2": 4.0,
+          "sl3": 4.0,
+          "sl4": 5.0,
+          "sl5": 6.14,
+          "sl6": 7.4,
+          "sl7": 7.17
+        },
+        "sand": {
+          "sl1": 43.0,
+          "sl2": 43.0,
+          "sl3": 43.0,
+          "sl4": 41.2,
+          "sl5": 41.14,
+          "sl6": 41.6,
+          "sl7": 41.83
+        },
+        "site": {
+          "siteData": {
+            "componentID": 116201,
+            "distance": 74794.646,
+            "mapunitID": 27168,
+            "minCompDistance": 36837.7515,
+            "share": 15,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Ferric Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Ferric Luvisols have soft and cemented iron concentrations in subsoils, and poorly developed structure between iron concentrations which can be susceptible to compaction. ",
+            "Description_es": "Los Luvisoles Férricos son suelos productivos con alta saturación de la base y subsuelos relativamente arcillosos. <br>Los Luvisoles férricos tienen concentraciones de hierro blandas y cementadas en los subsuelos, y una estructura poco desarrollada entre las concentraciones de hierro que puede ser susceptible de compactación. ",
+            "Description_fr": "Ferric Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Ferric Luvisols have soft and cemented iron concentrations in subsoils, and poorly developed structure between iron concentrations which can be susceptible to compaction. ",
+            "Description_ks": "Ferric Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Ferric Luvisols have soft and cemented iron concentrations in subsoils, and poorly developed structure between iron concentrations which can be susceptible to compaction. ",
+            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops. <br> Soils with poorly developed structure may be further aided by the inclusion of deep rooted and perennial crops. ",
+            "Management_es": "Estos suelos son fértiles y pueden utilizarse para una amplia gama de prácticas de cultivo. <br>Sin embargo, son sensibles a la pérdida de suelo por erosión, y hay que tener cuidado para proteger el suelo de la pérdida. <br>Si el suelo ya está erosionado, puede ser más adecuado para el pastoreo y/o los cultivos arbóreos. <br>Los suelos con una estructura poco desarrollada pueden verse favorecidos por la inclusión de cultivos de raíces profundas y perennes.",
+            "Management_fr": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops. <br> Soils with poorly developed structure may be further aided by the inclusion of deep rooted and perennial crops. ",
+            "Management_ks": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops. <br> Soils with poorly developed structure may be further aided by the inclusion of deep rooted and perennial crops. "
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Loam",
+          "sl5": "Loam",
+          "sl6": "Loam",
+          "sl7": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 22.0,
+          "sl2": 22.0,
+          "sl3": 22.0,
+          "sl4": 21.6,
+          "sl5": 21.86,
+          "sl6": 22.2,
+          "sl7": 22.67
+        },
+        "clay": {
+          "sl1": 29.0,
+          "sl2": 29.0,
+          "sl3": 29.0,
+          "sl4": 31.0,
+          "sl5": 31.43,
+          "sl6": 31.4,
+          "sl7": 31.33
+        },
+        "ec": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 1.4,
+          "sl5": 1.29,
+          "sl6": 1.2,
+          "sl7": 1.17
+        },
+        "id": {
+          "component": "Haplic solonetz",
+          "name": "Haplic solonetz2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.011
+        },
+        "ph": {
+          "sl1": 6.4,
+          "sl2": 6.4,
+          "sl3": 6.4,
+          "sl4": 6.42,
+          "sl5": 6.47,
+          "sl6": 6.58,
+          "sl7": 6.65
+        },
+        "rock_fragments": {
+          "sl1": 11.0,
+          "sl2": 11.0,
+          "sl3": 11.0,
+          "sl4": 15.8,
+          "sl5": 16.57,
+          "sl6": 17.8,
+          "sl7": 16.0
+        },
+        "sand": {
+          "sl1": 40.0,
+          "sl2": 40.0,
+          "sl3": 40.0,
+          "sl4": 39.2,
+          "sl5": 39.14,
+          "sl6": 39.6,
+          "sl7": 39.33
+        },
+        "site": {
+          "siteData": {
+            "componentID": 110985,
+            "distance": 55011.679,
+            "mapunitID": 17327,
+            "minCompDistance": 38961.9906,
+            "share": 40,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Solonetzs have strongly structured clay rich subsoils with high exchangeable sodium. <br> Productivity of these soils depends on the depth of surface horizons above these subsoils.",
+            "Description_es": "Los Solonetz Háplicos tienen subsuelos ricos en arcilla fuertemente estructurados con un alto nivel de sodio intercambiable. <br>La productividad de estos suelos depende de la profundidad de los horizontes superficiales por encima de estos subsuelos.",
+            "Description_fr": "Haplic Solonetzs have strongly structured clay rich subsoils with high exchangeable sodium. <br> Productivity of these soils depends on the depth of surface horizons above these subsoils.",
+            "Description_ks": "Haplic Solonetzs have strongly structured clay rich subsoils with high exchangeable sodium. <br> Productivity of these soils depends on the depth of surface horizons above these subsoils.",
+            "Management_en": "These are likely to have high sodium in subsurface horizons which results in poor soil structure and poor infiltration. <br> The soils will appear wet, but plants will wilt. <br> To improve internal drainage, gypsum should be applied to displace the sodium, followed by leaching with higher quality water to move the displaced sodium from the rooting zone. <br> If the soils can be reclaimed by the application of gypsum and leaching of sodium, they may be suitable for grazing or cultivation. <br> Selection of sodium tolerant crops is also an option, and should be used for maintenance.<br> Cultivation is more suited when these soils are located in temperate regions, and the surface soil is higher in organic matter. ",
+            "Management_es": "Es probable que tengan un alto nivel de sodio en los horizontes subsuperficiales, lo que da lugar a una mala estructura del suelo y a una mala infiltración. <br>Los suelos parecerán húmedos, pero las plantas se marchitarán. <br>Para mejorar el drenaje interno, debe aplicarse yeso para desplazar el sodio, seguido de una lixiviación con agua de mayor calidad para desplazar el sodio desplazado de la zona de enraizamiento. <br>Si los suelos pueden recuperarse mediante la aplicación de yeso y la lixiviación del sodio, pueden ser aptos para el pastoreo o el cultivo. <br>La selección de cultivos tolerantes al sodio también es una opción, y debería utilizarse para el mantenimiento.<br>El cultivo es más adecuado cuando estos suelos están situados en regiones templadas, y el suelo superficial es más rico en materia orgánica.",
+            "Management_fr": "These are likely to have high sodium in subsurface horizons which results in poor soil structure and poor infiltration. <br> The soils will appear wet, but plants will wilt. <br> To improve internal drainage, gypsum should be applied to displace the sodium, followed by leaching with higher quality water to move the displaced sodium from the rooting zone. <br> If the soils can be reclaimed by the application of gypsum and leaching of sodium, they may be suitable for grazing or cultivation. <br> Selection of sodium tolerant crops is also an option, and should be used for maintenance.<br> Cultivation is more suited when these soils are located in temperate regions, and the surface soil is higher in organic matter. ",
+            "Management_ks": "These are likely to have high sodium in subsurface horizons which results in poor soil structure and poor infiltration. <br> The soils will appear wet, but plants will wilt. <br> To improve internal drainage, gypsum should be applied to displace the sodium, followed by leaching with higher quality water to move the displaced sodium from the rooting zone. <br> If the soils can be reclaimed by the application of gypsum and leaching of sodium, they may be suitable for grazing or cultivation. <br> Selection of sodium tolerant crops is also an option, and should be used for maintenance.<br> Cultivation is more suited when these soils are located in temperate regions, and the surface soil is higher in organic matter. "
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 11.0,
+          "sl2": 11.0,
+          "sl3": 11.0,
+          "sl4": 11.2,
+          "sl5": 11.57,
+          "sl6": 12.2,
+          "sl7": 12.67
+        },
+        "clay": {
+          "sl1": 22.0,
+          "sl2": 22.0,
+          "sl3": 22.0,
+          "sl4": 28.4,
+          "sl5": 29.86,
+          "sl6": 31.2,
+          "sl7": 31.83
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.2,
+          "sl5": 0.43,
+          "sl6": 0.8,
+          "sl7": 1.0
+        },
+        "id": {
+          "component": "Gleyic solonchaks",
+          "name": "Gleyic solonchaks2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.011
+        },
+        "ph": {
+          "sl1": 5.8,
+          "sl2": 5.8,
+          "sl3": 5.8,
+          "sl4": 6.0,
+          "sl5": 6.03,
+          "sl6": 6.04,
+          "sl7": 6.08
+        },
+        "rock_fragments": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 7.2,
+          "sl5": 9.71,
+          "sl6": 10.0,
+          "sl7": 8.83
+        },
+        "sand": {
+          "sl1": 39.0,
+          "sl2": 39.0,
+          "sl3": 39.0,
+          "sl4": 34.2,
+          "sl5": 32.71,
+          "sl6": 31.0,
+          "sl7": 30.17
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111103,
+            "distance": 60642.675,
+            "mapunitID": 17392,
+            "minCompDistance": 53068.3217,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Gleyic Solonchaks are soils that contain salts at or near the soil surface that form in either deserts or close to coastlines. <br> These soils are saturated with shallow groundwater within one meter of the soil surface.",
+            "Description_es": "Los Solonchaks Gléyicos son suelos que contienen sales en la superficie del suelo o cerca de ella y que se forman en los desiertos o cerca de las costas. <br>Estos suelos están saturados con aguas subterráneas poco profundas a un metro de la superficie del suelo.",
+            "Description_fr": "Gleyic Solonchaks are soils that contain salts at or near the soil surface that form in either deserts or close to coastlines. <br> These soils are saturated with shallow groundwater within one meter of the soil surface.",
+            "Description_ks": "Gleyic Solonchaks are soils that contain salts at or near the soil surface that form in either deserts or close to coastlines. <br> These soils are saturated with shallow groundwater within one meter of the soil surface.",
+            "Management_en": "These soils are typically high in total salts. <br> They have very poor productivity, and cannot be used unless high quality irrigation is available to remove accumulated salts. <br> Drainage of these soils will be needed, both to eliminate standing water and remediate salinity issues. <br>These soils are not well suited for agriculture and are best used for grazing, or left fallow.",
+            "Management_es": "Estos suelos suelen tener un alto contenido de sales totales. <br>Tienen una productividad muy baja y no pueden utilizarse a menos que se disponga de un riego de alta calidad para eliminar las sales acumuladas. <br>Será necesario el drenaje de estos suelos, tanto para eliminar el agua estancada como para remediar los problemas de salinidad. *Estos suelos no son adecuados para la agricultura y es mejor utilizarlos para el pastoreo o dejarlos en barbecho.",
+            "Management_fr": "These soils are typically high in total salts. <br> They have very poor productivity, and cannot be used unless high quality irrigation is available to remove accumulated salts. <br> Drainage of these soils will be needed, both to eliminate standing water and remediate salinity issues. <br>These soils are not well suited for agriculture and are best used for grazing, or left fallow.",
+            "Management_ks": "These soils are typically high in total salts. <br> They have very poor productivity, and cannot be used unless high quality irrigation is available to remove accumulated salts. <br> Drainage of these soils will be needed, both to eliminate standing water and remediate salinity issues. <br>These soils are not well suited for agriculture and are best used for grazing, or left fallow."
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 16.0,
+          "sl2": 16.0,
+          "sl3": 16.0,
+          "sl4": 14.8,
+          "sl5": 14.57,
+          "sl6": 14.2,
+          "sl7": 14.0
+        },
+        "clay": {
+          "sl1": 20.0,
+          "sl2": 20.0,
+          "sl3": 20.0,
+          "sl4": 20.6,
+          "sl5": 20.86,
+          "sl6": 21.0,
+          "sl7": 20.83
+        },
+        "ec": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 0.8,
+          "sl5": 0.71,
+          "sl6": 0.8,
+          "sl7": 0.83
+        },
+        "id": {
+          "component": "Eutric cambisols",
+          "name": "Eutric cambisols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.011
+        },
+        "ph": {
+          "sl1": 6.4,
+          "sl2": 6.4,
+          "sl3": 6.4,
+          "sl4": 6.54,
+          "sl5": 6.6,
+          "sl6": 6.66,
+          "sl7": 6.7
+        },
+        "rock_fragments": {
+          "sl1": 13.0,
+          "sl2": 13.0,
+          "sl3": 13.0,
+          "sl4": 15.0,
+          "sl5": 16.57,
+          "sl6": 18.8,
+          "sl7": 19.17
+        },
+        "sand": {
+          "sl1": 40.0,
+          "sl2": 40.0,
+          "sl3": 40.0,
+          "sl4": 40.8,
+          "sl5": 41.14,
+          "sl6": 41.8,
+          "sl7": 42.17
+        },
+        "site": {
+          "siteData": {
+            "componentID": 110980,
+            "distance": 76138.236,
+            "mapunitID": 17324,
+            "minCompDistance": 70615.6896,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Eutric Cambisols are widely occurring soils with limited soil development. <br> These are productive soils with high base saturation (Ca, Mg and K) in the upper portion of soil. ",
+            "Description_es": "Los Cambisoles Eútricos son suelos que se dan ampliamente con un desarrollo limitado del suelo. <br>Son suelos productivos con alta saturación de bases (Ca, Mg y K) en la parte superior del suelo. ",
+            "Description_fr": "Eutric Cambisols are widely occurring soils with limited soil development. <br> These are productive soils with high base saturation (Ca, Mg and K) in the upper portion of soil. ",
+            "Description_ks": "Eutric Cambisols are widely occurring soils with limited soil development. <br> These are productive soils with high base saturation (Ca, Mg and K) in the upper portion of soil. ",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> Eutric Cambisols will have high base saturation, which means that the available soil nutrients will be predominantly calcium, potassium, and magnesium. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_es": "En regiones templadas los suelos tendrán un alto contenido de cationes básicos (potasio, calcio y magnesio), mientras que en regiones más húmedas pueden tener niveles más bajos de nutrientes en el suelo. <br>Los Cambisoles eútricos tendrán una alta saturación de bases, lo que significa que los nutrientes disponibles en el suelo serán predominantemente calcio, potasio y magnesio. <br>Estos suelos son muy adecuados para la producción de cultivos y pueden utilizarse de forma intensiva. <br>La fertilización debe utilizarse para mejorar la productividad, y puede incluirse el riego para aumentar aún más la productividad.",
+            "Management_fr": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> Eutric Cambisols will have high base saturation, which means that the available soil nutrients will be predominantly calcium, potassium, and magnesium. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_ks": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> Eutric Cambisols will have high base saturation, which means that the available soil nutrients will be predominantly calcium, potassium, and magnesium. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Loam",
+          "sl5": "Loam",
+          "sl6": "Loam",
+          "sl7": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 22.0,
+          "sl2": 22.0,
+          "sl3": 22.0,
+          "sl4": 21.6,
+          "sl5": 21.86,
+          "sl6": 22.2,
+          "sl7": 22.67
+        },
+        "clay": {
+          "sl1": 29.0,
+          "sl2": 29.0,
+          "sl3": 29.0,
+          "sl4": 31.0,
+          "sl5": 31.43,
+          "sl6": 31.4,
+          "sl7": 31.33
+        },
+        "ec": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 1.4,
+          "sl5": 1.29,
+          "sl6": 1.2,
+          "sl7": 1.17
+        },
+        "id": {
+          "component": "Eutric cambisols",
+          "name": "Eutric cambisols3",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.011
+        },
+        "ph": {
+          "sl1": 6.4,
+          "sl2": 6.4,
+          "sl3": 6.4,
+          "sl4": 6.42,
+          "sl5": 6.47,
+          "sl6": 6.58,
+          "sl7": 6.65
+        },
+        "rock_fragments": {
+          "sl1": 11.0,
+          "sl2": 11.0,
+          "sl3": 11.0,
+          "sl4": 15.8,
+          "sl5": 16.57,
+          "sl6": 17.8,
+          "sl7": 16.0
+        },
+        "sand": {
+          "sl1": 40.0,
+          "sl2": 40.0,
+          "sl3": 40.0,
+          "sl4": 39.2,
+          "sl5": 39.14,
+          "sl6": 39.6,
+          "sl7": 39.33
+        },
+        "site": {
+          "siteData": {
+            "componentID": 110986,
+            "distance": 78053.869,
+            "mapunitID": 17328,
+            "minCompDistance": 70615.6896,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Eutric Cambisols are widely occurring soils with limited soil development. <br> These are productive soils with high base saturation (Ca, Mg and K) in the upper portion of soil. ",
+            "Description_es": "Los Cambisoles Eútricos son suelos que se dan ampliamente con un desarrollo limitado del suelo. <br>Son suelos productivos con alta saturación de bases (Ca, Mg y K) en la parte superior del suelo. ",
+            "Description_fr": "Eutric Cambisols are widely occurring soils with limited soil development. <br> These are productive soils with high base saturation (Ca, Mg and K) in the upper portion of soil. ",
+            "Description_ks": "Eutric Cambisols are widely occurring soils with limited soil development. <br> These are productive soils with high base saturation (Ca, Mg and K) in the upper portion of soil. ",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> Eutric Cambisols will have high base saturation, which means that the available soil nutrients will be predominantly calcium, potassium, and magnesium. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_es": "En regiones templadas los suelos tendrán un alto contenido de cationes básicos (potasio, calcio y magnesio), mientras que en regiones más húmedas pueden tener niveles más bajos de nutrientes en el suelo. <br>Los Cambisoles eútricos tendrán una alta saturación de bases, lo que significa que los nutrientes disponibles en el suelo serán predominantemente calcio, potasio y magnesio. <br>Estos suelos son muy adecuados para la producción de cultivos y pueden utilizarse de forma intensiva. <br>La fertilización debe utilizarse para mejorar la productividad, y puede incluirse el riego para aumentar aún más la productividad.",
+            "Management_fr": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> Eutric Cambisols will have high base saturation, which means that the available soil nutrients will be predominantly calcium, potassium, and magnesium. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_ks": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> Eutric Cambisols will have high base saturation, which means that the available soil nutrients will be predominantly calcium, potassium, and magnesium. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      }
+    ]
+  },
+  "rank": {
+    "metadata": {
+      "location": "global",
+      "model": "v2"
+    },
+    "soilRank": [
+      {
+        "component": "Humic cambisols",
+        "componentData": "Data Complete",
+        "componentID": 111631,
+        "name": "Humic cambisols",
+        "rank_data": "1",
+        "rank_data_loc": "1",
+        "rank_loc": "7",
+        "score_data": 0.747,
+        "score_data_loc": 1.0,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Chromic cambisols",
+        "componentData": "Data Complete",
+        "componentID": 111105,
+        "name": "Chromic cambisols1",
+        "rank_data": "2",
+        "rank_data_loc": "2",
+        "rank_loc": "4",
+        "score_data": 0.724,
+        "score_data_loc": 0.973,
+        "score_loc": 0.013
+      },
+      {
+        "component": "Ferralic arenosols",
+        "componentData": "Data Complete",
+        "componentID": 111264,
+        "name": "Ferralic arenosols2",
+        "rank_data": "5",
+        "rank_data_loc": "3",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.705,
+        "score_data_loc": 0.971,
+        "score_loc": 0.03
+      },
+      {
+        "component": "Haplic lixisols",
+        "componentData": "Missing Data",
+        "componentID": 111208,
+        "name": "Haplic lixisols1",
+        "rank_data": "7",
+        "rank_data_loc": "4",
+        "rank_loc": "3",
+        "score_data": 0.705,
+        "score_data_loc": 0.951,
+        "score_loc": 0.015
+      },
+      {
+        "component": "Calcic luvisols",
+        "componentData": "Data Complete",
+        "componentID": 111218,
+        "name": "Calcic luvisols",
+        "rank_data": "3",
+        "rank_data_loc": "5",
+        "rank_loc": "10",
+        "score_data": 0.705,
+        "score_data_loc": 0.945,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Eutric vertisols",
+        "componentData": "No Data",
+        "componentID": 111286,
+        "name": "Eutric vertisols2",
+        "rank_data": "4",
+        "rank_data_loc": "6",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.705,
+        "score_data_loc": 0.945,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Ferric luvisols",
+        "componentData": "Data Complete",
+        "componentID": 111336,
+        "name": "Ferric luvisols1",
+        "rank_data": "6",
+        "rank_data_loc": "7",
+        "rank_loc": "8",
+        "score_data": 0.705,
+        "score_data_loc": 0.945,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Eutric cambisols",
+        "componentData": "Data Complete",
+        "componentID": 111337,
+        "name": "Eutric cambisols1",
+        "rank_data": "8",
+        "rank_data_loc": "8",
+        "rank_loc": "12",
+        "score_data": 0.697,
+        "score_data_loc": 0.934,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Gleyic solonchaks",
+        "componentData": "Data Complete",
+        "componentID": 111103,
+        "name": "Gleyic solonchaks2",
+        "rank_data": "9",
+        "rank_data_loc": "9",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.697,
+        "score_data_loc": 0.934,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Haplic solonetz",
+        "componentData": "Data Complete",
+        "componentID": 110985,
+        "name": "Haplic solonetz2",
+        "rank_data": "10",
+        "rank_data_loc": "10",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.697,
+        "score_data_loc": 0.934,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Calcaric cambisols",
+        "componentData": "Missing Data",
+        "componentID": 111282,
+        "name": "Calcaric cambisols1",
+        "rank_data": "11",
+        "rank_data_loc": "11",
+        "rank_loc": "6",
+        "score_data": 0.672,
+        "score_data_loc": 0.902,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Humic nitisols",
+        "componentData": "No Data",
+        "componentID": 111081,
+        "name": "Humic nitisols",
+        "rank_data": "12",
+        "rank_data_loc": "12",
+        "rank_loc": "2",
+        "score_data": 0.125,
+        "score_data_loc": 0.196,
+        "score_loc": 0.024
+      },
+      {
+        "component": "Haplic lixisols",
+        "componentData": "Data Complete",
+        "componentID": 111216,
+        "name": "Haplic lixisols2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.705,
+        "score_data_loc": 0.951,
+        "score_loc": 0.015
+      },
+      {
+        "component": "Ferric luvisols",
+        "componentData": "Data Complete",
+        "componentID": 111335,
+        "name": "Ferric luvisols2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.705,
+        "score_data_loc": 0.945,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Eutric cambisols",
+        "componentData": "Data Complete",
+        "componentID": 110986,
+        "name": "Eutric cambisols3",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.697,
+        "score_data_loc": 0.934,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Calcaric cambisols",
+        "componentData": "Data Complete",
+        "componentID": 111641,
+        "name": "Calcaric cambisols2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.665,
+        "score_data_loc": 0.893,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Gleyic solonchaks",
+        "componentData": "Missing Data",
+        "componentID": 111319,
+        "name": "Gleyic solonchaks1",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "11",
+        "score_data": 0.66,
+        "score_data_loc": 0.885,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Chromic cambisols",
+        "componentData": "Missing Data",
+        "componentID": 111117,
+        "name": "Chromic cambisols2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.633,
+        "score_data_loc": 0.853,
+        "score_loc": 0.013
+      },
+      {
+        "component": "Eutric vertisols",
+        "componentData": "No Data",
+        "componentID": 111193,
+        "name": "Eutric vertisols4",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.608,
+        "score_data_loc": 0.818,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Eutric cambisols",
+        "componentData": "Data Complete",
+        "componentID": 110980,
+        "name": "Eutric cambisols2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.597,
+        "score_data_loc": 0.802,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Ferric luvisols",
+        "componentData": "Data Complete",
+        "componentID": 116201,
+        "name": "Ferric luvisols3",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.597,
+        "score_data_loc": 0.802,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Haplic lixisols",
+        "componentData": "Data Complete",
+        "componentID": 116199,
+        "name": "Haplic lixisols3",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.583,
+        "score_data_loc": 0.79,
+        "score_loc": 0.015
+      },
+      {
+        "component": "Eutric vertisols",
+        "componentData": "No Data",
+        "componentID": 111101,
+        "name": "Eutric vertisols1",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "5",
+        "score_data": 0.587,
+        "score_data_loc": 0.789,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Eutric vertisols",
+        "componentData": "No Data",
+        "componentID": 111202,
+        "name": "Eutric vertisols3",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.587,
+        "score_data_loc": 0.789,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Eutric vertisols",
+        "componentData": "No Data",
+        "componentID": 111079,
+        "name": "Eutric vertisols5",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.587,
+        "score_data_loc": 0.789,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Haplic solonetz",
+        "componentData": "Data Complete",
+        "componentID": 111044,
+        "name": "Haplic solonetz1",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "9",
+        "score_data": 0.587,
+        "score_data_loc": 0.789,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Chromic cambisols",
+        "componentData": "Data Complete",
+        "componentID": 111267,
+        "name": "Chromic cambisols3",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.583,
+        "score_data_loc": 0.787,
+        "score_loc": 0.013
+      },
+      {
+        "component": "Ferralic arenosols",
+        "componentData": "Data Complete",
+        "componentID": 111242,
+        "name": "Ferralic arenosols1",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "1",
+        "score_data": 0.245,
+        "score_data_loc": 0.364,
+        "score_loc": 0.03
+      }
+    ]
+  }
+}

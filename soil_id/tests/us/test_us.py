@@ -17,8 +17,9 @@ import logging
 import time
 
 import pytest
-
+from soil_id.tests.utils import clean_soil_list_json
 from soil_id.us_soil import list_soils, rank_soils
+from syrupy.extensions.json import JSONSnapshotExtension
 
 test_locations = [
     {"lon": -121.5111084, "lat": 45.6508331},
@@ -40,9 +41,13 @@ test_locations = [
     # {"lat": 40.79861, "lon": -112.35477},  # crash: str object has no attribute rank_data_csv
 ]
 
+test_params = []
+for idx, coords in enumerate(test_locations):
+    test_params.append(pytest.param(coords, id=f"{coords["lat"]},{coords["lon"]}"))
 
-@pytest.mark.parametrize("location", test_locations)
-def test_soil_location(location):
+
+@pytest.mark.parametrize("location", test_params)
+def test_soil_location(location, snapshot):
     # Dummy Soil Profile Data (replicating the structure provided)
     soilHorizon = ["LOAM"] * 7
     topDepth = [0, 1, 10, 20, 50, 70, 100]
@@ -57,7 +62,7 @@ def test_soil_location(location):
     start_time = time.perf_counter()
     list_soils_result = list_soils(location["lon"], location["lat"])
     logging.info(f"...time: {(time.perf_counter() - start_time):.2f}s")
-    rank_soils(
+    rank_result = rank_soils(
         location["lon"],
         location["lat"],
         list_soils_result,
@@ -71,6 +76,11 @@ def test_soil_location(location):
         bedrock,
         cracks,
     )
+
+    assert snapshot.with_defaults(extension_class=JSONSnapshotExtension) == {
+        "list": clean_soil_list_json(list_soils_result.soil_list_json),
+        "rank": rank_result,
+    }
 
 
 def test_empty_rank():

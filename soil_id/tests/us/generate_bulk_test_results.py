@@ -15,7 +15,6 @@
 
 import datetime
 import json
-import math
 import os
 import time
 import traceback
@@ -23,16 +22,8 @@ import traceback
 import pandas
 
 from soil_id.us_soil import list_soils, rank_soils
+from soil_id.tests.utils import clean_soil_list_json
 
-
-def clean_soil_list_json(obj):
-    if isinstance(obj, float) and math.isnan(obj):
-        return None
-    elif isinstance(obj, dict):
-        return dict((k, clean_soil_list_json(v)) for k, v in obj.items())
-    elif isinstance(obj, (list, set, tuple)):
-        return list(map(clean_soil_list_json, obj))
-    return obj
 
 test_data_df = pandas.read_csv(
     os.path.join(os.path.dirname(__file__), "US_SoilID_KSSL_LPKS_Testing.csv")

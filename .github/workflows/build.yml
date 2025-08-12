@@ -22,7 +22,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13.3'
+          python-version: '3.13.6'
           cache-dependency-path: 'requirements-dev.txt'
 
       - name: Install uv
@@ -54,7 +54,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13.3'
+          python-version: '3.13.6'
           cache-dependency-path: |
             'requirements.txt'
             'requirements-dev.txt'

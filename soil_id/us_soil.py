@@ -270,7 +270,7 @@ def list_soils(lon, lat):
     muhorzdata_pd = muhorzdata_pd[~muhorzdata_pd["hzname"].str.contains("R", case=False, na=False)]
 
     # Group data by cokey (component key)
-    muhorzdata_group_cokey = [group for _, group in muhorzdata_pd.groupby("cokey", sort=False)]
+    muhorzdata_group_cokey = [group for _, group in muhorzdata_pd.groupby("cokey")]
 
     getProfile_cokey = []
     comp_max_depths = []
@@ -651,9 +651,7 @@ def list_soils(lon, lat):
 
         if mucompdata_pd["compkind"].isin(OSD_compkind).any():
             # Group data by cokey
-            OSDhorzdata_group_cokey = [
-                group for _, group in OSDhorzdata_pd.groupby("cokey", sort=False)
-            ]
+            OSDhorzdata_group_cokey = [group for _, group in OSDhorzdata_pd.groupby("cokey")]
 
             # Initialize empty lists
             lab_lyrs = []
@@ -967,7 +965,7 @@ def list_soils(lon, lat):
             SEE_URL = []
 
             # Group data by 'cokey'
-            OSDhorzdata_group_cokey = [g for _, g in OSDhorzdata_pd.groupby("cokey", sort=False)]
+            OSDhorzdata_group_cokey = [g for _, g in OSDhorzdata_pd.groupby("cokey")]
 
             for index, group in enumerate(OSDhorzdata_group_cokey):
                 # Check if compkind is not in OSD_compkind or if series contains any null values
@@ -1252,7 +1250,7 @@ def list_soils(lon, lat):
                         r"[0-9]+", "", regex=True
                     )
                     ESDcompdata_pd_comp_grps = [
-                        g for _, g in ESDcompdata_pd.groupby(["compname_grp"], sort=False)
+                        g for _, g in ESDcompdata_pd.groupby(["compname_grp"])
                     ]
                     ecoList_out = []
                     for i in range(len(ESDcompdata_pd_comp_grps)):
@@ -1776,7 +1774,7 @@ def rank_soils(
 
     # Horizon Data Similarity
     if soilIDRank_output_pd is not None:
-        groups = [group for _, group in soilIDRank_output_pd.groupby(["compname"], sort=False)]
+        groups = [group for _, group in soilIDRank_output_pd.groupby(["compname"])]
 
         Comp_Rank_Status = []
         Comp_Missing_Status = []
@@ -2035,7 +2033,7 @@ def rank_soils(
 
     # Sort and rank the components within each group
     soilIDList_data = []
-    for _, group in D_final.groupby(["compname_grp"], sort=False):
+    for _, group in D_final.groupby(["compname_grp"]):
         # Sort by score, and then by compname
         group = group.sort_values(by=["Score_Data", "compname"], ascending=[False, True])
 
@@ -2144,7 +2142,7 @@ def rank_soils(
     # Sorting and reindexing of final dataframe based on component groups
     soilIDList_out = []
 
-    for _, group in D_final_loc.groupby("compname_grp", sort=False):
+    for _, group in D_final_loc.groupby("compname_grp"):
         group = group.sort_values("Score_Data_Loc", ascending=False).reset_index(drop=True)
         group["soilID_rank_final"] = [True if idx == 0 else False for idx in range(len(group))]
         soilIDList_out.append(group)

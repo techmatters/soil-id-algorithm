@@ -78,8 +78,8 @@
             "nirrcapscl": "s",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=knob_lock",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#knob_lock",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=rawsonville",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#rawsonville",
             "slope": 40.0,
             "taxsubgrp": "Lithic Udifolists",
             "textureInfill": "No"
@@ -190,8 +190,8 @@
             "nirrcapscl": "s",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=elliottsville",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#elliottsville",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=monson",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#monson",
             "slope": 25.0,
             "taxsubgrp": "Typic Haplorthods",
             "textureInfill": "No"
@@ -246,8 +246,8 @@
             "nirrcapscl": "s",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=monson",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#monson",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=knob_lock",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#knob_lock",
             "slope": 25.0,
             "taxsubgrp": "Lithic Haplorthods",
             "textureInfill": "No"
@@ -302,8 +302,8 @@
             "nirrcapscl": "s",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=hogback",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#hogback",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=abram",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#abram",
             "slope": 50.0,
             "taxsubgrp": "Lithic Haplohumods",
             "textureInfill": "No"
@@ -358,8 +358,8 @@
             "nirrcapscl": "s",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=rawsonville",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#rawsonville",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=knob_lock",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#knob_lock",
             "slope": 20.0,
             "taxsubgrp": "Typic Haplohumods",
             "textureInfill": "No"
@@ -414,8 +414,8 @@
             "nirrcapscl": "s",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=abram",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#abram",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=monson",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#monson",
             "slope": 30.0,
             "taxsubgrp": "Lithic Haplorthods",
             "textureInfill": "No"
@@ -470,8 +470,8 @@
             "nirrcapscl": "s",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=knob_lock",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#knob_lock",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=hogback",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#hogback",
             "slope": 30.0,
             "taxsubgrp": "Lithic Udifolists",
             "textureInfill": "No"
@@ -582,8 +582,8 @@
             "nirrcapscl": "s",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=chesuncook",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#chesuncook",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=abram",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#abram",
             "slope": 12.0,
             "taxsubgrp": "Aquic Haplorthods",
             "textureInfill": "No"
@@ -638,8 +638,8 @@
             "nirrcapscl": "s",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=elliottsville",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#elliottsville",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=chesuncook",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#chesuncook",
             "slope": 40.0,
             "taxsubgrp": "Typic Haplorthods",
             "textureInfill": "No"
@@ -694,8 +694,8 @@
             "nirrcapscl": "s",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=monson",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#monson",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=elliottsville",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#elliottsville",
             "slope": 40.0,
             "taxsubgrp": "Lithic Haplorthods",
             "textureInfill": "No"
@@ -750,8 +750,8 @@
             "nirrcapscl": "s",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=abram",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#abram",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=elliottsville",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#elliottsville",
             "slope": 45.0,
             "taxsubgrp": "Lithic Haplorthods",
             "textureInfill": "No"
@@ -772,13 +772,13 @@
       {
         "component": "Chesuncook",
         "componentData": "Data Complete",
-        "componentID": 25209555,
-        "name": "Chesuncook1",
+        "componentID": 25209552,
+        "name": "Chesuncook2",
         "rank_data": "1",
         "rank_data_loc": "1",
-        "rank_loc": "2",
-        "score_data": 0.725,
-        "score_data_loc": 0.577,
+        "rank_loc": "Not Displayed",
+        "score_data": 0.726,
+        "score_data_loc": 0.578,
         "score_loc": 0.429
       },
       {
@@ -786,11 +786,11 @@
         "componentData": "Data Complete",
         "componentID": 25209556,
         "name": "Knob lock2",
-        "rank_data": "4",
+        "rank_data": "2",
         "rank_data_loc": "2",
         "rank_loc": "Not Displayed",
-        "score_data": 0.645,
-        "score_data_loc": 0.553,
+        "score_data": 0.667,
+        "score_data_loc": 0.563,
         "score_loc": 0.46
       },
       {
@@ -798,11 +798,11 @@
         "componentData": "Data Complete",
         "componentID": 25209557,
         "name": "Elliottsville1",
-        "rank_data": "2",
+        "rank_data": "3",
         "rank_data_loc": "3",
         "rank_loc": "3",
-        "score_data": 0.685,
-        "score_data_loc": 0.493,
+        "score_data": 0.648,
+        "score_data_loc": 0.475,
         "score_loc": 0.301
       },
       {
@@ -810,7 +810,7 @@
         "componentData": "Data Complete",
         "componentID": 25209554,
         "name": "Monson1",
-        "rank_data": "3",
+        "rank_data": "4",
         "rank_data_loc": "4",
         "rank_loc": "4",
         "score_data": 0.648,
@@ -822,7 +822,7 @@
         "componentData": "Data Complete",
         "componentID": 25208409,
         "name": "Rawsonville",
-        "rank_data": "6",
+        "rank_data": "5",
         "rank_data_loc": "5",
         "rank_loc": "6",
         "score_data": 0.624,
@@ -834,11 +834,11 @@
         "componentData": "Data Complete",
         "componentID": 25209553,
         "name": "Abram1",
-        "rank_data": "5",
+        "rank_data": "6",
         "rank_data_loc": "6",
         "rank_loc": "7",
-        "score_data": 0.631,
-        "score_data_loc": 0.332,
+        "score_data": 0.622,
+        "score_data_loc": 0.328,
         "score_loc": 0.034
       },
       {
@@ -849,20 +849,20 @@
         "rank_data": "7",
         "rank_data_loc": "7",
         "rank_loc": "5",
-        "score_data": 0.486,
-        "score_data_loc": 0.268,
+        "score_data": 0.497,
+        "score_data_loc": 0.274,
         "score_loc": 0.05
       },
       {
         "component": "Chesuncook",
         "componentData": "Data Complete",
-        "componentID": 25209552,
-        "name": "Chesuncook2",
+        "componentID": 25209555,
+        "name": "Chesuncook1",
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
-        "rank_loc": "Not Displayed",
-        "score_data": 0.692,
-        "score_data_loc": 0.561,
+        "rank_loc": "2",
+        "score_data": 0.717,
+        "score_data_loc": 0.573,
         "score_loc": 0.429
       },
       {
@@ -873,8 +873,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "1",
-        "score_data": 0.584,
-        "score_data_loc": 0.522,
+        "score_data": 0.578,
+        "score_data_loc": 0.519,
         "score_loc": 0.46
       },
       {
@@ -885,8 +885,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.529,
-        "score_data_loc": 0.494,
+        "score_data": 0.55,
+        "score_data_loc": 0.505,
         "score_loc": 0.46
       },
       {
@@ -897,8 +897,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.434,
-        "score_data_loc": 0.367,
+        "score_data": 0.587,
+        "score_data_loc": 0.444,
         "score_loc": 0.301
       },
       {
@@ -909,8 +909,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.603,
-        "score_data_loc": 0.351,
+        "score_data": 0.587,
+        "score_data_loc": 0.343,
         "score_loc": 0.1
       },
       {
@@ -921,8 +921,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.571,
-        "score_data_loc": 0.302,
+        "score_data": 0.404,
+        "score_data_loc": 0.219,
         "score_loc": 0.034
       }
     ]

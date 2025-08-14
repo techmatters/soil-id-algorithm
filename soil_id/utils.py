@@ -705,7 +705,7 @@ def drop_cokey_horz(df):
     drop_instances = []
 
     # Group by compname
-    for _, comp_group in df.groupby("compname", sort=False):
+    for _, comp_group in df.groupby("compname"):
         # Get unique cokeys and their data signature within this compname group
         cokey_map = comp_group.groupby("cokey")["_cokey_grouped"].first()
 
@@ -1711,7 +1711,7 @@ def process_distance_scores(mucompdata_pd, ExpCoeff):
     mucompdata_pd = mucompdata_pd.reset_index(drop=True)
 
     # Create a list of component groups
-    mucompdata_comp_grps = [g for _, g in mucompdata_pd.groupby(["compname"], sort=False)]
+    mucompdata_comp_grps = [g for _, g in mucompdata_pd.groupby(["compname"])]
     mucompdata_comp_grps = mucompdata_comp_grps[: min(12, len(mucompdata_comp_grps))]
 
     # Assign max within-group location-based score to all members of the group
@@ -2409,7 +2409,7 @@ def update_esd_data(df):
 
     # Replace group-specific data for missing ESD components
     df["compname_grp"] = df["compname"].str.replace(r"[0-9]+", "")
-    grouped = df.groupby("compname_grp", sort=False)
+    grouped = df.groupby("compname_grp")
 
     # Generate a list of updated groups
     updated_groups = []

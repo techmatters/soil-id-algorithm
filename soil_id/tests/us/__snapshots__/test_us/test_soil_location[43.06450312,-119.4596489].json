@@ -78,8 +78,8 @@
             "nirrcapscl": "e",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=lonely",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#lonely",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=rinconflat",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#rinconflat",
             "slope": 19.0,
             "taxsubgrp": "Xeric Haplocambids",
             "textureInfill": "No"
@@ -134,11 +134,11 @@
             "nirrcapscl": "s",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=robson",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#robson",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=ausmus",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#ausmus",
             "slope": 10.0,
             "taxsubgrp": "Lithic Xeric Haplargids",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "The Robson series consists of shallow, well drained soils that formed in residuum derived from igneous rock.  Robson soils are on hill and mountain crests and side slopes.  Slopes are 2 to 75 percent.  The mean annual precipitation is about 380 mm and the mean annual temperature is about 6 degrees C."
         },
@@ -246,8 +246,8 @@
             "nirrcapscl": "e",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=rinconflat",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#rinconflat",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=raz",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#raz",
             "slope": 7.0,
             "taxsubgrp": "Xeric Haplocambids",
             "textureInfill": "No"
@@ -302,8 +302,8 @@
             "nirrcapscl": "e",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=actem",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#actem",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=brace",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#brace",
             "slope": 11.0,
             "taxsubgrp": "Xeric Argidurids",
             "textureInfill": "No"
@@ -358,8 +358,8 @@
             "nirrcapscl": "e",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=lonegrave",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#lonegrave",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=robson",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#robson",
             "slope": 55.0,
             "taxsubgrp": "Xeric Haplocambids",
             "textureInfill": "No"
@@ -414,8 +414,8 @@
             "nirrcapscl": "e",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=raz",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#raz",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=lonely",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#lonely",
             "slope": 11.0,
             "taxsubgrp": "Xeric Haplodurids",
             "textureInfill": "No"
@@ -470,8 +470,8 @@
             "nirrcapscl": "e",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=brace",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#brace",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=lonegrave",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#lonegrave",
             "slope": 11.0,
             "taxsubgrp": "Xeric Argidurids",
             "textureInfill": "No"
@@ -526,11 +526,11 @@
             "nirrcapscl": "s",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=ausmus",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#ausmus",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=actem",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#actem",
             "slope": 1.0,
             "taxsubgrp": "Aquic Natrargids",
-            "textureInfill": "Yes"
+            "textureInfill": "No"
           },
           "siteDescription": "The Ausmus series consists of very deep, somewhat poorly drained or moderately well drained soils that formed in alluvium and lacustrine deposits derived from volcanic rocks and volcanic ash.  Ausmus soils are on low lake terraces.  Slopes are 0 to 2 percent.  The mean annual precipitation is about 230 mm and the mean annual temperature is about 6.5 degrees C."
         },
@@ -553,8 +553,8 @@
         "rank_data": "6",
         "rank_data_loc": "1",
         "rank_loc": 1,
-        "score_data": 0.63,
-        "score_data_loc": 0.565,
+        "score_data": 0.638,
+        "score_data_loc": 0.569,
         "score_loc": 0.5
       },
       {
@@ -562,12 +562,24 @@
         "componentData": "Data Complete",
         "componentID": 25442848,
         "name": "Robson",
-        "rank_data": "5",
+        "rank_data": "1",
         "rank_data_loc": "2",
         "rank_loc": 2,
-        "score_data": 0.646,
-        "score_data_loc": 0.498,
+        "score_data": 0.759,
+        "score_data_loc": 0.554,
         "score_loc": 0.35
+      },
+      {
+        "component": "Reallis",
+        "componentData": "Data Complete",
+        "componentID": 25442630,
+        "name": "Reallis",
+        "rank_data": "2",
+        "rank_data_loc": "3",
+        "rank_loc": 3,
+        "score_data": 0.696,
+        "score_data_loc": 0.454,
+        "score_loc": 0.212
       },
       {
         "component": "Actem",
@@ -575,46 +587,10 @@
         "componentID": 25443068,
         "name": "Actem",
         "rank_data": "4",
-        "rank_data_loc": "3",
-        "rank_loc": 5,
-        "score_data": 0.657,
-        "score_data_loc": 0.435,
-        "score_loc": 0.212
-      },
-      {
-        "component": "Raz",
-        "componentData": "Data Complete",
-        "componentID": 25442636,
-        "name": "Raz",
-        "rank_data": "3",
         "rank_data_loc": "4",
-        "rank_loc": 7,
-        "score_data": 0.723,
-        "score_data_loc": 0.424,
-        "score_loc": 0.125
-      },
-      {
-        "component": "Brace",
-        "componentData": "Data Complete",
-        "componentID": 25442637,
-        "name": "Brace",
-        "rank_data": "1",
-        "rank_data_loc": "5",
-        "rank_loc": 8,
-        "score_data": 0.756,
-        "score_data_loc": 0.421,
-        "score_loc": 0.087
-      },
-      {
-        "component": "Reallis",
-        "componentData": "Data Complete",
-        "componentID": 25442630,
-        "name": "Reallis",
-        "rank_data": "7",
-        "rank_data_loc": "6",
-        "rank_loc": 3,
-        "score_data": 0.588,
-        "score_data_loc": 0.4,
+        "rank_loc": 5,
+        "score_data": 0.649,
+        "score_data_loc": 0.43,
         "score_loc": 0.212
       },
       {
@@ -623,22 +599,46 @@
         "componentID": 25442616,
         "name": "Rinconflat",
         "rank_data": "8",
-        "rank_data_loc": "7",
+        "rank_data_loc": "5",
         "rank_loc": 4,
-        "score_data": 0.587,
-        "score_data_loc": 0.4,
+        "score_data": 0.593,
+        "score_data_loc": 0.403,
         "score_loc": 0.212
+      },
+      {
+        "component": "Raz",
+        "componentData": "Data Complete",
+        "componentID": 25442636,
+        "name": "Raz",
+        "rank_data": "5",
+        "rank_data_loc": "6",
+        "rank_loc": 7,
+        "score_data": 0.648,
+        "score_data_loc": 0.387,
+        "score_loc": 0.125
+      },
+      {
+        "component": "Brace",
+        "componentData": "Data Complete",
+        "componentID": 25442637,
+        "name": "Brace",
+        "rank_data": "3",
+        "rank_data_loc": "7",
+        "rank_loc": 8,
+        "score_data": 0.652,
+        "score_data_loc": 0.369,
+        "score_loc": 0.087
       },
       {
         "component": "Ausmus",
         "componentData": "Data Complete",
         "componentID": 25442629,
         "name": "Ausmus",
-        "rank_data": "2",
+        "rank_data": "7",
         "rank_data_loc": "8",
         "rank_loc": 9,
-        "score_data": 0.746,
-        "score_data_loc": 0.378,
+        "score_data": 0.633,
+        "score_data_loc": 0.322,
         "score_loc": 0.01
       },
       {
@@ -649,8 +649,8 @@
         "rank_data": "9",
         "rank_data_loc": "9",
         "rank_loc": 6,
-        "score_data": 0.406,
-        "score_data_loc": 0.284,
+        "score_data": 0.471,
+        "score_data_loc": 0.317,
         "score_loc": 0.163
       }
     ]

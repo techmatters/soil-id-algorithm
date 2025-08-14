@@ -161,6 +161,7 @@ pytest==8.4.1 \
     # via
     #   -r requirements/dev.in
     #   pytest-profiling
+    #   syrupy
 pytest-profiling==1.8.1 \
     --hash=sha256:3dd8713a96298b42d83de8f5951df3ada3e61b3e5d2a06956684175529e17aea \
     --hash=sha256:3f171fa69d5c82fa9aab76d66abd5f59da69135c37d6ae5bf7557f1b154cb08d
@@ -252,6 +253,10 @@ soupsieve==2.7 \
     --hash=sha256:6e60cc5c1ffaf1cebcc12e8188320b72071e922c2e897f737cadce79ad5d30c4 \
     --hash=sha256:ad282f9b6926286d2ead4750552c8a6142bc4c783fd66b0293547c8fe6ae126a
     # via beautifulsoup4
+syrupy==4.9.1 \
+    --hash=sha256:b7d0fcadad80a7d2f6c4c71917918e8ebe2483e8c703dfc8d49cdbb01081f9a4 \
+    --hash=sha256:b94cc12ed0e5e75b448255430af642516842a2374a46936dd2650cfb6dd20eda
+    # via -r requirements/dev.in
 tqdm==4.67.1 \
     --hash=sha256:26445eca388f82e72884e0d580d5464cd801a3ea01e63e5601bdff9ba6a48de2 \
     --hash=sha256:f8aef9c52c08c13a65f30ea34f4e5aac3fd1a34959879d7e59e63027286627f2

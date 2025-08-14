@@ -128,7 +128,7 @@ def soil_sim(muhorzdata_pd):
     agg_data = []
 
     # Group data by compname_grp
-    sim_group_compname = [group for _, group in sim.groupby("compname_grp", sort=False)]
+    sim_group_compname = [group for _, group in sim.groupby("compname_grp")]
     for index, group in enumerate(sim_group_compname):
         # aggregate data into 0-30 and 30-100 or bottom depth
         group_ag = slice_and_aggregate_soil_data(group[sim_data_columns])

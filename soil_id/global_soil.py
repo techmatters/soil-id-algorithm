@@ -105,7 +105,7 @@ def list_soils_global(connection, lon, lat, buffer_dist=100000):
     ##############################################################################################
     ExpCoeff = -0.00036888  # Decays to 0.25 @ 10km
     loc_scores = []
-    mucompdata_grouped = mucompdata_pd.groupby(["mukey", "cokey"], sort=False)
+    mucompdata_grouped = mucompdata_pd.groupby(["mukey", "cokey"])
 
     for (mukey, cokey), group in mucompdata_grouped:
         loc_score = calculate_location_score(group, ExpCoeff)
@@ -124,7 +124,7 @@ def list_soils_global(connection, lon, lat, buffer_dist=100000):
     mucompdata_pd["Index"] = mucompdata_pd.index
 
     # Group by component name
-    mucompdata_grouped = mucompdata_pd.groupby("compname", sort=False)
+    mucompdata_grouped = mucompdata_pd.groupby("compname")
 
     # Take at most 12 groups
     mucompdata_comp_grps = [group for _, group in mucompdata_grouped][:12]
@@ -234,7 +234,7 @@ def list_soils_global(connection, lon, lat, buffer_dist=100000):
     )
 
     # Group data by cokey for texture
-    muhorzdata_group_cokey = list(muhorzdata_pd.groupby("cokey", sort=False))
+    muhorzdata_group_cokey = list(muhorzdata_pd.groupby("cokey"))
     pd.set_option("display.max_rows", None)
     pd.set_option("display.max_columns", None)
     pd.set_option("display.width", None)
@@ -367,7 +367,7 @@ def list_soils_global(connection, lon, lat, buffer_dist=100000):
 
     # Create index for component instance display
     mucompdata_comp_grps_list = []
-    mucompdata_comp_grps = [group for _, group in mucompdata_pd.groupby("compname_grp", sort=False)]
+    mucompdata_comp_grps = [group for _, group in mucompdata_pd.groupby("compname_grp")]
 
     for group in mucompdata_comp_grps:
         group = group.sort_values("distance").reset_index(drop=True)
@@ -772,7 +772,7 @@ def rank_soils_global(
 
     # Horizon Data Similarity
     if soilIDRank_output_pd is not None:
-        cokey_groups = [group for _, group in soilIDRank_output_pd.groupby("compname", sort=False)]
+        cokey_groups = [group for _, group in soilIDRank_output_pd.groupby("compname")]
 
         # Create lists to store component statuses
         Comp_Rank_Status, Comp_Missing_Status, Comp_name = [], [], []
@@ -1087,7 +1087,7 @@ def rank_soils_global(
 
     # Sorting and reindexing of Data-only score
     soilIDList_data = []
-    D_final_comp_grps = [g for _, g in D_final_horz.groupby("compname_grp", sort=False)]
+    D_final_comp_grps = [g for _, g in D_final_horz.groupby("compname_grp")]
 
     for comp_grps_temp in D_final_comp_grps:
         comp_grps_temp = comp_grps_temp.sort_values("Score_Data", ascending=False).reset_index(
@@ -1163,7 +1163,7 @@ def rank_soils_global(
     soilIDList_out = []
 
     # Group by 'compname_grp'
-    for _, comp_grps_temp in D_final_loc.groupby("compname_grp", sort=False):
+    for _, comp_grps_temp in D_final_loc.groupby("compname_grp"):
         comp_grps_temp = comp_grps_temp.sort_values("Score_Data_Loc", ascending=False).reset_index(
             drop=True
         )

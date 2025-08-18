@@ -22,6 +22,7 @@ import traceback
 
 import pandas
 
+from soil_id.db import get_datastore_connection
 from soil_id.us_soil import list_soils, rank_soils
 
 
@@ -33,6 +34,7 @@ def clean_soil_list_json(obj):
     elif isinstance(obj, (list, set, tuple)):
         return list(map(clean_soil_list_json, obj))
     return obj
+
 
 test_data_df = pandas.read_csv(
     os.path.join(os.path.dirname(__file__), "US_SoilID_KSSL_LPKS_Testing.csv")
@@ -61,7 +63,7 @@ with open(result_file_name, "w", buffering=1) as result_file:
 
         start_time = time.perf_counter()
         try:
-            list_result = list_soils(lat=lat, lon=lon)
+            list_result = list_soils(get_datastore_connection(), lat=lat, lon=lon)
 
             result_record["list_result"] = list_result.soil_list_json
             result_record["rank_result"] = rank_soils(

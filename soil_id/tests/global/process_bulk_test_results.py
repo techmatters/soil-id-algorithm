@@ -44,13 +44,14 @@ for result_record in result_dicts:
 
         def last_word(s):
             return s.split()[-1].lower()
+
         secondary_index = [
             i
             for i, match in enumerate(matches)
             if last_word(match["component"]) == last_word(result_record["pedon_name"])
             or last_word(match["component"]) == (last_word(result_record["pedon_name"]) + "s")
         ]
-    
+
         if len(secondary_index) == 0:
             result_record["secondary_result"] = "missing"
         else:
@@ -71,7 +72,11 @@ print("# Result proportions:\n")
 print(result_groups.count()["pedon_key"] / len(df) * 100)
 
 print("# Secondary result proportions:\n")
-print(secondary_result_groups.count()["pedon_key"] / (len(df) - df["secondary_result"].isnull().sum()) * 100)
+print(
+    secondary_result_groups.count()["pedon_key"]
+    / (len(df) - df["secondary_result"].isnull().sum())
+    * 100
+)
 
 if len(df) < 11:
     print("\n# Execution times:\n")
@@ -99,4 +104,6 @@ if "crash" in result_groups.groups:
         indented_lines = ["  " + line for line in lines]
         print("\n".join(indented_lines) + "\n")
 
-df[['pedon_key', 'pedon_name', 'lat', 'lon', 'result', 'secondary_result', 'all_soils']].to_csv('global_algorithm_results.csv', index=False)
+df[["pedon_key", "pedon_name", "lat", "lon", "result", "secondary_result", "all_soils"]].to_csv(
+    "global_algorithm_results.csv", index=False
+)

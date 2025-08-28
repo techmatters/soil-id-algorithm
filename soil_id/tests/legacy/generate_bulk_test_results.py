@@ -18,10 +18,11 @@ import json
 import os
 import time
 import traceback
+
+import numpy
+import pandas
 import requests
 
-import pandas
-import numpy
 
 def get_rfv(cf):
     if 0 <= cf < 2:
@@ -35,14 +36,36 @@ def get_rfv(cf):
     elif 61 <= cf <= 100:
         return ">60%"
 
+
 def call_legacy(lat, lon, pedon):
     requests.get(f"https://api.landpotential.org/soilidlist?longitude={lon}&latitude={lat}")
 
     base = f"https://api.landpotential.org/soilidrank?longitude={lon}&latitude={lat}"
-    depths = "&".join([f"soilHorizon{idx + 1}_Depth={botdep}" for idx, botdep in enumerate(pedon["BOTDEP"].values.tolist())])
-    rfv = "&".join([f"soilHorizon{idx + 1}_RFV={get_rfv(rfv)}" for idx, rfv in enumerate(pedon["RFV"].values.tolist()) if not numpy.isnan(rfv) ])
-    texture = "&".join([f"soilHorizon{idx + 1}={textClass.upper()}" for idx, textClass in enumerate(pedon["textClass"].values.tolist())])
-    color = "&".join([f"soilHorizon{idx + 1}_LAB={",".join([f"{v}" for v in lab])}" for idx, lab in enumerate(pedon[["L", "A", "B"]].values.tolist())])
+    depths = "&".join(
+        [
+            f"soilHorizon{idx + 1}_Depth={botdep}"
+            for idx, botdep in enumerate(pedon["BOTDEP"].values.tolist())
+        ]
+    )
+    rfv = "&".join(
+        [
+            f"soilHorizon{idx + 1}_RFV={get_rfv(rfv)}"
+            for idx, rfv in enumerate(pedon["RFV"].values.tolist())
+            if not numpy.isnan(rfv)
+        ]
+    )
+    texture = "&".join(
+        [
+            f"soilHorizon{idx + 1}={textClass.upper()}"
+            for idx, textClass in enumerate(pedon["textClass"].values.tolist())
+        ]
+    )
+    color = "&".join(
+        [
+            f"soilHorizon{idx + 1}_LAB={','.join([f'{v}' for v in lab])}"
+            for idx, lab in enumerate(pedon[["L", "A", "B"]].values.tolist())
+        ]
+    )
     req = "&".join([base, depths, rfv, texture, color])
 
     print(req)
@@ -50,6 +73,7 @@ def call_legacy(lat, lon, pedon):
     resp = requests.get(req)
 
     return resp.json()
+
 
 test_data_df = pandas.read_csv(
     os.path.join(os.path.dirname(__file__), "../global/global_pedon_test_dataset.csv")
@@ -66,7 +90,7 @@ print(f"logging results to {result_file_name}")
 # buffering=1 is line buffering
 with open(result_file_name, "w", buffering=1) as result_file:
     result_agg = {}
- 
+
     for pedon_key, pedon in pedons:
         lat = pedon["Y_LatDD"].values[0]
         lon = pedon["X_LonDD"].values[0]

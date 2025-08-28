@@ -13,17 +13,19 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see https://www.gnu.org/licenses/.
 
-from soil_id.utils import find_region_for_location
 import pytest
 
+from soil_id.utils import find_region_for_location
+
 test_locations = [
-    (38.968984, -103.625974, 'US'),
-    (-6.708697, -69.306646, 'Global'),
-    (-3.521766, -136.995712, 'Global')
+    (38.968984, -103.625974, "US"),
+    (-6.708697, -69.306646, "Global"),
+    (-3.521766, -136.995712, "Global"),
 ]
+
 
 @pytest.mark.parametrize("location", test_locations)
 def test_find_region(location):
-    lat, lon, region = location    
+    lat, lon, region = location
 
     assert find_region_for_location(lat=lat, lon=lon) == region

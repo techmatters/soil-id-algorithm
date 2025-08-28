@@ -29,7 +29,7 @@ from pandas import json_normalize
 import soil_id.config
 
 from .color import getProfileLAB, lab2munsell, munsell2rgb
-from .services import get_soil_series_data, get_soilweb_data, sda_return, get_elev_data
+from .services import get_elev_data, get_soil_series_data, get_soilweb_data, sda_return
 from .soil_sim import soil_sim
 from .utils import (
     aggregate_data,
@@ -2046,7 +2046,7 @@ def rank_soils(
 
     # Concatenate the sorted and ranked groups
     D_final = pd.concat(soilIDList_data).reset_index(drop=True)
-    
+
     # Merge with the Rank_Filter data
     D_final = pd.merge(D_final, Rank_Filter, on="compname", how="left")
 

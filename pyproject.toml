@@ -17,6 +17,7 @@ line-length = 100
 known-first-party = ["soil_id"]
 
 [tool.ruff.lint]
+extend-select = ["I"]
 extend-ignore = ["E203"]
 
 [tool.pytest.ini_options]

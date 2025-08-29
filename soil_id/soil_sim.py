@@ -14,12 +14,13 @@
 # along with this program. If not, see https://www.gnu.org/licenses/.
 
 # Third-party libraries
+import re
+from typing import List
+
 import numpy as np
 import pandas as pd
 from composition_stats import ilr, ilr_inv
 from scipy.stats import spearmanr
-import re
-from typing import List
 
 from .utils import (
     acomp,

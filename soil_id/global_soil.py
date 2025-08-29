@@ -439,8 +439,7 @@ def list_soils_global(connection, lon, lat, buffer_dist=100000):
 
     # Merge component descriptions
     WRB_Comp_Desc = get_WRB_descriptions(
-        connection,
-        mucompdata_cond_prob["compname_grp"].drop_duplicates().tolist()
+        connection, mucompdata_cond_prob["compname_grp"].drop_duplicates().tolist()
     )
 
     mucompdata_cond_prob = pd.merge(
@@ -1027,7 +1026,9 @@ def rank_soils_global(
         # Normalize probabilities
         def normalize(arr):
             min_val, max_val = np.min(arr), np.max(arr)
-            return (arr - min_val) / (max_val - min_val) if max_val != min_val else np.ones_like(arr)
+            return (
+                (arr - min_val) / (max_val - min_val) if max_val != min_val else np.ones_like(arr)
+            )
 
         prob_w = normalize(prob_w)
         prob_r = normalize(prob_r)

@@ -78,4 +78,6 @@ if "crash" in result_groups.groups:
         indented_lines = ["  " + line for line in lines]
         print("\n".join(indented_lines) + "\n")
 
-df[['pedon_key', 'pedon_name', 'lat', 'lon', 'result', 'all_soils']].to_csv('us_algorithm_results.csv', index=False)
+df[["pedon_key", "pedon_name", "lat", "lon", "result", "all_soils"]].to_csv(
+    "us_algorithm_results.csv", index=False
+)

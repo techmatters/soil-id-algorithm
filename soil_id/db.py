@@ -295,10 +295,10 @@ def extract_hwsd2_data(connection, lon, lat, buffer_dist, table_name):
         #         ST_Intersects(vg.geom, ST_SetSRID(ST_Point({lon}, {lat}), 4326))
         #         OR ST_Intersects(vg.geom, pp.geom);
         # """
- 
+
         # # Q2
         # main_query = f"""
-        #     WITH 
+        #     WITH
         #     inputs AS (
         #         SELECT
         #             ST_GeomFromText('{buffer_wkt}', 4326) AS buffer_geom,
@@ -340,7 +340,6 @@ def extract_hwsd2_data(connection, lon, lat, buffer_dist, table_name):
         #     WHERE ST_DWithin(geom::geography, {point}::geography, {buffer_dist});
         # """
 
-
         # Q4
         point = f"ST_SetSRID(ST_Point({lon}, {lat}), 4326)::geography"
         main_query = f"""
@@ -355,7 +354,7 @@ def extract_hwsd2_data(connection, lon, lat, buffer_dist, table_name):
             WHERE ST_DWithin(shape, {point}, {buffer_dist})
             GROUP BY hwsd2_id;
         """
-        
+
         # Use GeoPandas to execute the main query and load results into a GeoDataFrame.
         hwsd = pd.read_sql_query(main_query, connection)
 
@@ -394,7 +393,6 @@ def get_WRB_descriptions(connection, WRB_Comp_List):
     """
     try:
         with connection.cursor() as cur:
-
             # Create placeholders for the SQL IN clause
             placeholders = ", ".join(["%s"] * len(WRB_Comp_List))
             sql = f"""SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es,

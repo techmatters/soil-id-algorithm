@@ -14,8 +14,9 @@
 # along with this program. If not, see https://www.gnu.org/licenses/.
 
 import os
-from setuptools import setup
 from pathlib import Path
+
+from setuptools import setup
 
 this_directory = Path(__file__).parent
 

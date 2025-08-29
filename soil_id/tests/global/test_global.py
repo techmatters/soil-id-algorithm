@@ -15,6 +15,7 @@
 
 import logging
 import time
+
 import pytest
 
 from soil_id.db import get_datastore_connection
@@ -27,13 +28,14 @@ test_locations = [
     {"lat": -10.07856, "lon": 15.107436},
 ]
 
+
 @pytest.mark.parametrize("location", test_locations)
 def test_soil_location(location):
     with get_datastore_connection() as connection:
         logging.info(f"Testing {location['lon']}, {location['lat']}")
         start_time = time.perf_counter()
         list_soils_result = list_soils_global(connection, location["lon"], location["lat"])
-        logging.info(f"...time: {(time.perf_counter()-start_time):.2f}s")
+        logging.info(f"...time: {(time.perf_counter() - start_time):.2f}s")
         rank_soils_global(
             connection,
             location["lon"],

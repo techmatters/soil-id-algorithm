@@ -20,6 +20,7 @@ import time
 import traceback
 
 import pandas
+
 from soil_id.db import get_datastore_connection
 from soil_id.global_soil import list_soils_global, rank_soils_global
 
@@ -57,7 +58,6 @@ with (
         else:
             start_time = time.perf_counter()
             try:
-
                 list_result = list_soils_global(connection=connection, lat=lat, lon=lon)
 
                 result_record["list_result"] = list_result.soil_list_json

@@ -1,11 +1,11 @@
 [project]
 name = "soil_id"
 readme = "README.md"
-license = {file = "LICENSE"}
+license = { file = "LICENSE" }
 requires-python = ">=3.12"
 authors = [
-  {name = "Jonathan Maynard", email = "jonathan.maynard@usda.gov"},
-  {name = "Paul Schreiber", email = "paul@techmatters.org"},
+  { name = "Jonathan Maynard", email = "jonathan.maynard@usda.gov" },
+  { name = "Paul Schreiber", email = "paul@techmatters.org" },
 ]
 dynamic = ["version", "description", "classifiers", "dependencies"]
 
@@ -25,4 +25,4 @@ log_cli = true
 log_cli_level = "INFO"
 
 [tool.setuptools.dynamic]
-dependencies = {file = ["requirements/base.in"]}
+dependencies = { file = ["requirements/base.in"] }

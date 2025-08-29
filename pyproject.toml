@@ -12,6 +12,7 @@ dynamic = ["version", "description", "classifiers", "dependencies"]
 [tool.ruff]
 exclude = ["migrations"]
 line-length = 100
+required-version = ">=0.12.11"
 
 [tool.ruff.lint.isort]
 known-first-party = ["soil_id"]

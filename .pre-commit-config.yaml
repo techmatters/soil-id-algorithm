@@ -3,6 +3,11 @@ default_install_hook_types:
     - commit-msg
 
 repos:
+    - repo: https://gitlab.com/vojko.pribudic.foss/pre-commit-update
+      rev: v0.8.0
+      hooks:
+          - id: pre-commit-update
+
     - repo: https://github.com/astral-sh/ruff-pre-commit
       rev: v0.12.11
       hooks:

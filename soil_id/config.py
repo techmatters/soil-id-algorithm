@@ -14,13 +14,17 @@
 # along with this program. If not, see https://www.gnu.org/licenses/.
 import os
 import tempfile
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 from platformdirs import user_cache_dir
 
 DATA_PATH = os.environ.get("DATA_PATH", "Data")
 
 # Numpy seeding
-RANDOM_SEED = os.environ.get("RANDOM_SEED", 19)
+RANDOM_SEED = int(os.environ.get("RANDOM_SEED", 19))
 
 # Output
 APP_NAME = os.environ.get("APP_NAME", "org.terraso.soilid")
@@ -41,5 +45,6 @@ MUNSELL_RGB_LAB_PATH = f"{DATA_PATH}/LandPKS_munsell_rgb_lab.csv"
 # Database
 DB_NAME = os.environ.get("DB_NAME", "terraso_backend")
 DB_HOST = os.environ.get("DB_HOST")
+DB_PORT = int(os.environ.get("DB_PORT", 5432))
 DB_USERNAME = os.environ.get("DB_USERNAME")
 DB_PASSWORD = os.environ.get("DB_PASSWORD")

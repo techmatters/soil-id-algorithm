@@ -679,11 +679,12 @@ def getProfile_SG(data, variable, c_bot=False):
 def drop_cokey_horz(df):
     """
     Function to drop duplicate rows of component horizon data when more than one instance of a
-    component are duplicates.
+    component are duplicates. Keeps the duplicate with the smallest distance.
 
     Function assumes that the dataframe contains:
       (1) unique cokey identifier ('cokey')
       (2) generic compname identifier ('compname')
+      (3) distance column ('distance')
     Can handle dataframes that include a 'slope_r' column as well as those that do not.
     """
     columns_to_compare = [
@@ -707,13 +708,30 @@ def drop_cokey_horz(df):
     # Group by compname
     for _, comp_group in df.groupby("compname", sort=False):
         # Get unique cokeys and their data signature within this compname group
-        cokey_map = comp_group.groupby("cokey")["_cokey_grouped"].first()
+        cokey_map = comp_group.groupby("cokey").agg({
+            "_cokey_grouped": "first",
+            "distance": "first"  # Get the distance for each cokey
+        })
 
-        # Find duplicates
-        duplicated = cokey_map.duplicated(keep="first")
-        drop_instances.extend(cokey_map[duplicated].index.tolist())
+        # Find duplicates based on the grouped horizon data
+        duplicated_mask = cokey_map["_cokey_grouped"].duplicated(keep=False)
+        
+        if duplicated_mask.any():
+            # Get only the duplicated entries
+            duplicated_entries = cokey_map[duplicated_mask]
+            
+            # Group by the duplicated signature to find which cokeys are duplicates of each other
+            for signature, dup_group in duplicated_entries.groupby("_cokey_grouped"):
+                # Sort by distance and keep the one with smallest distance (first after sorting)
+                sorted_by_distance = dup_group.sort_values("distance")
+                # Drop all except the first (smallest distance)
+                cokeys_to_drop = sorted_by_distance.index.tolist()[1:]
+                drop_instances.extend(cokeys_to_drop)
 
-    return pd.Series(drop_instances, name="cokey_to_drop")
+    # Clean up temporary columns
+    df.drop(columns=["_group_key", "_cokey_grouped"], inplace=True)
+
+    return pd.Series(drop_instances, name="cokey_to_drop") if drop_instances else None
 
 
 def calculate_location_score(group, ExpCoeff):
@@ -1122,21 +1140,31 @@ def trim_fraction(text):
     return text.rstrip(".0") if text.endswith(".0") else text
 
 
-def calculate_distance_score(row, ExpCoeff):
+def calculate_distance_score(row, ExpCoeff, comp_pct_col="comppct_r"):
     """
-    Calculate distance score based on the conditions provided (US).
+    Calculate distance score based on distance and component percentage.
+    This function is generalized to work with different data sources by
+    accepting the component percentage column name as a parameter.
+
+    Parameters:
+    - row (pd.Series): A row of a DataFrame.
+    - ExpCoeff (float): Exponential coefficient for distance decay.
+    - comp_pct_col (str): The name of the component percentage column.
     """
-    if row["distance"] == 0:
-        if row["comppct_r"] > 100:
+    comp_pct = row[comp_pct_col]
+    distance = row["distance"]
+
+    if distance == 0:
+        if comp_pct > 100:
             return 1
         else:
-            return round(row["comppct_r"] / 100, 3)
+            return round(comp_pct / 100, 3)
     else:
-        if row["comppct_r"] > 100:
-            return round(max(0.25, math.exp(ExpCoeff * row["distance"])), 3)
+        factor = max(0.25, math.exp(ExpCoeff * distance))
+        if comp_pct > 100:
+            return round(factor, 3)
         else:
-            factor = max(0.25, math.exp(ExpCoeff * row["distance"]))
-            return round(row["comppct_r"] / 100 * factor, 3)
+            return round(comp_pct / 100 * factor, 3)
 
 
 def extract_muhorzdata_STATSGO(mucompdata_pd):
@@ -1168,7 +1196,8 @@ def extract_muhorzdata_STATSGO(mucompdata_pd):
                         ec_r, lep_r, chfrags.fragvol_r
                         FROM chorizon
                         LEFT OUTER JOIN chfrags ON chfrags.chkey = chorizon.chkey
-                        WHERE cokey IN ({",".join(cokey_list)})"""
+                        WHERE cokey IN ({",".join(cokey_list)})
+                        ORDER BY cokey, chorizon.chkey, hzdept_r"""
 
     # Execute the query
     muhorzdata_out = sda_return(propQry=muhorzdataQry)
@@ -1396,7 +1425,8 @@ def extract_mucompdata_STATSGO(lon, lat):
                         component.irrcapscl, component.irrcapunit, component.taxorder,
                         component.taxsubgrp
                         FROM component
-                        WHERE mukey IN ({",".join(map(str, mukey_list))})"""
+                        WHERE mukey IN ({",".join(map(str, mukey_list))})
+                        ORDER BY component.mukey, component.cokey"""
     mucompdata_out = sda_return(propQry=mucompdataQry)
 
     if not mucompdata_out.empty:
@@ -1653,12 +1683,30 @@ def fill_missing_comppct_r(mucompdata_pd):
     return mucompdata_pd
 
 
-def process_distance_scores(mucompdata_pd, ExpCoeff):
+def process_distance_scores(
+    mucompdata_pd,
+    ExpCoeff,
+    comp_pct_col="comppct_r",
+    comp_key_col="cokey",
+    comp_name_col="compname",
+    map_unit_col="mukey",
+    distance_col="distance",
+    comp_kind_col="compkind",
+    compkind_filter=False,
+):
     """
     Process distance scores and perform group-wise aggregations.
 
     Parameters:
     - mucompdata_pd (pd.DataFrame): DataFrame containing soil data.
+    - ExpCoeff (float): Exponential coefficient for distance decay.
+    - comp_pct_col (str): The name of the component percentage column (e.g., 'comppct_r', 'share').
+    - comp_key_col (str): The name of the unique component key column (e.g., 'cokey').
+    - comp_name_col (str): The name of the component name column (e.g., 'compname').
+    - map_unit_col (str): The name of the map unit key column (e.g., 'mukey').
+    - distance_col (str): The name of the distance column.
+    - comp_kind_col (str): The name of the component kind column for filtering.
+    - compkind_filter (bool): If True, filter out "Miscellaneous area" based on comp_kind_col.
 
     External Functions:
     - calculate_distance_score (function): A function to calculate distance scores.
@@ -1673,58 +1721,93 @@ def process_distance_scores(mucompdata_pd, ExpCoeff):
         home and adjacent mapunits and dividing this by the sum of all map units
         and components. We have modified this approach so that each instance of a
         component occurance is evaluated separately and assinged a weight and the
-        max distance score for each component group is assigned to all component instances.
+        sum of distance scores for each component group is assigned to all component instances.
     # --------------------------------------------------------------------
 
     """
-
-    # Calculate distance score for each group
-    mucompdata_pd["distance_score"] = mucompdata_pd.apply(
-        lambda row: calculate_distance_score(row, ExpCoeff), axis=1
-    )
-
-    # Group by cokey and mukey and aggregate required values
+    # Group by component name and map unit to aggregate percentages
     grouped_data = (
-        mucompdata_pd.groupby(["cokey", "mukey"])
+        mucompdata_pd.groupby([comp_name_col, map_unit_col])
         .agg(
-            distance_score=("distance_score", "sum"),
-            comppct=("comppct_r", "sum"),
-            minDistance=("distance", "min"),
+            # Aggregate the specified component percentage column
+            aggregated_pct=(comp_pct_col, "sum"),
+            distance=(distance_col, "min"),
+            cokey_list=(comp_key_col, list),
         )
         .reset_index()
     )
+    # Rename aggregated column to be consistent for the calculation function
+    grouped_data.rename(columns={"aggregated_pct": comp_pct_col}, inplace=True)
 
-    # Calculate conditional probabilities
-    total_distance_score = grouped_data["distance_score"].sum()
-    grouped_data["cond_prob"] = grouped_data["distance_score"] / total_distance_score
-
-    # Merge dataframes on 'cokey'
-    mucompdata_pd = mucompdata_pd.merge(
-        grouped_data[["cokey", "cond_prob"]], on="cokey", how="left"
+    # Calculate a single distance score for each aggregated group
+    # Pass the correct component percentage column name to the calculation function
+    grouped_data["distance_score"] = grouped_data.apply(
+        lambda row: calculate_distance_score(row, ExpCoeff, comp_pct_col=comp_pct_col),
+        axis=1,
     )
 
-    # Additional processing
-    mucompdata_pd = mucompdata_pd.sort_values("distance_score", ascending=False)
+    # Sum distance scores per component group (instead of taking max)
+    sum_scores_per_comp = grouped_data.groupby(comp_name_col)["distance_score"].sum().reset_index()
+    sum_scores_per_comp.rename(columns={"distance_score": "sum_distance_score"}, inplace=True)
 
-    mucompdata_pd = mucompdata_pd[~mucompdata_pd["compkind"].str.contains("Miscellaneous area")]
+    # Merge sum scores back to grouped data
+    grouped_data = grouped_data.merge(sum_scores_per_comp, on=comp_name_col, how="left")
+
+    # Calculate conditional probabilities based on sum scores per component group
+    total_sum_score = sum_scores_per_comp["sum_distance_score"].sum()
+    if total_sum_score > 0:
+        sum_scores_per_comp["cond_prob"] = sum_scores_per_comp["sum_distance_score"] / total_sum_score
+    else:
+        sum_scores_per_comp["cond_prob"] = 0
+
+    # Merge conditional probabilities back to grouped data
+    grouped_data = grouped_data.merge(
+        sum_scores_per_comp[[comp_name_col, "cond_prob"]], on=comp_name_col, how="left"
+    )
+
+    # Explode the dataframe back to the component key level
+    grouped_data = grouped_data.explode("cokey_list").rename(
+        columns={"cokey_list": comp_key_col}
+    )
+
+    # Merge the conditional probability back into the original dataframe
+    mucompdata_pd = mucompdata_pd.merge(
+        grouped_data[[comp_key_col, "cond_prob", "sum_distance_score", "distance_score"]], on=comp_key_col, how="left"
+    )
+
+    # Rename sum_distance_score to comp_distance_score for clarity
+    mucompdata_pd.rename(columns={"sum_distance_score": "comp_distance_score"}, inplace=True)
+
+    # Additional processing
+    mucompdata_pd = mucompdata_pd.sort_values(["cond_prob", comp_name_col], ascending=[False, True])
+
+    # Filter out miscellaneous areas if the flag is set and the column exists
+    if compkind_filter and comp_kind_col in mucompdata_pd.columns:
+        mucompdata_pd = mucompdata_pd[
+            ~mucompdata_pd[comp_kind_col].str.contains("Miscellaneous area", na=False)
+        ]
 
     mucompdata_pd = mucompdata_pd.reset_index(drop=True)
 
     # Create a list of component groups
-    mucompdata_comp_grps = [g for _, g in mucompdata_pd.groupby(["compname"], sort=False)]
+    mucompdata_comp_grps = [
+        g for _, g in mucompdata_pd.groupby([comp_name_col], sort=True)
+    ]
     mucompdata_comp_grps = mucompdata_comp_grps[: min(12, len(mucompdata_comp_grps))]
 
-    # Assign max within-group location-based score to all members of the group
+    # Assign group-level values to all members of the group
     for group in mucompdata_comp_grps:
-        group["distance_score"] = group["distance_score"].max()
-        group = group.sort_values("distance").reset_index(drop=True)
-        group["min_dist"] = group["distance"].iloc[0]
+        # distance_score is already set to sum value for the group
+        group = group.sort_values(distance_col).reset_index(drop=True)
+        group["min_dist"] = group[distance_col].iloc[0]
 
     # Concatenate the list of dataframes
-    mucompdata_pd = pd.concat(mucompdata_comp_grps).reset_index(drop=True)
+    if mucompdata_comp_grps:
+        mucompdata_pd = pd.concat(mucompdata_comp_grps).reset_index(drop=True)
+    else:
+        mucompdata_pd = pd.DataFrame(columns=mucompdata_pd.columns)
 
     return mucompdata_pd
-
 
 ###################################################################################################
 #                                       Soil Color Functions                                      #
@@ -2068,7 +2151,7 @@ def slice_and_aggregate_soil_data(df):
         missing_row = {col: np.nan for col in result_df.columns}
         missing_row["hzdept_r"] = 30
         missing_row["hzdepb_r"] = 100
-        result_df = result_df.append(missing_row, ignore_index=True)
+        result_df = pd.concat([result_df, pd.DataFrame([missing_row])], ignore_index=True)
 
     return result_df
 

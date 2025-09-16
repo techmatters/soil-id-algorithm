@@ -39,6 +39,7 @@ def get_datastore_connection():
             user=soil_id.config.DB_USERNAME,
             password=soil_id.config.DB_PASSWORD,
             dbname=soil_id.config.DB_NAME,
+            port=soil_id.config.DB_PORT,
         )
         return conn
     except Exception as err:
@@ -185,6 +186,7 @@ def get_hwsd2_profile_data(connection, hwsd2_mu_select):
                        ph_water, elec_cond, fao90_name
                 FROM hwsd2_data
                 WHERE hwsd2_smu_id IN ({placeholders})
+                ORDER BY hwsd2_smu_id, compid, sequence, layer
             """
             cur.execute(sql_query, tuple(hwsd2_mu_select))
             results = cur.fetchall()
@@ -399,7 +401,8 @@ def get_WRB_descriptions(connection, WRB_Comp_List):
             sql = f"""SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es,
                              Description_ks, Management_ks, Description_fr, Management_fr
                       FROM wrb_fao90_desc
-                      WHERE WRB_tax IN ({placeholders})"""
+                      WHERE WRB_tax IN ({placeholders})
+                      ORDER BY WRB_tax"""
 
             # Execute the query with the parameters
             cur.execute(sql, tuple(WRB_Comp_List))
@@ -456,6 +459,7 @@ def getSG_descriptions(connection, WRB_Comp_List):
             SELECT lu.WRB_1984_Full
             FROM wrb2006_to_fao90 AS lu
             WHERE lu.WRB_2006_Full = ANY(%s)
+            ORDER BY lu.WRB_1984_Full
         """
         names = execute_query(sql1, ([WRB_Comp_List],))
 
@@ -492,6 +496,7 @@ def getSG_descriptions(connection, WRB_Comp_List):
                    Management_fr
             FROM wrb_fao90_desc
             WHERE WRB_tax = ANY(%s)
+            ORDER BY WRB_tax
         """
         results = execute_query(sql2, ([WRB_Comp_List_mapped],))
 

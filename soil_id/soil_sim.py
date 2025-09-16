@@ -66,7 +66,7 @@ def soil_sim(muhorzdata_pd):
     sim_columns = [
         "compname_grp",
         "hzname",
-        "distance_score",
+        "cond_prob",
         "hzdept_r",
         "hzdepb_r",
         "sandtotal_l",
@@ -129,12 +129,12 @@ def soil_sim(muhorzdata_pd):
     agg_data = []
 
     # Group data by compname_grp
-    sim_group_compname = [group for _, group in sim.groupby("compname_grp", sort=False)]
+    sim_group_compname = [group for _, group in sim.groupby("compname_grp", sort=True)]
     for index, group in enumerate(sim_group_compname):
         # aggregate data into 0-30 and 30-100 or bottom depth
         group_ag = slice_and_aggregate_soil_data(group[sim_data_columns])
-        group_ag["compname_grp"] = group["compname_grp"].unique()[0]
-        group_ag["distance_score"] = group["distance_score"].unique()[0]
+        group_ag["compname_grp"] = sorted(group["compname_grp"].unique())[0]
+        group_ag["cond_prob"] = sorted(group["cond_prob"].unique())[0]
         group_ag = group_ag.drop("Depth", axis=1)
         # group_ag = group_ag.where(pd.notna(group_ag), 0.01)
         group_ag = group_ag.reset_index(drop=True)
@@ -161,8 +161,20 @@ def soil_sim(muhorzdata_pd):
             "wthirdbar_r",
             "wfifteenbar_r",
         ]
-        rep_columns["ilr1"] = pd.Series(ilr_site_txt[:, 0])
-        rep_columns["ilr2"] = pd.Series(ilr_site_txt[:, 1])
+        # Handle both 1D and 2D array cases for ilr_site_txt
+        if ilr_site_txt.ndim == 1:
+            # If 1D, assume it's a single observation with 2 components
+            if len(ilr_site_txt) >= 2:
+                rep_columns["ilr1"] = pd.Series([ilr_site_txt[0]])
+                rep_columns["ilr2"] = pd.Series([ilr_site_txt[1]])
+            else:
+                # Fallback if insufficient data
+                rep_columns["ilr1"] = pd.Series([0.0])
+                rep_columns["ilr2"] = pd.Series([0.0])
+        else:
+            # Normal 2D case
+            rep_columns["ilr1"] = pd.Series(ilr_site_txt[:, 0])
+            rep_columns["ilr2"] = pd.Series(ilr_site_txt[:, 1])
         rep_columns[cor_cols] = rep_columns[cor_cols].replace(0, 0.01)
         is_constant = rep_columns["rfv_r"].nunique() == 1
         if is_constant:
@@ -238,7 +250,7 @@ def soil_sim(muhorzdata_pd):
 
         """
         Step 2. Simulate data for each row, with the number of simulations equal
-                to the (distance_score*100)*10
+                to the (cond_prob*100)*10
         """
         # Global soil texture correlation matrix (used for initial simulation)
         texture_correlation_matrix = np.array(
@@ -270,7 +282,7 @@ def soil_sim(muhorzdata_pd):
 
             simulated_txt = acomp(
                 simulate_correlated_triangular(
-                    (int(row["distance_score"] * 1000)), params_txt, texture_correlation_matrix
+                    (int(row["cond_prob"] * 1000)), params_txt, texture_correlation_matrix
                 )
             )
             simulated_txt_ilr = ilr(simulated_txt)
@@ -279,8 +291,20 @@ def soil_sim(muhorzdata_pd):
             Step 2c. Extract l,r,h values (min, median, max for ilr1 and ilr2) and format into a
                      params object for simiulation
             """
-            ilr1_values = simulated_txt_ilr[:, 0]
-            ilr2_values = simulated_txt_ilr[:, 1]
+            # Handle both 1D and 2D array cases for simulated_txt_ilr
+            if simulated_txt_ilr.ndim == 1:
+                # If 1D, assume it's a single observation with 2 components
+                if len(simulated_txt_ilr) >= 2:
+                    ilr1_values = np.array([simulated_txt_ilr[0]])
+                    ilr2_values = np.array([simulated_txt_ilr[1]])
+                else:
+                    # Fallback if insufficient data
+                    ilr1_values = np.array([0.0])
+                    ilr2_values = np.array([0.0])
+            else:
+                # Normal 2D case
+                ilr1_values = simulated_txt_ilr[:, 0]
+                ilr2_values = simulated_txt_ilr[:, 1]
 
             ilr1_l, ilr1_r, ilr1_h = (
                 ilr1_values.min(),
@@ -348,7 +372,7 @@ def soil_sim(muhorzdata_pd):
                     )
                     local_correlation_matrix = regularize_matrix(local_correlation_matrix)
 
-                n_sim = max(int(row["distance_score"] * 1000), 20)
+                n_sim = max(int(row["cond_prob"] * 1000), 20)
                 sim_data = simulate_correlated_triangular(
                     n=n_sim,
                     params=params,
@@ -376,7 +400,7 @@ def soil_sim(muhorzdata_pd):
                             "water_retention_15_bar",
                         ],
                     )
-                    rfv_unique = rep_columns["rfv_r"].unique()[0]
+                    rfv_unique = sorted(rep_columns["rfv_r"].unique())[0]
                     sim_data["rfv"] = rfv_unique
                 else:
                     sim_data = pd.DataFrame(
@@ -522,10 +546,13 @@ def soil_sim(muhorzdata_pd):
         groups1 = df1.groupby("compname_grp")
         groups2 = df2.groupby("compname_grp")
 
+        # Use only groups that exist in df1 (depth 0 data is required)
+        grp_list_filtered = [grp for grp in grp_list if grp in groups1.groups]
+
         # Concatenating corresponding groups
 
         concatenated_groups = []
-        for group_label in grp_list:
+        for group_label in grp_list_filtered:
             group_df1 = groups1.get_group(group_label).reset_index(drop=True)
             if group_label in groups2.groups:
                 group_df2 = groups2.get_group(group_label).reset_index(drop=True)
@@ -535,6 +562,7 @@ def soil_sim(muhorzdata_pd):
                 group_df2["compname_grp"] = group_df1["compname_grp"]
                 group_df2 = group_df2.fillna(0)
                 group_df2 = group_df2.reset_index(drop=True)
+            
             concatenated_group = pd.concat(
                 [group_df1, group_df2.drop("compname_grp", axis=1)], axis=1
             )

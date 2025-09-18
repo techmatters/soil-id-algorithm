@@ -1,14 +1,14 @@
 {
   "list": {
-    "AWS_PIW90": 6.72,
+    "AWS_PIW90": 5.98,
     "Soil Data Value": [
       [
         "rfv_class_0",
-        1.3573460169189175
+        1.2450871546455828
       ],
       [
         "rfv_class_30",
-        0.9685073841396465
+        0.7766173768825435
       ],
       [
         "texture_0",
@@ -55,7 +55,7 @@
           "component": "Hangerone",
           "name": "Hangerone",
           "rank_loc": "1",
-          "score_loc": 0.311
+          "score_loc": 0.39
         },
         "lab": {},
         "munsell": {},
@@ -109,9 +109,9 @@
         },
         "id": {
           "component": "Xerorthents",
-          "name": "Xerorthents1",
+          "name": "Xerorthents",
           "rank_loc": "2",
-          "score_loc": 0.304
+          "score_loc": 0.386
         },
         "lab": {},
         "munsell": {},
@@ -167,7 +167,7 @@
           "component": "Aquic xerorthents",
           "name": "Aquic xerorthents",
           "rank_loc": "3",
-          "score_loc": 0.237
+          "score_loc": 0.165
         },
         "lab": {},
         "munsell": {},
@@ -223,7 +223,7 @@
           "component": "Clear lake",
           "name": "Clear lake",
           "rank_loc": "4",
-          "score_loc": 0.021
+          "score_loc": 0.029
         },
         "lab": {},
         "munsell": {},
@@ -279,7 +279,7 @@
           "component": "Bayshore",
           "name": "Bayshore",
           "rank_loc": "5",
-          "score_loc": 0.02
+          "score_loc": 0.019
         },
         "lab": {},
         "munsell": {},
@@ -335,7 +335,7 @@
           "component": "Embarcadero",
           "name": "Embarcadero",
           "rank_loc": "6",
-          "score_loc": 0.01
+          "score_loc": 0.012
         },
         "lab": {},
         "munsell": {},
@@ -391,7 +391,7 @@
           "component": "Xerorthents",
           "name": "Xerorthents2",
           "rank_loc": "Not Displayed",
-          "score_loc": 0.304
+          "score_loc": 0.386
         },
         "lab": {},
         "munsell": {},
@@ -434,88 +434,88 @@
     },
     "soilRank": [
       {
+        "component": "Xerorthents",
+        "componentData": "Data Complete",
+        "componentID": 26038503,
+        "name": "Xerorthents",
+        "rank_data": "1",
+        "rank_data_loc": "1",
+        "rank_loc": "2",
+        "score_data": 0.76,
+        "score_data_loc": 0.573,
+        "score_loc": 0.386
+      },
+      {
         "component": "Hangerone",
         "componentData": "Data Complete",
         "componentID": 26038467,
         "name": "Hangerone",
-        "rank_data": "1",
-        "rank_data_loc": "1",
-        "rank_loc": "1",
-        "score_data": 0.78,
-        "score_data_loc": 0.545,
-        "score_loc": 0.311
-      },
-      {
-        "component": "Xerorthents",
-        "componentData": "Missing Data",
-        "componentID": 26038503,
-        "name": "Xerorthents1",
-        "rank_data": "3",
+        "rank_data": "6",
         "rank_data_loc": "2",
-        "rank_loc": "2",
-        "score_data": 0.764,
-        "score_data_loc": 0.534,
-        "score_loc": 0.304
+        "rank_loc": "1",
+        "score_data": 0.554,
+        "score_data_loc": 0.472,
+        "score_loc": 0.39
       },
       {
         "component": "Aquic xerorthents",
         "componentData": "Missing Data",
         "componentID": 26038456,
         "name": "Aquic xerorthents",
-        "rank_data": "4",
+        "rank_data": "3",
         "rank_data_loc": "3",
         "rank_loc": "3",
-        "score_data": 0.764,
-        "score_data_loc": 0.501,
-        "score_loc": 0.237
+        "score_data": 0.626,
+        "score_data_loc": 0.395,
+        "score_loc": 0.165
       },
       {
         "component": "Embarcadero",
-        "componentData": "Data Complete",
+        "componentData": "Missing Data",
         "componentID": 26038464,
         "name": "Embarcadero",
         "rank_data": "2",
         "rank_data_loc": "4",
         "rank_loc": "6",
-        "score_data": 0.769,
-        "score_data_loc": 0.389,
-        "score_loc": 0.01
+        "score_data": 0.712,
+        "score_data_loc": 0.362,
+        "score_loc": 0.012
       },
       {
         "component": "Clear lake",
-        "componentData": "Data Complete",
+        "componentData": "Missing Data",
         "componentID": 26038466,
         "name": "Clear lake",
-        "rank_data": "5",
+        "rank_data": "4",
         "rank_data_loc": "5",
         "rank_loc": "4",
-        "score_data": 0.548,
-        "score_data_loc": 0.285,
-        "score_loc": 0.021
+        "score_data": 0.617,
+        "score_data_loc": 0.323,
+        "score_loc": 0.029
       },
       {
         "component": "Bayshore",
         "componentData": "Data Complete",
         "componentID": 26038468,
         "name": "Bayshore",
-        "rank_data": "6",
+        "rank_data": "5",
         "rank_data_loc": "6",
         "rank_loc": "5",
-        "score_data": 0.434,
-        "score_data_loc": 0.227,
-        "score_loc": 0.02
+        "score_data": 0.607,
+        "score_data_loc": 0.313,
+        "score_loc": 0.019
       },
       {
         "component": "Xerorthents",
-        "componentData": "Missing Data",
+        "componentData": "Data Complete",
         "componentID": 26038454,
         "name": "Xerorthents2",
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.612,
-        "score_data_loc": 0.458,
-        "score_loc": 0.304
+        "score_data": 0.652,
+        "score_data_loc": 0.519,
+        "score_loc": 0.386
       }
     ]
   }

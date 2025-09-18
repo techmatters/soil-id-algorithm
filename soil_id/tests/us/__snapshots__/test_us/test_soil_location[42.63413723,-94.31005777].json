@@ -1,14 +1,14 @@
 {
   "list": {
-    "AWS_PIW90": 2.48,
+    "AWS_PIW90": 2.57,
     "Soil Data Value": [
       [
         "rfv_class_0",
-        0.17699904870697836
+        0.2488625668211104
       ],
       [
         "rfv_class_30",
-        0.17494019898158308
+        0.24530228329929127
       ],
       [
         "texture_0",
@@ -55,7 +55,7 @@
           "component": "Nicollet",
           "name": "Nicollet",
           "rank_loc": "1",
-          "score_loc": 0.85
+          "score_loc": 0.402
         },
         "lab": {},
         "munsell": {},
@@ -64,16 +64,16 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25584608",
+            "componentID": "25584956",
             "componentKind": "Series",
-            "componentPct": 5,
+            "componentPct": 85,
             "dataSource": "SSURGO",
-            "distance": 93.0,
+            "distance": 0.0,
             "irrcapcl": "None",
             "irrcapscl": "None",
             "irrcapunit": "None",
-            "mapunitID": "797923",
-            "minCompDistance": 93.0,
+            "mapunitID": "797917",
+            "minCompDistance": 0.0,
             "nirrcapcl": "1",
             "nirrcapscl": "None",
             "nirrcapunit": "None",
@@ -111,7 +111,7 @@
           "component": "Webster",
           "name": "Webster",
           "rank_loc": "2",
-          "score_loc": 0.679
+          "score_loc": 0.331
         },
         "lab": {},
         "munsell": {},
@@ -120,16 +120,16 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25584606",
+            "componentID": "25584954",
             "componentKind": "Series",
             "componentPct": 5,
             "dataSource": "SSURGO",
-            "distance": 93.0,
+            "distance": 0.0,
             "irrcapcl": "None",
             "irrcapscl": "None",
             "irrcapunit": "None",
-            "mapunitID": "797923",
-            "minCompDistance": 93.0,
+            "mapunitID": "797917",
+            "minCompDistance": 0.0,
             "nirrcapcl": "2",
             "nirrcapscl": "w",
             "nirrcapunit": "None",
@@ -153,13 +153,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R103XY001MN"
+              "R103XY015MN"
             ],
             "ecoclassname": [
-              "Loamy Wet Prairies"
+              "Depressional Marsh"
             ],
             "edit_url": [
-              "https://edit.jornada.nmsu.edu/catalogs/esd/103X/R103XY001MN"
+              "https://edit.jornada.nmsu.edu/catalogs/esd/103X/R103XY015MN"
             ]
           }
         },
@@ -167,7 +167,7 @@
           "component": "Clarion",
           "name": "Clarion",
           "rank_loc": "3",
-          "score_loc": 0.404
+          "score_loc": 0.2
         },
         "lab": {},
         "munsell": {},
@@ -176,16 +176,16 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25584604",
+            "componentID": "25584950",
             "componentKind": "Taxadjunct",
-            "componentPct": 85,
+            "componentPct": 5,
             "dataSource": "SSURGO",
-            "distance": 93.0,
+            "distance": 0.0,
             "irrcapcl": "None",
             "irrcapscl": "None",
             "irrcapunit": "None",
-            "mapunitID": "797923",
-            "minCompDistance": 93.0,
+            "mapunitID": "797917",
+            "minCompDistance": 0.0,
             "nirrcapcl": "2",
             "nirrcapscl": "e",
             "nirrcapunit": "None",
@@ -209,13 +209,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R103XY004MN"
+              "R103XY001MN"
             ],
             "ecoclassname": [
-              "Loamy Upland Prairies"
+              "Loamy Wet Prairies"
             ],
             "edit_url": [
-              "https://edit.jornada.nmsu.edu/catalogs/esd/103X/R103XY004MN"
+              "https://edit.jornada.nmsu.edu/catalogs/esd/103X/R103XY001MN"
             ]
           }
         },
@@ -223,7 +223,7 @@
           "component": "Okoboji",
           "name": "Okoboji",
           "rank_loc": "4",
-          "score_loc": 0.05
+          "score_loc": 0.04
         },
         "lab": {},
         "munsell": {},
@@ -265,13 +265,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R103XY015MN"
+              "R103XY004MN"
             ],
             "ecoclassname": [
-              "Depressional Marsh"
+              "Loamy Upland Prairies"
             ],
             "edit_url": [
-              "https://edit.jornada.nmsu.edu/catalogs/esd/103X/R103XY015MN"
+              "https://edit.jornada.nmsu.edu/catalogs/esd/103X/R103XY004MN"
             ]
           }
         },
@@ -279,7 +279,7 @@
           "component": "Glencoe",
           "name": "Glencoe",
           "rank_loc": "5",
-          "score_loc": 0.024
+          "score_loc": 0.011
         },
         "lab": {},
         "munsell": {},
@@ -335,7 +335,7 @@
           "component": "Storden",
           "name": "Storden",
           "rank_loc": "6",
-          "score_loc": 0.024
+          "score_loc": 0.011
         },
         "lab": {},
         "munsell": {},
@@ -391,7 +391,7 @@
           "component": "Canisteo",
           "name": "Canisteo",
           "rank_loc": "7",
-          "score_loc": 0.016
+          "score_loc": 0.007
         },
         "lab": {},
         "munsell": {},
@@ -434,52 +434,40 @@
     },
     "soilRank": [
       {
+        "component": "Clarion",
+        "componentData": "Data Complete",
+        "componentID": 25584950,
+        "name": "Clarion",
+        "rank_data": "1",
+        "rank_data_loc": "1",
+        "rank_loc": 3,
+        "score_data": 0.517,
+        "score_data_loc": 0.358,
+        "score_loc": 0.2
+      },
+      {
         "component": "Nicollet",
         "componentData": "Data Complete",
-        "componentID": 25584608,
+        "componentID": 25584956,
         "name": "Nicollet",
-        "rank_data": "5",
-        "rank_data_loc": "1",
+        "rank_data": "7",
+        "rank_data_loc": "2",
         "rank_loc": 1,
-        "score_data": 0.344,
-        "score_data_loc": 0.597,
-        "score_loc": 0.85
+        "score_data": 0.22,
+        "score_data_loc": 0.311,
+        "score_loc": 0.402
       },
       {
         "component": "Webster",
         "componentData": "Data Complete",
-        "componentID": 25584606,
+        "componentID": 25584954,
         "name": "Webster",
         "rank_data": "6",
-        "rank_data_loc": "2",
+        "rank_data_loc": "3",
         "rank_loc": 2,
         "score_data": 0.268,
-        "score_data_loc": 0.473,
-        "score_loc": 0.679
-      },
-      {
-        "component": "Clarion",
-        "componentData": "Data Complete",
-        "componentID": 25584604,
-        "name": "Clarion",
-        "rank_data": "4",
-        "rank_data_loc": "3",
-        "rank_loc": 3,
-        "score_data": 0.365,
-        "score_data_loc": 0.385,
-        "score_loc": 0.404
-      },
-      {
-        "component": "Storden",
-        "componentData": "Data Complete",
-        "componentID": 25584602,
-        "name": "Storden",
-        "rank_data": "1",
-        "rank_data_loc": "4",
-        "rank_loc": 6,
-        "score_data": 0.458,
-        "score_data_loc": 0.241,
-        "score_loc": 0.024
+        "score_data_loc": 0.299,
+        "score_loc": 0.331
       },
       {
         "component": "Glencoe",
@@ -487,35 +475,47 @@
         "componentID": 25584960,
         "name": "Glencoe",
         "rank_data": "2",
-        "rank_data_loc": "5",
+        "rank_data_loc": "4",
         "rank_loc": 5,
-        "score_data": 0.436,
-        "score_data_loc": 0.23,
-        "score_loc": 0.024
+        "score_data": 0.451,
+        "score_data_loc": 0.231,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Storden",
+        "componentData": "Data Complete",
+        "componentID": 25584602,
+        "name": "Storden",
+        "rank_data": "3",
+        "rank_data_loc": "5",
+        "rank_loc": 6,
+        "score_data": 0.433,
+        "score_data_loc": 0.222,
+        "score_loc": 0.011
       },
       {
         "component": "Okoboji",
         "componentData": "Missing Data",
         "componentID": 25584952,
         "name": "Okoboji",
-        "rank_data": "3",
+        "rank_data": "4",
         "rank_data_loc": "6",
         "rank_loc": 4,
-        "score_data": 0.402,
-        "score_data_loc": 0.226,
-        "score_loc": 0.05
+        "score_data": 0.303,
+        "score_data_loc": 0.171,
+        "score_loc": 0.04
       },
       {
         "component": "Canisteo",
         "componentData": "Data Complete",
         "componentID": 25584962,
         "name": "Canisteo",
-        "rank_data": "7",
+        "rank_data": "5",
         "rank_data_loc": "7",
         "rank_loc": 7,
-        "score_data": 0.205,
-        "score_data_loc": 0.11,
-        "score_loc": 0.016
+        "score_data": 0.287,
+        "score_data_loc": 0.147,
+        "score_loc": 0.007
       }
     ]
   }

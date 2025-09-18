@@ -1,10 +1,10 @@
 {
   "list": {
-    "AWS_PIW90": 5.2,
+    "AWS_PIW90": 5.09,
     "Soil Data Value": [
       [
         "rfv_class_30",
-        0.10133185276505285
+        0.12794865070214412
       ],
       [
         "texture_0",
@@ -55,7 +55,7 @@
           "component": "Randall",
           "name": "Randall",
           "rank_loc": "1",
-          "score_loc": 0.8
+          "score_loc": 0.474
         },
         "lab": {},
         "munsell": {},
@@ -109,9 +109,9 @@
         },
         "id": {
           "component": "Acuff",
-          "name": "Acuff1",
+          "name": "Acuff",
           "rank_loc": "2",
-          "score_loc": 0.414
+          "score_loc": 0.253
         },
         "lab": {},
         "munsell": {},
@@ -167,7 +167,7 @@
           "component": "Olton",
           "name": "Olton",
           "rank_loc": "3",
-          "score_loc": 0.212
+          "score_loc": 0.126
         },
         "lab": {},
         "munsell": {},
@@ -223,7 +223,7 @@
           "component": "Mclean",
           "name": "Mclean",
           "rank_loc": "4",
-          "score_loc": 0.1
+          "score_loc": 0.059
         },
         "lab": {},
         "munsell": {},
@@ -279,7 +279,7 @@
           "component": "Lockney",
           "name": "Lockney",
           "rank_loc": "5",
-          "score_loc": 0.05
+          "score_loc": 0.03
         },
         "lab": {},
         "munsell": {},
@@ -333,9 +333,9 @@
         },
         "id": {
           "component": "Estacado",
-          "name": "Estacado1",
+          "name": "Estacado",
           "rank_loc": "6",
-          "score_loc": 0.029
+          "score_loc": 0.021
         },
         "lab": {},
         "munsell": {},
@@ -391,7 +391,7 @@
           "component": "Friona",
           "name": "Friona",
           "rank_loc": "7",
-          "score_loc": 0.024
+          "score_loc": 0.014
         },
         "lab": {},
         "munsell": {},
@@ -447,7 +447,7 @@
           "component": "Amarillo",
           "name": "Amarillo",
           "rank_loc": "8",
-          "score_loc": 0.019
+          "score_loc": 0.011
         },
         "lab": {},
         "munsell": {},
@@ -503,7 +503,7 @@
           "component": "Pullman",
           "name": "Pullman",
           "rank_loc": "9",
-          "score_loc": 0.018
+          "score_loc": 0.011
         },
         "lab": {},
         "munsell": {},
@@ -559,7 +559,7 @@
           "component": "Acuff",
           "name": "Acuff2",
           "rank_loc": "Not Displayed",
-          "score_loc": 0.414
+          "score_loc": 0.253
         },
         "lab": {},
         "munsell": {},
@@ -615,7 +615,7 @@
           "component": "Estacado",
           "name": "Estacado2",
           "rank_loc": "Not Displayed",
-          "score_loc": 0.029
+          "score_loc": 0.021
         },
         "lab": {},
         "munsell": {},
@@ -662,132 +662,132 @@
         "componentData": "Missing Data",
         "componentID": 25623332,
         "name": "Randall",
-        "rank_data": "7",
+        "rank_data": "8",
         "rank_data_loc": "1",
         "rank_loc": "1",
-        "score_data": 0.465,
-        "score_data_loc": 0.633,
-        "score_loc": 0.8
+        "score_data": 0.429,
+        "score_data_loc": 0.452,
+        "score_loc": 0.474
       },
       {
         "component": "Acuff",
         "componentData": "Data Complete",
         "componentID": 25623297,
         "name": "Acuff2",
-        "rank_data": "5",
+        "rank_data": "1",
         "rank_data_loc": "2",
         "rank_loc": "Not Displayed",
-        "score_data": 0.499,
-        "score_data_loc": 0.457,
-        "score_loc": 0.414
-      },
-      {
-        "component": "Olton",
-        "componentData": "Data Complete",
-        "componentID": 25623299,
-        "name": "Olton",
-        "rank_data": "8",
-        "rank_data_loc": "3",
-        "rank_loc": "3",
-        "score_data": 0.454,
-        "score_data_loc": 0.333,
-        "score_loc": 0.212
-      },
-      {
-        "component": "Estacado",
-        "componentData": "Data Complete",
-        "componentID": 25623296,
-        "name": "Estacado2",
-        "rank_data": "1",
-        "rank_data_loc": "4",
-        "rank_loc": "Not Displayed",
-        "score_data": 0.598,
-        "score_data_loc": 0.314,
-        "score_loc": 0.029
-      },
-      {
-        "component": "Lockney",
-        "componentData": "Missing Data",
-        "componentID": 25623334,
-        "name": "Lockney",
-        "rank_data": "3",
-        "rank_data_loc": "5",
-        "rank_loc": "5",
-        "score_data": 0.571,
-        "score_data_loc": 0.31,
-        "score_loc": 0.05
-      },
-      {
-        "component": "Amarillo",
-        "componentData": "Data Complete",
-        "componentID": 25623212,
-        "name": "Amarillo",
-        "rank_data": "2",
-        "rank_data_loc": "6",
-        "rank_loc": "8",
-        "score_data": 0.576,
-        "score_data_loc": 0.298,
-        "score_loc": 0.019
-      },
-      {
-        "component": "Mclean",
-        "componentData": "Missing Data",
-        "componentID": 25623333,
-        "name": "Mclean",
-        "rank_data": "6",
-        "rank_data_loc": "7",
-        "rank_loc": "4",
-        "score_data": 0.482,
-        "score_data_loc": 0.291,
-        "score_loc": 0.1
+        "score_data": 0.591,
+        "score_data_loc": 0.422,
+        "score_loc": 0.253
       },
       {
         "component": "Friona",
         "componentData": "Data Complete",
         "componentID": 25623214,
         "name": "Friona",
-        "rank_data": "4",
-        "rank_data_loc": "8",
+        "rank_data": "2",
+        "rank_data_loc": "3",
         "rank_loc": "7",
-        "score_data": 0.506,
-        "score_data_loc": 0.265,
-        "score_loc": 0.024
+        "score_data": 0.571,
+        "score_data_loc": 0.293,
+        "score_loc": 0.014
+      },
+      {
+        "component": "Olton",
+        "componentData": "Data Complete",
+        "componentID": 25623299,
+        "name": "Olton",
+        "rank_data": "7",
+        "rank_data_loc": "4",
+        "rank_loc": "3",
+        "score_data": 0.457,
+        "score_data_loc": 0.292,
+        "score_loc": 0.126
+      },
+      {
+        "component": "Amarillo",
+        "componentData": "Data Complete",
+        "componentID": 25623212,
+        "name": "Amarillo",
+        "rank_data": "3",
+        "rank_data_loc": "5",
+        "rank_loc": "8",
+        "score_data": 0.554,
+        "score_data_loc": 0.283,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Lockney",
+        "componentData": "Missing Data",
+        "componentID": 25623334,
+        "name": "Lockney",
+        "rank_data": "5",
+        "rank_data_loc": "6",
+        "rank_loc": "5",
+        "score_data": 0.531,
+        "score_data_loc": 0.28,
+        "score_loc": 0.03
       },
       {
         "component": "Pullman",
         "componentData": "Data Complete",
         "componentID": 25623298,
         "name": "Pullman",
-        "rank_data": "9",
-        "rank_data_loc": "9",
+        "rank_data": "4",
+        "rank_data_loc": "7",
         "rank_loc": "9",
-        "score_data": 0.357,
-        "score_data_loc": 0.188,
-        "score_loc": 0.018
-      },
-      {
-        "component": "Acuff",
-        "componentData": "Data Complete",
-        "componentID": 25623211,
-        "name": "Acuff1",
-        "rank_data": "Not Displayed",
-        "rank_data_loc": "Not Displayed",
-        "rank_loc": "2",
-        "score_data": 0.492,
-        "score_data_loc": 0.453,
-        "score_loc": 0.414
+        "score_data": 0.536,
+        "score_data_loc": 0.274,
+        "score_loc": 0.011
       },
       {
         "component": "Estacado",
         "componentData": "Data Complete",
         "componentID": 25623213,
-        "name": "Estacado1",
+        "name": "Estacado",
+        "rank_data": "6",
+        "rank_data_loc": "8",
+        "rank_loc": "6",
+        "score_data": 0.493,
+        "score_data_loc": 0.257,
+        "score_loc": 0.021
+      },
+      {
+        "component": "Mclean",
+        "componentData": "Missing Data",
+        "componentID": 25623333,
+        "name": "Mclean",
+        "rank_data": "9",
+        "rank_data_loc": "9",
+        "rank_loc": "4",
+        "score_data": 0.412,
+        "score_data_loc": 0.236,
+        "score_loc": 0.059
+      },
+      {
+        "component": "Acuff",
+        "componentData": "Data Complete",
+        "componentID": 25623211,
+        "name": "Acuff",
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
-        "rank_loc": "6",
-        "score_data": 0.596,
-        "score_data_loc": 0.313,
-        "score_loc": 0.029
+        "rank_loc": "2",
+        "score_data": 0.578,
+        "score_data_loc": 0.416,
+        "score_loc": 0.253
+      },
+      {
+        "component": "Estacado",
+        "componentData": "Data Complete",
+        "componentID": 25623296,
+        "name": "Estacado2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.443,
+        "score_data_loc": 0.232,
+        "score_loc": 0.021
       }
     ]
   }

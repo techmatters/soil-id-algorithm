@@ -55,7 +55,7 @@
           "component": "Ferralic arenosols",
           "name": "Ferralic arenosols",
           "rank_loc": "1",
-          "score_loc": 0.4
+          "score_loc": 0.433
         },
         "ph": {
           "sl1": 5.3,
@@ -86,11 +86,11 @@
         },
         "site": {
           "siteData": {
-            "componentID": 144044,
-            "distance": 29708.866,
-            "mapunitID": 463,
-            "minCompDistance": 29708.8664,
-            "share": 20,
+            "componentID": 156032,
+            "distance": 0.0,
+            "mapunitID": 918,
+            "minCompDistance": 0.0,
+            "share": 60,
             "soilDepth": 200
           },
           "siteDescription": {
@@ -112,6 +112,106 @@
           "sl5": "Loamy sand",
           "sl6": "Loamy sand",
           "sl7": "Loamy sand"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 10.0,
+          "sl2": 10.0,
+          "sl3": 10.0,
+          "sl4": 8.0,
+          "sl5": 7.43,
+          "sl6": 7.0,
+          "sl7": 6.83
+        },
+        "clay": {
+          "sl1": 43.0,
+          "sl2": 43.0,
+          "sl3": 43.0,
+          "sl4": 46.4,
+          "sl5": 47.43,
+          "sl6": 48.2,
+          "sl7": 48.33
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Haplic ferralsols",
+          "name": "Haplic ferralsols",
+          "rank_loc": "2",
+          "score_loc": 0.3
+        },
+        "ph": {
+          "sl1": 4.9,
+          "sl2": 4.9,
+          "sl3": 4.9,
+          "sl4": 4.92,
+          "sl5": 4.96,
+          "sl6": 5.0,
+          "sl7": 5.02
+        },
+        "rock_fragments": {
+          "sl1": 4.0,
+          "sl2": 4.0,
+          "sl3": 4.0,
+          "sl4": 4.6,
+          "sl5": 4.71,
+          "sl6": 5.0,
+          "sl7": 5.0
+        },
+        "sand": {
+          "sl1": 40.0,
+          "sl2": 40.0,
+          "sl3": 40.0,
+          "sl4": 37.4,
+          "sl5": 36.57,
+          "sl6": 35.8,
+          "sl7": 35.5
+        },
+        "site": {
+          "siteData": {
+            "componentID": 156034,
+            "distance": 0.0,
+            "mapunitID": 918,
+            "minCompDistance": 0.0,
+            "share": 20,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients.",
+            "Description_es": "Los Ferralsoles Háplicos son suelos bien desarrollados en climas húmedos y cálidos en los que predominan los minerales de baja actividad como la caolinita y los óxidos de hierro y aluminio. <br>Suelen tener buenas propiedades físicas pero son ácidos, relativamente infértiles, tienen una alta fijación de P y tienen una capacidad limitada de retener nutrientes. ",
+            "Description_fr": "Haplic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients.",
+            "Description_ks": "Haplic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients.",
+            "Management_en": "soils are prone to phosphorus fixation, and most soil P will not be immediately available for crop uptake and use. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used.",
+            "Management_es": "Estos suelos son propensos a la fijación de fósforo, y la mayor parte del P del suelo no estará inmediatamente disponible para su absorción y uso por los cultivos. <br>Las prácticas bien documentadas, como la aplicación en banda (directamente sobre la semilla o a un lado y abajo de la semilla) de fertilizantes fosfatados, ayudarán a reducir la fijación de P. <br>La fertilización adicional y la aplicación de cal, además del P, también serán necesarias para garantizar un crecimiento y un rendimiento adecuados de los cultivos. <br>En estos suelos también puede haber altos niveles de aluminio soluble, que es tóxico para las plantas. <br>La aplicación de cal (que aumenta el pH del suelo y retiene el aluminio soluble) puede ayudar a reducir la toxicidad del aluminio. <br>Dado que estos suelos son infértiles, necesitarán aplicaciones de nutrientes para las plantas con el fin de obtener un mejor rendimiento de los cultivos, ya sea mediante la fertilización o la inclusión de residuos de cultivos, estiércol u otro material orgánico rico en nutrientes. <br>Estos suelos tienen una capacidad limitada para retener los fertilizantes nitrogenados. Deberían considerarse fuentes de nitrógeno de liberación lenta, si se dispone de ellas, o podría utilizarse la aplicación más frecuente de fuentes solubles a una tasa menor en cada aplicación.",
+            "Management_fr": "soils are prone to phosphorus fixation, and most soil P will not be immediately available for crop uptake and use. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used.",
+            "Management_ks": "soils are prone to phosphorus fixation, and most soil P will not be immediately available for crop uptake and use. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used."
+          }
+        },
+        "texture": {
+          "sl1": "Unknown",
+          "sl2": "Unknown",
+          "sl3": "Unknown",
+          "sl4": "Unknown",
+          "sl5": "Unknown",
+          "sl6": "Unknown",
+          "sl7": "Unknown"
         }
       },
       {
@@ -154,7 +254,7 @@
         "id": {
           "component": "Xanthic ferralsols",
           "name": "Xanthic ferralsols",
-          "rank_loc": "2",
+          "rank_loc": "3",
           "score_loc": 0.133
         },
         "ph": {
@@ -212,106 +312,6 @@
           "sl5": "Sandy clay",
           "sl6": "Sandy clay",
           "sl7": "Sandy clay"
-        }
-      },
-      {
-        "bottom_depth": {
-          "sl1": 1,
-          "sl2": 10,
-          "sl3": 20,
-          "sl4": 50,
-          "sl5": 70,
-          "sl6": 100,
-          "sl7": 120
-        },
-        "cec": {
-          "sl1": 10.0,
-          "sl2": 10.0,
-          "sl3": 10.0,
-          "sl4": 8.0,
-          "sl5": 7.43,
-          "sl6": 7.0,
-          "sl7": 6.83
-        },
-        "clay": {
-          "sl1": 43.0,
-          "sl2": 43.0,
-          "sl3": 43.0,
-          "sl4": 46.4,
-          "sl5": 47.43,
-          "sl6": 48.2,
-          "sl7": 48.33
-        },
-        "ec": {
-          "sl1": 0.0,
-          "sl2": 0.0,
-          "sl3": 0.0,
-          "sl4": 0.0,
-          "sl5": 0.0,
-          "sl6": 0.0,
-          "sl7": 0.0
-        },
-        "id": {
-          "component": "Haplic ferralsols",
-          "name": "Haplic ferralsols",
-          "rank_loc": "3",
-          "score_loc": 0.133
-        },
-        "ph": {
-          "sl1": 4.9,
-          "sl2": 4.9,
-          "sl3": 4.9,
-          "sl4": 4.92,
-          "sl5": 4.96,
-          "sl6": 5.0,
-          "sl7": 5.02
-        },
-        "rock_fragments": {
-          "sl1": 4.0,
-          "sl2": 4.0,
-          "sl3": 4.0,
-          "sl4": 4.6,
-          "sl5": 4.71,
-          "sl6": 5.0,
-          "sl7": 5.0
-        },
-        "sand": {
-          "sl1": 40.0,
-          "sl2": 40.0,
-          "sl3": 40.0,
-          "sl4": 37.4,
-          "sl5": 36.57,
-          "sl6": 35.8,
-          "sl7": 35.5
-        },
-        "site": {
-          "siteData": {
-            "componentID": 144043,
-            "distance": 29708.866,
-            "mapunitID": 463,
-            "minCompDistance": 29708.8664,
-            "share": 20,
-            "soilDepth": 200
-          },
-          "siteDescription": {
-            "Description_en": "Haplic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients.",
-            "Description_es": "Los Ferralsoles Háplicos son suelos bien desarrollados en climas húmedos y cálidos en los que predominan los minerales de baja actividad como la caolinita y los óxidos de hierro y aluminio. <br>Suelen tener buenas propiedades físicas pero son ácidos, relativamente infértiles, tienen una alta fijación de P y tienen una capacidad limitada de retener nutrientes. ",
-            "Description_fr": "Haplic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients.",
-            "Description_ks": "Haplic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients.",
-            "Management_en": "soils are prone to phosphorus fixation, and most soil P will not be immediately available for crop uptake and use. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used.",
-            "Management_es": "Estos suelos son propensos a la fijación de fósforo, y la mayor parte del P del suelo no estará inmediatamente disponible para su absorción y uso por los cultivos. <br>Las prácticas bien documentadas, como la aplicación en banda (directamente sobre la semilla o a un lado y abajo de la semilla) de fertilizantes fosfatados, ayudarán a reducir la fijación de P. <br>La fertilización adicional y la aplicación de cal, además del P, también serán necesarias para garantizar un crecimiento y un rendimiento adecuados de los cultivos. <br>En estos suelos también puede haber altos niveles de aluminio soluble, que es tóxico para las plantas. <br>La aplicación de cal (que aumenta el pH del suelo y retiene el aluminio soluble) puede ayudar a reducir la toxicidad del aluminio. <br>Dado que estos suelos son infértiles, necesitarán aplicaciones de nutrientes para las plantas con el fin de obtener un mejor rendimiento de los cultivos, ya sea mediante la fertilización o la inclusión de residuos de cultivos, estiércol u otro material orgánico rico en nutrientes. <br>Estos suelos tienen una capacidad limitada para retener los fertilizantes nitrogenados. Deberían considerarse fuentes de nitrógeno de liberación lenta, si se dispone de ellas, o podría utilizarse la aplicación más frecuente de fuentes solubles a una tasa menor en cada aplicación.",
-            "Management_fr": "soils are prone to phosphorus fixation, and most soil P will not be immediately available for crop uptake and use. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used.",
-            "Management_ks": "soils are prone to phosphorus fixation, and most soil P will not be immediately available for crop uptake and use. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used."
-          }
-        },
-        "texture": {
-          "sl1": "Unknown",
-          "sl2": "Unknown",
-          "sl3": "Unknown",
-          "sl4": "Unknown",
-          "sl5": "Unknown",
-          "sl6": "Unknown",
-          "sl7": "Unknown"
         }
       },
       {
@@ -389,7 +389,7 @@
             "componentID": 144042,
             "distance": 29708.866,
             "mapunitID": 463,
-            "minCompDistance": 29708.8664,
+            "minCompDistance": 29708.86642894,
             "share": 50,
             "soilDepth": 200
           },
@@ -487,9 +487,9 @@
         "site": {
           "siteData": {
             "componentID": 148190,
-            "distance": 5397.734,
+            "distance": 5397.735,
             "mapunitID": 546,
-            "minCompDistance": 5397.7345,
+            "minCompDistance": 5397.73450719,
             "share": 10,
             "soilDepth": 200
           },
@@ -587,9 +587,9 @@
         "site": {
           "siteData": {
             "componentID": 148189,
-            "distance": 5397.734,
+            "distance": 5397.735,
             "mapunitID": 546,
-            "minCompDistance": 5397.7345,
+            "minCompDistance": 5397.73450719,
             "share": 10,
             "soilDepth": 200
           },
@@ -689,7 +689,7 @@
             "componentID": 144045,
             "distance": 29708.866,
             "mapunitID": 463,
-            "minCompDistance": 29708.8664,
+            "minCompDistance": 29708.86642894,
             "share": 10,
             "soilDepth": 200
           },
@@ -723,51 +723,63 @@
     },
     "soilRank": [
       {
+        "component": "Haplic ferralsols",
+        "componentData": "No Data",
+        "componentID": 156034,
+        "name": "Haplic ferralsols",
+        "rank_data": "3",
+        "rank_data_loc": "1",
+        "rank_loc": 2,
+        "score_data": 0.571,
+        "score_data_loc": 1.0,
+        "score_loc": 0.3
+      },
+      {
+        "component": "Ferralic arenosols",
+        "componentData": "Data Complete",
+        "componentID": 156032,
+        "name": "Ferralic arenosols",
+        "rank_data": "6",
+        "rank_data_loc": "2",
+        "rank_loc": 1,
+        "score_data": 0.35,
+        "score_data_loc": 0.9,
+        "score_loc": 0.433
+      },
+      {
         "component": "Ferralic cambisols",
         "componentData": "Data Complete",
         "componentID": 144042,
         "name": "Ferralic cambisols",
         "rank_data": "1",
-        "rank_data_loc": "1",
+        "rank_data_loc": "3",
         "rank_loc": 4,
         "score_data": 0.621,
-        "score_data_loc": 1.0,
+        "score_data_loc": 0.809,
         "score_loc": 0.083
       },
       {
-        "component": "Haplic ferralsols",
-        "componentData": "No Data",
-        "componentID": 144043,
-        "name": "Haplic ferralsols",
-        "rank_data": "4",
-        "rank_data_loc": "2",
-        "rank_loc": 3,
-        "score_data": 0.519,
-        "score_data_loc": 0.926,
-        "score_loc": 0.133
-      },
-      {
-        "component": "Xanthic ferralsols",
-        "componentData": "Missing Data",
-        "componentID": 156033,
-        "name": "Xanthic ferralsols",
-        "rank_data": "5",
-        "rank_data_loc": "3",
-        "rank_loc": 2,
-        "score_data": 0.517,
-        "score_data_loc": 0.924,
-        "score_loc": 0.133
+        "component": "Dystric fluvisols",
+        "componentData": "Data Complete",
+        "componentID": 148190,
+        "name": "Dystric fluvisols",
+        "rank_data": "2",
+        "rank_data_loc": "4",
+        "rank_loc": 5,
+        "score_data": 0.571,
+        "score_data_loc": 0.675,
+        "score_loc": 0.017
       },
       {
         "component": "Dystric gleysols",
         "componentData": "Missing Data",
         "componentID": 148189,
         "name": "Dystric gleysols",
-        "rank_data": "2",
-        "rank_data_loc": "4",
+        "rank_data": "4",
+        "rank_data_loc": "5",
         "rank_loc": 6,
-        "score_data": 0.571,
-        "score_data_loc": 0.834,
+        "score_data": 0.519,
+        "score_data_loc": 0.615,
         "score_loc": 0.017
       },
       {
@@ -775,36 +787,24 @@
         "componentData": "Missing Data",
         "componentID": 144045,
         "name": "Gleyic acrisols",
-        "rank_data": "3",
-        "rank_data_loc": "5",
-        "rank_loc": 7,
-        "score_data": 0.571,
-        "score_data_loc": 0.834,
-        "score_loc": 0.017
-      },
-      {
-        "component": "Ferralic arenosols",
-        "componentData": "Data Complete",
-        "componentID": 144044,
-        "name": "Ferralic arenosols",
-        "rank_data": "7",
+        "rank_data": "5",
         "rank_data_loc": "6",
-        "rank_loc": 1,
-        "score_data": 0.0,
-        "score_data_loc": 0.568,
-        "score_loc": 0.4
+        "rank_loc": 7,
+        "score_data": 0.517,
+        "score_data_loc": 0.613,
+        "score_loc": 0.017
       },
       {
-        "component": "Dystric fluvisols",
-        "componentData": "Data Complete",
-        "componentID": 148190,
-        "name": "Dystric fluvisols",
-        "rank_data": "6",
+        "component": "Xanthic ferralsols",
+        "componentData": "Missing Data",
+        "componentID": 156033,
+        "name": "Xanthic ferralsols",
+        "rank_data": "7",
         "rank_data_loc": "7",
-        "rank_loc": 5,
-        "score_data": 0.35,
-        "score_data_loc": 0.521,
-        "score_loc": 0.017
+        "rank_loc": 3,
+        "score_data": 0.0,
+        "score_data_loc": 0.153,
+        "score_loc": 0.133
       }
     ]
   }

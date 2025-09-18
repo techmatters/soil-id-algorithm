@@ -36,9 +36,9 @@
         },
         "id": {
           "component": "Gunn",
-          "name": "Gunn1",
+          "name": "Gunn",
           "rank_loc": "1",
-          "score_loc": 0.95
+          "score_loc": 0.929
         },
         "lab": {},
         "munsell": {},
@@ -94,7 +94,7 @@
           "component": "Gunn",
           "name": "Gunn2",
           "rank_loc": "Not Displayed",
-          "score_loc": 0.95
+          "score_loc": 0.929
         },
         "lab": {},
         "munsell": {},
@@ -121,7 +121,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#gunn",
             "slope": 19.0,
             "taxsubgrp": "Ultic Haploxeralfs",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "Landscape--plateaus, hills\nLandform--structural benches, hillslopes, ridgetops\nSlope--0 to 65 percent\nParent material--loess mixed with colluvium and residuum derived from basalt\nMean annual precipitation--about 530 mm\nMean annual air temperature--about 9 degrees C\nDepth class--deep, very deep\nDrainage class--well drained\nSoil moisture regime--xeric\nSoil temperature regime--mesic\nSoil moisture subclass--typic"
         },
@@ -138,27 +138,27 @@
     "soilRank": [
       {
         "component": "Gunn",
-        "componentData": "Data Complete",
+        "componentData": NaN,
         "componentID": 25483316,
         "name": "Gunn2",
         "rank_data": "1",
         "rank_data_loc": "1",
         "rank_loc": "Not Displayed",
-        "score_data": 0.443,
-        "score_data_loc": 0.697,
-        "score_loc": 0.95
+        "score_data": 0.37,
+        "score_data_loc": 0.649,
+        "score_loc": 0.929
       },
       {
         "component": "Gunn",
         "componentData": "Data Complete",
         "componentID": 25483307,
-        "name": "Gunn1",
+        "name": "Gunn",
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "1",
-        "score_data": 0.401,
-        "score_data_loc": 0.675,
-        "score_loc": 0.95
+        "score_data": 0.312,
+        "score_data_loc": 0.62,
+        "score_loc": 0.929
       }
     ]
   }

@@ -1,18 +1,18 @@
 {
   "list": {
-    "AWS_PIW90": 15.63,
+    "AWS_PIW90": 17.02,
     "Soil Data Value": [
       [
         "rfv_class_30",
-        1.4455018975807923
+        1.6626417621471414
       ],
       [
         "rfv_class_0",
-        0.9758207999450619
+        1.2739601523701045
       ],
       [
         "texture_30",
-        0.43867507444769327
+        0.46616973466368394
       ],
       [
         "texture_0",
@@ -49,7 +49,7 @@
           "component": "E30-boreal taiga-loamy frozen colluvial slopes",
           "name": "E30-boreal taiga-loamy frozen colluvial slopes",
           "rank_loc": "1",
-          "score_loc": 0.34
+          "score_loc": 0.272
         },
         "lab": {},
         "munsell": {},
@@ -99,7 +99,7 @@
           "component": "E30-boreal scrub-gravelly low flood plains",
           "name": "E30-boreal scrub-gravelly low flood plains",
           "rank_loc": "2",
-          "score_loc": 0.19
+          "score_loc": 0.152
         },
         "lab": {},
         "munsell": {},
@@ -149,7 +149,7 @@
           "component": "E30-boreal taiga-organic frozen peat plateaus",
           "name": "E30-boreal taiga-organic frozen peat plateaus",
           "rank_loc": "3",
-          "score_loc": 0.12
+          "score_loc": 0.114
         },
         "lab": {},
         "munsell": {},
@@ -196,60 +196,10 @@
           }
         },
         "id": {
-          "component": "E30-boreal taiga/tussock-silty frozen terraces",
-          "name": "E30-boreal taiga/tussock-silty frozen terraces",
-          "rank_loc": "4",
-          "score_loc": 0.11
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "24914407",
-            "componentKind": "Taxon above family",
-            "componentPct": 11,
-            "dataSource": "SSURGO",
-            "distance": 0.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "3375385",
-            "minCompDistance": 0.0,
-            "nirrcapcl": "7",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 1.0,
-            "taxsubgrp": "Typic Histoturbels",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
           "component": "E30-boreal taiga-silty frozen loess slopes",
           "name": "E30-boreal taiga-silty frozen loess slopes",
-          "rank_loc": "5",
-          "score_loc": 0.107
+          "rank_loc": "4",
+          "score_loc": 0.086
         },
         "lab": {},
         "munsell": {},
@@ -298,8 +248,8 @@
         "id": {
           "component": "E30-boreal forest-loamy flood plains",
           "name": "E30-boreal forest-loamy flood plains",
-          "rank_loc": "6",
-          "score_loc": 0.09
+          "rank_loc": "5",
+          "score_loc": 0.072
         },
         "lab": {},
         "munsell": {},
@@ -348,8 +298,8 @@
         "id": {
           "component": "E30-boreal forest-silty slopes",
           "name": "E30-boreal forest-silty slopes",
-          "rank_loc": "7",
-          "score_loc": 0.07
+          "rank_loc": "6",
+          "score_loc": 0.056
         },
         "lab": {},
         "munsell": {},
@@ -398,8 +348,8 @@
         "id": {
           "component": "E30-boreal forest-silty loess slopes",
           "name": "E30-boreal forest-silty loess slopes",
-          "rank_loc": "8",
-          "score_loc": 0.058
+          "rank_loc": "7",
+          "score_loc": 0.046
         },
         "lab": {},
         "munsell": {},
@@ -446,60 +396,10 @@
           }
         },
         "id": {
-          "component": "E30-boreal wet meadow-organic depressions",
-          "name": "E30-boreal wet meadow-organic depressions",
-          "rank_loc": "9",
-          "score_loc": 0.05
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "24914412",
-            "componentKind": "Taxon above family",
-            "componentPct": 5,
-            "dataSource": "SSURGO",
-            "distance": 0.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "3375385",
-            "minCompDistance": 0.0,
-            "nirrcapcl": "7",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 0.0,
-            "taxsubgrp": "Terric Cryofibrists",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
           "component": "E30-boreal scrub/sphagnum-organic depressions",
           "name": "E30-boreal scrub/sphagnum-organic depressions",
-          "rank_loc": "10",
-          "score_loc": 0.03
+          "rank_loc": "8",
+          "score_loc": 0.024
         },
         "lab": {},
         "munsell": {},
@@ -548,8 +448,8 @@
         "id": {
           "component": "E30-boreal taiga/tussock-silty frozen slopes",
           "name": "E30-boreal taiga/tussock-silty frozen slopes",
-          "rank_loc": "11",
-          "score_loc": 0.03
+          "rank_loc": "9",
+          "score_loc": 0.024
         },
         "lab": {},
         "munsell": {},
@@ -598,8 +498,8 @@
         "id": {
           "component": "E30-boreal scrub-silty frozen drainageways",
           "name": "E30-boreal scrub-silty frozen drainageways",
-          "rank_loc": "12",
-          "score_loc": 0.028
+          "rank_loc": "10",
+          "score_loc": 0.022
         },
         "lab": {},
         "munsell": {},
@@ -632,6 +532,106 @@
         },
         "texture": {},
         "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "E30-boreal subalpine scrub-loamy colluvial slopes",
+          "name": "E30-boreal subalpine scrub-loamy colluvial slopes",
+          "rank_loc": "11",
+          "score_loc": 0.002
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "24914388",
+            "componentKind": "Taxon above family",
+            "componentPct": 1,
+            "dataSource": "SSURGO",
+            "distance": 350.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "3375378",
+            "minCompDistance": 350.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 25.0,
+            "taxsubgrp": "Typic Dystrocryepts",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "E30-boreal subalpine woodland-gravelly colluvial slopes",
+          "name": "E30-boreal subalpine woodland-gravelly colluvial slopes",
+          "rank_loc": "12",
+          "score_loc": 0.002
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "24914463",
+            "componentKind": "Taxon above family",
+            "componentPct": 1,
+            "dataSource": "SSURGO",
+            "distance": 350.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "3375378",
+            "minCompDistance": 350.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 18.0,
+            "taxsubgrp": "Typic Dystrocryepts",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
       }
     ]
   },
@@ -642,76 +642,88 @@
     },
     "soilRank": [
       {
+        "component": "E30-boreal taiga-organic frozen peat plateaus",
+        "componentData": "Missing Data",
+        "componentID": 24914411,
+        "name": "E30-boreal taiga-organic frozen peat plateaus",
+        "rank_data": "4",
+        "rank_data_loc": "1",
+        "rank_loc": 3,
+        "score_data": 0.657,
+        "score_data_loc": 0.385,
+        "score_loc": 0.114
+      },
+      {
         "component": "E30-boreal taiga-loamy frozen colluvial slopes",
         "componentData": "Missing Data",
         "componentID": 24914406,
         "name": "E30-boreal taiga-loamy frozen colluvial slopes",
-        "rank_data": "4",
-        "rank_data_loc": "1",
-        "rank_loc": 1,
-        "score_data": 0.613,
-        "score_data_loc": 0.477,
-        "score_loc": 0.34
-      },
-      {
-        "component": "E30-boreal forest-silty slopes",
-        "componentData": "Missing Data",
-        "componentID": 24914405,
-        "name": "E30-boreal forest-silty slopes",
-        "rank_data": "1",
+        "rank_data": "8",
         "rank_data_loc": "2",
-        "rank_loc": 7,
-        "score_data": 0.745,
-        "score_data_loc": 0.408,
-        "score_loc": 0.07
-      },
-      {
-        "component": "E30-boreal taiga-silty frozen loess slopes",
-        "componentData": "Missing Data",
-        "componentID": 24914462,
-        "name": "E30-boreal taiga-silty frozen loess slopes",
-        "rank_data": "3",
-        "rank_data_loc": "3",
-        "rank_loc": 5,
-        "score_data": 0.658,
-        "score_data_loc": 0.383,
-        "score_loc": 0.107
+        "rank_loc": 1,
+        "score_data": 0.481,
+        "score_data_loc": 0.377,
+        "score_loc": 0.272
       },
       {
         "component": "E30-boreal forest-silty loess slopes",
         "componentData": "Missing Data",
         "componentID": 24914386,
         "name": "E30-boreal forest-silty loess slopes",
-        "rank_data": "2",
-        "rank_data_loc": "4",
-        "rank_loc": 8,
-        "score_data": 0.663,
-        "score_data_loc": 0.36,
-        "score_loc": 0.058
+        "rank_data": "1",
+        "rank_data_loc": "3",
+        "rank_loc": 7,
+        "score_data": 0.706,
+        "score_data_loc": 0.376,
+        "score_loc": 0.046
       },
       {
-        "component": "E30-boreal taiga/tussock-silty frozen terraces",
+        "component": "E30-boreal forest-loamy flood plains",
         "componentData": "Missing Data",
-        "componentID": 24914407,
-        "name": "E30-boreal taiga/tussock-silty frozen terraces",
+        "componentID": 24914409,
+        "name": "E30-boreal forest-loamy flood plains",
+        "rank_data": "5",
+        "rank_data_loc": "4",
+        "rank_loc": 5,
+        "score_data": 0.649,
+        "score_data_loc": 0.36,
+        "score_loc": 0.072
+      },
+      {
+        "component": "E30-boreal scrub-gravelly low flood plains",
+        "componentData": "Missing Data",
+        "componentID": 24914408,
+        "name": "E30-boreal scrub-gravelly low flood plains",
         "rank_data": "7",
         "rank_data_loc": "5",
-        "rank_loc": 4,
-        "score_data": 0.497,
-        "score_data_loc": 0.304,
-        "score_loc": 0.11
+        "rank_loc": 2,
+        "score_data": 0.567,
+        "score_data_loc": 0.359,
+        "score_loc": 0.152
       },
       {
-        "component": "E30-boreal scrub-silty frozen drainageways",
+        "component": "E30-boreal subalpine woodland-gravelly colluvial slopes",
         "componentData": "Missing Data",
-        "componentID": 24914387,
-        "name": "E30-boreal scrub-silty frozen drainageways",
-        "rank_data": "5",
+        "componentID": 24914463,
+        "name": "E30-boreal subalpine woodland-gravelly colluvial slopes",
+        "rank_data": "2",
         "rank_data_loc": "6",
         "rank_loc": 12,
-        "score_data": 0.552,
-        "score_data_loc": 0.29,
-        "score_loc": 0.028
+        "score_data": 0.687,
+        "score_data_loc": 0.345,
+        "score_loc": 0.002
+      },
+      {
+        "component": "E30-boreal subalpine scrub-loamy colluvial slopes",
+        "componentData": "Missing Data",
+        "componentID": 24914388,
+        "name": "E30-boreal subalpine scrub-loamy colluvial slopes",
+        "rank_data": "3",
+        "rank_data_loc": "7",
+        "rank_loc": 11,
+        "score_data": 0.673,
+        "score_data_loc": 0.338,
+        "score_loc": 0.002
       },
       {
         "component": "E30-boreal taiga/tussock-silty frozen slopes",
@@ -719,71 +731,59 @@
         "componentID": 24914464,
         "name": "E30-boreal taiga/tussock-silty frozen slopes",
         "rank_data": "6",
-        "rank_data_loc": "7",
-        "rank_loc": 11,
-        "score_data": 0.521,
-        "score_data_loc": 0.275,
-        "score_loc": 0.03
-      },
-      {
-        "component": "E30-boreal wet meadow-organic depressions",
-        "componentData": "Missing Data",
-        "componentID": 24914412,
-        "name": "E30-boreal wet meadow-organic depressions",
-        "rank_data": "8",
         "rank_data_loc": "8",
         "rank_loc": 9,
-        "score_data": 0.46,
-        "score_data_loc": 0.255,
-        "score_loc": 0.05
+        "score_data": 0.647,
+        "score_data_loc": 0.335,
+        "score_loc": 0.024
       },
       {
-        "component": "E30-boreal forest-loamy flood plains",
+        "component": "E30-boreal forest-silty slopes",
         "componentData": "Missing Data",
-        "componentID": 24914409,
-        "name": "E30-boreal forest-loamy flood plains",
-        "rank_data": "9",
+        "componentID": 24914405,
+        "name": "E30-boreal forest-silty slopes",
+        "rank_data": "10",
         "rank_data_loc": "9",
         "rank_loc": 6,
-        "score_data": 0.372,
-        "score_data_loc": 0.231,
-        "score_loc": 0.09
-      },
-      {
-        "component": "E30-boreal taiga-organic frozen peat plateaus",
-        "componentData": "Missing Data",
-        "componentID": 24914411,
-        "name": "E30-boreal taiga-organic frozen peat plateaus",
-        "rank_data": "10",
-        "rank_data_loc": "10",
-        "rank_loc": 3,
-        "score_data": 0.277,
-        "score_data_loc": 0.199,
-        "score_loc": 0.12
+        "score_data": 0.473,
+        "score_data_loc": 0.264,
+        "score_loc": 0.056
       },
       {
         "component": "E30-boreal scrub/sphagnum-organic depressions",
         "componentData": "Missing Data",
         "componentID": 24914410,
         "name": "E30-boreal scrub/sphagnum-organic depressions",
+        "rank_data": "9",
+        "rank_data_loc": "10",
+        "rank_loc": 8,
+        "score_data": 0.473,
+        "score_data_loc": 0.248,
+        "score_loc": 0.024
+      },
+      {
+        "component": "E30-boreal scrub-silty frozen drainageways",
+        "componentData": "Missing Data",
+        "componentID": 24914387,
+        "name": "E30-boreal scrub-silty frozen drainageways",
         "rank_data": "11",
         "rank_data_loc": "11",
         "rank_loc": 10,
-        "score_data": 0.277,
-        "score_data_loc": 0.154,
-        "score_loc": 0.03
+        "score_data": 0.361,
+        "score_data_loc": 0.192,
+        "score_loc": 0.022
       },
       {
-        "component": "E30-boreal scrub-gravelly low flood plains",
+        "component": "E30-boreal taiga-silty frozen loess slopes",
         "componentData": "Missing Data",
-        "componentID": 24914408,
-        "name": "E30-boreal scrub-gravelly low flood plains",
+        "componentID": 24914462,
+        "name": "E30-boreal taiga-silty frozen loess slopes",
         "rank_data": "12",
         "rank_data_loc": "12",
-        "rank_loc": 2,
-        "score_data": 0.08,
-        "score_data_loc": 0.135,
-        "score_loc": 0.19
+        "rank_loc": 4,
+        "score_data": 0.211,
+        "score_data_loc": 0.148,
+        "score_loc": 0.086
       }
     ]
   }

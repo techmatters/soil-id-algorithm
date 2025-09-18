@@ -1,18 +1,18 @@
 {
   "list": {
-    "AWS_PIW90": 11.64,
+    "AWS_PIW90": 11.56,
     "Soil Data Value": [
       [
         "rfv_class_30",
-        1.6951525379286227
+        1.6875961328426623
       ],
       [
         "rfv_class_0",
-        1.3041643458994874
+        1.304781220223484
       ],
       [
         "texture_30",
-        0.35526589991601565
+        0.35284738420075
       ],
       [
         "texture_0",
@@ -55,7 +55,7 @@
           "component": "Lonely",
           "name": "Lonely",
           "rank_loc": "1",
-          "score_loc": 0.5
+          "score_loc": 0.267
         },
         "lab": {},
         "munsell": {},
@@ -111,7 +111,7 @@
           "component": "Robson",
           "name": "Robson",
           "rank_loc": "2",
-          "score_loc": 0.35
+          "score_loc": 0.187
         },
         "lab": {},
         "munsell": {},
@@ -138,9 +138,65 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#robson",
             "slope": 10.0,
             "taxsubgrp": "Lithic Xeric Haplargids",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "The Robson series consists of shallow, well drained soils that formed in residuum derived from igneous rock.  Robson soils are on hill and mountain crests and side slopes.  Slopes are 2 to 75 percent.  The mean annual precipitation is about 380 mm and the mean annual temperature is about 6 degrees C."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R023XY212OR"
+            ],
+            "ecoclassname": [
+              "Loamy  10-12 Pz"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/023X/R023XY212OR"
+            ]
+          }
+        },
+        "id": {
+          "component": "Actem",
+          "name": "Actem",
+          "rank_loc": "5",
+          "score_loc": 0.113
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25443068",
+            "componentKind": "Series",
+            "componentPct": 85,
+            "dataSource": "SSURGO",
+            "distance": 858.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "490458",
+            "minCompDistance": 858.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=actem",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#actem",
+            "slope": 11.0,
+            "taxsubgrp": "Xeric Argidurids",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Actem series consists of shallow to a duripan, well drained soils that formed in alluvium and colluvium derived from volcanic rocks. Actem soils are on hills and lava plateaus. Slopes are 2 to 20 percent. The mean annual precipitation is about 250 mm and the mean annual temperature is about 7 degrees C."
         },
         "texture": {},
         "top_depth": {}
@@ -167,7 +223,7 @@
           "component": "Reallis",
           "name": "Reallis",
           "rank_loc": "3",
-          "score_loc": 0.212
+          "score_loc": 0.113
         },
         "lab": {},
         "munsell": {},
@@ -223,7 +279,7 @@
           "component": "Rinconflat",
           "name": "Rinconflat",
           "rank_loc": "4",
-          "score_loc": 0.212
+          "score_loc": 0.113
         },
         "lab": {},
         "munsell": {},
@@ -265,62 +321,6 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R023XY212OR"
-            ],
-            "ecoclassname": [
-              "Loamy  10-12 Pz"
-            ],
-            "edit_url": [
-              "https://edit.jornada.nmsu.edu/catalogs/esd/023X/R023XY212OR"
-            ]
-          }
-        },
-        "id": {
-          "component": "Actem",
-          "name": "Actem",
-          "rank_loc": "5",
-          "score_loc": 0.212
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "25443068",
-            "componentKind": "Series",
-            "componentPct": 85,
-            "dataSource": "SSURGO",
-            "distance": 858.0,
-            "irrcapcl": "nan",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "490458",
-            "minCompDistance": 858.0,
-            "nirrcapcl": "6",
-            "nirrcapscl": "e",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=actem",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#actem",
-            "slope": 11.0,
-            "taxsubgrp": "Xeric Argidurids",
-            "textureInfill": "No"
-          },
-          "siteDescription": "The Actem series consists of shallow to a duripan, well drained soils that formed in alluvium and colluvium derived from volcanic rocks. Actem soils are on hills and lava plateaus. Slopes are 2 to 20 percent. The mean annual precipitation is about 250 mm and the mean annual temperature is about 7 degrees C."
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": [
               "R023XY220OR"
             ],
             "ecoclassname": [
@@ -335,7 +335,7 @@
           "component": "Lonegrave",
           "name": "Lonegrave",
           "rank_loc": "6",
-          "score_loc": 0.163
+          "score_loc": 0.087
         },
         "lab": {},
         "munsell": {},
@@ -391,7 +391,7 @@
           "component": "Raz",
           "name": "Raz",
           "rank_loc": "7",
-          "score_loc": 0.125
+          "score_loc": 0.067
         },
         "lab": {},
         "munsell": {},
@@ -447,7 +447,7 @@
           "component": "Brace",
           "name": "Brace",
           "rank_loc": "8",
-          "score_loc": 0.087
+          "score_loc": 0.046
         },
         "lab": {},
         "munsell": {},
@@ -503,7 +503,7 @@
           "component": "Ausmus",
           "name": "Ausmus",
           "rank_loc": "9",
-          "score_loc": 0.01
+          "score_loc": 0.005
         },
         "lab": {},
         "munsell": {},
@@ -530,7 +530,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#ausmus",
             "slope": 1.0,
             "taxsubgrp": "Aquic Natrargids",
-            "textureInfill": "Yes"
+            "textureInfill": "No"
           },
           "siteDescription": "The Ausmus series consists of very deep, somewhat poorly drained or moderately well drained soils that formed in alluvium and lacustrine deposits derived from volcanic rocks and volcanic ash.  Ausmus soils are on low lake terraces.  Slopes are 0 to 2 percent.  The mean annual precipitation is about 230 mm and the mean annual temperature is about 6.5 degrees C."
         },
@@ -553,93 +553,93 @@
         "rank_data": "6",
         "rank_data_loc": "1",
         "rank_loc": 1,
-        "score_data": 0.63,
-        "score_data_loc": 0.565,
-        "score_loc": 0.5
+        "score_data": 0.616,
+        "score_data_loc": 0.442,
+        "score_loc": 0.267
       },
       {
         "component": "Robson",
         "componentData": "Data Complete",
         "componentID": 25442848,
         "name": "Robson",
-        "rank_data": "5",
+        "rank_data": "2",
         "rank_data_loc": "2",
         "rank_loc": 2,
-        "score_data": 0.646,
-        "score_data_loc": 0.498,
-        "score_loc": 0.35
+        "score_data": 0.691,
+        "score_data_loc": 0.439,
+        "score_loc": 0.187
       },
       {
         "component": "Actem",
         "componentData": "Data Complete",
         "componentID": 25443068,
         "name": "Actem",
-        "rank_data": "4",
+        "rank_data": "1",
         "rank_data_loc": "3",
         "rank_loc": 5,
-        "score_data": 0.657,
-        "score_data_loc": 0.435,
-        "score_loc": 0.212
-      },
-      {
-        "component": "Raz",
-        "componentData": "Data Complete",
-        "componentID": 25442636,
-        "name": "Raz",
-        "rank_data": "3",
-        "rank_data_loc": "4",
-        "rank_loc": 7,
-        "score_data": 0.723,
-        "score_data_loc": 0.424,
-        "score_loc": 0.125
-      },
-      {
-        "component": "Brace",
-        "componentData": "Data Complete",
-        "componentID": 25442637,
-        "name": "Brace",
-        "rank_data": "1",
-        "rank_data_loc": "5",
-        "rank_loc": 8,
-        "score_data": 0.756,
-        "score_data_loc": 0.421,
-        "score_loc": 0.087
-      },
-      {
-        "component": "Reallis",
-        "componentData": "Data Complete",
-        "componentID": 25442630,
-        "name": "Reallis",
-        "rank_data": "7",
-        "rank_data_loc": "6",
-        "rank_loc": 3,
-        "score_data": 0.588,
-        "score_data_loc": 0.4,
-        "score_loc": 0.212
+        "score_data": 0.697,
+        "score_data_loc": 0.405,
+        "score_loc": 0.113
       },
       {
         "component": "Rinconflat",
         "componentData": "Data Complete",
         "componentID": 25442616,
         "name": "Rinconflat",
+        "rank_data": "5",
+        "rank_data_loc": "4",
+        "rank_loc": 4,
+        "score_data": 0.623,
+        "score_data_loc": 0.368,
+        "score_loc": 0.113
+      },
+      {
+        "component": "Brace",
+        "componentData": "Data Complete",
+        "componentID": 25442637,
+        "name": "Brace",
+        "rank_data": "3",
+        "rank_data_loc": "5",
+        "rank_loc": 8,
+        "score_data": 0.661,
+        "score_data_loc": 0.354,
+        "score_loc": 0.046
+      },
+      {
+        "component": "Raz",
+        "componentData": "Data Complete",
+        "componentID": 25442636,
+        "name": "Raz",
+        "rank_data": "4",
+        "rank_data_loc": "6",
+        "rank_loc": 7,
+        "score_data": 0.63,
+        "score_data_loc": 0.348,
+        "score_loc": 0.067
+      },
+      {
+        "component": "Reallis",
+        "componentData": "Data Complete",
+        "componentID": 25442630,
+        "name": "Reallis",
         "rank_data": "8",
         "rank_data_loc": "7",
-        "rank_loc": 4,
-        "score_data": 0.587,
-        "score_data_loc": 0.4,
-        "score_loc": 0.212
+        "rank_loc": 3,
+        "score_data": 0.581,
+        "score_data_loc": 0.347,
+        "score_loc": 0.113
       },
       {
         "component": "Ausmus",
         "componentData": "Data Complete",
         "componentID": 25442629,
         "name": "Ausmus",
-        "rank_data": "2",
+        "rank_data": "7",
         "rank_data_loc": "8",
         "rank_loc": 9,
-        "score_data": 0.746,
-        "score_data_loc": 0.378,
-        "score_loc": 0.01
+        "score_data": 0.607,
+        "score_data_loc": 0.306,
+        "score_loc": 0.005
       },
       {
         "component": "Lonegrave",
@@ -649,9 +649,9 @@
         "rank_data": "9",
         "rank_data_loc": "9",
         "rank_loc": 6,
-        "score_data": 0.406,
-        "score_data_loc": 0.284,
-        "score_loc": 0.163
+        "score_data": 0.437,
+        "score_data_loc": 0.262,
+        "score_loc": 0.087
       }
     ]
   }

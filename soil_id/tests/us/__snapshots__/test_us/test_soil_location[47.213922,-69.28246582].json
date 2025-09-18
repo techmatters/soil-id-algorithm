@@ -1,18 +1,18 @@
 {
   "list": {
-    "AWS_PIW90": 10.09,
+    "AWS_PIW90": 10.3,
     "Soil Data Value": [
       [
         "rfv_class_30",
-        1.3277379187696259
+        1.3229420838347168
       ],
       [
         "rfv_class_0",
-        1.0964549995974866
+        1.1105001941281816
       ],
       [
         "texture_30",
-        0.9800953659873861
+        0.9931611211632956
       ],
       [
         "texture_0",
@@ -53,9 +53,9 @@
         },
         "id": {
           "component": "Knob lock",
-          "name": "Knob lock1",
+          "name": "Knob lock",
           "rank_loc": "1",
-          "score_loc": 0.46
+          "score_loc": 0.325
         },
         "lab": {},
         "munsell": {},
@@ -109,9 +109,9 @@
         },
         "id": {
           "component": "Chesuncook",
-          "name": "Chesuncook1",
+          "name": "Chesuncook",
           "rank_loc": "2",
-          "score_loc": 0.429
+          "score_loc": 0.277
         },
         "lab": {},
         "munsell": {},
@@ -120,9 +120,9 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25209555",
+            "componentID": "25209552",
             "componentKind": "Series",
-            "componentPct": 50,
+            "componentPct": 3,
             "dataSource": "SSURGO",
             "distance": 19.0,
             "irrcapcl": "None",
@@ -136,7 +136,7 @@
             "rfvInfill": "No",
             "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=chesuncook",
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#chesuncook",
-            "slope": 20.0,
+            "slope": 12.0,
             "taxsubgrp": "Aquic Haplorthods",
             "textureInfill": "No"
           },
@@ -165,9 +165,9 @@
         },
         "id": {
           "component": "Elliottsville",
-          "name": "Elliottsville1",
+          "name": "Elliottsville",
           "rank_loc": "3",
-          "score_loc": 0.301
+          "score_loc": 0.211
         },
         "lab": {},
         "munsell": {},
@@ -221,9 +221,9 @@
         },
         "id": {
           "component": "Monson",
-          "name": "Monson1",
+          "name": "Monson",
           "rank_loc": "4",
-          "score_loc": 0.1
+          "score_loc": 0.092
         },
         "lab": {},
         "munsell": {},
@@ -276,122 +276,10 @@
           }
         },
         "id": {
-          "component": "Hogback",
-          "name": "Hogback",
-          "rank_loc": "5",
-          "score_loc": 0.05
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "25208410",
-            "componentKind": "Series",
-            "componentPct": 5,
-            "dataSource": "SSURGO",
-            "distance": 0.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "2549870",
-            "minCompDistance": 0.0,
-            "nirrcapcl": "6",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=hogback",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#hogback",
-            "slope": 50.0,
-            "taxsubgrp": "Lithic Haplohumods",
-            "textureInfill": "No"
-          },
-          "siteDescription": "The Hogback series consists of shallow, well drained soils on glaciated uplands. They formed in loamy till. Estimated saturated hydraulic conductivity is moderately high to high throughout the mineral soil. Slope ranges from 3 to 70 percent. Mean annual precipitation is about 50 inches, and mean annual temperature is about 43 degrees F."
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": [
-              "F143XY704ME"
-            ],
-            "ecoclassname": [
-              "Shallow Organic Rock Pocket"
-            ],
-            "edit_url": [
-              "https://edit.jornada.nmsu.edu/catalogs/esd/143X/F143XY704ME"
-            ]
-          }
-        },
-        "id": {
-          "component": "Rawsonville",
-          "name": "Rawsonville",
-          "rank_loc": "6",
-          "score_loc": 0.05
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "25208409",
-            "componentKind": "Series",
-            "componentPct": 5,
-            "dataSource": "SSURGO",
-            "distance": 0.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "2549870",
-            "minCompDistance": 0.0,
-            "nirrcapcl": "4",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=rawsonville",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#rawsonville",
-            "slope": 20.0,
-            "taxsubgrp": "Typic Haplohumods",
-            "textureInfill": "No"
-          },
-          "siteDescription": "The Rawsonville series consists of moderately deep, well drained soils on glaciated uplands. They formed in loamy till. Estimated saturated hydraulic conductivity is moderately high or high in the mineral soil. Slope ranges from 3 to 70 percent. Mean annual precipitation is about 1,270 mm, and mean annual temperature is about 6 degrees C."
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": [
-              "F143XY702ME"
-            ],
-            "ecoclassname": [
-              "Shallow And Moderately Deep Till"
-            ],
-            "edit_url": [
-              "https://edit.jornada.nmsu.edu/catalogs/esd/143X/F143XY702ME"
-            ]
-          }
-        },
-        "id": {
           "component": "Abram",
-          "name": "Abram1",
-          "rank_loc": "7",
-          "score_loc": 0.034
+          "name": "Abram",
+          "rank_loc": "5",
+          "score_loc": 0.036
         },
         "lab": {},
         "munsell": {},
@@ -433,6 +321,118 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
+              "F143XY702ME"
+            ],
+            "ecoclassname": [
+              "Shallow And Moderately Deep Till"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/143X/F143XY702ME"
+            ]
+          }
+        },
+        "id": {
+          "component": "Hogback",
+          "name": "Hogback",
+          "rank_loc": "6",
+          "score_loc": 0.03
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25208410",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "2549870",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=hogback",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#hogback",
+            "slope": 50.0,
+            "taxsubgrp": "Lithic Haplohumods",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Hogback series consists of shallow, well drained soils on glaciated uplands. They formed in loamy till. Estimated saturated hydraulic conductivity is moderately high to high throughout the mineral soil. Slope ranges from 3 to 70 percent. Mean annual precipitation is about 50 inches, and mean annual temperature is about 43 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F143XY702ME"
+            ],
+            "ecoclassname": [
+              "Shallow And Moderately Deep Till"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/143X/F143XY702ME"
+            ]
+          }
+        },
+        "id": {
+          "component": "Rawsonville",
+          "name": "Rawsonville",
+          "rank_loc": "7",
+          "score_loc": 0.03
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25208409",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "2549870",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "4",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=rawsonville",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#rawsonville",
+            "slope": 20.0,
+            "taxsubgrp": "Typic Haplohumods",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Rawsonville series consists of moderately deep, well drained soils on glaciated uplands. They formed in loamy till. Estimated saturated hydraulic conductivity is moderately high or high in the mineral soil. Slope ranges from 3 to 70 percent. Mean annual precipitation is about 1,270 mm, and mean annual temperature is about 6 degrees C."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
               ""
             ],
             "ecoclassname": [
@@ -447,7 +447,7 @@
           "component": "Knob lock",
           "name": "Knob lock2",
           "rank_loc": "Not Displayed",
-          "score_loc": 0.46
+          "score_loc": 0.325
         },
         "lab": {},
         "munsell": {},
@@ -503,7 +503,7 @@
           "component": "Knob lock",
           "name": "Knob lock3",
           "rank_loc": "Not Displayed",
-          "score_loc": 0.46
+          "score_loc": 0.325
         },
         "lab": {},
         "munsell": {},
@@ -559,7 +559,7 @@
           "component": "Chesuncook",
           "name": "Chesuncook2",
           "rank_loc": "Not Displayed",
-          "score_loc": 0.429
+          "score_loc": 0.277
         },
         "lab": {},
         "munsell": {},
@@ -568,9 +568,9 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25209552",
+            "componentID": "25209555",
             "componentKind": "Series",
-            "componentPct": 3,
+            "componentPct": 50,
             "dataSource": "SSURGO",
             "distance": 19.0,
             "irrcapcl": "None",
@@ -584,7 +584,7 @@
             "rfvInfill": "No",
             "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=chesuncook",
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#chesuncook",
-            "slope": 12.0,
+            "slope": 20.0,
             "taxsubgrp": "Aquic Haplorthods",
             "textureInfill": "No"
           },
@@ -615,7 +615,7 @@
           "component": "Elliottsville",
           "name": "Elliottsville2",
           "rank_loc": "Not Displayed",
-          "score_loc": 0.301
+          "score_loc": 0.211
         },
         "lab": {},
         "munsell": {},
@@ -671,7 +671,7 @@
           "component": "Monson",
           "name": "Monson2",
           "rank_loc": "Not Displayed",
-          "score_loc": 0.1
+          "score_loc": 0.092
         },
         "lab": {},
         "munsell": {},
@@ -713,13 +713,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "F143XY702ME"
+              "F143XY704ME"
             ],
             "ecoclassname": [
-              "Shallow And Moderately Deep Till"
+              "Shallow Organic Rock Pocket"
             ],
             "edit_url": [
-              "https://edit.jornada.nmsu.edu/catalogs/esd/143X/F143XY702ME"
+              "https://edit.jornada.nmsu.edu/catalogs/esd/143X/F143XY704ME"
             ]
           }
         },
@@ -727,7 +727,7 @@
           "component": "Abram",
           "name": "Abram2",
           "rank_loc": "Not Displayed",
-          "score_loc": 0.034
+          "score_loc": 0.036
         },
         "lab": {},
         "munsell": {},
@@ -772,50 +772,62 @@
       {
         "component": "Chesuncook",
         "componentData": "Data Complete",
-        "componentID": 25209555,
-        "name": "Chesuncook1",
+        "componentID": 25209552,
+        "name": "Chesuncook",
         "rank_data": "1",
         "rank_data_loc": "1",
         "rank_loc": "2",
-        "score_data": 0.725,
-        "score_data_loc": 0.577,
-        "score_loc": 0.429
+        "score_data": 0.729,
+        "score_data_loc": 0.503,
+        "score_loc": 0.277
       },
       {
         "component": "Knob lock",
         "componentData": "Data Complete",
         "componentID": 25209556,
         "name": "Knob lock2",
-        "rank_data": "4",
+        "rank_data": "3",
         "rank_data_loc": "2",
         "rank_loc": "Not Displayed",
-        "score_data": 0.645,
-        "score_data_loc": 0.553,
-        "score_loc": 0.46
+        "score_data": 0.667,
+        "score_data_loc": 0.496,
+        "score_loc": 0.325
       },
       {
         "component": "Elliottsville",
         "componentData": "Data Complete",
         "componentID": 25209557,
-        "name": "Elliottsville1",
-        "rank_data": "2",
+        "name": "Elliottsville",
+        "rank_data": "4",
         "rank_data_loc": "3",
         "rank_loc": "3",
-        "score_data": 0.685,
-        "score_data_loc": 0.493,
-        "score_loc": 0.301
+        "score_data": 0.648,
+        "score_data_loc": 0.43,
+        "score_loc": 0.211
       },
       {
         "component": "Monson",
         "componentData": "Data Complete",
         "componentID": 25209554,
-        "name": "Monson1",
-        "rank_data": "3",
+        "name": "Monson",
+        "rank_data": "5",
         "rank_data_loc": "4",
         "rank_loc": "4",
-        "score_data": 0.648,
-        "score_data_loc": 0.374,
-        "score_loc": 0.1
+        "score_data": 0.616,
+        "score_data_loc": 0.354,
+        "score_loc": 0.092
+      },
+      {
+        "component": "Abram",
+        "componentData": "Data Complete",
+        "componentID": 25209553,
+        "name": "Abram",
+        "rank_data": "2",
+        "rank_data_loc": "5",
+        "rank_loc": "5",
+        "score_data": 0.671,
+        "score_data_loc": 0.353,
+        "score_loc": 0.036
       },
       {
         "component": "Rawsonville",
@@ -823,23 +835,11 @@
         "componentID": 25208409,
         "name": "Rawsonville",
         "rank_data": "6",
-        "rank_data_loc": "5",
-        "rank_loc": "6",
-        "score_data": 0.624,
-        "score_data_loc": 0.337,
-        "score_loc": 0.05
-      },
-      {
-        "component": "Abram",
-        "componentData": "Data Complete",
-        "componentID": 25209553,
-        "name": "Abram1",
-        "rank_data": "5",
         "rank_data_loc": "6",
         "rank_loc": "7",
-        "score_data": 0.631,
-        "score_data_loc": 0.332,
-        "score_loc": 0.034
+        "score_data": 0.615,
+        "score_data_loc": 0.322,
+        "score_loc": 0.03
       },
       {
         "component": "Hogback",
@@ -848,34 +848,34 @@
         "name": "Hogback",
         "rank_data": "7",
         "rank_data_loc": "7",
-        "rank_loc": "5",
-        "score_data": 0.486,
-        "score_data_loc": 0.268,
-        "score_loc": 0.05
+        "rank_loc": "6",
+        "score_data": 0.484,
+        "score_data_loc": 0.257,
+        "score_loc": 0.03
       },
       {
         "component": "Chesuncook",
         "componentData": "Data Complete",
-        "componentID": 25209552,
+        "componentID": 25209555,
         "name": "Chesuncook2",
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.692,
-        "score_data_loc": 0.561,
-        "score_loc": 0.429
+        "score_data": 0.715,
+        "score_data_loc": 0.496,
+        "score_loc": 0.277
       },
       {
         "component": "Knob lock",
         "componentData": "Data Complete",
         "componentID": 25208412,
-        "name": "Knob lock1",
+        "name": "Knob lock",
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "1",
-        "score_data": 0.584,
-        "score_data_loc": 0.522,
-        "score_loc": 0.46
+        "score_data": 0.558,
+        "score_data_loc": 0.441,
+        "score_loc": 0.325
       },
       {
         "component": "Knob lock",
@@ -885,9 +885,9 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.529,
-        "score_data_loc": 0.494,
-        "score_loc": 0.46
+        "score_data": 0.539,
+        "score_data_loc": 0.432,
+        "score_loc": 0.325
       },
       {
         "component": "Elliottsville",
@@ -897,9 +897,9 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.434,
-        "score_data_loc": 0.367,
-        "score_loc": 0.301
+        "score_data": 0.546,
+        "score_data_loc": 0.379,
+        "score_loc": 0.211
       },
       {
         "component": "Monson",
@@ -909,9 +909,9 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.603,
-        "score_data_loc": 0.351,
-        "score_loc": 0.1
+        "score_data": 0.598,
+        "score_data_loc": 0.345,
+        "score_loc": 0.092
       },
       {
         "component": "Abram",
@@ -921,9 +921,9 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.571,
-        "score_data_loc": 0.302,
-        "score_loc": 0.034
+        "score_data": 0.469,
+        "score_data_loc": 0.252,
+        "score_loc": 0.036
       }
     ]
   }

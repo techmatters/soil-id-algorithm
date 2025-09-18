@@ -1,18 +1,18 @@
 {
   "list": {
-    "AWS_PIW90": 7.59,
+    "AWS_PIW90": 7.6,
     "Soil Data Value": [
       [
         "rfv_class_30",
-        1.3417496839612755
+        1.338959652390504
       ],
       [
         "texture_30",
-        0.4820661480830928
+        0.48238718594988694
       ],
       [
         "rfv_class_0",
-        0.2164794609217049
+        0.20970102486621656
       ],
       [
         "texture_0",
@@ -55,7 +55,7 @@
           "component": "D36-western maritime tussock scrub loamy eolian slopes",
           "name": "D36-western maritime tussock scrub loamy eolian slopes",
           "rank_loc": "1",
-          "score_loc": 0.24
+          "score_loc": 0.253
         },
         "lab": {},
         "munsell": {},
@@ -111,7 +111,7 @@
           "component": "D36-western maritime dwarf scrub loamy glaciated slopes",
           "name": "D36-western maritime dwarf scrub loamy glaciated slopes",
           "rank_loc": "2",
-          "score_loc": 0.23
+          "score_loc": 0.242
         },
         "lab": {},
         "munsell": {},
@@ -167,7 +167,7 @@
           "component": "D36-western maritime sedge organic depressions",
           "name": "D36-western maritime sedge organic depressions",
           "rank_loc": "3",
-          "score_loc": 0.2
+          "score_loc": 0.211
         },
         "lab": {},
         "munsell": {},
@@ -223,7 +223,7 @@
           "component": "D36-western maritime scrub organic peat mounds",
           "name": "D36-western maritime scrub organic peat mounds",
           "rank_loc": "4",
-          "score_loc": 0.17
+          "score_loc": 0.179
         },
         "lab": {},
         "munsell": {},
@@ -279,7 +279,7 @@
           "component": "D36-boreal forest loamy eolian slopes",
           "name": "D36-boreal forest loamy eolian slopes",
           "rank_loc": "5",
-          "score_loc": 0.1
+          "score_loc": 0.105
         },
         "lab": {},
         "munsell": {},
@@ -335,7 +335,7 @@
           "component": "D36-western maritime scrub drainageways",
           "name": "D36-western maritime scrub drainageways",
           "rank_loc": "6",
-          "score_loc": 0.01
+          "score_loc": 0.011
         },
         "lab": {},
         "munsell": {},
@@ -382,36 +382,12 @@
         "componentData": "Missing Data",
         "componentID": 26176414,
         "name": "D36-western maritime tussock scrub loamy eolian slopes",
-        "rank_data": "2",
+        "rank_data": "1",
         "rank_data_loc": "1",
         "rank_loc": 1,
-        "score_data": 0.48,
-        "score_data_loc": 0.36,
-        "score_loc": 0.24
-      },
-      {
-        "component": "D36-western maritime sedge organic depressions",
-        "componentData": "Missing Data",
-        "componentID": 26176412,
-        "name": "D36-western maritime sedge organic depressions",
-        "rank_data": "3",
-        "rank_data_loc": "2",
-        "rank_loc": 3,
-        "score_data": 0.45,
-        "score_data_loc": 0.325,
-        "score_loc": 0.2
-      },
-      {
-        "component": "D36-boreal forest loamy eolian slopes",
-        "componentData": "Missing Data",
-        "componentID": 26176415,
-        "name": "D36-boreal forest loamy eolian slopes",
-        "rank_data": "1",
-        "rank_data_loc": "3",
-        "rank_loc": 5,
-        "score_data": 0.522,
-        "score_data_loc": 0.311,
-        "score_loc": 0.1
+        "score_data": 0.508,
+        "score_data_loc": 0.38,
+        "score_loc": 0.253
       },
       {
         "component": "D36-western maritime dwarf scrub loamy glaciated slopes",
@@ -419,11 +395,23 @@
         "componentID": 26176416,
         "name": "D36-western maritime dwarf scrub loamy glaciated slopes",
         "rank_data": "5",
-        "rank_data_loc": "4",
+        "rank_data_loc": "2",
         "rank_loc": 2,
         "score_data": 0.377,
-        "score_data_loc": 0.303,
-        "score_loc": 0.23
+        "score_data_loc": 0.309,
+        "score_loc": 0.242
+      },
+      {
+        "component": "D36-boreal forest loamy eolian slopes",
+        "componentData": "Missing Data",
+        "componentID": 26176415,
+        "name": "D36-boreal forest loamy eolian slopes",
+        "rank_data": "2",
+        "rank_data_loc": "3",
+        "rank_loc": 5,
+        "score_data": 0.495,
+        "score_data_loc": 0.3,
+        "score_loc": 0.105
       },
       {
         "component": "D36-western maritime scrub organic peat mounds",
@@ -431,23 +419,35 @@
         "componentID": 26176417,
         "name": "D36-western maritime scrub organic peat mounds",
         "rank_data": "4",
-        "rank_data_loc": "5",
+        "rank_data_loc": "4",
         "rank_loc": 4,
         "score_data": 0.421,
-        "score_data_loc": 0.295,
-        "score_loc": 0.17
+        "score_data_loc": 0.3,
+        "score_loc": 0.179
+      },
+      {
+        "component": "D36-western maritime sedge organic depressions",
+        "componentData": "Missing Data",
+        "componentID": 26176412,
+        "name": "D36-western maritime sedge organic depressions",
+        "rank_data": "6",
+        "rank_data_loc": "5",
+        "rank_loc": 3,
+        "score_data": 0.332,
+        "score_data_loc": 0.271,
+        "score_loc": 0.211
       },
       {
         "component": "D36-western maritime scrub drainageways",
         "componentData": "Missing Data",
         "componentID": 26176413,
         "name": "D36-western maritime scrub drainageways",
-        "rank_data": "6",
+        "rank_data": "3",
         "rank_data_loc": "6",
         "rank_loc": 6,
-        "score_data": 0.376,
-        "score_data_loc": 0.193,
-        "score_loc": 0.01
+        "score_data": 0.495,
+        "score_data_loc": 0.253,
+        "score_loc": 0.011
       }
     ]
   }

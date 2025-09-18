@@ -1,18 +1,18 @@
 {
   "list": {
-    "AWS_PIW90": 14.84,
+    "AWS_PIW90": 12.64,
     "Soil Data Value": [
       [
         "rfv_class_30",
-        0.5233758769036427
-      ],
-      [
-        "rfv_class_0",
-        0.48072314826451956
+        0.5074815208577954
       ],
       [
         "texture_30",
-        0.25751396689198724
+        0.38007948871089425
+      ],
+      [
+        "rfv_class_0",
+        0.3160432490369194
       ],
       [
         "texture_0",
@@ -47,9 +47,9 @@
         },
         "id": {
           "component": "Carrizo",
-          "name": "Carrizo1",
+          "name": "Carrizo",
           "rank_loc": "1",
-          "score_loc": 0.363
+          "score_loc": 0.269
         },
         "lab": {},
         "munsell": {},
@@ -97,9 +97,9 @@
         },
         "id": {
           "component": "Gunsight",
-          "name": "Gunsight1",
+          "name": "Gunsight",
           "rank_loc": "2",
-          "score_loc": 0.27
+          "score_loc": 0.18
         },
         "lab": {},
         "munsell": {},
@@ -146,10 +146,10 @@
           }
         },
         "id": {
-          "component": "Rillito",
-          "name": "Rillito",
+          "component": "Chuckawalla",
+          "name": "Chuckawalla",
           "rank_loc": "3",
-          "score_loc": 0.19
+          "score_loc": 0.051
         },
         "lab": {},
         "munsell": {},
@@ -158,9 +158,9 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "14185645",
+            "componentID": "14185642",
             "componentKind": "Series",
-            "componentPct": 19,
+            "componentPct": 8,
             "dataSource": "STATSGO",
             "distance": 0.0,
             "irrcapcl": "None",
@@ -168,106 +168,6 @@
             "irrcapunit": "None",
             "mapunitID": "660587",
             "minCompDistance": 0.0,
-            "nirrcapcl": "7",
-            "nirrcapscl": "e",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 20.0,
-            "taxsubgrp": "Typic Haplocalcids",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
-          "component": "Rositas",
-          "name": "Rositas1",
-          "rank_loc": "4",
-          "score_loc": 0.091
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "14185600",
-            "componentKind": "Series",
-            "componentPct": 10,
-            "dataSource": "STATSGO",
-            "distance": 353.554689070506,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "660584",
-            "minCompDistance": 353.554689070506,
-            "nirrcapcl": "8",
-            "nirrcapscl": "e",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 5.0,
-            "taxsubgrp": "Typic Torripsamments",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
-          "component": "Chuckawalla",
-          "name": "Chuckawalla",
-          "rank_loc": "5",
-          "score_loc": 0.08
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "14185601",
-            "componentKind": "Series",
-            "componentPct": 2,
-            "dataSource": "STATSGO",
-            "distance": 353.554689070506,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "660584",
-            "minCompDistance": 353.554689070506,
             "nirrcapcl": "7",
             "nirrcapscl": "s",
             "nirrcapunit": "None",
@@ -298,8 +198,8 @@
         "id": {
           "component": "Beeline",
           "name": "Beeline",
-          "rank_loc": "6",
-          "score_loc": 0.05
+          "rank_loc": "4",
+          "score_loc": 0.026
         },
         "lab": {},
         "munsell": {},
@@ -346,10 +246,10 @@
           }
         },
         "id": {
-          "component": "Momoli",
-          "name": "Momoli",
-          "rank_loc": "7",
-          "score_loc": 0.05
+          "component": "Cipriano",
+          "name": "Cipriano",
+          "rank_loc": "5",
+          "score_loc": 0.026
         },
         "lab": {},
         "munsell": {},
@@ -358,7 +258,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "14185638",
+            "componentID": "14185643",
             "componentKind": "Series",
             "componentPct": 5,
             "dataSource": "STATSGO",
@@ -374,7 +274,57 @@
             "rfvInfill": "No",
             "sdeURL": "",
             "seeURL": "",
-            "slope": 6.0,
+            "slope": 18.0,
+            "taxsubgrp": "Typic Haplodurids",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Denure",
+          "name": "Denure",
+          "rank_loc": "6",
+          "score_loc": 0.026
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14185639",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "STATSGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "660587",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 4.0,
             "taxsubgrp": "Typic Haplocambids",
             "textureInfill": "No"
           },
@@ -398,8 +348,8 @@
         "id": {
           "component": "Gilman",
           "name": "Gilman",
-          "rank_loc": "8",
-          "score_loc": 0.05
+          "rank_loc": "7",
+          "score_loc": 0.026
         },
         "lab": {},
         "munsell": {},
@@ -448,8 +398,8 @@
         "id": {
           "component": "Mohall",
           "name": "Mohall",
-          "rank_loc": "9",
-          "score_loc": 0.05
+          "rank_loc": "8",
+          "score_loc": 0.026
         },
         "lab": {},
         "munsell": {},
@@ -496,10 +446,60 @@
           }
         },
         "id": {
-          "component": "Cipriano",
-          "name": "Cipriano",
+          "component": "Antho",
+          "name": "Antho",
+          "rank_loc": "9",
+          "score_loc": 0.009
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14185610",
+            "componentKind": "Series",
+            "componentPct": 2,
+            "dataSource": "STATSGO",
+            "distance": 353.554689070506,
+            "irrcapcl": "2",
+            "irrcapscl": "e",
+            "irrcapunit": "None",
+            "mapunitID": "660584",
+            "minCompDistance": 353.554689070506,
+            "nirrcapcl": "7",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 3.0,
+            "taxsubgrp": "Typic Torrifluvents",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Aco",
+          "name": "Aco",
           "rank_loc": "10",
-          "score_loc": 0.05
+          "score_loc": 0.005
         },
         "lab": {},
         "munsell": {},
@@ -508,124 +508,124 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "14185643",
+            "componentID": "14185609",
             "componentKind": "Series",
-            "componentPct": 5,
+            "componentPct": 1,
             "dataSource": "STATSGO",
-            "distance": 0.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
+            "distance": 353.554689070506,
+            "irrcapcl": "2",
+            "irrcapscl": "e",
             "irrcapunit": "None",
-            "mapunitID": "660587",
-            "minCompDistance": 0.0,
+            "mapunitID": "660584",
+            "minCompDistance": 353.554689070506,
             "nirrcapcl": "7",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 18.0,
-            "taxsubgrp": "Typic Haplodurids",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
-          "component": "Pinamt",
-          "name": "Pinamt",
-          "rank_loc": "11",
-          "score_loc": 0.05
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "14185641",
-            "componentKind": "Series",
-            "componentPct": 5,
-            "dataSource": "STATSGO",
-            "distance": 0.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "660587",
-            "minCompDistance": 0.0,
-            "nirrcapcl": "7",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 20.0,
-            "taxsubgrp": "Typic Calciargids",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
-          "component": "Denure",
-          "name": "Denure",
-          "rank_loc": "12",
-          "score_loc": 0.05
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "14185639",
-            "componentKind": "Series",
-            "componentPct": 5,
-            "dataSource": "STATSGO",
-            "distance": 0.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "660587",
-            "minCompDistance": 0.0,
-            "nirrcapcl": "7",
-            "nirrcapscl": "s",
+            "nirrcapscl": "e",
             "nirrcapunit": "None",
             "rfvInfill": "No",
             "sdeURL": "",
             "seeURL": "",
             "slope": 4.0,
-            "taxsubgrp": "Typic Haplocambids",
+            "taxsubgrp": "Typic Haplocalcids",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Indio",
+          "name": "Indio",
+          "rank_loc": "11",
+          "score_loc": 0.005
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14185607",
+            "componentKind": "Series",
+            "componentPct": 1,
+            "dataSource": "STATSGO",
+            "distance": 353.554689070506,
+            "irrcapcl": "2",
+            "irrcapscl": "e",
+            "irrcapunit": "None",
+            "mapunitID": "660584",
+            "minCompDistance": 353.554689070506,
+            "nirrcapcl": "7",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 3.0,
+            "taxsubgrp": "Typic Torrifluvents",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
+          "component": "Lethent",
+          "name": "Lethent",
+          "rank_loc": "12",
+          "score_loc": 0.005
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14185608",
+            "componentKind": "Series",
+            "componentPct": 1,
+            "dataSource": "STATSGO",
+            "distance": 353.554689070506,
+            "irrcapcl": "3",
+            "irrcapscl": "s",
+            "irrcapunit": "None",
+            "mapunitID": "660584",
+            "minCompDistance": 353.554689070506,
+            "nirrcapcl": "7",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 1.0,
+            "taxsubgrp": "Typic Natrargids",
             "textureInfill": "No"
           },
           "siteDescription": ""
@@ -649,57 +649,7 @@
           "component": "Carrizo",
           "name": "Carrizo2",
           "rank_loc": "Not Displayed",
-          "score_loc": 0.363
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "14185605",
-            "componentKind": "Series",
-            "componentPct": 40,
-            "dataSource": "STATSGO",
-            "distance": 353.554689070506,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "660584",
-            "minCompDistance": 0.0,
-            "nirrcapcl": "7",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 4.0,
-            "taxsubgrp": "Typic Torriorthents",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
-          "component": "Carrizo",
-          "name": "Carrizo3",
-          "rank_loc": "Not Displayed",
-          "score_loc": 0.363
+          "score_loc": 0.269
         },
         "lab": {},
         "munsell": {},
@@ -746,10 +696,60 @@
           }
         },
         "id": {
+          "component": "Carrizo",
+          "name": "Carrizo3",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.269
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "14185605",
+            "componentKind": "Series",
+            "componentPct": 40,
+            "dataSource": "STATSGO",
+            "distance": 353.554689070506,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "660584",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 4.0,
+            "taxsubgrp": "Typic Torriorthents",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": "",
+            "ecoclassname": "",
+            "edit_url": ""
+          }
+        },
+        "id": {
           "component": "Gunsight",
           "name": "Gunsight2",
           "rank_loc": "Not Displayed",
-          "score_loc": 0.27
+          "score_loc": 0.18
         },
         "lab": {},
         "munsell": {},
@@ -771,111 +771,11 @@
             "nirrcapcl": "7",
             "nirrcapscl": "s",
             "nirrcapunit": "None",
-            "rfvInfill": "No",
+            "rfvInfill": "Yes",
             "sdeURL": "",
             "seeURL": "",
             "slope": 5.0,
             "taxsubgrp": "Typic Haplocalcids",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
-          "component": "Rositas",
-          "name": "Rositas2",
-          "rank_loc": "Not Displayed",
-          "score_loc": 0.091
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "14185596",
-            "componentKind": "Series",
-            "componentPct": 10,
-            "dataSource": "STATSGO",
-            "distance": 353.554689070506,
-            "irrcapcl": "3",
-            "irrcapscl": "s",
-            "irrcapunit": "None",
-            "mapunitID": "660584",
-            "minCompDistance": 353.554689070506,
-            "nirrcapcl": "7",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 1.0,
-            "taxsubgrp": "Typic Torripsamments",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
-          "component": "Rositas",
-          "name": "Rositas3",
-          "rank_loc": "Not Displayed",
-          "score_loc": 0.091
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "14185606",
-            "componentKind": "Series",
-            "componentPct": 5,
-            "dataSource": "STATSGO",
-            "distance": 353.554689070506,
-            "irrcapcl": "3",
-            "irrcapscl": "s",
-            "irrcapunit": "None",
-            "mapunitID": "660584",
-            "minCompDistance": 353.554689070506,
-            "nirrcapcl": "7",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 5.0,
-            "taxsubgrp": "Typic Torripsamments",
             "textureInfill": "No"
           },
           "siteDescription": ""
@@ -894,206 +794,182 @@
       {
         "component": "Carrizo",
         "componentData": "Missing Data",
-        "componentID": 14185597,
+        "componentID": 14185605,
         "name": "Carrizo3",
-        "rank_data": "6",
+        "rank_data": "3",
         "rank_data_loc": "1",
         "rank_loc": "Not Displayed",
-        "score_data": 0.785,
-        "score_data_loc": 0.574,
-        "score_loc": 0.363
-      },
-      {
-        "component": "Rositas",
-        "componentData": "Missing Data",
-        "componentID": 14185600,
-        "name": "Rositas1",
-        "rank_data": "1",
-        "rank_data_loc": "2",
-        "rank_loc": "4",
-        "score_data": 0.931,
+        "score_data": 0.752,
         "score_data_loc": 0.511,
-        "score_loc": 0.091
-      },
-      {
-        "component": "Chuckawalla",
-        "componentData": "Missing Data",
-        "componentID": 14185601,
-        "name": "Chuckawalla",
-        "rank_data": "2",
-        "rank_data_loc": "3",
-        "rank_loc": "5",
-        "score_data": 0.931,
-        "score_data_loc": 0.505,
-        "score_loc": 0.08
+        "score_loc": 0.269
       },
       {
         "component": "Gunsight",
         "componentData": "Missing Data",
-        "componentID": 14185602,
-        "name": "Gunsight2",
-        "rank_data": "8",
-        "rank_data_loc": "4",
-        "rank_loc": "Not Displayed",
-        "score_data": 0.717,
-        "score_data_loc": 0.494,
-        "score_loc": 0.27
+        "componentID": 14185636,
+        "name": "Gunsight",
+        "rank_data": "2",
+        "rank_data_loc": "2",
+        "rank_loc": "2",
+        "score_data": 0.793,
+        "score_data_loc": 0.487,
+        "score_loc": 0.18
       },
       {
-        "component": "Denure",
+        "component": "Chuckawalla",
         "componentData": "Missing Data",
-        "componentID": 14185639,
-        "name": "Denure",
-        "rank_data": "3",
-        "rank_data_loc": "5",
-        "rank_loc": "12",
-        "score_data": 0.922,
-        "score_data_loc": 0.486,
-        "score_loc": 0.05
-      },
-      {
-        "component": "Beeline",
-        "componentData": "Missing Data",
-        "componentID": 14185640,
-        "name": "Beeline",
-        "rank_data": "4",
-        "rank_data_loc": "6",
-        "rank_loc": "6",
-        "score_data": 0.872,
-        "score_data_loc": 0.461,
-        "score_loc": 0.05
-      },
-      {
-        "component": "Cipriano",
-        "componentData": "Missing Data",
-        "componentID": 14185643,
-        "name": "Cipriano",
-        "rank_data": "5",
-        "rank_data_loc": "7",
-        "rank_loc": "10",
-        "score_data": 0.835,
-        "score_data_loc": 0.443,
-        "score_loc": 0.05
-      },
-      {
-        "component": "Pinamt",
-        "componentData": "Missing Data",
-        "componentID": 14185641,
-        "name": "Pinamt",
-        "rank_data": "7",
-        "rank_data_loc": "8",
-        "rank_loc": "11",
-        "score_data": 0.748,
-        "score_data_loc": 0.399,
-        "score_loc": 0.05
-      },
-      {
-        "component": "Rillito",
-        "componentData": "Missing Data",
-        "componentID": 14185645,
-        "name": "Rillito",
-        "rank_data": "12",
-        "rank_data_loc": "9",
+        "componentID": 14185642,
+        "name": "Chuckawalla",
+        "rank_data": "1",
+        "rank_data_loc": "3",
         "rank_loc": "3",
-        "score_data": 0.585,
-        "score_data_loc": 0.387,
-        "score_loc": 0.19
+        "score_data": 0.804,
+        "score_data_loc": 0.427,
+        "score_loc": 0.051
       },
       {
         "component": "Gilman",
         "componentData": "Missing Data",
         "componentID": 14185646,
         "name": "Gilman",
-        "rank_data": "9",
-        "rank_data_loc": "10",
-        "rank_loc": "8",
-        "score_data": 0.616,
-        "score_data_loc": 0.333,
-        "score_loc": 0.05
+        "rank_data": "4",
+        "rank_data_loc": "4",
+        "rank_loc": "7",
+        "score_data": 0.746,
+        "score_data_loc": 0.386,
+        "score_loc": 0.026
+      },
+      {
+        "component": "Cipriano",
+        "componentData": "Missing Data",
+        "componentID": 14185643,
+        "name": "Cipriano",
+        "rank_data": "6",
+        "rank_data_loc": "5",
+        "rank_loc": "5",
+        "score_data": 0.733,
+        "score_data_loc": 0.38,
+        "score_loc": 0.026
+      },
+      {
+        "component": "Antho",
+        "componentData": "Missing Data",
+        "componentID": 14185610,
+        "name": "Antho",
+        "rank_data": "5",
+        "rank_data_loc": "6",
+        "rank_loc": "9",
+        "score_data": 0.746,
+        "score_data_loc": 0.378,
+        "score_loc": 0.009
       },
       {
         "component": "Mohall",
         "componentData": "Missing Data",
         "componentID": 14185644,
         "name": "Mohall",
+        "rank_data": "7",
+        "rank_data_loc": "7",
+        "rank_loc": "8",
+        "score_data": 0.726,
+        "score_data_loc": 0.376,
+        "score_loc": 0.026
+      },
+      {
+        "component": "Indio",
+        "componentData": "Missing Data",
+        "componentID": 14185607,
+        "name": "Indio",
+        "rank_data": "8",
+        "rank_data_loc": "8",
+        "rank_loc": "11",
+        "score_data": 0.723,
+        "score_data_loc": 0.364,
+        "score_loc": 0.005
+      },
+      {
+        "component": "Lethent",
+        "componentData": "Missing Data",
+        "componentID": 14185608,
+        "name": "Lethent",
+        "rank_data": "9",
+        "rank_data_loc": "9",
+        "rank_loc": "12",
+        "score_data": 0.722,
+        "score_data_loc": 0.364,
+        "score_loc": 0.005
+      },
+      {
+        "component": "Beeline",
+        "componentData": "Missing Data",
+        "componentID": 14185640,
+        "name": "Beeline",
+        "rank_data": "11",
+        "rank_data_loc": "10",
+        "rank_loc": "4",
+        "score_data": 0.695,
+        "score_data_loc": 0.36,
+        "score_loc": 0.026
+      },
+      {
+        "component": "Aco",
+        "componentData": "Missing Data",
+        "componentID": 14185609,
+        "name": "Aco",
         "rank_data": "10",
         "rank_data_loc": "11",
-        "rank_loc": "9",
-        "score_data": 0.616,
-        "score_data_loc": 0.333,
-        "score_loc": 0.05
+        "rank_loc": "10",
+        "score_data": 0.715,
+        "score_data_loc": 0.36,
+        "score_loc": 0.005
       },
       {
-        "component": "Momoli",
+        "component": "Denure",
         "componentData": "Missing Data",
-        "componentID": 14185638,
-        "name": "Momoli",
-        "rank_data": "11",
+        "componentID": 14185639,
+        "name": "Denure",
+        "rank_data": "12",
         "rank_data_loc": "12",
-        "rank_loc": "7",
-        "score_data": 0.616,
-        "score_data_loc": 0.333,
-        "score_loc": 0.05
-      },
-      {
-        "component": "Carrizo",
-        "componentData": "Missing Data",
-        "componentID": 14185605,
-        "name": "Carrizo2",
-        "rank_data": "Not Displayed",
-        "rank_data_loc": "Not Displayed",
-        "rank_loc": "Not Displayed",
-        "score_data": 0.752,
-        "score_data_loc": 0.557,
-        "score_loc": 0.363
+        "rank_loc": "6",
+        "score_data": 0.687,
+        "score_data_loc": 0.356,
+        "score_loc": 0.026
       },
       {
         "component": "Carrizo",
         "componentData": "Missing Data",
         "componentID": 14185637,
-        "name": "Carrizo1",
+        "name": "Carrizo",
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "1",
-        "score_data": 0.653,
-        "score_data_loc": 0.508,
-        "score_loc": 0.363
+        "score_data": 0.723,
+        "score_data_loc": 0.496,
+        "score_loc": 0.269
+      },
+      {
+        "component": "Carrizo",
+        "componentData": "Missing Data",
+        "componentID": 14185597,
+        "name": "Carrizo2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.681,
+        "score_data_loc": 0.475,
+        "score_loc": 0.269
       },
       {
         "component": "Gunsight",
         "componentData": "Missing Data",
-        "componentID": 14185636,
-        "name": "Gunsight1",
-        "rank_data": "Not Displayed",
-        "rank_data_loc": "Not Displayed",
-        "rank_loc": "2",
-        "score_data": 0.702,
-        "score_data_loc": 0.486,
-        "score_loc": 0.27
-      },
-      {
-        "component": "Rositas",
-        "componentData": "Missing Data",
-        "componentID": 14185606,
-        "name": "Rositas3",
+        "componentID": 14185602,
+        "name": "Gunsight2",
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.783,
-        "score_data_loc": 0.437,
-        "score_loc": 0.091
-      },
-      {
-        "component": "Rositas",
-        "componentData": "Missing Data",
-        "componentID": 14185596,
-        "name": "Rositas2",
-        "rank_data": "Not Displayed",
-        "rank_data_loc": "Not Displayed",
-        "rank_loc": "Not Displayed",
-        "score_data": 0.709,
-        "score_data_loc": 0.4,
-        "score_loc": 0.091
+        "score_data": 0.768,
+        "score_data_loc": 0.474,
+        "score_loc": 0.18
       }
     ]
   }

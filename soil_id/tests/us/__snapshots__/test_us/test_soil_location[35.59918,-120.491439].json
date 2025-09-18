@@ -1,21 +1,21 @@
 {
   "list": {
-    "AWS_PIW90": 5.52,
+    "AWS_PIW90": 3.73,
     "Soil Data Value": [
-      [
-        "rfv_class_0",
-        0.0035457277021757605
-      ],
-      [
-        "rfv_class_30",
-        0.0035457277021757605
-      ],
       [
         "texture_0",
         0.0
       ],
       [
         "texture_30",
+        0.0
+      ],
+      [
+        "rfv_class_0",
+        0.0
+      ],
+      [
+        "rfv_class_30",
         0.0
       ]
     ],
@@ -55,7 +55,7 @@
           "component": "Balcom",
           "name": "Balcom2",
           "rank_loc": "1",
-          "score_loc": 0.316
+          "score_loc": 0.252
         },
         "lab": {},
         "munsell": {},
@@ -97,62 +97,6 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R015XE082CA"
-            ],
-            "ecoclassname": [
-              "Loamy South"
-            ],
-            "edit_url": [
-              "https://edit.jornada.nmsu.edu/catalogs/esd/015X/R015XE082CA"
-            ]
-          }
-        },
-        "id": {
-          "component": "Nacimiento",
-          "name": "Nacimiento1",
-          "rank_loc": "2",
-          "score_loc": 0.3
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "26027170",
-            "componentKind": "Series",
-            "componentPct": 20,
-            "dataSource": "SSURGO",
-            "distance": 44.0,
-            "irrcapcl": "6",
-            "irrcapscl": "e",
-            "irrcapunit": "nan",
-            "mapunitID": "457218",
-            "minCompDistance": 44.0,
-            "nirrcapcl": "6",
-            "nirrcapscl": "e",
-            "nirrcapunit": "nan",
-            "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=balcom",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#balcom",
-            "slope": 40.0,
-            "taxsubgrp": "Calcic Haploxerolls",
-            "textureInfill": "No"
-          },
-          "siteDescription": "The Nacimiento series consists of moderately deep, well drained soils that formed in material weathered from calcareous shale and sandstone.  Nacimiento soils are on rolling uplands and have mostly complex slopes of 9 to 75 percent. The mean annual precipitation is about 16 inches and the mean annual air temperature is about 60 degrees F."
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": [
               "R015XE020CA"
             ],
             "ecoclassname": [
@@ -165,9 +109,9 @@
         },
         "id": {
           "component": "Los osos",
-          "name": "Los osos1",
-          "rank_loc": "3",
-          "score_loc": 0.2
+          "name": "Los osos",
+          "rank_loc": "2",
+          "score_loc": 0.125
         },
         "lab": {},
         "munsell": {},
@@ -190,11 +134,11 @@
             "nirrcapscl": "e",
             "nirrcapunit": "nan",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=nacimiento",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#nacimiento",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=balcom",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#balcom",
             "slope": 40.0,
             "taxsubgrp": "Typic Argixerolls",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "The Los Osos series consists of moderately deep, well drained soils that formed in material weathered from sandstone and shale.  Los Osos soils are on uplands and have slopes of 5 to 75 percent.  The mean annual precipitation is about 25 inches and the mean annual air temperature is about 60 degrees F."
         },
@@ -209,13 +153,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R015XE020CA"
+              "R015XE082CA"
             ],
             "ecoclassname": [
-              "Fine Loamy 9-13"
+              "Loamy South"
             ],
             "edit_url": [
-              "https://edit.jornada.nmsu.edu/catalogs/esd/015X/R015XE020CA"
+              "https://edit.jornada.nmsu.edu/catalogs/esd/015X/R015XE082CA"
             ]
           }
         },
@@ -223,7 +167,7 @@
           "component": "Balcom",
           "name": "Balcom3",
           "rank_loc": "Not Displayed",
-          "score_loc": 0.316
+          "score_loc": 0.252
         },
         "lab": {},
         "munsell": {},
@@ -250,65 +194,9 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#balcom",
             "slope": 20.0,
             "taxsubgrp": "Calcixerollic Xerochrepts",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "The Balcom series consists of moderately deep, well drained soils that formed in material that weathered from soft, calcareous shale and sandstone.  Balcom soils are on hills and have slopes of 5 to 75 percent.  The mean annual precipitation is about 18 inches and the mean annual air temperature is about 61 degrees F."
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": [
-              "R015XE020CA"
-            ],
-            "ecoclassname": [
-              "Fine Loamy 9-13"
-            ],
-            "edit_url": [
-              "https://edit.jornada.nmsu.edu/catalogs/esd/015X/R015XE020CA"
-            ]
-          }
-        },
-        "id": {
-          "component": "Nacimiento",
-          "name": "Nacimiento2",
-          "rank_loc": "Not Displayed",
-          "score_loc": 0.3
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "26027161",
-            "componentKind": "Series",
-            "componentPct": 20,
-            "dataSource": "SSURGO",
-            "distance": 670.0,
-            "irrcapcl": "4",
-            "irrcapscl": "e",
-            "irrcapunit": "1.0",
-            "mapunitID": "457217",
-            "minCompDistance": 44.0,
-            "nirrcapcl": "4",
-            "nirrcapscl": "e",
-            "nirrcapunit": "1.0",
-            "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=nacimiento",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#nacimiento",
-            "slope": 20.0,
-            "taxsubgrp": "Calcic Haploxerolls",
-            "textureInfill": "No"
-          },
-          "siteDescription": "The Nacimiento series consists of moderately deep, well drained soils that formed in material weathered from calcareous shale and sandstone.  Nacimiento soils are on rolling uplands and have mostly complex slopes of 9 to 75 percent. The mean annual precipitation is about 16 inches and the mean annual air temperature is about 60 degrees F."
         },
         "texture": {},
         "top_depth": {}
@@ -335,7 +223,7 @@
           "component": "Los osos",
           "name": "Los osos2",
           "rank_loc": "Not Displayed",
-          "score_loc": 0.2
+          "score_loc": 0.125
         },
         "lab": {},
         "munsell": {},
@@ -362,7 +250,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#los_osos",
             "slope": 20.0,
             "taxsubgrp": "Typic Argixerolls",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "The Los Osos series consists of moderately deep, well drained soils that formed in material weathered from sandstone and shale.  Los Osos soils are on uplands and have slopes of 5 to 75 percent.  The mean annual precipitation is about 25 inches and the mean annual air temperature is about 60 degrees F."
         },
@@ -385,33 +273,21 @@
         "rank_data": "1",
         "rank_data_loc": "1",
         "rank_loc": "Not Displayed",
-        "score_data": 0.573,
-        "score_data_loc": 0.445,
-        "score_loc": 0.316
-      },
-      {
-        "component": "Nacimiento",
-        "componentData": "Data Complete",
-        "componentID": 26027161,
-        "name": "Nacimiento2",
-        "rank_data": "2",
-        "rank_data_loc": "2",
-        "rank_loc": "Not Displayed",
-        "score_data": 0.573,
-        "score_data_loc": 0.437,
-        "score_loc": 0.3
+        "score_data": 0.552,
+        "score_data_loc": 0.402,
+        "score_loc": 0.252
       },
       {
         "component": "Los osos",
         "componentData": NaN,
         "componentID": 26027715,
         "name": "Los osos2",
-        "rank_data": "3",
-        "rank_data_loc": "3",
+        "rank_data": "2",
+        "rank_data_loc": "2",
         "rank_loc": "Not Displayed",
-        "score_data": 0.435,
-        "score_data_loc": 0.318,
-        "score_loc": 0.2
+        "score_data": 0.535,
+        "score_data_loc": 0.33,
+        "score_loc": 0.125
       },
       {
         "component": "Balcom",
@@ -421,33 +297,21 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "1",
-        "score_data": 0.355,
-        "score_data_loc": 0.336,
-        "score_loc": 0.316
-      },
-      {
-        "component": "Nacimiento",
-        "componentData": "Data Complete",
-        "componentID": 26027170,
-        "name": "Nacimiento1",
-        "rank_data": "Not Displayed",
-        "rank_data_loc": "Not Displayed",
-        "rank_loc": "2",
-        "score_data": 0.331,
-        "score_data_loc": 0.315,
-        "score_loc": 0.3
+        "score_data": 0.345,
+        "score_data_loc": 0.299,
+        "score_loc": 0.252
       },
       {
         "component": "Los osos",
-        "componentData": "Data Complete",
+        "componentData": NaN,
         "componentID": 26027683,
-        "name": "Los osos1",
+        "name": "Los osos",
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
-        "rank_loc": "3",
-        "score_data": 0.331,
-        "score_data_loc": 0.265,
-        "score_loc": 0.2
+        "rank_loc": "2",
+        "score_data": 0.37,
+        "score_data_loc": 0.248,
+        "score_loc": 0.125
       }
     ]
   }

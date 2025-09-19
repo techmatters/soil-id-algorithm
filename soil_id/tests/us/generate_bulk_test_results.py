@@ -21,9 +21,8 @@ import traceback
 
 import pandas
 
-from soil_id.us_soil import list_soils, rank_soils
 from soil_id.tests.utils import clean_soil_list_json
-
+from soil_id.us_soil import list_soils, rank_soils
 
 test_data_df = pandas.read_csv(
     os.path.join(os.path.dirname(__file__), "US_SoilID_KSSL_LPKS_Testing.csv")

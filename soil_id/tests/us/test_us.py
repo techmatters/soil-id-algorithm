@@ -17,9 +17,10 @@ import logging
 import time
 
 import pytest
+from syrupy.extensions.json import JSONSnapshotExtension
+
 from soil_id.tests.utils import clean_soil_list_json
 from soil_id.us_soil import list_soils, rank_soils
-from syrupy.extensions.json import JSONSnapshotExtension
 
 test_locations = [
     {"lon": -121.5111084, "lat": 45.6508331},
@@ -43,7 +44,7 @@ test_locations = [
 
 test_params = []
 for idx, coords in enumerate(test_locations):
-    test_params.append(pytest.param(coords, id=f"{coords["lat"]},{coords["lon"]}"))
+    test_params.append(pytest.param(coords, id=f"{coords['lat']},{coords['lon']}"))
 
 
 @pytest.mark.parametrize("location", test_params)

@@ -562,7 +562,7 @@ def soil_sim(muhorzdata_pd):
                 group_df2["compname_grp"] = group_df1["compname_grp"]
                 group_df2 = group_df2.fillna(0)
                 group_df2 = group_df2.reset_index(drop=True)
-            
+
             concatenated_group = pd.concat(
                 [group_df1, group_df2.drop("compname_grp", axis=1)], axis=1
             )

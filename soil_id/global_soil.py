@@ -31,7 +31,6 @@ from .services import get_soilgrids_classification_data, get_soilgrids_property_
 from .utils import (
     adjust_depth_interval,
     agg_data_layer,
-    process_distance_scores,
     # assign_max_distance_scores,
     # calculate_location_score,
     drop_cokey_horz,
@@ -43,6 +42,7 @@ from .utils import (
     gower_distances,
     max_comp_depth,
     pedon_color,
+    process_distance_scores,
     silt_calc,
 )
 
@@ -161,10 +161,7 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
 
     # Add distance column from mucompdata_pd using cokey link
     muhorzdata_pd = pd.merge(
-        muhorzdata_pd, 
-        mucompdata_pd[["cokey", "distance"]], 
-        on="cokey", 
-        how="left"
+        muhorzdata_pd, mucompdata_pd[["cokey", "distance"]], on="cokey", how="left"
     )
 
     # Check for duplicate component instances
@@ -179,7 +176,9 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
     mucompdata_pd = mucompdata_pd[mucompdata_pd["cokey"].isin(comp_key)]
 
     # Sort mucompdata_pd based on 'cond_prob' and 'distance'
-    mucompdata_pd.sort_values(["cond_prob", "distance", "compname"], ascending=[False, True, True], inplace=True)
+    mucompdata_pd.sort_values(
+        ["cond_prob", "distance", "compname"], ascending=[False, True, True], inplace=True
+    )
     mucompdata_pd.reset_index(drop=True, inplace=True)
 
     # Duplicate the 'compname' column for grouping purposes
@@ -203,16 +202,13 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
     component_names = mucompdata_pd["compname"].tolist()
     name_counts = collections.Counter(component_names)
 
-    # Track which indices have been processed for each name
-    processed_indices = {}
-    
     for name, count in sorted(name_counts.items()):  # Sort for deterministic order
         if count > 1:  # If a component name is duplicated
             # Find all indices for this name
             indices = [i for i, comp_name in enumerate(component_names) if comp_name == name]
             # Sort indices for deterministic order
             indices.sort()
-            
+
             # Add suffixes to all occurrences except the first
             for i, idx in enumerate(indices):
                 if i > 0:  # Skip the first occurrence (keep original name)
@@ -371,7 +367,7 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
         mucompdata_comp_grps_list.append(group)
 
     mucompdata_pd = pd.concat(mucompdata_comp_grps_list).reset_index(drop=True)
-    
+
     # --------------------------------------------------------------------------------------------------------------------------
     # SoilIDList output
 
@@ -383,9 +379,9 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
     ]
     soilIDRank_output_pd = pd.concat(soilIDRank_output, axis=0).reset_index(drop=True)
 
-    mucompdata_cond_prob = mucompdata_pd.sort_values(["cond_prob", "compname"], ascending=[False, True]).reset_index(
-        drop=True
-    )
+    mucompdata_cond_prob = mucompdata_pd.sort_values(
+        ["cond_prob", "compname"], ascending=[False, True]
+    ).reset_index(drop=True)
 
     # Generate the Rank_Loc column values
     rank_id = 1
@@ -1083,9 +1079,9 @@ def rank_soils_global(
     D_final_comp_grps = [g for _, g in D_final_horz.groupby("compname_grp", sort=True)]
 
     for comp_grps_temp in D_final_comp_grps:
-        comp_grps_temp = comp_grps_temp.sort_values(["Score_Data", "compname"], ascending=[False, True]).reset_index(
-            drop=True
-        )
+        comp_grps_temp = comp_grps_temp.sort_values(
+            ["Score_Data", "compname"], ascending=[False, True]
+        ).reset_index(drop=True)
         SID_data = [True] + [False] * (len(comp_grps_temp) - 1)
         comp_grps_temp["soilID_rank_data"] = SID_data
         soilIDList_data.append(comp_grps_temp)
@@ -1157,9 +1153,9 @@ def rank_soils_global(
 
     # Group by 'compname_grp' with deterministic sorting
     for _, comp_grps_temp in D_final_loc.groupby("compname_grp", sort=True):
-        comp_grps_temp = comp_grps_temp.sort_values(["Score_Data_Loc", "compname"], ascending=[False, True]).reset_index(
-            drop=True
-        )
+        comp_grps_temp = comp_grps_temp.sort_values(
+            ["Score_Data_Loc", "compname"], ascending=[False, True]
+        ).reset_index(drop=True)
 
         if len(comp_grps_temp) > 1:
             # Mark the first entry as True, all others as False

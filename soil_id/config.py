@@ -14,12 +14,13 @@
 # along with this program. If not, see https://www.gnu.org/licenses/.
 import os
 import tempfile
+
 from dotenv import load_dotenv
+from platformdirs import user_cache_dir
 
 # Load environment variables from .env file
 load_dotenv()
 
-from platformdirs import user_cache_dir
 
 DATA_PATH = os.environ.get("DATA_PATH", "Data")
 

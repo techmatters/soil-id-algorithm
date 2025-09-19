@@ -708,18 +708,20 @@ def drop_cokey_horz(df):
     # Group by compname
     for _, comp_group in df.groupby("compname", sort=False):
         # Get unique cokeys and their data signature within this compname group
-        cokey_map = comp_group.groupby("cokey").agg({
-            "_cokey_grouped": "first",
-            "distance": "first"  # Get the distance for each cokey
-        })
+        cokey_map = comp_group.groupby("cokey").agg(
+            {
+                "_cokey_grouped": "first",
+                "distance": "first",  # Get the distance for each cokey
+            }
+        )
 
         # Find duplicates based on the grouped horizon data
         duplicated_mask = cokey_map["_cokey_grouped"].duplicated(keep=False)
-        
+
         if duplicated_mask.any():
             # Get only the duplicated entries
             duplicated_entries = cokey_map[duplicated_mask]
-            
+
             # Group by the duplicated signature to find which cokeys are duplicates of each other
             for signature, dup_group in duplicated_entries.groupby("_cokey_grouped"):
                 # Sort by distance and keep the one with smallest distance (first after sorting)
@@ -1756,7 +1758,9 @@ def process_distance_scores(
     # Calculate conditional probabilities based on sum scores per component group
     total_sum_score = sum_scores_per_comp["sum_distance_score"].sum()
     if total_sum_score > 0:
-        sum_scores_per_comp["cond_prob"] = sum_scores_per_comp["sum_distance_score"] / total_sum_score
+        sum_scores_per_comp["cond_prob"] = (
+            sum_scores_per_comp["sum_distance_score"] / total_sum_score
+        )
     else:
         sum_scores_per_comp["cond_prob"] = 0
 
@@ -1766,13 +1770,13 @@ def process_distance_scores(
     )
 
     # Explode the dataframe back to the component key level
-    grouped_data = grouped_data.explode("cokey_list").rename(
-        columns={"cokey_list": comp_key_col}
-    )
+    grouped_data = grouped_data.explode("cokey_list").rename(columns={"cokey_list": comp_key_col})
 
     # Merge the conditional probability back into the original dataframe
     mucompdata_pd = mucompdata_pd.merge(
-        grouped_data[[comp_key_col, "cond_prob", "sum_distance_score", "distance_score"]], on=comp_key_col, how="left"
+        grouped_data[[comp_key_col, "cond_prob", "sum_distance_score", "distance_score"]],
+        on=comp_key_col,
+        how="left",
     )
 
     # Rename sum_distance_score to comp_distance_score for clarity
@@ -1790,9 +1794,7 @@ def process_distance_scores(
     mucompdata_pd = mucompdata_pd.reset_index(drop=True)
 
     # Create a list of component groups
-    mucompdata_comp_grps = [
-        g for _, g in mucompdata_pd.groupby([comp_name_col], sort=True)
-    ]
+    mucompdata_comp_grps = [g for _, g in mucompdata_pd.groupby([comp_name_col], sort=True)]
     mucompdata_comp_grps = mucompdata_comp_grps[: min(12, len(mucompdata_comp_grps))]
 
     # Assign group-level values to all members of the group
@@ -1808,6 +1810,7 @@ def process_distance_scores(
         mucompdata_pd = pd.DataFrame(columns=mucompdata_pd.columns)
 
     return mucompdata_pd
+
 
 ###################################################################################################
 #                                       Soil Color Functions                                      #

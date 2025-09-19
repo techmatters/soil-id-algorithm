@@ -17,9 +17,10 @@ import logging
 import time
 
 import pytest
+from syrupy.extensions.json import JSONSnapshotExtension
+
 from soil_id.db import get_datastore_connection
 from soil_id.global_soil import list_soils_global, rank_soils_global
-from syrupy.extensions.json import JSONSnapshotExtension
 
 test_locations = [
     {"lon": -1.4631, "lat": 7.3318},

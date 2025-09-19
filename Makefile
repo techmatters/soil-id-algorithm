@@ -13,8 +13,10 @@ setup-git-hooks:
 
 lint:
 	ruff check soil_id
+	ruff format soil_id --diff
 
 format:
+	ruff check soil_id --fix
 	ruff format soil_id
 
 lock:

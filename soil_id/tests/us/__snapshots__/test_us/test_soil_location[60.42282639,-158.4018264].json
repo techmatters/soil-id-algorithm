@@ -1,0 +1,454 @@
+{
+  "list": {
+    "AWS_PIW90": 7.6,
+    "Soil Data Value": [
+      [
+        "rfv_class_30",
+        1.338959652390504
+      ],
+      [
+        "texture_30",
+        0.48238718594988694
+      ],
+      [
+        "rfv_class_0",
+        0.20970102486621656
+      ],
+      [
+        "texture_0",
+        0.0
+      ]
+    ],
+    "metadata": {
+      "location": "us",
+      "model": "v3",
+      "unit_measure": {
+        "cec": "cmol(c)/kg",
+        "clay": "%",
+        "depth": "cm",
+        "distance": "m",
+        "ec": "ds/m",
+        "rock_fragments": "cm3/100cm3",
+        "sand": "%"
+      }
+    },
+    "soilList": [
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R236XY109AK"
+            ],
+            "ecoclassname": [
+              "Subarctic Low Scrub Peat Drainages"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/236X/R236XY109AK"
+            ]
+          }
+        },
+        "id": {
+          "component": "D36-western maritime tussock scrub loamy eolian slopes",
+          "name": "D36-western maritime tussock scrub loamy eolian slopes",
+          "rank_loc": "1",
+          "score_loc": 0.253
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26176414",
+            "componentKind": "Taxon above family",
+            "componentPct": 24,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "2661500",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 2.0,
+            "taxsubgrp": "Histic Gelaquepts",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R236XY107AK"
+            ],
+            "ecoclassname": [
+              "Western Alaska Maritime Scrub Gravelly Drainages"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/236X/R236XY107AK"
+            ]
+          }
+        },
+        "id": {
+          "component": "D36-western maritime dwarf scrub loamy glaciated slopes",
+          "name": "D36-western maritime dwarf scrub loamy glaciated slopes",
+          "rank_loc": "2",
+          "score_loc": 0.242
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26176416",
+            "componentKind": "Taxon above family",
+            "componentPct": 23,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "2661500",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "4",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 6.0,
+            "taxsubgrp": "Typic Dystrocryepts",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R236XY140AK"
+            ],
+            "ecoclassname": [
+              "Subarctic Tussock Tundra Wet Loamy Plains"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/236X/R236XY140AK"
+            ]
+          }
+        },
+        "id": {
+          "component": "D36-western maritime sedge organic depressions",
+          "name": "D36-western maritime sedge organic depressions",
+          "rank_loc": "3",
+          "score_loc": 0.211
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26176412",
+            "componentKind": "Taxon above family",
+            "componentPct": 20,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "2661500",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 0.0,
+            "taxsubgrp": "Terric Cryohemists",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F236XY139AK"
+            ],
+            "ecoclassname": [
+              "Boreal Woodland Loamy Rises"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/236X/F236XY139AK"
+            ]
+          }
+        },
+        "id": {
+          "component": "D36-western maritime scrub organic peat mounds",
+          "name": "D36-western maritime scrub organic peat mounds",
+          "rank_loc": "4",
+          "score_loc": 0.179
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26176417",
+            "componentKind": "Taxon above family",
+            "componentPct": 17,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "2661500",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 4.0,
+            "taxsubgrp": "Folistic Umbriturbels",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R236XY132AK"
+            ],
+            "ecoclassname": [
+              "Subarctic Dwarf Scrub Dry Loamy Slopes"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/236X/R236XY132AK"
+            ]
+          }
+        },
+        "id": {
+          "component": "D36-boreal forest loamy eolian slopes",
+          "name": "D36-boreal forest loamy eolian slopes",
+          "rank_loc": "5",
+          "score_loc": 0.105
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26176415",
+            "componentKind": "Taxon above family",
+            "componentPct": 10,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "2661500",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "4",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 3.0,
+            "taxsubgrp": "Typic Haplocryods",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R236XY131AK"
+            ],
+            "ecoclassname": [
+              "Subarctic Tussock-Scrub Frozen Plains"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/236X/R236XY131AK"
+            ]
+          }
+        },
+        "id": {
+          "component": "D36-western maritime scrub drainageways",
+          "name": "D36-western maritime scrub drainageways",
+          "rank_loc": "6",
+          "score_loc": 0.011
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26176413",
+            "componentKind": "Taxon above family",
+            "componentPct": 1,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "2661500",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "",
+            "seeURL": "",
+            "slope": 3.0,
+            "taxsubgrp": "Oxyaquic Humicryepts",
+            "textureInfill": "No"
+          },
+          "siteDescription": ""
+        },
+        "texture": {},
+        "top_depth": {}
+      }
+    ]
+  },
+  "rank": {
+    "metadata": {
+      "location": "us",
+      "model": "v2"
+    },
+    "soilRank": [
+      {
+        "component": "D36-western maritime tussock scrub loamy eolian slopes",
+        "componentData": "Missing Data",
+        "componentID": 26176414,
+        "name": "D36-western maritime tussock scrub loamy eolian slopes",
+        "rank_data": "1",
+        "rank_data_loc": "1",
+        "rank_loc": 1,
+        "score_data": 0.508,
+        "score_data_loc": 0.38,
+        "score_loc": 0.253
+      },
+      {
+        "component": "D36-western maritime dwarf scrub loamy glaciated slopes",
+        "componentData": "Missing Data",
+        "componentID": 26176416,
+        "name": "D36-western maritime dwarf scrub loamy glaciated slopes",
+        "rank_data": "5",
+        "rank_data_loc": "2",
+        "rank_loc": 2,
+        "score_data": 0.377,
+        "score_data_loc": 0.309,
+        "score_loc": 0.242
+      },
+      {
+        "component": "D36-boreal forest loamy eolian slopes",
+        "componentData": "Missing Data",
+        "componentID": 26176415,
+        "name": "D36-boreal forest loamy eolian slopes",
+        "rank_data": "2",
+        "rank_data_loc": "3",
+        "rank_loc": 5,
+        "score_data": 0.495,
+        "score_data_loc": 0.3,
+        "score_loc": 0.105
+      },
+      {
+        "component": "D36-western maritime scrub organic peat mounds",
+        "componentData": "Missing Data",
+        "componentID": 26176417,
+        "name": "D36-western maritime scrub organic peat mounds",
+        "rank_data": "4",
+        "rank_data_loc": "4",
+        "rank_loc": 4,
+        "score_data": 0.421,
+        "score_data_loc": 0.3,
+        "score_loc": 0.179
+      },
+      {
+        "component": "D36-western maritime sedge organic depressions",
+        "componentData": "Missing Data",
+        "componentID": 26176412,
+        "name": "D36-western maritime sedge organic depressions",
+        "rank_data": "6",
+        "rank_data_loc": "5",
+        "rank_loc": 3,
+        "score_data": 0.332,
+        "score_data_loc": 0.271,
+        "score_loc": 0.211
+      },
+      {
+        "component": "D36-western maritime scrub drainageways",
+        "componentData": "Missing Data",
+        "componentID": 26176413,
+        "name": "D36-western maritime scrub drainageways",
+        "rank_data": "3",
+        "rank_data_loc": "6",
+        "rank_loc": 6,
+        "score_data": 0.495,
+        "score_data_loc": 0.253,
+        "score_loc": 0.011
+      }
+    ]
+  }
+}

@@ -1,0 +1,1202 @@
+{
+  "list": {
+    "AWS_PIW90": 5.19,
+    "Soil Data Value": [
+      [
+        "rfv_class_30",
+        1.0417872772025576
+      ],
+      [
+        "rfv_class_0",
+        1.0174644063857206
+      ],
+      [
+        "texture_0",
+        0.0
+      ],
+      [
+        "texture_30",
+        0.0
+      ]
+    ],
+    "metadata": {
+      "location": "us",
+      "model": "v3",
+      "unit_measure": {
+        "cec": "cmol(c)/kg",
+        "clay": "%",
+        "depth": "cm",
+        "distance": "m",
+        "ec": "ds/m",
+        "rock_fragments": "cm3/100cm3",
+        "sand": "%"
+      }
+    },
+    "soilList": [
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XA008IN"
+            ],
+            "ecoclassname": [
+              "Wet Till Ridge"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/111X/F111XA008IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Hennepin",
+          "name": "Hennepin",
+          "rank_loc": "1",
+          "score_loc": 0.061
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25325347",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "SSURGO",
+            "distance": 59.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162396",
+            "minCompDistance": 59.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=hennepin",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#hennepin",
+            "slope": 38.0,
+            "taxsubgrp": "Typic Eutrudepts",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Hennepin series consists of very deep, well drained soils formed in calcareous glacial till.  These soils are on upland side slopes that border stream valleys and on moraines.  Permeability is moderate or moderately slow.  Slopes range from 10 to 70 percent.  Mean annual temperature is about 52 degrees F, and mean annual precipitation is about 35 inches."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              ""
+            ],
+            "ecoclassname": [
+              ""
+            ],
+            "edit_url": [
+              ""
+            ]
+          }
+        },
+        "id": {
+          "component": "Fincastle",
+          "name": "Fincastle",
+          "rank_loc": "2",
+          "score_loc": 0.054
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25325308",
+            "componentKind": "Series",
+            "componentPct": 85,
+            "dataSource": "SSURGO",
+            "distance": 170.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162380",
+            "minCompDistance": 170.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=fincastle",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#fincastle",
+            "slope": 1.0,
+            "taxsubgrp": "Aeric Epiaqualfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Fincastle series consists of very deep, somewhat poorly drained soils that are deep to dense till. Fincastle soils formed in loess or other silty material and in the underlying loamy till. They are on till plains. Slope ranges from 0 to 6 percent. Mean annual precipitation is about 1016 mm (40 inches), and mean annual temperature is about 10.6 degrees C (51 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              ""
+            ],
+            "ecoclassname": [
+              ""
+            ],
+            "edit_url": [
+              ""
+            ]
+          }
+        },
+        "id": {
+          "component": "Hickory",
+          "name": "Hickory",
+          "rank_loc": "3",
+          "score_loc": 0.051
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25325331",
+            "componentKind": "Series",
+            "componentPct": 87,
+            "dataSource": "SSURGO",
+            "distance": 936.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162389",
+            "minCompDistance": 936.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=hickory",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#hickory",
+            "slope": 40.0,
+            "taxsubgrp": "Typic Hapludalfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Hickory series consists of very deep, well drained, soils on dissected till plains. They formed in till that can be capped with up to 20 inches of loess. Slope ranges from 5 to 70 percent. Mean annual air temperature is about 54 degrees F., and mean annual precipitation is about 40 inches."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F114XB503IN"
+            ],
+            "ecoclassname": [
+              "Till Upland Forest"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/114X/F114XB503IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Crosby",
+          "name": "Crosby",
+          "rank_loc": "4",
+          "score_loc": 0.048
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25325341",
+            "componentKind": "Series",
+            "componentPct": 9,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162394",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=crosby",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#crosby",
+            "slope": 2.0,
+            "taxsubgrp": "Aeric Epiaqualfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Crosby series consists of very deep, somewhat poorly drained soils that are moderately deep to dense till. Crosby soils formed in as much as 56 cm (22 inches) of loess or other silty material and in the underlying loamy till. They are on till plains. Slope ranges from 0 to 6 percent. Mean annual precipitation is about 1016 mm (40 inches), and mean annual temperature is about 10.6 degrees C (51 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              ""
+            ],
+            "ecoclassname": [
+              ""
+            ],
+            "edit_url": [
+              ""
+            ]
+          }
+        },
+        "id": {
+          "component": "Cyclone",
+          "name": "Cyclone",
+          "rank_loc": "5",
+          "score_loc": 0.011
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25325348",
+            "componentKind": "Series",
+            "componentPct": 3,
+            "dataSource": "SSURGO",
+            "distance": 59.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162396",
+            "minCompDistance": 59.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=cyclone",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#cyclone",
+            "slope": 0.5,
+            "taxsubgrp": "Typic Argiaquolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Cyclone series consists of very deep, poorly drained soils that formed in loess or silty material and in the underlying drift. Cyclone soils are on till plains. Slope ranges from 0 to 2 percent. Mean annual precipitation is about 991 mm (39 inches), and mean annual temperature is about 10.6 degrees C (51 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XA007IN"
+            ],
+            "ecoclassname": [
+              "Till Depression Flatwood"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/111X/F111XA007IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Brookston",
+          "name": "Brookston",
+          "rank_loc": "6",
+          "score_loc": 0.009
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25325342",
+            "componentKind": "Series",
+            "componentPct": 4,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162394",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=brookston",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#brookston",
+            "slope": 0.5,
+            "taxsubgrp": "Typic Argiaquolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Brookston series consists of very deep, poorly drained soils formed in as much as 51 cm (20 inches) of silty material and the underlying loamy till in depressions on till plains and moraines. Slope ranges from 0 to 3 percent. Mean annual precipitation is about 889 mm (35 inches), and mean annual temperature is about 10.0 degrees C (50 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XA009IN"
+            ],
+            "ecoclassname": [
+              "Till Ridge"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/111X/F111XA009IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Celina",
+          "name": "Celina",
+          "rank_loc": "7",
+          "score_loc": 0.003
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25325406",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "SSURGO",
+            "distance": 193.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162416",
+            "minCompDistance": 193.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=celina",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#celina",
+            "slope": 4.0,
+            "taxsubgrp": "Aquic Hapludalfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Celina series consists of very deep, moderately well drained soils that are moderately deep to dense till. They formed in as much as 46 cm (18 inches) of loess and the underlying loamy till of high-lime content. They are on till plains and moraines. Slope ranges from 0 to 12 percent. Mean annual precipitation is about 965 mm (38 inches), and mean annual air temperature is about 12 degrees C (53 degree F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XA007IN"
+            ],
+            "ecoclassname": [
+              "Till Depression Flatwood"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/111X/F111XA007IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Holton",
+          "name": "Holton",
+          "rank_loc": "8",
+          "score_loc": 0.002
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25325333",
+            "componentKind": "Series",
+            "componentPct": 4,
+            "dataSource": "SSURGO",
+            "distance": 936.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162389",
+            "minCompDistance": 936.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=holton",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#holton",
+            "slope": 0.5,
+            "taxsubgrp": "Aeric Endoaquepts",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Holton Series consists of very deep, somewhat poorly drained soils formed in loamy alluvium on flood plains. Slope ranges from 0 to 2 percent. Mean annual precipitation is about 1067 mm (42 inches), and mean annual temperature is about 11 degrees C (52 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XA008IN"
+            ],
+            "ecoclassname": [
+              "Wet Till Ridge"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/111X/F111XA008IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Bonnell",
+          "name": "Bonnell",
+          "rank_loc": "9",
+          "score_loc": 0.002
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25325330",
+            "componentKind": "Series",
+            "componentPct": 3,
+            "dataSource": "SSURGO",
+            "distance": 936.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162389",
+            "minCompDistance": 936.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=bonnell",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#bonnell",
+            "slope": 21.0,
+            "taxsubgrp": "Typic Hapludalfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Bonnell series consists of very deep, well drained soils that formed in less than 46 cm (18 inches) of loess or loamy materials and the underlying till. These soils are on dissected till plains. Slope ranges from 6 to 60 percent. Mean annual precipitation is about 1067 mm (42 inches), and mean annual temperature is about 12 degrees C (54 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XA008IN"
+            ],
+            "ecoclassname": [
+              "Wet Till Ridge"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/111X/F111XA008IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Cincinnati",
+          "name": "Cincinnati",
+          "rank_loc": "10",
+          "score_loc": 0.001
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25325332",
+            "componentKind": "Series",
+            "componentPct": 2,
+            "dataSource": "SSURGO",
+            "distance": 936.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162389",
+            "minCompDistance": 936.0,
+            "nirrcapcl": "3",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=cincinnati",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#cincinnati",
+            "slope": 9.0,
+            "taxsubgrp": "Oxyaquic Fragiudalfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Cincinnati series consists of very deep, well drained soils that are moderately deep to a fragipan. These soils formed in a mantle of loess, a thin layer of pedisediment, and a paleosol formed in the underlying till. They are on till plains. Slope ranges from 1 to 18 percent. Mean annual precipitation is about 1016 mm (40 inches), and mean annual air temperature is about 12 degrees C (54 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XA009IN"
+            ],
+            "ecoclassname": [
+              "Till Ridge"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/111X/F111XA009IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Grayford",
+          "name": "Grayford",
+          "rank_loc": "11",
+          "score_loc": 0.001
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25325329",
+            "componentKind": "Series",
+            "componentPct": 2,
+            "dataSource": "SSURGO",
+            "distance": 936.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162389",
+            "minCompDistance": 936.0,
+            "nirrcapcl": "4",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=grayford",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#grayford",
+            "slope": 17.0,
+            "taxsubgrp": "Ultic Hapludalfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Grayford series consists of deep, well drained soils formed in less than 56 cm (22 inches) of loess and in the underlying till of Illinoian age and residuum from limestone. They are on dissected till plains and sinkholes. Slope ranges from 2 to 35 percent. Mean annual precipitation is about 1016 mm (40 inches), and mean annual temperature is about 13 degrees C (55 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XD010IN"
+            ],
+            "ecoclassname": [
+              "Till Ridge"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/111X/F111XD010IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Jessietown",
+          "name": "Jessietown",
+          "rank_loc": "12",
+          "score_loc": 0.001
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25325334",
+            "componentKind": "Series",
+            "componentPct": 2,
+            "dataSource": "SSURGO",
+            "distance": 936.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162389",
+            "minCompDistance": 936.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=jessietown",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#jessietown",
+            "slope": 38.0,
+            "taxsubgrp": "Typic Hapludults",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Jessietown series consists of moderately deep, well drained soils formed in a thin mantle of silty material and residuum weathered from black fissile shale.  Permeability is moderate.  These gently sloping to steep soils are on upland ridges, side slopes, and toe slopes.  Slopes range from 2 to 30 percent.  The mean annual temperature is about 57 degrees F, and the mean annual precipitation is about 46 inches."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XA006IN"
+            ],
+            "ecoclassname": [
+              "Till Depression"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/111X/F111XA006IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Hennepin",
+          "name": "Hennepin2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.061
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25325325",
+            "componentKind": "Series",
+            "componentPct": 90,
+            "dataSource": "SSURGO",
+            "distance": 175.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162386",
+            "minCompDistance": 59.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=hennepin",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#hennepin",
+            "slope": 35.0,
+            "taxsubgrp": "Typic Eutrudepts",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Hennepin series consists of very deep, well drained soils formed in calcareous glacial till.  These soils are on upland side slopes that border stream valleys and on moraines.  Permeability is moderate or moderately slow.  Slopes range from 10 to 70 percent.  Mean annual temperature is about 52 degrees F, and mean annual precipitation is about 35 inches."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XD010IN"
+            ],
+            "ecoclassname": [
+              "Till Ridge"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/111X/F111XD010IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Hennepin",
+          "name": "Hennepin3",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.061
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25325355",
+            "componentKind": "Series",
+            "componentPct": 2,
+            "dataSource": "SSURGO",
+            "distance": 502.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162398",
+            "minCompDistance": 59.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=hennepin",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#hennepin",
+            "slope": 22.0,
+            "taxsubgrp": "Typic Eutrudepts",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Hennepin series consists of very deep, well drained soils formed in calcareous glacial till.  These soils are on upland side slopes that border stream valleys and on moraines.  Permeability is moderate or moderately slow.  Slopes range from 10 to 70 percent.  Mean annual temperature is about 52 degrees F, and mean annual precipitation is about 35 inches."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              ""
+            ],
+            "ecoclassname": [
+              ""
+            ],
+            "edit_url": [
+              ""
+            ]
+          }
+        },
+        "id": {
+          "component": "Crosby",
+          "name": "Crosby2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.048
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25325351",
+            "componentKind": "Series",
+            "componentPct": 4,
+            "dataSource": "SSURGO",
+            "distance": 85.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162397",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=crosby",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#crosby",
+            "slope": 1.0,
+            "taxsubgrp": "Aeric Epiaqualfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Crosby series consists of very deep, somewhat poorly drained soils that are moderately deep to dense till. Crosby soils formed in as much as 56 cm (22 inches) of loess or other silty material and in the underlying loamy till. They are on till plains. Slope ranges from 0 to 6 percent. Mean annual precipitation is about 1016 mm (40 inches), and mean annual temperature is about 10.6 degrees C (51 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              ""
+            ],
+            "ecoclassname": [
+              ""
+            ],
+            "edit_url": [
+              ""
+            ]
+          }
+        },
+        "id": {
+          "component": "Crosby",
+          "name": "Crosby3",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.048
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25325353",
+            "componentKind": "Series",
+            "componentPct": 7,
+            "dataSource": "SSURGO",
+            "distance": 502.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162398",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=crosby",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#crosby",
+            "slope": 1.0,
+            "taxsubgrp": "Aeric Epiaqualfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Crosby series consists of very deep, somewhat poorly drained soils that are moderately deep to dense till. Crosby soils formed in as much as 56 cm (22 inches) of loess or other silty material and in the underlying loamy till. They are on till plains. Slope ranges from 0 to 6 percent. Mean annual precipitation is about 1016 mm (40 inches), and mean annual temperature is about 10.6 degrees C (51 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XA008IN"
+            ],
+            "ecoclassname": [
+              "Wet Till Ridge"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/111X/F111XA008IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Cyclone",
+          "name": "Cyclone2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.011
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25325310",
+            "componentKind": "Series",
+            "componentPct": 10,
+            "dataSource": "SSURGO",
+            "distance": 170.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162380",
+            "minCompDistance": 59.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=cyclone",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#cyclone",
+            "slope": 0.5,
+            "taxsubgrp": "Typic Argiaquolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Cyclone series consists of very deep, poorly drained soils that formed in loess or silty material and in the underlying drift. Cyclone soils are on till plains. Slope ranges from 0 to 2 percent. Mean annual precipitation is about 991 mm (39 inches), and mean annual temperature is about 10.6 degrees C (51 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      }
+    ]
+  },
+  "rank": {
+    "metadata": {
+      "location": "us",
+      "model": "v2"
+    },
+    "soilRank": [
+      {
+        "component": "Fincastle",
+        "componentData": "Data Complete",
+        "componentID": 25325308,
+        "name": "Fincastle",
+        "rank_data": "1",
+        "rank_data_loc": "1",
+        "rank_loc": "2",
+        "score_data": 0.671,
+        "score_data_loc": 0.363,
+        "score_loc": 0.054
+      },
+      {
+        "component": "Crosby",
+        "componentData": "Data Complete",
+        "componentID": 25325341,
+        "name": "Crosby",
+        "rank_data": "3",
+        "rank_data_loc": "2",
+        "rank_loc": "4",
+        "score_data": 0.662,
+        "score_data_loc": 0.355,
+        "score_loc": 0.048
+      },
+      {
+        "component": "Bonnell",
+        "componentData": "Data Complete",
+        "componentID": 25325330,
+        "name": "Bonnell",
+        "rank_data": "2",
+        "rank_data_loc": "3",
+        "rank_loc": "9",
+        "score_data": 0.671,
+        "score_data_loc": 0.336,
+        "score_loc": 0.002
+      },
+      {
+        "component": "Holton",
+        "componentData": "Data Complete",
+        "componentID": 25325333,
+        "name": "Holton",
+        "rank_data": "4",
+        "rank_data_loc": "4",
+        "rank_loc": "8",
+        "score_data": 0.643,
+        "score_data_loc": 0.323,
+        "score_loc": 0.002
+      },
+      {
+        "component": "Grayford",
+        "componentData": "Data Complete",
+        "componentID": 25325329,
+        "name": "Grayford",
+        "rank_data": "5",
+        "rank_data_loc": "5",
+        "rank_loc": "11",
+        "score_data": 0.637,
+        "score_data_loc": 0.319,
+        "score_loc": 0.001
+      },
+      {
+        "component": "Brookston",
+        "componentData": "Data Complete",
+        "componentID": 25325342,
+        "name": "Brookston",
+        "rank_data": "6",
+        "rank_data_loc": "6",
+        "rank_loc": "6",
+        "score_data": 0.61,
+        "score_data_loc": 0.31,
+        "score_loc": 0.009
+      },
+      {
+        "component": "Cyclone",
+        "componentData": "Data Complete",
+        "componentID": 25325348,
+        "name": "Cyclone",
+        "rank_data": "7",
+        "rank_data_loc": "7",
+        "rank_loc": "5",
+        "score_data": 0.596,
+        "score_data_loc": 0.303,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Hennepin",
+        "componentData": "Data Complete",
+        "componentID": 25325355,
+        "name": "Hennepin3",
+        "rank_data": "10",
+        "rank_data_loc": "8",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.54,
+        "score_data_loc": 0.301,
+        "score_loc": 0.061
+      },
+      {
+        "component": "Cincinnati",
+        "componentData": "Data Complete",
+        "componentID": 25325332,
+        "name": "Cincinnati",
+        "rank_data": "8",
+        "rank_data_loc": "9",
+        "rank_loc": "10",
+        "score_data": 0.591,
+        "score_data_loc": 0.296,
+        "score_loc": 0.001
+      },
+      {
+        "component": "Celina",
+        "componentData": "Data Complete",
+        "componentID": 25325406,
+        "name": "Celina",
+        "rank_data": "9",
+        "rank_data_loc": "10",
+        "rank_loc": "7",
+        "score_data": 0.555,
+        "score_data_loc": 0.279,
+        "score_loc": 0.003
+      },
+      {
+        "component": "Hickory",
+        "componentData": "Data Complete",
+        "componentID": 25325331,
+        "name": "Hickory",
+        "rank_data": "12",
+        "rank_data_loc": "11",
+        "rank_loc": "3",
+        "score_data": 0.499,
+        "score_data_loc": 0.275,
+        "score_loc": 0.051
+      },
+      {
+        "component": "Jessietown",
+        "componentData": "Data Complete",
+        "componentID": 25325334,
+        "name": "Jessietown",
+        "rank_data": "11",
+        "rank_data_loc": "12",
+        "rank_loc": "12",
+        "score_data": 0.522,
+        "score_data_loc": 0.262,
+        "score_loc": 0.001
+      },
+      {
+        "component": "Crosby",
+        "componentData": "Data Complete",
+        "componentID": 25325353,
+        "name": "Crosby3",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.654,
+        "score_data_loc": 0.351,
+        "score_loc": 0.048
+      },
+      {
+        "component": "Crosby",
+        "componentData": "Data Complete",
+        "componentID": 25325351,
+        "name": "Crosby2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.609,
+        "score_data_loc": 0.328,
+        "score_loc": 0.048
+      },
+      {
+        "component": "Hennepin",
+        "componentData": "Data Complete",
+        "componentID": 25325325,
+        "name": "Hennepin2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.536,
+        "score_data_loc": 0.299,
+        "score_loc": 0.061
+      },
+      {
+        "component": "Hennepin",
+        "componentData": "Data Complete",
+        "componentID": 25325347,
+        "name": "Hennepin",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "1",
+        "score_data": 0.525,
+        "score_data_loc": 0.293,
+        "score_loc": 0.061
+      },
+      {
+        "component": "Cyclone",
+        "componentData": "Data Complete",
+        "componentID": 25325310,
+        "name": "Cyclone2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.555,
+        "score_data_loc": 0.283,
+        "score_loc": 0.011
+      }
+    ]
+  }
+}

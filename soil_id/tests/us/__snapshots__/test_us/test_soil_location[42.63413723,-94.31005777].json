@@ -1,0 +1,522 @@
+{
+  "list": {
+    "AWS_PIW90": 2.57,
+    "Soil Data Value": [
+      [
+        "rfv_class_0",
+        0.2488625668211104
+      ],
+      [
+        "rfv_class_30",
+        0.24530228329929127
+      ],
+      [
+        "texture_0",
+        0.0
+      ],
+      [
+        "texture_30",
+        0.0
+      ]
+    ],
+    "metadata": {
+      "location": "us",
+      "model": "v3",
+      "unit_measure": {
+        "cec": "cmol(c)/kg",
+        "clay": "%",
+        "depth": "cm",
+        "distance": "m",
+        "ec": "ds/m",
+        "rock_fragments": "cm3/100cm3",
+        "sand": "%"
+      }
+    },
+    "soilList": [
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R103XY002MN"
+            ],
+            "ecoclassname": [
+              "Calcareous Upland Prairies"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/103X/R103XY002MN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Nicollet",
+          "name": "Nicollet",
+          "rank_loc": "1",
+          "score_loc": 0.402
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25584956",
+            "componentKind": "Series",
+            "componentPct": 85,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "797917",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "1",
+            "nirrcapscl": "None",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=nicollet",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#nicollet",
+            "slope": 2.0,
+            "taxsubgrp": "Aquic Hapludolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Nicollet series consists of very deep, somewhat poorly drained soils that formed in calcareous loamy glacial till on till plains and moraines. Slopes range from 0 to 5 percent.  Mean annual air temperature is about 9 degrees C (48 degrees F).   Mean annual precipitation is about 660 mm (28 inches)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R103XY004MN"
+            ],
+            "ecoclassname": [
+              "Loamy Upland Prairies"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/103X/R103XY004MN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Webster",
+          "name": "Webster",
+          "rank_loc": "2",
+          "score_loc": 0.331
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25584954",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "797917",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=webster",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#webster",
+            "slope": 1.0,
+            "taxsubgrp": "Typic Endoaquolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Webster series consists of very deep, poorly drained, moderately permeable soils formed in glacial till or local alluvium derived from till on uplands.  Slope ranges from 0 to 3 percent.  Mean annual air temperature is about 48 degrees F, and mean annual precipitation is about 30 inches."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R103XY015MN"
+            ],
+            "ecoclassname": [
+              "Depressional Marsh"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/103X/R103XY015MN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Clarion",
+          "name": "Clarion",
+          "rank_loc": "3",
+          "score_loc": 0.2
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25584950",
+            "componentKind": "Taxadjunct",
+            "componentPct": 5,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "797917",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=clarion",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#clarion",
+            "slope": 3.0,
+            "taxsubgrp": "Oxyaquic Hapludolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Clarion series consists of very deep, moderately well drained soils on uplands. These soils formed in glacial till. Slopes range from 1 to 9 percent. Mean annual air temperature is about 8 degrees C (47 degrees F). Mean annual precipitation is about 74 centimeters (29 inches)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R103XY001MN"
+            ],
+            "ecoclassname": [
+              "Loamy Wet Prairies"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/103X/R103XY001MN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Okoboji",
+          "name": "Okoboji",
+          "rank_loc": "4",
+          "score_loc": 0.04
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25584952",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "797917",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "3",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=okoboji",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#okoboji",
+            "slope": 0.0,
+            "taxsubgrp": "Cumulic Vertic Endoaquolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Okoboji series consists of very deep, very poorly drained soils formed in alluvium or lacustrine sediments. These soils are in closed depressions on till plains and moraines. Slope ranges from 0 to 1 percent. Mean annual air temperature is about 8 degrees C. Mean annual precipitation is about 740 millimeters."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R103XY004MN"
+            ],
+            "ecoclassname": [
+              "Loamy Upland Prairies"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/103X/R103XY004MN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Glencoe",
+          "name": "Glencoe",
+          "rank_loc": "5",
+          "score_loc": 0.011
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25584960",
+            "componentKind": "Series",
+            "componentPct": 3,
+            "dataSource": "SSURGO",
+            "distance": 28.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "797921",
+            "minCompDistance": 28.0,
+            "nirrcapcl": "3",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=glencoe",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#glencoe",
+            "slope": 0.0,
+            "taxsubgrp": "Cumulic Endoaquolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Glencoe series consists of very deep, very poorly drained soils that formed in loamy sediments from till.  These soils are in closed depressions on moraines.  Slope ranges from 0 to 1 percent.  Mean annual air temperature is about 8 degrees C.  Mean annual precipitation is about 735 millimeters."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R103XY015MN"
+            ],
+            "ecoclassname": [
+              "Depressional Marsh"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/103X/R103XY015MN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Storden",
+          "name": "Storden",
+          "rank_loc": "6",
+          "score_loc": 0.011
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25584602",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "SSURGO",
+            "distance": 93.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "797923",
+            "minCompDistance": 93.0,
+            "nirrcapcl": "3",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=storden",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#storden",
+            "slope": 8.0,
+            "taxsubgrp": "Typic Eutrudepts",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Storden series consists of very deep, well drained soils that formed in calcareous loamy glacial till on glacial moraines. Slope ranges from 4 to 70 percent. Mean annual precipitation is about 660 mm (26 inches). Mean annual air temperature is about 9 degrees C (48 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R103XY001MN"
+            ],
+            "ecoclassname": [
+              "Loamy Wet Prairies"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/103X/R103XY001MN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Canisteo",
+          "name": "Canisteo",
+          "rank_loc": "7",
+          "score_loc": 0.007
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25584962",
+            "componentKind": "Series",
+            "componentPct": 2,
+            "dataSource": "SSURGO",
+            "distance": 28.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "797921",
+            "minCompDistance": 28.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=canisteo",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#canisteo",
+            "slope": 1.0,
+            "taxsubgrp": "Typic Endoaquolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Canisteo series consists of very deep, poorly and very poorly drained soils that formed in calcareous, loamy till or in a thin mantle of loamy or silty sediments and the underlying calcareous, loamy till.  These soils are on rims of depressions, depressions and flats on moraines or till plains.  Slope ranges from 0 to 2 percent.  Mean air annual temperature is about 9 degrees C. Mean annual precipitation is about 785 millimeters."
+        },
+        "texture": {},
+        "top_depth": {}
+      }
+    ]
+  },
+  "rank": {
+    "metadata": {
+      "location": "us",
+      "model": "v2"
+    },
+    "soilRank": [
+      {
+        "component": "Clarion",
+        "componentData": "Data Complete",
+        "componentID": 25584950,
+        "name": "Clarion",
+        "rank_data": "1",
+        "rank_data_loc": "1",
+        "rank_loc": 3,
+        "score_data": 0.517,
+        "score_data_loc": 0.358,
+        "score_loc": 0.2
+      },
+      {
+        "component": "Nicollet",
+        "componentData": "Data Complete",
+        "componentID": 25584956,
+        "name": "Nicollet",
+        "rank_data": "7",
+        "rank_data_loc": "2",
+        "rank_loc": 1,
+        "score_data": 0.22,
+        "score_data_loc": 0.311,
+        "score_loc": 0.402
+      },
+      {
+        "component": "Webster",
+        "componentData": "Data Complete",
+        "componentID": 25584954,
+        "name": "Webster",
+        "rank_data": "6",
+        "rank_data_loc": "3",
+        "rank_loc": 2,
+        "score_data": 0.268,
+        "score_data_loc": 0.299,
+        "score_loc": 0.331
+      },
+      {
+        "component": "Glencoe",
+        "componentData": "Data Complete",
+        "componentID": 25584960,
+        "name": "Glencoe",
+        "rank_data": "2",
+        "rank_data_loc": "4",
+        "rank_loc": 5,
+        "score_data": 0.451,
+        "score_data_loc": 0.231,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Storden",
+        "componentData": "Data Complete",
+        "componentID": 25584602,
+        "name": "Storden",
+        "rank_data": "3",
+        "rank_data_loc": "5",
+        "rank_loc": 6,
+        "score_data": 0.433,
+        "score_data_loc": 0.222,
+        "score_loc": 0.011
+      },
+      {
+        "component": "Okoboji",
+        "componentData": "Missing Data",
+        "componentID": 25584952,
+        "name": "Okoboji",
+        "rank_data": "4",
+        "rank_data_loc": "6",
+        "rank_loc": 4,
+        "score_data": 0.303,
+        "score_data_loc": 0.171,
+        "score_loc": 0.04
+      },
+      {
+        "component": "Canisteo",
+        "componentData": "Data Complete",
+        "componentID": 25584962,
+        "name": "Canisteo",
+        "rank_data": "5",
+        "rank_data_loc": "7",
+        "rank_loc": 7,
+        "score_data": 0.287,
+        "score_data_loc": 0.147,
+        "score_loc": 0.007
+      }
+    ]
+  }
+}

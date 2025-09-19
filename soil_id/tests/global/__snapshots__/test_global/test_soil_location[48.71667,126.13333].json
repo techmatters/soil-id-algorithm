@@ -1,0 +1,811 @@
+{
+  "list": {
+    "metadata": {
+      "location": "us",
+      "model": "v3",
+      "unit_measure": {
+        "cec": "cmol(c)/kg",
+        "clay": "%",
+        "depth": "cm",
+        "distance": "m",
+        "ec": "ds/m",
+        "rock_fragments": "cm3/100cm3",
+        "sand": "%"
+      }
+    },
+    "soilList": [
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 34.0,
+          "sl2": 34.0,
+          "sl3": 34.0,
+          "sl4": 30.2,
+          "sl5": 28.86,
+          "sl6": 26.8,
+          "sl7": 25.67
+        },
+        "clay": {
+          "sl1": 19.0,
+          "sl2": 19.0,
+          "sl3": 19.0,
+          "sl4": 19.8,
+          "sl5": 19.71,
+          "sl6": 18.8,
+          "sl7": 18.5
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.6,
+          "sl5": 0.71,
+          "sl6": 0.8,
+          "sl7": 0.83
+        },
+        "id": {
+          "component": "Haplic andosols",
+          "name": "Haplic andosols",
+          "rank_loc": "1",
+          "score_loc": 0.366
+        },
+        "ph": {
+          "sl1": 5.9,
+          "sl2": 5.9,
+          "sl3": 5.9,
+          "sl4": 6.08,
+          "sl5": 6.13,
+          "sl6": 6.18,
+          "sl7": 6.18
+        },
+        "rock_fragments": {
+          "sl1": 13.0,
+          "sl2": 13.0,
+          "sl3": 13.0,
+          "sl4": 13.6,
+          "sl5": 14.43,
+          "sl6": 16.8,
+          "sl7": 18.5
+        },
+        "sand": {
+          "sl1": 40.0,
+          "sl2": 40.0,
+          "sl3": 40.0,
+          "sl4": 39.4,
+          "sl5": 40.14,
+          "sl6": 42.4,
+          "sl7": 43.5
+        },
+        "site": {
+          "siteData": {
+            "componentID": 103929,
+            "distance": 0.0,
+            "mapunitID": 11372,
+            "minCompDistance": 0.0,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Andosols form in volcanic materials. <br> These soils are highly erodible and have high P fixation, but most have relatively good water holding capacity and soil fertility. ",
+            "Description_es": "Los Andosoles Háplicos se forman en materiales volcánicos. <br>Estos suelos son muy erosionables y tienen una alta fijación de P, pero la mayoría tienen una capacidad de retención de agua y una fertilidad del suelo relativamente buenas. ",
+            "Description_fr": "Haplic Andosols form in volcanic materials. <br> These soils are highly erodible and have high P fixation, but most have relatively good water holding capacity and soil fertility. ",
+            "Description_ks": "Haplic Andosols form in volcanic materials. <br> These soils are highly erodible and have high P fixation, but most have relatively good water holding capacity and soil fertility. ",
+            "Management_en": "Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover. <br> Because these soils are formed from volcanic materials a part of their soil charge is positive, which means they can ‘fix’ phosphorus, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Agroforestry systems can help minimize erosion. ",
+            "Management_es": "La preservación del suelo superficial con su materia orgánica es importante, y la prevención de la erosión es fundamental. <br>Las prácticas de gestión de la tierra deben maximizar la cobertura del suelo. <br>Debido a que estos suelos se forman a partir de materiales volcánicos, una parte de su carga es positiva, lo que significa que pueden \"fijar\" el fósforo, haciendo que no esté disponible para las plantas en la temporada de cultivo. <br>Las prácticas bien documentadas, como la aplicación en banda (directamente sobre la semilla o a un lado y abajo de la semilla) de fertilizantes fosfatados, ayudarán a reducir la fijación de P. <br>La fertilización adicional y la aplicación de cal, además del P, también serán necesarias para garantizar un crecimiento y rendimiento adecuados de los cultivos. <br>Los cultivos de cobertura y las rotaciones que incluyan leguminosas y la inclusión de cultivos con alta biomasa serán beneficiosos, ya que añaden materia orgánica y nitrógeno para el cultivo posterior. <br>Los sistemas agroforestales pueden ayudar a minimizar la erosión.",
+            "Management_fr": "Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover. <br> Because these soils are formed from volcanic materials a part of their soil charge is positive, which means they can ‘fix’ phosphorus, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Agroforestry systems can help minimize erosion. ",
+            "Management_ks": "Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover. <br> Because these soils are formed from volcanic materials a part of their soil charge is positive, which means they can ‘fix’ phosphorus, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Agroforestry systems can help minimize erosion. "
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Loam",
+          "sl5": "Loam",
+          "sl6": "Loam",
+          "sl7": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 22.0,
+          "sl2": 22.0,
+          "sl3": 22.0,
+          "sl4": 21.2,
+          "sl5": 20.57,
+          "sl6": 19.6,
+          "sl7": 19.0
+        },
+        "clay": {
+          "sl1": 26.0,
+          "sl2": 26.0,
+          "sl3": 26.0,
+          "sl4": 26.4,
+          "sl5": 26.14,
+          "sl6": 25.6,
+          "sl7": 25.0
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Haplic phaeozems",
+          "name": "Haplic phaeozems",
+          "rank_loc": "2",
+          "score_loc": 0.194
+        },
+        "ph": {
+          "sl1": 6.2,
+          "sl2": 6.2,
+          "sl3": 6.2,
+          "sl4": 6.36,
+          "sl5": 6.46,
+          "sl6": 6.58,
+          "sl7": 6.68
+        },
+        "rock_fragments": {
+          "sl1": 5.0,
+          "sl2": 5.0,
+          "sl3": 5.0,
+          "sl4": 4.8,
+          "sl5": 4.57,
+          "sl6": 4.6,
+          "sl7": 4.67
+        },
+        "sand": {
+          "sl1": 28.0,
+          "sl2": 28.0,
+          "sl3": 28.0,
+          "sl4": 28.4,
+          "sl5": 29.14,
+          "sl6": 30.2,
+          "sl7": 31.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 103604,
+            "distance": 2611.703,
+            "mapunitID": 11112,
+            "minCompDistance": 2611.70290883,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Phaeozems are fertile and productive soils of grasslands with relatively high organic matter and base saturation. <br> Their occurrence in dry climates means that irrigation is likely needed for production.",
+            "Description_es": "Los Phaeozems Háplicos son suelos fértiles y productivos de pastizales con una materia orgánica y una saturación de bases relativamente altas. <br>Su presencia en climas secos significa que es probable que se necesite el riego para la producción.",
+            "Description_fr": "Haplic Phaeozems are fertile and productive soils of grasslands with relatively high organic matter and base saturation. <br> Their occurrence in dry climates means that irrigation is likely needed for production.",
+            "Description_ks": "Haplic Phaeozems are fertile and productive soils of grasslands with relatively high organic matter and base saturation. <br> Their occurrence in dry climates means that irrigation is likely needed for production.",
+            "Management_en": "These soils are highly productive and fertile, and make excellent cropland. <br> They are rich in organic matter. <br> However, they are at risk for soil loss through both wind and water erosion. <br> Thus, practices to maintain soil cover (mulches, conservation tillage, windbreaks) are needed.",
+            "Management_es": "Estos suelos son altamente productivos y fértiles, y constituyen excelentes tierras de cultivo. <br>Son ricos en materia orgánica. <br>Sin embargo, corren el riesgo de perder el suelo por la erosión del viento y del agua. <br>Por lo tanto, se necesitan prácticas para mantener la cobertura del suelo (mantillos, labranza de conservación, cortavientos).",
+            "Management_fr": "These soils are highly productive and fertile, and make excellent cropland. <br> They are rich in organic matter. <br> However, they are at risk for soil loss through both wind and water erosion. <br> Thus, practices to maintain soil cover (mulches, conservation tillage, windbreaks) are needed.",
+            "Management_ks": "These soils are highly productive and fertile, and make excellent cropland. <br> They are rich in organic matter. <br> However, they are at risk for soil loss through both wind and water erosion. <br> Thus, practices to maintain soil cover (mulches, conservation tillage, windbreaks) are needed."
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Loam",
+          "sl5": "Loam",
+          "sl6": "Loam",
+          "sl7": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 15.0,
+          "sl2": 15.0,
+          "sl3": 15.0,
+          "sl4": 15.0,
+          "sl5": 15.0,
+          "sl6": 14.8,
+          "sl7": 14.5
+        },
+        "clay": {
+          "sl1": 19.0,
+          "sl2": 19.0,
+          "sl3": 19.0,
+          "sl4": 23.0,
+          "sl5": 24.14,
+          "sl6": 24.6,
+          "sl7": 24.5
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 1.0,
+          "sl6": 1.0,
+          "sl7": 1.0
+        },
+        "id": {
+          "component": "Haplic luvisols",
+          "name": "Haplic luvisols",
+          "rank_loc": "3",
+          "score_loc": 0.165
+        },
+        "ph": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 6.02,
+          "sl5": 6.06,
+          "sl6": 6.12,
+          "sl7": 6.2
+        },
+        "rock_fragments": {
+          "sl1": 7.0,
+          "sl2": 7.0,
+          "sl3": 7.0,
+          "sl4": 11.0,
+          "sl5": 12.29,
+          "sl6": 13.6,
+          "sl7": 14.17
+        },
+        "sand": {
+          "sl1": 31.0,
+          "sl2": 31.0,
+          "sl3": 31.0,
+          "sl4": 31.2,
+          "sl5": 31.71,
+          "sl6": 33.0,
+          "sl7": 33.83
+        },
+        "site": {
+          "siteData": {
+            "componentID": 104599,
+            "distance": 9855.721,
+            "mapunitID": 11910,
+            "minCompDistance": 9855.72065557,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Luvisols are productive soils with high base saturation and relatively clayey subsoils.",
+            "Description_es": "Los Luvisoles Háplicos son suelos productivos con alta saturación de bases y subsuelos relativamente arcillosos.",
+            "Description_fr": "Haplic Luvisols are productive soils with high base saturation and relatively clayey subsoils.",
+            "Description_ks": "Haplic Luvisols are productive soils with high base saturation and relatively clayey subsoils.",
+            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops.",
+            "Management_es": "Estos suelos son fértiles y pueden utilizarse para una amplia gama de prácticas de cultivo. <br>Sin embargo, son sensibles a la pérdida de suelo por erosión y hay que tener cuidado para proteger el suelo de la pérdida. <br>Si el suelo ya está erosionado, pueden ser más adecuados para el pastoreo y/o los cultivos arbóreos.",
+            "Management_fr": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops.",
+            "Management_ks": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops."
+          }
+        },
+        "texture": {
+          "sl1": "Silt loam",
+          "sl2": "Silt loam",
+          "sl3": "Silt loam",
+          "sl4": "Loam",
+          "sl5": "Loam",
+          "sl6": "Loam",
+          "sl7": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 27.0,
+          "sl2": 27.0,
+          "sl3": 27.0,
+          "sl4": 26.4,
+          "sl5": 25.57,
+          "sl6": 24.6,
+          "sl7": 24.0
+        },
+        "clay": {
+          "sl1": 28.0,
+          "sl2": 28.0,
+          "sl3": 28.0,
+          "sl4": 28.8,
+          "sl5": 29.29,
+          "sl6": 29.4,
+          "sl7": 29.17
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Gleyic phaeozems",
+          "name": "Gleyic phaeozems",
+          "rank_loc": "4",
+          "score_loc": 0.11
+        },
+        "ph": {
+          "sl1": 7.1,
+          "sl2": 7.1,
+          "sl3": 7.1,
+          "sl4": 7.16,
+          "sl5": 7.19,
+          "sl6": 7.24,
+          "sl7": 7.28
+        },
+        "rock_fragments": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 7.4,
+          "sl5": 9.43,
+          "sl6": 11.2,
+          "sl7": 10.5
+        },
+        "sand": {
+          "sl1": 34.0,
+          "sl2": 34.0,
+          "sl3": 34.0,
+          "sl4": 33.8,
+          "sl5": 33.71,
+          "sl6": 34.4,
+          "sl7": 34.83
+        },
+        "site": {
+          "siteData": {
+            "componentID": 103605,
+            "distance": 12988.596,
+            "mapunitID": 11113,
+            "minCompDistance": 12988.59595592,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Gleyic Phaeozems are fertile and productive soils of grasslands with relatively high organic matter and base saturation. <br> Their occurrence in dry climates means that irrigation is likely needed for production. <br> Gleyic Phaeozems are saturated with shallow groundwater within one meter of the soil surface.",
+            "Description_es": "Los Phaeozems Gléyicos son suelos fértiles y productivos de pastizales con una materia orgánica y una saturación de bases relativamente altas. <br>Su presencia en climas secos significa que es probable que el riego sea necesario para la producción. <br>Los feozems gleyicos están saturados de agua subterránea poco profunda a menos de un metro de la superficie del suelo.",
+            "Description_fr": "Gleyic Phaeozems are fertile and productive soils of grasslands with relatively high organic matter and base saturation. <br> Their occurrence in dry climates means that irrigation is likely needed for production. <br> Gleyic Phaeozems are saturated with shallow groundwater within one meter of the soil surface.",
+            "Description_ks": "Gleyic Phaeozems are fertile and productive soils of grasslands with relatively high organic matter and base saturation. <br> Their occurrence in dry climates means that irrigation is likely needed for production. <br> Gleyic Phaeozems are saturated with shallow groundwater within one meter of the soil surface.",
+            "Management_en": "These soils are highly productive and fertile, and make excellent cropland. <br> They are rich in organic matter. <br> However, they are at risk for soil loss through both wind and water erosion. <br> Thus, practices to maintain soil cover (mulches, conservation tillage, windbreaks) are needed. <br> Drainage of these soils may be needed. <br> However, since this is saturation via groundwater this may not be possible, and thus shallow-rooted crops must be considered. <br> If fertilized and not drained, loss of applied nitrogen (N) by denitrification or leaching is possible. <br> More efficient crop N use in these soils can be achieved by:  1) drainage, and, 2) use of slow-release N fertilizers (if available). ",
+            "Management_es": "Estos suelos son muy productivos y fértiles, y constituyen excelentes tierras de cultivo. <br>Son ricos en materia orgánica. <br>Sin embargo, corren el riesgo de perder el suelo por la erosión del viento y del agua. <br>Por lo tanto, se necesitan prácticas para mantener la cobertura del suelo (mantillos, labranza de conservación, cortavientos). <br>Puede ser necesario el drenaje de estos suelos. <br>Sin embargo, al tratarse de una saturación a través de las aguas subterráneas, esto puede no ser posible, por lo que hay que considerar los cultivos de raíz superficial. <br>Si se fertiliza y no se drena, es posible la pérdida de nitrógeno (N) aplicado por desnitrificación o lixiviación. <br>El uso más eficiente del N por parte de los cultivos en estos suelos puede lograrse mediante:  1) el drenaje, y, 2) el uso de fertilizantes de N de liberación lenta (si están disponibles).",
+            "Management_fr": "These soils are highly productive and fertile, and make excellent cropland. <br> They are rich in organic matter. <br> However, they are at risk for soil loss through both wind and water erosion. <br> Thus, practices to maintain soil cover (mulches, conservation tillage, windbreaks) are needed. <br> Drainage of these soils may be needed. <br> However, since this is saturation via groundwater this may not be possible, and thus shallow-rooted crops must be considered. <br> If fertilized and not drained, loss of applied nitrogen (N) by denitrification or leaching is possible. <br> More efficient crop N use in these soils can be achieved by:  1) drainage, and, 2) use of slow-release N fertilizers (if available). ",
+            "Management_ks": "These soils are highly productive and fertile, and make excellent cropland. <br> They are rich in organic matter. <br> However, they are at risk for soil loss through both wind and water erosion. <br> Thus, practices to maintain soil cover (mulches, conservation tillage, windbreaks) are needed. <br> Drainage of these soils may be needed. <br> However, since this is saturation via groundwater this may not be possible, and thus shallow-rooted crops must be considered. <br> If fertilized and not drained, loss of applied nitrogen (N) by denitrification or leaching is possible. <br> More efficient crop N use in these soils can be achieved by:  1) drainage, and, 2) use of slow-release N fertilizers (if available). "
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 35.0,
+          "sl2": 35.0,
+          "sl3": 35.0,
+          "sl4": 28.4,
+          "sl5": 25.71,
+          "sl6": 22.6,
+          "sl7": 21.17
+        },
+        "clay": {
+          "sl1": 28.0,
+          "sl2": 28.0,
+          "sl3": 28.0,
+          "sl4": 26.8,
+          "sl5": 26.57,
+          "sl6": 26.0,
+          "sl7": 25.67
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 0.8,
+          "sl5": 0.57,
+          "sl6": 1.0,
+          "sl7": 1.33
+        },
+        "id": {
+          "component": "Eutric gleysols",
+          "name": "Eutric gleysols",
+          "rank_loc": "5",
+          "score_loc": 0.055
+        },
+        "ph": {
+          "sl1": 6.7,
+          "sl2": 6.7,
+          "sl3": 6.7,
+          "sl4": 6.98,
+          "sl5": 7.09,
+          "sl6": 7.2,
+          "sl7": 7.25
+        },
+        "rock_fragments": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 2.2,
+          "sl5": 2.43,
+          "sl6": 2.8,
+          "sl7": 3.0
+        },
+        "sand": {
+          "sl1": 31.0,
+          "sl2": 31.0,
+          "sl3": 31.0,
+          "sl4": 34.0,
+          "sl5": 34.57,
+          "sl6": 35.8,
+          "sl7": 36.67
+        },
+        "site": {
+          "siteData": {
+            "componentID": 104276,
+            "distance": 14827.397,
+            "mapunitID": 11663,
+            "minCompDistance": 14827.39744996,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Eutric Gleysols have shallow groundwater and are saturated for significant portions of the year. <br> Deep drainage is necessary for cultivation.    <br> Eutric Gleysols are productive soils with high base saturation in the upper portion of soil.",
+            "Description_es": "Los gleysoles Eútricos tienen aguas subterráneas poco profundas y están saturados durante gran parte del año. <br>El drenaje profundo es necesario para el cultivo.    <br>Los Gleysoles Eutricos son suelos productivos con una alta saturación de la base en la parte superior del suelo.",
+            "Description_fr": "Eutric Gleysols have shallow groundwater and are saturated for significant portions of the year. <br> Deep drainage is necessary for cultivation.    <br> Eutric Gleysols are productive soils with high base saturation in the upper portion of soil.",
+            "Description_ks": "Eutric Gleysols have shallow groundwater and are saturated for significant portions of the year. <br> Deep drainage is necessary for cultivation.    <br> Eutric Gleysols are productive soils with high base saturation in the upper portion of soil.",
+            "Management_en": "These soils are saturated, and if they are cultivated significant drainage is required. <br> Once drained, these soils can be highly productive. <br> The water table must be lowered using deep drainage. <br> Once drained, liming may be required as organic matter begins to decompose. ",
+            "Management_es": "Estos suelos están saturados, y si se cultivan se requiere un drenaje significativo. <br>Una vez drenados, estos suelos pueden ser altamente productivos. <br>El nivel freático debe bajarse mediante un drenaje profundo. <br>Una vez drenados, puede ser necesario el encalado, ya que la materia orgánica comienza a descomponerse.",
+            "Management_fr": "These soils are saturated, and if they are cultivated significant drainage is required. <br> Once drained, these soils can be highly productive. <br> The water table must be lowered using deep drainage. <br> Once drained, liming may be required as organic matter begins to decompose. ",
+            "Management_ks": "These soils are saturated, and if they are cultivated significant drainage is required. <br> Once drained, these soils can be highly productive. <br> The water table must be lowered using deep drainage. <br> Once drained, liming may be required as organic matter begins to decompose. "
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Loam",
+          "sl5": "Loam",
+          "sl6": "Loam",
+          "sl7": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 28.0,
+          "sl2": 28.0,
+          "sl3": 28.0,
+          "sl4": 23.4,
+          "sl5": 21.0,
+          "sl6": 18.2,
+          "sl7": 16.83
+        },
+        "clay": {
+          "sl1": 10.0,
+          "sl2": 10.0,
+          "sl3": 10.0,
+          "sl4": 10.0,
+          "sl5": 10.14,
+          "sl6": 10.2,
+          "sl7": 9.83
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Mollic gleysols",
+          "name": "Mollic gleysols",
+          "rank_loc": "6",
+          "score_loc": 0.055
+        },
+        "ph": {
+          "sl1": 5.7,
+          "sl2": 5.7,
+          "sl3": 5.7,
+          "sl4": 5.82,
+          "sl5": 5.84,
+          "sl6": 5.84,
+          "sl7": 5.85
+        },
+        "rock_fragments": {
+          "sl1": 12.0,
+          "sl2": 12.0,
+          "sl3": 12.0,
+          "sl4": 15.0,
+          "sl5": 17.43,
+          "sl6": 20.0,
+          "sl7": 21.0
+        },
+        "sand": {
+          "sl1": 37.0,
+          "sl2": 37.0,
+          "sl3": 37.0,
+          "sl4": 39.6,
+          "sl5": 41.29,
+          "sl6": 43.6,
+          "sl7": 46.17
+        },
+        "site": {
+          "siteData": {
+            "componentID": 104133,
+            "distance": 6486.577,
+            "mapunitID": 11540,
+            "minCompDistance": 6486.5766191,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Mollic Gleysols have shallow groundwater and are saturated for significant portions of the year. <br> Deep drainage is necessary for cultivation.   <br> Mollic Gleysols have relatively higher organic matter and nutrients in surface horizons.",
+            "Description_es": "Los Mollic Gleysols tienen aguas subterráneas poco profundas y están saturados durante gran parte del año. <br>El drenaje profundo es necesario para el cultivo.   <br>Los Gleysoles móllicos tienen relativamente más materia orgánica y nutrientes en los horizontes superficiales.",
+            "Description_fr": "Mollic Gleysols have shallow groundwater and are saturated for significant portions of the year. <br> Deep drainage is necessary for cultivation.   <br> Mollic Gleysols have relatively higher organic matter and nutrients in surface horizons.",
+            "Description_ks": "Mollic Gleysols have shallow groundwater and are saturated for significant portions of the year. <br> Deep drainage is necessary for cultivation.   <br> Mollic Gleysols have relatively higher organic matter and nutrients in surface horizons.",
+            "Management_en": "These soils are saturated, and if they are cultivated significant drainage is required. <br> Once drained, these soils can be highly productive. <br> The water table must be lowered using deep drainage. <br> Once drained, liming may be required as organic matter begins to decompose. ",
+            "Management_es": "Estos suelos están saturados y, si se cultivan, se requiere un drenaje importante. <br>Una vez drenados, estos suelos pueden ser muy productivos. <br>El nivel freático debe bajarse mediante un drenaje profundo. <br>Una vez drenados, puede ser necesario el encalado, ya que la materia orgánica comienza a descomponerse.",
+            "Management_fr": "These soils are saturated, and if they are cultivated significant drainage is required. <br> Once drained, these soils can be highly productive. <br> The water table must be lowered using deep drainage. <br> Once drained, liming may be required as organic matter begins to decompose. ",
+            "Management_ks": "These soils are saturated, and if they are cultivated significant drainage is required. <br> Once drained, these soils can be highly productive. <br> The water table must be lowered using deep drainage. <br> Once drained, liming may be required as organic matter begins to decompose. "
+          }
+        },
+        "texture": {
+          "sl1": "Silt loam",
+          "sl2": "Silt loam",
+          "sl3": "Silt loam",
+          "sl4": "Silt loam",
+          "sl5": "Loam",
+          "sl6": "Loam",
+          "sl7": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 18.0,
+          "sl2": 18.0,
+          "sl3": 18.0,
+          "sl4": 17.4,
+          "sl5": 17.43,
+          "sl6": 17.4,
+          "sl7": 17.0
+        },
+        "clay": {
+          "sl1": 30.0,
+          "sl2": 30.0,
+          "sl3": 30.0,
+          "sl4": 31.8,
+          "sl5": 32.0,
+          "sl6": 31.8,
+          "sl7": 31.17
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 0.8,
+          "sl5": 0.57,
+          "sl6": 0.6,
+          "sl7": 0.83
+        },
+        "id": {
+          "component": "Umbric andosols",
+          "name": "Umbric andosols",
+          "rank_loc": "7",
+          "score_loc": 0.055
+        },
+        "ph": {
+          "sl1": 6.3,
+          "sl2": 6.3,
+          "sl3": 6.3,
+          "sl4": 6.5,
+          "sl5": 6.57,
+          "sl6": 6.66,
+          "sl7": 6.75
+        },
+        "rock_fragments": {
+          "sl1": 8.0,
+          "sl2": 8.0,
+          "sl3": 8.0,
+          "sl4": 8.0,
+          "sl5": 8.86,
+          "sl6": 9.0,
+          "sl7": 9.33
+        },
+        "sand": {
+          "sl1": 24.0,
+          "sl2": 24.0,
+          "sl3": 24.0,
+          "sl4": 23.0,
+          "sl5": 23.14,
+          "sl6": 23.2,
+          "sl7": 23.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 103928,
+            "distance": 7836.2,
+            "mapunitID": 11371,
+            "minCompDistance": 7836.200108,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Umbric Andosols form in volcanic materials. <br> These soils are highly erodible and have high P fixation, but most have relatively good water holding capacity and soil fertility. <br> Umbric Andosols have a thick surface horizon but soils are wetter and have fewer nutrients than Mollic Andosols. ",
+            "Description_es": "Los Andosoles Úmbricos se forman en materiales volcánicos. <br>Estos suelos son muy erosionables y tienen una alta fijación de P, pero la mayoría tienen una capacidad de retención de agua y una fertilidad del suelo relativamente buenas. <br>Los Andosoles úmbricos tienen un horizonte superficial grueso, pero los suelos son más húmedos y tienen menos nutrientes que los Andosoles móllicos. ",
+            "Description_fr": "Umbric Andosols form in volcanic materials. <br> These soils are highly erodible and have high P fixation, but most have relatively good water holding capacity and soil fertility. <br> Umbric Andosols have a thick surface horizon but soils are wetter and have fewer nutrients than Mollic Andosols. ",
+            "Description_ks": "Umbric Andosols form in volcanic materials. <br> These soils are highly erodible and have high P fixation, but most have relatively good water holding capacity and soil fertility. <br> Umbric Andosols have a thick surface horizon but soils are wetter and have fewer nutrients than Mollic Andosols. ",
+            "Management_en": "Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover. <br> Because these soils are formed from volcanic materials a part of their soil charge is positive, which means they can ‘fix’ phosphorus, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Agroforestry systems can help minimize erosion. <br> Additional drainage may make these soils more productive. <br> Fertilization will be essential for effective crop production. ",
+            "Management_es": "La preservación del suelo superficial con su materia orgánica es importante, y la prevención de la erosión es fundamental. <br>Las prácticas de gestión de la tierra deben maximizar la cobertura del suelo. <br>Dado que estos suelos se forman a partir de materiales volcánicos, una parte de su carga es positiva, lo que significa que pueden \"fijar\" el fósforo, haciéndolo inaccesible para las plantas en la temporada de cultivo. <br>Las prácticas bien documentadas, como la aplicación en banda (directamente sobre la semilla o a un lado y abajo de la semilla) de fertilizantes fosfatados, ayudarán a reducir la fijación de P. <br>La fertilización adicional y la aplicación de cal, además del P, también serán necesarias para garantizar un crecimiento y rendimiento adecuados de los cultivos. <br>Los cultivos de cobertura y las rotaciones que incluyan leguminosas y la inclusión de cultivos con alta biomasa serán beneficiosos, ya que añaden materia orgánica y nitrógeno para el cultivo posterior. <br>Los sistemas agroforestales pueden ayudar a minimizar la erosión. <br>El drenaje adicional puede hacer que estos suelos sean más productivos. <br>La fertilización será esencial para la producción efectiva de los cultivos.",
+            "Management_fr": "Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover. <br> Because these soils are formed from volcanic materials a part of their soil charge is positive, which means they can ‘fix’ phosphorus, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Agroforestry systems can help minimize erosion. <br> Additional drainage may make these soils more productive. <br> Fertilization will be essential for effective crop production. ",
+            "Management_ks": "Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover. <br> Because these soils are formed from volcanic materials a part of their soil charge is positive, which means they can ‘fix’ phosphorus, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Agroforestry systems can help minimize erosion. <br> Additional drainage may make these soils more productive. <br> Fertilization will be essential for effective crop production. "
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      }
+    ]
+  },
+  "rank": {
+    "metadata": {
+      "location": "global",
+      "model": "v2"
+    },
+    "soilRank": [
+      {
+        "component": "Haplic luvisols",
+        "componentData": "Data Complete",
+        "componentID": 104599,
+        "name": "Haplic luvisols",
+        "rank_data": "2",
+        "rank_data_loc": "1",
+        "rank_loc": 3,
+        "score_data": 0.431,
+        "score_data_loc": 1.0,
+        "score_loc": 0.165
+      },
+      {
+        "component": "Gleyic phaeozems",
+        "componentData": "Missing Data",
+        "componentID": 103605,
+        "name": "Gleyic phaeozems",
+        "rank_data": "3",
+        "rank_data_loc": "2",
+        "rank_loc": 4,
+        "score_data": 0.385,
+        "score_data_loc": 0.83,
+        "score_loc": 0.11
+      },
+      {
+        "component": "Eutric gleysols",
+        "componentData": "Data Complete",
+        "componentID": 104276,
+        "name": "Eutric gleysols",
+        "rank_data": "1",
+        "rank_data_loc": "3",
+        "rank_loc": 5,
+        "score_data": 0.431,
+        "score_data_loc": 0.815,
+        "score_loc": 0.055
+      },
+      {
+        "component": "Umbric andosols",
+        "componentData": "Data Complete",
+        "componentID": 103928,
+        "name": "Umbric andosols",
+        "rank_data": "4",
+        "rank_data_loc": "4",
+        "rank_loc": 7,
+        "score_data": 0.385,
+        "score_data_loc": 0.738,
+        "score_loc": 0.055
+      },
+      {
+        "component": "Haplic andosols",
+        "componentData": "Data Complete",
+        "componentID": 103929,
+        "name": "Haplic andosols",
+        "rank_data": "5",
+        "rank_data_loc": "5",
+        "rank_loc": 1,
+        "score_data": 0.068,
+        "score_data_loc": 0.729,
+        "score_loc": 0.366
+      },
+      {
+        "component": "Haplic phaeozems",
+        "componentData": "Data Complete",
+        "componentID": 103604,
+        "name": "Haplic phaeozems",
+        "rank_data": "6",
+        "rank_data_loc": "6",
+        "rank_loc": 2,
+        "score_data": 0.068,
+        "score_data_loc": 0.44,
+        "score_loc": 0.194
+      },
+      {
+        "component": "Mollic gleysols",
+        "componentData": "Data Complete",
+        "componentID": 104133,
+        "name": "Mollic gleysols",
+        "rank_data": "7",
+        "rank_data_loc": "7",
+        "rank_loc": 6,
+        "score_data": 0.068,
+        "score_data_loc": 0.207,
+        "score_loc": 0.055
+      }
+    ]
+  }
+}

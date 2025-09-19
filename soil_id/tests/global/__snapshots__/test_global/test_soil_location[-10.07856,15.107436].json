@@ -1,0 +1,1515 @@
+{
+  "list": {
+    "metadata": {
+      "location": "us",
+      "model": "v3",
+      "unit_measure": {
+        "cec": "cmol(c)/kg",
+        "clay": "%",
+        "depth": "cm",
+        "distance": "m",
+        "ec": "ds/m",
+        "rock_fragments": "cm3/100cm3",
+        "sand": "%"
+      }
+    },
+    "soilList": [
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 7.0,
+          "sl2": 7.0,
+          "sl3": 7.0,
+          "sl4": 5.6,
+          "sl5": 5.14,
+          "sl6": 4.6,
+          "sl7": 4.33
+        },
+        "clay": {
+          "sl1": 35.0,
+          "sl2": 35.0,
+          "sl3": 35.0,
+          "sl4": 39.2,
+          "sl5": 40.71,
+          "sl6": 42.0,
+          "sl7": 42.5
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Xanthic ferralsols",
+          "name": "Xanthic ferralsols",
+          "rank_loc": "1",
+          "score_loc": 0.269
+        },
+        "ph": {
+          "sl1": 4.5,
+          "sl2": 4.5,
+          "sl3": 4.5,
+          "sl4": 4.58,
+          "sl5": 4.63,
+          "sl6": 4.68,
+          "sl7": 4.72
+        },
+        "rock_fragments": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 3.2,
+          "sl5": 3.57,
+          "sl6": 4.0,
+          "sl7": 5.0
+        },
+        "sand": {
+          "sl1": 53.0,
+          "sl2": 53.0,
+          "sl3": 53.0,
+          "sl4": 50.0,
+          "sl5": 48.71,
+          "sl6": 47.6,
+          "sl7": 47.17
+        },
+        "site": {
+          "siteData": {
+            "componentID": 105422,
+            "distance": 0.0,
+            "mapunitID": 12214,
+            "minCompDistance": 0.0,
+            "share": 40,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Xanthic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients. <br> Xanthic Ferralsols have yellow colored subsoils indicating slightly higher moisture retention. ",
+            "Description_es": "Los Ferralsoles Xánticos son suelos bien desarrollados en climas húmedos y cálidos que están dominados por minerales de baja actividad como la caolinita y los óxidos de hierro y aluminio. <br>Suelen tener buenas propiedades físicas pero son ácidos, relativamente infértiles, tienen una alta fijación de P y una capacidad limitada para retener nutrientes. <br>Los ferraliscos xánticos tienen subsuelos de color amarillo que indican una retención de humedad ligeramente superior. ",
+            "Description_fr": "Xanthic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients. <br> Xanthic Ferralsols have yellow colored subsoils indicating slightly higher moisture retention. ",
+            "Description_ks": "Xanthic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients. <br> Xanthic Ferralsols have yellow colored subsoils indicating slightly higher moisture retention. ",
+            "Management_en": "soils are prone to phosphorus fixation, and applied fertilizer P or most soil P will not be immediately available for crop uptake and use.<br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used.",
+            "Management_es": "suelos son propensos a la fijación de fósforo, y el P aplicado por los fertilizantes o la mayor parte del P del suelo no estará inmediatamente disponible para su absorción y uso por los cultivos. *Prácticas bien documentadas, como la aplicación en banda (directamente sobre la semilla o a un lado y abajo de la semilla) de fertilizantes fosfatados, ayudarán a reducir la fijación de P. <br>La fertilización adicional y la aplicación de cal, además del P, también serán necesarias para garantizar un crecimiento y un rendimiento adecuados de los cultivos. <br>En estos suelos también puede haber altos niveles de aluminio soluble, que es tóxico para las plantas. <br>La aplicación de cal (que aumenta el pH del suelo y retiene el aluminio soluble) puede ayudar a reducir la toxicidad del aluminio. <br>Dado que estos suelos son infértiles, necesitarán aplicaciones de nutrientes para las plantas con el fin de obtener un mejor rendimiento de los cultivos, ya sea mediante la fertilización o la inclusión de residuos de cultivos, estiércol u otro material orgánico rico en nutrientes. <br>Estos suelos tienen una capacidad limitada para retener los fertilizantes nitrogenados. Deberían considerarse fuentes de nitrógeno de liberación lenta, si se dispone de ellas, o podría utilizarse la aplicación más frecuente de fuentes solubles a una tasa menor en cada aplicación.",
+            "Management_fr": "soils are prone to phosphorus fixation, and applied fertilizer P or most soil P will not be immediately available for crop uptake and use.<br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used.",
+            "Management_ks": "soils are prone to phosphorus fixation, and applied fertilizer P or most soil P will not be immediately available for crop uptake and use.<br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used."
+          }
+        },
+        "texture": {
+          "sl1": "Sandy clay",
+          "sl2": "Sandy clay",
+          "sl3": "Sandy clay",
+          "sl4": "Sandy clay",
+          "sl5": "Sandy clay",
+          "sl6": "Sandy clay",
+          "sl7": "Sandy clay"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 7.0,
+          "sl2": 7.0,
+          "sl3": 7.0,
+          "sl4": 6.4,
+          "sl5": 6.14,
+          "sl6": 5.8,
+          "sl7": 5.33
+        },
+        "clay": {
+          "sl1": 22.0,
+          "sl2": 22.0,
+          "sl3": 22.0,
+          "sl4": 25.8,
+          "sl5": 27.14,
+          "sl6": 28.6,
+          "sl7": 31.17
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Haplic ferralsols",
+          "name": "Haplic ferralsols",
+          "rank_loc": "2",
+          "score_loc": 0.181
+        },
+        "ph": {
+          "sl1": 4.5,
+          "sl2": 4.5,
+          "sl3": 4.5,
+          "sl4": 4.58,
+          "sl5": 4.63,
+          "sl6": 4.68,
+          "sl7": 4.72
+        },
+        "rock_fragments": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 3.2,
+          "sl5": 3.57,
+          "sl6": 4.0,
+          "sl7": 5.0
+        },
+        "sand": {
+          "sl1": 66.0,
+          "sl2": 66.0,
+          "sl3": 66.0,
+          "sl4": 62.8,
+          "sl5": 61.71,
+          "sl6": 61.0,
+          "sl7": 58.5
+        },
+        "site": {
+          "siteData": {
+            "componentID": 105423,
+            "distance": 0.0,
+            "mapunitID": 12214,
+            "minCompDistance": 0.0,
+            "share": 25,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients.",
+            "Description_es": "Los Ferralsoles Háplicos son suelos bien desarrollados en climas húmedos y cálidos en los que predominan los minerales de baja actividad como la caolinita y los óxidos de hierro y aluminio. <br>Suelen tener buenas propiedades físicas pero son ácidos, relativamente infértiles, tienen una alta fijación de P y tienen una capacidad limitada de retener nutrientes. ",
+            "Description_fr": "Haplic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients.",
+            "Description_ks": "Haplic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients.",
+            "Management_en": "soils are prone to phosphorus fixation, and most soil P will not be immediately available for crop uptake and use. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used.",
+            "Management_es": "Estos suelos son propensos a la fijación de fósforo, y la mayor parte del P del suelo no estará inmediatamente disponible para su absorción y uso por los cultivos. <br>Las prácticas bien documentadas, como la aplicación en banda (directamente sobre la semilla o a un lado y abajo de la semilla) de fertilizantes fosfatados, ayudarán a reducir la fijación de P. <br>La fertilización adicional y la aplicación de cal, además del P, también serán necesarias para garantizar un crecimiento y un rendimiento adecuados de los cultivos. <br>En estos suelos también puede haber altos niveles de aluminio soluble, que es tóxico para las plantas. <br>La aplicación de cal (que aumenta el pH del suelo y retiene el aluminio soluble) puede ayudar a reducir la toxicidad del aluminio. <br>Dado que estos suelos son infértiles, necesitarán aplicaciones de nutrientes para las plantas con el fin de obtener un mejor rendimiento de los cultivos, ya sea mediante la fertilización o la inclusión de residuos de cultivos, estiércol u otro material orgánico rico en nutrientes. <br>Estos suelos tienen una capacidad limitada para retener los fertilizantes nitrogenados. Deberían considerarse fuentes de nitrógeno de liberación lenta, si se dispone de ellas, o podría utilizarse la aplicación más frecuente de fuentes solubles a una tasa menor en cada aplicación.",
+            "Management_fr": "soils are prone to phosphorus fixation, and most soil P will not be immediately available for crop uptake and use. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used.",
+            "Management_ks": "soils are prone to phosphorus fixation, and most soil P will not be immediately available for crop uptake and use. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used."
+          }
+        },
+        "texture": {
+          "sl1": "Sandy clay loam",
+          "sl2": "Sandy clay loam",
+          "sl3": "Sandy clay loam",
+          "sl4": "Sandy clay loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 10.0,
+          "sl2": 10.0,
+          "sl3": 10.0,
+          "sl4": 8.0,
+          "sl5": 7.43,
+          "sl6": 7.0,
+          "sl7": 6.83
+        },
+        "clay": {
+          "sl1": 43.0,
+          "sl2": 43.0,
+          "sl3": 43.0,
+          "sl4": 46.4,
+          "sl5": 47.43,
+          "sl6": 48.2,
+          "sl7": 48.33
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Eutric leptosols",
+          "name": "Eutric leptosols",
+          "rank_loc": "3",
+          "score_loc": 0.144
+        },
+        "ph": {
+          "sl1": 4.9,
+          "sl2": 4.9,
+          "sl3": 4.9,
+          "sl4": 4.92,
+          "sl5": 4.96,
+          "sl6": 5.0,
+          "sl7": 5.02
+        },
+        "rock_fragments": {
+          "sl1": 4.0,
+          "sl2": 4.0,
+          "sl3": 4.0,
+          "sl4": 4.6,
+          "sl5": 4.71,
+          "sl6": 5.0,
+          "sl7": 5.0
+        },
+        "sand": {
+          "sl1": 40.0,
+          "sl2": 40.0,
+          "sl3": 40.0,
+          "sl4": 37.4,
+          "sl5": 36.57,
+          "sl6": 35.8,
+          "sl7": 35.5
+        },
+        "site": {
+          "siteData": {
+            "componentID": 105424,
+            "distance": 0.0,
+            "mapunitID": 12214,
+            "minCompDistance": 0.0,
+            "share": 20,
+            "soilDepth": 40
+          },
+          "siteDescription": {
+            "Description_en": "Eutric Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Eutric Leptosols have high base saturation over the shallow root limiting layer. ",
+            "Description_es": "Los Leptosoles Eútricos tienen un volumen de enraizamiento muy limitado debido a la presencia de roca continua, material altamente calcáreo, horizontes cementados o muchas rocas y fragmentos gruesos en la parte superior del suelo. <br>Los leptosoles en pendientes pronunciadas son muy erosionables. <br>Los Leptosoles eútricos tienen una alta saturación de la base sobre la capa limitante de las raíces poco profundas. ",
+            "Description_fr": "Eutric Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Eutric Leptosols have high base saturation over the shallow root limiting layer. ",
+            "Description_ks": "Eutric Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Eutric Leptosols have high base saturation over the shallow root limiting layer. ",
+            "Management_en": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Onlyuses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> These soils can be productive for agriculture, but the focus should be on use for grazing. <br> Any use for cropping must be limited and combined with soil conservation practices. ",
+            "Management_es": "Debido a que estos suelos son poco profundos, rocosos y erosionables deben ser utilizados para cultivos perennes, y no deben ser labrados. <br>Deben utilizarse prácticas para mantener la materia orgánica y la cobertura. <br>Se debe considerar el uso exclusivo para el pastoreo o la agroforestería. <br>La preservación del suelo superficial con su materia orgánica es importante, y la prevención de la erosión es fundamental. <br>Estos suelos pueden ser productivos para la agricultura, pero el enfoque debe ser el uso para el pastoreo. <br>Cualquier uso para el cultivo debe limitarse y combinarse con prácticas de conservación del suelo.",
+            "Management_fr": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Onlyuses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> These soils can be productive for agriculture, but the focus should be on use for grazing. <br> Any use for cropping must be limited and combined with soil conservation practices. ",
+            "Management_ks": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Onlyuses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> These soils can be productive for agriculture, but the focus should be on use for grazing. <br> Any use for cropping must be limited and combined with soil conservation practices. "
+          }
+        },
+        "texture": {
+          "sl1": "Unknown",
+          "sl2": "Unknown",
+          "sl3": "Unknown",
+          "sl4": "Unknown",
+          "sl5": "Unknown",
+          "sl6": "Unknown",
+          "sl7": "Unknown"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 8.0,
+          "sl2": 8.0,
+          "sl3": 8.0,
+          "sl4": 6.6,
+          "sl5": 6.14,
+          "sl6": 5.8,
+          "sl7": 5.67
+        },
+        "clay": {
+          "sl1": 36.0,
+          "sl2": 36.0,
+          "sl3": 36.0,
+          "sl4": 38.8,
+          "sl5": 39.86,
+          "sl6": 40.8,
+          "sl7": 41.5
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Lithic leptosols",
+          "name": "Lithic leptosols",
+          "rank_loc": "4",
+          "score_loc": 0.138
+        },
+        "ph": {
+          "sl1": 5.1,
+          "sl2": 5.1,
+          "sl3": 5.1,
+          "sl4": 5.16,
+          "sl5": 5.19,
+          "sl6": 5.24,
+          "sl7": 5.28
+        },
+        "rock_fragments": {
+          "sl1": 3.0,
+          "sl2": 3.0,
+          "sl3": 3.0,
+          "sl4": 3.4,
+          "sl5": 3.29,
+          "sl6": 3.2,
+          "sl7": 5.17
+        },
+        "sand": {
+          "sl1": 41.0,
+          "sl2": 41.0,
+          "sl3": 41.0,
+          "sl4": 38.8,
+          "sl5": 37.86,
+          "sl6": 36.8,
+          "sl7": 36.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 105416,
+            "distance": 13359.43,
+            "mapunitID": 12212,
+            "minCompDistance": 13359.43009493,
+            "share": 100,
+            "soilDepth": 20
+          },
+          "siteDescription": {
+            "Description_en": "Lithic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Lithic Leptosols have hard rock within 10 cm of the soil surface. ",
+            "Description_es": "Los leptosoles Líticos tienen un volumen de enraizamiento muy limitado debido a la presencia de roca continua, material altamente calcáreo, horizontes cementados o muchas rocas y fragmentos gruesos en la parte superior del suelo. <br>Los leptosoles en pendientes pronunciadas son muy erosionables. <br>Los leptosoles líticos tienen rocas duras a menos de 10 cm de la superficie del suelo. ",
+            "Description_fr": "Lithic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Lithic Leptosols have hard rock within 10 cm of the soil surface. ",
+            "Description_ks": "Lithic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Lithic Leptosols have hard rock within 10 cm of the soil surface. ",
+            "Management_en": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover. <br> Any agricultural use should be for grazing, with cover continuously maintained. ",
+            "Management_es": "Debido a que estos suelos son poco profundos, rocosos y erosionables, deben utilizarse para cultivos perennes, y no deben ser labrados. <br>Deben utilizarse prácticas para mantener la materia orgánica y la cobertura. <br>Sólo deben considerarse los usos para pastoreo o agroforestales. <br>La preservación del suelo superficial con su materia orgánica es importante, y la prevención de la erosión es fundamental. <br>Las prácticas de gestión de la tierra deben maximizar la cobertura del suelo. <br>Cualquier uso agrícola debe ser para el pastoreo, con el mantenimiento continuo de la cobertura.",
+            "Management_fr": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover. <br> Any agricultural use should be for grazing, with cover continuously maintained. ",
+            "Management_ks": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover. <br> Any agricultural use should be for grazing, with cover continuously maintained. "
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Unknown",
+          "sl7": "Unknown"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 40
+        },
+        "cec": {
+          "sl1": 14.0,
+          "sl2": 14.0,
+          "sl3": 14.0,
+          "sl4": 13.0
+        },
+        "clay": {
+          "sl1": 26.0,
+          "sl2": 26.0,
+          "sl3": 26.0,
+          "sl4": 27.0
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0
+        },
+        "id": {
+          "component": "Rhodic ferralsols",
+          "name": "Rhodic ferralsols",
+          "rank_loc": "5",
+          "score_loc": 0.1
+        },
+        "ph": {
+          "sl1": 6.5,
+          "sl2": 6.5,
+          "sl3": 6.5,
+          "sl4": 6.55
+        },
+        "rock_fragments": {
+          "sl1": 22.0,
+          "sl2": 22.0,
+          "sl3": 22.0,
+          "sl4": 30.5
+        },
+        "sand": {
+          "sl1": 45.0,
+          "sl2": 45.0,
+          "sl3": 45.0,
+          "sl4": 44.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 105425,
+            "distance": 0.0,
+            "mapunitID": 12214,
+            "minCompDistance": 0.0,
+            "share": 15,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Rhodic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients. <br> Rhodic Ferralsols have dark red subsoils with good soil structure. ",
+            "Description_es": "Los Ferralsoles Ródicos son suelos bien desarrollados en climas húmedos y cálidos en los que predominan los minerales de baja actividad como la caolinita y los óxidos de hierro y aluminio. <br>Suelen tener buenas propiedades físicas, pero son ácidos, relativamente infértiles, tienen una alta fijación de P y una capacidad limitada para retener nutrientes. <br>Los ferraliscos ródicos tienen subsuelos de color rojo oscuro con una buena estructura de suelo. ",
+            "Description_fr": "Rhodic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients. <br> Rhodic Ferralsols have dark red subsoils with good soil structure. ",
+            "Description_ks": "Rhodic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients. <br> Rhodic Ferralsols have dark red subsoils with good soil structure. ",
+            "Management_en": "soils are prone to phosphorus fixation, and applied fertilizer P or most soil P will not be immediately available for crop uptake and use.<br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used.",
+            "Management_es": "suelos son propensos a la fijación de fósforo, y el P aplicado por los fertilizantes o la mayor parte del P del suelo no estará inmediatamente disponible para su absorción y uso por los cultivos.<br>Las prácticas bien documentadas, como la aplicación en banda (directamente sobre la semilla o a un lado y abajo de la semilla) de fertilizantes fosfatados, ayudarán a reducir la fijación de P. <br>La fertilización adicional y la aplicación de cal, además del P, también serán necesarias para garantizar un crecimiento y un rendimiento adecuados de los cultivos. <br>En estos suelos también puede haber altos niveles de aluminio soluble, que es tóxico para las plantas. <br>La aplicación de cal (que aumenta el pH del suelo y retiene el aluminio soluble) puede ayudar a reducir la toxicidad del aluminio. <br>Dado que estos suelos son infértiles, necesitarán aplicaciones de nutrientes para las plantas con el fin de obtener un mejor rendimiento de los cultivos, ya sea mediante la fertilización o la inclusión de residuos de cultivos, estiércol u otro material orgánico rico en nutrientes. <br>Estos suelos tienen una capacidad limitada para retener los fertilizantes nitrogenados. Deberían considerarse fuentes de nitrógeno de liberación lenta, si se dispone de ellas, o podría utilizarse la aplicación más frecuente de fuentes solubles a una tasa menor en cada aplicación.",
+            "Management_fr": "soils are prone to phosphorus fixation, and applied fertilizer P or most soil P will not be immediately available for crop uptake and use.<br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used.",
+            "Management_ks": "soils are prone to phosphorus fixation, and applied fertilizer P or most soil P will not be immediately available for crop uptake and use.<br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used."
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 40
+        },
+        "cec": {
+          "sl1": 19.0,
+          "sl2": 19.0,
+          "sl3": 19.0,
+          "sl4": 21.5
+        },
+        "clay": {
+          "sl1": 27.0,
+          "sl2": 27.0,
+          "sl3": 27.0,
+          "sl4": 34.5
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0
+        },
+        "id": {
+          "component": "Ferralic cambisols",
+          "name": "Ferralic cambisols",
+          "rank_loc": "6",
+          "score_loc": 0.069
+        },
+        "ph": {
+          "sl1": 6.7,
+          "sl2": 6.7,
+          "sl3": 6.7,
+          "sl4": 6.55
+        },
+        "rock_fragments": {
+          "sl1": 19.0,
+          "sl2": 19.0,
+          "sl3": 19.0,
+          "sl4": 40.5
+        },
+        "sand": {
+          "sl1": 41.0,
+          "sl2": 41.0,
+          "sl3": 41.0,
+          "sl4": 36.5
+        },
+        "site": {
+          "siteData": {
+            "componentID": 105395,
+            "distance": 4468.846,
+            "mapunitID": 12207,
+            "minCompDistance": 4468.84592815,
+            "share": 40,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Ferralic Cambisols are widely occurring soils with limited soil development. <br> These soils have a poor ability to retain nutrients due to low cation exchange capacity.  Because they retain fewer nutrients they are typically less productive.",
+            "Description_es": "Los Cambisoles Ferrálicos son suelos muy extendidos con un desarrollo limitado del suelo. <br>Estos suelos tienen una escasa capacidad para retener nutrientes debido a su baja capacidad de intercambio catiónico.  Como retienen menos nutrientes, suelen ser menos productivos. ",
+            "Description_fr": "Ferralic Cambisols are widely occurring soils with limited soil development. <br> These soils have a poor ability to retain nutrients due to low cation exchange capacity.  Because they retain fewer nutrients they are typically less productive.",
+            "Description_ks": "Ferralic Cambisols are widely occurring soils with limited soil development. <br> These soils have a poor ability to retain nutrients due to low cation exchange capacity.  Because they retain fewer nutrients they are typically less productive.",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> The clay type in this soil is extremely weathered, and as such will have low nutrient supplying capacity. <br> Fertilization will be required to improve productivity. ",
+            "Management_es": "En regiones templadas los suelos tendrán un alto contenido de cationes básicos (potasio, calcio y magnesio), mientras que en regiones más húmedas pueden tener niveles más bajos de nutrientes en el suelo. <br>El tipo de arcilla de este suelo está extremadamente erosionado, y como tal tendrá una baja capacidad de suministro de nutrientes. <br>La fertilización será necesaria para mejorar la productividad.",
+            "Management_fr": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> The clay type in this soil is extremely weathered, and as such will have low nutrient supplying capacity. <br> Fertilization will be required to improve productivity. ",
+            "Management_ks": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> The clay type in this soil is extremely weathered, and as such will have low nutrient supplying capacity. <br> Fertilization will be required to improve productivity. "
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20
+        },
+        "cec": {
+          "sl1": 16.0,
+          "sl2": 16.0,
+          "sl3": 16.0
+        },
+        "clay": {
+          "sl1": 20.0,
+          "sl2": 20.0,
+          "sl3": 20.0
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0
+        },
+        "id": {
+          "component": "Chromic luvisols",
+          "name": "Chromic luvisols",
+          "rank_loc": "7",
+          "score_loc": 0.05
+        },
+        "ph": {
+          "sl1": 6.7,
+          "sl2": 6.7,
+          "sl3": 6.7
+        },
+        "rock_fragments": {
+          "sl1": 22.0,
+          "sl2": 22.0,
+          "sl3": 22.0
+        },
+        "sand": {
+          "sl1": 51.0,
+          "sl2": 51.0,
+          "sl3": 51.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 105244,
+            "distance": 28892.433,
+            "mapunitID": 12167,
+            "minCompDistance": 28892.43320808,
+            "share": 40,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Chromic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Chromic Luvisols have an iron rich subsoil.",
+            "Description_es": "Los Luvisoles Crómicos son suelos productivos con alta saturación de bases y subsuelos relativamente arcillosos. <br>Los Luvisoles crómicos tienen un subsuelo rico en hierro.",
+            "Description_fr": "Chromic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Chromic Luvisols have an iron rich subsoil.",
+            "Description_ks": "Chromic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Chromic Luvisols have an iron rich subsoil.",
+            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops.",
+            "Management_es": "Estos suelos son fértiles y pueden utilizarse para una amplia gama de prácticas de cultivo. <br>Sin embargo, son sensibles a la pérdida de suelo por erosión, y hay que tener cuidado para proteger el suelo de la pérdida. <br>Si el suelo ya está erosionado, pueden ser más adecuados para el pastoreo y/o los cultivos arbóreos.",
+            "Management_fr": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops.",
+            "Management_ks": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops."
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 10.0,
+          "sl2": 10.0,
+          "sl3": 10.0,
+          "sl4": 8.4,
+          "sl5": 7.71,
+          "sl6": 7.2,
+          "sl7": 7.0
+        },
+        "clay": {
+          "sl1": 48.0,
+          "sl2": 48.0,
+          "sl3": 48.0,
+          "sl4": 52.6,
+          "sl5": 53.86,
+          "sl6": 55.0,
+          "sl7": 55.67
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Haplic acrisols",
+          "name": "Haplic acrisols",
+          "rank_loc": "8",
+          "score_loc": 0.025
+        },
+        "ph": {
+          "sl1": 5.6,
+          "sl2": 5.6,
+          "sl3": 5.6,
+          "sl4": 5.62,
+          "sl5": 5.63,
+          "sl6": 5.64,
+          "sl7": 5.65
+        },
+        "rock_fragments": {
+          "sl1": 26.0,
+          "sl2": 26.0,
+          "sl3": 26.0,
+          "sl4": 17.0,
+          "sl5": 12.71,
+          "sl6": 10.0,
+          "sl7": 8.83
+        },
+        "sand": {
+          "sl1": 35.0,
+          "sl2": 35.0,
+          "sl3": 35.0,
+          "sl4": 32.2,
+          "sl5": 31.29,
+          "sl6": 30.4,
+          "sl7": 29.83
+        },
+        "site": {
+          "siteData": {
+            "componentID": 105396,
+            "distance": 4468.846,
+            "mapunitID": 12207,
+            "minCompDistance": 4468.84592815,
+            "share": 20,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Acrisols are acidic and relatively infertile soils. <br> Supplemental fertilization and liming will be needed to create a productive soil for crop use. <br> These soils are also high in soluble aluminum (Al) which is toxic to plants.",
+            "Description_es": "Los Acrisoles Háplicos son suelos ácidos y relativamente infértiles. <br>Se necesita una fertilización y un encalado suplementarios para crear un suelo productivo para los cultivos. <br>Estos suelos también tienen un alto contenido de aluminio soluble (Al), que es tóxico para las plantas. ",
+            "Description_fr": "Haplic Acrisols are acidic and relatively infertile soils. <br> Supplemental fertilization and liming will be needed to create a productive soil for crop use. <br> These soils are also high in soluble aluminum (Al) which is toxic to plants.",
+            "Description_ks": "Haplic Acrisols are acidic and relatively infertile soils. <br> Supplemental fertilization and liming will be needed to create a productive soil for crop use. <br> These soils are also high in soluble aluminum (Al) which is toxic to plants.",
+            "Management_en": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate, which will take Al out of solution) can help to reduce aluminum toxicity. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover, crop rotation and agroforestry. ",
+            "Management_es": "Debido a que el suelo tiende a ser ácido (tiene un pH bajo) y alto en Al, el fertilizante de fósforo es rápidamente \"fijado\" por el suelo, haciendo que no esté disponible para las plantas en la temporada de cultivo. <br>Las prácticas bien documentadas, como la aplicación en banda (directamente sobre la semilla o a un lado y abajo de la semilla) de fertilizantes fosfatados, ayudarán a reducir la fijación de P. <br>La aplicación de nitrógeno (N) es esencial, y esto puede lograrse mediante la aplicación de dosis correctas de fertilizantes (como la urea), o mediante el uso de cultivos de cobertura, abonos verdes y rotaciones. <br>Los cultivos de cobertura y las rotaciones que incluyen leguminosas y la inclusión de cultivos con alta biomasa serían beneficiosos, ya que añaden materia orgánica y nitrógeno para el cultivo posterior. <br>Incluso con cultivos de cobertura o prácticas similares, es probable que se necesite una fertilización suplementaria de N, ya que el N orgánico no se convertirá en el N inorgánico necesario para el cultivo en cantidades suficientes durante el año de cultivo. <br>La aplicación de cal (que aumenta el pH del suelo y retiene el aluminio soluble) o de yeso (sulfato de calcio, que extrae el aluminio de la solución) puede ayudar a reducir la toxicidad del aluminio. <br>La conservación del suelo superficial con su materia orgánica es importante, y la prevención de la erosión es fundamental. <br>Las prácticas de gestión de la tierra deben maximizar la cobertura del suelo, la rotación de cultivos y la agrosilvicultura. ",
+            "Management_fr": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate, which will take Al out of solution) can help to reduce aluminum toxicity. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover, crop rotation and agroforestry. ",
+            "Management_ks": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate, which will take Al out of solution) can help to reduce aluminum toxicity. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover, crop rotation and agroforestry. "
+          }
+        },
+        "texture": {
+          "sl1": "Unknown",
+          "sl2": "Unknown",
+          "sl3": "Unknown",
+          "sl4": "Unknown",
+          "sl5": "Unknown",
+          "sl6": "Unknown",
+          "sl7": "Unknown"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 9.0,
+          "sl2": 9.0,
+          "sl3": 9.0,
+          "sl4": 7.6,
+          "sl5": 7.14,
+          "sl6": 6.6,
+          "sl7": 6.33
+        },
+        "clay": {
+          "sl1": 46.0,
+          "sl2": 46.0,
+          "sl3": 46.0,
+          "sl4": 49.8,
+          "sl5": 50.71,
+          "sl6": 51.4,
+          "sl7": 51.67
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Haplic lixisols",
+          "name": "Haplic lixisols",
+          "rank_loc": "9",
+          "score_loc": 0.025
+        },
+        "ph": {
+          "sl1": 5.5,
+          "sl2": 5.5,
+          "sl3": 5.5,
+          "sl4": 5.44,
+          "sl5": 5.44,
+          "sl6": 5.46,
+          "sl7": 5.48
+        },
+        "rock_fragments": {
+          "sl1": 15.0,
+          "sl2": 15.0,
+          "sl3": 15.0,
+          "sl4": 7.0,
+          "sl5": 5.29,
+          "sl6": 4.2,
+          "sl7": 4.67
+        },
+        "sand": {
+          "sl1": 37.0,
+          "sl2": 37.0,
+          "sl3": 37.0,
+          "sl4": 34.4,
+          "sl5": 33.57,
+          "sl6": 32.8,
+          "sl7": 32.5
+        },
+        "site": {
+          "siteData": {
+            "componentID": 105245,
+            "distance": 28892.433,
+            "mapunitID": 12167,
+            "minCompDistance": 28892.43320808,
+            "share": 20,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Lixisols form in warm climates with relatively clayey subsoils dominated by kaolinite and iron oxides, but relatively high base saturation. ",
+            "Description_es": "Los Lixisoles Háplicos se forman en climas cálidos con subsuelos relativamente arcillosos dominados por caolinita y óxidos de hierro, pero con una saturación de bases relativamente alta. ",
+            "Description_fr": "Haplic Lixisols form in warm climates with relatively clayey subsoils dominated by kaolinite and iron oxides, but relatively high base saturation. ",
+            "Description_ks": "Haplic Lixisols form in warm climates with relatively clayey subsoils dominated by kaolinite and iron oxides, but relatively high base saturation. ",
+            "Management_en": "These soils are heavily weathered soils, which means that fertilization (and possibly lime) will be needed for production. <br> Although they do have kaolinite clay and iron oxides, they have fairly low aluminum toxicity. <br> Best production practices for this soil will include regular fertilization, and consistent cropping in perennial crops or forestry. <br> The soils are sensitive to erosion, and so practices that maintain surface cover are important. ",
+            "Management_es": "Estos suelos están fuertemente meteorizados, lo que significa que la fertilización (y posiblemente la cal) será necesaria para la producción. <br>Aunque tienen arcilla caolinita y óxidos de hierro, tienen una toxicidad de aluminio bastante baja. <br>Las mejores prácticas de producción para este suelo incluirán la fertilización regular, y el cultivo consistente en cultivos perennes o la silvicultura. <br>Los suelos son sensibles a la erosión, por lo que son importantes las prácticas que mantienen la cobertura de la superficie.",
+            "Management_fr": "These soils are heavily weathered soils, which means that fertilization (and possibly lime) will be needed for production. <br> Although they do have kaolinite clay and iron oxides, they have fairly low aluminum toxicity. <br> Best production practices for this soil will include regular fertilization, and consistent cropping in perennial crops or forestry. <br> The soils are sensitive to erosion, and so practices that maintain surface cover are important. ",
+            "Management_ks": "These soils are heavily weathered soils, which means that fertilization (and possibly lime) will be needed for production. <br> Although they do have kaolinite clay and iron oxides, they have fairly low aluminum toxicity. <br> Best production practices for this soil will include regular fertilization, and consistent cropping in perennial crops or forestry. <br> The soils are sensitive to erosion, and so practices that maintain surface cover are important. "
+          }
+        },
+        "texture": {
+          "sl1": "Unknown",
+          "sl2": "Unknown",
+          "sl3": "Unknown",
+          "sl4": "Unknown",
+          "sl5": "Unknown",
+          "sl6": "Unknown",
+          "sl7": "Unknown"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 8.0,
+          "sl2": 8.0,
+          "sl3": 8.0,
+          "sl4": 6.6,
+          "sl5": 6.14,
+          "sl6": 5.8,
+          "sl7": 5.67
+        },
+        "clay": {
+          "sl1": 30.0,
+          "sl2": 30.0,
+          "sl3": 30.0,
+          "sl4": 31.4,
+          "sl5": 32.0,
+          "sl6": 32.6,
+          "sl7": 33.0
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 0.4,
+          "sl5": 0.29,
+          "sl6": 0.2,
+          "sl7": 0.17
+        },
+        "id": {
+          "component": "Xanthic ferralsols",
+          "name": "Xanthic ferralsols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.269
+        },
+        "ph": {
+          "sl1": 5.2,
+          "sl2": 5.2,
+          "sl3": 5.2,
+          "sl4": 5.2,
+          "sl5": 5.2,
+          "sl6": 5.2,
+          "sl7": 5.18
+        },
+        "rock_fragments": {
+          "sl1": 12.0,
+          "sl2": 12.0,
+          "sl3": 12.0,
+          "sl4": 9.4,
+          "sl5": 9.86,
+          "sl6": 10.6,
+          "sl7": 10.5
+        },
+        "sand": {
+          "sl1": 45.0,
+          "sl2": 45.0,
+          "sl3": 45.0,
+          "sl4": 43.0,
+          "sl5": 42.29,
+          "sl6": 41.4,
+          "sl7": 41.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 105399,
+            "distance": 4468.846,
+            "mapunitID": 12207,
+            "minCompDistance": 0.0,
+            "share": 10,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Xanthic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients. <br> Xanthic Ferralsols have yellow colored subsoils indicating slightly higher moisture retention. ",
+            "Description_es": "Los Ferralsoles Xánticos son suelos bien desarrollados en climas húmedos y cálidos que están dominados por minerales de baja actividad como la caolinita y los óxidos de hierro y aluminio. <br>Suelen tener buenas propiedades físicas pero son ácidos, relativamente infértiles, tienen una alta fijación de P y una capacidad limitada para retener nutrientes. <br>Los ferraliscos xánticos tienen subsuelos de color amarillo que indican una retención de humedad ligeramente superior. ",
+            "Description_fr": "Xanthic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients. <br> Xanthic Ferralsols have yellow colored subsoils indicating slightly higher moisture retention. ",
+            "Description_ks": "Xanthic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients. <br> Xanthic Ferralsols have yellow colored subsoils indicating slightly higher moisture retention. ",
+            "Management_en": "soils are prone to phosphorus fixation, and applied fertilizer P or most soil P will not be immediately available for crop uptake and use.<br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used.",
+            "Management_es": "suelos son propensos a la fijación de fósforo, y el P aplicado por los fertilizantes o la mayor parte del P del suelo no estará inmediatamente disponible para su absorción y uso por los cultivos. *Prácticas bien documentadas, como la aplicación en banda (directamente sobre la semilla o a un lado y abajo de la semilla) de fertilizantes fosfatados, ayudarán a reducir la fijación de P. <br>La fertilización adicional y la aplicación de cal, además del P, también serán necesarias para garantizar un crecimiento y un rendimiento adecuados de los cultivos. <br>En estos suelos también puede haber altos niveles de aluminio soluble, que es tóxico para las plantas. <br>La aplicación de cal (que aumenta el pH del suelo y retiene el aluminio soluble) puede ayudar a reducir la toxicidad del aluminio. <br>Dado que estos suelos son infértiles, necesitarán aplicaciones de nutrientes para las plantas con el fin de obtener un mejor rendimiento de los cultivos, ya sea mediante la fertilización o la inclusión de residuos de cultivos, estiércol u otro material orgánico rico en nutrientes. <br>Estos suelos tienen una capacidad limitada para retener los fertilizantes nitrogenados. Deberían considerarse fuentes de nitrógeno de liberación lenta, si se dispone de ellas, o podría utilizarse la aplicación más frecuente de fuentes solubles a una tasa menor en cada aplicación.",
+            "Management_fr": "soils are prone to phosphorus fixation, and applied fertilizer P or most soil P will not be immediately available for crop uptake and use.<br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used.",
+            "Management_ks": "soils are prone to phosphorus fixation, and applied fertilizer P or most soil P will not be immediately available for crop uptake and use.<br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used."
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 9.0,
+          "sl2": 9.0,
+          "sl3": 9.0,
+          "sl4": 7.6,
+          "sl5": 7.14,
+          "sl6": 6.8,
+          "sl7": 6.67
+        },
+        "clay": {
+          "sl1": 31.0,
+          "sl2": 31.0,
+          "sl3": 31.0,
+          "sl4": 33.4,
+          "sl5": 33.86,
+          "sl6": 34.0,
+          "sl7": 33.83
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 0.86,
+          "sl6": 0.6,
+          "sl7": 0.5
+        },
+        "id": {
+          "component": "Haplic ferralsols",
+          "name": "Haplic ferralsols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.181
+        },
+        "ph": {
+          "sl1": 5.1,
+          "sl2": 5.1,
+          "sl3": 5.1,
+          "sl4": 5.12,
+          "sl5": 5.14,
+          "sl6": 5.14,
+          "sl7": 5.13
+        },
+        "rock_fragments": {
+          "sl1": 9.0,
+          "sl2": 9.0,
+          "sl3": 9.0,
+          "sl4": 10.2,
+          "sl5": 11.43,
+          "sl6": 12.6,
+          "sl7": 12.83
+        },
+        "sand": {
+          "sl1": 45.0,
+          "sl2": 45.0,
+          "sl3": 45.0,
+          "sl4": 43.0,
+          "sl5": 42.43,
+          "sl6": 42.0,
+          "sl7": 42.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 105398,
+            "distance": 4468.846,
+            "mapunitID": 12207,
+            "minCompDistance": 0.0,
+            "share": 15,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients.",
+            "Description_es": "Los Ferralsoles Háplicos son suelos bien desarrollados en climas húmedos y cálidos en los que predominan los minerales de baja actividad como la caolinita y los óxidos de hierro y aluminio. <br>Suelen tener buenas propiedades físicas pero son ácidos, relativamente infértiles, tienen una alta fijación de P y tienen una capacidad limitada de retener nutrientes. ",
+            "Description_fr": "Haplic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients.",
+            "Description_ks": "Haplic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients.",
+            "Management_en": "soils are prone to phosphorus fixation, and most soil P will not be immediately available for crop uptake and use. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used.",
+            "Management_es": "Estos suelos son propensos a la fijación de fósforo, y la mayor parte del P del suelo no estará inmediatamente disponible para su absorción y uso por los cultivos. <br>Las prácticas bien documentadas, como la aplicación en banda (directamente sobre la semilla o a un lado y abajo de la semilla) de fertilizantes fosfatados, ayudarán a reducir la fijación de P. <br>La fertilización adicional y la aplicación de cal, además del P, también serán necesarias para garantizar un crecimiento y un rendimiento adecuados de los cultivos. <br>En estos suelos también puede haber altos niveles de aluminio soluble, que es tóxico para las plantas. <br>La aplicación de cal (que aumenta el pH del suelo y retiene el aluminio soluble) puede ayudar a reducir la toxicidad del aluminio. <br>Dado que estos suelos son infértiles, necesitarán aplicaciones de nutrientes para las plantas con el fin de obtener un mejor rendimiento de los cultivos, ya sea mediante la fertilización o la inclusión de residuos de cultivos, estiércol u otro material orgánico rico en nutrientes. <br>Estos suelos tienen una capacidad limitada para retener los fertilizantes nitrogenados. Deberían considerarse fuentes de nitrógeno de liberación lenta, si se dispone de ellas, o podría utilizarse la aplicación más frecuente de fuentes solubles a una tasa menor en cada aplicación.",
+            "Management_fr": "soils are prone to phosphorus fixation, and most soil P will not be immediately available for crop uptake and use. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used.",
+            "Management_ks": "soils are prone to phosphorus fixation, and most soil P will not be immediately available for crop uptake and use. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used."
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 14.0,
+          "sl2": 14.0,
+          "sl3": 14.0,
+          "sl4": 14.6,
+          "sl5": 14.71,
+          "sl6": 15.0,
+          "sl7": 15.17
+        },
+        "clay": {
+          "sl1": 24.0,
+          "sl2": 24.0,
+          "sl3": 24.0,
+          "sl4": 28.6,
+          "sl5": 29.86,
+          "sl6": 30.6,
+          "sl7": 30.5
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 1.0,
+          "sl6": 1.0,
+          "sl7": 1.0
+        },
+        "id": {
+          "component": "Eutric leptosols",
+          "name": "Eutric leptosols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.144
+        },
+        "ph": {
+          "sl1": 6.4,
+          "sl2": 6.4,
+          "sl3": 6.4,
+          "sl4": 6.42,
+          "sl5": 6.44,
+          "sl6": 6.44,
+          "sl7": 6.43
+        },
+        "rock_fragments": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 6.8,
+          "sl5": 9.29,
+          "sl6": 13.4,
+          "sl7": 12.5
+        },
+        "sand": {
+          "sl1": 53.0,
+          "sl2": 53.0,
+          "sl3": 53.0,
+          "sl4": 49.0,
+          "sl5": 47.71,
+          "sl6": 46.6,
+          "sl7": 46.67
+        },
+        "site": {
+          "siteData": {
+            "componentID": 105397,
+            "distance": 4468.846,
+            "mapunitID": 12207,
+            "minCompDistance": 0.0,
+            "share": 15,
+            "soilDepth": 40
+          },
+          "siteDescription": {
+            "Description_en": "Eutric Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Eutric Leptosols have high base saturation over the shallow root limiting layer. ",
+            "Description_es": "Los Leptosoles Eútricos tienen un volumen de enraizamiento muy limitado debido a la presencia de roca continua, material altamente calcáreo, horizontes cementados o muchas rocas y fragmentos gruesos en la parte superior del suelo. <br>Los leptosoles en pendientes pronunciadas son muy erosionables. <br>Los Leptosoles eútricos tienen una alta saturación de la base sobre la capa limitante de las raíces poco profundas. ",
+            "Description_fr": "Eutric Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Eutric Leptosols have high base saturation over the shallow root limiting layer. ",
+            "Description_ks": "Eutric Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Eutric Leptosols have high base saturation over the shallow root limiting layer. ",
+            "Management_en": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Onlyuses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> These soils can be productive for agriculture, but the focus should be on use for grazing. <br> Any use for cropping must be limited and combined with soil conservation practices. ",
+            "Management_es": "Debido a que estos suelos son poco profundos, rocosos y erosionables deben ser utilizados para cultivos perennes, y no deben ser labrados. <br>Deben utilizarse prácticas para mantener la materia orgánica y la cobertura. <br>Se debe considerar el uso exclusivo para el pastoreo o la agroforestería. <br>La preservación del suelo superficial con su materia orgánica es importante, y la prevención de la erosión es fundamental. <br>Estos suelos pueden ser productivos para la agricultura, pero el enfoque debe ser el uso para el pastoreo. <br>Cualquier uso para el cultivo debe limitarse y combinarse con prácticas de conservación del suelo.",
+            "Management_fr": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Onlyuses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> These soils can be productive for agriculture, but the focus should be on use for grazing. <br> Any use for cropping must be limited and combined with soil conservation practices. ",
+            "Management_ks": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Onlyuses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> These soils can be productive for agriculture, but the focus should be on use for grazing. <br> Any use for cropping must be limited and combined with soil conservation practices. "
+          }
+        },
+        "texture": {
+          "sl1": "Sandy clay loam",
+          "sl2": "Sandy clay loam",
+          "sl3": "Sandy clay loam",
+          "sl4": "Sandy clay loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 6.0,
+          "sl5": 6.0,
+          "sl6": 6.0,
+          "sl7": 6.0
+        },
+        "clay": {
+          "sl1": 19.0,
+          "sl2": 19.0,
+          "sl3": 19.0,
+          "sl4": 25.6,
+          "sl5": 28.14,
+          "sl6": 30.0,
+          "sl7": 30.5
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Rhodic ferralsols",
+          "name": "Rhodic ferralsols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.1
+        },
+        "ph": {
+          "sl1": 5.2,
+          "sl2": 5.2,
+          "sl3": 5.2,
+          "sl4": 5.2,
+          "sl5": 5.19,
+          "sl6": 5.16,
+          "sl7": 5.13
+        },
+        "rock_fragments": {
+          "sl1": 8.0,
+          "sl2": 8.0,
+          "sl3": 8.0,
+          "sl4": 6.8,
+          "sl5": 6.71,
+          "sl6": 6.2,
+          "sl7": 5.83
+        },
+        "sand": {
+          "sl1": 53.0,
+          "sl2": 53.0,
+          "sl3": 53.0,
+          "sl4": 47.8,
+          "sl5": 45.86,
+          "sl6": 44.8,
+          "sl7": 44.83
+        },
+        "site": {
+          "siteData": {
+            "componentID": 105419,
+            "distance": 21840.312,
+            "mapunitID": 12213,
+            "minCompDistance": 0.0,
+            "share": 20,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Rhodic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients. <br> Rhodic Ferralsols have dark red subsoils with good soil structure. ",
+            "Description_es": "Los Ferralsoles Ródicos son suelos bien desarrollados en climas húmedos y cálidos en los que predominan los minerales de baja actividad como la caolinita y los óxidos de hierro y aluminio. <br>Suelen tener buenas propiedades físicas, pero son ácidos, relativamente infértiles, tienen una alta fijación de P y una capacidad limitada para retener nutrientes. <br>Los ferraliscos ródicos tienen subsuelos de color rojo oscuro con una buena estructura de suelo. ",
+            "Description_fr": "Rhodic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients. <br> Rhodic Ferralsols have dark red subsoils with good soil structure. ",
+            "Description_ks": "Rhodic Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients. <br> Rhodic Ferralsols have dark red subsoils with good soil structure. ",
+            "Management_en": "soils are prone to phosphorus fixation, and applied fertilizer P or most soil P will not be immediately available for crop uptake and use.<br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used.",
+            "Management_es": "suelos son propensos a la fijación de fósforo, y el P aplicado por los fertilizantes o la mayor parte del P del suelo no estará inmediatamente disponible para su absorción y uso por los cultivos.<br>Las prácticas bien documentadas, como la aplicación en banda (directamente sobre la semilla o a un lado y abajo de la semilla) de fertilizantes fosfatados, ayudarán a reducir la fijación de P. <br>La fertilización adicional y la aplicación de cal, además del P, también serán necesarias para garantizar un crecimiento y un rendimiento adecuados de los cultivos. <br>En estos suelos también puede haber altos niveles de aluminio soluble, que es tóxico para las plantas. <br>La aplicación de cal (que aumenta el pH del suelo y retiene el aluminio soluble) puede ayudar a reducir la toxicidad del aluminio. <br>Dado que estos suelos son infértiles, necesitarán aplicaciones de nutrientes para las plantas con el fin de obtener un mejor rendimiento de los cultivos, ya sea mediante la fertilización o la inclusión de residuos de cultivos, estiércol u otro material orgánico rico en nutrientes. <br>Estos suelos tienen una capacidad limitada para retener los fertilizantes nitrogenados. Deberían considerarse fuentes de nitrógeno de liberación lenta, si se dispone de ellas, o podría utilizarse la aplicación más frecuente de fuentes solubles a una tasa menor en cada aplicación.",
+            "Management_fr": "soils are prone to phosphorus fixation, and applied fertilizer P or most soil P will not be immediately available for crop uptake and use.<br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used.",
+            "Management_ks": "soils are prone to phosphorus fixation, and applied fertilizer P or most soil P will not be immediately available for crop uptake and use.<br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used."
+          }
+        },
+        "texture": {
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy clay loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 8.0,
+          "sl2": 8.0,
+          "sl3": 8.0,
+          "sl4": 6.8,
+          "sl5": 6.71,
+          "sl6": 6.8,
+          "sl7": 6.83
+        },
+        "clay": {
+          "sl1": 21.0,
+          "sl2": 21.0,
+          "sl3": 21.0,
+          "sl4": 27.2,
+          "sl5": 30.29,
+          "sl6": 33.2,
+          "sl7": 34.33
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Ferralic cambisols",
+          "name": "Ferralic cambisols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.069
+        },
+        "ph": {
+          "sl1": 6.2,
+          "sl2": 6.2,
+          "sl3": 6.2,
+          "sl4": 6.12,
+          "sl5": 6.07,
+          "sl6": 6.02,
+          "sl7": 6.02
+        },
+        "rock_fragments": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 9.8,
+          "sl5": 10.43,
+          "sl6": 10.6,
+          "sl7": 10.5
+        },
+        "sand": {
+          "sl1": 65.0,
+          "sl2": 65.0,
+          "sl3": 65.0,
+          "sl4": 60.2,
+          "sl5": 57.57,
+          "sl6": 54.8,
+          "sl7": 53.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 105247,
+            "distance": 28892.433,
+            "mapunitID": 12167,
+            "minCompDistance": 4468.84592815,
+            "share": 15,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Ferralic Cambisols are widely occurring soils with limited soil development. <br> These soils have a poor ability to retain nutrients due to low cation exchange capacity.  Because they retain fewer nutrients they are typically less productive.",
+            "Description_es": "Los Cambisoles Ferrálicos son suelos muy extendidos con un desarrollo limitado del suelo. <br>Estos suelos tienen una escasa capacidad para retener nutrientes debido a su baja capacidad de intercambio catiónico.  Como retienen menos nutrientes, suelen ser menos productivos. ",
+            "Description_fr": "Ferralic Cambisols are widely occurring soils with limited soil development. <br> These soils have a poor ability to retain nutrients due to low cation exchange capacity.  Because they retain fewer nutrients they are typically less productive.",
+            "Description_ks": "Ferralic Cambisols are widely occurring soils with limited soil development. <br> These soils have a poor ability to retain nutrients due to low cation exchange capacity.  Because they retain fewer nutrients they are typically less productive.",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> The clay type in this soil is extremely weathered, and as such will have low nutrient supplying capacity. <br> Fertilization will be required to improve productivity. ",
+            "Management_es": "En regiones templadas los suelos tendrán un alto contenido de cationes básicos (potasio, calcio y magnesio), mientras que en regiones más húmedas pueden tener niveles más bajos de nutrientes en el suelo. <br>El tipo de arcilla de este suelo está extremadamente erosionado, y como tal tendrá una baja capacidad de suministro de nutrientes. <br>La fertilización será necesaria para mejorar la productividad.",
+            "Management_fr": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> The clay type in this soil is extremely weathered, and as such will have low nutrient supplying capacity. <br> Fertilization will be required to improve productivity. ",
+            "Management_ks": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> The clay type in this soil is extremely weathered, and as such will have low nutrient supplying capacity. <br> Fertilization will be required to improve productivity. "
+          }
+        },
+        "texture": {
+          "sl1": "Sandy clay loam",
+          "sl2": "Sandy clay loam",
+          "sl3": "Sandy clay loam",
+          "sl4": "Sandy clay loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      }
+    ]
+  },
+  "rank": {
+    "metadata": {
+      "location": "global",
+      "model": "v2"
+    },
+    "soilRank": [
+      {
+        "component": "Xanthic ferralsols",
+        "componentData": "Missing Data",
+        "componentID": 105399,
+        "name": "Xanthic ferralsols2",
+        "rank_data": "3",
+        "rank_data_loc": "1",
+        "rank_loc": "Not Displayed",
+        "score_data": 1.0,
+        "score_data_loc": 1.0,
+        "score_loc": 0.269
+      },
+      {
+        "component": "Haplic ferralsols",
+        "componentData": "No Data",
+        "componentID": 105423,
+        "name": "Haplic ferralsols",
+        "rank_data": "2",
+        "rank_data_loc": "2",
+        "rank_loc": "2",
+        "score_data": 1.0,
+        "score_data_loc": 0.931,
+        "score_loc": 0.181
+      },
+      {
+        "component": "Chromic luvisols",
+        "componentData": "Data Complete",
+        "componentID": 105244,
+        "name": "Chromic luvisols",
+        "rank_data": "4",
+        "rank_data_loc": "3",
+        "rank_loc": "7",
+        "score_data": 0.738,
+        "score_data_loc": 0.621,
+        "score_loc": 0.05
+      },
+      {
+        "component": "Rhodic ferralsols",
+        "componentData": "No Data",
+        "componentID": 105425,
+        "name": "Rhodic ferralsols",
+        "rank_data": "7",
+        "rank_data_loc": "4",
+        "rank_loc": "5",
+        "score_data": 0.681,
+        "score_data_loc": 0.616,
+        "score_loc": 0.1
+      },
+      {
+        "component": "Haplic acrisols",
+        "componentData": "Data Complete",
+        "componentID": 105396,
+        "name": "Haplic acrisols",
+        "rank_data": "5",
+        "rank_data_loc": "5",
+        "rank_loc": "8",
+        "score_data": 0.681,
+        "score_data_loc": 0.556,
+        "score_loc": 0.025
+      },
+      {
+        "component": "Ferralic cambisols",
+        "componentData": "Data Complete",
+        "componentID": 105395,
+        "name": "Ferralic cambisols",
+        "rank_data": "8",
+        "rank_data_loc": "6",
+        "rank_loc": "6",
+        "score_data": 0.5,
+        "score_data_loc": 0.448,
+        "score_loc": 0.069
+      },
+      {
+        "component": "Haplic lixisols",
+        "componentData": "Missing Data",
+        "componentID": 105245,
+        "name": "Haplic lixisols",
+        "rank_data": "9",
+        "rank_data_loc": "7",
+        "rank_loc": "9",
+        "score_data": 0.433,
+        "score_data_loc": 0.361,
+        "score_loc": 0.025
+      },
+      {
+        "component": "Eutric leptosols",
+        "componentData": "Missing Data",
+        "componentID": 105424,
+        "name": "Eutric leptosols",
+        "rank_data": "1",
+        "rank_data_loc": "8",
+        "rank_loc": "3",
+        "score_data": 1.0,
+        "score_data_loc": 0.002,
+        "score_loc": 0.144
+      },
+      {
+        "component": "Lithic leptosols",
+        "componentData": "Missing Data",
+        "componentID": 105416,
+        "name": "Lithic leptosols",
+        "rank_data": "6",
+        "rank_data_loc": "9",
+        "rank_loc": "4",
+        "score_data": 0.681,
+        "score_data_loc": 0.002,
+        "score_loc": 0.138
+      },
+      {
+        "component": "Haplic ferralsols",
+        "componentData": "Missing Data",
+        "componentID": 105398,
+        "name": "Haplic ferralsols2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.738,
+        "score_data_loc": 0.724,
+        "score_loc": 0.181
+      },
+      {
+        "component": "Xanthic ferralsols",
+        "componentData": "Missing Data",
+        "componentID": 105422,
+        "name": "Xanthic ferralsols",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "1",
+        "score_data": 0.433,
+        "score_data_loc": 0.553,
+        "score_loc": 0.269
+      },
+      {
+        "component": "Ferralic cambisols",
+        "componentData": "Data Complete",
+        "componentID": 105247,
+        "name": "Ferralic cambisols2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.433,
+        "score_data_loc": 0.396,
+        "score_loc": 0.069
+      },
+      {
+        "component": "Rhodic ferralsols",
+        "componentData": "No Data",
+        "componentID": 105419,
+        "name": "Rhodic ferralsols2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.308,
+        "score_data_loc": 0.322,
+        "score_loc": 0.1
+      },
+      {
+        "component": "Eutric leptosols",
+        "componentData": "Missing Data",
+        "componentID": 105397,
+        "name": "Eutric leptosols2",
+        "rank_data": "Not Displayed",
+        "rank_data_loc": "Not Displayed",
+        "rank_loc": "Not Displayed",
+        "score_data": 0.738,
+        "score_data_loc": 0.002,
+        "score_loc": 0.144
+      }
+    ]
+  }
+}

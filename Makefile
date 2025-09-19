@@ -13,15 +13,23 @@ setup-git-hooks:
 
 lint:
 	ruff check soil_id
+	ruff format soil_id --diff
 
 format:
+	ruff check soil_id --fix
 	ruff format soil_id
 
 lock:
 	CUSTOM_COMPILE_COMMAND="make lock" uv pip compile --upgrade --generate-hashes requirements/base.in -o requirements.txt
 
+lock-package:
+	CUSTOM_COMPILE_COMMAND="make lock" uv pip compile --upgrade-package $(PACKAGE) --generate-hashes --emit-build-options requirements/base.in requirements/deploy.in -o requirements.txt
+
 lock-dev:
 	CUSTOM_COMPILE_COMMAND="make lock-dev" uv pip compile --upgrade --generate-hashes requirements/dev.in -o requirements-dev.txt
+
+lock-dev-package:
+	CUSTOM_COMPILE_COMMAND="make lock-dev" uv pip compile --upgrade-package $(PACKAGE) --generate-hashes requirements/dev.in -o requirements-dev.txt
 
 build:
 	echo "Building TK..."
@@ -35,9 +43,16 @@ clean:
 
 test: clean check_rebuild
 	if [ -z "$(PATTERN)" ]; then \
-		$(DC_RUN_CMD) pytest soil_id; \
+		$(DC_RUN_CMD) pytest soil_id -vv; \
 	else \
-		$(DC_RUN_CMD) pytest soil_id -k $(PATTERN); \
+		$(DC_RUN_CMD) pytest soil_id -vv -k $(PATTERN); \
+	fi
+
+test_update_snapshots: clean check_rebuild
+	if [ -z "$(PATTERN)" ]; then \
+		$(DC_RUN_CMD) pytest soil_id --snapshot-update; \
+	else \
+		$(DC_RUN_CMD) pytest soil_id --snapshot-update -k $(PATTERN); \
 	fi
 
 test-verbose:

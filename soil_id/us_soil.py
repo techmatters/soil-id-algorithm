@@ -133,7 +133,7 @@ def list_soils(lon, lat):
     # Location based calculation
     # --------------------------------------------------------------------
     # Process distance scores and perform group-wise aggregations.
-    mucompdata_pd = process_distance_scores(mucompdata_pd, ExpCoeff)
+    mucompdata_pd = process_distance_scores(mucompdata_pd, ExpCoeff, compkind_filter=True)
 
     # Add the data source column
     mucompdata_pd["data_source"] = data_source
@@ -202,7 +202,7 @@ def list_soils(lon, lat):
     # Merge muhorzdata_pd with selected columns from mucompdata_pd
     muhorzdata_pd = pd.merge(
         muhorzdata_pd,
-        mucompdata_pd[["cokey", "comppct_r", "compname", "distance_score", "slope_r"]],
+        mucompdata_pd[["cokey", "comppct_r", "compname", "cond_prob", "slope_r"]],
         on="cokey",
         how="left",
     )
@@ -213,6 +213,14 @@ def list_soils(lon, lat):
         pd.notnull(muhorzdata_pd["hzdept_r"]) & pd.notnull(muhorzdata_pd["hzdepb_r"])
     )
     muhorzdata_pd = muhorzdata_pd[filter_condition].drop_duplicates().reset_index(drop=True)
+
+    # Add distance column from mucompdata_pd using cokey link
+    muhorzdata_pd = pd.merge(
+        muhorzdata_pd,
+        mucompdata_pd[["cokey", "distance", "distance_score"]],
+        on="cokey",
+        how="left",
+    )
 
     # Check for duplicate component instances
     hz_drop = drop_cokey_horz(muhorzdata_pd)
@@ -225,8 +233,10 @@ def list_soils(lon, lat):
     comp_key = muhorzdata_pd["cokey"].unique().tolist()
     mucompdata_pd = mucompdata_pd[mucompdata_pd["cokey"].isin(comp_key)]
 
-    # Sort mucompdata_pd based on 'distance_score' and 'distance'
-    mucompdata_pd.sort_values(["distance_score", "distance"], ascending=[False, True], inplace=True)
+    # Sort mucompdata_pd based on 'cond_prob' and 'distance'
+    mucompdata_pd.sort_values(
+        ["cond_prob", "distance", "compname"], ascending=[False, True, True], inplace=True
+    )
     mucompdata_pd.reset_index(drop=True, inplace=True)
 
     # Duplicate the 'compname' column for grouping purposes
@@ -250,14 +260,17 @@ def list_soils(lon, lat):
     component_names = mucompdata_pd["compname"].tolist()
     name_counts = collections.Counter(component_names)
 
-    for name, count in name_counts.items():
+    for name, count in sorted(name_counts.items()):  # Sort for deterministic order
         if count > 1:  # If a component name is duplicated
-            suffixes = range(1, count + 1)  # Generate suffixes for the duplicate names
-            for suffix in suffixes:
-                index = component_names.index(
-                    name
-                )  # Find the index of the first occurrence of the duplicate name
-                component_names[index] = name + str(suffix)  # Append the suffix
+            # Find all indices for this name
+            indices = [i for i, comp_name in enumerate(component_names) if comp_name == name]
+            # Sort indices for deterministic order
+            indices.sort()
+
+            # Add suffixes to all occurrences except the first
+            for i, idx in enumerate(indices):
+                if i > 0:  # Skip the first occurrence (keep original name)
+                    component_names[idx] = name + str(i + 1)  # Append suffix starting from 2
 
     mucompdata_pd["compname"] = component_names
     muhorzdata_pd.rename(columns={"compname": "compname_grp"}, inplace=True)
@@ -270,7 +283,7 @@ def list_soils(lon, lat):
     muhorzdata_pd = muhorzdata_pd[~muhorzdata_pd["hzname"].str.contains("R", case=False, na=False)]
 
     # Group data by cokey (component key)
-    muhorzdata_group_cokey = [group for _, group in muhorzdata_pd.groupby("cokey", sort=False)]
+    muhorzdata_group_cokey = [group for _, group in muhorzdata_pd.groupby("cokey", sort=True)]
 
     getProfile_cokey = []
     comp_max_depths = []
@@ -1122,7 +1135,7 @@ def list_soils(lon, lat):
 
     # Create a new column 'soilID_rank' which will be True for the first row in each group sorted
     # by 'distance' and False for other rows
-    mucompdata_pd = mucompdata_pd.sort_values(["compname_grp", "distance"])
+    mucompdata_pd = mucompdata_pd.sort_values(["compname_grp", "distance", "compname"])
     mucompdata_pd["soilID_rank"] = ~mucompdata_pd.duplicated("compname_grp", keep="first")
 
     # Assign the minimum distance for each group to a new column 'min_dist'
@@ -1156,7 +1169,7 @@ def list_soils(lon, lat):
         ESDcompdataQry = (
             "SELECT cokey,  ecoclassid, ecoclassname FROM coecoclass WHERE cokey IN ("
             + ",".join(map(str, comp_key))
-            + ")"
+            + ") ORDER BY cokey"
         )
         ESDcompdata_out = sda_return(propQry=ESDcompdataQry)
 
@@ -1208,7 +1221,7 @@ def list_soils(lon, lat):
         ESDcompdata_pd = update_esd_data(ESDcompdata_pd)
 
         # Aggregate the ESD components for output
-        for _, group in ESDcompdata_pd.groupby("cokey"):
+        for _, group in ESDcompdata_pd.groupby("cokey", sort=True):
             esd_data = {
                 "ESD": {
                     "ecoclassid": group["ecoclassid"].tolist(),
@@ -1252,7 +1265,7 @@ def list_soils(lon, lat):
                         r"[0-9]+", "", regex=True
                     )
                     ESDcompdata_pd_comp_grps = [
-                        g for _, g in ESDcompdata_pd.groupby(["compname_grp"], sort=False)
+                        g for _, g in ESDcompdata_pd.groupby(["compname_grp"], sort=True)
                     ]
                     ecoList_out = []
                     for i in range(len(ESDcompdata_pd_comp_grps)):
@@ -1299,7 +1312,7 @@ def list_soils(lon, lat):
                     ESDcompdata_pd = pd.concat(ecoList_out)
 
                 ESDcompdata_group_cokey = [
-                    g for _, g in ESDcompdata_pd.groupby(["cokey"], sort=False)
+                    g for _, g in ESDcompdata_pd.groupby(["cokey"], sort=True)
                 ]
                 for i in range(len(ESDcompdata_group_cokey)):
                     if ESDcompdata_group_cokey[i]["ecoclassname"].isnull().values.any():
@@ -1384,9 +1397,9 @@ def list_soils(lon, lat):
 
     # ------------------------------------------------------------
 
-    # Sort mucompdata_cond_prob by soilID_rank and distance_score
+    # Sort mucompdata_cond_prob by soilID_rank, cond_prob, and compname for deterministic tie-breaking
     mucompdata_cond_prob = mucompdata_cond_prob.sort_values(
-        ["soilID_rank", "distance_score"], ascending=[False, False]
+        ["soilID_rank", "cond_prob", "compname"], ascending=[False, False, True]
     )
     mucomp_index = mucompdata_cond_prob.index
 
@@ -1401,7 +1414,7 @@ def list_soils(lon, lat):
         for site, comp, sc, rank in zip(
             mucompdata_cond_prob["compname"],
             mucompdata_cond_prob["compname_grp"],
-            mucompdata_cond_prob["distance_score"].round(3),
+            mucompdata_cond_prob["cond_prob"].round(3),
             mucompdata_cond_prob["Rank_Loc"],
         )
     ]
@@ -1560,6 +1573,10 @@ def rank_soils(
     into site data use 'getColor_deltaE2000_OSD_pedon' and helper functions
     located in utils.py
     """
+    # Check if list_output_data is a string (error message) instead of expected object
+    if isinstance(list_output_data, str):
+        return {"error": f"Cannot rank soils: {list_output_data}"}
+
     # ---------------------------------------------------------------------------------------
     # ------ Load in user data --------#
     # Initialize the DataFrame from the input data
@@ -1776,7 +1793,7 @@ def rank_soils(
 
     # Horizon Data Similarity
     if soilIDRank_output_pd is not None:
-        groups = [group for _, group in soilIDRank_output_pd.groupby(["compname"], sort=False)]
+        groups = [group for _, group in soilIDRank_output_pd.groupby(["compname"], sort=True)]
 
         Comp_Rank_Status = []
         Comp_Missing_Status = []
@@ -1797,7 +1814,7 @@ def rank_soils(
                 Comp_Rank_Status.append("Ranked")
                 Comp_Missing_Status.append("Data Complete")
 
-            Comp_name.append(group["compname"].unique()[0])
+            Comp_name.append(sorted(group["compname"].unique())[0])
 
         # Consolidate the results into a DataFrame
         Rank_Filter = pd.DataFrame(
@@ -2035,7 +2052,7 @@ def rank_soils(
 
     # Sort and rank the components within each group
     soilIDList_data = []
-    for _, group in D_final.groupby(["compname_grp"], sort=False):
+    for _, group in D_final.groupby(["compname_grp"], sort=True):
         # Sort by score, and then by compname
         group = group.sort_values(by=["Score_Data", "compname"], ascending=[False, True])
 
@@ -2051,7 +2068,9 @@ def rank_soils(
     D_final = pd.merge(D_final, Rank_Filter, on="compname", how="left")
 
     # Sort dataframe to correctly assign Rank_Data
-    D_final = D_final.sort_values(by=["soilID_rank_data", "Score_Data"], ascending=[False, False])
+    D_final = D_final.sort_values(
+        by=["soilID_rank_data", "Score_Data", "compname"], ascending=[False, False, True]
+    )
 
     # Assigning rank based on the soilID rank and rank status
     rank_id = 1
@@ -2072,7 +2091,7 @@ def rank_soils(
     # ----------------------------------------------------------------
     #Data output for testing
     D_final_loc = pd.merge(D_final, mucompdata_pd[['compname', 'cokey', 'mukey',
-    'distance_score', 'clay', 'taxorder', 'taxsubgrp', 'OSD_text_int',
+    'cond_prob', 'clay', 'taxorder', 'taxsubgrp', 'OSD_text_int',
     'OSD_rfv_int', 'data_source', 'Rank_Loc', 'majcompflag', 'comppct_r', 'distance',
     'nirrcapcl', 'nirrcapscl', 'nirrcapunit', 'irrcapcl', 'irrcapscl', 'irrcapunit',
     'ecoclassid_update', 'ecoclassname']], on='compname', how='left')
@@ -2086,7 +2105,7 @@ def rank_soils(
             [
                 "compname",
                 "cokey",
-                "distance_score",
+                "cond_prob",
                 "clay",
                 "taxorder",
                 "taxsubgrp",
@@ -2111,7 +2130,7 @@ def rank_soils(
         Score_Data_Loc = [0.0 for _ in range(len(D_final_loc))]
     else:
         # Calculate the combined score
-        Score_Data_Loc = (D_final_loc["Score_Data"] + D_final_loc["distance_score"]) / (
+        Score_Data_Loc = (D_final_loc["Score_Data"] + D_final_loc["cond_prob"]) / (
             D_final_loc["data_weight"] + location_weight
         )
 
@@ -2144,8 +2163,10 @@ def rank_soils(
     # Sorting and reindexing of final dataframe based on component groups
     soilIDList_out = []
 
-    for _, group in D_final_loc.groupby("compname_grp", sort=False):
-        group = group.sort_values("Score_Data_Loc", ascending=False).reset_index(drop=True)
+    for _, group in D_final_loc.groupby("compname_grp", sort=True):
+        group = group.sort_values(
+            ["Score_Data_Loc", "compname"], ascending=[False, True]
+        ).reset_index(drop=True)
         group["soilID_rank_final"] = [True if idx == 0 else False for idx in range(len(group))]
         soilIDList_out.append(group)
 
@@ -2172,9 +2193,9 @@ def rank_soils(
 
     D_final_loc["Rank_Data_Loc"] = Rank_DataLoc
 
-    # Sort dataframe based on soilID_rank_final and Score_Data_Loc
+    # Sort dataframe based on soilID_rank_final, Score_Data_Loc, and compname for deterministic tie-breaking
     D_final_loc = D_final_loc.sort_values(
-        ["soilID_rank_final", "Score_Data_Loc"], ascending=[False, False]
+        ["soilID_rank_final", "Score_Data_Loc", "compname"], ascending=[False, False, True]
     ).reset_index(drop=True)
 
     # Replace NaN values in the specified columns with 0.0
@@ -2184,7 +2205,7 @@ def rank_soils(
             "D_horz",
             "D_site",
             "Score_Data_Loc",
-            "distance_score",
+            "cond_prob",
         ]
     ] = D_final_loc[
         [
@@ -2192,7 +2213,7 @@ def rank_soils(
             "D_horz",
             "D_site",
             "Score_Data_Loc",
-            "distance_score",
+            "cond_prob",
         ]
     ].fillna(0.0)
 
@@ -2212,7 +2233,7 @@ def rank_soils(
                 "" if row.missing_status == "Location data only" else round(row.Score_Data, 3)
             ),
             "rank_data": "" if row.missing_status == "Location data only" else row.Rank_Data,
-            "score_loc": round(row.distance_score, 3),
+            "score_loc": round(row.cond_prob, 3),
             "rank_loc": row.Rank_Loc,
             "componentData": row.missing_status,
         }

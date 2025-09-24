@@ -606,11 +606,11 @@
         "componentData": "Data Complete",
         "componentID": 25443415,
         "name": "Ruch",
-        "rank_data": "4",
+        "rank_data": "3",
         "rank_data_loc": "1",
         "rank_loc": "1",
-        "score_data": 0.677,
-        "score_data_loc": 0.472,
+        "score_data": 0.671,
+        "score_data_loc": 0.469,
         "score_loc": 0.267
       },
       {
@@ -618,11 +618,11 @@
         "componentData": NaN,
         "componentID": 25443848,
         "name": "Josephine2",
-        "rank_data": "3",
+        "rank_data": "4",
         "rank_data_loc": "2",
         "rank_loc": "Not Displayed",
-        "score_data": 0.68,
-        "score_data_loc": 0.403,
+        "score_data": 0.664,
+        "score_data_loc": 0.395,
         "score_loc": 0.125
       },
       {
@@ -633,8 +633,8 @@
         "rank_data": "2",
         "rank_data_loc": "3",
         "rank_loc": "3",
-        "score_data": 0.72,
-        "score_data_loc": 0.395,
+        "score_data": 0.709,
+        "score_data_loc": 0.389,
         "score_loc": 0.069
       },
       {
@@ -645,8 +645,8 @@
         "rank_data": "1",
         "rank_data_loc": "4",
         "rank_loc": "9",
-        "score_data": 0.749,
-        "score_data_loc": 0.378,
+        "score_data": 0.746,
+        "score_data_loc": 0.376,
         "score_loc": 0.007
       },
       {
@@ -657,8 +657,8 @@
         "rank_data": "5",
         "rank_data_loc": "5",
         "rank_loc": "7",
-        "score_data": 0.623,
-        "score_data_loc": 0.324,
+        "score_data": 0.626,
+        "score_data_loc": 0.326,
         "score_loc": 0.025
       },
       {
@@ -669,8 +669,8 @@
         "rank_data": "6",
         "rank_data_loc": "6",
         "rank_loc": "8",
-        "score_data": 0.472,
-        "score_data_loc": 0.244,
+        "score_data": 0.473,
+        "score_data_loc": 0.245,
         "score_loc": 0.017
       },
       {
@@ -681,8 +681,8 @@
         "rank_data": "7",
         "rank_data_loc": "7",
         "rank_loc": "4",
-        "score_data": 0.402,
-        "score_data_loc": 0.226,
+        "score_data": 0.406,
+        "score_data_loc": 0.228,
         "score_loc": 0.05
       },
       {
@@ -693,8 +693,8 @@
         "rank_data": "9",
         "rank_data_loc": "8",
         "rank_loc": "5",
-        "score_data": 0.385,
-        "score_data_loc": 0.215,
+        "score_data": 0.388,
+        "score_data_loc": 0.217,
         "score_loc": 0.046
       },
       {
@@ -705,8 +705,8 @@
         "rank_data": "8",
         "rank_data_loc": "9",
         "rank_loc": "6",
-        "score_data": 0.387,
-        "score_data_loc": 0.206,
+        "score_data": 0.392,
+        "score_data_loc": 0.209,
         "score_loc": 0.025
       },
       {

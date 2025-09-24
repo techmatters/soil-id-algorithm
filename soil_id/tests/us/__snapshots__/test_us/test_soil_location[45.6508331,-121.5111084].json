@@ -205,8 +205,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "1",
         "score_data": 0.588,
+        "score_data_group": 0.588,
         "score_data_loc": 0.794,
-        "score_loc": 1.0
+        "score_data_loc_group": 0.794,
+        "score_loc": 1.0,
+        "score_loc_group": 1.0
       },
       {
         "component": "Hood",
@@ -221,8 +224,11 @@
         "rank_loc": "1",
         "rank_loc_group": "1",
         "score_data": 0.556,
+        "score_data_group": 0.588,
         "score_data_loc": 0.778,
-        "score_loc": 1.0
+        "score_data_loc_group": 0.794,
+        "score_loc": 1.0,
+        "score_loc_group": 1.0
       },
       {
         "component": "Hood",
@@ -237,8 +243,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "1",
         "score_data": 0.54,
+        "score_data_group": 0.588,
         "score_data_loc": 0.77,
-        "score_loc": 1.0
+        "score_data_loc_group": 0.794,
+        "score_loc": 1.0,
+        "score_loc_group": 1.0
       }
     ]
   }

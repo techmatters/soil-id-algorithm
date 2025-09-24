@@ -1279,8 +1279,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "2",
         "score_data": 0.836,
+        "score_data_group": 0.836,
         "score_data_loc": 0.552,
-        "score_loc": 0.268
+        "score_data_loc_group": 0.552,
+        "score_loc": 0.268,
+        "score_loc_group": 0.268
       },
       {
         "component": "Eutric vertisols",
@@ -1295,8 +1298,11 @@
         "rank_loc": "1",
         "rank_loc_group": "1",
         "score_data": 0.699,
+        "score_data_group": 0.699,
         "score_data_loc": 0.489,
-        "score_loc": 0.278
+        "score_data_loc_group": 0.489,
+        "score_loc": 0.278,
+        "score_loc_group": 0.278
       },
       {
         "component": "Calcaric regosols",
@@ -1311,8 +1317,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "9",
         "score_data": 0.894,
+        "score_data_group": 0.894,
         "score_data_loc": 0.468,
-        "score_loc": 0.043
+        "score_data_loc_group": 0.468,
+        "score_loc": 0.043,
+        "score_loc_group": 0.043
       },
       {
         "component": "Eutric regosols",
@@ -1327,8 +1336,11 @@
         "rank_loc": "3",
         "rank_loc_group": "3",
         "score_data": 0.699,
+        "score_data_group": 0.699,
         "score_data_loc": 0.389,
-        "score_loc": 0.078
+        "score_data_loc_group": 0.389,
+        "score_loc": 0.078,
+        "score_loc_group": 0.078
       },
       {
         "component": "Gleyic acrisols",
@@ -1343,8 +1355,11 @@
         "rank_loc": "4",
         "rank_loc_group": "4",
         "score_data": 0.699,
+        "score_data_group": 0.699,
         "score_data_loc": 0.382,
-        "score_loc": 0.065
+        "score_data_loc_group": 0.382,
+        "score_loc": 0.065,
+        "score_loc_group": 0.065
       },
       {
         "component": "Calcaric fluvisols",
@@ -1359,8 +1374,11 @@
         "rank_loc": "5",
         "rank_loc_group": "5",
         "score_data": 0.625,
+        "score_data_group": 0.625,
         "score_data_loc": 0.341,
-        "score_loc": 0.057
+        "score_data_loc_group": 0.341,
+        "score_loc": 0.057,
+        "score_loc_group": 0.057
       },
       {
         "component": "Gleyic luvisols",
@@ -1375,8 +1393,11 @@
         "rank_loc": "8",
         "rank_loc_group": "8",
         "score_data": 0.625,
+        "score_data_group": 0.625,
         "score_data_loc": 0.338,
-        "score_loc": 0.05
+        "score_data_loc_group": 0.338,
+        "score_loc": 0.05,
+        "score_loc_group": 0.05
       },
       {
         "component": "Calcic luvisols",
@@ -1391,8 +1412,11 @@
         "rank_loc": "6",
         "rank_loc_group": "6",
         "score_data": 0.412,
+        "score_data_group": 0.412,
         "score_data_loc": 0.235,
-        "score_loc": 0.057
+        "score_data_loc_group": 0.235,
+        "score_loc": 0.057,
+        "score_loc_group": 0.057
       },
       {
         "component": "Dystric planosols",
@@ -1407,8 +1431,11 @@
         "rank_loc": "10",
         "rank_loc_group": "10",
         "score_data": 0.421,
+        "score_data_group": 0.421,
         "score_data_loc": 0.225,
-        "score_loc": 0.029
+        "score_data_loc_group": 0.225,
+        "score_loc": 0.029,
+        "score_loc_group": 0.029
       },
       {
         "component": "Lithic leptosols",
@@ -1423,8 +1450,11 @@
         "rank_loc": "7",
         "rank_loc_group": "7",
         "score_data": 0.49,
+        "score_data_group": 0.49,
         "score_data_loc": 0.001,
-        "score_loc": 0.057
+        "score_data_loc_group": 0.001,
+        "score_loc": 0.057,
+        "score_loc_group": 0.057
       },
       {
         "component": "Rendzic leptosols",
@@ -1439,8 +1469,11 @@
         "rank_loc": "11",
         "rank_loc_group": "11",
         "score_data": 0.711,
+        "score_data_group": 0.711,
         "score_data_loc": 0.001,
-        "score_loc": 0.018
+        "score_data_loc_group": 0.001,
+        "score_loc": 0.018,
+        "score_loc_group": 0.018
       },
       {
         "component": "Calcaric regosols",
@@ -1455,8 +1488,11 @@
         "rank_loc": "9",
         "rank_loc_group": "9",
         "score_data": 0.864,
+        "score_data_group": 0.894,
         "score_data_loc": 0.453,
-        "score_loc": 0.043
+        "score_data_loc_group": 0.468,
+        "score_loc": 0.043,
+        "score_loc_group": 0.043
       },
       {
         "component": "Calcaric cambisols",
@@ -1471,8 +1507,11 @@
         "rank_loc": "2",
         "rank_loc_group": "2",
         "score_data": 0.525,
+        "score_data_group": 0.836,
         "score_data_loc": 0.397,
-        "score_loc": 0.268
+        "score_data_loc_group": 0.552,
+        "score_loc": 0.268,
+        "score_loc_group": 0.268
       }
     ]
   }

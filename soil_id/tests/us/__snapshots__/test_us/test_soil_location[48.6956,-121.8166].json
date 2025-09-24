@@ -804,8 +804,11 @@
         "rank_loc": "11",
         "rank_loc_group": "11",
         "score_data": 0.876,
+        "score_data_group": 0.876,
         "score_data_loc": 0.447,
-        "score_loc": 0.017
+        "score_data_loc_group": 0.447,
+        "score_loc": 0.017,
+        "score_loc_group": 0.017
       },
       {
         "component": "Kindy",
@@ -820,8 +823,11 @@
         "rank_loc": "10",
         "rank_loc_group": "10",
         "score_data": 0.818,
+        "score_data_group": 0.818,
         "score_data_loc": 0.418,
-        "score_loc": 0.017
+        "score_data_loc_group": 0.418,
+        "score_loc": 0.017,
+        "score_loc_group": 0.017
       },
       {
         "component": "Nimue",
@@ -836,8 +842,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "1",
         "score_data": 0.662,
+        "score_data_group": 0.662,
         "score_data_loc": 0.396,
-        "score_loc": 0.131
+        "score_data_loc_group": 0.396,
+        "score_loc": 0.131,
+        "score_loc_group": 0.131
       },
       {
         "component": "Andic xerochrepts",
@@ -852,8 +861,11 @@
         "rank_loc": "12",
         "rank_loc_group": "12",
         "score_data": 0.719,
+        "score_data_group": 0.719,
         "score_data_loc": 0.365,
-        "score_loc": 0.011
+        "score_data_loc_group": 0.365,
+        "score_loc": 0.011,
+        "score_loc_group": 0.011
       },
       {
         "component": "Cryorthods",
@@ -868,8 +880,11 @@
         "rank_loc": "3",
         "rank_loc_group": "3",
         "score_data": 0.631,
+        "score_data_group": 0.631,
         "score_data_loc": 0.348,
-        "score_loc": 0.065
+        "score_data_loc_group": 0.348,
+        "score_loc": 0.065,
+        "score_loc_group": 0.065
       },
       {
         "component": "Diobsud",
@@ -884,8 +899,11 @@
         "rank_loc": "6",
         "rank_loc_group": "6",
         "score_data": 0.648,
+        "score_data_group": 0.648,
         "score_data_loc": 0.335,
-        "score_loc": 0.023
+        "score_data_loc_group": 0.335,
+        "score_loc": 0.023,
+        "score_loc_group": 0.023
       },
       {
         "component": "Getchell",
@@ -900,8 +918,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "4",
         "score_data": 0.591,
+        "score_data_group": 0.591,
         "score_data_loc": 0.327,
-        "score_loc": 0.062
+        "score_data_loc_group": 0.327,
+        "score_loc": 0.062,
+        "score_loc_group": 0.062
       },
       {
         "component": "Andic cryumbrepts",
@@ -916,8 +937,11 @@
         "rank_loc": "2",
         "rank_loc_group": "2",
         "score_data": 0.493,
+        "score_data_group": 0.493,
         "score_data_loc": 0.289,
-        "score_loc": 0.086
+        "score_data_loc_group": 0.289,
+        "score_loc": 0.086,
+        "score_loc_group": 0.086
       },
       {
         "component": "Cryaquepts",
@@ -932,8 +956,11 @@
         "rank_loc": "7",
         "rank_loc_group": "7",
         "score_data": 0.469,
+        "score_data_group": 0.469,
         "score_data_loc": 0.245,
-        "score_loc": 0.022
+        "score_data_loc_group": 0.245,
+        "score_loc": 0.022,
+        "score_loc_group": 0.022
       },
       {
         "component": "Cryumbrepts",
@@ -948,8 +975,11 @@
         "rank_loc": "5",
         "rank_loc_group": "5",
         "score_data": 0.372,
+        "score_data_group": 0.372,
         "score_data_loc": 0.207,
-        "score_loc": 0.043
+        "score_data_loc_group": 0.207,
+        "score_loc": 0.043,
+        "score_loc_group": 0.043
       },
       {
         "component": "Cryohumods",
@@ -964,8 +994,11 @@
         "rank_loc": "8",
         "rank_loc_group": "8",
         "score_data": 0.372,
+        "score_data_group": 0.372,
         "score_data_loc": 0.197,
-        "score_loc": 0.022
+        "score_data_loc_group": 0.197,
+        "score_loc": 0.022,
+        "score_loc_group": 0.022
       },
       {
         "component": "Haplocryods",
@@ -980,8 +1013,11 @@
         "rank_loc": "9",
         "rank_loc_group": "9",
         "score_data": 0.362,
+        "score_data_group": 0.362,
         "score_data_loc": 0.192,
-        "score_loc": 0.022
+        "score_data_loc_group": 0.192,
+        "score_loc": 0.022,
+        "score_loc_group": 0.022
       },
       {
         "component": "Nimue",
@@ -996,8 +1032,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "1",
         "score_data": 0.582,
+        "score_data_group": 0.662,
         "score_data_loc": 0.356,
-        "score_loc": 0.131
+        "score_data_loc_group": 0.396,
+        "score_loc": 0.131,
+        "score_loc_group": 0.131
       },
       {
         "component": "Getchell",
@@ -1012,8 +1051,11 @@
         "rank_loc": "4",
         "rank_loc_group": "4",
         "score_data": 0.503,
+        "score_data_group": 0.591,
         "score_data_loc": 0.283,
-        "score_loc": 0.062
+        "score_data_loc_group": 0.327,
+        "score_loc": 0.062,
+        "score_loc_group": 0.062
       },
       {
         "component": "Nimue",
@@ -1028,8 +1070,11 @@
         "rank_loc": "1",
         "rank_loc_group": "1",
         "score_data": 0.408,
+        "score_data_group": 0.662,
         "score_data_loc": 0.27,
-        "score_loc": 0.131
+        "score_data_loc_group": 0.396,
+        "score_loc": 0.131,
+        "score_loc_group": 0.131
       }
     ]
   }

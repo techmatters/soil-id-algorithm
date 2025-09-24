@@ -390,8 +390,11 @@
         "rank_loc": 1,
         "rank_loc_group": 1,
         "score_data": 0.508,
+        "score_data_group": 0.508,
         "score_data_loc": 0.38,
-        "score_loc": 0.253
+        "score_data_loc_group": 0.38,
+        "score_loc": 0.253,
+        "score_loc_group": 0.253
       },
       {
         "component": "D36-western maritime dwarf scrub loamy glaciated slopes",
@@ -406,8 +409,11 @@
         "rank_loc": 2,
         "rank_loc_group": 2,
         "score_data": 0.377,
+        "score_data_group": 0.377,
         "score_data_loc": 0.309,
-        "score_loc": 0.242
+        "score_data_loc_group": 0.309,
+        "score_loc": 0.242,
+        "score_loc_group": 0.242
       },
       {
         "component": "D36-boreal forest loamy eolian slopes",
@@ -422,8 +428,11 @@
         "rank_loc": 5,
         "rank_loc_group": 5,
         "score_data": 0.495,
+        "score_data_group": 0.495,
         "score_data_loc": 0.3,
-        "score_loc": 0.105
+        "score_data_loc_group": 0.3,
+        "score_loc": 0.105,
+        "score_loc_group": 0.105
       },
       {
         "component": "D36-western maritime scrub organic peat mounds",
@@ -438,8 +447,11 @@
         "rank_loc": 4,
         "rank_loc_group": 4,
         "score_data": 0.421,
+        "score_data_group": 0.421,
         "score_data_loc": 0.3,
-        "score_loc": 0.179
+        "score_data_loc_group": 0.3,
+        "score_loc": 0.179,
+        "score_loc_group": 0.179
       },
       {
         "component": "D36-western maritime sedge organic depressions",
@@ -454,8 +466,11 @@
         "rank_loc": 3,
         "rank_loc_group": 3,
         "score_data": 0.332,
+        "score_data_group": 0.332,
         "score_data_loc": 0.271,
-        "score_loc": 0.211
+        "score_data_loc_group": 0.271,
+        "score_loc": 0.211,
+        "score_loc_group": 0.211
       },
       {
         "component": "D36-western maritime scrub drainageways",
@@ -470,8 +485,11 @@
         "rank_loc": 6,
         "rank_loc_group": 6,
         "score_data": 0.495,
+        "score_data_group": 0.495,
         "score_data_loc": 0.253,
-        "score_loc": 0.011
+        "score_data_loc_group": 0.253,
+        "score_loc": 0.011,
+        "score_loc_group": 0.011
       }
     ]
   }

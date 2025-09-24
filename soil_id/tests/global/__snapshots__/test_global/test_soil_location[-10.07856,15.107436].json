@@ -1355,8 +1355,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "1",
         "score_data": 1.0,
+        "score_data_group": 1.0,
         "score_data_loc": 0.634,
-        "score_loc": 0.269
+        "score_data_loc_group": 0.634,
+        "score_loc": 0.269,
+        "score_loc_group": 0.269
       },
       {
         "component": "Haplic ferralsols",
@@ -1371,8 +1374,11 @@
         "rank_loc": "2",
         "rank_loc_group": "2",
         "score_data": 1.0,
+        "score_data_group": 1.0,
         "score_data_loc": 0.591,
-        "score_loc": 0.181
+        "score_data_loc_group": 0.591,
+        "score_loc": 0.181,
+        "score_loc_group": 0.181
       },
       {
         "component": "Chromic luvisols",
@@ -1387,8 +1393,11 @@
         "rank_loc": "7",
         "rank_loc_group": "7",
         "score_data": 0.738,
+        "score_data_group": 0.738,
         "score_data_loc": 0.394,
-        "score_loc": 0.05
+        "score_data_loc_group": 0.394,
+        "score_loc": 0.05,
+        "score_loc_group": 0.05
       },
       {
         "component": "Rhodic ferralsols",
@@ -1403,8 +1412,11 @@
         "rank_loc": "5",
         "rank_loc_group": "5",
         "score_data": 0.681,
+        "score_data_group": 0.681,
         "score_data_loc": 0.391,
-        "score_loc": 0.1
+        "score_data_loc_group": 0.391,
+        "score_loc": 0.1,
+        "score_loc_group": 0.1
       },
       {
         "component": "Haplic acrisols",
@@ -1419,8 +1431,11 @@
         "rank_loc": "8",
         "rank_loc_group": "8",
         "score_data": 0.681,
+        "score_data_group": 0.681,
         "score_data_loc": 0.353,
-        "score_loc": 0.025
+        "score_data_loc_group": 0.353,
+        "score_loc": 0.025,
+        "score_loc_group": 0.025
       },
       {
         "component": "Ferralic cambisols",
@@ -1435,8 +1450,11 @@
         "rank_loc": "6",
         "rank_loc_group": "6",
         "score_data": 0.5,
+        "score_data_group": 0.5,
         "score_data_loc": 0.284,
-        "score_loc": 0.069
+        "score_data_loc_group": 0.284,
+        "score_loc": 0.069,
+        "score_loc_group": 0.069
       },
       {
         "component": "Haplic lixisols",
@@ -1451,8 +1469,11 @@
         "rank_loc": "9",
         "rank_loc_group": "9",
         "score_data": 0.433,
+        "score_data_group": 0.433,
         "score_data_loc": 0.229,
-        "score_loc": 0.025
+        "score_data_loc_group": 0.229,
+        "score_loc": 0.025,
+        "score_loc_group": 0.025
       },
       {
         "component": "Eutric leptosols",
@@ -1467,8 +1488,11 @@
         "rank_loc": "3",
         "rank_loc_group": "3",
         "score_data": 1.0,
+        "score_data_group": 1.0,
         "score_data_loc": 0.001,
-        "score_loc": 0.144
+        "score_data_loc_group": 0.001,
+        "score_loc": 0.144,
+        "score_loc_group": 0.144
       },
       {
         "component": "Lithic leptosols",
@@ -1483,8 +1507,11 @@
         "rank_loc": "4",
         "rank_loc_group": "4",
         "score_data": 0.681,
+        "score_data_group": 0.681,
         "score_data_loc": 0.001,
-        "score_loc": 0.138
+        "score_data_loc_group": 0.001,
+        "score_loc": 0.138,
+        "score_loc_group": 0.138
       },
       {
         "component": "Haplic ferralsols",
@@ -1499,8 +1526,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "2",
         "score_data": 0.738,
+        "score_data_group": 1.0,
         "score_data_loc": 0.459,
-        "score_loc": 0.181
+        "score_data_loc_group": 0.591,
+        "score_loc": 0.181,
+        "score_loc_group": 0.181
       },
       {
         "component": "Xanthic ferralsols",
@@ -1515,8 +1545,11 @@
         "rank_loc": "1",
         "rank_loc_group": "1",
         "score_data": 0.433,
+        "score_data_group": 1.0,
         "score_data_loc": 0.351,
-        "score_loc": 0.269
+        "score_data_loc_group": 0.634,
+        "score_loc": 0.269,
+        "score_loc_group": 0.269
       },
       {
         "component": "Ferralic cambisols",
@@ -1531,8 +1564,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "6",
         "score_data": 0.433,
+        "score_data_group": 0.5,
         "score_data_loc": 0.251,
-        "score_loc": 0.069
+        "score_data_loc_group": 0.284,
+        "score_loc": 0.069,
+        "score_loc_group": 0.069
       },
       {
         "component": "Rhodic ferralsols",
@@ -1547,8 +1583,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "5",
         "score_data": 0.308,
+        "score_data_group": 0.681,
         "score_data_loc": 0.204,
-        "score_loc": 0.1
+        "score_data_loc_group": 0.391,
+        "score_loc": 0.1,
+        "score_loc_group": 0.1
       },
       {
         "component": "Eutric leptosols",
@@ -1563,8 +1602,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "3",
         "score_data": 0.738,
+        "score_data_group": 1.0,
         "score_data_loc": 0.001,
-        "score_loc": 0.144
+        "score_data_loc_group": 0.001,
+        "score_loc": 0.144,
+        "score_loc_group": 0.144
       }
     ]
   }

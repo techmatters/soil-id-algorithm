@@ -1203,8 +1203,11 @@
         "rank_loc": 1,
         "rank_loc_group": 1,
         "score_data": 0.475,
+        "score_data_group": 0.475,
         "score_data_loc": 0.323,
-        "score_loc": 0.17
+        "score_data_loc_group": 0.323,
+        "score_loc": 0.17,
+        "score_loc_group": 0.17
       },
       {
         "component": "Eutric cambisols",
@@ -1219,8 +1222,11 @@
         "rank_loc": 2,
         "rank_loc_group": 2,
         "score_data": 0.515,
+        "score_data_group": 0.515,
         "score_data_loc": 0.317,
-        "score_loc": 0.12
+        "score_data_loc_group": 0.317,
+        "score_loc": 0.12,
+        "score_loc_group": 0.12
       },
       {
         "component": "Gleyic cambisols",
@@ -1235,8 +1241,11 @@
         "rank_loc": 4,
         "rank_loc_group": 4,
         "score_data": 0.515,
+        "score_data_group": 0.515,
         "score_data_loc": 0.317,
-        "score_loc": 0.12
+        "score_data_loc_group": 0.317,
+        "score_loc": 0.12,
+        "score_loc_group": 0.12
       },
       {
         "component": "Dystric cambisols",
@@ -1251,8 +1260,11 @@
         "rank_loc": 5,
         "rank_loc_group": 5,
         "score_data": 0.515,
+        "score_data_group": 0.515,
         "score_data_loc": 0.307,
-        "score_loc": 0.1
+        "score_data_loc_group": 0.307,
+        "score_loc": 0.1,
+        "score_loc_group": 0.1
       },
       {
         "component": "Gleysols",
@@ -1267,8 +1279,11 @@
         "rank_loc": 10,
         "rank_loc_group": 10,
         "score_data": 0.566,
+        "score_data_group": 0.566,
         "score_data_loc": 0.293,
-        "score_loc": 0.02
+        "score_data_loc_group": 0.293,
+        "score_loc": 0.02,
+        "score_loc_group": 0.02
       },
       {
         "component": "Eutric fluvisols",
@@ -1283,8 +1298,11 @@
         "rank_loc": 7,
         "rank_loc_group": 7,
         "score_data": 0.464,
+        "score_data_group": 0.464,
         "score_data_loc": 0.267,
-        "score_loc": 0.07
+        "score_data_loc_group": 0.267,
+        "score_loc": 0.07,
+        "score_loc_group": 0.07
       },
       {
         "component": "Haplic acrisols",
@@ -1299,8 +1317,11 @@
         "rank_loc": 3,
         "rank_loc_group": 3,
         "score_data": 0.402,
+        "score_data_group": 0.402,
         "score_data_loc": 0.261,
-        "score_loc": 0.12
+        "score_data_loc_group": 0.261,
+        "score_loc": 0.12,
+        "score_loc_group": 0.12
       },
       {
         "component": "Eutric gleysols",
@@ -1315,8 +1336,11 @@
         "rank_loc": 9,
         "rank_loc_group": 9,
         "score_data": 0.451,
+        "score_data_group": 0.451,
         "score_data_loc": 0.24,
-        "score_loc": 0.03
+        "score_data_loc_group": 0.24,
+        "score_loc": 0.03,
+        "score_loc_group": 0.03
       },
       {
         "component": "Humic acrisols",
@@ -1331,8 +1355,11 @@
         "rank_loc": 12,
         "rank_loc_group": 12,
         "score_data": 0.337,
+        "score_data_group": 0.337,
         "score_data_loc": 0.174,
-        "score_loc": 0.01
+        "score_data_loc_group": 0.174,
+        "score_loc": 0.01,
+        "score_loc_group": 0.01
       },
       {
         "component": "Haplic luvisols",
@@ -1347,8 +1374,11 @@
         "rank_loc": 8,
         "rank_loc_group": 8,
         "score_data": 0.208,
+        "score_data_group": 0.208,
         "score_data_loc": 0.124,
-        "score_loc": 0.04
+        "score_data_loc_group": 0.124,
+        "score_loc": 0.04,
+        "score_loc_group": 0.04
       },
       {
         "component": "Gleyic luvisols",
@@ -1363,8 +1393,11 @@
         "rank_loc": 6,
         "rank_loc_group": 6,
         "score_data": 0.157,
+        "score_data_group": 0.157,
         "score_data_loc": 0.118,
-        "score_loc": 0.08
+        "score_data_loc_group": 0.118,
+        "score_loc": 0.08,
+        "score_loc_group": 0.08
       },
       {
         "component": "Lithic leptosols",
@@ -1379,8 +1412,11 @@
         "rank_loc": 11,
         "rank_loc_group": 11,
         "score_data": 0.465,
+        "score_data_group": 0.465,
         "score_data_loc": 0.001,
-        "score_loc": 0.02
+        "score_data_loc_group": 0.001,
+        "score_loc": 0.02,
+        "score_loc_group": 0.02
       }
     ]
   }

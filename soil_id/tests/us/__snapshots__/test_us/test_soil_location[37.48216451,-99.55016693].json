@@ -894,8 +894,11 @@
         "rank_loc": "2",
         "rank_loc_group": "2",
         "score_data": 0.649,
+        "score_data_group": 0.649,
         "score_data_loc": 0.456,
-        "score_loc": 0.263
+        "score_data_loc_group": 0.456,
+        "score_loc": 0.263,
+        "score_loc_group": 0.263
       },
       {
         "component": "Coly",
@@ -910,8 +913,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "3",
         "score_data": 0.677,
+        "score_data_group": 0.677,
         "score_data_loc": 0.446,
-        "score_loc": 0.215
+        "score_data_loc_group": 0.446,
+        "score_loc": 0.215,
+        "score_loc_group": 0.215
       },
       {
         "component": "Uly",
@@ -926,8 +932,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "1",
         "score_data": 0.571,
+        "score_data_group": 0.571,
         "score_data_loc": 0.433,
-        "score_loc": 0.295
+        "score_data_loc_group": 0.433,
+        "score_loc": 0.295,
+        "score_loc_group": 0.295
       },
       {
         "component": "Penden",
@@ -942,8 +951,11 @@
         "rank_loc": "7",
         "rank_loc_group": "7",
         "score_data": 0.667,
+        "score_data_group": 0.667,
         "score_data_loc": 0.341,
-        "score_loc": 0.016
+        "score_data_loc_group": 0.341,
+        "score_loc": 0.016,
+        "score_loc_group": 0.016
       },
       {
         "component": "Canlon",
@@ -958,8 +970,11 @@
         "rank_loc": "11",
         "rank_loc_group": "11",
         "score_data": 0.659,
+        "score_data_group": 0.659,
         "score_data_loc": 0.331,
-        "score_loc": 0.002
+        "score_data_loc_group": 0.331,
+        "score_loc": 0.002,
+        "score_loc_group": 0.002
       },
       {
         "component": "Case",
@@ -974,8 +989,11 @@
         "rank_loc": "6",
         "rank_loc_group": "6",
         "score_data": 0.58,
+        "score_data_group": 0.58,
         "score_data_loc": 0.302,
-        "score_loc": 0.023
+        "score_data_loc_group": 0.302,
+        "score_loc": 0.023,
+        "score_loc_group": 0.023
       },
       {
         "component": "Aquolls",
@@ -990,8 +1008,11 @@
         "rank_loc": "10",
         "rank_loc_group": "10",
         "score_data": 0.594,
+        "score_data_group": 0.594,
         "score_data_loc": 0.298,
-        "score_loc": 0.003
+        "score_data_loc_group": 0.298,
+        "score_loc": 0.003,
+        "score_loc_group": 0.003
       },
       {
         "component": "Wakeen",
@@ -1006,8 +1027,11 @@
         "rank_loc": "9",
         "rank_loc_group": "9",
         "score_data": 0.585,
+        "score_data_group": 0.585,
         "score_data_loc": 0.298,
-        "score_loc": 0.01
+        "score_data_loc_group": 0.298,
+        "score_loc": 0.01,
+        "score_loc_group": 0.01
       },
       {
         "component": "Tobin",
@@ -1022,8 +1046,11 @@
         "rank_loc": "5",
         "rank_loc_group": "5",
         "score_data": 0.538,
+        "score_data_group": 0.538,
         "score_data_loc": 0.298,
-        "score_loc": 0.057
+        "score_data_loc_group": 0.298,
+        "score_loc": 0.057,
+        "score_loc_group": 0.057
       },
       {
         "component": "Bridgeport",
@@ -1038,8 +1065,11 @@
         "rank_loc": "8",
         "rank_loc_group": "8",
         "score_data": 0.551,
+        "score_data_group": 0.551,
         "score_data_loc": 0.282,
-        "score_loc": 0.012
+        "score_data_loc_group": 0.282,
+        "score_loc": 0.012,
+        "score_loc_group": 0.012
       },
       {
         "component": "Holdrege",
@@ -1054,8 +1084,11 @@
         "rank_loc": "4",
         "rank_loc_group": "4",
         "score_data": 0.44,
+        "score_data_group": 0.44,
         "score_data_loc": 0.272,
-        "score_loc": 0.104
+        "score_data_loc_group": 0.272,
+        "score_loc": 0.104,
+        "score_loc_group": 0.104
       },
       {
         "component": "Harney",
@@ -1070,8 +1103,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "2",
         "score_data": 0.585,
+        "score_data_group": 0.649,
         "score_data_loc": 0.424,
-        "score_loc": 0.263
+        "score_data_loc_group": 0.456,
+        "score_loc": 0.263,
+        "score_loc_group": 0.263
       },
       {
         "component": "Uly",
@@ -1086,8 +1122,11 @@
         "rank_loc": "1",
         "rank_loc_group": "1",
         "score_data": 0.535,
+        "score_data_group": 0.571,
         "score_data_loc": 0.415,
-        "score_loc": 0.295
+        "score_data_loc_group": 0.433,
+        "score_loc": 0.295,
+        "score_loc_group": 0.295
       },
       {
         "component": "Harney",
@@ -1102,8 +1141,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "2",
         "score_data": 0.55,
+        "score_data_group": 0.649,
         "score_data_loc": 0.407,
-        "score_loc": 0.263
+        "score_data_loc_group": 0.456,
+        "score_loc": 0.263,
+        "score_loc_group": 0.263
       },
       {
         "component": "Coly",
@@ -1118,8 +1160,11 @@
         "rank_loc": "3",
         "rank_loc_group": "3",
         "score_data": 0.597,
+        "score_data_group": 0.677,
         "score_data_loc": 0.406,
-        "score_loc": 0.215
+        "score_data_loc_group": 0.446,
+        "score_loc": 0.215,
+        "score_loc_group": 0.215
       }
     ]
   }

@@ -149,8 +149,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "1",
         "score_data": 0.37,
+        "score_data_group": 0.37,
         "score_data_loc": 0.649,
-        "score_loc": 0.929
+        "score_data_loc_group": 0.649,
+        "score_loc": 0.929,
+        "score_loc_group": 0.929
       },
       {
         "component": "Gunn",
@@ -165,8 +168,11 @@
         "rank_loc": "1",
         "rank_loc_group": "1",
         "score_data": 0.312,
+        "score_data_group": 0.37,
         "score_data_loc": 0.62,
-        "score_loc": 0.929
+        "score_data_loc_group": 0.649,
+        "score_loc": 0.929,
+        "score_loc_group": 0.929
       }
     ]
   }

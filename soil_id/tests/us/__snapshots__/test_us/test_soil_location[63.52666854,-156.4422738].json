@@ -654,8 +654,11 @@
         "rank_loc": 3,
         "rank_loc_group": 3,
         "score_data": 0.657,
+        "score_data_group": 0.657,
         "score_data_loc": 0.385,
-        "score_loc": 0.114
+        "score_data_loc_group": 0.385,
+        "score_loc": 0.114,
+        "score_loc_group": 0.114
       },
       {
         "component": "E30-boreal taiga-loamy frozen colluvial slopes",
@@ -670,8 +673,11 @@
         "rank_loc": 1,
         "rank_loc_group": 1,
         "score_data": 0.481,
+        "score_data_group": 0.481,
         "score_data_loc": 0.377,
-        "score_loc": 0.272
+        "score_data_loc_group": 0.377,
+        "score_loc": 0.272,
+        "score_loc_group": 0.272
       },
       {
         "component": "E30-boreal forest-silty loess slopes",
@@ -686,8 +692,11 @@
         "rank_loc": 7,
         "rank_loc_group": 7,
         "score_data": 0.706,
+        "score_data_group": 0.706,
         "score_data_loc": 0.376,
-        "score_loc": 0.046
+        "score_data_loc_group": 0.376,
+        "score_loc": 0.046,
+        "score_loc_group": 0.046
       },
       {
         "component": "E30-boreal forest-loamy flood plains",
@@ -702,8 +711,11 @@
         "rank_loc": 5,
         "rank_loc_group": 5,
         "score_data": 0.649,
+        "score_data_group": 0.649,
         "score_data_loc": 0.36,
-        "score_loc": 0.072
+        "score_data_loc_group": 0.36,
+        "score_loc": 0.072,
+        "score_loc_group": 0.072
       },
       {
         "component": "E30-boreal scrub-gravelly low flood plains",
@@ -718,8 +730,11 @@
         "rank_loc": 2,
         "rank_loc_group": 2,
         "score_data": 0.567,
+        "score_data_group": 0.567,
         "score_data_loc": 0.359,
-        "score_loc": 0.152
+        "score_data_loc_group": 0.359,
+        "score_loc": 0.152,
+        "score_loc_group": 0.152
       },
       {
         "component": "E30-boreal subalpine woodland-gravelly colluvial slopes",
@@ -734,8 +749,11 @@
         "rank_loc": 12,
         "rank_loc_group": 12,
         "score_data": 0.687,
+        "score_data_group": 0.687,
         "score_data_loc": 0.345,
-        "score_loc": 0.002
+        "score_data_loc_group": 0.345,
+        "score_loc": 0.002,
+        "score_loc_group": 0.002
       },
       {
         "component": "E30-boreal subalpine scrub-loamy colluvial slopes",
@@ -750,8 +768,11 @@
         "rank_loc": 11,
         "rank_loc_group": 11,
         "score_data": 0.673,
+        "score_data_group": 0.673,
         "score_data_loc": 0.338,
-        "score_loc": 0.002
+        "score_data_loc_group": 0.338,
+        "score_loc": 0.002,
+        "score_loc_group": 0.002
       },
       {
         "component": "E30-boreal taiga/tussock-silty frozen slopes",
@@ -766,8 +787,11 @@
         "rank_loc": 9,
         "rank_loc_group": 9,
         "score_data": 0.647,
+        "score_data_group": 0.647,
         "score_data_loc": 0.335,
-        "score_loc": 0.024
+        "score_data_loc_group": 0.335,
+        "score_loc": 0.024,
+        "score_loc_group": 0.024
       },
       {
         "component": "E30-boreal forest-silty slopes",
@@ -782,8 +806,11 @@
         "rank_loc": 6,
         "rank_loc_group": 6,
         "score_data": 0.473,
+        "score_data_group": 0.473,
         "score_data_loc": 0.264,
-        "score_loc": 0.056
+        "score_data_loc_group": 0.264,
+        "score_loc": 0.056,
+        "score_loc_group": 0.056
       },
       {
         "component": "E30-boreal scrub/sphagnum-organic depressions",
@@ -798,8 +825,11 @@
         "rank_loc": 8,
         "rank_loc_group": 8,
         "score_data": 0.473,
+        "score_data_group": 0.473,
         "score_data_loc": 0.248,
-        "score_loc": 0.024
+        "score_data_loc_group": 0.248,
+        "score_loc": 0.024,
+        "score_loc_group": 0.024
       },
       {
         "component": "E30-boreal scrub-silty frozen drainageways",
@@ -814,8 +844,11 @@
         "rank_loc": 10,
         "rank_loc_group": 10,
         "score_data": 0.361,
+        "score_data_group": 0.361,
         "score_data_loc": 0.192,
-        "score_loc": 0.022
+        "score_data_loc_group": 0.192,
+        "score_loc": 0.022,
+        "score_loc_group": 0.022
       },
       {
         "component": "E30-boreal taiga-silty frozen loess slopes",
@@ -830,8 +863,11 @@
         "rank_loc": 4,
         "rank_loc_group": 4,
         "score_data": 0.211,
+        "score_data_group": 0.211,
         "score_data_loc": 0.148,
-        "score_loc": 0.086
+        "score_data_loc_group": 0.148,
+        "score_loc": 0.086,
+        "score_loc_group": 0.086
       }
     ]
   }

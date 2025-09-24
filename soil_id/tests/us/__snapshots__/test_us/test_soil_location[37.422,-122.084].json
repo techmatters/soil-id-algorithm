@@ -446,8 +446,11 @@
         "rank_loc": "2",
         "rank_loc_group": "2",
         "score_data": 0.76,
+        "score_data_group": 0.76,
         "score_data_loc": 0.573,
-        "score_loc": 0.386
+        "score_data_loc_group": 0.573,
+        "score_loc": 0.386,
+        "score_loc_group": 0.386
       },
       {
         "component": "Hangerone",
@@ -462,8 +465,11 @@
         "rank_loc": "1",
         "rank_loc_group": "1",
         "score_data": 0.554,
+        "score_data_group": 0.554,
         "score_data_loc": 0.472,
-        "score_loc": 0.39
+        "score_data_loc_group": 0.472,
+        "score_loc": 0.39,
+        "score_loc_group": 0.39
       },
       {
         "component": "Aquic xerorthents",
@@ -478,8 +484,11 @@
         "rank_loc": "3",
         "rank_loc_group": "3",
         "score_data": 0.626,
+        "score_data_group": 0.626,
         "score_data_loc": 0.395,
-        "score_loc": 0.165
+        "score_data_loc_group": 0.395,
+        "score_loc": 0.165,
+        "score_loc_group": 0.165
       },
       {
         "component": "Embarcadero",
@@ -494,8 +503,11 @@
         "rank_loc": "6",
         "rank_loc_group": "6",
         "score_data": 0.712,
+        "score_data_group": 0.712,
         "score_data_loc": 0.362,
-        "score_loc": 0.012
+        "score_data_loc_group": 0.362,
+        "score_loc": 0.012,
+        "score_loc_group": 0.012
       },
       {
         "component": "Clear lake",
@@ -510,8 +522,11 @@
         "rank_loc": "4",
         "rank_loc_group": "4",
         "score_data": 0.617,
+        "score_data_group": 0.617,
         "score_data_loc": 0.323,
-        "score_loc": 0.029
+        "score_data_loc_group": 0.323,
+        "score_loc": 0.029,
+        "score_loc_group": 0.029
       },
       {
         "component": "Bayshore",
@@ -526,8 +541,11 @@
         "rank_loc": "5",
         "rank_loc_group": "5",
         "score_data": 0.607,
+        "score_data_group": 0.607,
         "score_data_loc": 0.313,
-        "score_loc": 0.019
+        "score_data_loc_group": 0.313,
+        "score_loc": 0.019,
+        "score_loc_group": 0.019
       },
       {
         "component": "Xerorthents",
@@ -542,8 +560,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "2",
         "score_data": 0.652,
+        "score_data_group": 0.76,
         "score_data_loc": 0.519,
-        "score_loc": 0.386
+        "score_data_loc_group": 0.573,
+        "score_loc": 0.386,
+        "score_loc_group": 0.386
       }
     ]
   }

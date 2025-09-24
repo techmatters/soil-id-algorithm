@@ -278,8 +278,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "1",
         "score_data": 0.552,
+        "score_data_group": 0.552,
         "score_data_loc": 0.402,
-        "score_loc": 0.252
+        "score_data_loc_group": 0.402,
+        "score_loc": 0.252,
+        "score_loc_group": 0.252
       },
       {
         "component": "Los osos",
@@ -294,8 +297,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "2",
         "score_data": 0.535,
+        "score_data_group": 0.535,
         "score_data_loc": 0.33,
-        "score_loc": 0.125
+        "score_data_loc_group": 0.33,
+        "score_loc": 0.125,
+        "score_loc_group": 0.125
       },
       {
         "component": "Balcom",
@@ -310,8 +316,11 @@
         "rank_loc": "1",
         "rank_loc_group": "1",
         "score_data": 0.345,
+        "score_data_group": 0.552,
         "score_data_loc": 0.299,
-        "score_loc": 0.252
+        "score_data_loc_group": 0.402,
+        "score_loc": 0.252,
+        "score_loc_group": 0.252
       },
       {
         "component": "Los osos",
@@ -326,8 +335,11 @@
         "rank_loc": "2",
         "rank_loc_group": "2",
         "score_data": 0.37,
+        "score_data_group": 0.535,
         "score_data_loc": 0.248,
-        "score_loc": 0.125
+        "score_data_loc_group": 0.33,
+        "score_loc": 0.125,
+        "score_loc_group": 0.125
       }
     ]
   }

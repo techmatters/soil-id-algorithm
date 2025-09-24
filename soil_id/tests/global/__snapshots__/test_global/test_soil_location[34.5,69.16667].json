@@ -403,8 +403,11 @@
         "rank_loc": 1,
         "rank_loc_group": 1,
         "score_data": 1.0,
+        "score_data_group": 1.0,
         "score_data_loc": 0.763,
-        "score_loc": 0.526
+        "score_data_loc_group": 0.763,
+        "score_loc": 0.526,
+        "score_loc_group": 0.526
       },
       {
         "component": "Calcaric regosols",
@@ -419,8 +422,11 @@
         "rank_loc": 2,
         "rank_loc_group": 2,
         "score_data": 0.437,
+        "score_data_group": 0.437,
         "score_data_loc": 0.4,
-        "score_loc": 0.363
+        "score_data_loc_group": 0.4,
+        "score_loc": 0.363,
+        "score_loc_group": 0.363
       },
       {
         "component": "Histosols",
@@ -435,8 +441,11 @@
         "rank_loc": 4,
         "rank_loc_group": 4,
         "score_data": 0.437,
+        "score_data_group": 0.437,
         "score_data_loc": 0.225,
-        "score_loc": 0.012
+        "score_data_loc_group": 0.225,
+        "score_loc": 0.012,
+        "score_loc_group": 0.012
       },
       {
         "component": "Lithic leptosols",
@@ -451,8 +460,11 @@
         "rank_loc": 3,
         "rank_loc_group": 3,
         "score_data": 0.563,
+        "score_data_group": 0.563,
         "score_data_loc": 0.001,
-        "score_loc": 0.1
+        "score_data_loc_group": 0.001,
+        "score_loc": 0.1,
+        "score_loc_group": 0.1
       }
     ]
   }

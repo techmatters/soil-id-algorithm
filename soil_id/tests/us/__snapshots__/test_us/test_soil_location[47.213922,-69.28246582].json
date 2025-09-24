@@ -782,8 +782,11 @@
         "rank_loc": "2",
         "rank_loc_group": "2",
         "score_data": 0.729,
+        "score_data_group": 0.729,
         "score_data_loc": 0.503,
-        "score_loc": 0.277
+        "score_data_loc_group": 0.503,
+        "score_loc": 0.277,
+        "score_loc_group": 0.277
       },
       {
         "component": "Knob lock",
@@ -798,8 +801,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "1",
         "score_data": 0.667,
+        "score_data_group": 0.667,
         "score_data_loc": 0.496,
-        "score_loc": 0.325
+        "score_data_loc_group": 0.496,
+        "score_loc": 0.325,
+        "score_loc_group": 0.325
       },
       {
         "component": "Elliottsville",
@@ -814,8 +820,11 @@
         "rank_loc": "3",
         "rank_loc_group": "3",
         "score_data": 0.648,
+        "score_data_group": 0.648,
         "score_data_loc": 0.43,
-        "score_loc": 0.211
+        "score_data_loc_group": 0.43,
+        "score_loc": 0.211,
+        "score_loc_group": 0.211
       },
       {
         "component": "Monson",
@@ -830,8 +839,11 @@
         "rank_loc": "4",
         "rank_loc_group": "4",
         "score_data": 0.616,
+        "score_data_group": 0.616,
         "score_data_loc": 0.354,
-        "score_loc": 0.092
+        "score_data_loc_group": 0.354,
+        "score_loc": 0.092,
+        "score_loc_group": 0.092
       },
       {
         "component": "Abram",
@@ -846,8 +858,11 @@
         "rank_loc": "5",
         "rank_loc_group": "5",
         "score_data": 0.671,
+        "score_data_group": 0.671,
         "score_data_loc": 0.353,
-        "score_loc": 0.036
+        "score_data_loc_group": 0.353,
+        "score_loc": 0.036,
+        "score_loc_group": 0.036
       },
       {
         "component": "Rawsonville",
@@ -862,8 +877,11 @@
         "rank_loc": "7",
         "rank_loc_group": "7",
         "score_data": 0.615,
+        "score_data_group": 0.615,
         "score_data_loc": 0.322,
-        "score_loc": 0.03
+        "score_data_loc_group": 0.322,
+        "score_loc": 0.03,
+        "score_loc_group": 0.03
       },
       {
         "component": "Hogback",
@@ -878,8 +896,11 @@
         "rank_loc": "6",
         "rank_loc_group": "6",
         "score_data": 0.484,
+        "score_data_group": 0.484,
         "score_data_loc": 0.257,
-        "score_loc": 0.03
+        "score_data_loc_group": 0.257,
+        "score_loc": 0.03,
+        "score_loc_group": 0.03
       },
       {
         "component": "Chesuncook",
@@ -894,8 +915,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "2",
         "score_data": 0.715,
+        "score_data_group": 0.729,
         "score_data_loc": 0.496,
-        "score_loc": 0.277
+        "score_data_loc_group": 0.503,
+        "score_loc": 0.277,
+        "score_loc_group": 0.277
       },
       {
         "component": "Knob lock",
@@ -910,8 +934,11 @@
         "rank_loc": "1",
         "rank_loc_group": "1",
         "score_data": 0.558,
+        "score_data_group": 0.667,
         "score_data_loc": 0.441,
-        "score_loc": 0.325
+        "score_data_loc_group": 0.496,
+        "score_loc": 0.325,
+        "score_loc_group": 0.325
       },
       {
         "component": "Knob lock",
@@ -926,8 +953,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "1",
         "score_data": 0.539,
+        "score_data_group": 0.667,
         "score_data_loc": 0.432,
-        "score_loc": 0.325
+        "score_data_loc_group": 0.496,
+        "score_loc": 0.325,
+        "score_loc_group": 0.325
       },
       {
         "component": "Elliottsville",
@@ -942,8 +972,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "3",
         "score_data": 0.546,
+        "score_data_group": 0.648,
         "score_data_loc": 0.379,
-        "score_loc": 0.211
+        "score_data_loc_group": 0.43,
+        "score_loc": 0.211,
+        "score_loc_group": 0.211
       },
       {
         "component": "Monson",
@@ -958,8 +991,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "4",
         "score_data": 0.598,
+        "score_data_group": 0.616,
         "score_data_loc": 0.345,
-        "score_loc": 0.092
+        "score_data_loc_group": 0.354,
+        "score_loc": 0.092,
+        "score_loc_group": 0.092
       },
       {
         "component": "Abram",
@@ -974,8 +1010,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "5",
         "score_data": 0.469,
+        "score_data_group": 0.671,
         "score_data_loc": 0.252,
-        "score_loc": 0.036
+        "score_data_loc_group": 0.353,
+        "score_loc": 0.036,
+        "score_loc_group": 0.036
       }
     ]
   }

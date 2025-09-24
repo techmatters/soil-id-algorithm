@@ -1,782 +1,871 @@
 {
-    "list": {
-        "AWS_PIW90": 5.09,
-        "Soil Data Value": [
-            ["rfv_class_30", 0.12794865070214412],
-            ["texture_0", 0.0],
-            ["texture_30", 0.0],
-            ["rfv_class_0", 0.0]
-        ],
-        "metadata": {
-            "location": "us",
-            "model": "v3",
-            "unit_measure": {
-                "cec": "cmol(c)/kg",
-                "clay": "%",
-                "depth": "cm",
-                "distance": "m",
-                "ec": "ds/m",
-                "rock_fragments": "cm3/100cm3",
-                "sand": "%"
-            }
-        },
-        "soilList": [
-            {
-                "bottom_depth": {},
-                "cec": {},
-                "clay": {},
-                "ec": {},
-                "esd": {
-                    "ESD": {
-                        "ecoclassid": ["R077CY022TX"],
-                        "ecoclassname": ["Deep Hardland 16-21 Pz"],
-                        "edit_url": [
-                            "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY022TX"
-                        ]
-                    }
-                },
-                "id": {
-                    "component": "Randall",
-                    "name": "Randall",
-                    "rank_loc": "1",
-                    "score_loc": 0.474
-                },
-                "lab": {},
-                "munsell": {},
-                "ph": {},
-                "rock_fragments": {},
-                "sand": {},
-                "site": {
-                    "siteData": {
-                        "componentID": "25623332",
-                        "componentKind": "Series",
-                        "componentPct": 80,
-                        "dataSource": "SSURGO",
-                        "distance": 0.0,
-                        "irrcapcl": "nan",
-                        "irrcapscl": "None",
-                        "irrcapunit": "None",
-                        "mapunitID": "369864",
-                        "minCompDistance": 0.0,
-                        "nirrcapcl": "6",
-                        "nirrcapscl": "w",
-                        "nirrcapunit": "None",
-                        "rfvInfill": "No",
-                        "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=randall",
-                        "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#randall",
-                        "slope": 0.5,
-                        "taxsubgrp": "Ustic Epiaquerts",
-                        "textureInfill": "No"
-                    },
-                    "siteDescription": "The Randall series consists of very deep, poorly drained, very slowly permeable soils that formed in clayey lacustrine sediments derived from the Blackwater Draw Formation of Pleistocene age. These nearly level soils are on the floor of playa basins 3 to 15 m (10 to 50 ft) below the surrounding plain and range in size from 10 to more than 150 acres. Slope ranges from 0 to 1 percent. Mean annual precipitation is 483 mm (19 in), and mean annual temperature is 15 degrees C (59 degrees F)."
-                },
-                "texture": {},
-                "top_depth": {}
-            },
-            {
-                "bottom_depth": {},
-                "cec": {},
-                "clay": {},
-                "ec": {},
-                "esd": {
-                    "ESD": {
-                        "ecoclassid": ["R077CY036TX"],
-                        "ecoclassname": ["Sandy Loam 16-21 Pz"],
-                        "edit_url": [
-                            "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY036TX"
-                        ]
-                    }
-                },
-                "id": {
-                    "component": "Acuff",
-                    "name": "Acuff",
-                    "rank_loc": "2",
-                    "score_loc": 0.253
-                },
-                "lab": {},
-                "munsell": {},
-                "ph": {},
-                "rock_fragments": {},
-                "sand": {},
-                "site": {
-                    "siteData": {
-                        "componentID": "25623211",
-                        "componentKind": "Series",
-                        "componentPct": 85,
-                        "dataSource": "SSURGO",
-                        "distance": 90.0,
-                        "irrcapcl": "3",
-                        "irrcapscl": "e",
-                        "irrcapunit": "None",
-                        "mapunitID": "369839",
-                        "minCompDistance": 90.0,
-                        "nirrcapcl": "3",
-                        "nirrcapscl": "e",
-                        "nirrcapunit": "None",
-                        "rfvInfill": "No",
-                        "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=acuff",
-                        "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#acuff",
-                        "slope": 2.0,
-                        "taxsubgrp": "Aridic Paleustolls",
-                        "textureInfill": "No"
-                    },
-                    "siteDescription": "The Acuff series consists of very deep, well drained, moderately permeable soils. These soils formed in loamy eolian sediments in the Blackwater Draw Formation of Pleistocene age. Acuff soils are on nearly level to gently sloping plains and playa slopes. Slope ranges from 0 to 5 percent. Mean annual precipitation is about 483 mm (19 in) and the mean annual air temperature is about 16 degrees C (60 degrees F)."
-                },
-                "texture": {},
-                "top_depth": {}
-            },
-            {
-                "bottom_depth": {},
-                "cec": {},
-                "clay": {},
-                "ec": {},
-                "esd": {
-                    "ESD": {
-                        "ecoclassid": ["R077CY022TX"],
-                        "ecoclassname": ["Deep Hardland 16-21 Pz"],
-                        "edit_url": [
-                            "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY022TX"
-                        ]
-                    }
-                },
-                "id": {
-                    "component": "Olton",
-                    "name": "Olton",
-                    "rank_loc": "3",
-                    "score_loc": 0.126
-                },
-                "lab": {},
-                "munsell": {},
-                "ph": {},
-                "rock_fragments": {},
-                "sand": {},
-                "site": {
-                    "siteData": {
-                        "componentID": "25623299",
-                        "componentKind": "Series",
-                        "componentPct": 85,
-                        "dataSource": "SSURGO",
-                        "distance": 204.0,
-                        "irrcapcl": "1",
-                        "irrcapscl": "None",
-                        "irrcapunit": "None",
-                        "mapunitID": "369851",
-                        "minCompDistance": 204.0,
-                        "nirrcapcl": "2",
-                        "nirrcapscl": "c",
-                        "nirrcapunit": "None",
-                        "rfvInfill": "No",
-                        "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=olton",
-                        "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#olton",
-                        "slope": 0.4,
-                        "taxsubgrp": "Aridic Paleustolls",
-                        "textureInfill": "No"
-                    },
-                    "siteDescription": "The Olton series consists of very deep, well drained, moderately slowly permeable soils that formed in clayey, calcareous eolian sediments in the\nBlackwater Draw Formation of Pleistocene age. These soils are on nearly level to gently sloping plains and upper side slopes of playas and draws. Slope ranges from 0 to 5 percent. Mean annual precipitation is 483 mm (19 in), and mean annual temperature is 15 degrees C (59 degrees F)."
-                },
-                "texture": {},
-                "top_depth": {}
-            },
-            {
-                "bottom_depth": {},
-                "cec": {},
-                "clay": {},
-                "ec": {},
-                "esd": {
-                    "ESD": {
-                        "ecoclassid": ["R077CY022TX"],
-                        "ecoclassname": ["Deep Hardland 16-21 Pz"],
-                        "edit_url": [
-                            "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY022TX"
-                        ]
-                    }
-                },
-                "id": {
-                    "component": "Mclean",
-                    "name": "Mclean",
-                    "rank_loc": "4",
-                    "score_loc": 0.059
-                },
-                "lab": {},
-                "munsell": {},
-                "ph": {},
-                "rock_fragments": {},
-                "sand": {},
-                "site": {
-                    "siteData": {
-                        "componentID": "25623333",
-                        "componentKind": "Series",
-                        "componentPct": 10,
-                        "dataSource": "SSURGO",
-                        "distance": 0.0,
-                        "irrcapcl": "4",
-                        "irrcapscl": "w",
-                        "irrcapunit": "None",
-                        "mapunitID": "369864",
-                        "minCompDistance": 0.0,
-                        "nirrcapcl": "4",
-                        "nirrcapscl": "w",
-                        "nirrcapunit": "None",
-                        "rfvInfill": "No",
-                        "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=mclean",
-                        "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#mclean",
-                        "slope": 0.5,
-                        "taxsubgrp": "Udic Haplusterts",
-                        "textureInfill": "No"
-                    },
-                    "siteDescription": "The McLean series consists of very deep, somewhat poorly drained, very slowly permeable soils that formed in clayey lacustrine deposits of Quaternary age. These nearly level soils are on the floor of playas 1.5 to 23 m (5 to 75 ft) below the surrounding plain and range in size from a few acres to more than 200 acres. Slope ranges from 0 to 1 percent. Mean annual precipitation is 483 mm (19 in), and mean annual temperature is 16 degrees C (61 degrees F)."
-                },
-                "texture": {},
-                "top_depth": {}
-            },
-            {
-                "bottom_depth": {},
-                "cec": {},
-                "clay": {},
-                "ec": {},
-                "esd": {
-                    "ESD": {
-                        "ecoclassid": ["R077CY022TX"],
-                        "ecoclassname": ["Deep Hardland 16-21 Pz"],
-                        "edit_url": [
-                            "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY022TX"
-                        ]
-                    }
-                },
-                "id": {
-                    "component": "Lockney",
-                    "name": "Lockney",
-                    "rank_loc": "5",
-                    "score_loc": 0.03
-                },
-                "lab": {},
-                "munsell": {},
-                "ph": {},
-                "rock_fragments": {},
-                "sand": {},
-                "site": {
-                    "siteData": {
-                        "componentID": "25623334",
-                        "componentKind": "Series",
-                        "componentPct": 5,
-                        "dataSource": "SSURGO",
-                        "distance": 0.0,
-                        "irrcapcl": "2",
-                        "irrcapscl": "s",
-                        "irrcapunit": "None",
-                        "mapunitID": "369864",
-                        "minCompDistance": 0.0,
-                        "nirrcapcl": "3",
-                        "nirrcapscl": "s",
-                        "nirrcapunit": "None",
-                        "rfvInfill": "No",
-                        "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=lockney",
-                        "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#lockney",
-                        "slope": 0.5,
-                        "taxsubgrp": "Typic Haplusterts",
-                        "textureInfill": "No"
-                    },
-                    "siteDescription": "The Lockney series consists of very deep, moderately well drained, very slowly permeable soils that formed in clayey lacustrine deposits of Quaternary age. These nearly level soils are on a playa step in large playa basins. Slope ranges from 0 to 1 percent. Mean annual precipitation is 483 mm (19 inches) and mean annual temperature is 16 degrees C (61 F)."
-                },
-                "texture": {},
-                "top_depth": {}
-            },
-            {
-                "bottom_depth": {},
-                "cec": {},
-                "clay": {},
-                "ec": {},
-                "esd": {
-                    "ESD": {
-                        "ecoclassid": ["R077CY022TX"],
-                        "ecoclassname": ["Deep Hardland 16-21 Pz"],
-                        "edit_url": [
-                            "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY022TX"
-                        ]
-                    }
-                },
-                "id": {
-                    "component": "Estacado",
-                    "name": "Estacado",
-                    "rank_loc": "6",
-                    "score_loc": 0.021
-                },
-                "lab": {},
-                "munsell": {},
-                "ph": {},
-                "rock_fragments": {},
-                "sand": {},
-                "site": {
-                    "siteData": {
-                        "componentID": "25623213",
-                        "componentKind": "Series",
-                        "componentPct": 6,
-                        "dataSource": "SSURGO",
-                        "distance": 90.0,
-                        "irrcapcl": "3",
-                        "irrcapscl": "e",
-                        "irrcapunit": "None",
-                        "mapunitID": "369839",
-                        "minCompDistance": 90.0,
-                        "nirrcapcl": "3",
-                        "nirrcapscl": "e",
-                        "nirrcapunit": "None",
-                        "rfvInfill": "No",
-                        "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=estacado",
-                        "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#estacado",
-                        "slope": 2.0,
-                        "taxsubgrp": "Aridic Paleustolls",
-                        "textureInfill": "No"
-                    },
-                    "siteDescription": "The Estacado series consists of very deep, well drained, moderately slowly permeable soils that formed in calcareous, loamy eolian deposits of the Blackwater Draw Formation of Pleistocene age. These soils are on nearly level to gently sloping plains and playa slopes. Slope ranges from 0 to 5 percent. Mean annual precipitation is 483 mm (19 in) and mean annual air temperature is 16 degrees C (61 degrees F)."
-                },
-                "texture": {},
-                "top_depth": {}
-            },
-            {
-                "bottom_depth": {},
-                "cec": {},
-                "clay": {},
-                "ec": {},
-                "esd": {
-                    "ESD": {
-                        "ecoclassid": ["R077CY027TX"],
-                        "ecoclassname": ["Playa 16-21 Pz"],
-                        "edit_url": [
-                            "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY027TX"
-                        ]
-                    }
-                },
-                "id": {
-                    "component": "Friona",
-                    "name": "Friona",
-                    "rank_loc": "7",
-                    "score_loc": 0.014
-                },
-                "lab": {},
-                "munsell": {},
-                "ph": {},
-                "rock_fragments": {},
-                "sand": {},
-                "site": {
-                    "siteData": {
-                        "componentID": "25623214",
-                        "componentKind": "Series",
-                        "componentPct": 5,
-                        "dataSource": "SSURGO",
-                        "distance": 90.0,
-                        "irrcapcl": "3",
-                        "irrcapscl": "e",
-                        "irrcapunit": "None",
-                        "mapunitID": "369839",
-                        "minCompDistance": 90.0,
-                        "nirrcapcl": "3",
-                        "nirrcapscl": "e",
-                        "nirrcapunit": "None",
-                        "rfvInfill": "No",
-                        "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=friona",
-                        "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#friona",
-                        "slope": 2.0,
-                        "taxsubgrp": "Petrocalcic Paleustolls",
-                        "textureInfill": "No"
-                    },
-                    "siteDescription": "The Friona series consists of soils that are moderately deep to a petrocalcic horizon. They are well drained, moderately permeable soils that formed in loamy eolian sediments from the Blackwater Draw Formation of Pleistocene age. These soils are on nearly level to gently sloping plains. Slope ranges from 0 to 3 percent. Mean annual precipitation is about 483 mm (19 in), and mean annual air temperature is about 16 degrees C (61 degrees F)"
-                },
-                "texture": {},
-                "top_depth": {}
-            },
-            {
-                "bottom_depth": {},
-                "cec": {},
-                "clay": {},
-                "ec": {},
-                "esd": {
-                    "ESD": {
-                        "ecoclassid": ["R077CY027TX"],
-                        "ecoclassname": ["Playa 16-21 Pz"],
-                        "edit_url": [
-                            "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY027TX"
-                        ]
-                    }
-                },
-                "id": {
-                    "component": "Amarillo",
-                    "name": "Amarillo",
-                    "rank_loc": "8",
-                    "score_loc": 0.011
-                },
-                "lab": {},
-                "munsell": {},
-                "ph": {},
-                "rock_fragments": {},
-                "sand": {},
-                "site": {
-                    "siteData": {
-                        "componentID": "25623212",
-                        "componentKind": "Series",
-                        "componentPct": 4,
-                        "dataSource": "SSURGO",
-                        "distance": 90.0,
-                        "irrcapcl": "3",
-                        "irrcapscl": "e",
-                        "irrcapunit": "None",
-                        "mapunitID": "369839",
-                        "minCompDistance": 90.0,
-                        "nirrcapcl": "3",
-                        "nirrcapscl": "e",
-                        "nirrcapunit": "None",
-                        "rfvInfill": "No",
-                        "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=amarillo",
-                        "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#amarillo",
-                        "slope": 2.0,
-                        "taxsubgrp": "Aridic Paleustalfs",
-                        "textureInfill": "No"
-                    },
-                    "siteDescription": "The Amarillo series consists of very deep, well drained, moderately permeable soils. These soils formed in loamy eolian deposits from the Blackwater Draw Formation of Pleistocene age. Amarillo soils are on nearly level to gently sloping plains and playa slopes. Slope ranges from 0 to 5 percent. Mean annual precipitation is 483 mm (19 in) and the mean annual air temperature is 16 degrees C (61 degrees F)"
-                },
-                "texture": {},
-                "top_depth": {}
-            },
-            {
-                "bottom_depth": {},
-                "cec": {},
-                "clay": {},
-                "ec": {},
-                "esd": {
-                    "ESD": {
-                        "ecoclassid": ["R077CY022TX"],
-                        "ecoclassname": ["Deep Hardland 16-21 Pz"],
-                        "edit_url": [
-                            "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY022TX"
-                        ]
-                    }
-                },
-                "id": {
-                    "component": "Pullman",
-                    "name": "Pullman",
-                    "rank_loc": "9",
-                    "score_loc": 0.011
-                },
-                "lab": {},
-                "munsell": {},
-                "ph": {},
-                "rock_fragments": {},
-                "sand": {},
-                "site": {
-                    "siteData": {
-                        "componentID": "25623298",
-                        "componentKind": "Series",
-                        "componentPct": 7,
-                        "dataSource": "SSURGO",
-                        "distance": 204.0,
-                        "irrcapcl": "3",
-                        "irrcapscl": "s",
-                        "irrcapunit": "None",
-                        "mapunitID": "369851",
-                        "minCompDistance": 204.0,
-                        "nirrcapcl": "3",
-                        "nirrcapscl": "s",
-                        "nirrcapunit": "None",
-                        "rfvInfill": "No",
-                        "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=pullman",
-                        "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#pullman",
-                        "slope": 0.4,
-                        "taxsubgrp": "Torrertic Paleustolls",
-                        "textureInfill": "No"
-                    },
-                    "siteDescription": "The Pullman series consists of very deep, well drained, slowly permeable soils that formed in clayey eolian deposits from the Blackwater Draw Formation of Pleistocene age. These soils occur on nearly level to very gently sloping plains or playa slopes. Slope ranges from 0 to 3 percent. The mean annual precipitation is about 483 mm (19 in) and the mean annual temperature is about 16 degrees C (60 degrees F)."
-                },
-                "texture": {},
-                "top_depth": {}
-            },
-            {
-                "bottom_depth": {},
-                "cec": {},
-                "clay": {},
-                "ec": {},
-                "esd": {
-                    "ESD": {
-                        "ecoclassid": ["R077CY022TX"],
-                        "ecoclassname": ["Deep Hardland 16-21 Pz"],
-                        "edit_url": [
-                            "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY022TX"
-                        ]
-                    }
-                },
-                "id": {
-                    "component": "Acuff",
-                    "name": "Acuff2",
-                    "rank_loc": "Not Displayed",
-                    "score_loc": 0.253
-                },
-                "lab": {},
-                "munsell": {},
-                "ph": {},
-                "rock_fragments": {},
-                "sand": {},
-                "site": {
-                    "siteData": {
-                        "componentID": "25623297",
-                        "componentKind": "Series",
-                        "componentPct": 5,
-                        "dataSource": "SSURGO",
-                        "distance": 204.0,
-                        "irrcapcl": "2",
-                        "irrcapscl": "s",
-                        "irrcapunit": "None",
-                        "mapunitID": "369851",
-                        "minCompDistance": 90.0,
-                        "nirrcapcl": "2",
-                        "nirrcapscl": "s",
-                        "nirrcapunit": "None",
-                        "rfvInfill": "No",
-                        "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=acuff",
-                        "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#acuff",
-                        "slope": 0.5,
-                        "taxsubgrp": "Aridic Paleustolls",
-                        "textureInfill": "No"
-                    },
-                    "siteDescription": "The Acuff series consists of very deep, well drained, moderately permeable soils. These soils formed in loamy eolian sediments in the Blackwater Draw Formation of Pleistocene age. Acuff soils are on nearly level to gently sloping plains and playa slopes. Slope ranges from 0 to 5 percent. Mean annual precipitation is about 483 mm (19 in) and the mean annual air temperature is about 16 degrees C (60 degrees F)."
-                },
-                "texture": {},
-                "top_depth": {}
-            },
-            {
-                "bottom_depth": {},
-                "cec": {},
-                "clay": {},
-                "ec": {},
-                "esd": {
-                    "ESD": {
-                        "ecoclassid": ["R077CY022TX"],
-                        "ecoclassname": ["Deep Hardland 16-21 Pz"],
-                        "edit_url": [
-                            "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY022TX"
-                        ]
-                    }
-                },
-                "id": {
-                    "component": "Estacado",
-                    "name": "Estacado2",
-                    "rank_loc": "Not Displayed",
-                    "score_loc": 0.021
-                },
-                "lab": {},
-                "munsell": {},
-                "ph": {},
-                "rock_fragments": {},
-                "sand": {},
-                "site": {
-                    "siteData": {
-                        "componentID": "25623296",
-                        "componentKind": "Series",
-                        "componentPct": 3,
-                        "dataSource": "SSURGO",
-                        "distance": 204.0,
-                        "irrcapcl": "1",
-                        "irrcapscl": "None",
-                        "irrcapunit": "None",
-                        "mapunitID": "369851",
-                        "minCompDistance": 90.0,
-                        "nirrcapcl": "2",
-                        "nirrcapscl": "c",
-                        "nirrcapunit": "None",
-                        "rfvInfill": "No",
-                        "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=estacado",
-                        "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#estacado",
-                        "slope": 0.5,
-                        "taxsubgrp": "Aridic Paleustolls",
-                        "textureInfill": "No"
-                    },
-                    "siteDescription": "The Estacado series consists of very deep, well drained, moderately slowly permeable soils that formed in calcareous, loamy eolian deposits of the Blackwater Draw Formation of Pleistocene age. These soils are on nearly level to gently sloping plains and playa slopes. Slope ranges from 0 to 5 percent. Mean annual precipitation is 483 mm (19 in) and mean annual air temperature is 16 degrees C (61 degrees F)."
-                },
-                "texture": {},
-                "top_depth": {}
-            }
-        ]
+  "list": {
+    "AWS_PIW90": 5.09,
+    "Soil Data Value": [
+      [
+        "rfv_class_30",
+        0.12794865070214412
+      ],
+      [
+        "texture_0",
+        0.0
+      ],
+      [
+        "texture_30",
+        0.0
+      ],
+      [
+        "rfv_class_0",
+        0.0
+      ]
+    ],
+    "metadata": {
+      "location": "us",
+      "model": "v3",
+      "unit_measure": {
+        "cec": "cmol(c)/kg",
+        "clay": "%",
+        "depth": "cm",
+        "distance": "m",
+        "ec": "ds/m",
+        "rock_fragments": "cm3/100cm3",
+        "sand": "%"
+      }
     },
-    "rank": {
-        "metadata": {
-            "location": "us",
-            "model": "v2"
+    "soilList": [
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R077CY022TX"
+            ],
+            "ecoclassname": [
+              "Deep Hardland 16-21 Pz"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY022TX"
+            ]
+          }
         },
-        "soilRank": [
-            {
-                "component": "Randall",
-                "componentData": "Missing Data",
-                "componentID": 25623332,
-                "name": "Randall",
-                "not_displayed": false,
-                "rank_data": "8",
-                "rank_data_group": "8",
-                "rank_data_loc": "1",
-                "rank_data_loc_group": "1",
-                "rank_loc": "1",
-                "rank_loc_group": "1",
-                "score_data": 0.427,
-                "score_data_loc": 0.451,
-                "score_loc": 0.474
-            },
-            {
-                "component": "Acuff",
-                "componentData": "Data Complete",
-                "componentID": 25623297,
-                "name": "Acuff2",
-                "not_displayed": false,
-                "rank_data": "1",
-                "rank_data_group": "1",
-                "rank_data_loc": "2",
-                "rank_data_loc_group": "2",
-                "rank_loc": "Not Displayed",
-                "rank_loc_group": "2",
-                "score_data": 0.593,
-                "score_data_loc": 0.423,
-                "score_loc": 0.253
-            },
-            {
-                "component": "Olton",
-                "componentData": "Data Complete",
-                "componentID": 25623299,
-                "name": "Olton",
-                "not_displayed": false,
-                "rank_data": "7",
-                "rank_data_group": "7",
-                "rank_data_loc": "3",
-                "rank_data_loc_group": "3",
-                "rank_loc": "3",
-                "rank_loc_group": "3",
-                "score_data": 0.46,
-                "score_data_loc": 0.293,
-                "score_loc": 0.126
-            },
-            {
-                "component": "Friona",
-                "componentData": "Data Complete",
-                "componentID": 25623214,
-                "name": "Friona",
-                "not_displayed": false,
-                "rank_data": "2",
-                "rank_data_group": "2",
-                "rank_data_loc": "4",
-                "rank_data_loc_group": "4",
-                "rank_loc": "7",
-                "rank_loc_group": "7",
-                "score_data": 0.57,
-                "score_data_loc": 0.292,
-                "score_loc": 0.014
-            },
-            {
-                "component": "Amarillo",
-                "componentData": "Data Complete",
-                "componentID": 25623212,
-                "name": "Amarillo",
-                "not_displayed": false,
-                "rank_data": "3",
-                "rank_data_group": "3",
-                "rank_data_loc": "5",
-                "rank_data_loc_group": "5",
-                "rank_loc": "8",
-                "rank_loc_group": "8",
-                "score_data": 0.553,
-                "score_data_loc": 0.282,
-                "score_loc": 0.011
-            },
-            {
-                "component": "Lockney",
-                "componentData": "Missing Data",
-                "componentID": 25623334,
-                "name": "Lockney",
-                "not_displayed": false,
-                "rank_data": "5",
-                "rank_data_group": "5",
-                "rank_data_loc": "6",
-                "rank_data_loc_group": "6",
-                "rank_loc": "5",
-                "rank_loc_group": "5",
-                "score_data": 0.533,
-                "score_data_loc": 0.281,
-                "score_loc": 0.03
-            },
-            {
-                "component": "Pullman",
-                "componentData": "Data Complete",
-                "componentID": 25623298,
-                "name": "Pullman",
-                "not_displayed": false,
-                "rank_data": "4",
-                "rank_data_group": "4",
-                "rank_data_loc": "7",
-                "rank_data_loc_group": "7",
-                "rank_loc": "9",
-                "rank_loc_group": "9",
-                "score_data": 0.539,
-                "score_data_loc": 0.275,
-                "score_loc": 0.011
-            },
-            {
-                "component": "Estacado",
-                "componentData": "Data Complete",
-                "componentID": 25623213,
-                "name": "Estacado",
-                "not_displayed": false,
-                "rank_data": "6",
-                "rank_data_group": "6",
-                "rank_data_loc": "8",
-                "rank_data_loc_group": "8",
-                "rank_loc": "6",
-                "rank_loc_group": "6",
-                "score_data": 0.492,
-                "score_data_loc": 0.257,
-                "score_loc": 0.021
-            },
-            {
-                "component": "Mclean",
-                "componentData": "Missing Data",
-                "componentID": 25623333,
-                "name": "Mclean",
-                "not_displayed": false,
-                "rank_data": "9",
-                "rank_data_group": "9",
-                "rank_data_loc": "9",
-                "rank_data_loc_group": "9",
-                "rank_loc": "4",
-                "rank_loc_group": "4",
-                "score_data": 0.411,
-                "score_data_loc": 0.235,
-                "score_loc": 0.059
-            },
-            {
-                "component": "Acuff",
-                "componentData": "Data Complete",
-                "componentID": 25623211,
-                "name": "Acuff",
-                "not_displayed": true,
-                "rank_data": "Not Displayed",
-                "rank_data_group": "1",
-                "rank_data_loc": "Not Displayed",
-                "rank_data_loc_group": "2",
-                "rank_loc": "2",
-                "rank_loc_group": "2",
-                "score_data": 0.576,
-                "score_data_loc": 0.414,
-                "score_loc": 0.253
-            },
-            {
-                "component": "Estacado",
-                "componentData": "Data Complete",
-                "componentID": 25623296,
-                "name": "Estacado2",
-                "not_displayed": true,
-                "rank_data": "Not Displayed",
-                "rank_data_group": "6",
-                "rank_data_loc": "Not Displayed",
-                "rank_data_loc_group": "8",
-                "rank_loc": "Not Displayed",
-                "rank_loc_group": "6",
-                "score_data": 0.441,
-                "score_data_loc": 0.231,
-                "score_loc": 0.021
-            }
-        ]
-    }
+        "id": {
+          "component": "Randall",
+          "name": "Randall",
+          "rank_loc": "1",
+          "score_loc": 0.474
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25623332",
+            "componentKind": "Series",
+            "componentPct": 80,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "369864",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=randall",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#randall",
+            "slope": 0.5,
+            "taxsubgrp": "Ustic Epiaquerts",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Randall series consists of very deep, poorly drained, very slowly permeable soils that formed in clayey lacustrine sediments derived from the Blackwater Draw Formation of Pleistocene age. These nearly level soils are on the floor of playa basins 3 to 15 m (10 to 50 ft) below the surrounding plain and range in size from 10 to more than 150 acres. Slope ranges from 0 to 1 percent. Mean annual precipitation is 483 mm (19 in), and mean annual temperature is 15 degrees C (59 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R077CY036TX"
+            ],
+            "ecoclassname": [
+              "Sandy Loam 16-21 Pz"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY036TX"
+            ]
+          }
+        },
+        "id": {
+          "component": "Acuff",
+          "name": "Acuff",
+          "rank_loc": "2",
+          "score_loc": 0.253
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25623211",
+            "componentKind": "Series",
+            "componentPct": 85,
+            "dataSource": "SSURGO",
+            "distance": 90.0,
+            "irrcapcl": "3",
+            "irrcapscl": "e",
+            "irrcapunit": "None",
+            "mapunitID": "369839",
+            "minCompDistance": 90.0,
+            "nirrcapcl": "3",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=acuff",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#acuff",
+            "slope": 2.0,
+            "taxsubgrp": "Aridic Paleustolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Acuff series consists of very deep, well drained, moderately permeable soils. These soils formed in loamy eolian sediments in the Blackwater Draw Formation of Pleistocene age. Acuff soils are on nearly level to gently sloping plains and playa slopes. Slope ranges from 0 to 5 percent. Mean annual precipitation is about 483 mm (19 in) and the mean annual air temperature is about 16 degrees C (60 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R077CY022TX"
+            ],
+            "ecoclassname": [
+              "Deep Hardland 16-21 Pz"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY022TX"
+            ]
+          }
+        },
+        "id": {
+          "component": "Olton",
+          "name": "Olton",
+          "rank_loc": "3",
+          "score_loc": 0.126
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25623299",
+            "componentKind": "Series",
+            "componentPct": 85,
+            "dataSource": "SSURGO",
+            "distance": 204.0,
+            "irrcapcl": "1",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "369851",
+            "minCompDistance": 204.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "c",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=olton",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#olton",
+            "slope": 0.4,
+            "taxsubgrp": "Aridic Paleustolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Olton series consists of very deep, well drained, moderately slowly permeable soils that formed in clayey, calcareous eolian sediments in the\nBlackwater Draw Formation of Pleistocene age. These soils are on nearly level to gently sloping plains and upper side slopes of playas and draws. Slope ranges from 0 to 5 percent. Mean annual precipitation is 483 mm (19 in), and mean annual temperature is 15 degrees C (59 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R077CY022TX"
+            ],
+            "ecoclassname": [
+              "Deep Hardland 16-21 Pz"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY022TX"
+            ]
+          }
+        },
+        "id": {
+          "component": "Mclean",
+          "name": "Mclean",
+          "rank_loc": "4",
+          "score_loc": 0.059
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25623333",
+            "componentKind": "Series",
+            "componentPct": 10,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "4",
+            "irrcapscl": "w",
+            "irrcapunit": "None",
+            "mapunitID": "369864",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "4",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=mclean",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#mclean",
+            "slope": 0.5,
+            "taxsubgrp": "Udic Haplusterts",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The McLean series consists of very deep, somewhat poorly drained, very slowly permeable soils that formed in clayey lacustrine deposits of Quaternary age. These nearly level soils are on the floor of playas 1.5 to 23 m (5 to 75 ft) below the surrounding plain and range in size from a few acres to more than 200 acres. Slope ranges from 0 to 1 percent. Mean annual precipitation is 483 mm (19 in), and mean annual temperature is 16 degrees C (61 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R077CY022TX"
+            ],
+            "ecoclassname": [
+              "Deep Hardland 16-21 Pz"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY022TX"
+            ]
+          }
+        },
+        "id": {
+          "component": "Lockney",
+          "name": "Lockney",
+          "rank_loc": "5",
+          "score_loc": 0.03
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25623334",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "2",
+            "irrcapscl": "s",
+            "irrcapunit": "None",
+            "mapunitID": "369864",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "3",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=lockney",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#lockney",
+            "slope": 0.5,
+            "taxsubgrp": "Typic Haplusterts",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Lockney series consists of very deep, moderately well drained, very slowly permeable soils that formed in clayey lacustrine deposits of Quaternary age. These nearly level soils are on a playa step in large playa basins. Slope ranges from 0 to 1 percent. Mean annual precipitation is 483 mm (19 inches) and mean annual temperature is 16 degrees C (61 F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R077CY022TX"
+            ],
+            "ecoclassname": [
+              "Deep Hardland 16-21 Pz"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY022TX"
+            ]
+          }
+        },
+        "id": {
+          "component": "Estacado",
+          "name": "Estacado",
+          "rank_loc": "6",
+          "score_loc": 0.021
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25623213",
+            "componentKind": "Series",
+            "componentPct": 6,
+            "dataSource": "SSURGO",
+            "distance": 90.0,
+            "irrcapcl": "3",
+            "irrcapscl": "e",
+            "irrcapunit": "None",
+            "mapunitID": "369839",
+            "minCompDistance": 90.0,
+            "nirrcapcl": "3",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=estacado",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#estacado",
+            "slope": 2.0,
+            "taxsubgrp": "Aridic Paleustolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Estacado series consists of very deep, well drained, moderately slowly permeable soils that formed in calcareous, loamy eolian deposits of the Blackwater Draw Formation of Pleistocene age. These soils are on nearly level to gently sloping plains and playa slopes. Slope ranges from 0 to 5 percent. Mean annual precipitation is 483 mm (19 in) and mean annual air temperature is 16 degrees C (61 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R077CY027TX"
+            ],
+            "ecoclassname": [
+              "Playa 16-21 Pz"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY027TX"
+            ]
+          }
+        },
+        "id": {
+          "component": "Friona",
+          "name": "Friona",
+          "rank_loc": "7",
+          "score_loc": 0.014
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25623214",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "SSURGO",
+            "distance": 90.0,
+            "irrcapcl": "3",
+            "irrcapscl": "e",
+            "irrcapunit": "None",
+            "mapunitID": "369839",
+            "minCompDistance": 90.0,
+            "nirrcapcl": "3",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=friona",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#friona",
+            "slope": 2.0,
+            "taxsubgrp": "Petrocalcic Paleustolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Friona series consists of soils that are moderately deep to a petrocalcic horizon. They are well drained, moderately permeable soils that formed in loamy eolian sediments from the Blackwater Draw Formation of Pleistocene age. These soils are on nearly level to gently sloping plains. Slope ranges from 0 to 3 percent. Mean annual precipitation is about 483 mm (19 in), and mean annual air temperature is about 16 degrees C (61 degrees F)"
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R077CY027TX"
+            ],
+            "ecoclassname": [
+              "Playa 16-21 Pz"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY027TX"
+            ]
+          }
+        },
+        "id": {
+          "component": "Amarillo",
+          "name": "Amarillo",
+          "rank_loc": "8",
+          "score_loc": 0.011
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25623212",
+            "componentKind": "Series",
+            "componentPct": 4,
+            "dataSource": "SSURGO",
+            "distance": 90.0,
+            "irrcapcl": "3",
+            "irrcapscl": "e",
+            "irrcapunit": "None",
+            "mapunitID": "369839",
+            "minCompDistance": 90.0,
+            "nirrcapcl": "3",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=amarillo",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#amarillo",
+            "slope": 2.0,
+            "taxsubgrp": "Aridic Paleustalfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Amarillo series consists of very deep, well drained, moderately permeable soils. These soils formed in loamy eolian deposits from the Blackwater Draw Formation of Pleistocene age. Amarillo soils are on nearly level to gently sloping plains and playa slopes. Slope ranges from 0 to 5 percent. Mean annual precipitation is 483 mm (19 in) and the mean annual air temperature is 16 degrees C (61 degrees F)"
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R077CY022TX"
+            ],
+            "ecoclassname": [
+              "Deep Hardland 16-21 Pz"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY022TX"
+            ]
+          }
+        },
+        "id": {
+          "component": "Pullman",
+          "name": "Pullman",
+          "rank_loc": "9",
+          "score_loc": 0.011
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25623298",
+            "componentKind": "Series",
+            "componentPct": 7,
+            "dataSource": "SSURGO",
+            "distance": 204.0,
+            "irrcapcl": "3",
+            "irrcapscl": "s",
+            "irrcapunit": "None",
+            "mapunitID": "369851",
+            "minCompDistance": 204.0,
+            "nirrcapcl": "3",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=pullman",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#pullman",
+            "slope": 0.4,
+            "taxsubgrp": "Torrertic Paleustolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Pullman series consists of very deep, well drained, slowly permeable soils that formed in clayey eolian deposits from the Blackwater Draw Formation of Pleistocene age. These soils occur on nearly level to very gently sloping plains or playa slopes. Slope ranges from 0 to 3 percent. The mean annual precipitation is about 483 mm (19 in) and the mean annual temperature is about 16 degrees C (60 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R077CY022TX"
+            ],
+            "ecoclassname": [
+              "Deep Hardland 16-21 Pz"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY022TX"
+            ]
+          }
+        },
+        "id": {
+          "component": "Acuff",
+          "name": "Acuff2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.253
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25623297",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "SSURGO",
+            "distance": 204.0,
+            "irrcapcl": "2",
+            "irrcapscl": "s",
+            "irrcapunit": "None",
+            "mapunitID": "369851",
+            "minCompDistance": 90.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=acuff",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#acuff",
+            "slope": 0.5,
+            "taxsubgrp": "Aridic Paleustolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Acuff series consists of very deep, well drained, moderately permeable soils. These soils formed in loamy eolian sediments in the Blackwater Draw Formation of Pleistocene age. Acuff soils are on nearly level to gently sloping plains and playa slopes. Slope ranges from 0 to 5 percent. Mean annual precipitation is about 483 mm (19 in) and the mean annual air temperature is about 16 degrees C (60 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R077CY022TX"
+            ],
+            "ecoclassname": [
+              "Deep Hardland 16-21 Pz"
+            ],
+            "edit_url": [
+              "https://edit.jornada.nmsu.edu/catalogs/esd/077C/R077CY022TX"
+            ]
+          }
+        },
+        "id": {
+          "component": "Estacado",
+          "name": "Estacado2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.021
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25623296",
+            "componentKind": "Series",
+            "componentPct": 3,
+            "dataSource": "SSURGO",
+            "distance": 204.0,
+            "irrcapcl": "1",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "369851",
+            "minCompDistance": 90.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "c",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=estacado",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#estacado",
+            "slope": 0.5,
+            "taxsubgrp": "Aridic Paleustolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Estacado series consists of very deep, well drained, moderately slowly permeable soils that formed in calcareous, loamy eolian deposits of the Blackwater Draw Formation of Pleistocene age. These soils are on nearly level to gently sloping plains and playa slopes. Slope ranges from 0 to 5 percent. Mean annual precipitation is 483 mm (19 in) and mean annual air temperature is 16 degrees C (61 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      }
+    ]
+  },
+  "rank": {
+    "metadata": {
+      "location": "us",
+      "model": "v2"
+    },
+    "soilRank": [
+      {
+        "component": "Randall",
+        "componentData": "Missing Data",
+        "componentID": 25623332,
+        "name": "Randall",
+        "not_displayed": false,
+        "rank_data": "8",
+        "rank_data_group": "8",
+        "rank_data_loc": "1",
+        "rank_data_loc_group": "1",
+        "rank_loc": "1",
+        "rank_loc_group": "1",
+        "score_data": 0.427,
+        "score_data_group": 0.427,
+        "score_data_loc": 0.451,
+        "score_data_loc_group": 0.451,
+        "score_loc": 0.474,
+        "score_loc_group": 0.474
+      },
+      {
+        "component": "Acuff",
+        "componentData": "Data Complete",
+        "componentID": 25623297,
+        "name": "Acuff2",
+        "not_displayed": false,
+        "rank_data": "1",
+        "rank_data_group": "1",
+        "rank_data_loc": "2",
+        "rank_data_loc_group": "2",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "2",
+        "score_data": 0.593,
+        "score_data_group": 0.593,
+        "score_data_loc": 0.423,
+        "score_data_loc_group": 0.423,
+        "score_loc": 0.253,
+        "score_loc_group": 0.253
+      },
+      {
+        "component": "Olton",
+        "componentData": "Data Complete",
+        "componentID": 25623299,
+        "name": "Olton",
+        "not_displayed": false,
+        "rank_data": "7",
+        "rank_data_group": "7",
+        "rank_data_loc": "3",
+        "rank_data_loc_group": "3",
+        "rank_loc": "3",
+        "rank_loc_group": "3",
+        "score_data": 0.46,
+        "score_data_group": 0.46,
+        "score_data_loc": 0.293,
+        "score_data_loc_group": 0.293,
+        "score_loc": 0.126,
+        "score_loc_group": 0.126
+      },
+      {
+        "component": "Friona",
+        "componentData": "Data Complete",
+        "componentID": 25623214,
+        "name": "Friona",
+        "not_displayed": false,
+        "rank_data": "2",
+        "rank_data_group": "2",
+        "rank_data_loc": "4",
+        "rank_data_loc_group": "4",
+        "rank_loc": "7",
+        "rank_loc_group": "7",
+        "score_data": 0.57,
+        "score_data_group": 0.57,
+        "score_data_loc": 0.292,
+        "score_data_loc_group": 0.292,
+        "score_loc": 0.014,
+        "score_loc_group": 0.014
+      },
+      {
+        "component": "Amarillo",
+        "componentData": "Data Complete",
+        "componentID": 25623212,
+        "name": "Amarillo",
+        "not_displayed": false,
+        "rank_data": "3",
+        "rank_data_group": "3",
+        "rank_data_loc": "5",
+        "rank_data_loc_group": "5",
+        "rank_loc": "8",
+        "rank_loc_group": "8",
+        "score_data": 0.553,
+        "score_data_group": 0.553,
+        "score_data_loc": 0.282,
+        "score_data_loc_group": 0.282,
+        "score_loc": 0.011,
+        "score_loc_group": 0.011
+      },
+      {
+        "component": "Lockney",
+        "componentData": "Missing Data",
+        "componentID": 25623334,
+        "name": "Lockney",
+        "not_displayed": false,
+        "rank_data": "5",
+        "rank_data_group": "5",
+        "rank_data_loc": "6",
+        "rank_data_loc_group": "6",
+        "rank_loc": "5",
+        "rank_loc_group": "5",
+        "score_data": 0.533,
+        "score_data_group": 0.533,
+        "score_data_loc": 0.281,
+        "score_data_loc_group": 0.281,
+        "score_loc": 0.03,
+        "score_loc_group": 0.03
+      },
+      {
+        "component": "Pullman",
+        "componentData": "Data Complete",
+        "componentID": 25623298,
+        "name": "Pullman",
+        "not_displayed": false,
+        "rank_data": "4",
+        "rank_data_group": "4",
+        "rank_data_loc": "7",
+        "rank_data_loc_group": "7",
+        "rank_loc": "9",
+        "rank_loc_group": "9",
+        "score_data": 0.539,
+        "score_data_group": 0.539,
+        "score_data_loc": 0.275,
+        "score_data_loc_group": 0.275,
+        "score_loc": 0.011,
+        "score_loc_group": 0.011
+      },
+      {
+        "component": "Estacado",
+        "componentData": "Data Complete",
+        "componentID": 25623213,
+        "name": "Estacado",
+        "not_displayed": false,
+        "rank_data": "6",
+        "rank_data_group": "6",
+        "rank_data_loc": "8",
+        "rank_data_loc_group": "8",
+        "rank_loc": "6",
+        "rank_loc_group": "6",
+        "score_data": 0.492,
+        "score_data_group": 0.492,
+        "score_data_loc": 0.257,
+        "score_data_loc_group": 0.257,
+        "score_loc": 0.021,
+        "score_loc_group": 0.021
+      },
+      {
+        "component": "Mclean",
+        "componentData": "Missing Data",
+        "componentID": 25623333,
+        "name": "Mclean",
+        "not_displayed": false,
+        "rank_data": "9",
+        "rank_data_group": "9",
+        "rank_data_loc": "9",
+        "rank_data_loc_group": "9",
+        "rank_loc": "4",
+        "rank_loc_group": "4",
+        "score_data": 0.411,
+        "score_data_group": 0.411,
+        "score_data_loc": 0.235,
+        "score_data_loc_group": 0.235,
+        "score_loc": 0.059,
+        "score_loc_group": 0.059
+      },
+      {
+        "component": "Acuff",
+        "componentData": "Data Complete",
+        "componentID": 25623211,
+        "name": "Acuff",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "1",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "2",
+        "rank_loc": "2",
+        "rank_loc_group": "2",
+        "score_data": 0.576,
+        "score_data_group": 0.593,
+        "score_data_loc": 0.414,
+        "score_data_loc_group": 0.423,
+        "score_loc": 0.253,
+        "score_loc_group": 0.253
+      },
+      {
+        "component": "Estacado",
+        "componentData": "Data Complete",
+        "componentID": 25623296,
+        "name": "Estacado2",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "6",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "8",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "6",
+        "score_data": 0.441,
+        "score_data_group": 0.492,
+        "score_data_loc": 0.231,
+        "score_data_loc_group": 0.257,
+        "score_loc": 0.021,
+        "score_loc_group": 0.021
+      }
+    ]
+  }
 }

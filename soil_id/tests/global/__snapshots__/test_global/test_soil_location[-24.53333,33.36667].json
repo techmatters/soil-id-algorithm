@@ -1235,8 +1235,11 @@
         "rank_loc": "2",
         "rank_loc_group": "2",
         "score_data": 0.9,
+        "score_data_group": 0.9,
         "score_data_loc": 0.539,
-        "score_loc": 0.178
+        "score_data_loc_group": 0.539,
+        "score_loc": 0.178,
+        "score_loc_group": 0.178
       },
       {
         "component": "Haplic solonetz",
@@ -1251,8 +1254,11 @@
         "rank_loc": "4",
         "rank_loc_group": "4",
         "score_data": 0.9,
+        "score_data_group": 0.9,
         "score_data_loc": 0.514,
-        "score_loc": 0.127
+        "score_data_loc_group": 0.514,
+        "score_loc": 0.127,
+        "score_loc_group": 0.127
       },
       {
         "component": "Mollic fluvisols",
@@ -1267,8 +1273,11 @@
         "rank_loc": "5",
         "rank_loc_group": "5",
         "score_data": 0.9,
+        "score_data_group": 0.9,
         "score_data_loc": 0.505,
-        "score_loc": 0.109
+        "score_data_loc_group": 0.505,
+        "score_loc": 0.109,
+        "score_loc_group": 0.109
       },
       {
         "component": "Ferralic arenosols",
@@ -1283,8 +1292,11 @@
         "rank_loc": "6",
         "rank_loc_group": "6",
         "score_data": 0.9,
+        "score_data_group": 0.9,
         "score_data_loc": 0.5,
-        "score_loc": 0.1
+        "score_data_loc_group": 0.5,
+        "score_loc": 0.1,
+        "score_loc_group": 0.1
       },
       {
         "component": "Eutric planosols",
@@ -1299,8 +1311,11 @@
         "rank_loc": "7",
         "rank_loc_group": "7",
         "score_data": 0.9,
+        "score_data_group": 0.9,
         "score_data_loc": 0.487,
-        "score_loc": 0.073
+        "score_data_loc_group": 0.487,
+        "score_loc": 0.073,
+        "score_loc_group": 0.073
       },
       {
         "component": "Eutric fluvisols",
@@ -1315,8 +1330,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "3",
         "score_data": 0.813,
+        "score_data_group": 0.813,
         "score_data_loc": 0.47,
-        "score_loc": 0.127
+        "score_data_loc_group": 0.47,
+        "score_loc": 0.127,
+        "score_loc_group": 0.127
       },
       {
         "component": "Salic fluvisols",
@@ -1331,8 +1349,11 @@
         "rank_loc": "1",
         "rank_loc_group": "1",
         "score_data": 0.756,
+        "score_data_group": 0.756,
         "score_data_loc": 0.469,
-        "score_loc": 0.182
+        "score_data_loc_group": 0.469,
+        "score_loc": 0.182,
+        "score_loc_group": 0.182
       },
       {
         "component": "Gleyic solonetz",
@@ -1347,8 +1368,11 @@
         "rank_loc": "8",
         "rank_loc_group": "8",
         "score_data": 0.576,
+        "score_data_group": 0.576,
         "score_data_loc": 0.315,
-        "score_loc": 0.055
+        "score_data_loc_group": 0.315,
+        "score_loc": 0.055,
+        "score_loc_group": 0.055
       },
       {
         "component": "Umbric gleysols",
@@ -1363,8 +1387,11 @@
         "rank_loc": "9",
         "rank_loc_group": "9",
         "score_data": 0.576,
+        "score_data_group": 0.576,
         "score_data_loc": 0.306,
-        "score_loc": 0.036
+        "score_data_loc_group": 0.306,
+        "score_loc": 0.036,
+        "score_loc_group": 0.036
       },
       {
         "component": "Gleyic arenosols",
@@ -1379,8 +1406,11 @@
         "rank_loc": "10",
         "rank_loc_group": "10",
         "score_data": 0.244,
+        "score_data_group": 0.244,
         "score_data_loc": 0.129,
-        "score_loc": 0.013
+        "score_data_loc_group": 0.129,
+        "score_loc": 0.013,
+        "score_loc_group": 0.013
       },
       {
         "component": "Cambic arenosols",
@@ -1395,8 +1425,11 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "2",
         "score_data": 0.576,
+        "score_data_group": 0.9,
         "score_data_loc": 0.377,
-        "score_loc": 0.178
+        "score_data_loc_group": 0.539,
+        "score_loc": 0.178,
+        "score_loc_group": 0.178
       },
       {
         "component": "Eutric fluvisols",
@@ -1411,8 +1444,11 @@
         "rank_loc": "3",
         "rank_loc_group": "3",
         "score_data": 0.244,
+        "score_data_group": 0.813,
         "score_data_loc": 0.186,
-        "score_loc": 0.127
+        "score_data_loc_group": 0.47,
+        "score_loc": 0.127,
+        "score_loc_group": 0.127
       }
     ]
   }

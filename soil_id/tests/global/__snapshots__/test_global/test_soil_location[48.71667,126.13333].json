@@ -735,8 +735,11 @@
         "rank_loc": 3,
         "rank_loc_group": 3,
         "score_data": 0.431,
+        "score_data_group": 0.431,
         "score_data_loc": 0.298,
-        "score_loc": 0.165
+        "score_data_loc_group": 0.298,
+        "score_loc": 0.165,
+        "score_loc_group": 0.165
       },
       {
         "component": "Gleyic phaeozems",
@@ -751,8 +754,11 @@
         "rank_loc": 4,
         "rank_loc_group": 4,
         "score_data": 0.385,
+        "score_data_group": 0.385,
         "score_data_loc": 0.247,
-        "score_loc": 0.11
+        "score_data_loc_group": 0.247,
+        "score_loc": 0.11,
+        "score_loc_group": 0.11
       },
       {
         "component": "Eutric gleysols",
@@ -767,8 +773,11 @@
         "rank_loc": 5,
         "rank_loc_group": 5,
         "score_data": 0.431,
+        "score_data_group": 0.431,
         "score_data_loc": 0.243,
-        "score_loc": 0.055
+        "score_data_loc_group": 0.243,
+        "score_loc": 0.055,
+        "score_loc_group": 0.055
       },
       {
         "component": "Umbric andosols",
@@ -783,8 +792,11 @@
         "rank_loc": 7,
         "rank_loc_group": 7,
         "score_data": 0.385,
+        "score_data_group": 0.385,
         "score_data_loc": 0.22,
-        "score_loc": 0.055
+        "score_data_loc_group": 0.22,
+        "score_loc": 0.055,
+        "score_loc_group": 0.055
       },
       {
         "component": "Haplic andosols",
@@ -799,8 +811,11 @@
         "rank_loc": 1,
         "rank_loc_group": 1,
         "score_data": 0.068,
+        "score_data_group": 0.068,
         "score_data_loc": 0.217,
-        "score_loc": 0.366
+        "score_data_loc_group": 0.217,
+        "score_loc": 0.366,
+        "score_loc_group": 0.366
       },
       {
         "component": "Haplic phaeozems",
@@ -815,8 +830,11 @@
         "rank_loc": 2,
         "rank_loc_group": 2,
         "score_data": 0.068,
+        "score_data_group": 0.068,
         "score_data_loc": 0.131,
-        "score_loc": 0.194
+        "score_data_loc_group": 0.131,
+        "score_loc": 0.194,
+        "score_loc_group": 0.194
       },
       {
         "component": "Mollic gleysols",
@@ -831,8 +849,11 @@
         "rank_loc": 6,
         "rank_loc_group": 6,
         "score_data": 0.068,
+        "score_data_group": 0.068,
         "score_data_loc": 0.062,
-        "score_loc": 0.055
+        "score_data_loc_group": 0.062,
+        "score_loc": 0.055,
+        "score_loc_group": 0.055
       }
     ]
   }

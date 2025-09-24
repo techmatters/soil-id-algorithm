@@ -27,6 +27,7 @@ import pandas as pd
 
 from .color import calculate_deltaE2000
 from .db import extract_hwsd2_data, fetch_table_from_db, get_WRB_descriptions, getSG_descriptions
+from .rank_utils import finalize_rank_output
 from .services import get_soilgrids_classification_data, get_soilgrids_property_data
 from .utils import (
     adjust_depth_interval,
@@ -1207,38 +1208,7 @@ def rank_soils_global(
         ]
     ].fillna(0.0)
 
-    # Construct the output format
-    Rank = [
-        {
-            "name": row.compname.capitalize(),
-            "component": row.compname_grp.capitalize(),
-            "componentID": row.cokey,
-            "score_data_loc": (
-                "" if row.missing_status == "Location data only" else round(row.Score_Data_Loc, 3)
-            ),
-            "rank_data_loc": (
-                "" if row.missing_status == "Location data only" else row.Rank_Data_Loc
-            ),
-            "score_data": (
-                "" if row.missing_status == "Location data only" else round(row.Score_Data, 3)
-            ),
-            "rank_data": "" if row.missing_status == "Location data only" else row.Rank_Data,
-            "score_loc": round(row.cond_prob, 3),
-            "rank_loc": row.Rank_Loc,
-            "componentData": row.missing_status,
-        }
-        for _, row in D_final_loc.iterrows()
-    ]
-
-    output_data = {
-        "metadata": {
-            "location": "global",
-            "model": "v2",
-        },
-        "soilRank": Rank,
-    }
-
-    return output_data
+    return finalize_rank_output(D_final_loc, location="global")
 
 
 ##################################################################################################

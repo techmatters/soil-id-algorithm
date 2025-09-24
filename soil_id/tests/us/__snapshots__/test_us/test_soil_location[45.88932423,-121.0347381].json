@@ -141,24 +141,38 @@
         "componentData": NaN,
         "componentID": 25483316,
         "name": "Gunn2",
+        "not_displayed": false,
         "rank_data": "1",
+        "rank_data_group": "1",
         "rank_data_loc": "1",
+        "rank_data_loc_group": "1",
         "rank_loc": "Not Displayed",
+        "rank_loc_group": "1",
         "score_data": 0.37,
+        "score_data_group": 0.37,
         "score_data_loc": 0.649,
-        "score_loc": 0.929
+        "score_data_loc_group": 0.649,
+        "score_loc": 0.929,
+        "score_loc_group": 0.929
       },
       {
         "component": "Gunn",
         "componentData": "Data Complete",
         "componentID": 25483307,
         "name": "Gunn",
+        "not_displayed": true,
         "rank_data": "Not Displayed",
+        "rank_data_group": "1",
         "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "1",
         "rank_loc": "1",
+        "rank_loc_group": "1",
         "score_data": 0.312,
+        "score_data_group": 0.37,
         "score_data_loc": 0.62,
-        "score_loc": 0.929
+        "score_data_loc_group": 0.649,
+        "score_loc": 0.929,
+        "score_loc_group": 0.929
       }
     ]
   }

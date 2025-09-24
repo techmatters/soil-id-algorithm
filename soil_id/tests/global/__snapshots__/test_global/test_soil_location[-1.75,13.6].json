@@ -731,7 +731,7 @@
         "rank_data_loc": "1",
         "rank_loc": 2,
         "score_data": 0.571,
-        "score_data_loc": 1.0,
+        "score_data_loc": 0.435,
         "score_loc": 0.3
       },
       {
@@ -743,7 +743,7 @@
         "rank_data_loc": "2",
         "rank_loc": 1,
         "score_data": 0.35,
-        "score_data_loc": 0.9,
+        "score_data_loc": 0.392,
         "score_loc": 0.433
       },
       {
@@ -755,7 +755,7 @@
         "rank_data_loc": "3",
         "rank_loc": 4,
         "score_data": 0.621,
-        "score_data_loc": 0.809,
+        "score_data_loc": 0.352,
         "score_loc": 0.083
       },
       {
@@ -767,7 +767,7 @@
         "rank_data_loc": "4",
         "rank_loc": 5,
         "score_data": 0.571,
-        "score_data_loc": 0.675,
+        "score_data_loc": 0.294,
         "score_loc": 0.017
       },
       {
@@ -779,7 +779,7 @@
         "rank_data_loc": "5",
         "rank_loc": 6,
         "score_data": 0.519,
-        "score_data_loc": 0.615,
+        "score_data_loc": 0.268,
         "score_loc": 0.017
       },
       {
@@ -791,7 +791,7 @@
         "rank_data_loc": "6",
         "rank_loc": 7,
         "score_data": 0.517,
-        "score_data_loc": 0.613,
+        "score_data_loc": 0.267,
         "score_loc": 0.017
       },
       {
@@ -803,7 +803,7 @@
         "rank_data_loc": "7",
         "rank_loc": 3,
         "score_data": 0.0,
-        "score_data_loc": 0.153,
+        "score_data_loc": 0.067,
         "score_loc": 0.133
       }
     ]

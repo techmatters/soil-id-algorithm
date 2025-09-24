@@ -665,8 +665,8 @@
         "rank_data": "8",
         "rank_data_loc": "1",
         "rank_loc": "1",
-        "score_data": 0.429,
-        "score_data_loc": 0.452,
+        "score_data": 0.427,
+        "score_data_loc": 0.451,
         "score_loc": 0.474
       },
       {
@@ -677,21 +677,9 @@
         "rank_data": "1",
         "rank_data_loc": "2",
         "rank_loc": "Not Displayed",
-        "score_data": 0.591,
-        "score_data_loc": 0.422,
+        "score_data": 0.593,
+        "score_data_loc": 0.423,
         "score_loc": 0.253
-      },
-      {
-        "component": "Friona",
-        "componentData": "Data Complete",
-        "componentID": 25623214,
-        "name": "Friona",
-        "rank_data": "2",
-        "rank_data_loc": "3",
-        "rank_loc": "7",
-        "score_data": 0.571,
-        "score_data_loc": 0.293,
-        "score_loc": 0.014
       },
       {
         "component": "Olton",
@@ -699,11 +687,23 @@
         "componentID": 25623299,
         "name": "Olton",
         "rank_data": "7",
-        "rank_data_loc": "4",
+        "rank_data_loc": "3",
         "rank_loc": "3",
-        "score_data": 0.457,
-        "score_data_loc": 0.292,
+        "score_data": 0.46,
+        "score_data_loc": 0.293,
         "score_loc": 0.126
+      },
+      {
+        "component": "Friona",
+        "componentData": "Data Complete",
+        "componentID": 25623214,
+        "name": "Friona",
+        "rank_data": "2",
+        "rank_data_loc": "4",
+        "rank_loc": "7",
+        "score_data": 0.57,
+        "score_data_loc": 0.292,
+        "score_loc": 0.014
       },
       {
         "component": "Amarillo",
@@ -713,8 +713,8 @@
         "rank_data": "3",
         "rank_data_loc": "5",
         "rank_loc": "8",
-        "score_data": 0.554,
-        "score_data_loc": 0.283,
+        "score_data": 0.553,
+        "score_data_loc": 0.282,
         "score_loc": 0.011
       },
       {
@@ -725,8 +725,8 @@
         "rank_data": "5",
         "rank_data_loc": "6",
         "rank_loc": "5",
-        "score_data": 0.531,
-        "score_data_loc": 0.28,
+        "score_data": 0.533,
+        "score_data_loc": 0.281,
         "score_loc": 0.03
       },
       {
@@ -737,8 +737,8 @@
         "rank_data": "4",
         "rank_data_loc": "7",
         "rank_loc": "9",
-        "score_data": 0.536,
-        "score_data_loc": 0.274,
+        "score_data": 0.539,
+        "score_data_loc": 0.275,
         "score_loc": 0.011
       },
       {
@@ -749,7 +749,7 @@
         "rank_data": "6",
         "rank_data_loc": "8",
         "rank_loc": "6",
-        "score_data": 0.493,
+        "score_data": 0.492,
         "score_data_loc": 0.257,
         "score_loc": 0.021
       },
@@ -761,8 +761,8 @@
         "rank_data": "9",
         "rank_data_loc": "9",
         "rank_loc": "4",
-        "score_data": 0.412,
-        "score_data_loc": 0.236,
+        "score_data": 0.411,
+        "score_data_loc": 0.235,
         "score_loc": 0.059
       },
       {
@@ -773,8 +773,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "2",
-        "score_data": 0.578,
-        "score_data_loc": 0.416,
+        "score_data": 0.576,
+        "score_data_loc": 0.414,
         "score_loc": 0.253
       },
       {
@@ -785,8 +785,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.443,
-        "score_data_loc": 0.232,
+        "score_data": 0.441,
+        "score_data_loc": 0.231,
         "score_loc": 0.021
       }
     ]

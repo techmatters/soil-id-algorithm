@@ -399,7 +399,7 @@
         "rank_data_loc": "1",
         "rank_loc": 1,
         "score_data": 1.0,
-        "score_data_loc": 1.0,
+        "score_data_loc": 0.763,
         "score_loc": 0.526
       },
       {
@@ -411,7 +411,7 @@
         "rank_data_loc": "2",
         "rank_loc": 2,
         "score_data": 0.437,
-        "score_data_loc": 0.524,
+        "score_data_loc": 0.4,
         "score_loc": 0.363
       },
       {
@@ -423,7 +423,7 @@
         "rank_data_loc": "3",
         "rank_loc": 4,
         "score_data": 0.437,
-        "score_data_loc": 0.295,
+        "score_data_loc": 0.225,
         "score_loc": 0.012
       },
       {

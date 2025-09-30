@@ -217,7 +217,7 @@ def list_soils(lon, lat):
     # Add distance column from mucompdata_pd using cokey link
     muhorzdata_pd = pd.merge(
         muhorzdata_pd,
-        mucompdata_pd[["cokey", "distance", "distance_score"]], 
+        mucompdata_pd[["cokey", "distance", "distance_score"]],
         on="cokey",
         how="left",
     )
@@ -234,7 +234,9 @@ def list_soils(lon, lat):
     mucompdata_pd = mucompdata_pd[mucompdata_pd["cokey"].isin(comp_key)]
 
     # Sort mucompdata_pd based on 'cond_prob' and 'distance'
-    mucompdata_pd.sort_values(["cond_prob", "distance", "compname"], ascending=[False, True, True], inplace=True)
+    mucompdata_pd.sort_values(
+        ["cond_prob", "distance", "compname"], ascending=[False, True, True], inplace=True
+    )
     mucompdata_pd.reset_index(drop=True, inplace=True)
 
     # Duplicate the 'compname' column for grouping purposes
@@ -258,16 +260,13 @@ def list_soils(lon, lat):
     component_names = mucompdata_pd["compname"].tolist()
     name_counts = collections.Counter(component_names)
 
-    # Track which indices have been processed for each name
-    processed_indices = {}
-    
     for name, count in sorted(name_counts.items()):  # Sort for deterministic order
         if count > 1:  # If a component name is duplicated
             # Find all indices for this name
             indices = [i for i, comp_name in enumerate(component_names) if comp_name == name]
             # Sort indices for deterministic order
             indices.sort()
-            
+
             # Add suffixes to all occurrences except the first
             for i, idx in enumerate(indices):
                 if i > 0:  # Skip the first occurrence (keep original name)
@@ -982,10 +981,11 @@ def list_soils(lon, lat):
 
             for index, group in enumerate(OSDhorzdata_group_cokey):
                 cokey = group["cokey"].iloc[0]  # Get the cokey for this group
-                
+
                 # Check if compkind is not in OSD_compkind or if series contains any null values
                 if (
-                    mucompdata_pd[mucompdata_pd["cokey"] == cokey]["compkind"].iloc[0] not in OSD_compkind
+                    mucompdata_pd[mucompdata_pd["cokey"] == cokey]["compkind"].iloc[0]
+                    not in OSD_compkind
                     or group["series"].isnull().any()
                 ):
                     cokey_to_urls[cokey] = {"sde": "", "see": ""}
@@ -998,7 +998,7 @@ def list_soils(lon, lat):
                     # Create URLs
                     cokey_to_urls[cokey] = {
                         "sde": f"https://casoilresource.lawr.ucdavis.edu/sde/?series={comp}",
-                        "see": f"https://casoilresource.lawr.ucdavis.edu/see/#{comp}"
+                        "see": f"https://casoilresource.lawr.ucdavis.edu/see/#{comp}",
                     }
 
         else:
@@ -1574,7 +1574,7 @@ def rank_soils(
     # Check if list_output_data is a string (error message) instead of expected object
     if isinstance(list_output_data, str):
         return {"error": f"Cannot rank soils: {list_output_data}"}
-    
+
     # ---------------------------------------------------------------------------------------
     # ------ Load in user data --------#
     # Initialize the DataFrame from the input data
@@ -2061,12 +2061,14 @@ def rank_soils(
 
     # Concatenate the sorted and ranked groups
     D_final = pd.concat(soilIDList_data).reset_index(drop=True)
-    
+
     # Merge with the Rank_Filter data
     D_final = pd.merge(D_final, Rank_Filter, on="compname", how="left")
 
     # Sort dataframe to correctly assign Rank_Data
-    D_final = D_final.sort_values(by=["soilID_rank_data", "Score_Data", "compname"], ascending=[False, False, True])
+    D_final = D_final.sort_values(
+        by=["soilID_rank_data", "Score_Data", "compname"], ascending=[False, False, True]
+    )
 
     # Assigning rank based on the soilID rank and rank status
     rank_id = 1
@@ -2160,7 +2162,9 @@ def rank_soils(
     soilIDList_out = []
 
     for _, group in D_final_loc.groupby("compname_grp", sort=True):
-        group = group.sort_values(["Score_Data_Loc", "compname"], ascending=[False, True]).reset_index(drop=True)
+        group = group.sort_values(
+            ["Score_Data_Loc", "compname"], ascending=[False, True]
+        ).reset_index(drop=True)
         group["soilID_rank_final"] = [True if idx == 0 else False for idx in range(len(group))]
         soilIDList_out.append(group)
 

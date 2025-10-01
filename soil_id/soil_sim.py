@@ -307,15 +307,19 @@ def soil_sim(muhorzdata_pd):
                 ilr2_values = simulated_txt_ilr[:, 1]
 
             ilr1_l, ilr1_r, ilr1_h = (
-                ilr1_values.min(),
+                ilr1_values.min(initial=0.0),
                 np.median(ilr1_values),
-                ilr1_values.max(),
+                ilr1_values.max(initial=0.0),
             )
+            if np.isnan(ilr1_r):
+                ilr1_r = 0.0
             ilr2_l, ilr2_r, ilr2_h = (
-                ilr2_values.min(),
+                ilr2_values.min(initial=0.0),
                 np.median(ilr2_values),
-                ilr2_values.max(),
+                ilr2_values.max(initial=0.0),
             )
+            if np.isnan(ilr2_r):
+                ilr2_r = 0.0
 
             # Create the list of parameters.
             if is_constant:

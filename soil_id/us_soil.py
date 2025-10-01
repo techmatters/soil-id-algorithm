@@ -29,6 +29,7 @@ from pandas import json_normalize
 import soil_id.config
 
 from .color import getProfileLAB, lab2munsell, munsell2rgb
+from .rank_utils import finalize_rank_output
 from .services import get_elev_data, get_soil_series_data, get_soilweb_data, sda_return
 from .soil_sim import soil_sim
 from .utils import (
@@ -2223,35 +2224,4 @@ def rank_soils(
         ]
     ].fillna(0.0)
 
-    # Construct the output format
-    Rank = [
-        {
-            "name": row.compname.capitalize(),
-            "component": row.compname_grp.capitalize(),
-            "componentID": row.cokey,
-            "score_data_loc": (
-                "" if row.missing_status == "Location data only" else round(row.Score_Data_Loc, 3)
-            ),
-            "rank_data_loc": (
-                "" if row.missing_status == "Location data only" else row.Rank_Data_Loc
-            ),
-            "score_data": (
-                "" if row.missing_status == "Location data only" else round(row.Score_Data, 3)
-            ),
-            "rank_data": "" if row.missing_status == "Location data only" else row.Rank_Data,
-            "score_loc": round(row.cond_prob, 3),
-            "rank_loc": row.Rank_Loc,
-            "componentData": row.missing_status,
-        }
-        for _, row in D_final_loc.iterrows()
-    ]
-
-    output_data = {
-        "metadata": {
-            "location": "us",
-            "model": "v2",
-        },
-        "soilRank": Rank,
-    }
-
-    return output_data
+    return finalize_rank_output(D_final_loc, location="us")

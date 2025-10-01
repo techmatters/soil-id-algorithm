@@ -546,39 +546,39 @@
     },
     "soilRank": [
       {
-        "component": "Lonely",
-        "componentData": "Data Complete",
-        "componentID": 25442849,
-        "name": "Lonely",
-        "rank_data": "6",
-        "rank_data_loc": "1",
-        "rank_loc": 1,
-        "score_data": 0.611,
-        "score_data_loc": 0.439,
-        "score_loc": 0.267
-      },
-      {
         "component": "Robson",
         "componentData": "Data Complete",
         "componentID": 25442848,
         "name": "Robson",
-        "rank_data": "2",
-        "rank_data_loc": "2",
+        "rank_data": "1",
+        "rank_data_loc": "1",
         "rank_loc": 2,
-        "score_data": 0.69,
-        "score_data_loc": 0.439,
+        "score_data": 0.761,
+        "score_data_loc": 0.474,
         "score_loc": 0.187
+      },
+      {
+        "component": "Lonely",
+        "componentData": "Data Complete",
+        "componentID": 25442849,
+        "name": "Lonely",
+        "rank_data": "5",
+        "rank_data_loc": "2",
+        "rank_loc": 1,
+        "score_data": 0.635,
+        "score_data_loc": 0.451,
+        "score_loc": 0.267
       },
       {
         "component": "Actem",
         "componentData": "Data Complete",
         "componentID": 25443068,
         "name": "Actem",
-        "rank_data": "1",
+        "rank_data": "2",
         "rank_data_loc": "3",
         "rank_loc": 5,
-        "score_data": 0.695,
-        "score_data_loc": 0.404,
+        "score_data": 0.711,
+        "score_data_loc": 0.412,
         "score_loc": 0.113
       },
       {
@@ -586,24 +586,12 @@
         "componentData": "Data Complete",
         "componentID": 25442616,
         "name": "Rinconflat",
-        "rank_data": "5",
+        "rank_data": "7",
         "rank_data_loc": "4",
         "rank_loc": 4,
-        "score_data": 0.621,
-        "score_data_loc": 0.367,
+        "score_data": 0.626,
+        "score_data_loc": 0.37,
         "score_loc": 0.113
-      },
-      {
-        "component": "Brace",
-        "componentData": "Data Complete",
-        "componentID": 25442637,
-        "name": "Brace",
-        "rank_data": "3",
-        "rank_data_loc": "5",
-        "rank_loc": 8,
-        "score_data": 0.656,
-        "score_data_loc": 0.351,
-        "score_loc": 0.046
       },
       {
         "component": "Raz",
@@ -611,10 +599,10 @@
         "componentID": 25442636,
         "name": "Raz",
         "rank_data": "4",
-        "rank_data_loc": "6",
+        "rank_data_loc": "5",
         "rank_loc": 7,
-        "score_data": 0.629,
-        "score_data_loc": 0.348,
+        "score_data": 0.645,
+        "score_data_loc": 0.356,
         "score_loc": 0.067
       },
       {
@@ -623,22 +611,34 @@
         "componentID": 25442630,
         "name": "Reallis",
         "rank_data": "8",
-        "rank_data_loc": "7",
+        "rank_data_loc": "6",
         "rank_loc": 3,
-        "score_data": 0.579,
-        "score_data_loc": 0.346,
+        "score_data": 0.595,
+        "score_data_loc": 0.354,
         "score_loc": 0.113
+      },
+      {
+        "component": "Brace",
+        "componentData": "Data Complete",
+        "componentID": 25442637,
+        "name": "Brace",
+        "rank_data": "3",
+        "rank_data_loc": "7",
+        "rank_loc": 8,
+        "score_data": 0.645,
+        "score_data_loc": 0.346,
+        "score_loc": 0.046
       },
       {
         "component": "Ausmus",
         "componentData": "Data Complete",
         "componentID": 25442629,
         "name": "Ausmus",
-        "rank_data": "7",
+        "rank_data": "6",
         "rank_data_loc": "8",
         "rank_loc": 9,
-        "score_data": 0.602,
-        "score_data_loc": 0.304,
+        "score_data": 0.63,
+        "score_data_loc": 0.318,
         "score_loc": 0.005
       },
       {
@@ -649,8 +649,8 @@
         "rank_data": "9",
         "rank_data_loc": "9",
         "rank_loc": 6,
-        "score_data": 0.437,
-        "score_data_loc": 0.262,
+        "score_data": 0.469,
+        "score_data_loc": 0.278,
         "score_loc": 0.087
       }
     ]

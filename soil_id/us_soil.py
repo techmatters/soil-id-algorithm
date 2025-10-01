@@ -664,9 +664,7 @@ def list_soils(lon, lat):
 
         if mucompdata_pd["compkind"].isin(OSD_compkind).any():
             # Group data by cokey
-            OSDhorzdata_group_cokey = [
-                group for _, group in OSDhorzdata_pd.groupby("cokey", sort=False)
-            ]
+            OSDhorzdata_group_cokey = [group for _, group in OSDhorzdata_pd.groupby("cokey")]
 
             # Initialize empty lists
             lab_lyrs = []
@@ -975,39 +973,40 @@ def list_soils(lon, lat):
                     munsell_lyrs.append(dict(zip(hzb_lyrs[index].keys(), munsell_dummy)))
 
             # Series URL Generation
-            # Initialize lists to store series URLs
-            SDE_URL = []
-            SEE_URL = []
+            # Create a mapping of cokey to URLs for safe lookup
+            cokey_to_urls = {}
 
-            # Group data by 'cokey'
-            OSDhorzdata_group_cokey = [g for _, g in OSDhorzdata_pd.groupby("cokey", sort=False)]
+            # Group data by 'cokey' - use sort=True for deterministic ordering
+            OSDhorzdata_group_cokey = [g for _, g in OSDhorzdata_pd.groupby("cokey", sort=True)]
 
             for index, group in enumerate(OSDhorzdata_group_cokey):
+                cokey = group["cokey"].iloc[0]  # Get the cokey for this group
+
                 # Check if compkind is not in OSD_compkind or if series contains any null values
                 if (
-                    mucompdata_pd.loc[index]["compkind"] not in OSD_compkind
+                    mucompdata_pd[mucompdata_pd["cokey"] == cokey]["compkind"].iloc[0]
+                    not in OSD_compkind
                     or group["series"].isnull().any()
                 ):
-                    SDE_URL.append("")
-                    SEE_URL.append("")
+                    cokey_to_urls[cokey] = {"sde": "", "see": ""}
                 else:
-                    # Extract compname, convert to lowercase, remove trailing numbers, and replace
-                    # spaces with underscores
+                    # Extract compname, convert to lowercase, remove trailing numbers, and replace spaces with underscores
                     comp = group["compname"].iloc[0].lower()
                     comp = re.sub(r"\d+$", "", comp)
                     comp = comp.replace(" ", "_")
 
-                    # Create and append URLs
-                    SDE_URL.append(f"https://casoilresource.lawr.ucdavis.edu/sde/?series={comp}")
-                    SEE_URL.append(f"https://casoilresource.lawr.ucdavis.edu/see/#{comp}")
+                    # Create URLs
+                    cokey_to_urls[cokey] = {
+                        "sde": f"https://casoilresource.lawr.ucdavis.edu/sde/?series={comp}",
+                        "see": f"https://casoilresource.lawr.ucdavis.edu/see/#{comp}",
+                    }
 
         else:
             # Initialize lists to store data layers and URLs
             lab_lyrs = []
             lab_intpl_lyrs = []
             munsell_lyrs = []
-            SDE_URL = []
-            SEE_URL = []
+            cokey_to_urls = {}
 
             # Iterate over each entry in mucompdata_pd
             for i in range(len(mucompdata_pd)):
@@ -1028,17 +1027,16 @@ def list_soils(lon, lat):
                 lab_lyrs.append(dict(zip(keys, lab_dummy)))
                 munsell_lyrs.append(dict(zip(keys, munsell_dummy)))
 
-                # Append empty URLs
-                SDE_URL.append("")
-                SEE_URL.append("")
+                # Create empty URLs for each component
+                cokey = mucompdata_pd.iloc[i]["cokey"]
+                cokey_to_urls[cokey] = {"sde": "", "see": ""}
 
     else:
         # Initialize lists to store data layers and URLs
         lab_lyrs = []
         lab_intpl_lyrs = []
         munsell_lyrs = []
-        SDE_URL = []
-        SEE_URL = []
+        cokey_to_urls = {}
 
         # Iterate over each entry in mucompdata_pd
         for i in range(len(mucompdata_pd)):
@@ -1059,9 +1057,9 @@ def list_soils(lon, lat):
             lab_lyrs.append(dict(zip(keys, lab_dummy)))
             munsell_lyrs.append(dict(zip(keys, munsell_dummy)))
 
-            # Append empty URLs
-            SDE_URL.append("")
-            SEE_URL.append("")
+            # Create empty URLs for each component
+            cokey = mucompdata_pd.iloc[i]["cokey"]
+            cokey_to_urls[cokey] = {"sde": "", "see": ""}
 
     # Subset datasets to exclude pedons without any depth information
     cokeys_with_depth = mucompdata_pd[mucompdata_pd["comp_max_bottom"] > 0].cokey.unique()
@@ -1422,7 +1420,7 @@ def list_soils(lon, lat):
     # Replace NaN values with an empty string
     mucompdata_cond_prob = mucompdata_cond_prob.fillna("")
 
-    # Generate the Site list
+    # Generate the Site list using cokey-based URL lookup
     Site = [
         {
             "siteData": {
@@ -1443,8 +1441,8 @@ def list_soils(lon, lat):
                 "irrcapscl": row["irrcapscl"],
                 "irrcapunit": row["irrcapunit"],
                 "taxsubgrp": row["taxsubgrp"],
-                "sdeURL": SDE_URL[idx],
-                "seeURL": SEE_URL[idx],
+                "sdeURL": cokey_to_urls.get(row["cokey"], {"sde": ""})["sde"],
+                "seeURL": cokey_to_urls.get(row["cokey"], {"see": ""})["see"],
             },
             "siteDescription": row["brief_narrative"],
         }

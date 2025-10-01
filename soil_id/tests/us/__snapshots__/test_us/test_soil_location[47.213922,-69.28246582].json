@@ -786,7 +786,7 @@
         "componentData": "Data Complete",
         "componentID": 25209556,
         "name": "Knob lock2",
-        "rank_data": "3",
+        "rank_data": "2",
         "rank_data_loc": "2",
         "rank_loc": "Not Displayed",
         "score_data": 0.667,
@@ -798,7 +798,7 @@
         "componentData": "Data Complete",
         "componentID": 25209557,
         "name": "Elliottsville",
-        "rank_data": "4",
+        "rank_data": "3",
         "rank_data_loc": "3",
         "rank_loc": "3",
         "score_data": 0.648,
@@ -810,11 +810,11 @@
         "componentData": "Data Complete",
         "componentID": 25209554,
         "name": "Monson",
-        "rank_data": "5",
+        "rank_data": "4",
         "rank_data_loc": "4",
         "rank_loc": "4",
-        "score_data": 0.616,
-        "score_data_loc": 0.354,
+        "score_data": 0.648,
+        "score_data_loc": 0.37,
         "score_loc": 0.092
       },
       {
@@ -822,11 +822,11 @@
         "componentData": "Data Complete",
         "componentID": 25209553,
         "name": "Abram",
-        "rank_data": "2",
+        "rank_data": "5",
         "rank_data_loc": "5",
         "rank_loc": "5",
-        "score_data": 0.671,
-        "score_data_loc": 0.353,
+        "score_data": 0.631,
+        "score_data_loc": 0.333,
         "score_loc": 0.036
       },
       {
@@ -838,7 +838,7 @@
         "rank_data_loc": "6",
         "rank_loc": "7",
         "score_data": 0.615,
-        "score_data_loc": 0.322,
+        "score_data_loc": 0.323,
         "score_loc": 0.03
       },
       {
@@ -849,8 +849,8 @@
         "rank_data": "7",
         "rank_data_loc": "7",
         "rank_loc": "6",
-        "score_data": 0.484,
-        "score_data_loc": 0.257,
+        "score_data": 0.497,
+        "score_data_loc": 0.264,
         "score_loc": 0.03
       },
       {
@@ -861,7 +861,7 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.715,
+        "score_data": 0.714,
         "score_data_loc": 0.496,
         "score_loc": 0.277
       },
@@ -873,8 +873,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "1",
-        "score_data": 0.558,
-        "score_data_loc": 0.441,
+        "score_data": 0.578,
+        "score_data_loc": 0.451,
         "score_loc": 0.325
       },
       {
@@ -885,8 +885,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.539,
-        "score_data_loc": 0.432,
+        "score_data": 0.55,
+        "score_data_loc": 0.437,
         "score_loc": 0.325
       },
       {
@@ -897,8 +897,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.546,
-        "score_data_loc": 0.379,
+        "score_data": 0.587,
+        "score_data_loc": 0.399,
         "score_loc": 0.211
       },
       {
@@ -909,8 +909,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.598,
-        "score_data_loc": 0.345,
+        "score_data": 0.587,
+        "score_data_loc": 0.339,
         "score_loc": 0.092
       },
       {
@@ -921,8 +921,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "Not Displayed",
-        "score_data": 0.469,
-        "score_data_loc": 0.252,
+        "score_data": 0.404,
+        "score_data_loc": 0.22,
         "score_loc": 0.036
       }
     ]

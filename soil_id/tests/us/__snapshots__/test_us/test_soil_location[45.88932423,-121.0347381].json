@@ -144,8 +144,8 @@
         "rank_data": "1",
         "rank_data_loc": "1",
         "rank_loc": "Not Displayed",
-        "score_data": 0.37,
-        "score_data_loc": 0.649,
+        "score_data": 0.481,
+        "score_data_loc": 0.705,
         "score_loc": 0.929
       },
       {
@@ -156,8 +156,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "1",
-        "score_data": 0.312,
-        "score_data_loc": 0.62,
+        "score_data": 0.399,
+        "score_data_loc": 0.664,
         "score_loc": 0.929
       }
     ]

@@ -217,7 +217,7 @@ def list_soils(lon, lat):
     # Add distance column from mucompdata_pd using cokey link
     muhorzdata_pd = pd.merge(
         muhorzdata_pd,
-        mucompdata_pd[["cokey", "distance", "distance_score"]],
+        mucompdata_pd[["cokey", "distance", "distance_score"]], 
         on="cokey",
         how="left",
     )
@@ -234,9 +234,7 @@ def list_soils(lon, lat):
     mucompdata_pd = mucompdata_pd[mucompdata_pd["cokey"].isin(comp_key)]
 
     # Sort mucompdata_pd based on 'cond_prob' and 'distance'
-    mucompdata_pd.sort_values(
-        ["cond_prob", "distance", "compname"], ascending=[False, True, True], inplace=True
-    )
+    mucompdata_pd.sort_values(["cond_prob", "distance", "compname"], ascending=[False, True, True], inplace=True)
     mucompdata_pd.reset_index(drop=True, inplace=True)
 
     # Duplicate the 'compname' column for grouping purposes
@@ -260,13 +258,16 @@ def list_soils(lon, lat):
     component_names = mucompdata_pd["compname"].tolist()
     name_counts = collections.Counter(component_names)
 
+    # Track which indices have been processed for each name
+    processed_indices = {}
+    
     for name, count in sorted(name_counts.items()):  # Sort for deterministic order
         if count > 1:  # If a component name is duplicated
             # Find all indices for this name
             indices = [i for i, comp_name in enumerate(component_names) if comp_name == name]
             # Sort indices for deterministic order
             indices.sort()
-
+            
             # Add suffixes to all occurrences except the first
             for i, idx in enumerate(indices):
                 if i > 0:  # Skip the first occurrence (keep original name)
@@ -664,9 +665,7 @@ def list_soils(lon, lat):
 
         if mucompdata_pd["compkind"].isin(OSD_compkind).any():
             # Group data by cokey
-            OSDhorzdata_group_cokey = [
-                group for _, group in OSDhorzdata_pd.groupby("cokey", sort=False)
-            ]
+            OSDhorzdata_group_cokey = [group for _, group in OSDhorzdata_pd.groupby("cokey")]
 
             # Initialize empty lists
             lab_lyrs = []
@@ -975,39 +974,39 @@ def list_soils(lon, lat):
                     munsell_lyrs.append(dict(zip(hzb_lyrs[index].keys(), munsell_dummy)))
 
             # Series URL Generation
-            # Initialize lists to store series URLs
-            SDE_URL = []
-            SEE_URL = []
+            # Create a mapping of cokey to URLs for safe lookup
+            cokey_to_urls = {}
 
-            # Group data by 'cokey'
-            OSDhorzdata_group_cokey = [g for _, g in OSDhorzdata_pd.groupby("cokey", sort=False)]
+            # Group data by 'cokey' - use sort=True for deterministic ordering
+            OSDhorzdata_group_cokey = [g for _, g in OSDhorzdata_pd.groupby("cokey", sort=True)]
 
             for index, group in enumerate(OSDhorzdata_group_cokey):
+                cokey = group["cokey"].iloc[0]  # Get the cokey for this group
+                
                 # Check if compkind is not in OSD_compkind or if series contains any null values
                 if (
-                    mucompdata_pd.loc[index]["compkind"] not in OSD_compkind
+                    mucompdata_pd[mucompdata_pd["cokey"] == cokey]["compkind"].iloc[0] not in OSD_compkind
                     or group["series"].isnull().any()
                 ):
-                    SDE_URL.append("")
-                    SEE_URL.append("")
+                    cokey_to_urls[cokey] = {"sde": "", "see": ""}
                 else:
-                    # Extract compname, convert to lowercase, remove trailing numbers, and replace
-                    # spaces with underscores
+                    # Extract compname, convert to lowercase, remove trailing numbers, and replace spaces with underscores
                     comp = group["compname"].iloc[0].lower()
                     comp = re.sub(r"\d+$", "", comp)
                     comp = comp.replace(" ", "_")
 
-                    # Create and append URLs
-                    SDE_URL.append(f"https://casoilresource.lawr.ucdavis.edu/sde/?series={comp}")
-                    SEE_URL.append(f"https://casoilresource.lawr.ucdavis.edu/see/#{comp}")
+                    # Create URLs
+                    cokey_to_urls[cokey] = {
+                        "sde": f"https://casoilresource.lawr.ucdavis.edu/sde/?series={comp}",
+                        "see": f"https://casoilresource.lawr.ucdavis.edu/see/#{comp}"
+                    }
 
         else:
             # Initialize lists to store data layers and URLs
             lab_lyrs = []
             lab_intpl_lyrs = []
             munsell_lyrs = []
-            SDE_URL = []
-            SEE_URL = []
+            cokey_to_urls = {}
 
             # Iterate over each entry in mucompdata_pd
             for i in range(len(mucompdata_pd)):
@@ -1028,17 +1027,16 @@ def list_soils(lon, lat):
                 lab_lyrs.append(dict(zip(keys, lab_dummy)))
                 munsell_lyrs.append(dict(zip(keys, munsell_dummy)))
 
-                # Append empty URLs
-                SDE_URL.append("")
-                SEE_URL.append("")
+                # Create empty URLs for each component
+                cokey = mucompdata_pd.iloc[i]["cokey"]
+                cokey_to_urls[cokey] = {"sde": "", "see": ""}
 
     else:
         # Initialize lists to store data layers and URLs
         lab_lyrs = []
         lab_intpl_lyrs = []
         munsell_lyrs = []
-        SDE_URL = []
-        SEE_URL = []
+        cokey_to_urls = {}
 
         # Iterate over each entry in mucompdata_pd
         for i in range(len(mucompdata_pd)):
@@ -1059,9 +1057,9 @@ def list_soils(lon, lat):
             lab_lyrs.append(dict(zip(keys, lab_dummy)))
             munsell_lyrs.append(dict(zip(keys, munsell_dummy)))
 
-            # Append empty URLs
-            SDE_URL.append("")
-            SEE_URL.append("")
+            # Create empty URLs for each component
+            cokey = mucompdata_pd.iloc[i]["cokey"]
+            cokey_to_urls[cokey] = {"sde": "", "see": ""}
 
     # Subset datasets to exclude pedons without any depth information
     cokeys_with_depth = mucompdata_pd[mucompdata_pd["comp_max_bottom"] > 0].cokey.unique()
@@ -1422,7 +1420,7 @@ def list_soils(lon, lat):
     # Replace NaN values with an empty string
     mucompdata_cond_prob = mucompdata_cond_prob.fillna("")
 
-    # Generate the Site list
+    # Generate the Site list using cokey-based URL lookup
     Site = [
         {
             "siteData": {
@@ -1443,8 +1441,8 @@ def list_soils(lon, lat):
                 "irrcapscl": row["irrcapscl"],
                 "irrcapunit": row["irrcapunit"],
                 "taxsubgrp": row["taxsubgrp"],
-                "sdeURL": SDE_URL[idx],
-                "seeURL": SEE_URL[idx],
+                "sdeURL": cokey_to_urls.get(row["cokey"], {"sde": ""})["sde"],
+                "seeURL": cokey_to_urls.get(row["cokey"], {"see": ""})["see"],
             },
             "siteDescription": row["brief_narrative"],
         }
@@ -1576,7 +1574,7 @@ def rank_soils(
     # Check if list_output_data is a string (error message) instead of expected object
     if isinstance(list_output_data, str):
         return {"error": f"Cannot rank soils: {list_output_data}"}
-
+    
     # ---------------------------------------------------------------------------------------
     # ------ Load in user data --------#
     # Initialize the DataFrame from the input data
@@ -2063,14 +2061,12 @@ def rank_soils(
 
     # Concatenate the sorted and ranked groups
     D_final = pd.concat(soilIDList_data).reset_index(drop=True)
-
+    
     # Merge with the Rank_Filter data
     D_final = pd.merge(D_final, Rank_Filter, on="compname", how="left")
 
     # Sort dataframe to correctly assign Rank_Data
-    D_final = D_final.sort_values(
-        by=["soilID_rank_data", "Score_Data", "compname"], ascending=[False, False, True]
-    )
+    D_final = D_final.sort_values(by=["soilID_rank_data", "Score_Data", "compname"], ascending=[False, False, True])
 
     # Assigning rank based on the soilID rank and rank status
     rank_id = 1
@@ -2164,9 +2160,7 @@ def rank_soils(
     soilIDList_out = []
 
     for _, group in D_final_loc.groupby("compname_grp", sort=True):
-        group = group.sort_values(
-            ["Score_Data_Loc", "compname"], ascending=[False, True]
-        ).reset_index(drop=True)
+        group = group.sort_values(["Score_Data_Loc", "compname"], ascending=[False, True]).reset_index(drop=True)
         group["soilID_rank_final"] = [True if idx == 0 else False for idx in range(len(group))]
         soilIDList_out.append(group)
 

@@ -134,8 +134,8 @@
             "nirrcapscl": "e",
             "nirrcapunit": "nan",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=balcom",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#balcom",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=los_osos",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#los_osos",
             "slope": 40.0,
             "taxsubgrp": "Typic Argixerolls",
             "textureInfill": "Yes"
@@ -273,8 +273,8 @@
         "rank_data": "1",
         "rank_data_loc": "1",
         "rank_loc": "Not Displayed",
-        "score_data": 0.552,
-        "score_data_loc": 0.402,
+        "score_data": 0.578,
+        "score_data_loc": 0.415,
         "score_loc": 0.252
       },
       {
@@ -285,8 +285,8 @@
         "rank_data": "2",
         "rank_data_loc": "2",
         "rank_loc": "Not Displayed",
-        "score_data": 0.535,
-        "score_data_loc": 0.33,
+        "score_data": 0.397,
+        "score_data_loc": 0.261,
         "score_loc": 0.125
       },
       {
@@ -297,8 +297,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "1",
-        "score_data": 0.345,
-        "score_data_loc": 0.299,
+        "score_data": 0.383,
+        "score_data_loc": 0.317,
         "score_loc": 0.252
       },
       {
@@ -309,8 +309,8 @@
         "rank_data": "Not Displayed",
         "rank_data_loc": "Not Displayed",
         "rank_loc": "2",
-        "score_data": 0.37,
-        "score_data_loc": 0.248,
+        "score_data": 0.383,
+        "score_data_loc": 0.254,
         "score_loc": 0.125
       }
     ]

@@ -1194,7 +1194,7 @@ def list_soils(lon, lat):
             ESDcompdata_sda["edit_url"] = (
                 NEW_ESD_BASE_URL
                 + "/"
-                + +ESDcompdata_sda["ecoclassid"].str[1:5]
+                + ESDcompdata_sda["ecoclassid"].str[1:5]
                 + "/"
                 + ESDcompdata_sda["ecoclassid"]
             )

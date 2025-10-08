@@ -25,14 +25,13 @@ import re
 import geopandas as gpd
 import numpy as np
 import pandas as pd
-import shapely
 from numpy.linalg import cholesky
 from osgeo import ogr
 from rosetta import SoilData, rosetta
 from scipy.interpolate import UnivariateSpline
 from scipy.sparse import issparse
 from scipy.stats import entropy, norm
-from shapely.geometry import Point, box
+from shapely.geometry import Point
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import pairwise
 from sklearn.utils import validation
@@ -40,46 +39,26 @@ from sklearn.utils import validation
 # local libraries
 import soil_id.config
 
-from .db import get_WISE30sec_data
 from .services import sda_return
-
-
-# global
-def extract_WISE_data(lon, lat, file_path, buffer_size=0.5):
-    # Create LPKS point
-    point_geo = Point(lon, lat)
-    point_geo.crs = {"init": "epsg:4326"}
-
-    # Create bounding box to clip HWSD data around the point
-    bounding_box = create_bounding_box(lon, lat, buffer_dist=10000)
-    box_geom = shapely.geometry.box(*bounding_box)
-
-    # Load HWSD data from the provided file_path
-    hwsd = gpd.read_file(file_path, bbox=box_geom.bounds, driver="GPKG")
-
-    # Filter data to consider unique map units
-    mu_geo = hwsd[["MUGLB_NEW", "geometry"]].drop_duplicates(subset="MUGLB_NEW")
-    mu_id_dist = calculate_distances_and_intersections(mu_geo, point_geo)
-    mu_id_dist.loc[mu_id_dist["pt_intersect"], "dist_meters"] = 0
-    mu_id_dist["distance"] = mu_id_dist.groupby("MUGLB_NEW")["dist_meters"].transform(min)
-    mu_id_dist = mu_id_dist.nsmallest(2, "distance")
-
-    hwsd = hwsd.drop(columns=["geometry"])
-    hwsd = pd.merge(mu_id_dist, hwsd, on="MUGLB_NEW", how="left").drop_duplicates()
-
-    MUGLB_NEW_Select = hwsd["MUGLB_NEW"].tolist()
-    wise_data = get_WISE30sec_data(MUGLB_NEW_Select)
-    wise_data = pd.merge(wise_data, mu_id_dist, on="MUGLB_NEW", how="left")
-
-    return wise_data
-
 
 ###################################################################################################
 #                                       Utility Functions                                         #
 ###################################################################################################
 
 
-def getSand(field):
+def getSand(field: str) -> float:
+    """
+    Given a soil texture name (e.g. "loam", "sand", "clay"), return the approximate
+    sand percentage based on a predefined lookup table.
+
+    Args:
+        field (str): The soil texture name (e.g. "sandy loam", "clay", etc.).
+                     Case-insensitive. May be None or an empty string.
+
+    Returns:
+        float: The sand percentage for that texture, or numpy.nan if the texture
+               is unrecognized or field is None.
+    """
     sand_percentages = {
         "sand": 92.0,
         "loamy sand": 80.0,
@@ -95,7 +74,11 @@ def getSand(field):
         "clay": 22.5,
     }
 
-    return sand_percentages.get(field.lower() if field else None, np.nan)
+    if field is None:
+        return np.nan
+
+    # Convert field to lowercase, then do the lookup in the dictionary
+    return sand_percentages.get(field.lower(), np.nan)
 
 
 def getClay(field):
@@ -124,58 +107,75 @@ def silt_calc(row):
     return silt
 
 
-def getTexture(row, sand=None, silt=None, clay=None):
-    sand = (
-        sand
-        if sand is not None
-        else row.get("sandtotal_r") or row.get("sand") or row.get("sand_total")
-    )
-    silt = (
-        silt
-        if silt is not None
-        else row.get("silttotal_r") or row.get("silt") or row.get("silt_total")
-    )
-    clay = (
-        clay
-        if clay is not None
-        else row.get("claytotal_r") or row.get("clay") or row.get("clay_total")
-    )
+def getTexture(row=None, sand=None, silt=None, clay=None):
+    """
+    Classify soil texture based on sand, silt, and clay proportions.
 
+    Parameters:
+    - row (dict): Dictionary-like object with 'sandtotal_r', 'silttotal_r', 'claytotal_r' keys.
+    - sand (float): Percentage of sand.
+    - silt (float): Percentage of silt.
+    - clay (float): Percentage of clay.
+
+    Returns:
+    - str: Soil texture classification.
+    """
+
+    # Handle missing inputs: if not provided individually, try to get from row.
     if sand is None or silt is None or clay is None:
-        return None
+        if row is not None:
+            sand = row.get("sandtotal_r", np.nan)
+            silt = row.get("silttotal_r", np.nan)
+            clay = row.get("claytotal_r", np.nan)
 
+    # Replace any NaN with 0 for the calculation.
+    sand = np.nan_to_num(sand, nan=0)
+    silt = np.nan_to_num(silt, nan=0)
+    clay = np.nan_to_num(clay, nan=0)
+
+    # Calculate derived values.
     silt_clay = silt + 1.5 * clay
     silt_2x_clay = silt + 2.0 * clay
 
-    if silt_clay < 15:
-        return "Sand"
-    elif silt_clay < 30:
-        return "Loamy sand"
-    elif (7 <= clay <= 20 and sand > 52) or (clay < 7 and silt < 50):
-        if silt_2x_clay >= 30:
-            return "Sandy loam"
-    elif 7 <= clay <= 27 and 28 <= silt < 50 and sand <= 52:
-        return "Loam"
-    elif silt >= 50 and ((12 <= clay < 27) or (silt < 80 and clay < 12)):
-        return "Silt loam"
-    elif silt >= 80 and clay < 12:
-        return "Silt"
-    elif 20 <= clay < 35 and silt < 28 and sand > 45:
-        return "Sandy clay loam"
-    elif 27 <= clay < 40 and sand <= 45:
-        if sand > 20:
-            return "Clay loam"
-        else:
-            return "Silty clay loam"
-    elif clay >= 35 and sand >= 45:
-        return "Sandy clay"
-    elif clay >= 40:
-        if silt >= 40:
-            return "Silty clay"
-        elif sand <= 45:
-            return "Clay"
+    # Define conditions and corresponding texture classifications.
+    conditions = [
+        silt_clay < 15,
+        (silt_clay >= 15) & (silt_clay < 30),
+        (((7 <= clay) & (clay <= 20)) & (sand > 52))
+        | ((clay < 7) & (silt < 50) & (silt_2x_clay >= 30)),
+        (7 <= clay) & (clay <= 27) & (28 <= silt) & (silt < 50) & (sand <= 52),
+        (silt >= 50) & (((12 <= clay) & (clay < 27)) | ((silt < 80) & (clay < 12))),
+        (silt >= 80) & (clay < 12),
+        (20 <= clay) & (clay < 35) & (silt < 28) & (sand > 45),
+        (27 <= clay) & (clay < 40) & (sand <= 45) & (sand > 20),
+        (clay >= 35) & (sand >= 45),
+        (clay >= 40) & (silt >= 40) & (sand <= 45),
+    ]
 
-    return None  # Default return value
+    choices = [
+        "Sand",
+        "Loamy sand",
+        "Sandy loam",
+        "Loam",
+        "Silt loam",
+        "Silt",
+        "Sandy clay loam",
+        "Clay loam",
+        "Sandy clay",
+        "Clay",
+    ]
+
+    # Compute the texture classification.
+    result = np.select(conditions, choices, default="Unknown")
+
+    # Ensure that a plain Python string is returned.
+    if isinstance(result, np.ndarray):
+        try:
+            result = result.item()  # Extract single element from an array of size 1.
+        except Exception:
+            result = str(result)
+
+    return result
 
 
 def getCF(cf):
@@ -304,6 +304,36 @@ def agg_data_layer(data, bottom, sd=2, depth=False):
 
 
 def aggregate_data(data, bottom_depths, sd=2):
+    """
+    Aggregate values of a given data series into segments defined by depth intervals
+    and return their mean values, rounded to a specified number of decimal places.
+
+    This function partitions the data index into depth intervals determined by
+    the provided `bottom_depths`. Each interval starts at one of the `top_depths`
+    (which is derived from `bottom_depths` by shifting them up by one) and ends
+    at the corresponding bottom depth. For each interval, the function extracts
+    the data values within that depth range and computes their mean. The results
+    are rounded to `sd` decimal places and returned as a Series, where each element
+    corresponds to the aggregated mean for the respective depth interval.
+
+    Parameters
+    ----------
+    data : pandas.Series
+        A series indexed by depth (or a comparable numeric index), which
+        will be aggregated over the defined depth intervals.
+    bottom_depths : list or array-like
+        A list or array of numerical values representing the lower boundaries
+        of depth intervals. The top boundary for the first interval is implicitly 0.
+    sd : int, optional, default 2
+        Number of decimal places to which the computed mean values will be rounded.
+
+    Returns
+    -------
+    pandas.Series
+        A series of aggregated mean values for each depth interval, indexed by
+        the order of the intervals. If any interval does not contain data values,
+        NaN is returned for that interval.
+    """
     if not bottom_depths or np.isnan(bottom_depths[0]):
         return pd.Series([np.nan])
 
@@ -649,16 +679,14 @@ def getProfile_SG(data, variable, c_bot=False):
 def drop_cokey_horz(df):
     """
     Function to drop duplicate rows of component horizon data when more than one instance of a
-    component are duplicates.
+    component are duplicates. Keeps the duplicate with the smallest distance.
 
     Function assumes that the dataframe contains:
       (1) unique cokey identifier ('cokey')
       (2) generic compname identifier ('compname')
+      (3) distance column ('distance')
     Can handle dataframes that include a 'slope_r' column as well as those that do not.
     """
-    drop_instances = []
-
-    # Base columns to compare
     columns_to_compare = [
         "hzdept_r",
         "hzdepb_r",
@@ -668,39 +696,44 @@ def drop_cokey_horz(df):
         "total_frag_volume",
         "texture",
     ]
-
-    # Check if 'slope_r' column exists, and if so, add it to the columns to compare
     if "slope_r" in df.columns:
         columns_to_compare.append("slope_r")
 
-    # Group by 'compname'
+    # Generate a hashable representation of each cokey's horizon data
+    df["_group_key"] = df[columns_to_compare].astype(str).agg("|".join, axis=1)
+    df["_cokey_grouped"] = df.groupby("cokey")["_group_key"].transform(lambda x: "|".join(x))
+
+    drop_instances = []
+
+    # Group by compname
     for _, comp_group in df.groupby("compname", sort=False):
-        # Group the component group by 'cokey'
-        grouped_by_cokey = [group for _, group in comp_group.groupby("cokey", sort=False)]
-
-        # Iterate over combinations of the component instances
-        for j, group_j in enumerate(grouped_by_cokey):
-            for k, group_k in enumerate(grouped_by_cokey):
-                if j >= k:
-                    continue
-
-                # Check if the two groups are the same based on specified columns
-                if (
-                    group_j[columns_to_compare]
-                    .reset_index(drop=True)
-                    .equals(group_k[columns_to_compare].reset_index(drop=True))
-                ):
-                    drop_instances.append(group_k["cokey"])
-
-    # Drop duplicates and reset index
-    if drop_instances:
-        drop_instances = (
-            pd.concat(drop_instances).drop_duplicates(keep="first").reset_index(drop=True)
+        # Get unique cokeys and their data signature within this compname group
+        cokey_map = comp_group.groupby("cokey").agg(
+            {
+                "_cokey_grouped": "first",
+                "distance": "first",  # Get the distance for each cokey
+            }
         )
-    else:
-        drop_instances = None
 
-    return drop_instances
+        # Find duplicates based on the grouped horizon data
+        duplicated_mask = cokey_map["_cokey_grouped"].duplicated(keep=False)
+
+        if duplicated_mask.any():
+            # Get only the duplicated entries
+            duplicated_entries = cokey_map[duplicated_mask]
+
+            # Group by the duplicated signature to find which cokeys are duplicates of each other
+            for signature, dup_group in duplicated_entries.groupby("_cokey_grouped"):
+                # Sort by distance and keep the one with smallest distance (first after sorting)
+                sorted_by_distance = dup_group.sort_values("distance")
+                # Drop all except the first (smallest distance)
+                cokeys_to_drop = sorted_by_distance.index.tolist()[1:]
+                drop_instances.extend(cokeys_to_drop)
+
+    # Clean up temporary columns
+    df.drop(columns=["_group_key", "_cokey_grouped"], inplace=True)
+
+    return pd.Series(drop_instances, name="cokey_to_drop") if drop_instances else None
 
 
 def calculate_location_score(group, ExpCoeff):
@@ -814,231 +847,148 @@ def check_pairwise_arrays(X, Y, precomputed=False, dtype=None):
     return X, Y
 
 
-def gower_distances(X, Y=None, feature_weight=None, categorical_features=None):
+def gower_distances(
+    X, Y=None, feature_weight=None, categorical_features=None, theoretical_ranges=None
+):
     """
-    Computes the gower distances between X and Y.
-    Gower is a similarity measure for categorical, boolean, and numerical mixed data.
+    Computes the Gower distances between X and Y using mixed-type data,
+    with optional hybrid normalization: per-slice min/max with a floor
+    based on theoretical feature ranges.
 
     Parameters:
     ----------
-    X : array-like, or pd.DataFrame
-        Shape (n_samples, n_features)
-    Y : array-like, or pd.DataFrame, optional
-        Shape (n_samples, n_features)
-    feature_weight : array-like, optional
-        Shape (n_features). According to the Gower formula, it's an attribute weight.
-    categorical_features : array-like, optional
-        Shape (n_features). Indicates whether a column is a categorical attribute.
-
-    Returns:
-    -------
-    ndarray : Gower distances. Shape (n_samples, n_samples)
+    X : array-like or pd.DataFrame, shape (n_samples, n_features)
+    Y : array-like or pd.DataFrame, shape (m_samples, n_features), optional
+    feature_weight : array-like, shape (n_features,), optional
+    categorical_features : array-like of bools or indices, optional
+    theoretical_ranges : array-like, shape (n_numeric_features,), optional
+        If provided, the floor for each numeric feature's denominator is
+        set to 10%% of its theoretical span.
     """
-
+    # Reject sparse inputs
     if issparse(X) or (Y is not None and issparse(Y)):
         raise TypeError("Sparse matrices are not supported for gower distance")
 
-    # Ensure arrays are numpy arrays
+    # Ensure numpy arrays and pairwise shape
     X = np.asarray(X)
-
     dtype = (
         object
-        if not np.issubdtype(X.dtype, np.number) or np.isnan(X.sum())
+        if not np.issubdtype(X.dtype, np.number) or np.isnan(X).any()
         else type(np.zeros(1, X.dtype).flat[0])
     )
     X, Y = check_pairwise_arrays(X, Y, dtype=dtype)
-
     n_rows, n_cols = X.shape
 
+    # Determine categorical features mask
     if categorical_features is None:
-        categorical_features = np.array(
-            [not np.issubdtype(type(val), np.number) for val in X[0, :]]
-        )
+        mask = [not np.issubdtype(type(val), np.number) for val in X[0]]
+        categorical_features = np.array(mask, dtype=bool)
     else:
         categorical_features = np.array(categorical_features)
+        if categorical_features.dtype == int:
+            mask = np.zeros(n_cols, dtype=bool)
+            mask[categorical_features] = True
+            categorical_features = mask
 
-    if np.issubdtype(categorical_features.dtype, int):
-        new_categorical_features = np.zeros(n_cols, dtype=bool)
-        new_categorical_features[categorical_features] = True
-        categorical_features = new_categorical_features
-
-    # Split data into categorical and numeric
+    # Split data
     X_cat = X[:, categorical_features]
     X_num = X[:, ~categorical_features]
 
-    # Calculate ranges and max values for normalization
-    max_of_numeric = np.nanmax(X_num, axis=0)
-    min_of_numeric = np.nanmin(X_num, axis=0)
-    ranges_of_numeric = max_of_numeric - min_of_numeric
-    ranges_of_numeric[ranges_of_numeric == 0] = 1
+    # Hybrid numeric normalization
+    slice_max = np.nanmax(X_num, axis=0)
+    slice_min = np.nanmin(X_num, axis=0)
+    slice_range = slice_max - slice_min
 
-    # Normalize numeric data
-    X_num = (X_num - min_of_numeric) / ranges_of_numeric
+    if theoretical_ranges is None:
+        # avoid division by zero
+        denom = np.where(slice_range == 0, 1.0, slice_range)
+    else:
+        theo = np.array(theoretical_ranges, dtype=float)
+        floor = 0.1 * theo
+        denom = np.maximum(slice_range, floor)
+
+    X_num = (X_num - slice_min) / denom
 
     # Handle feature weights
     if feature_weight is None:
-        feature_weight = np.ones(X_num.shape[1])
-
+        feature_weight = np.ones(X_num.shape[1], dtype=float)
     feature_weight_num = feature_weight[~categorical_features]
+    feature_weight_cat = feature_weight[categorical_features]
 
-    # Conditional processing for Y
+    # Process Y
     if Y is not None:
         Y_cat = Y[:, categorical_features]
         Y_num = Y[:, ~categorical_features]
-        # Normalize numeric data safely for Y_num
-        Y_num = np.where(
-            ranges_of_numeric != 0, (Y_num - min_of_numeric) / ranges_of_numeric, Y_num
-        )
+        if theoretical_ranges is None:
+            Y_num = np.where(denom != 0, (Y_num - slice_min) / denom, Y_num)
+        else:
+            Y_num = (Y_num - slice_min) / denom
     else:
         Y_cat = X_cat.copy()
         Y_num = X_num.copy()
 
-    # Ensure feature_weight_cat is defined
-    feature_weight_cat = feature_weight[categorical_features]
-
-    # # Handle feature weights
-    # if feature_weight is None:
-    #     feature_weight = np.ones(n_cols)
-
-    # feature_weight_cat = feature_weight[categorical_features]
-    # feature_weight_num = feature_weight[~categorical_features]
-
-    # Y_cat = X_cat if Y is None else Y[:, categorical_features]
-    # Y_num = X_num if Y is None else Y[:, ~categorical_features]
-    # Y_num /= max_of_numeric
-
+    # Compute pairwise distances
     dm = np.zeros((n_rows, Y.shape[0]), dtype=np.float32)
-
-    # Calculate pairwise gower distances
-    for i in range(X_num.shape[0]):
+    total_weight = feature_weight.sum()
+    for i in range(n_rows):
         start = i if Y is None else 0
-        result = _gower_distance_row(
-            X_cat[i, :],
-            X_num[i, :],
-            Y_cat[start:, :],
-            Y_num[start:, :],
+        row = _gower_distance_row(
+            X_cat[i],
+            X_num[i],
+            Y_cat[start:],
+            Y_num[start:],
             feature_weight_cat,
             feature_weight_num,
-            feature_weight.sum(),
-            categorical_features,
-            ranges_of_numeric,
-            max_of_numeric,
+            total_weight,
         )
-        dm[i, start:] = result
-        if Y is None:  # If Y is not provided, the matrix is symmetric
-            dm[start:, i] = result
-
+        dm[i, start:] = row
+        if Y is None:
+            dm[start:, i] = row
     return dm
-    # # Calculate pairwise gower distances
-    # for i in range(n_rows):
-    #     start = i if Y is None else 0
-    #     result = _gower_distance_row(
-    #         X_cat[i, :],
-    #         X_num[i, :],
-    #         Y_cat[start:, :],
-    #         Y_num[start:, :],
-    #         feature_weight_cat,
-    #         feature_weight_num,
-    #         feature_weight.sum(),
-    #         categorical_features,
-    #         ranges_of_numeric,
-    #         max_of_numeric,
-    #     )
-    #     dm[i, start:] = result
-    #     if Y is None:  # If Y is not provided, the matrix is symmetric
-    #         dm[start:, i] = result
-
-    # return dm
 
 
 def _gower_distance_row(
-    xi_cat,
-    xi_num,
-    xj_cat,
-    xj_num,
-    feature_weight_cat,
-    feature_weight_num,
-    feature_weight_sum,
-    categorical_features,
-    ranges_of_numeric,
-    max_of_numeric,
+    xi_cat, xi_num, xj_cat, xj_num, feature_weight_cat, feature_weight_num, feature_weight_sum
 ):
     """
-    Compute the Gower distance between a single row and a set of rows.
-
-    This function calculates the Gower distance between a single data point (xi)
-    and a set of data points (xj). Both categorical and numerical features are
-    considered in the calculation.
-
-    Parameters:
-    - xi_cat: Categorical data for xi.
-    - xi_num: Numerical data for xi.
-    - xj_cat: Categorical data for xj.
-    - xj_num: Numerical data for xj.
-    - feature_weight_cat: Weights for categorical features.
-    - feature_weight_num: Weights for numerical features.
-    - feature_weight_sum: Sum of all feature weights.
-    - ranges_of_numeric: Normalized ranges for numeric features.
-
-    Returns:
-    - Gower distance between xi and each row in xj.
+    Compute Gower distance between one row xi and rows xj. xi_num and xj_num
+    are already normalized to [0,1] using the hybrid approach.
     """
+    # Categorical distance (0 if equal, 1 if not)
+    sij_cat = (xi_cat != xj_cat).astype(int)
+    sum_cat = np.dot(sij_cat, feature_weight_cat)
 
-    # Calculate distance for categorical data
-    sij_cat = np.where(xi_cat == xj_cat, 0, 1)
-    sum_cat = np.sum(feature_weight_cat * sij_cat, axis=1)
+    # Numeric distance (absolute difference, already normalized)
+    sum_num = np.dot(np.abs(xi_num - xj_num), feature_weight_num)
 
-    # Calculate distance for numerical data
-    abs_delta = np.abs(xi_num - xj_num)
-    sij_num = np.divide(
-        abs_delta,
-        ranges_of_numeric,
-        out=np.zeros_like(abs_delta),
-        where=ranges_of_numeric != 0,
-    )
-    sum_num = np.sum(feature_weight_num * sij_num, axis=1)
-
-    # Combine distances for categorical and numerical data
-    sum_sij = (sum_cat + sum_num) / feature_weight_sum
-
-    return sum_sij
+    # Combined
+    return (sum_cat + sum_num) / feature_weight_sum
 
 
 def compute_site_similarity(
-    p_slope, mucompdata, slices, additional_columns=None, feature_weight=None
-):
+    data: pd.DataFrame, features: list[str], feature_weight: np.ndarray
+) -> np.ndarray:
     """
-    Compute gower distances for site similarity based on the provided feature weights.
+    Compute Gower distances among the rows of `data` using only `features`
+    and the matching weights in `feature_weight`.
 
     Parameters:
-    - p_slope: DataFrame containing sample_pedon information.
-    - mucompdata: DataFrame containing component data.
-    - slices: DataFrame containing slices of soil.
-    - additional_columns: List of additional columns to consider.
-    - feature_weight: Array of weights for features.
+    - data: DataFrame with columns "compname" + at least all names in `features`.
+    - features: list of column names to include in the distance.
+    - feature_weight: 1D array of floats, same length as `features`.
 
     Returns:
-    - D_site: Gower distances array for site similarity.
+    - (n×n) numpy array of Gower distances, with NaNs replaced by the max distance.
     """
-    # Combine pedon slope data with component data
-    site_vars = pd.concat([p_slope, mucompdata[["compname", "slope_r", "elev_r"]]], axis=0)
+    # 1) subset & index by compname
+    site_mat = data.set_index("compname")[features]
 
-    # If additional columns are specified, merge them
-    if additional_columns:
-        site_vars = pd.merge(slices, site_vars, on="compname", how="left")
-        site_mat = site_vars[additional_columns]
-    else:
-        site_mat = site_vars[["slope_r", "elev_r"]]
+    # 2) compute
+    D = gower_distances(site_mat, feature_weight=feature_weight)
 
-    site_mat = site_mat.set_index(slices.compname.values)
-
-    # Compute the gower distances
-    D_site = gower_distances(site_mat, feature_weight=feature_weight)
-
-    # Replace NaN values with the maximum value in the array
-    D_site = np.where(np.isnan(D_site), np.nanmax(D_site), D_site)
-
-    return D_site
+    # 3) fill NaNs
+    D = np.where(np.isnan(D), np.nanmax(D), D)
+    return D
 
 
 def compute_text_comp(bedrock, p_sandpct_intpl, soilHorizon):
@@ -1192,21 +1142,31 @@ def trim_fraction(text):
     return text.rstrip(".0") if text.endswith(".0") else text
 
 
-def calculate_distance_score(row, ExpCoeff):
+def calculate_distance_score(row, ExpCoeff, comp_pct_col="comppct_r"):
     """
-    Calculate distance score based on the conditions provided (US).
+    Calculate distance score based on distance and component percentage.
+    This function is generalized to work with different data sources by
+    accepting the component percentage column name as a parameter.
+
+    Parameters:
+    - row (pd.Series): A row of a DataFrame.
+    - ExpCoeff (float): Exponential coefficient for distance decay.
+    - comp_pct_col (str): The name of the component percentage column.
     """
-    if row["distance"] == 0:
-        if row["comppct_r"] > 100:
+    comp_pct = row[comp_pct_col]
+    distance = row["distance"]
+
+    if distance == 0:
+        if comp_pct > 100:
             return 1
         else:
-            return round(row["comppct_r"] / 100, 3)
+            return round(comp_pct / 100, 3)
     else:
-        if row["comppct_r"] > 100:
-            return round(max(0.25, math.exp(ExpCoeff * row["distance"])), 3)
+        factor = max(0.25, math.exp(ExpCoeff * distance))
+        if comp_pct > 100:
+            return round(factor, 3)
         else:
-            factor = max(0.25, math.exp(ExpCoeff * row["distance"]))
-            return round(row["comppct_r"] / 100 * factor, 3)
+            return round(comp_pct / 100 * factor, 3)
 
 
 def extract_muhorzdata_STATSGO(mucompdata_pd):
@@ -1238,7 +1198,8 @@ def extract_muhorzdata_STATSGO(mucompdata_pd):
                         ec_r, lep_r, chfrags.fragvol_r
                         FROM chorizon
                         LEFT OUTER JOIN chfrags ON chfrags.chkey = chorizon.chkey
-                        WHERE cokey IN ({",".join(cokey_list)})"""
+                        WHERE cokey IN ({",".join(cokey_list)})
+                        ORDER BY cokey, chorizon.chkey, hzdept_r"""
 
     # Execute the query
     muhorzdata_out = sda_return(propQry=muhorzdataQry)
@@ -1265,16 +1226,26 @@ def calculate_distances_and_intersections(mu_geo, point):
         DataFrame: Contains mapunit keys, distances, and intersection flags.
     """
 
-    # Project the data to a suitable UTM zone based on the point's location
+    # Ensure the point is wrapped in a GeoDataFrame and projected correctly
     point_utm, epsg_code = convert_geometry_to_utm(point)
 
-    # Ensure both the point and GeoDataFrame are transformed to the same CRS
+    # Ensure the point is a GeoDataFrame (for compatibility)
+    if not isinstance(point_utm, gpd.GeoDataFrame):
+        point_utm = gpd.GeoDataFrame(geometry=[point_utm], crs=epsg_code)
+
+    # Transform the GeoDataFrame to the same UTM CRS
     mu_geo_utm = mu_geo.to_crs(epsg_code)
 
-    # Calculate distances and intersections
-    distances = mu_geo_utm["geometry"].distance(point_utm)
-    intersects = mu_geo_utm["geometry"].intersects(point_utm)
+    # Reset index for clean operations
+    mu_geo_utm = mu_geo_utm.reset_index(drop=True)
+    point_utm = point_utm.reset_index(drop=True)
 
+    # Extract the single geometry for the point
+    point_geometry = point_utm.geometry.iloc[0]
+
+    # Calculate distances and intersections
+    distances = mu_geo_utm["geometry"].distance(point_geometry)
+    intersects = mu_geo_utm["geometry"].intersects(point_geometry)
     return pd.DataFrame(
         {"mukey": mu_geo_utm["MUKEY"], "dist_meters": distances, "pt_intersect": intersects}
     )
@@ -1299,79 +1270,119 @@ def load_statsgo_data(box):
         return None
 
 
-def convert_geometry_to_utm(geometry, src_crs="epsg:4326", target_crs=None):
+def convert_geometry_to_utm(geometry, src_crs="EPSG:4326"):
     """
-    Transforms a given geometry from its source coordinate reference system (CRS)
-    to an appropriate Universal Transverse Mercator (UTM) CRS based on the geometry's
-    centroid location.
+    Converts a geometry from a geographic CRS to a UTM CRS based on its centroid.
 
     Parameters:
-    - geometry (shapely.geometry.base.BaseGeometry): The geometry to transform, which
-      could be any type of geometry, e.g., Point, Polygon.
-    - src_crs (str, optional): The EPSG code of the source CRS of the geometry. Defaults
-      to 'epsg:4326'.
-    - target_crs (str, optional): The EPSG code of the target CRS to which the geometry
-      should be transformed. If None, the appropriate UTM CRS based on the geometry's
-      centroid will be calculated.
+    - geometry (shapely.geometry or geopandas.GeoDataFrame): The input geometry.
+    - src_crs (str, optional): The source CRS, default is "EPSG:4326".
 
     Returns:
-    - tuple: A tuple containing the transformed geometry and the EPSG code of the
-      target UTM CRS. The transformed geometry is in the new CRS, and distances from
-      this geometry can be accurately calculated in linear units (meters).
-
-    Notes:
-    - If the target_crs is not provided, the function calculates the correct UTM zone
-      based on the longitude (from -180 to 180 degrees) and adjusts for the northern or
-      southern hemisphere based on the latitude.
-    - This function assumes the geometry is already in the specified source CRS and will
-      convert it directly to the target CRS without additional CRS transformations.
+    - tuple: (GeoDataFrame with transformed geometry, target CRS string)
     """
-    if target_crs is None:
-        lon, lat = geometry.centroid.x, geometry.centroid.y
-        utm_zone = int((lon + 180) / 6) + 1
-        hemisphere = "north" if lat >= 0 else "south"
-        epsg_code = f"326{utm_zone:02d}" if hemisphere == "north" else f"327{utm_zone:02d}"
-        target_crs = f"epsg:{epsg_code}"
+    # Ensure the geometry is a GeoDataFrame
+    if isinstance(geometry, Point):
+        geometry = gpd.GeoDataFrame(geometry=[geometry], columns=["geometry"], crs=src_crs)
+    elif isinstance(geometry, gpd.GeoSeries):
+        geometry = geometry.to_frame(name="geometry")
 
-    # Wrap the shapely geometry in a GeoSeries to use the to_crs() method
-    geo_series = gpd.GeoSeries([geometry], crs=src_crs)
-    transformed_geo_series = geo_series.to_crs(target_crs)
+    if "geometry" not in geometry:
+        raise ValueError("Input does not contain a valid geometry column.")
 
-    # Return the first (and only) geometry in the transformed GeoSeries and the new EPSG code
-    return transformed_geo_series.iloc[0], target_crs
+    # Ensure the CRS is correctly assigned before transformation
+    if geometry.crs is None:
+        geometry.set_crs(src_crs, inplace=True)
+
+    # Convert to source CRS (to ensure consistency)
+    geometry = geometry.to_crs(src_crs)
+
+    # Compute the centroid
+    centroid = geometry.geometry.centroid.iloc[0]  # Extract the first centroid
+    if centroid.is_empty:
+        raise ValueError("Geometry centroid is empty. Check input geometries.")
+
+    lon, lat = centroid.x, centroid.y
+
+    # Determine UTM zone
+    utm_zone = int((lon + 180) / 6) + 1
+    hemisphere = "north" if lat >= 0 else "south"
+    epsg_code = f"326{utm_zone:02d}" if hemisphere == "north" else f"327{utm_zone:02d}"
+    target_crs = f"EPSG:{epsg_code}"
+
+    # Transform to UTM CRS
+    geometry_utm = geometry.to_crs(target_crs)
+
+    return geometry_utm, target_crs
 
 
-def create_bounding_box(lon, lat, buffer_dist):
+# def get_utm_crs(lat, lon):
+#     # Define an area of interest that is just the point (or a small buffer around it)
+#     aoi = pyproj.aoi.AreaOfInterest(
+#         west_lon_degree=lon, south_lat_degree=lat,
+#         east_lon_degree=lon, north_lat_degree=lat
+#     )
+#     # Query for UTM CRS candidates covering the area of interest
+#     utm_crs_list = query_utm_crs_info(datum_name="WGS84", area_of_interest=aoi)
+#     if not utm_crs_list:
+#         raise ValueError("No UTM CRS found for the specified location.")
+
+#     # Select the first matching CRS
+#     crs = CRS.from_epsg(utm_crs_list[0].code)
+#     return crs
+
+
+# def get_target_utm_srid(lat, lon):
+#     """
+#     Determine the target UTM SRID (as an integer) based on latitude and longitude.
+
+#     Parameters:
+#         lat (float): The latitude coordinate.
+#         lon (float): The longitude coordinate.
+
+#     Returns:
+#         int: The UTM EPSG code as an integer. For example, for a point in the northern
+#              hemisphere in UTM zone 33, the function returns 32633.
+
+#     Raises:
+#         ValueError: If the latitude is not in the valid range [-90, 90] or the longitude
+#                     is not in the valid range [-180, 180].
+#     """
+#     # Basic input validation
+#     if not (-90 <= lat <= 90):
+#         raise ValueError("Latitude must be between -90 and 90.")
+#     if not (-180 <= lon <= 180):
+#         raise ValueError("Longitude must be between -180 and 180.")
+
+#     # Determine UTM zone: zones are 6° wide starting at -180.
+#     utm_zone = int((lon + 180) / 6) + 1
+
+#     # For the northern hemisphere, UTM EPSG codes start at 32600; for the southern, 32700.
+#     if lat >= 0:
+#         return 32600 + utm_zone
+#     else:
+#         return 32700 + utm_zone
+
+
+def create_circular_buffer(lon, lat, buffer_dist):
     """
-    Creates a geographic bounding box around a given latitude and longitude,
-    buffered by a specified distance in meters.
-
-    Parameters:
-    - lon (float): Longitude of the center point.
-    - lat (float): Latitude of the center point.
-    - buffer_dist (float): Buffer distance in meters.
-
-    Returns:
-    - Shapely Polygon: Geographic bounding box as a shapely polygon.
+    Creates a circular buffer in meters around a point and converts it to EPSG:4326.
     """
-    # Convert geographic coordinates to a Point geometry
     point_geo = Point(lon, lat)
-
-    # Use the convert_geometry_to_utm function to transform the point
     point_utm, epsg_code = convert_geometry_to_utm(point_geo)
 
-    # Create a GeoDataFrame with the UTM point
-    point_gdf = gpd.GeoDataFrame([{"geometry": point_utm}], crs=epsg_code)
+    # Ensure geometry is singular
+    if isinstance(point_utm, gpd.GeoDataFrame):
+        point_utm = point_utm.geometry.iloc[0]
 
-    # Buffer the point in UTM coordinates
-    buffered_point = point_gdf.buffer(buffer_dist)[0]
-    utm_box = box(*buffered_point.bounds)
+    # Create buffer
+    buffered_circle = point_utm.buffer(buffer_dist)
 
-    # Convert the UTM box back to geographic coordinates
-    point_gdf = gpd.GeoDataFrame([{"geometry": utm_box}], crs=epsg_code)
-    geographic_box = point_gdf.to_crs("epsg:4326").geometry.iloc[0]
+    # Convert buffer back to geographic CRS
+    circle_gdf = gpd.GeoDataFrame(geometry=[buffered_circle], crs=epsg_code)
+    geographic_circle = circle_gdf.to_crs("EPSG:4326").geometry.iloc[0]
 
-    return geographic_box
+    return geographic_circle
 
 
 def extract_mucompdata_STATSGO(lon, lat):
@@ -1391,9 +1402,9 @@ def extract_mucompdata_STATSGO(lon, lat):
     """
 
     point = Point(lon, lat)
-    box = create_bounding_box(lon, lat, buffer_dist=5000)
+    buffer = create_circular_buffer(lon, lat, buffer_dist=5000)
 
-    statsgo_mukey = load_statsgo_data(box)
+    statsgo_mukey = load_statsgo_data(buffer)
     if statsgo_mukey is None:
         logging.warning(f"Soil ID not available in this area: {lon}.{lat}")
         return None
@@ -1416,7 +1427,8 @@ def extract_mucompdata_STATSGO(lon, lat):
                         component.irrcapscl, component.irrcapunit, component.taxorder,
                         component.taxsubgrp
                         FROM component
-                        WHERE mukey IN ({','.join(map(str, mukey_list))})"""
+                        WHERE mukey IN ({",".join(map(str, mukey_list))})
+                        ORDER BY component.mukey, component.cokey"""
     mucompdata_out = sda_return(propQry=mucompdataQry)
 
     if not mucompdata_out.empty:
@@ -1673,12 +1685,30 @@ def fill_missing_comppct_r(mucompdata_pd):
     return mucompdata_pd
 
 
-def process_distance_scores(mucompdata_pd, ExpCoeff):
+def process_distance_scores(
+    mucompdata_pd,
+    ExpCoeff,
+    comp_pct_col="comppct_r",
+    comp_key_col="cokey",
+    comp_name_col="compname",
+    map_unit_col="mukey",
+    distance_col="distance",
+    comp_kind_col="compkind",
+    compkind_filter=False,
+):
     """
     Process distance scores and perform group-wise aggregations.
 
     Parameters:
     - mucompdata_pd (pd.DataFrame): DataFrame containing soil data.
+    - ExpCoeff (float): Exponential coefficient for distance decay.
+    - comp_pct_col (str): The name of the component percentage column (e.g., 'comppct_r', 'share').
+    - comp_key_col (str): The name of the unique component key column (e.g., 'cokey').
+    - comp_name_col (str): The name of the component name column (e.g., 'compname').
+    - map_unit_col (str): The name of the map unit key column (e.g., 'mukey').
+    - distance_col (str): The name of the distance column.
+    - comp_kind_col (str): The name of the component kind column for filtering.
+    - compkind_filter (bool): If True, filter out "Miscellaneous area" based on comp_kind_col.
 
     External Functions:
     - calculate_distance_score (function): A function to calculate distance scores.
@@ -1693,55 +1723,91 @@ def process_distance_scores(mucompdata_pd, ExpCoeff):
         home and adjacent mapunits and dividing this by the sum of all map units
         and components. We have modified this approach so that each instance of a
         component occurance is evaluated separately and assinged a weight and the
-        max distance score for each component group is assigned to all component instances.
+        sum of distance scores for each component group is assigned to all component instances.
     # --------------------------------------------------------------------
 
     """
-
-    # Calculate distance score for each group
-    mucompdata_pd["distance_score"] = mucompdata_pd.apply(
-        lambda row: calculate_distance_score(row, ExpCoeff), axis=1
-    )
-
-    # Group by cokey and mukey and aggregate required values
+    # Group by component name and map unit to aggregate percentages
     grouped_data = (
-        mucompdata_pd.groupby(["cokey", "mukey"])
+        mucompdata_pd.groupby([comp_name_col, map_unit_col])
         .agg(
-            distance_score=("distance_score", "sum"),
-            comppct=("comppct_r", "sum"),
-            minDistance=("distance", "min"),
+            # Aggregate the specified component percentage column
+            aggregated_pct=(comp_pct_col, "sum"),
+            distance=(distance_col, "min"),
+            cokey_list=(comp_key_col, list),
         )
         .reset_index()
     )
+    # Rename aggregated column to be consistent for the calculation function
+    grouped_data.rename(columns={"aggregated_pct": comp_pct_col}, inplace=True)
 
-    # Calculate conditional probabilities
-    total_distance_score = grouped_data["distance_score"].sum()
-    grouped_data["cond_prob"] = grouped_data["distance_score"] / total_distance_score
-
-    # Merge dataframes on 'cokey'
-    mucompdata_pd = mucompdata_pd.merge(
-        grouped_data[["cokey", "cond_prob"]], on="cokey", how="left"
+    # Calculate a single distance score for each aggregated group
+    # Pass the correct component percentage column name to the calculation function
+    grouped_data["distance_score"] = grouped_data.apply(
+        lambda row: calculate_distance_score(row, ExpCoeff, comp_pct_col=comp_pct_col),
+        axis=1,
     )
 
-    # Additional processing
-    mucompdata_pd = mucompdata_pd.sort_values("distance_score", ascending=False)
+    # Sum distance scores per component group (instead of taking max)
+    sum_scores_per_comp = grouped_data.groupby(comp_name_col)["distance_score"].sum().reset_index()
+    sum_scores_per_comp.rename(columns={"distance_score": "sum_distance_score"}, inplace=True)
 
-    mucompdata_pd = mucompdata_pd[~mucompdata_pd["compkind"].str.contains("Miscellaneous area")]
+    # Merge sum scores back to grouped data
+    grouped_data = grouped_data.merge(sum_scores_per_comp, on=comp_name_col, how="left")
+
+    # Calculate conditional probabilities based on sum scores per component group
+    total_sum_score = sum_scores_per_comp["sum_distance_score"].sum()
+    if total_sum_score > 0:
+        sum_scores_per_comp["cond_prob"] = (
+            sum_scores_per_comp["sum_distance_score"] / total_sum_score
+        )
+    else:
+        sum_scores_per_comp["cond_prob"] = 0
+
+    # Merge conditional probabilities back to grouped data
+    grouped_data = grouped_data.merge(
+        sum_scores_per_comp[[comp_name_col, "cond_prob"]], on=comp_name_col, how="left"
+    )
+
+    # Explode the dataframe back to the component key level
+    grouped_data = grouped_data.explode("cokey_list").rename(columns={"cokey_list": comp_key_col})
+
+    # Merge the conditional probability back into the original dataframe
+    mucompdata_pd = mucompdata_pd.merge(
+        grouped_data[[comp_key_col, "cond_prob", "sum_distance_score", "distance_score"]],
+        on=comp_key_col,
+        how="left",
+    )
+
+    # Rename sum_distance_score to comp_distance_score for clarity
+    mucompdata_pd.rename(columns={"sum_distance_score": "comp_distance_score"}, inplace=True)
+
+    # Additional processing
+    mucompdata_pd = mucompdata_pd.sort_values(["cond_prob", comp_name_col], ascending=[False, True])
+
+    # Filter out miscellaneous areas if the flag is set and the column exists
+    if compkind_filter and comp_kind_col in mucompdata_pd.columns:
+        mucompdata_pd = mucompdata_pd[
+            ~mucompdata_pd[comp_kind_col].str.contains("Miscellaneous area", na=False)
+        ]
 
     mucompdata_pd = mucompdata_pd.reset_index(drop=True)
 
     # Create a list of component groups
-    mucompdata_comp_grps = [g for _, g in mucompdata_pd.groupby(["compname"], sort=False)]
+    mucompdata_comp_grps = [g for _, g in mucompdata_pd.groupby([comp_name_col], sort=True)]
     mucompdata_comp_grps = mucompdata_comp_grps[: min(12, len(mucompdata_comp_grps))]
 
-    # Assign max within-group location-based score to all members of the group
+    # Assign group-level values to all members of the group
     for group in mucompdata_comp_grps:
-        group["distance_score"] = group["distance_score"].max()
-        group = group.sort_values("distance").reset_index(drop=True)
-        group["min_dist"] = group["distance"].iloc[0]
+        # distance_score is already set to sum value for the group
+        group = group.sort_values(distance_col).reset_index(drop=True)
+        group["min_dist"] = group[distance_col].iloc[0]
 
     # Concatenate the list of dataframes
-    mucompdata_pd = pd.concat(mucompdata_comp_grps).reset_index(drop=True)
+    if mucompdata_comp_grps:
+        mucompdata_pd = pd.concat(mucompdata_comp_grps).reset_index(drop=True)
+    else:
+        mucompdata_pd = pd.DataFrame(columns=mucompdata_pd.columns)
 
     return mucompdata_pd
 
@@ -1751,11 +1817,7 @@ def process_distance_scores(mucompdata_pd, ExpCoeff):
 ###################################################################################################
 
 
-def pedon_color(lab_Color, horizonDepth):
-    lbIdx = len(horizonDepth) - 1
-    pedon_top = [0] + [horizonDepth[i] for i in range(lbIdx)]
-
-    pedon_bottom = horizonDepth
+def pedon_color(lab_Color, top, bottom):
     pedon_l, pedon_a, pedon_b = (
         lab_Color.iloc[:, 0],
         lab_Color.iloc[:, 1],
@@ -1763,28 +1825,30 @@ def pedon_color(lab_Color, horizonDepth):
     )
 
     # Check for None values
-    if None in (pedon_top, pedon_bottom, pedon_l, pedon_a, pedon_b):
+    if any(x is None for x in [top, bottom]) or any(
+        s.isnull().any() for s in [pedon_l, pedon_a, pedon_b]
+    ):
         return np.nan
 
-    if pedon_top[0] != 0:
+    if top[0] != 0:
         return np.nan
 
     # Check for missing horizons
-    pedon_MisHrz = any(pedon_top[i + 1] != pedon_bottom[i] for i in range(len(pedon_top) - 1))
+    pedon_MisHrz = any(top[i + 1] != bottom[i] for i in range(len(top) - 1))
     if pedon_MisHrz:
         return np.nan
 
     pedon_l_intpl, pedon_a_intpl, pedon_b_intpl = [], [], []
 
-    if len(pedon_top) == 1:
-        pedon_l_intpl = [pedon_l[0]] * (pedon_bottom[0] - pedon_top[0])
-        pedon_a_intpl = [pedon_a[0]] * (pedon_bottom[0] - pedon_top[0])
-        pedon_b_intpl = [pedon_b[0]] * (pedon_bottom[0] - pedon_top[0])
+    if len(top) == 1:
+        pedon_l_intpl = [pedon_l[0]] * (bottom[0] - top[0])
+        pedon_a_intpl = [pedon_a[0]] * (bottom[0] - top[0])
+        pedon_b_intpl = [pedon_b[0]] * (bottom[0] - top[0])
     else:
-        for i in range(len(pedon_bottom)):
-            pedon_l_intpl.extend([pedon_l[i]] * (pedon_bottom[i] - pedon_top[i]))
-            pedon_a_intpl.extend([pedon_a[i]] * (pedon_bottom[i] - pedon_top[i]))
-            pedon_b_intpl.extend([pedon_b[i]] * (pedon_bottom[i] - pedon_top[i]))
+        for i in range(len(bottom)):
+            pedon_l_intpl.extend([pedon_l[i]] * (bottom[i] - top[i]))
+            pedon_a_intpl.extend([pedon_a[i]] * (bottom[i] - top[i]))
+            pedon_b_intpl.extend([pedon_b[i]] * (bottom[i] - top[i]))
 
     pedon_len = len(pedon_l_intpl)
     if pedon_len >= 37:
@@ -1799,7 +1863,7 @@ def pedon_color(lab_Color, horizonDepth):
         pedon_l_mean, pedon_a_mean, pedon_b_mean = np.nan, np.nan, np.nan
 
     if np.isnan(pedon_l_mean) or np.isnan(pedon_a_mean) or np.isnan(pedon_b_mean):
-        return np.nan
+        return [np.nan, np.nan, np.nan]
     else:
         return [pedon_l_mean, pedon_a_mean, pedon_b_mean]
 
@@ -1870,14 +1934,14 @@ def simulate_correlated_triangular(n, params, correlation_matrix):
         normal_var = correlated_normal[:, i]
         u = norm.cdf(normal_var)  # Transform to uniform [0, 1] range
 
-        # Transform the uniform values into triangularly distributed values
-        try:
-            condition = u <= (b - a) / (c - a)
-        except ZeroDivisionError:
-            # Handle the zero-division case
-            condition = None  # or some other default value
+        # Check for degenerate case where c - a == 0
+        if c - a == 0:
+            samples[:, i] = a
+            continue
 
-        # condition = u <= (b - a) / (c - a)
+        # Compute the condition for the triangular distribution
+        condition = u <= ((b - a) / (c - a))
+        # Compute the two branches of the inverse CDF
         samples[condition, i] = a + np.sqrt(u[condition] * (c - a) * (b - a))
         samples[~condition, i] = c - np.sqrt((1 - u[~condition]) * (c - a) * (c - b))
 
@@ -2090,7 +2154,7 @@ def slice_and_aggregate_soil_data(df):
         missing_row = {col: np.nan for col in result_df.columns}
         missing_row["hzdept_r"] = 30
         missing_row["hzdepb_r"] = 100
-        result_df = result_df.append(missing_row, ignore_index=True)
+        result_df = pd.concat([result_df, pd.DataFrame([missing_row])], ignore_index=True)
 
     return result_df
 
@@ -2268,10 +2332,104 @@ def sg_get_and_agg(variable, sg_data_w, bottom, return_depth=False):
         return pd_lpks.replace(np.nan, "")
 
 
+def adjust_depth_interval(data, target_length=200):
+    """Adjusts the depth interval of user data."""
+
+    # Convert input to a DataFrame
+    if isinstance(data, list):
+        data = pd.DataFrame(data)
+    elif isinstance(data, pd.Series):
+        data = data.to_frame()
+
+    # Ensure data is a DataFrame at this point
+    if not isinstance(data, pd.DataFrame):
+        raise TypeError("Data must be a list, Series, or DataFrame")
+
+    length = len(data)
+
+    if length > target_length:
+        # Truncate data if it exceeds the target length
+        data = data.iloc[:target_length]
+    elif length < target_length:
+        # Extend data if it's shorter than the target length
+        add_length = target_length - length
+        add_data = pd.DataFrame(np.nan, index=np.arange(add_length), columns=data.columns)
+        data = pd.concat([data, add_data])
+
+    data.reset_index(drop=True, inplace=True)
+    return data
+
+
+# Helper function to update dataframes based on depth conditions
+def update_intpl_data(
+    df, col_names, values, very_bottom, OSD_depth_add, OSD_depth_remove, OSD_max_bottom_int
+):
+    if OSD_depth_add:
+        layer_add = very_bottom - OSD_max_bottom_int
+        pd_add = pd.DataFrame([values] * layer_add, columns=col_names)
+        df = pd.concat([df.loc[: OSD_max_bottom_int - 1], pd_add], axis=0).reset_index(drop=True)
+    elif OSD_depth_remove:
+        df = df.loc[:very_bottom].reset_index(drop=True)
+    return df
+
+
+# Creates a new soil horizon layer row in the soil horizon table
+def create_new_layer(row, hzdept, hzdepb):
+    return pd.DataFrame(
+        {
+            "cokey": row["cokey"],
+            "hzdept_r": hzdepb,
+            "hzdepb_r": hzdept,
+            "chkey": row["chkey"],
+            "hzname": None,
+            "sandtotal_r": np.nan,
+            "silttotal_r": np.nan,
+            "claytotal_r": np.nan,
+            "total_frag_volume": np.nan,
+            "CEC": np.nan,
+            "pH": np.nan,
+            "EC": np.nan,
+            "lep_r": np.nan,
+            "comppct_r": row["comppct_r"],
+            "compname": row["compname"],
+            "slope_r": np.nan,
+            "texture": None,
+        },
+        index=[0],
+    )
+
+
+# Creates a new row entry in the OSD (Official Series Description) soil horizon table
+def create_new_layer_osd(row, top, bottom):
+    """Create a new layer with specified top and bottom depths."""
+    new_row = row.copy()
+    new_row["top"] = top
+    new_row["bottom"] = bottom
+    for col in [
+        "hzname",
+        "texture_class",
+        "cf_class",
+        "matrix_dry_color_hue",
+        "matrix_dry_color_value",
+        "matrix_dry_color_chroma",
+    ]:
+        new_row[col] = None
+    for col in [
+        "srgb_r",
+        "srgb_g",
+        "srgb_b",
+        "total_frag_volume",
+        "claytotal_r",
+        "sandtotal_r",
+    ]:
+        new_row[col] = np.nan
+    return new_row
+
+
 ##################################################################################################
 #                                       Database and API Functions                               #
 ##################################################################################################
-def findSoilLocation(lon, lat):
+def find_region_for_location(lon, lat):
     """
     Determines the location type (US, Global, or None) of the given longitude and latitude
     based on soil datasets.
@@ -2286,35 +2444,28 @@ def findSoilLocation(lon, lat):
                    None otherwise.
     """
 
-    drv_h = ogr.GetDriverByName("ESRI Shapefile")
-    ds_in_h = drv_h.Open(soil_id.config.HWSD_PATH, 0)
-    layer_global = ds_in_h.GetLayer(0)
-
     drv_us = ogr.GetDriverByName("ESRI Shapefile")
     ds_in_us = drv_us.Open(soil_id.config.US_AREA_PATH, 0)
     layer_us = ds_in_us.GetLayer(0)
 
     # Setup coordinate transformation
-    geo_ref = layer_global.GetSpatialRef()
+    geo_ref = layer_us.GetSpatialRef()
     pt_ref = ogr.osr.SpatialReference()
     pt_ref.ImportFromEPSG(4326)
     coord_transform = ogr.osr.CoordinateTransformation(pt_ref, geo_ref)
 
     # Transform the coordinate system of the input point
-    lon, lat, _ = coord_transform.TransformPoint(lon, lat)
+    lon, lat, _ = coord_transform.TransformPoint(lat, lon)
 
     # Create a point geometry
     pt = ogr.Geometry(ogr.wkbPoint)
     pt.SetPoint_2D(0, lon, lat)
 
     # Filter layers using the point
-    layer_global.SetSpatialFilter(pt)
     layer_us.SetSpatialFilter(pt)
 
     # Determine location type
-    if not (len(layer_global) or len(layer_us)):
-        return None
-    elif len(layer_us):
+    if len(layer_us) > 0:
         return "US"
     else:
         return "Global"
@@ -2355,8 +2506,8 @@ def update_esd_data(df):
             # Fill all missing values if all are missing within the group
             group.fillna(
                 {
-                    "ecoclassid": unique_ids[0] if unique_ids else "",
-                    "ecoclassname": unique_names[0] if unique_names else "",
+                    "ecoclassid": unique_ids[0] if unique_ids.size > 0 else "",
+                    "ecoclassname": unique_names[0] if unique_names.size > 0 else "",
                 },
                 inplace=True,
             )

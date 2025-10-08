@@ -1,0 +1,179 @@
+{
+  "list": {
+    "AWS_PIW90": "Data not available",
+    "Soil Data Value": "Data not available",
+    "metadata": {
+      "location": "us",
+      "model": "v3",
+      "unit_measure": {
+        "cec": "cmol(c)/kg",
+        "clay": "%",
+        "depth": "cm",
+        "distance": "m",
+        "ec": "ds/m",
+        "rock_fragments": "cm3/100cm3",
+        "sand": "%"
+      }
+    },
+    "soilList": [
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F006XD004WA"
+            ],
+            "ecoclassname": [
+              "Mesic Xeric Slopes And Plateaus (Oregon White Oak-Ponderosa Pine Hot Dry Herb/Shrub)"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/006X/F006XD004WA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Gunn",
+          "name": "Gunn",
+          "rank_loc": "1",
+          "score_loc": 0.929
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25483307",
+            "componentKind": "Series",
+            "componentPct": 95,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "3",
+            "irrcapscl": "e",
+            "irrcapunit": "None",
+            "mapunitID": "76223",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=gunn",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#gunn",
+            "slope": 5.0,
+            "taxsubgrp": "Ultic Haploxeralfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "Landscape--plateaus, hills\nLandform--structural benches, hillslopes, ridgetops\nSlope--0 to 65 percent\nParent material--loess mixed with colluvium and residuum derived from basalt\nMean annual precipitation--about 530 mm\nMean annual air temperature--about 9 degrees C\nDepth class--deep, very deep\nDrainage class--well drained\nSoil moisture regime--xeric\nSoil temperature regime--mesic\nSoil moisture subclass--typic"
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F006XD004WA"
+            ],
+            "ecoclassname": [
+              "Mesic Xeric Slopes And Plateaus (Oregon White Oak-Ponderosa Pine Hot Dry Herb/Shrub)"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/006X/F006XD004WA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Gunn",
+          "name": "Gunn2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.929
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "25483316",
+            "componentKind": "Series",
+            "componentPct": 90,
+            "dataSource": "SSURGO",
+            "distance": 42.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "76225",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "4",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=gunn",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#gunn",
+            "slope": 19.0,
+            "taxsubgrp": "Ultic Haploxeralfs",
+            "textureInfill": "Yes"
+          },
+          "siteDescription": "Landscape--plateaus, hills\nLandform--structural benches, hillslopes, ridgetops\nSlope--0 to 65 percent\nParent material--loess mixed with colluvium and residuum derived from basalt\nMean annual precipitation--about 530 mm\nMean annual air temperature--about 9 degrees C\nDepth class--deep, very deep\nDrainage class--well drained\nSoil moisture regime--xeric\nSoil temperature regime--mesic\nSoil moisture subclass--typic"
+        },
+        "texture": {},
+        "top_depth": {}
+      }
+    ]
+  },
+  "rank": {
+    "metadata": {
+      "location": "us",
+      "model": "v2"
+    },
+    "soilRank": [
+      {
+        "component": "Gunn",
+        "componentData": NaN,
+        "componentID": 25483316,
+        "name": "Gunn2",
+        "not_displayed": false,
+        "rank_data": "1",
+        "rank_data_group": "1",
+        "rank_data_loc": "1",
+        "rank_data_loc_group": "1",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "1",
+        "score_data": 0.37,
+        "score_data_group": 0.37,
+        "score_data_loc": 0.649,
+        "score_data_loc_group": 0.649,
+        "score_loc": 0.929,
+        "score_loc_group": 0.929
+      },
+      {
+        "component": "Gunn",
+        "componentData": "Data Complete",
+        "componentID": 25483307,
+        "name": "Gunn",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "1",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "1",
+        "rank_loc": "1",
+        "rank_loc_group": "1",
+        "score_data": 0.312,
+        "score_data_group": 0.37,
+        "score_data_loc": 0.62,
+        "score_data_loc_group": 0.649,
+        "score_loc": 0.929,
+        "score_loc_group": 0.929
+      }
+    ]
+  }
+}

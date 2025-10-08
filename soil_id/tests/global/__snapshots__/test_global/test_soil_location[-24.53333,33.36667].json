@@ -1,0 +1,1455 @@
+{
+  "list": {
+    "metadata": {
+      "location": "us",
+      "model": "v3",
+      "unit_measure": {
+        "cec": "cmol(c)/kg",
+        "clay": "%",
+        "depth": "cm",
+        "distance": "m",
+        "ec": "ds/m",
+        "rock_fragments": "cm3/100cm3",
+        "sand": "%"
+      }
+    },
+    "soilList": [
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 14.0,
+          "sl2": 14.0,
+          "sl3": 14.0,
+          "sl4": 13.2,
+          "sl5": 12.71,
+          "sl6": 12.4,
+          "sl7": 12.5
+        },
+        "clay": {
+          "sl1": 26.0,
+          "sl2": 26.0,
+          "sl3": 26.0,
+          "sl4": 26.2,
+          "sl5": 25.57,
+          "sl6": 25.2,
+          "sl7": 25.0
+        },
+        "ec": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 1.4,
+          "sl5": 1.43,
+          "sl6": 1.6,
+          "sl7": 1.67
+        },
+        "id": {
+          "component": "Salic fluvisols",
+          "name": "Salic fluvisols",
+          "rank_loc": "1",
+          "score_loc": 0.182
+        },
+        "ph": {
+          "sl1": 8.4,
+          "sl2": 8.4,
+          "sl3": 8.4,
+          "sl4": 8.4,
+          "sl5": 8.41,
+          "sl6": 8.44,
+          "sl7": 8.45
+        },
+        "rock_fragments": {
+          "sl1": 4.0,
+          "sl2": 4.0,
+          "sl3": 4.0,
+          "sl4": 6.0,
+          "sl5": 7.71,
+          "sl6": 10.4,
+          "sl7": 10.67
+        },
+        "sand": {
+          "sl1": 39.0,
+          "sl2": 39.0,
+          "sl3": 39.0,
+          "sl4": 39.4,
+          "sl5": 40.43,
+          "sl6": 41.0,
+          "sl7": 41.5
+        },
+        "site": {
+          "siteData": {
+            "componentID": 113476,
+            "distance": 0.5,
+            "mapunitID": 18586,
+            "minCompDistance": 0.50040511,
+            "share": 50,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Salic Fluvisols are mostly found in floodplains and coastal areas and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Salic Fluvisols have high salinity in the upper portion of soil.",
+            "Description_es": "Los Fluvisoles Sálicos se encuentran sobre todo en llanuras de inundación y zonas costeras y tienen un desarrollo de perfil limitado con una serie de propiedades. <br>La gestión hidrológica es esencial para la producción.   <br>Los fluvisoles salinos tienen una alta salinidad en la parte superior del suelo.",
+            "Description_fr": "Salic Fluvisols are mostly found in floodplains and coastal areas and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Salic Fluvisols have high salinity in the upper portion of soil.",
+            "Description_ks": "Salic Fluvisols are mostly found in floodplains and coastal areas and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Salic Fluvisols have high salinity in the upper portion of soil.",
+            "Management_en": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered. <br> Leaching with a high quality (low salinity) water source will be needed to move salts out of the rooting zone. <br> Use of salt tolerant crops and varieties is also recommended. <br> Last, management of fertilization programs to avoid overapplication and accumulation of salts is needed. ",
+            "Management_es": "Estos suelos son todos naturalmente fértiles y productivos. <br>El drenaje y/o la gestión de las aguas de inundación pueden hacerlos aptos para el cultivo continuo. <br>Sin embargo, el drenaje puede afectar al pH del suelo, por lo que debe realizarse un muestreo para evaluar la necesidad de cal. <br>Una vez en cultivo continuo hay que tener cuidado para evitar la erosión del suelo. <br>Deben considerarse métodos de producción que protejan la superficie del suelo (mantillos, cultivos de cobertura), mejoren la infiltración del agua o proporcionen una vía para el movimiento del agua desde el campo a una velocidad no erosiva (terrazas, vías de drenaje). <br>La lixiviación con una fuente de agua de alta calidad (baja salinidad) será necesaria para desplazar las sales fuera de la zona de enraizamiento. <br>También se recomienda el uso de cultivos y variedades tolerantes a la sal. <br>Por último, es necesario gestionar los programas de fertilización para evitar la sobreaplicación y la acumulación de sales.",
+            "Management_fr": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered. <br> Leaching with a high quality (low salinity) water source will be needed to move salts out of the rooting zone. <br> Use of salt tolerant crops and varieties is also recommended. <br> Last, management of fertilization programs to avoid overapplication and accumulation of salts is needed. ",
+            "Management_ks": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered. <br> Leaching with a high quality (low salinity) water source will be needed to move salts out of the rooting zone. <br> Use of salt tolerant crops and varieties is also recommended. <br> Last, management of fertilization programs to avoid overapplication and accumulation of salts is needed. "
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Loam",
+          "sl5": "Loam",
+          "sl6": "Loam",
+          "sl7": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 4.0,
+          "sl2": 4.0,
+          "sl3": 4.0,
+          "sl4": 4.0,
+          "sl5": 4.0,
+          "sl6": 4.0,
+          "sl7": 4.0
+        },
+        "clay": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 5.8,
+          "sl5": 5.57,
+          "sl6": 5.4,
+          "sl7": 5.33
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Cambic arenosols",
+          "name": "Cambic arenosols",
+          "rank_loc": "2",
+          "score_loc": 0.178
+        },
+        "ph": {
+          "sl1": 6.9,
+          "sl2": 6.9,
+          "sl3": 6.9,
+          "sl4": 6.82,
+          "sl5": 6.8,
+          "sl6": 6.8,
+          "sl7": 6.82
+        },
+        "rock_fragments": {
+          "sl1": 7.0,
+          "sl2": 7.0,
+          "sl3": 7.0,
+          "sl4": 14.4,
+          "sl5": 16.57,
+          "sl6": 21.2,
+          "sl7": 20.67
+        },
+        "sand": {
+          "sl1": 89.0,
+          "sl2": 89.0,
+          "sl3": 89.0,
+          "sl4": 89.2,
+          "sl5": 89.29,
+          "sl6": 89.2,
+          "sl7": 89.17
+        },
+        "site": {
+          "siteData": {
+            "componentID": 113052,
+            "distance": 0.0,
+            "mapunitID": 18428,
+            "minCompDistance": 0.0,
+            "share": 30,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Cambic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> Cambic Arenosols have a minimally developed subsoil horizon that can retain slightly higher amounts of nutrients and water.",
+            "Description_es": "Los Arenosoles Cámbicos son suelos arenosos con un desarrollo mínimo del suelo. <br>Son inherentemente bajos en nutrientes y capacidad de retención de agua. <br>Los arenosoles cámbicos tienen un horizonte del subsuelo mínimamente desarrollado que puede retener cantidades ligeramente superiores de nutrientes y agua.",
+            "Description_fr": "Cambic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> Cambic Arenosols have a minimally developed subsoil horizon that can retain slightly higher amounts of nutrients and water.",
+            "Description_ks": "Cambic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> Cambic Arenosols have a minimally developed subsoil horizon that can retain slightly higher amounts of nutrients and water.",
+            "Management_en": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. ",
+            "Management_es": "Dado que estos suelos tienen poca capacidad de retención de agua y nutrientes, deben ser fertilizados y regados para obtener una productividad óptima. <br>Las prácticas de gestión para mejorar el suministro de nutrientes y la capacidad de retención de agua incluyen la adición de materia orgánica, el uso de cultivos de cobertura y la rotación de cultivos. <br>La mejor productividad se logrará mediante el uso de riego suplementario, el uso de herramientas como mantillos o cubiertas para preservar la humedad del suelo, y la fertilización.",
+            "Management_fr": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. ",
+            "Management_ks": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. "
+          }
+        },
+        "texture": {
+          "sl1": "Sand",
+          "sl2": "Sand",
+          "sl3": "Sand",
+          "sl4": "Sand",
+          "sl5": "Sand",
+          "sl6": "Sand",
+          "sl7": "Sand"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 5.0,
+          "sl2": 5.0,
+          "sl3": 5.0,
+          "sl4": 3.8,
+          "sl5": 3.57,
+          "sl6": 3.8,
+          "sl7": 3.5
+        },
+        "clay": {
+          "sl1": 7.0,
+          "sl2": 7.0,
+          "sl3": 7.0,
+          "sl4": 7.0,
+          "sl5": 7.14,
+          "sl6": 7.6,
+          "sl7": 7.17
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Eutric fluvisols",
+          "name": "Eutric fluvisols",
+          "rank_loc": "3",
+          "score_loc": 0.127
+        },
+        "ph": {
+          "sl1": 6.4,
+          "sl2": 6.4,
+          "sl3": 6.4,
+          "sl4": 6.42,
+          "sl5": 6.46,
+          "sl6": 6.54,
+          "sl7": 6.55
+        },
+        "rock_fragments": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 2.4,
+          "sl5": 2.86,
+          "sl6": 2.8,
+          "sl7": 5.33
+        },
+        "sand": {
+          "sl1": 87.0,
+          "sl2": 87.0,
+          "sl3": 87.0,
+          "sl4": 86.8,
+          "sl5": 86.29,
+          "sl6": 85.2,
+          "sl7": 86.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 113479,
+            "distance": 0.5,
+            "mapunitID": 18586,
+            "minCompDistance": 0.50040511,
+            "share": 10,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Eutric Fluvisols are mostly found in floodplains and coastal areas, and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Eutric Fluvisols are productive soils with high base saturation in the upper portion of soil. ",
+            "Description_es": "Los Fluvisoles Eútricos se encuentran principalmente en llanuras de inundación y zonas costeras, y tienen un desarrollo de perfil limitado con una serie de propiedades. <br>La gestión hidrológica es esencial para la producción.   <br>Los fluvisoles eútricos son suelos productivos con una alta saturación de bases en la parte superior del suelo. ",
+            "Description_fr": "Eutric Fluvisols are mostly found in floodplains and coastal areas, and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Eutric Fluvisols are productive soils with high base saturation in the upper portion of soil. ",
+            "Description_ks": "Eutric Fluvisols are mostly found in floodplains and coastal areas, and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Eutric Fluvisols are productive soils with high base saturation in the upper portion of soil. ",
+            "Management_en": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered.",
+            "Management_es": "Estos suelos son todos naturalmente fértiles y productivos. <br>El drenaje y/o la gestión de las aguas de inundación pueden hacerlos aptos para el cultivo continuo. <br>Sin embargo, el drenaje puede afectar al pH del suelo, por lo que debe realizarse un muestreo para evaluar la necesidad de cal. <br>Una vez en cultivo continuo hay que tener cuidado para evitar la erosión del suelo. <br>Deben considerarse métodos de producción que protejan la superficie del suelo (mantillos, cultivos de cobertura), mejoren la infiltración del agua o proporcionen una ruta para el movimiento del agua desde el campo a una velocidad no erosiva (terrazas, vías de drenaje).",
+            "Management_fr": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered.",
+            "Management_ks": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered."
+          }
+        },
+        "texture": {
+          "sl1": "Loamy sand",
+          "sl2": "Loamy sand",
+          "sl3": "Loamy sand",
+          "sl4": "Loamy sand",
+          "sl5": "Loamy sand",
+          "sl6": "Loamy sand",
+          "sl7": "Loamy sand"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 17.0,
+          "sl2": 17.0,
+          "sl3": 17.0,
+          "sl4": 19.2,
+          "sl5": 19.29,
+          "sl6": 19.0,
+          "sl7": 18.67
+        },
+        "clay": {
+          "sl1": 21.0,
+          "sl2": 21.0,
+          "sl3": 21.0,
+          "sl4": 26.0,
+          "sl5": 26.29,
+          "sl6": 25.6,
+          "sl7": 24.67
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.8,
+          "sl5": 2.57,
+          "sl6": 3.8,
+          "sl7": 3.83
+        },
+        "id": {
+          "component": "Haplic solonetz",
+          "name": "Haplic solonetz",
+          "rank_loc": "4",
+          "score_loc": 0.127
+        },
+        "ph": {
+          "sl1": 8.3,
+          "sl2": 8.3,
+          "sl3": 8.3,
+          "sl4": 8.56,
+          "sl5": 8.63,
+          "sl6": 8.66,
+          "sl7": 8.65
+        },
+        "rock_fragments": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 5.0,
+          "sl5": 5.29,
+          "sl6": 7.4,
+          "sl7": 9.0
+        },
+        "sand": {
+          "sl1": 49.0,
+          "sl2": 49.0,
+          "sl3": 49.0,
+          "sl4": 44.6,
+          "sl5": 44.57,
+          "sl6": 45.4,
+          "sl7": 46.17
+        },
+        "site": {
+          "siteData": {
+            "componentID": 113051,
+            "distance": 0.0,
+            "mapunitID": 18428,
+            "minCompDistance": 0.0,
+            "share": 35,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Solonetzs have strongly structured clay rich subsoils with high exchangeable sodium. <br> Productivity of these soils depends on the depth of surface horizons above these subsoils.",
+            "Description_es": "Los Solonetz Háplicos tienen subsuelos ricos en arcilla fuertemente estructurados con un alto nivel de sodio intercambiable. <br>La productividad de estos suelos depende de la profundidad de los horizontes superficiales por encima de estos subsuelos.",
+            "Description_fr": "Haplic Solonetzs have strongly structured clay rich subsoils with high exchangeable sodium. <br> Productivity of these soils depends on the depth of surface horizons above these subsoils.",
+            "Description_ks": "Haplic Solonetzs have strongly structured clay rich subsoils with high exchangeable sodium. <br> Productivity of these soils depends on the depth of surface horizons above these subsoils.",
+            "Management_en": "These are likely to have high sodium in subsurface horizons which results in poor soil structure and poor infiltration. <br> The soils will appear wet, but plants will wilt. <br> To improve internal drainage, gypsum should be applied to displace the sodium, followed by leaching with higher quality water to move the displaced sodium from the rooting zone. <br> If the soils can be reclaimed by the application of gypsum and leaching of sodium, they may be suitable for grazing or cultivation. <br> Selection of sodium tolerant crops is also an option, and should be used for maintenance.<br> Cultivation is more suited when these soils are located in temperate regions, and the surface soil is higher in organic matter. ",
+            "Management_es": "Es probable que tengan un alto nivel de sodio en los horizontes subsuperficiales, lo que da lugar a una mala estructura del suelo y a una mala infiltración. <br>Los suelos parecerán húmedos, pero las plantas se marchitarán. <br>Para mejorar el drenaje interno, debe aplicarse yeso para desplazar el sodio, seguido de una lixiviación con agua de mayor calidad para desplazar el sodio desplazado de la zona de enraizamiento. <br>Si los suelos pueden recuperarse mediante la aplicación de yeso y la lixiviación del sodio, pueden ser aptos para el pastoreo o el cultivo. <br>La selección de cultivos tolerantes al sodio también es una opción, y debería utilizarse para el mantenimiento.<br>El cultivo es más adecuado cuando estos suelos están situados en regiones templadas, y el suelo superficial es más rico en materia orgánica.",
+            "Management_fr": "These are likely to have high sodium in subsurface horizons which results in poor soil structure and poor infiltration. <br> The soils will appear wet, but plants will wilt. <br> To improve internal drainage, gypsum should be applied to displace the sodium, followed by leaching with higher quality water to move the displaced sodium from the rooting zone. <br> If the soils can be reclaimed by the application of gypsum and leaching of sodium, they may be suitable for grazing or cultivation. <br> Selection of sodium tolerant crops is also an option, and should be used for maintenance.<br> Cultivation is more suited when these soils are located in temperate regions, and the surface soil is higher in organic matter. ",
+            "Management_ks": "These are likely to have high sodium in subsurface horizons which results in poor soil structure and poor infiltration. <br> The soils will appear wet, but plants will wilt. <br> To improve internal drainage, gypsum should be applied to displace the sodium, followed by leaching with higher quality water to move the displaced sodium from the rooting zone. <br> If the soils can be reclaimed by the application of gypsum and leaching of sodium, they may be suitable for grazing or cultivation. <br> Selection of sodium tolerant crops is also an option, and should be used for maintenance.<br> Cultivation is more suited when these soils are located in temperate regions, and the surface soil is higher in organic matter. "
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Loam",
+          "sl5": "Loam",
+          "sl6": "Loam",
+          "sl7": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 19.0,
+          "sl2": 19.0,
+          "sl3": 19.0,
+          "sl4": 18.4,
+          "sl5": 18.14,
+          "sl6": 17.6,
+          "sl7": 17.5
+        },
+        "clay": {
+          "sl1": 31.0,
+          "sl2": 31.0,
+          "sl3": 31.0,
+          "sl4": 32.2,
+          "sl5": 32.14,
+          "sl6": 31.6,
+          "sl7": 31.33
+        },
+        "ec": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 1.4,
+          "sl5": 1.43,
+          "sl6": 1.6,
+          "sl7": 1.67
+        },
+        "id": {
+          "component": "Mollic fluvisols",
+          "name": "Mollic fluvisols",
+          "rank_loc": "5",
+          "score_loc": 0.109
+        },
+        "ph": {
+          "sl1": 6.1,
+          "sl2": 6.1,
+          "sl3": 6.1,
+          "sl4": 6.24,
+          "sl5": 6.3,
+          "sl6": 6.38,
+          "sl7": 6.43
+        },
+        "rock_fragments": {
+          "sl1": 19.0,
+          "sl2": 19.0,
+          "sl3": 19.0,
+          "sl4": 11.6,
+          "sl5": 9.86,
+          "sl6": 10.2,
+          "sl7": 10.33
+        },
+        "sand": {
+          "sl1": 37.0,
+          "sl2": 37.0,
+          "sl3": 37.0,
+          "sl4": 36.2,
+          "sl5": 36.86,
+          "sl6": 38.4,
+          "sl7": 38.83
+        },
+        "site": {
+          "siteData": {
+            "componentID": 113477,
+            "distance": 0.5,
+            "mapunitID": 18586,
+            "minCompDistance": 0.50040511,
+            "share": 30,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Mollic Fluvisols are mostly found in floodplains and coastal areas and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Mollic Fluvisols have relatively higher organic matter and nutrients in surface horizons.",
+            "Description_es": "Los Fluvisoles Mólicos se encuentran principalmente en llanuras de inundación y zonas costeras y tienen un desarrollo de perfil limitado con una serie de propiedades. <br>La gestión hidrológica es esencial para la producción.   <br>Los fluvisoles móllicos tienen una materia orgánica y nutrientes relativamente altos en los horizontes superficiales.",
+            "Description_fr": "Mollic Fluvisols are mostly found in floodplains and coastal areas and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Mollic Fluvisols have relatively higher organic matter and nutrients in surface horizons.",
+            "Description_ks": "Mollic Fluvisols are mostly found in floodplains and coastal areas and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Mollic Fluvisols have relatively higher organic matter and nutrients in surface horizons.",
+            "Management_en": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered.",
+            "Management_es": "Estos suelos son todos naturalmente fértiles y productivos. <br>El drenaje y/o la gestión de las aguas de inundación pueden hacerlos aptos para el cultivo continuo. <br>Sin embargo, el drenaje puede afectar al pH del suelo, por lo que debe realizarse un muestreo para evaluar la necesidad de cal. <br>Una vez en cultivo continuo hay que tener cuidado para evitar la erosión del suelo. <br>Deben considerarse métodos de producción que protejan la superficie del suelo (mantillos, cultivos de cobertura), mejoren la infiltración del agua o proporcionen una ruta para el movimiento del agua desde el campo a una velocidad no erosiva (terrazas, vías de drenaje).",
+            "Management_fr": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered.",
+            "Management_ks": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered."
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 14.0,
+          "sl2": 14.0,
+          "sl3": 14.0,
+          "sl4": 13.6,
+          "sl5": 13.57,
+          "sl6": 13.0,
+          "sl7": 13.17
+        },
+        "clay": {
+          "sl1": 18.0,
+          "sl2": 18.0,
+          "sl3": 18.0,
+          "sl4": 18.8,
+          "sl5": 18.86,
+          "sl6": 18.8,
+          "sl7": 18.83
+        },
+        "ec": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 1.4,
+          "sl5": 1.43,
+          "sl6": 1.6,
+          "sl7": 1.67
+        },
+        "id": {
+          "component": "Ferralic arenosols",
+          "name": "Ferralic arenosols",
+          "rank_loc": "6",
+          "score_loc": 0.1
+        },
+        "ph": {
+          "sl1": 7.5,
+          "sl2": 7.5,
+          "sl3": 7.5,
+          "sl4": 7.62,
+          "sl5": 7.66,
+          "sl6": 7.68,
+          "sl7": 7.7
+        },
+        "rock_fragments": {
+          "sl1": 3.0,
+          "sl2": 3.0,
+          "sl3": 3.0,
+          "sl4": 2.4,
+          "sl5": 2.57,
+          "sl6": 4.4,
+          "sl7": 5.5
+        },
+        "sand": {
+          "sl1": 55.0,
+          "sl2": 55.0,
+          "sl3": 55.0,
+          "sl4": 54.2,
+          "sl5": 54.14,
+          "sl6": 54.6,
+          "sl7": 55.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 112871,
+            "distance": 14598.857,
+            "mapunitID": 18373,
+            "minCompDistance": 14598.85741844,
+            "share": 85,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Ferralic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are high in iron and have low nutrient retention.",
+            "Description_es": "Los Arenosoles Ferrálicos son suelos arenosos con un desarrollo mínimo del suelo. <br>Son inherentemente bajos en nutrientes y capacidad de retención de agua. <br>Estos suelos tienen un alto contenido en hierro y una baja retención de nutrientes.",
+            "Description_fr": "Ferralic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are high in iron and have low nutrient retention.",
+            "Description_ks": "Ferralic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are high in iron and have low nutrient retention.",
+            "Management_en": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> Increased attention to the supply of phosphorus may be needed, as excessive iron may increase P fixation in these soils. ",
+            "Management_es": "Dado que estos suelos tienen poca capacidad de retención de agua y nutrientes, deben ser fertilizados y regados para obtener una productividad óptima. <br>Las prácticas de gestión para mejorar el suministro de nutrientes y la capacidad de retención de agua incluyen la adición de materia orgánica, el uso de cultivos de cobertura y la rotación de cultivos. <br>La mejor productividad se logrará mediante el uso de riego suplementario, el uso de herramientas como mantillos o cubiertas para preservar la humedad del suelo, y la fertilización. <br>Puede ser necesario prestar más atención al suministro de fósforo, ya que el exceso de hierro puede aumentar la fijación de P en estos suelos.",
+            "Management_fr": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> Increased attention to the supply of phosphorus may be needed, as excessive iron may increase P fixation in these soils. ",
+            "Management_ks": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> Increased attention to the supply of phosphorus may be needed, as excessive iron may increase P fixation in these soils. "
+          }
+        },
+        "texture": {
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy loam",
+          "sl5": "Sandy loam",
+          "sl6": "Sandy loam",
+          "sl7": "Sandy loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 23.0,
+          "sl2": 23.0,
+          "sl3": 23.0,
+          "sl4": 21.4,
+          "sl5": 21.0,
+          "sl6": 20.2,
+          "sl7": 18.67
+        },
+        "clay": {
+          "sl1": 32.0,
+          "sl2": 32.0,
+          "sl3": 32.0,
+          "sl4": 33.4,
+          "sl5": 32.86,
+          "sl6": 31.4,
+          "sl7": 29.83
+        },
+        "ec": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 1.4,
+          "sl5": 1.43,
+          "sl6": 1.6,
+          "sl7": 1.67
+        },
+        "id": {
+          "component": "Eutric planosols",
+          "name": "Eutric planosols",
+          "rank_loc": "7",
+          "score_loc": 0.073
+        },
+        "ph": {
+          "sl1": 6.5,
+          "sl2": 6.5,
+          "sl3": 6.5,
+          "sl4": 6.52,
+          "sl5": 6.56,
+          "sl6": 6.62,
+          "sl7": 6.7
+        },
+        "rock_fragments": {
+          "sl1": 18.0,
+          "sl2": 18.0,
+          "sl3": 18.0,
+          "sl4": 17.6,
+          "sl5": 16.43,
+          "sl6": 17.4,
+          "sl7": 18.0
+        },
+        "sand": {
+          "sl1": 39.0,
+          "sl2": 39.0,
+          "sl3": 39.0,
+          "sl4": 40.0,
+          "sl5": 41.29,
+          "sl6": 43.8,
+          "sl7": 45.33
+        },
+        "site": {
+          "siteData": {
+            "componentID": 113053,
+            "distance": 0.0,
+            "mapunitID": 18428,
+            "minCompDistance": 0.0,
+            "share": 20,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Eutric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil.<br> These soils are prone to compaction and require drainage for crop production.<br> Eutric Planosols are relatively productive soils with high base saturation in the subsoil.",
+            "Description_es": "Los Planosoles Éutricos están estacionalmente encharcados o saturados de agua en la parte superior debido a un subsuelo rico en arcilla y lentamente permeable.<br>Estos suelos son propensos a la compactación y requieren drenaje para la producción de cultivos.<br>Los Planosoles Eutricos son suelos relativamente productivos con una alta saturación de base en el subsuelo.",
+            "Description_fr": "Eutric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil.<br> These soils are prone to compaction and require drainage for crop production.<br> Eutric Planosols are relatively productive soils with high base saturation in the subsoil.",
+            "Description_ks": "Eutric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil.<br> These soils are prone to compaction and require drainage for crop production.<br> Eutric Planosols are relatively productive soils with high base saturation in the subsoil.",
+            "Management_en": "Located on flat land, these soils are best suited for paddy rice production.<br> Drainage will be required for production.<br> Highest yields will require additional fertilization.",
+            "Management_es": "Ubicados en terrenos planos, estos suelos son los más adecuados para la producción de arroz con cáscara.<br>Se requerirá el drenaje para la producción.<br>Los rendimientos más elevados requieren una fertilización adicional.",
+            "Management_fr": "Located on flat land, these soils are best suited for paddy rice production.<br> Drainage will be required for production.<br> Highest yields will require additional fertilization.",
+            "Management_ks": "Located on flat land, these soils are best suited for paddy rice production.<br> Drainage will be required for production.<br> Highest yields will require additional fertilization."
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 3.0,
+          "sl2": 3.0,
+          "sl3": 3.0,
+          "sl4": 2.4,
+          "sl5": 2.29,
+          "sl6": 2.2,
+          "sl7": 2.0
+        },
+        "clay": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 6.2,
+          "sl5": 6.43,
+          "sl6": 6.8,
+          "sl7": 7.0
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Gleyic solonetz",
+          "name": "Gleyic solonetz",
+          "rank_loc": "8",
+          "score_loc": 0.055
+        },
+        "ph": {
+          "sl1": 5.3,
+          "sl2": 5.3,
+          "sl3": 5.3,
+          "sl4": 5.32,
+          "sl5": 5.34,
+          "sl6": 5.36,
+          "sl7": 5.37
+        },
+        "rock_fragments": {
+          "sl1": 4.0,
+          "sl2": 4.0,
+          "sl3": 4.0,
+          "sl4": 4.2,
+          "sl5": 4.43,
+          "sl6": 4.6,
+          "sl7": 4.5
+        },
+        "sand": {
+          "sl1": 87.0,
+          "sl2": 87.0,
+          "sl3": 87.0,
+          "sl4": 86.8,
+          "sl5": 86.57,
+          "sl6": 86.2,
+          "sl7": 86.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 113054,
+            "distance": 0.0,
+            "mapunitID": 18428,
+            "minCompDistance": 0.0,
+            "share": 15,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Gleyic Solonetz have strongly structured clay rich subsoils with high exchangeable sodium. <br> Productivity of these soils depends on the depth of surface horizons above these subsoils.<br> Gleyic Solonetz are saturated with shallow groundwater within one meter of the soil surface.",
+            "Description_es": "Los Solonetz Gléyicos tienen subsuelos ricos en arcilla fuertemente estructurados con un alto nivel de sodio intercambiable. <br>La productividad de estos suelos depende de la profundidad de los horizontes superficiales por encima de estos subsuelos.<br>Los Solonetz gleyicos están saturados de aguas subterráneas poco profundas a menos de un metro de la superficie del suelo.",
+            "Description_fr": "Gleyic Solonetz have strongly structured clay rich subsoils with high exchangeable sodium. <br> Productivity of these soils depends on the depth of surface horizons above these subsoils.<br> Gleyic Solonetz are saturated with shallow groundwater within one meter of the soil surface.",
+            "Description_ks": "Gleyic Solonetz have strongly structured clay rich subsoils with high exchangeable sodium. <br> Productivity of these soils depends on the depth of surface horizons above these subsoils.<br> Gleyic Solonetz are saturated with shallow groundwater within one meter of the soil surface.",
+            "Management_en": "These are likely to have high sodium in subsurface horizons which results in poor soil structure and poor infiltration. <br> The soils will appear wet, but plants will wilt. <br> Drainage of these soils will be needed, both to eliminate standing water and remediate sodicity issues. <br> To further improve internal drainage, gypsum should be applied to displace the sodium, followed by leaching with higher quality water to move the displaced sodium from the rooting zone. <br> If the soils can be reclaimed by the application of gypsum and leaching of sodium, they may be suitable for grazing or cultivation. <br> Selection of sodium tolerant crops is also an option, and should be used for maintenance.<br> Cultivation is more suited when these soils are located in temperate regions, and the surface soil is higher in organic matter. ",
+            "Management_es": "Es probable que tengan un alto contenido de sodio en los horizontes subsuperficiales, lo que da lugar a una estructura deficiente del suelo y a una mala infiltración. <br>Los suelos parecerán húmedos, pero las plantas se marchitarán. <br>Será necesario drenar estos suelos, tanto para eliminar el agua estancada como para remediar los problemas de sodicidad. <br>Para mejorar aún más el drenaje interno, debería aplicarse yeso para desplazar el sodio, seguido de una lixiviación con agua de mayor calidad para desplazar el sodio desplazado de la zona de enraizamiento. <br>Si los suelos pueden recuperarse mediante la aplicación de yeso y la lixiviación del sodio, pueden ser aptos para el pastoreo o el cultivo. <br>La selección de cultivos tolerantes al sodio también es una opción, y debería utilizarse para el mantenimiento.<br>El cultivo es más adecuado cuando estos suelos están situados en regiones templadas, y el suelo superficial es más rico en materia orgánica.",
+            "Management_fr": "These are likely to have high sodium in subsurface horizons which results in poor soil structure and poor infiltration. <br> The soils will appear wet, but plants will wilt. <br> Drainage of these soils will be needed, both to eliminate standing water and remediate sodicity issues. <br> To further improve internal drainage, gypsum should be applied to displace the sodium, followed by leaching with higher quality water to move the displaced sodium from the rooting zone. <br> If the soils can be reclaimed by the application of gypsum and leaching of sodium, they may be suitable for grazing or cultivation. <br> Selection of sodium tolerant crops is also an option, and should be used for maintenance.<br> Cultivation is more suited when these soils are located in temperate regions, and the surface soil is higher in organic matter. ",
+            "Management_ks": "These are likely to have high sodium in subsurface horizons which results in poor soil structure and poor infiltration. <br> The soils will appear wet, but plants will wilt. <br> Drainage of these soils will be needed, both to eliminate standing water and remediate sodicity issues. <br> To further improve internal drainage, gypsum should be applied to displace the sodium, followed by leaching with higher quality water to move the displaced sodium from the rooting zone. <br> If the soils can be reclaimed by the application of gypsum and leaching of sodium, they may be suitable for grazing or cultivation. <br> Selection of sodium tolerant crops is also an option, and should be used for maintenance.<br> Cultivation is more suited when these soils are located in temperate regions, and the surface soil is higher in organic matter. "
+          }
+        },
+        "texture": {
+          "sl1": "Loamy sand",
+          "sl2": "Loamy sand",
+          "sl3": "Loamy sand",
+          "sl4": "Loamy sand",
+          "sl5": "Loamy sand",
+          "sl6": "Loamy sand",
+          "sl7": "Loamy sand"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 8.8,
+          "sl5": 10.0,
+          "sl6": 10.8,
+          "sl7": 11.33
+        },
+        "clay": {
+          "sl1": 11.0,
+          "sl2": 11.0,
+          "sl3": 11.0,
+          "sl4": 18.4,
+          "sl5": 20.86,
+          "sl6": 22.2,
+          "sl7": 22.83
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 1.0,
+          "sl6": 1.2,
+          "sl7": 1.33
+        },
+        "id": {
+          "component": "Umbric gleysols",
+          "name": "Umbric gleysols",
+          "rank_loc": "9",
+          "score_loc": 0.036
+        },
+        "ph": {
+          "sl1": 6.2,
+          "sl2": 6.2,
+          "sl3": 6.2,
+          "sl4": 6.36,
+          "sl5": 6.46,
+          "sl6": 6.64,
+          "sl7": 6.73
+        },
+        "rock_fragments": {
+          "sl1": 21.0,
+          "sl2": 21.0,
+          "sl3": 21.0,
+          "sl4": 13.6,
+          "sl5": 11.29,
+          "sl6": 9.6,
+          "sl7": 8.83
+        },
+        "sand": {
+          "sl1": 80.0,
+          "sl2": 80.0,
+          "sl3": 80.0,
+          "sl4": 72.0,
+          "sl5": 70.0,
+          "sl6": 69.0,
+          "sl7": 68.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 113478,
+            "distance": 0.5,
+            "mapunitID": 18586,
+            "minCompDistance": 0.50040511,
+            "share": 10,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Umbric Gleysols have shallow groundwater and are saturated for significant portions of the year. <br> Deep drainage is necessary for cultivation.    <br> Umbric Gleysols have relatively higher organic matter but lower nutrients in surface horizons.",
+            "Description_es": "Los Gleysoles Úmbricos tienen aguas subterráneas poco profundas y están saturados durante gran parte del año. <br>El drenaje profundo es necesario para el cultivo.    <br>Los Gleysoles úmbricos tienen una materia orgánica relativamente alta, pero menos nutrientes en los horizontes superficiales. ",
+            "Description_fr": "Umbric Gleysols have shallow groundwater and are saturated for significant portions of the year. <br> Deep drainage is necessary for cultivation.    <br> Umbric Gleysols have relatively higher organic matter but lower nutrients in surface horizons.",
+            "Description_ks": "Umbric Gleysols have shallow groundwater and are saturated for significant portions of the year. <br> Deep drainage is necessary for cultivation.    <br> Umbric Gleysols have relatively higher organic matter but lower nutrients in surface horizons.",
+            "Management_en": "These soils are saturated, and if they are cultivated significant drainage is required. <br> Once drained, these soils can be highly productive. <br> The water table must be lowered using deep drainage. <br> Once drained, liming may be required as organic matter begins to decompose. <br> The surface soil pH is low in these soils, and liming will likely be required. ",
+            "Management_es": "Estos suelos están saturados y, si se cultivan, se requiere un drenaje importante. <br>Una vez drenados, estos suelos pueden ser muy productivos. <br>El nivel freático debe bajarse mediante un drenaje profundo. <br>Una vez drenados, puede ser necesario el encalado, ya que la materia orgánica comienza a descomponerse. <br>El pH superficial del suelo es bajo en estos suelos, y es probable que sea necesario el encalado.",
+            "Management_fr": "These soils are saturated, and if they are cultivated significant drainage is required. <br> Once drained, these soils can be highly productive. <br> The water table must be lowered using deep drainage. <br> Once drained, liming may be required as organic matter begins to decompose. <br> The surface soil pH is low in these soils, and liming will likely be required. ",
+            "Management_ks": "These soils are saturated, and if they are cultivated significant drainage is required. <br> Once drained, these soils can be highly productive. <br> The water table must be lowered using deep drainage. <br> Once drained, liming may be required as organic matter begins to decompose. <br> The surface soil pH is low in these soils, and liming will likely be required. "
+          }
+        },
+        "texture": {
+          "sl1": "Loamy sand",
+          "sl2": "Loamy sand",
+          "sl3": "Loamy sand",
+          "sl4": "Sandy loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 16.0,
+          "sl2": 16.0,
+          "sl3": 16.0,
+          "sl4": 16.0,
+          "sl5": 16.14,
+          "sl6": 16.6,
+          "sl7": 17.0
+        },
+        "clay": {
+          "sl1": 26.0,
+          "sl2": 26.0,
+          "sl3": 26.0,
+          "sl4": 29.2,
+          "sl5": 30.14,
+          "sl6": 30.8,
+          "sl7": 31.33
+        },
+        "ec": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 3.2,
+          "sl5": 3.86,
+          "sl6": 5.0,
+          "sl7": 5.17
+        },
+        "id": {
+          "component": "Gleyic arenosols",
+          "name": "Gleyic arenosols",
+          "rank_loc": "10",
+          "score_loc": 0.013
+        },
+        "ph": {
+          "sl1": 7.9,
+          "sl2": 7.9,
+          "sl3": 7.9,
+          "sl4": 8.26,
+          "sl5": 8.41,
+          "sl6": 8.6,
+          "sl7": 8.7
+        },
+        "rock_fragments": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 4.0,
+          "sl5": 4.0,
+          "sl6": 4.2,
+          "sl7": 4.5
+        },
+        "sand": {
+          "sl1": 42.0,
+          "sl2": 42.0,
+          "sl3": 42.0,
+          "sl4": 38.4,
+          "sl5": 37.14,
+          "sl6": 35.6,
+          "sl7": 35.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 112872,
+            "distance": 14598.857,
+            "mapunitID": 18373,
+            "minCompDistance": 14598.85741844,
+            "share": 15,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Gleyic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are saturated with shallow groundwater above one meter.",
+            "Description_es": "Los Arenosoles Gleyicos son suelos arenosos con un desarrollo mínimo del suelo. <br>Son inherentemente bajos en nutrientes y capacidad de retención de agua. <br>Estos suelos están saturados con aguas subterráneas poco profundas por encima de un metro.",
+            "Description_fr": "Gleyic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are saturated with shallow groundwater above one meter.",
+            "Description_ks": "Gleyic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are saturated with shallow groundwater above one meter.",
+            "Management_en": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> Drainage of these soils may be needed. <br> However, since this is saturation from groundwater installation of drainage lines may not be possible, and thus shallow-rooted crops should be considered. <br> If fertilized and not drained the loss of applied nitrogen (N) by denitrification or leaching is possible. <br> More efficient crop N use in these soils can be achieved by:  1) drainage, and, 2) use of slow-release N fertilizers (if available). ",
+            "Management_es": "Dado que estos suelos tienen poca capacidad de retención de agua y nutrientes, deben ser fertilizados y regados para obtener una productividad óptima. <br>Las prácticas de gestión para mejorar el suministro de nutrientes y la capacidad de retención de agua incluyen la adición de materia orgánica, el uso de cultivos de cobertura y la rotación de cultivos. <br>La mejor productividad se logrará mediante el uso de riego suplementario, el uso de herramientas como mantillos o cubiertas para preservar la humedad del suelo, y la fertilización. <br>Puede ser necesario el drenaje de estos suelos. <br>Sin embargo, al tratarse de una saturación por aguas subterráneas puede no ser posible la instalación de líneas de drenaje, por lo que deben considerarse los cultivos de raíz superficial. <br>Si se fertiliza y no se drena es posible la pérdida de nitrógeno (N) aplicado por desnitrificación o lixiviación. <br>En estos suelos se puede conseguir un uso más eficiente del N por parte de los cultivos mediante:  1) el drenaje, y, 2) el uso de fertilizantes de N de liberación lenta (si están disponibles).",
+            "Management_fr": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> Drainage of these soils may be needed. <br> However, since this is saturation from groundwater installation of drainage lines may not be possible, and thus shallow-rooted crops should be considered. <br> If fertilized and not drained the loss of applied nitrogen (N) by denitrification or leaching is possible. <br> More efficient crop N use in these soils can be achieved by:  1) drainage, and, 2) use of slow-release N fertilizers (if available). ",
+            "Management_ks": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> Drainage of these soils may be needed. <br> However, since this is saturation from groundwater installation of drainage lines may not be possible, and thus shallow-rooted crops should be considered. <br> If fertilized and not drained the loss of applied nitrogen (N) by denitrification or leaching is possible. <br> More efficient crop N use in these soils can be achieved by:  1) drainage, and, 2) use of slow-release N fertilizers (if available). "
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 28.0,
+          "sl2": 28.0,
+          "sl3": 28.0,
+          "sl4": 26.2,
+          "sl5": 24.71,
+          "sl6": 23.0,
+          "sl7": 21.5
+        },
+        "clay": {
+          "sl1": 46.0,
+          "sl2": 46.0,
+          "sl3": 46.0,
+          "sl4": 49.0,
+          "sl5": 48.43,
+          "sl6": 46.8,
+          "sl7": 46.33
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 0.8,
+          "sl5": 0.57,
+          "sl6": 0.4,
+          "sl7": 0.33
+        },
+        "id": {
+          "component": "Cambic arenosols",
+          "name": "Cambic arenosols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.178
+        },
+        "ph": {
+          "sl1": 5.0,
+          "sl2": 5.0,
+          "sl3": 5.0,
+          "sl4": 4.9,
+          "sl5": 4.91,
+          "sl6": 4.9,
+          "sl7": 4.9
+        },
+        "rock_fragments": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 10.0,
+          "sl5": 11.43,
+          "sl6": 13.4,
+          "sl7": 14.33
+        },
+        "sand": {
+          "sl1": 25.0,
+          "sl2": 25.0,
+          "sl3": 25.0,
+          "sl4": 25.0,
+          "sl5": 26.14,
+          "sl6": 27.6,
+          "sl7": 27.83
+        },
+        "site": {
+          "siteData": {
+            "componentID": 113348,
+            "distance": 26104.038,
+            "mapunitID": 18542,
+            "minCompDistance": 0.0,
+            "share": 75,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Cambic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> Cambic Arenosols have a minimally developed subsoil horizon that can retain slightly higher amounts of nutrients and water.",
+            "Description_es": "Los Arenosoles Cámbicos son suelos arenosos con un desarrollo mínimo del suelo. <br>Son inherentemente bajos en nutrientes y capacidad de retención de agua. <br>Los arenosoles cámbicos tienen un horizonte del subsuelo mínimamente desarrollado que puede retener cantidades ligeramente superiores de nutrientes y agua.",
+            "Description_fr": "Cambic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> Cambic Arenosols have a minimally developed subsoil horizon that can retain slightly higher amounts of nutrients and water.",
+            "Description_ks": "Cambic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> Cambic Arenosols have a minimally developed subsoil horizon that can retain slightly higher amounts of nutrients and water.",
+            "Management_en": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. ",
+            "Management_es": "Dado que estos suelos tienen poca capacidad de retención de agua y nutrientes, deben ser fertilizados y regados para obtener una productividad óptima. <br>Las prácticas de gestión para mejorar el suministro de nutrientes y la capacidad de retención de agua incluyen la adición de materia orgánica, el uso de cultivos de cobertura y la rotación de cultivos. <br>La mejor productividad se logrará mediante el uso de riego suplementario, el uso de herramientas como mantillos o cubiertas para preservar la humedad del suelo, y la fertilización.",
+            "Management_fr": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. ",
+            "Management_ks": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. "
+          }
+        },
+        "texture": {
+          "sl1": "Unknown",
+          "sl2": "Unknown",
+          "sl3": "Unknown",
+          "sl4": "Unknown",
+          "sl5": "Unknown",
+          "sl6": "Unknown",
+          "sl7": "Unknown"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 4.0,
+          "sl2": 4.0,
+          "sl3": 4.0,
+          "sl4": 3.2,
+          "sl5": 2.86,
+          "sl6": 2.6,
+          "sl7": 2.5
+        },
+        "clay": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 5.6,
+          "sl5": 5.71,
+          "sl6": 6.0,
+          "sl7": 6.67
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Eutric fluvisols",
+          "name": "Eutric fluvisols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.127
+        },
+        "ph": {
+          "sl1": 5.7,
+          "sl2": 5.7,
+          "sl3": 5.7,
+          "sl4": 5.64,
+          "sl5": 5.63,
+          "sl6": 5.64,
+          "sl7": 5.63
+        },
+        "rock_fragments": {
+          "sl1": 7.0,
+          "sl2": 7.0,
+          "sl3": 7.0,
+          "sl4": 11.6,
+          "sl5": 11.86,
+          "sl6": 10.6,
+          "sl7": 9.33
+        },
+        "sand": {
+          "sl1": 84.0,
+          "sl2": 84.0,
+          "sl3": 84.0,
+          "sl4": 84.6,
+          "sl5": 84.71,
+          "sl6": 84.2,
+          "sl7": 82.33
+        },
+        "site": {
+          "siteData": {
+            "componentID": 113211,
+            "distance": 25925.864,
+            "mapunitID": 18484,
+            "minCompDistance": 0.50040511,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Eutric Fluvisols are mostly found in floodplains and coastal areas, and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Eutric Fluvisols are productive soils with high base saturation in the upper portion of soil. ",
+            "Description_es": "Los Fluvisoles Eútricos se encuentran principalmente en llanuras de inundación y zonas costeras, y tienen un desarrollo de perfil limitado con una serie de propiedades. <br>La gestión hidrológica es esencial para la producción.   <br>Los fluvisoles eútricos son suelos productivos con una alta saturación de bases en la parte superior del suelo. ",
+            "Description_fr": "Eutric Fluvisols are mostly found in floodplains and coastal areas, and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Eutric Fluvisols are productive soils with high base saturation in the upper portion of soil. ",
+            "Description_ks": "Eutric Fluvisols are mostly found in floodplains and coastal areas, and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Eutric Fluvisols are productive soils with high base saturation in the upper portion of soil. ",
+            "Management_en": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered.",
+            "Management_es": "Estos suelos son todos naturalmente fértiles y productivos. <br>El drenaje y/o la gestión de las aguas de inundación pueden hacerlos aptos para el cultivo continuo. <br>Sin embargo, el drenaje puede afectar al pH del suelo, por lo que debe realizarse un muestreo para evaluar la necesidad de cal. <br>Una vez en cultivo continuo hay que tener cuidado para evitar la erosión del suelo. <br>Deben considerarse métodos de producción que protejan la superficie del suelo (mantillos, cultivos de cobertura), mejoren la infiltración del agua o proporcionen una ruta para el movimiento del agua desde el campo a una velocidad no erosiva (terrazas, vías de drenaje).",
+            "Management_fr": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered.",
+            "Management_ks": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered."
+          }
+        },
+        "texture": {
+          "sl1": "Loamy sand",
+          "sl2": "Loamy sand",
+          "sl3": "Loamy sand",
+          "sl4": "Loamy sand",
+          "sl5": "Loamy sand",
+          "sl6": "Loamy sand",
+          "sl7": "Loamy sand"
+        }
+      }
+    ]
+  },
+  "rank": {
+    "metadata": {
+      "location": "global",
+      "model": "v2"
+    },
+    "soilRank": [
+      {
+        "component": "Cambic arenosols",
+        "componentData": "Data Complete",
+        "componentID": 113052,
+        "name": "Cambic arenosols",
+        "not_displayed": false,
+        "rank_data": "1",
+        "rank_data_group": "1",
+        "rank_data_loc": "1",
+        "rank_data_loc_group": "1",
+        "rank_loc": "2",
+        "rank_loc_group": "2",
+        "score_data": 0.9,
+        "score_data_group": 0.9,
+        "score_data_loc": 0.539,
+        "score_data_loc_group": 0.539,
+        "score_loc": 0.178,
+        "score_loc_group": 0.178
+      },
+      {
+        "component": "Haplic solonetz",
+        "componentData": "Data Complete",
+        "componentID": 113051,
+        "name": "Haplic solonetz",
+        "not_displayed": false,
+        "rank_data": "4",
+        "rank_data_group": "4",
+        "rank_data_loc": "2",
+        "rank_data_loc_group": "2",
+        "rank_loc": "4",
+        "rank_loc_group": "4",
+        "score_data": 0.9,
+        "score_data_group": 0.9,
+        "score_data_loc": 0.514,
+        "score_data_loc_group": 0.514,
+        "score_loc": 0.127,
+        "score_loc_group": 0.127
+      },
+      {
+        "component": "Mollic fluvisols",
+        "componentData": "Data Complete",
+        "componentID": 113477,
+        "name": "Mollic fluvisols",
+        "not_displayed": false,
+        "rank_data": "5",
+        "rank_data_group": "5",
+        "rank_data_loc": "3",
+        "rank_data_loc_group": "3",
+        "rank_loc": "5",
+        "rank_loc_group": "5",
+        "score_data": 0.9,
+        "score_data_group": 0.9,
+        "score_data_loc": 0.505,
+        "score_data_loc_group": 0.505,
+        "score_loc": 0.109,
+        "score_loc_group": 0.109
+      },
+      {
+        "component": "Ferralic arenosols",
+        "componentData": "Data Complete",
+        "componentID": 112871,
+        "name": "Ferralic arenosols",
+        "not_displayed": false,
+        "rank_data": "3",
+        "rank_data_group": "3",
+        "rank_data_loc": "4",
+        "rank_data_loc_group": "4",
+        "rank_loc": "6",
+        "rank_loc_group": "6",
+        "score_data": 0.9,
+        "score_data_group": 0.9,
+        "score_data_loc": 0.5,
+        "score_data_loc_group": 0.5,
+        "score_loc": 0.1,
+        "score_loc_group": 0.1
+      },
+      {
+        "component": "Eutric planosols",
+        "componentData": "Data Complete",
+        "componentID": 113053,
+        "name": "Eutric planosols",
+        "not_displayed": false,
+        "rank_data": "2",
+        "rank_data_group": "2",
+        "rank_data_loc": "5",
+        "rank_data_loc_group": "5",
+        "rank_loc": "7",
+        "rank_loc_group": "7",
+        "score_data": 0.9,
+        "score_data_group": 0.9,
+        "score_data_loc": 0.487,
+        "score_data_loc_group": 0.487,
+        "score_loc": 0.073,
+        "score_loc_group": 0.073
+      },
+      {
+        "component": "Eutric fluvisols",
+        "componentData": "Data Complete",
+        "componentID": 113211,
+        "name": "Eutric fluvisols2",
+        "not_displayed": false,
+        "rank_data": "6",
+        "rank_data_group": "6",
+        "rank_data_loc": "6",
+        "rank_data_loc_group": "6",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "3",
+        "score_data": 0.813,
+        "score_data_group": 0.813,
+        "score_data_loc": 0.47,
+        "score_data_loc_group": 0.47,
+        "score_loc": 0.127,
+        "score_loc_group": 0.127
+      },
+      {
+        "component": "Salic fluvisols",
+        "componentData": "Data Complete",
+        "componentID": 113476,
+        "name": "Salic fluvisols",
+        "not_displayed": false,
+        "rank_data": "7",
+        "rank_data_group": "7",
+        "rank_data_loc": "7",
+        "rank_data_loc_group": "7",
+        "rank_loc": "1",
+        "rank_loc_group": "1",
+        "score_data": 0.756,
+        "score_data_group": 0.756,
+        "score_data_loc": 0.469,
+        "score_data_loc_group": 0.469,
+        "score_loc": 0.182,
+        "score_loc_group": 0.182
+      },
+      {
+        "component": "Gleyic solonetz",
+        "componentData": "Data Complete",
+        "componentID": 113054,
+        "name": "Gleyic solonetz",
+        "not_displayed": false,
+        "rank_data": "8",
+        "rank_data_group": "8",
+        "rank_data_loc": "8",
+        "rank_data_loc_group": "8",
+        "rank_loc": "8",
+        "rank_loc_group": "8",
+        "score_data": 0.576,
+        "score_data_group": 0.576,
+        "score_data_loc": 0.315,
+        "score_data_loc_group": 0.315,
+        "score_loc": 0.055,
+        "score_loc_group": 0.055
+      },
+      {
+        "component": "Umbric gleysols",
+        "componentData": "Missing Data",
+        "componentID": 113478,
+        "name": "Umbric gleysols",
+        "not_displayed": false,
+        "rank_data": "9",
+        "rank_data_group": "9",
+        "rank_data_loc": "9",
+        "rank_data_loc_group": "9",
+        "rank_loc": "9",
+        "rank_loc_group": "9",
+        "score_data": 0.576,
+        "score_data_group": 0.576,
+        "score_data_loc": 0.306,
+        "score_data_loc_group": 0.306,
+        "score_loc": 0.036,
+        "score_loc_group": 0.036
+      },
+      {
+        "component": "Gleyic arenosols",
+        "componentData": "Data Complete",
+        "componentID": 112872,
+        "name": "Gleyic arenosols",
+        "not_displayed": false,
+        "rank_data": "10",
+        "rank_data_group": "10",
+        "rank_data_loc": "10",
+        "rank_data_loc_group": "10",
+        "rank_loc": "10",
+        "rank_loc_group": "10",
+        "score_data": 0.244,
+        "score_data_group": 0.244,
+        "score_data_loc": 0.129,
+        "score_data_loc_group": 0.129,
+        "score_loc": 0.013,
+        "score_loc_group": 0.013
+      },
+      {
+        "component": "Cambic arenosols",
+        "componentData": "Data Complete",
+        "componentID": 113348,
+        "name": "Cambic arenosols2",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "1",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "1",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "2",
+        "score_data": 0.576,
+        "score_data_group": 0.9,
+        "score_data_loc": 0.377,
+        "score_data_loc_group": 0.539,
+        "score_loc": 0.178,
+        "score_loc_group": 0.178
+      },
+      {
+        "component": "Eutric fluvisols",
+        "componentData": "Data Complete",
+        "componentID": 113479,
+        "name": "Eutric fluvisols",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "6",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "6",
+        "rank_loc": "3",
+        "rank_loc_group": "3",
+        "score_data": 0.244,
+        "score_data_group": 0.813,
+        "score_data_loc": 0.186,
+        "score_data_loc_group": 0.47,
+        "score_loc": 0.127,
+        "score_loc_group": 0.127
+      }
+    ]
+  }
+}

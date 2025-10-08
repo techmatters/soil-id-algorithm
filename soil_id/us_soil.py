@@ -29,11 +29,13 @@ from pandas import json_normalize
 import soil_id.config
 
 from .color import getProfileLAB, lab2munsell, munsell2rgb
-from .services import get_soil_series_data, get_soilweb_data, sda_return
+from .rank_utils import finalize_rank_output
+from .services import get_elev_data, get_soil_series_data, get_soilweb_data, sda_return
 from .soil_sim import soil_sim
 from .utils import (
     aggregate_data,
-    compute_site_similarity,
+    create_new_layer,
+    create_new_layer_osd,
     drop_cokey_horz,
     extract_mucompdata_STATSGO,
     extract_muhorzdata_STATSGO,
@@ -50,6 +52,7 @@ from .utils import (
     process_horizon_data,
     process_site_data,
     update_esd_data,
+    update_intpl_data,
 )
 
 # entry points
@@ -131,7 +134,7 @@ def list_soils(lon, lat):
     # Location based calculation
     # --------------------------------------------------------------------
     # Process distance scores and perform group-wise aggregations.
-    mucompdata_pd = process_distance_scores(mucompdata_pd, ExpCoeff)
+    mucompdata_pd = process_distance_scores(mucompdata_pd, ExpCoeff, compkind_filter=True)
 
     # Add the data source column
     mucompdata_pd["data_source"] = data_source
@@ -200,7 +203,7 @@ def list_soils(lon, lat):
     # Merge muhorzdata_pd with selected columns from mucompdata_pd
     muhorzdata_pd = pd.merge(
         muhorzdata_pd,
-        mucompdata_pd[["cokey", "comppct_r", "compname", "distance_score", "slope_r"]],
+        mucompdata_pd[["cokey", "comppct_r", "compname", "cond_prob", "slope_r"]],
         on="cokey",
         how="left",
     )
@@ -211,6 +214,14 @@ def list_soils(lon, lat):
         pd.notnull(muhorzdata_pd["hzdept_r"]) & pd.notnull(muhorzdata_pd["hzdepb_r"])
     )
     muhorzdata_pd = muhorzdata_pd[filter_condition].drop_duplicates().reset_index(drop=True)
+
+    # Add distance column from mucompdata_pd using cokey link
+    muhorzdata_pd = pd.merge(
+        muhorzdata_pd,
+        mucompdata_pd[["cokey", "distance", "distance_score"]],
+        on="cokey",
+        how="left",
+    )
 
     # Check for duplicate component instances
     hz_drop = drop_cokey_horz(muhorzdata_pd)
@@ -223,8 +234,10 @@ def list_soils(lon, lat):
     comp_key = muhorzdata_pd["cokey"].unique().tolist()
     mucompdata_pd = mucompdata_pd[mucompdata_pd["cokey"].isin(comp_key)]
 
-    # Sort mucompdata_pd based on 'distance_score' and 'distance'
-    mucompdata_pd.sort_values(["distance_score", "distance"], ascending=[False, True], inplace=True)
+    # Sort mucompdata_pd based on 'cond_prob' and 'distance'
+    mucompdata_pd.sort_values(
+        ["cond_prob", "distance", "compname"], ascending=[False, True, True], inplace=True
+    )
     mucompdata_pd.reset_index(drop=True, inplace=True)
 
     # Duplicate the 'compname' column for grouping purposes
@@ -248,14 +261,17 @@ def list_soils(lon, lat):
     component_names = mucompdata_pd["compname"].tolist()
     name_counts = collections.Counter(component_names)
 
-    for name, count in name_counts.items():
+    for name, count in sorted(name_counts.items()):  # Sort for deterministic order
         if count > 1:  # If a component name is duplicated
-            suffixes = range(1, count + 1)  # Generate suffixes for the duplicate names
-            for suffix in suffixes:
-                index = component_names.index(
-                    name
-                )  # Find the index of the first occurrence of the duplicate name
-                component_names[index] = name + str(suffix)  # Append the suffix
+            # Find all indices for this name
+            indices = [i for i, comp_name in enumerate(component_names) if comp_name == name]
+            # Sort indices for deterministic order
+            indices.sort()
+
+            # Add suffixes to all occurrences except the first
+            for i, idx in enumerate(indices):
+                if i > 0:  # Skip the first occurrence (keep original name)
+                    component_names[idx] = name + str(i + 1)  # Append suffix starting from 2
 
     mucompdata_pd["compname"] = component_names
     muhorzdata_pd.rename(columns={"compname": "compname_grp"}, inplace=True)
@@ -268,7 +284,7 @@ def list_soils(lon, lat):
     muhorzdata_pd = muhorzdata_pd[~muhorzdata_pd["hzname"].str.contains("R", case=False, na=False)]
 
     # Group data by cokey (component key)
-    muhorzdata_group_cokey = [group for _, group in muhorzdata_pd.groupby("cokey", sort=False)]
+    muhorzdata_group_cokey = [group for _, group in muhorzdata_pd.groupby("cokey", sort=True)]
 
     getProfile_cokey = []
     comp_max_depths = []
@@ -276,7 +292,8 @@ def list_soils(lon, lat):
     snd_lyrs = []
     cly_lyrs = []
     txt_lyrs = []
-    hz_lyrs = []
+    hzt_lyrs = []
+    hzb_lyrs = []
     rf_lyrs = []
     cec_lyrs = []
     ph_lyrs = []
@@ -329,6 +346,7 @@ def list_soils(lon, lat):
             OSD_rfv_int.append("No")
 
         # extract horizon data
+        hz_dept = group_sorted["hzdept_r"]
         hz_depb = group_sorted["hzdepb_r"]
         snd_d = group_sorted["sandtotal_r"]
         cly_d = group_sorted["claytotal_r"]
@@ -338,6 +356,7 @@ def list_soils(lon, lat):
         ec_d = group_sorted["EC"]
         ph_d = group_sorted["pH"]
 
+        hz_dept = hz_dept.fillna("")
         hz_depb = hz_depb.fillna("")
         snd_d = snd_d.fillna("")
         cly_d = cly_d.fillna("")
@@ -353,7 +372,8 @@ def list_soils(lon, lat):
         cec_lyrs.append(dict(zip(cec_d.index, cec_d)))
         ph_lyrs.append(dict(zip(ph_d.index, ph_d)))
         ec_lyrs.append(dict(zip(ec_d.index, ec_d)))
-        hz_lyrs.append(dict(zip(hz_depb.index, hz_depb)))
+        hzt_lyrs.append(dict(zip(hz_dept.index, hz_dept)))
+        hzb_lyrs.append(dict(zip(hz_depb.index, hz_depb)))
 
         cokey_group = group_sorted["cokey"].iloc[0]
         compname_group = group_sorted["compname"].iloc[0]
@@ -933,8 +953,8 @@ def list_soils(lon, lat):
                         # empty string
                         for lyr in [cec_lyrs, ph_lyrs, ec_lyrs]:
                             if len(lyr[index]) == 1 and lyr[index][0] == "":
-                                empty_values = [""] * len(hz_lyrs[index])
-                                lyr[index] = dict(zip(hz_lyrs[index], empty_values))
+                                empty_values = [""] * len(hzb_lyrs[index])
+                                lyr[index] = dict(zip(hzb_lyrs[index], empty_values))
 
                 else:
                     OSDhorzdata_group_cokey[index] = group_sorted
@@ -948,12 +968,12 @@ def list_soils(lon, lat):
                     lab_intpl_lyrs.append(lab_intpl)
 
                     # Create dummy data for lab_lyrs
-                    lab_dummy = [["", "", ""] for _ in range(len(hz_lyrs[index]))]
-                    lab_lyrs.append(dict(zip(hz_lyrs[index].keys(), lab_dummy)))
+                    lab_dummy = [["", "", ""] for _ in range(len(hzb_lyrs[index]))]
+                    lab_lyrs.append(dict(zip(hzb_lyrs[index].keys(), lab_dummy)))
 
                     # Create dummy data for munsell_lyrs
-                    munsell_dummy = [""] * len(hz_lyrs[index])
-                    munsell_lyrs.append(dict(zip(hz_lyrs[index].keys(), munsell_dummy)))
+                    munsell_dummy = [""] * len(hzb_lyrs[index])
+                    munsell_lyrs.append(dict(zip(hzb_lyrs[index].keys(), munsell_dummy)))
 
             # Series URL Generation
             # Initialize lists to store series URLs
@@ -1001,7 +1021,7 @@ def list_soils(lon, lat):
                 lab_intpl_lyrs.append(lab_intpl)
 
                 # Create dummy data for lab and munsell layers
-                keys = list(hz_lyrs[i].keys())
+                keys = list(hzb_lyrs[i].keys())
                 lab_dummy = [{"", "", ""} for _ in range(len(keys))]
                 munsell_dummy = [""] * len(keys)
 
@@ -1032,7 +1052,7 @@ def list_soils(lon, lat):
             lab_intpl_lyrs.append(lab_intpl)
 
             # Create dummy data for lab and munsell layers
-            keys = list(hz_lyrs[i].keys())
+            keys = list(hzb_lyrs[i].keys())
             lab_dummy = [{"", "", ""} for _ in range(len(keys))]
             munsell_dummy = [""] * len(keys)
 
@@ -1078,7 +1098,8 @@ def list_soils(lon, lat):
             cec_lyrs,
             ph_lyrs,
             ec_lyrs,
-            hz_lyrs,
+            hzt_lyrs,
+            hzb_lyrs,
             lab_lyrs,
             munsell_lyrs,
         ]
@@ -1098,7 +1119,8 @@ def list_soils(lon, lat):
             cec_lyrs,
             ph_lyrs,
             ec_lyrs,
-            hz_lyrs,
+            hzt_lyrs,
+            hzb_lyrs,
             lab_lyrs,
             munsell_lyrs,
         ) = layer_lists
@@ -1114,13 +1136,16 @@ def list_soils(lon, lat):
 
     # Create a new column 'soilID_rank' which will be True for the first row in each group sorted
     # by 'distance' and False for other rows
-    mucompdata_pd = mucompdata_pd.sort_values(["compname_grp", "distance"])
+    mucompdata_pd = mucompdata_pd.sort_values(["compname_grp", "distance", "compname"])
     mucompdata_pd["soilID_rank"] = ~mucompdata_pd.duplicated("compname_grp", keep="first")
 
     # Assign the minimum distance for each group to a new column 'min_dist'
     mucompdata_pd["min_dist"] = mucompdata_pd.groupby("compname_grp")["distance"].transform("first")
 
     mucompdata_pd = mucompdata_pd.reset_index(drop=True)
+
+    OLD_ESD_BASE_URL = "https://edit.jornada.nmsu.edu"
+    NEW_ESD_BASE_URL = "https://edit.sc.egov.usda.gov"
 
     # ---------------------------------------------------------------------------------------------
     # Ecological site
@@ -1132,6 +1157,8 @@ def list_soils(lon, lat):
             ESD[["cokey", "ecoclassid", "ecoclassname", "edit_url"]] = ESD[
                 ["cokey", "ecoclassid", "ecoclassname", "edit_url"]
             ].astype(str)
+
+            ESD["edit_url"] = ESD["edit_url"].str.replace(OLD_ESD_BASE_URL, NEW_ESD_BASE_URL)
 
             # Check if any cokey in ESD matches with mucompdata_pd
             if any(ESD["cokey"].isin(mucompdata_pd["cokey"])):
@@ -1148,7 +1175,7 @@ def list_soils(lon, lat):
         ESDcompdataQry = (
             "SELECT cokey,  ecoclassid, ecoclassname FROM coecoclass WHERE cokey IN ("
             + ",".join(map(str, comp_key))
-            + ")"
+            + ") ORDER BY cokey"
         )
         ESDcompdata_out = sda_return(propQry=ESDcompdataQry)
 
@@ -1165,7 +1192,8 @@ def list_soils(lon, lat):
 
             # Create the "edit_url" column
             ESDcompdata_sda["edit_url"] = (
-                "https://edit.jornada.nmsu.edu/catalogs/esd/"
+                NEW_ESD_BASE_URL
+                + "/"
                 + ESDcompdata_sda["ecoclassid"].str[1:5]
                 + "/"
                 + ESDcompdata_sda["ecoclassid"]
@@ -1200,7 +1228,7 @@ def list_soils(lon, lat):
         ESDcompdata_pd = update_esd_data(ESDcompdata_pd)
 
         # Aggregate the ESD components for output
-        for _, group in ESDcompdata_pd.groupby("cokey"):
+        for _, group in ESDcompdata_pd.groupby("cokey", sort=True):
             esd_data = {
                 "ESD": {
                     "ecoclassid": group["ecoclassid"].tolist(),
@@ -1244,7 +1272,7 @@ def list_soils(lon, lat):
                         r"[0-9]+", "", regex=True
                     )
                     ESDcompdata_pd_comp_grps = [
-                        g for _, g in ESDcompdata_pd.groupby(["compname_grp"], sort=False)
+                        g for _, g in ESDcompdata_pd.groupby(["compname_grp"], sort=True)
                     ]
                     ecoList_out = []
                     for i in range(len(ESDcompdata_pd_comp_grps)):
@@ -1291,7 +1319,7 @@ def list_soils(lon, lat):
                     ESDcompdata_pd = pd.concat(ecoList_out)
 
                 ESDcompdata_group_cokey = [
-                    g for _, g in ESDcompdata_pd.groupby(["cokey"], sort=False)
+                    g for _, g in ESDcompdata_pd.groupby(["cokey"], sort=True)
                 ]
                 for i in range(len(ESDcompdata_group_cokey)):
                     if ESDcompdata_group_cokey[i]["ecoclassname"].isnull().values.any():
@@ -1376,9 +1404,9 @@ def list_soils(lon, lat):
 
     # ------------------------------------------------------------
 
-    # Sort mucompdata_cond_prob by soilID_rank and distance_score
+    # Sort mucompdata_cond_prob by soilID_rank, cond_prob, and compname for deterministic tie-breaking
     mucompdata_cond_prob = mucompdata_cond_prob.sort_values(
-        ["soilID_rank", "distance_score"], ascending=[False, False]
+        ["soilID_rank", "cond_prob", "compname"], ascending=[False, False, True]
     )
     mucomp_index = mucompdata_cond_prob.index
 
@@ -1393,7 +1421,7 @@ def list_soils(lon, lat):
         for site, comp, sc, rank in zip(
             mucompdata_cond_prob["compname"],
             mucompdata_cond_prob["compname_grp"],
-            mucompdata_cond_prob["distance_score"].round(3),
+            mucompdata_cond_prob["cond_prob"].round(3),
             mucompdata_cond_prob["Rank_Loc"],
         )
     ]
@@ -1433,7 +1461,8 @@ def list_soils(lon, lat):
     # Reordering lists using list comprehension and mucomp_index
     lists_to_reorder = [
         esd_comp_list,
-        hz_lyrs,
+        hzt_lyrs,
+        hzb_lyrs,
         snd_lyrs,
         cly_lyrs,
         txt_lyrs,
@@ -1449,7 +1478,8 @@ def list_soils(lon, lat):
     # Destructuring reordered lists for clarity
     (
         esd_comp_list,
-        hz_lyrs,
+        hzt_lyrs,
+        hzb_lyrs,
         snd_lyrs,
         cly_lyrs,
         txt_lyrs,
@@ -1469,6 +1499,7 @@ def list_soils(lon, lat):
                     "id",
                     "site",
                     "esd",
+                    "top_depth",
                     "bottom_depth",
                     "sand",
                     "clay",
@@ -1487,7 +1518,8 @@ def list_soils(lon, lat):
             ID,
             Site,
             esd_comp_list,
-            hz_lyrs,
+            hzt_lyrs,
+            hzb_lyrs,
             snd_lyrs,
             cly_lyrs,
             txt_lyrs,
@@ -1534,7 +1566,8 @@ def rank_soils(
     lat,
     list_output_data: SoilListOutputData,
     soilHorizon,
-    horizonDepth,
+    topDepth,
+    bottomDepth,
     rfvDepth,
     lab_Color,
     pSlope,
@@ -1547,13 +1580,18 @@ def rank_soils(
     into site data use 'getColor_deltaE2000_OSD_pedon' and helper functions
     located in utils.py
     """
+    # Check if list_output_data is a string (error message) instead of expected object
+    if isinstance(list_output_data, str):
+        return {"error": f"Cannot rank soils: {list_output_data}"}
+
     # ---------------------------------------------------------------------------------------
     # ------ Load in user data --------#
     # Initialize the DataFrame from the input data
     soil_df = pd.DataFrame(
         {
             "soilHorizon": soilHorizon,
-            "horizonDepth": horizonDepth,
+            "top": topDepth,
+            "bottom": bottomDepth,
             "rfvDepth": rfvDepth,
             "lab_Color": lab_Color,
         }
@@ -1562,27 +1600,16 @@ def rank_soils(
     # Drop rows where all values are NaN
     soil_df.dropna(how="all", inplace=True)
 
-    # Set the bottom of each horizon
-    soil_df["bottom"] = soil_df["horizonDepth"]
-
     # Replace NaNs with None for consistency
     # soil_df.fillna(value=None, inplace=True)
-
-    # Calculate the top depth for each horizon
-    soil_df["top"] = [0] + soil_df["horizonDepth"].iloc[:-1].tolist()
 
     # Adjust the bottom depth based on bedrock depth
     if bedrock is not None:
         if bedrock is not soil_df.empty and soil_df["bottom"].iloc[-1] > bedrock:
-            # Find the last valid index where bottom depth is less than or equal to bedrock
-            last_valid_index = soil_df.loc[soil_df["bottom"] <= bedrock].index[-1]
-            # Filter the DataFrame up to the last valid index
-            soil_df = soil_df.loc[:last_valid_index].copy()
-            # Set the bottom depth of the last row to the bedrock depth
-            soil_df.at[last_valid_index, "bottom"] = bedrock
-
-    # Drop the original horizonDepth column
-    soil_df.drop(columns=["horizonDepth"], inplace=True)
+            # Remove rows where top depth is already below bedrock
+            soil_df = soil_df[soil_df["top"] < bedrock].copy()
+            # If any remaining row has bottom depth exceeding bedrock, truncate it
+            soil_df.loc[soil_df["bottom"] > bedrock, "bottom"] = bedrock
 
     # Filter out rows without valid horizon data
     relevant_columns = ["soilHorizon", "rfvDepth", "lab_Color"]
@@ -1610,60 +1637,73 @@ def rank_soils(
         rfvDepth = soil_df.rfvDepth.tolist()
         horizonDepthB = [int(x) for x in soil_df.bottom.tolist()]
         horizonDepthT = [int(x) for x in soil_df.top.tolist()]
-        lab_Color = soil_df.lab_Color
+        lab_series = soil_df.lab_Color
+
+        # Determine the maximum depth for user specified horizons
+        if not horizonDepthB:
+            max_user_depth = 0
+        else:
+            max_user_depth = max(horizonDepthB)
+        if bedrock is not None:
+            max_user_depth = min(bedrock, max_user_depth)
 
         # Generate user specified percent clay, sand, and rfv distributions
         spt = [getSand(sh) for sh in soilHorizon]
         cpt = [getClay(sh) for sh in soilHorizon]
         p_cfg = [getCF_fromClass(rf) for rf in rfvDepth]
 
-        p_sandpct_intpl = [
-            spt[i]
-            for i in range(len(soilHorizon))
-            for _ in range(horizonDepthT[i], horizonDepthB[i])
-        ]
-        p_claypct_intpl = [
-            cpt[i]
-            for i in range(len(soilHorizon))
-            for _ in range(horizonDepthT[i], horizonDepthB[i])
-        ]
-        p_cfg_intpl = [
-            p_cfg[i]
-            for i in range(len(soilHorizon))
-            for _ in range(horizonDepthT[i], horizonDepthB[i])
-        ]
+        # Initialize full-length property arrays with NaNs
+        sand_array = [np.nan] * max_user_depth
+        clay_array = [np.nan] * max_user_depth
+        cfg_array = [np.nan] * max_user_depth
+
+        for i in range(len(soilHorizon)):
+            t = horizonDepthT[i]
+            b = horizonDepthB[i]
+            if t >= max_user_depth:
+                continue
+            b = min(b, max_user_depth)
+            for d in range(t, b):
+                sand_array[d] = spt[i]
+                clay_array[d] = cpt[i]
+                cfg_array[d] = p_cfg[i]
+
+        p_sandpct_intpl = pd.DataFrame(sand_array)
+        p_claypct_intpl = pd.DataFrame(clay_array)
+        p_cfg_intpl = pd.DataFrame(cfg_array)
 
         # Length of interpolated texture and RF depth
-        p_bottom_depth = pd.DataFrame([-999, "sample_pedon", soil_df_slice.bottom.iloc[-1]]).T
+        p_bottom_depth = pd.DataFrame([-999, "sample_pedon", max_user_depth]).T
         p_bottom_depth.columns = ["cokey", "compname", "bottom_depth"]
 
         # Pedon color data
-        if not isinstance(lab_Color, pd.DataFrame):
-            lab_Color = pd.DataFrame(lab_Color)
-        if not lab_Color.isnull().all().all():  # Use all().all() to check the entire DataFrame
-            lab_Color = lab_Color.apply(
-                lambda x: [np.nan, np.nan, np.nan] if x.isnull().all() else x, axis=1
-            )
-            p_lab_intpl = [
-                lab_Color.iloc[i].tolist()
-                for i in range(len(lab_Color))
-                for _ in range(horizonDepthT[i], horizonDepthB[i])
-            ]
-            p_lab_intpl_list = [item[0] for item in p_lab_intpl]  # Access the inner list
-            p_lab_intpl = pd.DataFrame(p_lab_intpl_list, columns=["L", "A", "B"]).reset_index(
-                drop=True
-            )
-        else:
-            lab_Color = lab_Color.dropna()  # Remove rows where all elements are None
-            p_lab_intpl = pd.DataFrame(
-                np.nan, index=np.arange(200), columns=["L", "A", "B"]
-            ).reset_index(drop=True)
+        lab_array = [[np.nan, np.nan, np.nan] for _ in range(max_user_depth)]
 
-        # Adjust depth interval for each dataset
-        p_sandpct_intpl = adjust_depth_interval(p_sandpct_intpl)
-        p_claypct_intpl = adjust_depth_interval(p_claypct_intpl)
-        p_cfg_intpl = adjust_depth_interval(p_cfg_intpl)
-        p_lab_intpl = adjust_depth_interval(p_lab_intpl)
+        # Force correct structure
+        lab_cleaned = [
+            row if (isinstance(row, (list, tuple)) and len(row) == 3) else [np.nan, np.nan, np.nan]
+            for row in lab_series
+        ]
+
+        # now unpack into three columns
+        lab_Color = pd.DataFrame(lab_cleaned, columns=["L", "A", "B"])
+
+        # Interpolate colors across depth
+        for i in range(len(lab_Color)):
+            t = horizonDepthT[i]
+            b = horizonDepthB[i]
+            if t >= max_user_depth:
+                continue
+            b = min(b, max_user_depth)
+            color_val = (
+                lab_Color.iloc[i].tolist()
+                if not pd.isnull(lab_Color.iloc[i]).all()
+                else [np.nan, np.nan, np.nan]
+            )
+            for d in range(t, b):
+                lab_array[d] = color_val
+
+        p_lab_intpl = pd.DataFrame(lab_array, columns=["L", "A", "B"]).reset_index(drop=True)
 
         # Construct final dataframe with adjusted data
         p_compname = pd.Series("sample_pedon", index=np.arange(len(p_sandpct_intpl)))
@@ -1760,7 +1800,7 @@ def rank_soils(
 
     # Horizon Data Similarity
     if soilIDRank_output_pd is not None:
-        groups = [group for _, group in soilIDRank_output_pd.groupby(["compname"], sort=False)]
+        groups = [group for _, group in soilIDRank_output_pd.groupby(["compname"], sort=True)]
 
         Comp_Rank_Status = []
         Comp_Missing_Status = []
@@ -1781,7 +1821,7 @@ def rank_soils(
                 Comp_Rank_Status.append("Ranked")
                 Comp_Missing_Status.append("Data Complete")
 
-            Comp_name.append(group["compname"].unique()[0])
+            Comp_name.append(sorted(group["compname"].unique())[0])
 
         # Consolidate the results into a DataFrame
         Rank_Filter = pd.DataFrame(
@@ -1798,11 +1838,23 @@ def rank_soils(
         horz_vars = [p_hz_data]
         horz_vars.extend([group.reset_index(drop=True).loc[pedon_slice_index] for group in groups])
 
+        global_prop_bounds = {
+            "sandpct_intpl": (10.0, 92.0),
+            "claypct_intpl": (5.0, 70.0),
+            "rfv_intpl": (0.0, 80.0),
+            "l": (10.0, 95.0),
+            "a": (-10.0, 35.0),
+            "b": (-10.0, 60.0),
+        }
+
+        # numeric range (upper – lower):
+        global_prop_ranges = {
+            prop: upper - lower for prop, (lower, upper) in global_prop_bounds.items()
+        }
+
         # Calculate similarity for each depth slice
         dis_mat_list = []
-        for (
-            i
-        ) in (
+        for i in (
             soil_matrix.index
         ):  # i should be an index of p_hz_data depth slices, e.g. if user only enters
             # 100-120cm data, then i = 100:120
@@ -1827,9 +1879,13 @@ def rank_soils(
                         .drop(["compname"], axis=1)
                         .columns.tolist()
                     )
-                sliceT = sliceT[sample_pedon_slice_vars]
+            sliceT = sliceT[sample_pedon_slice_vars]
 
-            D = gower_distances(sliceT)  # Equal weighting given to all soil variables
+            theoretical_prop_ranges = [global_prop_ranges[c] for c in sample_pedon_slice_vars]
+            D = gower_distances(
+                sliceT, theoretical_ranges=theoretical_prop_ranges
+            )  # Equal weighting given to all soil variables
+
             dis_mat_list.append(D)
 
         # Determine if any components have all NaNs at every slice
@@ -1839,40 +1895,29 @@ def rank_soils(
             "Not Ranked" if np.ma.is_masked(x) else "Ranked" for x in D_check[0][1:]
         ]
 
-        # Calculate maximum dissimilarity
-        dis_max_slice = [
-            np.nanmax(matrix) if not np.isnan(matrix).all() else np.nan for matrix in dis_mat_list
-        ]
-        dis_max = np.nanmax(dis_max_slice)
-        dis_max_slice = [dis_max if np.isnan(x) else x for x in dis_max_slice]
+        # Maximum dissimilarity
+        dis_max = 1.0
 
         # Apply depth weight
         depth_weight = np.concatenate((np.repeat(0.2, 20), np.repeat(1.0, 180)), axis=0)
         depth_weight = depth_weight[pedon_slice_index]
 
-        # Infill Nan data
-
-        # Update dis_mat_list using numpy operations
+        # Infill Nan data: soil vs non‑soil logic
         for i, dis_mat in enumerate(dis_mat_list):
-            soil_slice = soil_matrix.iloc[i, :]
+            soil_slice = soil_matrix.iloc[i, :].values.astype(bool)
+            pedon_idx = 0  # assuming sample_pedon is always row 0
 
-            # Identify where NaN values exist and where the corresponding soil_slice is 1
-            nan_and_soil_slice_is_one = np.isnan(dis_mat) & np.isin(
-                np.arange(dis_mat.shape[1]), np.where(soil_slice == 1)[0]
-            )
+            # 1) If pedon has data here, any NaN in pedon↔component → max dissimilarity
+            if soil_slice[pedon_idx]:
+                # components are those indices where soil_slice[j] is False
+                nonsoil_j = np.where(~soil_slice)[0]
+                for j in nonsoil_j:
+                    if np.isnan(dis_mat[pedon_idx, j]):
+                        dis_mat[pedon_idx, j] = dis_max
+                        dis_mat[j, pedon_idx] = dis_max
 
-            # Identify where NaN values exist and both corresponding values in soil_slice are 0
-            rows, cols = np.where(np.isnan(dis_mat))
-            both_zero_rows_cols = [
-                (row, col)
-                for row, col in zip(rows, cols)
-                if soil_slice[row] == 0 and soil_slice[col] == 0
-            ]
-
-            # Assign max dissimilarity or 0 based on conditions
-            dis_mat[nan_and_soil_slice_is_one] = dis_max
-            for row, col in both_zero_rows_cols:
-                dis_mat[row, col] = 0
+            # 2) Every other NaN (component–component or missing–missing) → zero
+            dis_mat[np.isnan(dis_mat)] = 0.0
 
             dis_mat_list[i] = dis_mat
 
@@ -1890,32 +1935,69 @@ def rank_soils(
         D_horz = None
 
     # ---Site Data Similarity---
+    if pElev is None:
+        pElev_dict = get_elev_data(lon, lat)
+    try:
+        pElev = float(pElev_dict["value"])
+    except (KeyError, TypeError, ValueError):
+        pElev = None  # or some default
 
-    # Initialize variables for site similarity
-    p_slope = pd.DataFrame(["sample_pedon", pSlope, pElev]).T
-    p_slope.columns = ["compname", "slope_r", "elev_r"]
+    # 1) “Raw” guard on the three possible site inputs:
+    provided = {
+        "slope_r": pSlope,
+        "elev_r": pElev,
+        "bottom_depth": bedrock,  # this determines if bottom_depth is set
+    }
 
-    # Check conditions to determine the data columns and feature weights
-    if (pSlope is not None) and (p_bottom_depth.bottom_depth.any() > 0):
-        D_site = compute_site_similarity(
-            p_slope,
-            mucompdata_pd,
-            slices_of_soil,
-            ["slope_r", "elev_r", "bottom_depth"],
-            feature_weight=np.array([1.0, 0.5, 0.5]),
-        )
+    # 2) Figure out which of those are actually non-null
+    features = [
+        name
+        for name, val in provided.items()
+        if val is not None and not (isinstance(val, float) and np.isnan(val))
+    ]
+
+    # 3) If fewer than two features, skip entirely
+    if len(features) < 2:
+        D_site = None
     else:
-        D_site = compute_site_similarity(
-            p_slope, mucompdata_pd, slices_of_soil, feature_weight=np.array([1.0, 0.5])
-        )
+        # 4) Build your one‐row pedon DataFrame (only slope/elev, depth comes from merge)
+        pedon_dict = {"compname": "sample_pedon"}
+        if "slope_r" in features:
+            pedon_dict["slope_r"] = pSlope
+        if "elev_r" in features:
+            pedon_dict["elev_r"] = pElev
+        pedon_df = pd.DataFrame([pedon_dict])
 
-    # Adjust the distances and apply weight
-    site_wt = 0.5
-    D_site = (1 - D_site) * site_wt
+        # 5) Build your map‐unit library (only the columns you need)
+        lib_cols = ["compname"] + [f for f in features if f in ("slope_r", "elev_r")]
+        lib_df = mucompdata_pd[lib_cols].copy()
+
+        # 6) Stack them together
+        full_df = pd.concat([pedon_df, lib_df], ignore_index=True)
+
+        # 7) If you need bottom_depth, merge it in for *all* rows
+        if "bottom_depth" in features:
+            full_df = full_df.merge(
+                slices_of_soil[["compname", "bottom_depth"]], on="compname", how="left"
+            )
+
+        # 8) Build your weight vector
+        DEFAULT_WEIGHTS = {"slope_r": 1.0, "elev_r": 0.5, "bottom_depth": 1.5}
+        weights = np.array([DEFAULT_WEIGHTS[f] for f in features])
+
+        # 9) Compute Gower distances on exactly those feature columns
+        site_mat = full_df.set_index("compname")[features]
+        D_raw = gower_distances(site_mat, feature_weight=weights)
+
+        # 10 Replace any NaNs with the max distance, then (optionally) convert to similarity
+        D_site = np.where(np.isnan(D_raw), np.nanmax(D_raw), D_raw)
+
+        site_wt = 0.5
+        D_site = (1 - D_site) * site_wt
 
     # Create the D_final dataframe based on the availability of D_horz and D_site data
 
-    # When both D_horz and D_site are available
+    # When both D_horz and D_site are available (relative weights: 66% horz, 33% site)
     if D_horz is not None and D_site is not None:
         D_site_hz = np.sum([D_site, D_horz], axis=0) / (1 + site_wt)
         D_final = pd.concat(
@@ -1977,7 +2059,7 @@ def rank_soils(
 
     # Sort and rank the components within each group
     soilIDList_data = []
-    for _, group in D_final.groupby(["compname_grp"], sort=False):
+    for _, group in D_final.groupby(["compname_grp"], sort=True):
         # Sort by score, and then by compname
         group = group.sort_values(by=["Score_Data", "compname"], ascending=[False, True])
 
@@ -1992,6 +2074,11 @@ def rank_soils(
     # Merge with the Rank_Filter data
     D_final = pd.merge(D_final, Rank_Filter, on="compname", how="left")
 
+    # Sort dataframe to correctly assign Rank_Data
+    D_final = D_final.sort_values(
+        by=["soilID_rank_data", "Score_Data", "compname"], ascending=[False, False, True]
+    )
+
     # Assigning rank based on the soilID rank and rank status
     rank_id = 1
     Rank_Data = []
@@ -2005,12 +2092,13 @@ def rank_soils(
             rank_id += 1
 
     D_final["Rank_Data"] = Rank_Data
+
     """
     Code options for production API/testing output
     # ----------------------------------------------------------------
     #Data output for testing
     D_final_loc = pd.merge(D_final, mucompdata_pd[['compname', 'cokey', 'mukey',
-    'distance_score', 'clay', 'taxorder', 'taxsubgrp', 'OSD_text_int',
+    'cond_prob', 'clay', 'taxorder', 'taxsubgrp', 'OSD_text_int',
     'OSD_rfv_int', 'data_source', 'Rank_Loc', 'majcompflag', 'comppct_r', 'distance',
     'nirrcapcl', 'nirrcapscl', 'nirrcapunit', 'irrcapcl', 'irrcapscl', 'irrcapunit',
     'ecoclassid_update', 'ecoclassname']], on='compname', how='left')
@@ -2024,7 +2112,7 @@ def rank_soils(
             [
                 "compname",
                 "cokey",
-                "distance_score",
+                "cond_prob",
                 "clay",
                 "taxorder",
                 "taxsubgrp",
@@ -2048,19 +2136,10 @@ def rank_soils(
     if D_horz is None and D_site is None:
         Score_Data_Loc = [0.0 for _ in range(len(D_final_loc))]
     else:
-        # Scale location and data scores for equal weighting
-        D_final_loc["Score_Data_scale"] = D_final_loc["Score_Data"] / np.nanmax(
-            D_final_loc["Score_Data"]
-        )
-        D_final_loc["distance_score_scale"] = D_final_loc["distance_score"] / np.nanmax(
-            D_final_loc["distance_score"]
-        )
-
         # Calculate the combined score
-        Score_Data_Loc = (D_final_loc["Score_Data_scale"] + D_final_loc["distance_score_scale"]) / (
+        Score_Data_Loc = (D_final_loc["Score_Data"] + D_final_loc["cond_prob"]) / (
             D_final_loc["data_weight"] + location_weight
         )
-        Score_Data_Loc /= np.nanmax(Score_Data_Loc)
 
     # Assign the final combined score to the dataframe
     D_final_loc["Score_Data_Loc"] = Score_Data_Loc
@@ -2091,8 +2170,10 @@ def rank_soils(
     # Sorting and reindexing of final dataframe based on component groups
     soilIDList_out = []
 
-    for _, group in D_final_loc.groupby("compname_grp", sort=False):
-        group = group.sort_values("Score_Data_Loc", ascending=False).reset_index(drop=True)
+    for _, group in D_final_loc.groupby("compname_grp", sort=True):
+        group = group.sort_values(
+            ["Score_Data_Loc", "compname"], ascending=[False, True]
+        ).reset_index(drop=True)
         group["soilID_rank_final"] = [True if idx == 0 else False for idx in range(len(group))]
         soilIDList_out.append(group)
 
@@ -2119,9 +2200,9 @@ def rank_soils(
 
     D_final_loc["Rank_Data_Loc"] = Rank_DataLoc
 
-    # Sort dataframe based on soilID_rank_final and Score_Data_Loc
+    # Sort dataframe based on soilID_rank_final, Score_Data_Loc, and compname for deterministic tie-breaking
     D_final_loc = D_final_loc.sort_values(
-        ["soilID_rank_final", "Score_Data_Loc"], ascending=[False, False]
+        ["soilID_rank_final", "Score_Data_Loc", "compname"], ascending=[False, False, True]
     ).reset_index(drop=True)
 
     # Replace NaN values in the specified columns with 0.0
@@ -2131,7 +2212,7 @@ def rank_soils(
             "D_horz",
             "D_site",
             "Score_Data_Loc",
-            "distance_score",
+            "cond_prob",
         ]
     ] = D_final_loc[
         [
@@ -2139,135 +2220,8 @@ def rank_soils(
             "D_horz",
             "D_site",
             "Score_Data_Loc",
-            "distance_score",
+            "cond_prob",
         ]
-    ].fillna(
-        0.0
-    )
+    ].fillna(0.0)
 
-    # Construct the output format
-    Rank = [
-        {
-            "name": row.compname.capitalize(),
-            "component": row.compname_grp.capitalize(),
-            "componentID": row.cokey,
-            "score_data_loc": (
-                "" if row.missing_status == "Location data only" else round(row.Score_Data_Loc, 3)
-            ),
-            "rank_data_loc": (
-                "" if row.missing_status == "Location data only" else row.Rank_Data_Loc
-            ),
-            "score_data": (
-                "" if row.missing_status == "Location data only" else round(row.Score_Data, 3)
-            ),
-            "rank_data": "" if row.missing_status == "Location data only" else row.Rank_Data,
-            "score_loc": round(row.distance_score, 3),
-            "rank_loc": row.Rank_Loc,
-            "componentData": row.missing_status,
-        }
-        for _, row in D_final_loc.iterrows()
-    ]
-
-    output_data = {
-        "metadata": {
-            "location": "us",
-            "model": "v2",
-        },
-        "soilRank": Rank,
-    }
-
-    return output_data
-
-
-def adjust_depth_interval(data, target_length=200):
-    """Adjusts the depth interval of user data."""
-
-    # Convert input to a DataFrame
-    if isinstance(data, list):
-        data = pd.DataFrame(data)
-    elif isinstance(data, pd.Series):
-        data = data.to_frame()
-
-    # Ensure data is a DataFrame at this point
-    if not isinstance(data, pd.DataFrame):
-        raise TypeError("Data must be a list, Series, or DataFrame")
-
-    length = len(data)
-
-    if length > target_length:
-        # Truncate data if it exceeds the target length
-        data = data.iloc[:target_length]
-    elif length < target_length:
-        # Extend data if it's shorter than the target length
-        add_length = target_length - length
-        add_data = pd.DataFrame(np.nan, index=np.arange(add_length), columns=data.columns)
-        data = pd.concat([data, add_data])
-
-    data.reset_index(drop=True, inplace=True)
-    return data
-
-
-# Helper function to update dataframes based on depth conditions
-def update_intpl_data(
-    df, col_names, values, very_bottom, OSD_depth_add, OSD_depth_remove, OSD_max_bottom_int
-):
-    if OSD_depth_add:
-        layer_add = very_bottom - OSD_max_bottom_int
-        pd_add = pd.DataFrame([values] * layer_add, columns=col_names)
-        df = pd.concat([df.loc[: OSD_max_bottom_int - 1], pd_add], axis=0).reset_index(drop=True)
-    elif OSD_depth_remove:
-        df = df.loc[:very_bottom].reset_index(drop=True)
-    return df
-
-
-# Creates a new soil horizon layer row in the soil horizon table
-def create_new_layer(row, hzdept, hzdepb):
-    return pd.DataFrame(
-        {
-            "cokey": row["cokey"],
-            "hzdept_r": hzdepb,
-            "hzdepb_r": hzdept,
-            "chkey": row["chkey"],
-            "hzname": None,
-            "sandtotal_r": np.nan,
-            "silttotal_r": np.nan,
-            "claytotal_r": np.nan,
-            "total_frag_volume": np.nan,
-            "CEC": np.nan,
-            "pH": np.nan,
-            "EC": np.nan,
-            "lep_r": np.nan,
-            "comppct_r": row["comppct_r"],
-            "compname": row["compname"],
-            "slope_r": np.nan,
-            "texture": None,
-        },
-        index=[0],
-    )
-
-
-# Creates a new row entry in the OSD (Official Series Description) soil horizon table
-def create_new_layer_osd(row, top, bottom):
-    """Create a new layer with specified top and bottom depths."""
-    new_row = row.copy()
-    new_row["top"] = top
-    new_row["bottom"] = bottom
-    for col in [
-        "hzname",
-        "texture_class",
-        "cf_class",
-        "matrix_dry_color_hue",
-        "matrix_dry_color_value",
-        "matrix_dry_color_chroma",
-    ]:
-        new_row[col] = None
-    for col in [
-        "srgb_r",
-        "srgb_g",
-        "srgb_b",
-        "total_frag_volume",
-        "claytotal_r",
-        "sandtotal_r",
-    ]:
-        new_row[col] = np.nan
-    return new_row
+    return finalize_rank_output(D_final_loc, location="us")

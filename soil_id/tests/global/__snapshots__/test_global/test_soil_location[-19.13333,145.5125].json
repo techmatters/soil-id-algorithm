@@ -1,0 +1,2288 @@
+{
+  "list": {
+    "metadata": {
+      "location": "us",
+      "model": "v3",
+      "unit_measure": {
+        "cec": "cmol(c)/kg",
+        "clay": "%",
+        "depth": "cm",
+        "distance": "m",
+        "ec": "ds/m",
+        "rock_fragments": "cm3/100cm3",
+        "sand": "%"
+      }
+    },
+    "soilList": [
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 18.0,
+          "sl2": 18.0,
+          "sl3": 18.0,
+          "sl4": 18.2,
+          "sl5": 18.43,
+          "sl6": 18.4,
+          "sl7": 17.83
+        },
+        "clay": {
+          "sl1": 30.0,
+          "sl2": 30.0,
+          "sl3": 30.0,
+          "sl4": 34.2,
+          "sl5": 35.86,
+          "sl6": 37.2,
+          "sl7": 37.5
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 1.0,
+          "sl6": 1.0,
+          "sl7": 1.0
+        },
+        "id": {
+          "component": "Chromic luvisols",
+          "name": "Chromic luvisols",
+          "rank_loc": "1",
+          "score_loc": 0.126
+        },
+        "ph": {
+          "sl1": 6.5,
+          "sl2": 6.5,
+          "sl3": 6.5,
+          "sl4": 6.56,
+          "sl5": 6.57,
+          "sl6": 6.58,
+          "sl7": 6.55
+        },
+        "rock_fragments": {
+          "sl1": 11.0,
+          "sl2": 11.0,
+          "sl3": 11.0,
+          "sl4": 10.6,
+          "sl5": 10.14,
+          "sl6": 9.8,
+          "sl7": 11.33
+        },
+        "sand": {
+          "sl1": 37.0,
+          "sl2": 37.0,
+          "sl3": 37.0,
+          "sl4": 34.4,
+          "sl5": 33.43,
+          "sl6": 32.6,
+          "sl7": 33.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 149086,
+            "distance": 0.0,
+            "mapunitID": 6080,
+            "minCompDistance": 0.0,
+            "share": 10,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Chromic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Chromic Luvisols have an iron rich subsoil.",
+            "Description_es": "Los Luvisoles Crómicos son suelos productivos con alta saturación de bases y subsuelos relativamente arcillosos. <br>Los Luvisoles crómicos tienen un subsuelo rico en hierro.",
+            "Description_fr": "Chromic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Chromic Luvisols have an iron rich subsoil.",
+            "Description_ks": "Chromic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Chromic Luvisols have an iron rich subsoil.",
+            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops.",
+            "Management_es": "Estos suelos son fértiles y pueden utilizarse para una amplia gama de prácticas de cultivo. <br>Sin embargo, son sensibles a la pérdida de suelo por erosión, y hay que tener cuidado para proteger el suelo de la pérdida. <br>Si el suelo ya está erosionado, pueden ser más adecuados para el pastoreo y/o los cultivos arbóreos.",
+            "Management_fr": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops.",
+            "Management_ks": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops."
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 14.0,
+          "sl2": 14.0,
+          "sl3": 14.0,
+          "sl4": 14.6,
+          "sl5": 14.71,
+          "sl6": 15.0,
+          "sl7": 15.17
+        },
+        "clay": {
+          "sl1": 24.0,
+          "sl2": 24.0,
+          "sl3": 24.0,
+          "sl4": 28.6,
+          "sl5": 29.86,
+          "sl6": 30.6,
+          "sl7": 30.5
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 1.0,
+          "sl6": 1.0,
+          "sl7": 1.0
+        },
+        "id": {
+          "component": "Eutric planosols",
+          "name": "Eutric planosols",
+          "rank_loc": "2",
+          "score_loc": 0.12
+        },
+        "ph": {
+          "sl1": 6.4,
+          "sl2": 6.4,
+          "sl3": 6.4,
+          "sl4": 6.42,
+          "sl5": 6.44,
+          "sl6": 6.44,
+          "sl7": 6.43
+        },
+        "rock_fragments": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 6.8,
+          "sl5": 9.29,
+          "sl6": 13.4,
+          "sl7": 12.5
+        },
+        "sand": {
+          "sl1": 53.0,
+          "sl2": 53.0,
+          "sl3": 53.0,
+          "sl4": 49.0,
+          "sl5": 47.71,
+          "sl6": 46.6,
+          "sl7": 46.67
+        },
+        "site": {
+          "siteData": {
+            "componentID": 149085,
+            "distance": 0.0,
+            "mapunitID": 6080,
+            "minCompDistance": 0.0,
+            "share": 30,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Eutric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil.<br> These soils are prone to compaction and require drainage for crop production.<br> Eutric Planosols are relatively productive soils with high base saturation in the subsoil.",
+            "Description_es": "Los Planosoles Éutricos están estacionalmente encharcados o saturados de agua en la parte superior debido a un subsuelo rico en arcilla y lentamente permeable.<br>Estos suelos son propensos a la compactación y requieren drenaje para la producción de cultivos.<br>Los Planosoles Eutricos son suelos relativamente productivos con una alta saturación de base en el subsuelo.",
+            "Description_fr": "Eutric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil.<br> These soils are prone to compaction and require drainage for crop production.<br> Eutric Planosols are relatively productive soils with high base saturation in the subsoil.",
+            "Description_ks": "Eutric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil.<br> These soils are prone to compaction and require drainage for crop production.<br> Eutric Planosols are relatively productive soils with high base saturation in the subsoil.",
+            "Management_en": "Located on flat land, these soils are best suited for paddy rice production.<br> Drainage will be required for production.<br> Highest yields will require additional fertilization.",
+            "Management_es": "Ubicados en terrenos planos, estos suelos son los más adecuados para la producción de arroz con cáscara.<br>Se requerirá el drenaje para la producción.<br>Los rendimientos más elevados requieren una fertilización adicional.",
+            "Management_fr": "Located on flat land, these soils are best suited for paddy rice production.<br> Drainage will be required for production.<br> Highest yields will require additional fertilization.",
+            "Management_ks": "Located on flat land, these soils are best suited for paddy rice production.<br> Drainage will be required for production.<br> Highest yields will require additional fertilization."
+          }
+        },
+        "texture": {
+          "sl1": "Sandy clay loam",
+          "sl2": "Sandy clay loam",
+          "sl3": "Sandy clay loam",
+          "sl4": "Sandy clay loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 10.0,
+          "sl2": 10.0,
+          "sl3": 10.0,
+          "sl4": 11.8,
+          "sl5": 12.14,
+          "sl6": 12.2,
+          "sl7": 12.17
+        },
+        "clay": {
+          "sl1": 19.0,
+          "sl2": 19.0,
+          "sl3": 19.0,
+          "sl4": 24.2,
+          "sl5": 25.43,
+          "sl6": 26.2,
+          "sl7": 26.0
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 1.0,
+          "sl6": 1.0,
+          "sl7": 1.0
+        },
+        "id": {
+          "component": "Albic arenosols",
+          "name": "Albic arenosols",
+          "rank_loc": "3",
+          "score_loc": 0.094
+        },
+        "ph": {
+          "sl1": 6.5,
+          "sl2": 6.5,
+          "sl3": 6.5,
+          "sl4": 6.62,
+          "sl5": 6.66,
+          "sl6": 6.76,
+          "sl7": 6.83
+        },
+        "rock_fragments": {
+          "sl1": 12.0,
+          "sl2": 12.0,
+          "sl3": 12.0,
+          "sl4": 12.0,
+          "sl5": 12.71,
+          "sl6": 16.0,
+          "sl7": 18.0
+        },
+        "sand": {
+          "sl1": 67.0,
+          "sl2": 67.0,
+          "sl3": 67.0,
+          "sl4": 62.6,
+          "sl5": 61.71,
+          "sl6": 61.0,
+          "sl7": 61.17
+        },
+        "site": {
+          "siteData": {
+            "componentID": 148957,
+            "distance": 438.366,
+            "mapunitID": 6037,
+            "minCompDistance": 438.36624807,
+            "share": 20,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Albic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are highly leached with low nutrients and available water.",
+            "Description_es": "Los Arenosoles Álbicos son suelos arenosos con un desarrollo mínimo del suelo. <br>Son inherentemente bajos en nutrientes y capacidad de retención de agua. <br>Estos suelos están muy lixiviados con pocos nutrientes y agua disponible.",
+            "Description_fr": "Albic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are highly leached with low nutrients and available water.",
+            "Description_ks": "Albic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are highly leached with low nutrients and available water.",
+            "Management_en": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> These soils should have particular attention paid to minimizing nutrient loss during fertilization. <br> If available, slow release N sources should be considered, or more frequent application of N at lower rates. ",
+            "Management_es": "Dado que estos suelos tienen poca retención de agua y nutrientes, deben ser fertilizados y regados para lograr una productividad óptima. <br>Las prácticas de gestión para mejorar el suministro de nutrientes y la capacidad de retención de agua incluyen la adición de materia orgánica, el uso de cultivos de cobertura y la rotación de cultivos. <br>La mejor productividad se logrará mediante el uso de riego suplementario, el uso de herramientas como mantillos o cubiertas para preservar la humedad del suelo, y la fertilización. <br>En estos suelos se debe prestar especial atención a minimizar la pérdida de nutrientes durante la fertilización. <br>Si se dispone de ellas, deben considerarse fuentes de N de liberación lenta, o una aplicación más frecuente de N a tasas más bajas.",
+            "Management_fr": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> These soils should have particular attention paid to minimizing nutrient loss during fertilization. <br> If available, slow release N sources should be considered, or more frequent application of N at lower rates. ",
+            "Management_ks": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> These soils should have particular attention paid to minimizing nutrient loss during fertilization. <br> If available, slow release N sources should be considered, or more frequent application of N at lower rates. "
+          }
+        },
+        "texture": {
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy clay loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 11.0,
+          "sl2": 11.0,
+          "sl3": 11.0,
+          "sl4": 13.6,
+          "sl5": 15.0,
+          "sl6": 16.4,
+          "sl7": 16.83
+        },
+        "clay": {
+          "sl1": 20.0,
+          "sl2": 20.0,
+          "sl3": 20.0,
+          "sl4": 24.4,
+          "sl5": 26.86,
+          "sl6": 29.2,
+          "sl7": 30.0
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 1.0,
+          "sl6": 1.0,
+          "sl7": 1.0
+        },
+        "id": {
+          "component": "Cambic arenosols",
+          "name": "Cambic arenosols",
+          "rank_loc": "4",
+          "score_loc": 0.088
+        },
+        "ph": {
+          "sl1": 6.1,
+          "sl2": 6.1,
+          "sl3": 6.1,
+          "sl4": 6.26,
+          "sl5": 6.37,
+          "sl6": 6.52,
+          "sl7": 6.57
+        },
+        "rock_fragments": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 2.6,
+          "sl5": 2.57,
+          "sl6": 2.4,
+          "sl7": 2.33
+        },
+        "sand": {
+          "sl1": 49.0,
+          "sl2": 49.0,
+          "sl3": 49.0,
+          "sl4": 46.0,
+          "sl5": 44.14,
+          "sl6": 42.2,
+          "sl7": 42.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 148955,
+            "distance": 438.366,
+            "mapunitID": 6037,
+            "minCompDistance": 438.36624807,
+            "share": 30,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Cambic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> Cambic Arenosols have a minimally developed subsoil horizon that can retain slightly higher amounts of nutrients and water.",
+            "Description_es": "Los Arenosoles Cámbicos son suelos arenosos con un desarrollo mínimo del suelo. <br>Son inherentemente bajos en nutrientes y capacidad de retención de agua. <br>Los arenosoles cámbicos tienen un horizonte del subsuelo mínimamente desarrollado que puede retener cantidades ligeramente superiores de nutrientes y agua.",
+            "Description_fr": "Cambic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> Cambic Arenosols have a minimally developed subsoil horizon that can retain slightly higher amounts of nutrients and water.",
+            "Description_ks": "Cambic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> Cambic Arenosols have a minimally developed subsoil horizon that can retain slightly higher amounts of nutrients and water.",
+            "Management_en": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. ",
+            "Management_es": "Dado que estos suelos tienen poca capacidad de retención de agua y nutrientes, deben ser fertilizados y regados para obtener una productividad óptima. <br>Las prácticas de gestión para mejorar el suministro de nutrientes y la capacidad de retención de agua incluyen la adición de materia orgánica, el uso de cultivos de cobertura y la rotación de cultivos. <br>La mejor productividad se logrará mediante el uso de riego suplementario, el uso de herramientas como mantillos o cubiertas para preservar la humedad del suelo, y la fertilización.",
+            "Management_fr": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. ",
+            "Management_ks": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. "
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Loam",
+          "sl5": "Loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 8.8,
+          "sl5": 10.0,
+          "sl6": 10.8,
+          "sl7": 11.33
+        },
+        "clay": {
+          "sl1": 11.0,
+          "sl2": 11.0,
+          "sl3": 11.0,
+          "sl4": 18.4,
+          "sl5": 20.86,
+          "sl6": 22.2,
+          "sl7": 22.83
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 1.0,
+          "sl6": 1.2,
+          "sl7": 1.33
+        },
+        "id": {
+          "component": "Haplic luvisols",
+          "name": "Haplic luvisols",
+          "rank_loc": "5",
+          "score_loc": 0.087
+        },
+        "ph": {
+          "sl1": 6.2,
+          "sl2": 6.2,
+          "sl3": 6.2,
+          "sl4": 6.36,
+          "sl5": 6.46,
+          "sl6": 6.64,
+          "sl7": 6.73
+        },
+        "rock_fragments": {
+          "sl1": 21.0,
+          "sl2": 21.0,
+          "sl3": 21.0,
+          "sl4": 13.6,
+          "sl5": 11.29,
+          "sl6": 9.6,
+          "sl7": 8.83
+        },
+        "sand": {
+          "sl1": 80.0,
+          "sl2": 80.0,
+          "sl3": 80.0,
+          "sl4": 72.0,
+          "sl5": 70.0,
+          "sl6": 69.0,
+          "sl7": 68.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 149088,
+            "distance": 0.0,
+            "mapunitID": 6080,
+            "minCompDistance": 0.0,
+            "share": 10,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Luvisols are productive soils with high base saturation and relatively clayey subsoils.",
+            "Description_es": "Los Luvisoles Háplicos son suelos productivos con alta saturación de bases y subsuelos relativamente arcillosos.",
+            "Description_fr": "Haplic Luvisols are productive soils with high base saturation and relatively clayey subsoils.",
+            "Description_ks": "Haplic Luvisols are productive soils with high base saturation and relatively clayey subsoils.",
+            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops.",
+            "Management_es": "Estos suelos son fértiles y pueden utilizarse para una amplia gama de prácticas de cultivo. <br>Sin embargo, son sensibles a la pérdida de suelo por erosión y hay que tener cuidado para proteger el suelo de la pérdida. <br>Si el suelo ya está erosionado, pueden ser más adecuados para el pastoreo y/o los cultivos arbóreos.",
+            "Management_fr": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops.",
+            "Management_ks": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops."
+          }
+        },
+        "texture": {
+          "sl1": "Loamy sand",
+          "sl2": "Loamy sand",
+          "sl3": "Loamy sand",
+          "sl4": "Sandy loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 3.0,
+          "sl2": 3.0,
+          "sl3": 3.0,
+          "sl4": 1.8,
+          "sl5": 1.57,
+          "sl6": 1.4,
+          "sl7": 1.33
+        },
+        "clay": {
+          "sl1": 4.0,
+          "sl2": 4.0,
+          "sl3": 4.0,
+          "sl4": 4.0,
+          "sl5": 4.0,
+          "sl6": 4.0,
+          "sl7": 4.17
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Dystric regosols",
+          "name": "Dystric regosols",
+          "rank_loc": "6",
+          "score_loc": 0.054
+        },
+        "ph": {
+          "sl1": 5.3,
+          "sl2": 5.3,
+          "sl3": 5.3,
+          "sl4": 5.32,
+          "sl5": 5.36,
+          "sl6": 5.42,
+          "sl7": 5.43
+        },
+        "rock_fragments": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 3.2,
+          "sl5": 3.43,
+          "sl6": 3.6,
+          "sl7": 4.5
+        },
+        "sand": {
+          "sl1": 86.0,
+          "sl2": 86.0,
+          "sl3": 86.0,
+          "sl4": 86.8,
+          "sl5": 86.86,
+          "sl6": 86.6,
+          "sl7": 86.33
+        },
+        "site": {
+          "siteData": {
+            "componentID": 148956,
+            "distance": 438.366,
+            "mapunitID": 6037,
+            "minCompDistance": 438.36624807,
+            "share": 20,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Dystric Regosols are weakly developed soils that commonly are too dry, or are on steeper slopes which limit productivity.<br> Dystric Regosols have low base saturation in the subsoil. ",
+            "Description_es": "Los Regosoles Dístricos son suelos débilmente desarrollados que comúnmente son demasiado secos, o están en pendientes más pronunciadas que limitan la productividad.<br>Los Regosoles Dístricos tienen una baja saturación de base en el subsuelo. ",
+            "Description_fr": "Dystric Regosols are weakly developed soils that commonly are too dry, or are on steeper slopes which limit productivity.<br> Dystric Regosols have low base saturation in the subsoil. ",
+            "Description_ks": "Dystric Regosols are weakly developed soils that commonly are too dry, or are on steeper slopes which limit productivity.<br> Dystric Regosols have low base saturation in the subsoil. ",
+            "Management_en": "These soils have low water holding capacity, and are very sensitive to drought. <br> They are prone to erosion, especially in areas with slope. <br> The combination of drought sensitivity and high erosion potential makes these soils best suited for grazing or other uses with constant soil cover. <br> Even when used for grazing, irrigation will be needed due to the low water holding capacity and high permeability of these soils. <br>With a low base saturation these soils may respond to addition of bases such as potassium, calcium or magnesium.  ",
+            "Management_es": "Estos suelos tienen una baja capacidad de retención de agua, y son muy sensibles a la sequía. <br>Son propensos a la erosión, especialmente en zonas con pendiente. <br>La combinación de la sensibilidad a la sequía y el alto potencial de erosión hace que estos suelos sean los más adecuados para el pastoreo u otros usos con una cobertura constante del suelo. *Incluso cuando se utilizan para el pastoreo, el riego será necesario debido a la baja capacidad de retención de agua y la alta permeabilidad de estos suelos. *Con una baja saturación de bases, estos suelos pueden responder a la adición de bases como el potasio, el calcio o el magnesio.  ",
+            "Management_fr": "These soils have low water holding capacity, and are very sensitive to drought. <br> They are prone to erosion, especially in areas with slope. <br> The combination of drought sensitivity and high erosion potential makes these soils best suited for grazing or other uses with constant soil cover. <br> Even when used for grazing, irrigation will be needed due to the low water holding capacity and high permeability of these soils. <br>With a low base saturation these soils may respond to addition of bases such as potassium, calcium or magnesium.  ",
+            "Management_ks": "These soils have low water holding capacity, and are very sensitive to drought. <br> They are prone to erosion, especially in areas with slope. <br> The combination of drought sensitivity and high erosion potential makes these soils best suited for grazing or other uses with constant soil cover. <br> Even when used for grazing, irrigation will be needed due to the low water holding capacity and high permeability of these soils. <br>With a low base saturation these soils may respond to addition of bases such as potassium, calcium or magnesium.  "
+          }
+        },
+        "texture": {
+          "sl1": "Loamy sand",
+          "sl2": "Loamy sand",
+          "sl3": "Loamy sand",
+          "sl4": "Loamy sand",
+          "sl5": "Loamy sand",
+          "sl6": "Loamy sand",
+          "sl7": "Loamy sand"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 3.0,
+          "sl2": 3.0,
+          "sl3": 3.0,
+          "sl4": 2.4,
+          "sl5": 2.14,
+          "sl6": 1.8,
+          "sl7": 1.67
+        },
+        "clay": {
+          "sl1": 4.0,
+          "sl2": 4.0,
+          "sl3": 4.0,
+          "sl4": 4.0,
+          "sl5": 4.0,
+          "sl6": 4.0,
+          "sl7": 4.0
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Calcic luvisols",
+          "name": "Calcic luvisols",
+          "rank_loc": "7",
+          "score_loc": 0.039
+        },
+        "ph": {
+          "sl1": 5.5,
+          "sl2": 5.5,
+          "sl3": 5.5,
+          "sl4": 5.5,
+          "sl5": 5.53,
+          "sl6": 5.58,
+          "sl7": 5.6
+        },
+        "rock_fragments": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 3.0,
+          "sl5": 3.14,
+          "sl6": 3.4,
+          "sl7": 4.17
+        },
+        "sand": {
+          "sl1": 88.0,
+          "sl2": 88.0,
+          "sl3": 88.0,
+          "sl4": 88.6,
+          "sl5": 88.57,
+          "sl6": 88.4,
+          "sl7": 88.33
+        },
+        "site": {
+          "siteData": {
+            "componentID": 149087,
+            "distance": 0.0,
+            "mapunitID": 6080,
+            "minCompDistance": 0.0,
+            "share": 10,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Calcic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Calcic Luvisols have calcareous subsoils.",
+            "Description_es": "Los Luvisoles Cálcicos son suelos productivos con alta saturación de bases y subsuelos relativamente arcillosos. <br>Los Luvisoles cálcicos tienen subsuelos calcáreos.",
+            "Description_fr": "Calcic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Calcic Luvisols have calcareous subsoils.",
+            "Description_ks": "Calcic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Calcic Luvisols have calcareous subsoils.",
+            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops. <br> These soils will have large amounts of free calcium carbonate in the subsample, and thus the soil pH will be > 7.0. ",
+            "Management_es": "Estos suelos son fértiles y pueden utilizarse para una amplia gama de prácticas de cultivo. <br>Sin embargo, son sensibles a la pérdida de suelo por erosión, y hay que tener cuidado para proteger el suelo de la pérdida. <br>Si el suelo ya está erosionado, pueden ser más adecuados para el pastoreo y/o los cultivos arbóreos. <br>Estos suelos tendrán grandes cantidades de carbonato de calcio libre en la submuestra, por lo que el pH del suelo será superior a 7,0.",
+            "Management_fr": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops. <br> These soils will have large amounts of free calcium carbonate in the subsample, and thus the soil pH will be > 7.0. ",
+            "Management_ks": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops. <br> These soils will have large amounts of free calcium carbonate in the subsample, and thus the soil pH will be > 7.0. "
+          }
+        },
+        "texture": {
+          "sl1": "Sand",
+          "sl2": "Sand",
+          "sl3": "Sand",
+          "sl4": "Sand",
+          "sl5": "Sand",
+          "sl6": "Sand",
+          "sl7": "Sand"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 5.0,
+          "sl2": 5.0,
+          "sl3": 5.0,
+          "sl4": 3.8,
+          "sl5": 3.57,
+          "sl6": 3.8,
+          "sl7": 3.5
+        },
+        "clay": {
+          "sl1": 7.0,
+          "sl2": 7.0,
+          "sl3": 7.0,
+          "sl4": 7.0,
+          "sl5": 7.14,
+          "sl6": 7.6,
+          "sl7": 7.17
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Acrisols",
+          "name": "Acrisols",
+          "rank_loc": "8",
+          "score_loc": 0.037
+        },
+        "ph": {
+          "sl1": 6.4,
+          "sl2": 6.4,
+          "sl3": 6.4,
+          "sl4": 6.42,
+          "sl5": 6.46,
+          "sl6": 6.54,
+          "sl7": 6.55
+        },
+        "rock_fragments": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 2.4,
+          "sl5": 2.86,
+          "sl6": 2.8,
+          "sl7": 5.33
+        },
+        "sand": {
+          "sl1": 87.0,
+          "sl2": 87.0,
+          "sl3": 87.0,
+          "sl4": 86.8,
+          "sl5": 86.29,
+          "sl6": 85.2,
+          "sl7": 86.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 148960,
+            "distance": 438.366,
+            "mapunitID": 6037,
+            "minCompDistance": 438.36624807,
+            "share": 10,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Acrisols are acidic and relatively infertile soils. <br> Supplemental fertilization and liming will be needed to create a productive soil for crop use. <br> These soils are also high in soluble aluminum (Al) which is toxic to plants.",
+            "Description_es": "Los Acrisoles son suelos ácidos y relativamente infértiles. <br>Se necesita una fertilización y un encalado suplementarios para crear un suelo productivo para los cultivos. <br>Estos suelos también tienen un alto contenido de aluminio soluble (Al), que es tóxico para las plantas. ",
+            "Description_fr": "Acrisols are acidic and relatively infertile soils. <br> Supplemental fertilization and liming will be needed to create a productive soil for crop use. <br> These soils are also high in soluble aluminum (Al) which is toxic to plants.",
+            "Description_ks": "Acrisols are acidic and relatively infertile soils. <br> Supplemental fertilization and liming will be needed to create a productive soil for crop use. <br> These soils are also high in soluble aluminum (Al) which is toxic to plants.",
+            "Management_en": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate, which will take Al out of solution) can help to reduce aluminum toxicity. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover, crop rotation and agroforestry. ",
+            "Management_es": "Debido a que el suelo tiende a ser ácido (tiene un pH bajo) y alto en Al, el fertilizante de fósforo es rápidamente \"fijado\" por el suelo, haciendo que no esté disponible para las plantas en la temporada de cultivo. <br>Las prácticas bien documentadas, como la aplicación en banda (directamente sobre la semilla o a un lado y abajo de la semilla) de fertilizantes fosfatados, ayudarán a reducir la fijación de P. <br>La aplicación de nitrógeno (N) es esencial, y esto puede lograrse mediante la aplicación de dosis correctas de fertilizantes (como la urea), o mediante el uso de cultivos de cobertura, abonos verdes y rotaciones. <br>Los cultivos de cobertura y las rotaciones que incluyen leguminosas y la inclusión de cultivos con alta biomasa serían beneficiosos, ya que añaden materia orgánica y nitrógeno para el cultivo posterior. <br>Incluso con cultivos de cobertura o prácticas similares, es probable que se necesite una fertilización suplementaria de N, ya que el N orgánico no se convertirá en el N inorgánico necesario para el cultivo en cantidades suficientes durante el año de cultivo. <br>La aplicación de cal (que aumenta el pH del suelo y retiene el aluminio soluble) o de yeso (sulfato de calcio, que extrae el aluminio de la solución) puede ayudar a reducir la toxicidad del aluminio. <br>La conservación del suelo superficial con su materia orgánica es importante, y la prevención de la erosión es fundamental. <br>Las prácticas de gestión de la tierra deben maximizar la cobertura del suelo, la rotación de cultivos y la agrosilvicultura. ",
+            "Management_fr": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate, which will take Al out of solution) can help to reduce aluminum toxicity. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover, crop rotation and agroforestry. ",
+            "Management_ks": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate, which will take Al out of solution) can help to reduce aluminum toxicity. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover, crop rotation and agroforestry. "
+          }
+        },
+        "texture": {
+          "sl1": "Loamy sand",
+          "sl2": "Loamy sand",
+          "sl3": "Loamy sand",
+          "sl4": "Loamy sand",
+          "sl5": "Loamy sand",
+          "sl6": "Loamy sand",
+          "sl7": "Loamy sand"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 13.0,
+          "sl2": 13.0,
+          "sl3": 13.0,
+          "sl4": 14.0,
+          "sl5": 14.71,
+          "sl6": 15.2,
+          "sl7": 15.33
+        },
+        "clay": {
+          "sl1": 17.0,
+          "sl2": 17.0,
+          "sl3": 17.0,
+          "sl4": 22.8,
+          "sl5": 24.86,
+          "sl6": 26.2,
+          "sl7": 26.17
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 1.0,
+          "sl6": 1.2,
+          "sl7": 1.33
+        },
+        "id": {
+          "component": "Ferralsols",
+          "name": "Ferralsols",
+          "rank_loc": "9",
+          "score_loc": 0.027
+        },
+        "ph": {
+          "sl1": 5.9,
+          "sl2": 5.9,
+          "sl3": 5.9,
+          "sl4": 5.96,
+          "sl5": 5.97,
+          "sl6": 6.0,
+          "sl7": 6.03
+        },
+        "rock_fragments": {
+          "sl1": 11.0,
+          "sl2": 11.0,
+          "sl3": 11.0,
+          "sl4": 11.2,
+          "sl5": 11.71,
+          "sl6": 12.8,
+          "sl7": 13.33
+        },
+        "sand": {
+          "sl1": 41.0,
+          "sl2": 41.0,
+          "sl3": 41.0,
+          "sl4": 37.6,
+          "sl5": 36.57,
+          "sl6": 36.2,
+          "sl7": 36.67
+        },
+        "site": {
+          "siteData": {
+            "componentID": 148959,
+            "distance": 438.366,
+            "mapunitID": 6037,
+            "minCompDistance": 438.36624807,
+            "share": 10,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients. ",
+            "Description_es": "Los Ferralisoles son suelos bien desarrollados en climas húmedos y cálidos en los que predominan los minerales de baja actividad, como la caolinita y los óxidos de hierro y aluminio. <br>Suelen tener buenas propiedades físicas, pero son ácidos, relativamente infértiles, tienen una alta fijación de P y una capacidad limitada para retener nutrientes. ",
+            "Description_fr": "Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients. ",
+            "Description_ks": "Ferralsols are well developed soils in humid, warm climates that are dominated by low activity minerals such as kaolinite and iron and aluminum oxides. <br> They often have good physical properties but are acid, relatively infertile, have high P fixation, and have limited ability to retain nutrients. ",
+            "Management_en": "soils are prone to phosphorus fixation, and most soil P will not be immediately available for crop uptake and use. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used.",
+            "Management_es": "suelos son propensos a la fijación de fósforo, y la mayor parte del P del suelo no estará inmediatamente disponible para su absorción y uso por parte de los cultivos. <br>Las prácticas bien documentadas, como la aplicación en banda (directamente sobre la semilla o a un lado y abajo de la semilla) de fertilizantes fosfatados, ayudarán a reducir la fijación de P. <br>La fertilización adicional y la aplicación de cal, además del P, también serán necesarias para garantizar un crecimiento y un rendimiento adecuados de los cultivos. <br>En estos suelos también puede haber altos niveles de aluminio soluble, que es tóxico para las plantas. <br>La aplicación de cal (que aumenta el pH del suelo y retiene el aluminio soluble) puede ayudar a reducir la toxicidad del aluminio. <br>Dado que estos suelos son infértiles, necesitarán aplicaciones de nutrientes para las plantas con el fin de obtener un mejor rendimiento de los cultivos, ya sea mediante la fertilización o la inclusión de residuos de cultivos, estiércol u otro material orgánico rico en nutrientes. <br>Estos suelos tienen una capacidad limitada para retener los fertilizantes nitrogenados. Deberían considerarse fuentes de nitrógeno de liberación lenta, si se dispone de ellas, o podría utilizarse la aplicación más frecuente de fuentes solubles a una tasa menor en cada aplicación.",
+            "Management_fr": "soils are prone to phosphorus fixation, and most soil P will not be immediately available for crop uptake and use. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used.",
+            "Management_ks": "soils are prone to phosphorus fixation, and most soil P will not be immediately available for crop uptake and use. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> High levels of soluble aluminum can also be present in these soils, and it is toxic to plants. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) can help to reduce aluminum toxicity. <br> Since these soils are infertile they will require applications of plant nutrients for best crop performance, applied either by fertilization or inclusion of crop residues, manures or other nutrient-rich organic material. <br> These soils have a limited ability to retain nitrogen fertilizer. Slow-release nitrogen sources should be considered, if available, or more frequent application of soluble sources at a lower rate with each application could be used."
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Loam",
+          "sl5": "Loam",
+          "sl6": "Loam",
+          "sl7": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 16.0,
+          "sl2": 16.0,
+          "sl3": 16.0,
+          "sl4": 16.6,
+          "sl5": 16.71,
+          "sl6": 16.6,
+          "sl7": 16.5
+        },
+        "clay": {
+          "sl1": 25.0,
+          "sl2": 25.0,
+          "sl3": 25.0,
+          "sl4": 30.2,
+          "sl5": 31.57,
+          "sl6": 32.4,
+          "sl7": 32.33
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 1.0,
+          "sl6": 1.0,
+          "sl7": 1.0
+        },
+        "id": {
+          "component": "Haplic acrisols",
+          "name": "Haplic acrisols",
+          "rank_loc": "10",
+          "score_loc": 0.016
+        },
+        "ph": {
+          "sl1": 6.2,
+          "sl2": 6.2,
+          "sl3": 6.2,
+          "sl4": 6.22,
+          "sl5": 6.26,
+          "sl6": 6.32,
+          "sl7": 6.37
+        },
+        "rock_fragments": {
+          "sl1": 10.0,
+          "sl2": 10.0,
+          "sl3": 10.0,
+          "sl4": 14.8,
+          "sl5": 15.29,
+          "sl6": 15.2,
+          "sl7": 14.67
+        },
+        "sand": {
+          "sl1": 47.0,
+          "sl2": 47.0,
+          "sl3": 47.0,
+          "sl4": 43.6,
+          "sl5": 42.71,
+          "sl6": 42.4,
+          "sl7": 42.67
+        },
+        "site": {
+          "siteData": {
+            "componentID": 148400,
+            "distance": 29716.363,
+            "mapunitID": 5876,
+            "minCompDistance": 29716.36256981,
+            "share": 20,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Acrisols are acidic and relatively infertile soils. <br> Supplemental fertilization and liming will be needed to create a productive soil for crop use. <br> These soils are also high in soluble aluminum (Al) which is toxic to plants.",
+            "Description_es": "Los Acrisoles Háplicos son suelos ácidos y relativamente infértiles. <br>Se necesita una fertilización y un encalado suplementarios para crear un suelo productivo para los cultivos. <br>Estos suelos también tienen un alto contenido de aluminio soluble (Al), que es tóxico para las plantas. ",
+            "Description_fr": "Haplic Acrisols are acidic and relatively infertile soils. <br> Supplemental fertilization and liming will be needed to create a productive soil for crop use. <br> These soils are also high in soluble aluminum (Al) which is toxic to plants.",
+            "Description_ks": "Haplic Acrisols are acidic and relatively infertile soils. <br> Supplemental fertilization and liming will be needed to create a productive soil for crop use. <br> These soils are also high in soluble aluminum (Al) which is toxic to plants.",
+            "Management_en": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate, which will take Al out of solution) can help to reduce aluminum toxicity. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover, crop rotation and agroforestry. ",
+            "Management_es": "Debido a que el suelo tiende a ser ácido (tiene un pH bajo) y alto en Al, el fertilizante de fósforo es rápidamente \"fijado\" por el suelo, haciendo que no esté disponible para las plantas en la temporada de cultivo. <br>Las prácticas bien documentadas, como la aplicación en banda (directamente sobre la semilla o a un lado y abajo de la semilla) de fertilizantes fosfatados, ayudarán a reducir la fijación de P. <br>La aplicación de nitrógeno (N) es esencial, y esto puede lograrse mediante la aplicación de dosis correctas de fertilizantes (como la urea), o mediante el uso de cultivos de cobertura, abonos verdes y rotaciones. <br>Los cultivos de cobertura y las rotaciones que incluyen leguminosas y la inclusión de cultivos con alta biomasa serían beneficiosos, ya que añaden materia orgánica y nitrógeno para el cultivo posterior. <br>Incluso con cultivos de cobertura o prácticas similares, es probable que se necesite una fertilización suplementaria de N, ya que el N orgánico no se convertirá en el N inorgánico necesario para el cultivo en cantidades suficientes durante el año de cultivo. <br>La aplicación de cal (que aumenta el pH del suelo y retiene el aluminio soluble) o de yeso (sulfato de calcio, que extrae el aluminio de la solución) puede ayudar a reducir la toxicidad del aluminio. <br>La conservación del suelo superficial con su materia orgánica es importante, y la prevención de la erosión es fundamental. <br>Las prácticas de gestión de la tierra deben maximizar la cobertura del suelo, la rotación de cultivos y la agrosilvicultura. ",
+            "Management_fr": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate, which will take Al out of solution) can help to reduce aluminum toxicity. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover, crop rotation and agroforestry. ",
+            "Management_ks": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate, which will take Al out of solution) can help to reduce aluminum toxicity. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover, crop rotation and agroforestry. "
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 9.0,
+          "sl2": 9.0,
+          "sl3": 9.0,
+          "sl4": 7.6,
+          "sl5": 7.0,
+          "sl6": 6.4,
+          "sl7": 6.0
+        },
+        "clay": {
+          "sl1": 20.0,
+          "sl2": 20.0,
+          "sl3": 20.0,
+          "sl4": 18.0,
+          "sl5": 17.14,
+          "sl6": 16.0,
+          "sl7": 15.67
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 1.14,
+          "sl6": 1.2,
+          "sl7": 1.0
+        },
+        "id": {
+          "component": "Dystric planosols",
+          "name": "Dystric planosols",
+          "rank_loc": "11",
+          "score_loc": 0.008
+        },
+        "ph": {
+          "sl1": 5.1,
+          "sl2": 5.1,
+          "sl3": 5.1,
+          "sl4": 5.08,
+          "sl5": 5.13,
+          "sl6": 5.16,
+          "sl7": 5.18
+        },
+        "rock_fragments": {
+          "sl1": 24.0,
+          "sl2": 24.0,
+          "sl3": 24.0,
+          "sl4": 30.6,
+          "sl5": 31.14,
+          "sl6": 35.2,
+          "sl7": 36.67
+        },
+        "sand": {
+          "sl1": 55.0,
+          "sl2": 55.0,
+          "sl3": 55.0,
+          "sl4": 57.6,
+          "sl5": 58.71,
+          "sl6": 60.2,
+          "sl7": 60.17
+        },
+        "site": {
+          "siteData": {
+            "componentID": 148585,
+            "distance": 7539.61,
+            "mapunitID": 5933,
+            "minCompDistance": 7539.61019871,
+            "share": 10,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Dystric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil.<br> These soils are prone to compaction and require drainage for crop production.<br> Dystric Planosols are less productive soils with low base saturation in the subsoil.",
+            "Description_es": "Los Planosoles Dístricos están estacionalmente encharcados o saturados de agua en la parte superior debido a un subsuelo rico en arcilla y lentamente permeable.<br>Estos suelos son propensos a la compactación y requieren de drenaje para la producción de cultivos.<br>Los Planosoles Dístricos son suelos menos productivos con baja saturación de base en el subsuelo.",
+            "Description_fr": "Dystric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil.<br> These soils are prone to compaction and require drainage for crop production.<br> Dystric Planosols are less productive soils with low base saturation in the subsoil.",
+            "Description_ks": "Dystric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil.<br> These soils are prone to compaction and require drainage for crop production.<br> Dystric Planosols are less productive soils with low base saturation in the subsoil.",
+            "Management_en": "Located on flat land, these soils are best suited for paddy rice production.<br> Drainage will be required for production.<br> Highest yields will require additional fertilization.<br> Very low levels of calcium are available in the lower profile of this soil.<br> Supplemental fertilization will be needed.",
+            "Management_es": "Situados en terrenos planos, estos suelos son los más adecuados para la producción de arroz con cáscara.<br>Se requerirá el drenaje para la producción.<br>Los rendimientos más elevados requerirán una fertilización adicional.<br>Los niveles de calcio son muy bajos en el perfil inferior de este suelo.<br>Se necesitará una fertilización suplementaria.",
+            "Management_fr": "Located on flat land, these soils are best suited for paddy rice production.<br> Drainage will be required for production.<br> Highest yields will require additional fertilization.<br> Very low levels of calcium are available in the lower profile of this soil.<br> Supplemental fertilization will be needed.",
+            "Management_ks": "Located on flat land, these soils are best suited for paddy rice production.<br> Drainage will be required for production.<br> Highest yields will require additional fertilization.<br> Very low levels of calcium are available in the lower profile of this soil.<br> Supplemental fertilization will be needed."
+          }
+        },
+        "texture": {
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy loam",
+          "sl5": "Sandy loam",
+          "sl6": "Sandy loam",
+          "sl7": "Sandy loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 19.0,
+          "sl2": 19.0,
+          "sl3": 19.0,
+          "sl4": 20.2,
+          "sl5": 20.14,
+          "sl6": 19.8,
+          "sl7": 19.0
+        },
+        "clay": {
+          "sl1": 23.0,
+          "sl2": 23.0,
+          "sl3": 23.0,
+          "sl4": 26.8,
+          "sl5": 27.86,
+          "sl6": 29.2,
+          "sl7": 28.83
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.2,
+          "sl5": 0.43,
+          "sl6": 0.8,
+          "sl7": 0.83
+        },
+        "id": {
+          "component": "Eutric cambisols",
+          "name": "Eutric cambisols",
+          "rank_loc": "12",
+          "score_loc": 0.008
+        },
+        "ph": {
+          "sl1": 7.6,
+          "sl2": 7.6,
+          "sl3": 7.6,
+          "sl4": 7.68,
+          "sl5": 7.74,
+          "sl6": 7.82,
+          "sl7": 7.88
+        },
+        "rock_fragments": {
+          "sl1": 16.0,
+          "sl2": 16.0,
+          "sl3": 16.0,
+          "sl4": 16.0,
+          "sl5": 18.0,
+          "sl6": 21.2,
+          "sl7": 21.67
+        },
+        "sand": {
+          "sl1": 42.0,
+          "sl2": 42.0,
+          "sl3": 42.0,
+          "sl4": 39.0,
+          "sl5": 38.29,
+          "sl6": 36.8,
+          "sl7": 36.83
+        },
+        "site": {
+          "siteData": {
+            "componentID": 148586,
+            "distance": 7539.61,
+            "mapunitID": 5933,
+            "minCompDistance": 7539.61019871,
+            "share": 10,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Eutric Cambisols are widely occurring soils with limited soil development. <br> These are productive soils with high base saturation (Ca, Mg and K) in the upper portion of soil. ",
+            "Description_es": "Los Cambisoles Eútricos son suelos que se dan ampliamente con un desarrollo limitado del suelo. <br>Son suelos productivos con alta saturación de bases (Ca, Mg y K) en la parte superior del suelo. ",
+            "Description_fr": "Eutric Cambisols are widely occurring soils with limited soil development. <br> These are productive soils with high base saturation (Ca, Mg and K) in the upper portion of soil. ",
+            "Description_ks": "Eutric Cambisols are widely occurring soils with limited soil development. <br> These are productive soils with high base saturation (Ca, Mg and K) in the upper portion of soil. ",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> Eutric Cambisols will have high base saturation, which means that the available soil nutrients will be predominantly calcium, potassium, and magnesium. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_es": "En regiones templadas los suelos tendrán un alto contenido de cationes básicos (potasio, calcio y magnesio), mientras que en regiones más húmedas pueden tener niveles más bajos de nutrientes en el suelo. <br>Los Cambisoles eútricos tendrán una alta saturación de bases, lo que significa que los nutrientes disponibles en el suelo serán predominantemente calcio, potasio y magnesio. <br>Estos suelos son muy adecuados para la producción de cultivos y pueden utilizarse de forma intensiva. <br>La fertilización debe utilizarse para mejorar la productividad, y puede incluirse el riego para aumentar aún más la productividad.",
+            "Management_fr": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> Eutric Cambisols will have high base saturation, which means that the available soil nutrients will be predominantly calcium, potassium, and magnesium. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. ",
+            "Management_ks": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> Eutric Cambisols will have high base saturation, which means that the available soil nutrients will be predominantly calcium, potassium, and magnesium. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 15.0,
+          "sl2": 15.0,
+          "sl3": 15.0,
+          "sl4": 16.0,
+          "sl5": 16.0,
+          "sl6": 16.0,
+          "sl7": 15.83
+        },
+        "clay": {
+          "sl1": 19.0,
+          "sl2": 19.0,
+          "sl3": 19.0,
+          "sl4": 22.2,
+          "sl5": 23.0,
+          "sl6": 23.6,
+          "sl7": 23.67
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 1.0,
+          "sl6": 1.0,
+          "sl7": 1.0
+        },
+        "id": {
+          "component": "Chromic luvisols",
+          "name": "Chromic luvisols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.126
+        },
+        "ph": {
+          "sl1": 7.4,
+          "sl2": 7.4,
+          "sl3": 7.4,
+          "sl4": 7.56,
+          "sl5": 7.64,
+          "sl6": 7.74,
+          "sl7": 7.82
+        },
+        "rock_fragments": {
+          "sl1": 15.0,
+          "sl2": 15.0,
+          "sl3": 15.0,
+          "sl4": 19.0,
+          "sl5": 21.0,
+          "sl6": 22.6,
+          "sl7": 22.83
+        },
+        "sand": {
+          "sl1": 57.0,
+          "sl2": 57.0,
+          "sl3": 57.0,
+          "sl4": 55.0,
+          "sl5": 54.57,
+          "sl6": 54.2,
+          "sl7": 54.17
+        },
+        "site": {
+          "siteData": {
+            "componentID": 148550,
+            "distance": 11835.884,
+            "mapunitID": 5927,
+            "minCompDistance": 0.0,
+            "share": 70,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Chromic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Chromic Luvisols have an iron rich subsoil.",
+            "Description_es": "Los Luvisoles Crómicos son suelos productivos con alta saturación de bases y subsuelos relativamente arcillosos. <br>Los Luvisoles crómicos tienen un subsuelo rico en hierro.",
+            "Description_fr": "Chromic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Chromic Luvisols have an iron rich subsoil.",
+            "Description_ks": "Chromic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Chromic Luvisols have an iron rich subsoil.",
+            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops.",
+            "Management_es": "Estos suelos son fértiles y pueden utilizarse para una amplia gama de prácticas de cultivo. <br>Sin embargo, son sensibles a la pérdida de suelo por erosión, y hay que tener cuidado para proteger el suelo de la pérdida. <br>Si el suelo ya está erosionado, pueden ser más adecuados para el pastoreo y/o los cultivos arbóreos.",
+            "Management_fr": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops.",
+            "Management_ks": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops."
+          }
+        },
+        "texture": {
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy clay loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 8.0,
+          "sl2": 8.0,
+          "sl3": 8.0,
+          "sl4": 6.8,
+          "sl5": 6.57,
+          "sl6": 6.6,
+          "sl7": 6.67
+        },
+        "clay": {
+          "sl1": 25.0,
+          "sl2": 25.0,
+          "sl3": 25.0,
+          "sl4": 30.8,
+          "sl5": 33.14,
+          "sl6": 35.6,
+          "sl7": 36.67
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Chromic luvisols",
+          "name": "Chromic luvisols3",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.126
+        },
+        "ph": {
+          "sl1": 5.1,
+          "sl2": 5.1,
+          "sl3": 5.1,
+          "sl4": 5.04,
+          "sl5": 5.03,
+          "sl6": 5.02,
+          "sl7": 5.02
+        },
+        "rock_fragments": {
+          "sl1": 15.0,
+          "sl2": 15.0,
+          "sl3": 15.0,
+          "sl4": 17.8,
+          "sl5": 19.14,
+          "sl6": 19.6,
+          "sl7": 20.0
+        },
+        "sand": {
+          "sl1": 54.0,
+          "sl2": 54.0,
+          "sl3": 54.0,
+          "sl4": 49.6,
+          "sl5": 47.71,
+          "sl6": 45.6,
+          "sl7": 44.5
+        },
+        "site": {
+          "siteData": {
+            "componentID": 148831,
+            "distance": 27418.494,
+            "mapunitID": 6000,
+            "minCompDistance": 0.0,
+            "share": 10,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Chromic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Chromic Luvisols have an iron rich subsoil.",
+            "Description_es": "Los Luvisoles Crómicos son suelos productivos con alta saturación de bases y subsuelos relativamente arcillosos. <br>Los Luvisoles crómicos tienen un subsuelo rico en hierro.",
+            "Description_fr": "Chromic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Chromic Luvisols have an iron rich subsoil.",
+            "Description_ks": "Chromic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Chromic Luvisols have an iron rich subsoil.",
+            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops.",
+            "Management_es": "Estos suelos son fértiles y pueden utilizarse para una amplia gama de prácticas de cultivo. <br>Sin embargo, son sensibles a la pérdida de suelo por erosión, y hay que tener cuidado para proteger el suelo de la pérdida. <br>Si el suelo ya está erosionado, pueden ser más adecuados para el pastoreo y/o los cultivos arbóreos.",
+            "Management_fr": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops.",
+            "Management_ks": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops."
+          }
+        },
+        "texture": {
+          "sl1": "Sandy clay loam",
+          "sl2": "Sandy clay loam",
+          "sl3": "Sandy clay loam",
+          "sl4": "Sandy clay loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 3.0,
+          "sl2": 3.0,
+          "sl3": 3.0,
+          "sl4": 3.6,
+          "sl5": 3.71,
+          "sl6": 3.8,
+          "sl7": 3.83
+        },
+        "clay": {
+          "sl1": 11.0,
+          "sl2": 11.0,
+          "sl3": 11.0,
+          "sl4": 15.4,
+          "sl5": 17.14,
+          "sl6": 18.6,
+          "sl7": 19.17
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Eutric planosols",
+          "name": "Eutric planosols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.12
+        },
+        "ph": {
+          "sl1": 5.4,
+          "sl2": 5.4,
+          "sl3": 5.4,
+          "sl4": 5.22,
+          "sl5": 5.19,
+          "sl6": 5.16,
+          "sl7": 5.17
+        },
+        "rock_fragments": {
+          "sl1": 19.0,
+          "sl2": 19.0,
+          "sl3": 19.0,
+          "sl4": 11.0,
+          "sl5": 9.14,
+          "sl6": 8.4,
+          "sl7": 9.17
+        },
+        "sand": {
+          "sl1": 77.0,
+          "sl2": 77.0,
+          "sl3": 77.0,
+          "sl4": 72.6,
+          "sl5": 71.0,
+          "sl6": 70.0,
+          "sl7": 69.33
+        },
+        "site": {
+          "siteData": {
+            "componentID": 148917,
+            "distance": 3068.563,
+            "mapunitID": 6024,
+            "minCompDistance": 0.0,
+            "share": 10,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Eutric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil.<br> These soils are prone to compaction and require drainage for crop production.<br> Eutric Planosols are relatively productive soils with high base saturation in the subsoil.",
+            "Description_es": "Los Planosoles Éutricos están estacionalmente encharcados o saturados de agua en la parte superior debido a un subsuelo rico en arcilla y lentamente permeable.<br>Estos suelos son propensos a la compactación y requieren drenaje para la producción de cultivos.<br>Los Planosoles Eutricos son suelos relativamente productivos con una alta saturación de base en el subsuelo.",
+            "Description_fr": "Eutric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil.<br> These soils are prone to compaction and require drainage for crop production.<br> Eutric Planosols are relatively productive soils with high base saturation in the subsoil.",
+            "Description_ks": "Eutric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil.<br> These soils are prone to compaction and require drainage for crop production.<br> Eutric Planosols are relatively productive soils with high base saturation in the subsoil.",
+            "Management_en": "Located on flat land, these soils are best suited for paddy rice production.<br> Drainage will be required for production.<br> Highest yields will require additional fertilization.",
+            "Management_es": "Ubicados en terrenos planos, estos suelos son los más adecuados para la producción de arroz con cáscara.<br>Se requerirá el drenaje para la producción.<br>Los rendimientos más elevados requieren una fertilización adicional.",
+            "Management_fr": "Located on flat land, these soils are best suited for paddy rice production.<br> Drainage will be required for production.<br> Highest yields will require additional fertilization.",
+            "Management_ks": "Located on flat land, these soils are best suited for paddy rice production.<br> Drainage will be required for production.<br> Highest yields will require additional fertilization."
+          }
+        },
+        "texture": {
+          "sl1": "Loamy sand",
+          "sl2": "Loamy sand",
+          "sl3": "Loamy sand",
+          "sl4": "Sandy loam",
+          "sl5": "Sandy loam",
+          "sl6": "Sandy loam",
+          "sl7": "Sandy loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 9.0,
+          "sl2": 9.0,
+          "sl3": 9.0,
+          "sl4": 7.6,
+          "sl5": 7.0,
+          "sl6": 6.4,
+          "sl7": 6.17
+        },
+        "clay": {
+          "sl1": 43.0,
+          "sl2": 43.0,
+          "sl3": 43.0,
+          "sl4": 46.4,
+          "sl5": 47.43,
+          "sl6": 48.2,
+          "sl7": 48.67
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Albic arenosols",
+          "name": "Albic arenosols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.094
+        },
+        "ph": {
+          "sl1": 4.9,
+          "sl2": 4.9,
+          "sl3": 4.9,
+          "sl4": 4.92,
+          "sl5": 4.94,
+          "sl6": 4.98,
+          "sl7": 5.0
+        },
+        "rock_fragments": {
+          "sl1": 4.0,
+          "sl2": 4.0,
+          "sl3": 4.0,
+          "sl4": 4.2,
+          "sl5": 4.43,
+          "sl6": 4.8,
+          "sl7": 5.0
+        },
+        "sand": {
+          "sl1": 41.0,
+          "sl2": 41.0,
+          "sl3": 41.0,
+          "sl4": 38.8,
+          "sl5": 38.0,
+          "sl6": 37.4,
+          "sl7": 37.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 148914,
+            "distance": 3068.563,
+            "mapunitID": 6024,
+            "minCompDistance": 438.36624807,
+            "share": 40,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Albic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are highly leached with low nutrients and available water.",
+            "Description_es": "Los Arenosoles Álbicos son suelos arenosos con un desarrollo mínimo del suelo. <br>Son inherentemente bajos en nutrientes y capacidad de retención de agua. <br>Estos suelos están muy lixiviados con pocos nutrientes y agua disponible.",
+            "Description_fr": "Albic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are highly leached with low nutrients and available water.",
+            "Description_ks": "Albic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are highly leached with low nutrients and available water.",
+            "Management_en": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> These soils should have particular attention paid to minimizing nutrient loss during fertilization. <br> If available, slow release N sources should be considered, or more frequent application of N at lower rates. ",
+            "Management_es": "Dado que estos suelos tienen poca retención de agua y nutrientes, deben ser fertilizados y regados para lograr una productividad óptima. <br>Las prácticas de gestión para mejorar el suministro de nutrientes y la capacidad de retención de agua incluyen la adición de materia orgánica, el uso de cultivos de cobertura y la rotación de cultivos. <br>La mejor productividad se logrará mediante el uso de riego suplementario, el uso de herramientas como mantillos o cubiertas para preservar la humedad del suelo, y la fertilización. <br>En estos suelos se debe prestar especial atención a minimizar la pérdida de nutrientes durante la fertilización. <br>Si se dispone de ellas, deben considerarse fuentes de N de liberación lenta, o una aplicación más frecuente de N a tasas más bajas.",
+            "Management_fr": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> These soils should have particular attention paid to minimizing nutrient loss during fertilization. <br> If available, slow release N sources should be considered, or more frequent application of N at lower rates. ",
+            "Management_ks": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> These soils should have particular attention paid to minimizing nutrient loss during fertilization. <br> If available, slow release N sources should be considered, or more frequent application of N at lower rates. "
+          }
+        },
+        "texture": {
+          "sl1": "Unknown",
+          "sl2": "Unknown",
+          "sl3": "Unknown",
+          "sl4": "Unknown",
+          "sl5": "Unknown",
+          "sl6": "Unknown",
+          "sl7": "Unknown"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 7.0,
+          "sl2": 7.0,
+          "sl3": 7.0,
+          "sl4": 6.4,
+          "sl5": 6.29,
+          "sl6": 6.2,
+          "sl7": 6.17
+        },
+        "clay": {
+          "sl1": 23.0,
+          "sl2": 23.0,
+          "sl3": 23.0,
+          "sl4": 28.8,
+          "sl5": 31.14,
+          "sl6": 33.4,
+          "sl7": 34.33
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Haplic luvisols",
+          "name": "Haplic luvisols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.087
+        },
+        "ph": {
+          "sl1": 5.1,
+          "sl2": 5.1,
+          "sl3": 5.1,
+          "sl4": 5.04,
+          "sl5": 5.03,
+          "sl6": 5.02,
+          "sl7": 5.02
+        },
+        "rock_fragments": {
+          "sl1": 11.0,
+          "sl2": 11.0,
+          "sl3": 11.0,
+          "sl4": 12.4,
+          "sl5": 13.29,
+          "sl6": 13.0,
+          "sl7": 14.0
+        },
+        "sand": {
+          "sl1": 59.0,
+          "sl2": 59.0,
+          "sl3": 59.0,
+          "sl4": 54.4,
+          "sl5": 52.29,
+          "sl6": 50.2,
+          "sl7": 49.17
+        },
+        "site": {
+          "siteData": {
+            "componentID": 148551,
+            "distance": 11835.884,
+            "mapunitID": 5927,
+            "minCompDistance": 0.0,
+            "share": 30,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Luvisols are productive soils with high base saturation and relatively clayey subsoils.",
+            "Description_es": "Los Luvisoles Háplicos son suelos productivos con alta saturación de bases y subsuelos relativamente arcillosos.",
+            "Description_fr": "Haplic Luvisols are productive soils with high base saturation and relatively clayey subsoils.",
+            "Description_ks": "Haplic Luvisols are productive soils with high base saturation and relatively clayey subsoils.",
+            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops.",
+            "Management_es": "Estos suelos son fértiles y pueden utilizarse para una amplia gama de prácticas de cultivo. <br>Sin embargo, son sensibles a la pérdida de suelo por erosión y hay que tener cuidado para proteger el suelo de la pérdida. <br>Si el suelo ya está erosionado, pueden ser más adecuados para el pastoreo y/o los cultivos arbóreos.",
+            "Management_fr": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops.",
+            "Management_ks": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops."
+          }
+        },
+        "texture": {
+          "sl1": "Sandy clay loam",
+          "sl2": "Sandy clay loam",
+          "sl3": "Sandy clay loam",
+          "sl4": "Sandy clay loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 12.0,
+          "sl2": 12.0,
+          "sl3": 12.0,
+          "sl4": 13.2,
+          "sl5": 14.71,
+          "sl6": 15.8,
+          "sl7": 15.67
+        },
+        "clay": {
+          "sl1": 14.0,
+          "sl2": 14.0,
+          "sl3": 14.0,
+          "sl4": 25.6,
+          "sl5": 31.86,
+          "sl6": 36.2,
+          "sl7": 36.33
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Calcic luvisols",
+          "name": "Calcic luvisols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.039
+        },
+        "ph": {
+          "sl1": 4.7,
+          "sl2": 4.7,
+          "sl3": 4.7,
+          "sl4": 4.78,
+          "sl5": 4.76,
+          "sl6": 4.74,
+          "sl7": 4.87
+        },
+        "rock_fragments": {
+          "sl1": 15.0,
+          "sl2": 15.0,
+          "sl3": 15.0,
+          "sl4": 13.2,
+          "sl5": 11.14,
+          "sl6": 10.2,
+          "sl7": 12.67
+        },
+        "sand": {
+          "sl1": 51.0,
+          "sl2": 51.0,
+          "sl3": 51.0,
+          "sl4": 43.0,
+          "sl5": 38.14,
+          "sl6": 35.2,
+          "sl7": 36.33
+        },
+        "site": {
+          "siteData": {
+            "componentID": 148402,
+            "distance": 29716.363,
+            "mapunitID": 5876,
+            "minCompDistance": 0.0,
+            "share": 10,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Calcic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Calcic Luvisols have calcareous subsoils.",
+            "Description_es": "Los Luvisoles Cálcicos son suelos productivos con alta saturación de bases y subsuelos relativamente arcillosos. <br>Los Luvisoles cálcicos tienen subsuelos calcáreos.",
+            "Description_fr": "Calcic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Calcic Luvisols have calcareous subsoils.",
+            "Description_ks": "Calcic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Calcic Luvisols have calcareous subsoils.",
+            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops. <br> These soils will have large amounts of free calcium carbonate in the subsample, and thus the soil pH will be > 7.0. ",
+            "Management_es": "Estos suelos son fértiles y pueden utilizarse para una amplia gama de prácticas de cultivo. <br>Sin embargo, son sensibles a la pérdida de suelo por erosión, y hay que tener cuidado para proteger el suelo de la pérdida. <br>Si el suelo ya está erosionado, pueden ser más adecuados para el pastoreo y/o los cultivos arbóreos. <br>Estos suelos tendrán grandes cantidades de carbonato de calcio libre en la submuestra, por lo que el pH del suelo será superior a 7,0.",
+            "Management_fr": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops. <br> These soils will have large amounts of free calcium carbonate in the subsample, and thus the soil pH will be > 7.0. ",
+            "Management_ks": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops. <br> These soils will have large amounts of free calcium carbonate in the subsample, and thus the soil pH will be > 7.0. "
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 16.0,
+          "sl2": 16.0,
+          "sl3": 16.0,
+          "sl4": 14.8,
+          "sl5": 14.57,
+          "sl6": 14.2,
+          "sl7": 14.0
+        },
+        "clay": {
+          "sl1": 20.0,
+          "sl2": 20.0,
+          "sl3": 20.0,
+          "sl4": 20.6,
+          "sl5": 20.86,
+          "sl6": 21.0,
+          "sl7": 20.83
+        },
+        "ec": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 0.8,
+          "sl5": 0.71,
+          "sl6": 0.8,
+          "sl7": 0.83
+        },
+        "id": {
+          "component": "Acrisols",
+          "name": "Acrisols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.037
+        },
+        "ph": {
+          "sl1": 6.4,
+          "sl2": 6.4,
+          "sl3": 6.4,
+          "sl4": 6.54,
+          "sl5": 6.6,
+          "sl6": 6.66,
+          "sl7": 6.7
+        },
+        "rock_fragments": {
+          "sl1": 13.0,
+          "sl2": 13.0,
+          "sl3": 13.0,
+          "sl4": 15.0,
+          "sl5": 16.57,
+          "sl6": 18.8,
+          "sl7": 19.17
+        },
+        "sand": {
+          "sl1": 40.0,
+          "sl2": 40.0,
+          "sl3": 40.0,
+          "sl4": 40.8,
+          "sl5": 41.14,
+          "sl6": 41.8,
+          "sl7": 42.17
+        },
+        "site": {
+          "siteData": {
+            "componentID": 148918,
+            "distance": 3068.563,
+            "mapunitID": 6024,
+            "minCompDistance": 438.36624807,
+            "share": 10,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Acrisols are acidic and relatively infertile soils. <br> Supplemental fertilization and liming will be needed to create a productive soil for crop use. <br> These soils are also high in soluble aluminum (Al) which is toxic to plants.",
+            "Description_es": "Los Acrisoles son suelos ácidos y relativamente infértiles. <br>Se necesita una fertilización y un encalado suplementarios para crear un suelo productivo para los cultivos. <br>Estos suelos también tienen un alto contenido de aluminio soluble (Al), que es tóxico para las plantas. ",
+            "Description_fr": "Acrisols are acidic and relatively infertile soils. <br> Supplemental fertilization and liming will be needed to create a productive soil for crop use. <br> These soils are also high in soluble aluminum (Al) which is toxic to plants.",
+            "Description_ks": "Acrisols are acidic and relatively infertile soils. <br> Supplemental fertilization and liming will be needed to create a productive soil for crop use. <br> These soils are also high in soluble aluminum (Al) which is toxic to plants.",
+            "Management_en": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate, which will take Al out of solution) can help to reduce aluminum toxicity. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover, crop rotation and agroforestry. ",
+            "Management_es": "Debido a que el suelo tiende a ser ácido (tiene un pH bajo) y alto en Al, el fertilizante de fósforo es rápidamente \"fijado\" por el suelo, haciendo que no esté disponible para las plantas en la temporada de cultivo. <br>Las prácticas bien documentadas, como la aplicación en banda (directamente sobre la semilla o a un lado y abajo de la semilla) de fertilizantes fosfatados, ayudarán a reducir la fijación de P. <br>La aplicación de nitrógeno (N) es esencial, y esto puede lograrse mediante la aplicación de dosis correctas de fertilizantes (como la urea), o mediante el uso de cultivos de cobertura, abonos verdes y rotaciones. <br>Los cultivos de cobertura y las rotaciones que incluyen leguminosas y la inclusión de cultivos con alta biomasa serían beneficiosos, ya que añaden materia orgánica y nitrógeno para el cultivo posterior. <br>Incluso con cultivos de cobertura o prácticas similares, es probable que se necesite una fertilización suplementaria de N, ya que el N orgánico no se convertirá en el N inorgánico necesario para el cultivo en cantidades suficientes durante el año de cultivo. <br>La aplicación de cal (que aumenta el pH del suelo y retiene el aluminio soluble) o de yeso (sulfato de calcio, que extrae el aluminio de la solución) puede ayudar a reducir la toxicidad del aluminio. <br>La conservación del suelo superficial con su materia orgánica es importante, y la prevención de la erosión es fundamental. <br>Las prácticas de gestión de la tierra deben maximizar la cobertura del suelo, la rotación de cultivos y la agrosilvicultura. ",
+            "Management_fr": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate, which will take Al out of solution) can help to reduce aluminum toxicity. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover, crop rotation and agroforestry. ",
+            "Management_ks": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate, which will take Al out of solution) can help to reduce aluminum toxicity. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover, crop rotation and agroforestry. "
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Loam",
+          "sl5": "Loam",
+          "sl6": "Loam",
+          "sl7": "Loam"
+        }
+      }
+    ]
+  },
+  "rank": {
+    "metadata": {
+      "location": "global",
+      "model": "v2"
+    },
+    "soilRank": [
+      {
+        "component": "Chromic luvisols",
+        "componentData": "Data Complete",
+        "componentID": 148550,
+        "name": "Chromic luvisols2",
+        "not_displayed": false,
+        "rank_data": "2",
+        "rank_data_group": "2",
+        "rank_data_loc": "1",
+        "rank_data_loc_group": "1",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "1",
+        "score_data": 0.919,
+        "score_data_group": 0.919,
+        "score_data_loc": 0.523,
+        "score_data_loc_group": 0.523,
+        "score_loc": 0.126,
+        "score_loc_group": 0.126
+      },
+      {
+        "component": "Calcic luvisols",
+        "componentData": "Data Complete",
+        "componentID": 148402,
+        "name": "Calcic luvisols2",
+        "not_displayed": false,
+        "rank_data": "1",
+        "rank_data_group": "1",
+        "rank_data_loc": "2",
+        "rank_data_loc_group": "2",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "7",
+        "score_data": 0.919,
+        "score_data_group": 0.919,
+        "score_data_loc": 0.479,
+        "score_data_loc_group": 0.479,
+        "score_loc": 0.039,
+        "score_loc_group": 0.039
+      },
+      {
+        "component": "Dystric planosols",
+        "componentData": "Missing Data",
+        "componentID": 148585,
+        "name": "Dystric planosols",
+        "not_displayed": false,
+        "rank_data": "3",
+        "rank_data_group": "3",
+        "rank_data_loc": "3",
+        "rank_data_loc_group": "3",
+        "rank_loc": "11",
+        "rank_loc_group": "11",
+        "score_data": 0.919,
+        "score_data_group": 0.919,
+        "score_data_loc": 0.463,
+        "score_data_loc_group": 0.463,
+        "score_loc": 0.008,
+        "score_loc_group": 0.008
+      },
+      {
+        "component": "Albic arenosols",
+        "componentData": "Data Complete",
+        "componentID": 148914,
+        "name": "Albic arenosols2",
+        "not_displayed": false,
+        "rank_data": "4",
+        "rank_data_group": "4",
+        "rank_data_loc": "4",
+        "rank_data_loc_group": "4",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "3",
+        "score_data": 0.821,
+        "score_data_group": 0.821,
+        "score_data_loc": 0.457,
+        "score_data_loc_group": 0.457,
+        "score_loc": 0.094,
+        "score_loc_group": 0.094
+      },
+      {
+        "component": "Haplic luvisols",
+        "componentData": "Data Complete",
+        "componentID": 149088,
+        "name": "Haplic luvisols",
+        "not_displayed": false,
+        "rank_data": "7",
+        "rank_data_group": "7",
+        "rank_data_loc": "5",
+        "rank_data_loc_group": "5",
+        "rank_loc": "5",
+        "rank_loc_group": "5",
+        "score_data": 0.753,
+        "score_data_group": 0.753,
+        "score_data_loc": 0.42,
+        "score_data_loc_group": 0.42,
+        "score_loc": 0.087,
+        "score_loc_group": 0.087
+      },
+      {
+        "component": "Acrisols",
+        "componentData": "Data Complete",
+        "componentID": 148918,
+        "name": "Acrisols2",
+        "not_displayed": false,
+        "rank_data": "6",
+        "rank_data_group": "6",
+        "rank_data_loc": "6",
+        "rank_data_loc_group": "6",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "8",
+        "score_data": 0.753,
+        "score_data_group": 0.753,
+        "score_data_loc": 0.395,
+        "score_data_loc_group": 0.395,
+        "score_loc": 0.037,
+        "score_loc_group": 0.037
+      },
+      {
+        "component": "Eutric planosols",
+        "componentData": "Data Complete",
+        "componentID": 149085,
+        "name": "Eutric planosols",
+        "not_displayed": false,
+        "rank_data": "10",
+        "rank_data_group": "10",
+        "rank_data_loc": "7",
+        "rank_data_loc_group": "7",
+        "rank_loc": "2",
+        "rank_loc_group": "2",
+        "score_data": 0.657,
+        "score_data_group": 0.657,
+        "score_data_loc": 0.389,
+        "score_data_loc_group": 0.389,
+        "score_loc": 0.12,
+        "score_loc_group": 0.12
+      },
+      {
+        "component": "Dystric regosols",
+        "componentData": "Data Complete",
+        "componentID": 148956,
+        "name": "Dystric regosols",
+        "not_displayed": false,
+        "rank_data": "8",
+        "rank_data_group": "8",
+        "rank_data_loc": "8",
+        "rank_data_loc_group": "8",
+        "rank_loc": "6",
+        "rank_loc_group": "6",
+        "score_data": 0.722,
+        "score_data_group": 0.722,
+        "score_data_loc": 0.388,
+        "score_data_loc_group": 0.388,
+        "score_loc": 0.054,
+        "score_loc_group": 0.054
+      },
+      {
+        "component": "Eutric cambisols",
+        "componentData": "Data Complete",
+        "componentID": 148586,
+        "name": "Eutric cambisols",
+        "not_displayed": false,
+        "rank_data": "5",
+        "rank_data_group": "5",
+        "rank_data_loc": "9",
+        "rank_data_loc_group": "9",
+        "rank_loc": "12",
+        "rank_loc_group": "12",
+        "score_data": 0.757,
+        "score_data_group": 0.757,
+        "score_data_loc": 0.382,
+        "score_data_loc_group": 0.382,
+        "score_loc": 0.008,
+        "score_loc_group": 0.008
+      },
+      {
+        "component": "Haplic acrisols",
+        "componentData": "Data Complete",
+        "componentID": 148400,
+        "name": "Haplic acrisols",
+        "not_displayed": false,
+        "rank_data": "9",
+        "rank_data_group": "9",
+        "rank_data_loc": "10",
+        "rank_data_loc_group": "10",
+        "rank_loc": "10",
+        "rank_loc_group": "10",
+        "score_data": 0.722,
+        "score_data_group": 0.722,
+        "score_data_loc": 0.369,
+        "score_data_loc_group": 0.369,
+        "score_loc": 0.016,
+        "score_loc_group": 0.016
+      },
+      {
+        "component": "Ferralsols",
+        "componentData": "No Data",
+        "componentID": 148959,
+        "name": "Ferralsols",
+        "not_displayed": false,
+        "rank_data": "11",
+        "rank_data_group": "11",
+        "rank_data_loc": "11",
+        "rank_data_loc_group": "11",
+        "rank_loc": "9",
+        "rank_loc_group": "9",
+        "score_data": 0.625,
+        "score_data_group": 0.625,
+        "score_data_loc": 0.326,
+        "score_data_loc_group": 0.326,
+        "score_loc": 0.027,
+        "score_loc_group": 0.027
+      },
+      {
+        "component": "Cambic arenosols",
+        "componentData": "Data Complete",
+        "componentID": 148955,
+        "name": "Cambic arenosols",
+        "not_displayed": false,
+        "rank_data": "12",
+        "rank_data_group": "12",
+        "rank_data_loc": "12",
+        "rank_data_loc_group": "12",
+        "rank_loc": "4",
+        "rank_loc_group": "4",
+        "score_data": 0.413,
+        "score_data_group": 0.413,
+        "score_data_loc": 0.25,
+        "score_data_loc_group": 0.25,
+        "score_loc": 0.088,
+        "score_loc_group": 0.088
+      },
+      {
+        "component": "Chromic luvisols",
+        "componentData": "Data Complete",
+        "componentID": 148831,
+        "name": "Chromic luvisols3",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "2",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "1",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "1",
+        "score_data": 0.919,
+        "score_data_group": 0.919,
+        "score_data_loc": 0.523,
+        "score_data_loc_group": 0.523,
+        "score_loc": 0.126,
+        "score_loc_group": 0.126
+      },
+      {
+        "component": "Chromic luvisols",
+        "componentData": "Missing Data",
+        "componentID": 149086,
+        "name": "Chromic luvisols",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "2",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "1",
+        "rank_loc": "1",
+        "rank_loc_group": "1",
+        "score_data": 0.625,
+        "score_data_group": 0.919,
+        "score_data_loc": 0.376,
+        "score_data_loc_group": 0.523,
+        "score_loc": 0.126,
+        "score_loc_group": 0.126
+      },
+      {
+        "component": "Eutric planosols",
+        "componentData": "Data Complete",
+        "componentID": 148917,
+        "name": "Eutric planosols2",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "10",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "7",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "2",
+        "score_data": 0.622,
+        "score_data_group": 0.657,
+        "score_data_loc": 0.371,
+        "score_data_loc_group": 0.389,
+        "score_loc": 0.12,
+        "score_loc_group": 0.12
+      },
+      {
+        "component": "Haplic luvisols",
+        "componentData": "Data Complete",
+        "componentID": 148551,
+        "name": "Haplic luvisols2",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "7",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "5",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "5",
+        "score_data": 0.625,
+        "score_data_group": 0.753,
+        "score_data_loc": 0.356,
+        "score_data_loc_group": 0.42,
+        "score_loc": 0.087,
+        "score_loc_group": 0.087
+      },
+      {
+        "component": "Albic arenosols",
+        "componentData": "Data Complete",
+        "componentID": 148957,
+        "name": "Albic arenosols",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "4",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "4",
+        "rank_loc": "3",
+        "rank_loc_group": "3",
+        "score_data": 0.557,
+        "score_data_group": 0.821,
+        "score_data_loc": 0.326,
+        "score_data_loc_group": 0.457,
+        "score_loc": 0.094,
+        "score_loc_group": 0.094
+      },
+      {
+        "component": "Acrisols",
+        "componentData": "Missing Data",
+        "componentID": 148960,
+        "name": "Acrisols",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "6",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "6",
+        "rank_loc": "8",
+        "rank_loc_group": "8",
+        "score_data": 0.587,
+        "score_data_group": 0.753,
+        "score_data_loc": 0.312,
+        "score_data_loc_group": 0.395,
+        "score_loc": 0.037,
+        "score_loc_group": 0.037
+      },
+      {
+        "component": "Calcic luvisols",
+        "componentData": "Data Complete",
+        "componentID": 149087,
+        "name": "Calcic luvisols",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "1",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "2",
+        "rank_loc": "7",
+        "rank_loc_group": "7",
+        "score_data": 0.557,
+        "score_data_group": 0.919,
+        "score_data_loc": 0.298,
+        "score_data_loc_group": 0.479,
+        "score_loc": 0.039,
+        "score_loc_group": 0.039
+      }
+    ]
+  }
+}

@@ -1,0 +1,346 @@
+{
+  "list": {
+    "AWS_PIW90": 3.72,
+    "Soil Data Value": [
+      [
+        "texture_0",
+        0.0
+      ],
+      [
+        "texture_30",
+        0.0
+      ],
+      [
+        "rfv_class_0",
+        0.0
+      ],
+      [
+        "rfv_class_30",
+        0.0
+      ]
+    ],
+    "metadata": {
+      "location": "us",
+      "model": "v3",
+      "unit_measure": {
+        "cec": "cmol(c)/kg",
+        "clay": "%",
+        "depth": "cm",
+        "distance": "m",
+        "ec": "ds/m",
+        "rock_fragments": "cm3/100cm3",
+        "sand": "%"
+      }
+    },
+    "soilList": [
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R015XE082CA"
+            ],
+            "ecoclassname": [
+              "Loamy South"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/015X/R015XE082CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Balcom",
+          "name": "Balcom2",
+          "rank_loc": "1",
+          "score_loc": 0.252
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26027166",
+            "componentKind": "Series",
+            "componentPct": 45,
+            "dataSource": "SSURGO",
+            "distance": 44.0,
+            "irrcapcl": "6",
+            "irrcapscl": "e",
+            "irrcapunit": "nan",
+            "mapunitID": "457218",
+            "minCompDistance": 44.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "nan",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=balcom",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#balcom",
+            "slope": 40.0,
+            "taxsubgrp": "Calcixerollic Xerochrepts",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Balcom series consists of moderately deep, well drained soils that formed in material that weathered from soft, calcareous shale and sandstone.  Balcom soils are on hills and have slopes of 5 to 75 percent.  The mean annual precipitation is about 18 inches and the mean annual air temperature is about 61 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R015XE020CA"
+            ],
+            "ecoclassname": [
+              "Fine Loamy 9-13"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/015X/R015XE020CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Los osos",
+          "name": "Los osos",
+          "rank_loc": "2",
+          "score_loc": 0.125
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26027683",
+            "componentKind": "Series",
+            "componentPct": 20,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "6",
+            "irrcapscl": "e",
+            "irrcapunit": "nan",
+            "mapunitID": "457283",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "nan",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=balcom",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#balcom",
+            "slope": 40.0,
+            "taxsubgrp": "Typic Argixerolls",
+            "textureInfill": "Yes"
+          },
+          "siteDescription": "The Los Osos series consists of moderately deep, well drained soils that formed in material weathered from sandstone and shale.  Los Osos soils are on uplands and have slopes of 5 to 75 percent.  The mean annual precipitation is about 25 inches and the mean annual air temperature is about 60 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R015XE082CA"
+            ],
+            "ecoclassname": [
+              "Loamy South"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/015X/R015XE082CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Balcom",
+          "name": "Balcom3",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.252
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26027125",
+            "componentKind": "Series",
+            "componentPct": 45,
+            "dataSource": "SSURGO",
+            "distance": 670.0,
+            "irrcapcl": "4",
+            "irrcapscl": "e",
+            "irrcapunit": "1.0",
+            "mapunitID": "457217",
+            "minCompDistance": 44.0,
+            "nirrcapcl": "4",
+            "nirrcapscl": "e",
+            "nirrcapunit": "1.0",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=balcom",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#balcom",
+            "slope": 20.0,
+            "taxsubgrp": "Calcixerollic Xerochrepts",
+            "textureInfill": "Yes"
+          },
+          "siteDescription": "The Balcom series consists of moderately deep, well drained soils that formed in material that weathered from soft, calcareous shale and sandstone.  Balcom soils are on hills and have slopes of 5 to 75 percent.  The mean annual precipitation is about 18 inches and the mean annual air temperature is about 61 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R015XE020CA"
+            ],
+            "ecoclassname": [
+              "Fine Loamy 9-13"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/015X/R015XE020CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Los osos",
+          "name": "Los osos2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.125
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26027715",
+            "componentKind": "Series",
+            "componentPct": 20,
+            "dataSource": "SSURGO",
+            "distance": 385.0,
+            "irrcapcl": "4",
+            "irrcapscl": "e",
+            "irrcapunit": "3.0",
+            "mapunitID": "457282",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "4",
+            "nirrcapscl": "e",
+            "nirrcapunit": "3.0",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=los_osos",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#los_osos",
+            "slope": 20.0,
+            "taxsubgrp": "Typic Argixerolls",
+            "textureInfill": "Yes"
+          },
+          "siteDescription": "The Los Osos series consists of moderately deep, well drained soils that formed in material weathered from sandstone and shale.  Los Osos soils are on uplands and have slopes of 5 to 75 percent.  The mean annual precipitation is about 25 inches and the mean annual air temperature is about 60 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      }
+    ]
+  },
+  "rank": {
+    "metadata": {
+      "location": "us",
+      "model": "v2"
+    },
+    "soilRank": [
+      {
+        "component": "Balcom",
+        "componentData": "Data Complete",
+        "componentID": 26027125,
+        "name": "Balcom3",
+        "not_displayed": false,
+        "rank_data": "1",
+        "rank_data_group": "1",
+        "rank_data_loc": "1",
+        "rank_data_loc_group": "1",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "1",
+        "score_data": 0.552,
+        "score_data_group": 0.552,
+        "score_data_loc": 0.402,
+        "score_data_loc_group": 0.402,
+        "score_loc": 0.252,
+        "score_loc_group": 0.252
+      },
+      {
+        "component": "Los osos",
+        "componentData": NaN,
+        "componentID": 26027715,
+        "name": "Los osos2",
+        "not_displayed": false,
+        "rank_data": "2",
+        "rank_data_group": "2",
+        "rank_data_loc": "2",
+        "rank_data_loc_group": "2",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "2",
+        "score_data": 0.535,
+        "score_data_group": 0.535,
+        "score_data_loc": 0.33,
+        "score_data_loc_group": 0.33,
+        "score_loc": 0.125,
+        "score_loc_group": 0.125
+      },
+      {
+        "component": "Balcom",
+        "componentData": "Data Complete",
+        "componentID": 26027166,
+        "name": "Balcom2",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "1",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "1",
+        "rank_loc": "1",
+        "rank_loc_group": "1",
+        "score_data": 0.345,
+        "score_data_group": 0.552,
+        "score_data_loc": 0.299,
+        "score_data_loc_group": 0.402,
+        "score_loc": 0.252,
+        "score_loc_group": 0.252
+      },
+      {
+        "component": "Los osos",
+        "componentData": NaN,
+        "componentID": 26027683,
+        "name": "Los osos",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "2",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "2",
+        "rank_loc": "2",
+        "rank_loc_group": "2",
+        "score_data": 0.37,
+        "score_data_group": 0.535,
+        "score_data_loc": 0.248,
+        "score_data_loc_group": 0.33,
+        "score_loc": 0.125,
+        "score_loc_group": 0.125
+      }
+    ]
+  }
+}

@@ -1,24 +1,29 @@
 [project]
 name = "soil_id"
 readme = "README.md"
-license = {file = "LICENSE"}
+license = { file = "LICENSE" }
 requires-python = ">=3.12"
 authors = [
-  {name = "Jonathan Maynard", email = "jonathan.maynard@usda.gov"},
-  {name = "Paul Schreiber", email = "paul@techmatters.org"},
+  { name = "Jonathan Maynard", email = "jonathan.maynard@usda.gov" },
+  { name = "Paul Schreiber", email = "paul@techmatters.org" },
 ]
 dynamic = ["version", "description", "classifiers", "dependencies"]
 
-[tool.black]
+[tool.ruff]
+exclude = ["migrations"]
 line-length = 100
+required-version = ">=0.12.12"
 
-[tool.isort]
-profile = "black"
-known_first_party = "soil_id"
+[tool.ruff.lint.isort]
+known-first-party = ["soil_id"]
+
+[tool.ruff.lint]
+extend-select = ["I"]
+extend-ignore = ["E203"]
 
 [tool.pytest.ini_options]
 log_cli = true
 log_cli_level = "INFO"
 
 [tool.setuptools.dynamic]
-dependencies = {file = ["requirements/base.in"]}
+dependencies = { file = ["requirements/base.in"] }

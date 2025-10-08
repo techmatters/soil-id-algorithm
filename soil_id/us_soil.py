@@ -1144,6 +1144,9 @@ def list_soils(lon, lat):
 
     mucompdata_pd = mucompdata_pd.reset_index(drop=True)
 
+    OLD_ESD_BASE_URL = "https://edit.jornada.nmsu.edu"
+    NEW_ESD_BASE_URL = "https://edit.sc.egov.usda.gov"
+
     # ---------------------------------------------------------------------------------------------
     # Ecological site
     if data_source == "SSURGO":
@@ -1154,6 +1157,8 @@ def list_soils(lon, lat):
             ESD[["cokey", "ecoclassid", "ecoclassname", "edit_url"]] = ESD[
                 ["cokey", "ecoclassid", "ecoclassname", "edit_url"]
             ].astype(str)
+
+            ESD["edit_url"] = ESD["edit_url"].str.replace(OLD_ESD_BASE_URL, NEW_ESD_BASE_URL)
 
             # Check if any cokey in ESD matches with mucompdata_pd
             if any(ESD["cokey"].isin(mucompdata_pd["cokey"])):
@@ -1187,7 +1192,8 @@ def list_soils(lon, lat):
 
             # Create the "edit_url" column
             ESDcompdata_sda["edit_url"] = (
-                "https://edit.jornada.nmsu.edu/catalogs/esd/"
+                NEW_ESD_BASE_URL
+                + "/"
                 + ESDcompdata_sda["ecoclassid"].str[1:5]
                 + "/"
                 + ESDcompdata_sda["ecoclassid"]

@@ -20,7 +20,7 @@ import pandas as pd
 import requests
 
 from .config import SOILWEB_URL
-from .db import save_soilgrids_output
+
 
 def get_elev_data(lon, lat):
     """

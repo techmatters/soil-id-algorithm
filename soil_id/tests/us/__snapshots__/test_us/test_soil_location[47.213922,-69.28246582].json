@@ -1,18 +1,18 @@
 {
   "list": {
-    "AWS_PIW90": 10.31,
+    "AWS_PIW90": 4.73,
     "Soil Data Value": [
       [
-        "rfv_class_30",
-        1.3229420838347168
+        "rfv_class_0",
+        1.561554765729544
       ],
       [
-        "rfv_class_0",
-        1.1105001941281816
+        "rfv_class_30",
+        1.543062149933733
       ],
       [
         "texture_30",
-        0.9931611211632956
+        0.9908959471041263
       ],
       [
         "texture_0",
@@ -41,13 +41,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              ""
+              "F143XY704ME"
             ],
             "ecoclassname": [
-              ""
+              "Shallow Organic Rock Pocket"
             ],
             "edit_url": [
-              ""
+              "https://edit.sc.egov.usda.gov/catalogs/esd/143X/F143XY704ME"
             ]
           }
         },
@@ -55,7 +55,7 @@
           "component": "Knob lock",
           "name": "Knob lock",
           "rank_loc": "1",
-          "score_loc": 0.325
+          "score_loc": 0.372
         },
         "lab": {},
         "munsell": {},
@@ -64,7 +64,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25208412",
+            "componentID": "26560861",
             "componentKind": "Series",
             "componentPct": 46,
             "dataSource": "SSURGO",
@@ -97,13 +97,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              ""
+              "F143XY501ME"
             ],
             "ecoclassname": [
-              ""
+              "Loamy Slope"
             ],
             "edit_url": [
-              ""
+              "https://edit.sc.egov.usda.gov/catalogs/esd/143X/F143XY501ME"
             ]
           }
         },
@@ -111,7 +111,7 @@
           "component": "Chesuncook",
           "name": "Chesuncook",
           "rank_loc": "2",
-          "score_loc": 0.277
+          "score_loc": 0.306
         },
         "lab": {},
         "munsell": {},
@@ -120,455 +120,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25209552",
-            "componentKind": "Series",
-            "componentPct": 3,
-            "dataSource": "SSURGO",
-            "distance": 19.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "2549860",
-            "minCompDistance": 19.0,
-            "nirrcapcl": "6",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=chesuncook",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#chesuncook",
-            "slope": 12.0,
-            "taxsubgrp": "Aquic Haplorthods",
-            "textureInfill": "No"
-          },
-          "siteDescription": "The Chesuncook series consists of very deep, moderately well drained soils on till plains, hills, ridges, and mountains. These soils formed in dense glacial till. Saturated hydraulic conductivity is moderately high or high in the solum, and low to moderately high in the dense substratum. Slope ranges from 3 to 45 percent. Mean annual temperature is about 4 degrees C, and mean annual precipitation is about 1092 mm at the type location."
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": [
-              ""
-            ],
-            "ecoclassname": [
-              ""
-            ],
-            "edit_url": [
-              ""
-            ]
-          }
-        },
-        "id": {
-          "component": "Elliottsville",
-          "name": "Elliottsville",
-          "rank_loc": "3",
-          "score_loc": 0.211
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "25209557",
-            "componentKind": "Series",
-            "componentPct": 35,
-            "dataSource": "SSURGO",
-            "distance": 19.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "2549860",
-            "minCompDistance": 19.0,
-            "nirrcapcl": "6",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=elliottsville",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#elliottsville",
-            "slope": 25.0,
-            "taxsubgrp": "Typic Haplorthods",
-            "textureInfill": "No"
-          },
-          "siteDescription": "The Elliottsville series consists of moderately deep, well drained soils formed in glacial till on till plains, hills, ridges and mountains.  Permeability is moderate.  Slope ranges from 3 to 65 percent.  Mean annual temperature is about 3 degrees C, and mean annual precipitation is about 970 mm at the type location."
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": [
-              ""
-            ],
-            "ecoclassname": [
-              ""
-            ],
-            "edit_url": [
-              ""
-            ]
-          }
-        },
-        "id": {
-          "component": "Monson",
-          "name": "Monson",
-          "rank_loc": "4",
-          "score_loc": 0.092
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "25209554",
-            "componentKind": "Series",
-            "componentPct": 6,
-            "dataSource": "SSURGO",
-            "distance": 19.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "2549860",
-            "minCompDistance": 19.0,
-            "nirrcapcl": "6",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=monson",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#monson",
-            "slope": 25.0,
-            "taxsubgrp": "Lithic Haplorthods",
-            "textureInfill": "No"
-          },
-          "siteDescription": "The Monson series consists of shallow, somewhat excessively drained soils formed in glacial till on knolls of till plains, and on hills, ridges and mountains.  Estimated saturated hydraulic conductivity is moderate or high. Slope ranges from 3 to 60 percent.  Mean annual temperature is about 3 degrees C, and mean annual precipitation is about 965 mm at the type location."
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": [
-              ""
-            ],
-            "ecoclassname": [
-              ""
-            ],
-            "edit_url": [
-              ""
-            ]
-          }
-        },
-        "id": {
-          "component": "Abram",
-          "name": "Abram",
-          "rank_loc": "5",
-          "score_loc": 0.036
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "25209553",
-            "componentKind": "Series",
-            "componentPct": 4,
-            "dataSource": "SSURGO",
-            "distance": 19.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "2549860",
-            "minCompDistance": 19.0,
-            "nirrcapcl": "7",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=abram",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#abram",
-            "slope": 30.0,
-            "taxsubgrp": "Lithic Haplorthods",
-            "textureInfill": "No"
-          },
-          "siteDescription": "The Abram series consists of very shallow, excessively drained soils formed in a thin mantle of glacial till on ridges and mountains. Permeability is moderately rapid. Slope ranges from 0 to 80 percent. Mean annual temperature is about 7 degrees C, and mean annual precipitation is about 1118 mm at the type location."
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": [
-              "F143XY702ME"
-            ],
-            "ecoclassname": [
-              "Shallow And Moderately Deep Till"
-            ],
-            "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/143X/F143XY702ME"
-            ]
-          }
-        },
-        "id": {
-          "component": "Hogback",
-          "name": "Hogback",
-          "rank_loc": "6",
-          "score_loc": 0.03
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "25208410",
-            "componentKind": "Series",
-            "componentPct": 5,
-            "dataSource": "SSURGO",
-            "distance": 0.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "2549870",
-            "minCompDistance": 0.0,
-            "nirrcapcl": "6",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=hogback",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#hogback",
-            "slope": 50.0,
-            "taxsubgrp": "Lithic Haplohumods",
-            "textureInfill": "No"
-          },
-          "siteDescription": "The Hogback series consists of shallow, well drained soils on glaciated uplands. They formed in loamy till. Estimated saturated hydraulic conductivity is moderately high to high throughout the mineral soil. Slope ranges from 3 to 70 percent. Mean annual precipitation is about 50 inches, and mean annual temperature is about 43 degrees F."
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": [
-              "F143XY702ME"
-            ],
-            "ecoclassname": [
-              "Shallow And Moderately Deep Till"
-            ],
-            "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/143X/F143XY702ME"
-            ]
-          }
-        },
-        "id": {
-          "component": "Rawsonville",
-          "name": "Rawsonville",
-          "rank_loc": "7",
-          "score_loc": 0.03
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "25208409",
-            "componentKind": "Series",
-            "componentPct": 5,
-            "dataSource": "SSURGO",
-            "distance": 0.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "2549870",
-            "minCompDistance": 0.0,
-            "nirrcapcl": "4",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=rawsonville",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#rawsonville",
-            "slope": 20.0,
-            "taxsubgrp": "Typic Haplohumods",
-            "textureInfill": "No"
-          },
-          "siteDescription": "The Rawsonville series consists of moderately deep, well drained soils on glaciated uplands. They formed in loamy till. Estimated saturated hydraulic conductivity is moderately high or high in the mineral soil. Slope ranges from 3 to 70 percent. Mean annual precipitation is about 1,270 mm, and mean annual temperature is about 6 degrees C."
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": [
-              ""
-            ],
-            "ecoclassname": [
-              ""
-            ],
-            "edit_url": [
-              ""
-            ]
-          }
-        },
-        "id": {
-          "component": "Knob lock",
-          "name": "Knob lock2",
-          "rank_loc": "Not Displayed",
-          "score_loc": 0.325
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "25209556",
-            "componentKind": "Series",
-            "componentPct": 2,
-            "dataSource": "SSURGO",
-            "distance": 19.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "2549860",
-            "minCompDistance": 0.0,
-            "nirrcapcl": "7",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=knob_lock",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#knob_lock",
-            "slope": 30.0,
-            "taxsubgrp": "Lithic Udifolists",
-            "textureInfill": "No"
-          },
-          "siteDescription": "The Knob Lock series consists of very shallow and shallow, well drained through excessively drained organic soils on mountains and hills. They formed in thin organic deposits underlain in most places by a very thin mineral horizon over bedrock. Saturated hydraulic conductivity is moderately high through very high throughout the soil. Slope ranges from 3 through 80 percent. Mean annual precipitation is about 1092 mm and mean annual temperature is about 5 degrees C."
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": [
-              "F143XY704ME"
-            ],
-            "ecoclassname": [
-              "Shallow Organic Rock Pocket"
-            ],
-            "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/143X/F143XY704ME"
-            ]
-          }
-        },
-        "id": {
-          "component": "Knob lock",
-          "name": "Knob lock3",
-          "rank_loc": "Not Displayed",
-          "score_loc": 0.325
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "25209692",
-            "componentKind": "Series",
-            "componentPct": 25,
-            "dataSource": "SSURGO",
-            "distance": 192.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "2549867",
-            "minCompDistance": 0.0,
-            "nirrcapcl": "7",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=knob_lock",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#knob_lock",
-            "slope": 50.0,
-            "taxsubgrp": "Lithic Udifolists",
-            "textureInfill": "No"
-          },
-          "siteDescription": "The Knob Lock series consists of very shallow and shallow, well drained through excessively drained organic soils on mountains and hills. They formed in thin organic deposits underlain in most places by a very thin mineral horizon over bedrock. Saturated hydraulic conductivity is moderately high through very high throughout the soil. Slope ranges from 3 through 80 percent. Mean annual precipitation is about 1092 mm and mean annual temperature is about 5 degrees C."
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": [
-              ""
-            ],
-            "ecoclassname": [
-              ""
-            ],
-            "edit_url": [
-              ""
-            ]
-          }
-        },
-        "id": {
-          "component": "Chesuncook",
-          "name": "Chesuncook2",
-          "rank_loc": "Not Displayed",
-          "score_loc": 0.277
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "25209555",
+            "componentID": "26560912",
             "componentKind": "Series",
             "componentPct": 50,
             "dataSource": "SSURGO",
@@ -601,21 +153,21 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "F143XY501ME"
+              "F143XY704ME"
             ],
             "ecoclassname": [
-              "Loamy Slope"
+              "Shallow Organic Rock Pocket"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/143X/F143XY501ME"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/143X/F143XY704ME"
             ]
           }
         },
         "id": {
           "component": "Elliottsville",
-          "name": "Elliottsville2",
-          "rank_loc": "Not Displayed",
-          "score_loc": 0.211
+          "name": "Elliottsville",
+          "rank_loc": "3",
+          "score_loc": 0.25
         },
         "lab": {},
         "munsell": {},
@@ -624,15 +176,15 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25209694",
+            "componentID": "26560911",
             "componentKind": "Series",
-            "componentPct": 20,
+            "componentPct": 35,
             "dataSource": "SSURGO",
-            "distance": 192.0,
+            "distance": 19.0,
             "irrcapcl": "None",
             "irrcapscl": "None",
             "irrcapunit": "None",
-            "mapunitID": "2549867",
+            "mapunitID": "2549860",
             "minCompDistance": 19.0,
             "nirrcapcl": "6",
             "nirrcapscl": "s",
@@ -640,7 +192,7 @@
             "rfvInfill": "No",
             "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=elliottsville",
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#elliottsville",
-            "slope": 40.0,
+            "slope": 25.0,
             "taxsubgrp": "Typic Haplorthods",
             "textureInfill": "No"
           },
@@ -657,21 +209,21 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "F143XY501ME"
+              "F143XY702ME"
             ],
             "ecoclassname": [
-              "Loamy Slope"
+              "Shallow And Moderately Deep Till"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/143X/F143XY501ME"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/143X/F143XY702ME"
             ]
           }
         },
         "id": {
           "component": "Monson",
-          "name": "Monson2",
-          "rank_loc": "Not Displayed",
-          "score_loc": 0.092
+          "name": "Monson",
+          "rank_loc": "4",
+          "score_loc": 0.071
         },
         "lab": {},
         "munsell": {},
@@ -680,7 +232,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25209693",
+            "componentID": "26560914",
             "componentKind": "Series",
             "componentPct": 40,
             "dataSource": "SSURGO",
@@ -689,7 +241,7 @@
             "irrcapscl": "None",
             "irrcapunit": "None",
             "mapunitID": "2549867",
-            "minCompDistance": 19.0,
+            "minCompDistance": 192.0,
             "nirrcapcl": "6",
             "nirrcapscl": "s",
             "nirrcapunit": "None",
@@ -713,21 +265,21 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "F143XY704ME"
+              "F143XY501ME"
             ],
             "ecoclassname": [
-              "Shallow Organic Rock Pocket"
+              "Loamy Slope"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/143X/F143XY704ME"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/143X/F143XY501ME"
             ]
           }
         },
         "id": {
-          "component": "Abram",
-          "name": "Abram2",
+          "component": "Knob lock",
+          "name": "Knob lock2",
           "rank_loc": "Not Displayed",
-          "score_loc": 0.036
+          "score_loc": 0.372
         },
         "lab": {},
         "munsell": {},
@@ -736,9 +288,65 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25209690",
+            "componentID": "26560913",
             "componentKind": "Series",
-            "componentPct": 10,
+            "componentPct": 25,
+            "dataSource": "SSURGO",
+            "distance": 192.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "2549867",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=knob_lock",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#knob_lock",
+            "slope": 50.0,
+            "taxsubgrp": "Lithic Udifolists",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Knob Lock series consists of very shallow and shallow, well drained through excessively drained organic soils on mountains and hills. They formed in thin organic deposits underlain in most places by a very thin mineral horizon over bedrock. Saturated hydraulic conductivity is moderately high through very high throughout the soil. Slope ranges from 3 through 80 percent. Mean annual precipitation is about 1092 mm and mean annual temperature is about 5 degrees C."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F143XY702ME"
+            ],
+            "ecoclassname": [
+              "Shallow And Moderately Deep Till"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/143X/F143XY702ME"
+            ]
+          }
+        },
+        "id": {
+          "component": "Elliottsville",
+          "name": "Elliottsville2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.25
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26560915",
+            "componentKind": "Series",
+            "componentPct": 20,
             "dataSource": "SSURGO",
             "distance": 192.0,
             "irrcapcl": "None",
@@ -746,17 +354,17 @@
             "irrcapunit": "None",
             "mapunitID": "2549867",
             "minCompDistance": 19.0,
-            "nirrcapcl": "7",
+            "nirrcapcl": "6",
             "nirrcapscl": "s",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=abram",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#abram",
-            "slope": 45.0,
-            "taxsubgrp": "Lithic Haplorthods",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=elliottsville",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#elliottsville",
+            "slope": 40.0,
+            "taxsubgrp": "Typic Haplorthods",
             "textureInfill": "No"
           },
-          "siteDescription": "The Abram series consists of very shallow, excessively drained soils formed in a thin mantle of glacial till on ridges and mountains. Permeability is moderately rapid. Slope ranges from 0 to 80 percent. Mean annual temperature is about 7 degrees C, and mean annual precipitation is about 1118 mm at the type location."
+          "siteDescription": "The Elliottsville series consists of moderately deep, well drained soils formed in glacial till on till plains, hills, ridges and mountains.  Permeability is moderate.  Slope ranges from 3 to 65 percent.  Mean annual temperature is about 3 degrees C, and mean annual precipitation is about 970 mm at the type location."
         },
         "texture": {},
         "top_depth": {}
@@ -772,7 +380,7 @@
       {
         "component": "Chesuncook",
         "componentData": "Data Complete",
-        "componentID": 25209552,
+        "componentID": 26560912,
         "name": "Chesuncook",
         "not_displayed": false,
         "rank_data": "1",
@@ -781,240 +389,107 @@
         "rank_data_loc_group": "1",
         "rank_loc": "2",
         "rank_loc_group": "2",
-        "score_data": 0.729,
-        "score_data_group": 0.729,
-        "score_data_loc": 0.503,
-        "score_data_loc_group": 0.503,
-        "score_loc": 0.277,
-        "score_loc_group": 0.277
-      },
-      {
-        "component": "Knob lock",
-        "componentData": "Data Complete",
-        "componentID": 25209556,
-        "name": "Knob lock2",
-        "not_displayed": false,
-        "rank_data": "3",
-        "rank_data_group": "3",
-        "rank_data_loc": "2",
-        "rank_data_loc_group": "2",
-        "rank_loc": "Not Displayed",
-        "rank_loc_group": "1",
-        "score_data": 0.667,
-        "score_data_group": 0.667,
-        "score_data_loc": 0.496,
-        "score_data_loc_group": 0.496,
-        "score_loc": 0.325,
-        "score_loc_group": 0.325
+        "score_data": 0.737,
+        "score_data_group": 0.737,
+        "score_data_loc": 0.521,
+        "score_data_loc_group": 0.521,
+        "score_loc": 0.306,
+        "score_loc_group": 0.306
       },
       {
         "component": "Elliottsville",
         "componentData": "Data Complete",
-        "componentID": 25209557,
+        "componentID": 26560911,
         "name": "Elliottsville",
+        "not_displayed": false,
+        "rank_data": "2",
+        "rank_data_group": "2",
+        "rank_data_loc": "2",
+        "rank_data_loc_group": "2",
+        "rank_loc": "3",
+        "rank_loc_group": "3",
+        "score_data": 0.697,
+        "score_data_group": 0.697,
+        "score_data_loc": 0.474,
+        "score_data_loc_group": 0.474,
+        "score_loc": 0.25,
+        "score_loc_group": 0.25
+      },
+      {
+        "component": "Knob lock",
+        "componentData": "Data Complete",
+        "componentID": 26560913,
+        "name": "Knob lock2",
         "not_displayed": false,
         "rank_data": "4",
         "rank_data_group": "4",
         "rank_data_loc": "3",
         "rank_data_loc_group": "3",
-        "rank_loc": "3",
-        "rank_loc_group": "3",
-        "score_data": 0.648,
-        "score_data_group": 0.648,
-        "score_data_loc": 0.43,
-        "score_data_loc_group": 0.43,
-        "score_loc": 0.211,
-        "score_loc_group": 0.211
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "1",
+        "score_data": 0.475,
+        "score_data_group": 0.475,
+        "score_data_loc": 0.424,
+        "score_data_loc_group": 0.424,
+        "score_loc": 0.372,
+        "score_loc_group": 0.372
       },
       {
         "component": "Monson",
         "componentData": "Data Complete",
-        "componentID": 25209554,
+        "componentID": 26560914,
         "name": "Monson",
         "not_displayed": false,
-        "rank_data": "5",
-        "rank_data_group": "5",
+        "rank_data": "3",
+        "rank_data_group": "3",
         "rank_data_loc": "4",
         "rank_data_loc_group": "4",
         "rank_loc": "4",
         "rank_loc_group": "4",
-        "score_data": 0.616,
-        "score_data_group": 0.616,
-        "score_data_loc": 0.354,
-        "score_data_loc_group": 0.354,
-        "score_loc": 0.092,
-        "score_loc_group": 0.092
-      },
-      {
-        "component": "Abram",
-        "componentData": "Data Complete",
-        "componentID": 25209553,
-        "name": "Abram",
-        "not_displayed": false,
-        "rank_data": "2",
-        "rank_data_group": "2",
-        "rank_data_loc": "5",
-        "rank_data_loc_group": "5",
-        "rank_loc": "5",
-        "rank_loc_group": "5",
-        "score_data": 0.671,
-        "score_data_group": 0.671,
-        "score_data_loc": 0.353,
-        "score_data_loc_group": 0.353,
-        "score_loc": 0.036,
-        "score_loc_group": 0.036
-      },
-      {
-        "component": "Rawsonville",
-        "componentData": "Data Complete",
-        "componentID": 25208409,
-        "name": "Rawsonville",
-        "not_displayed": false,
-        "rank_data": "6",
-        "rank_data_group": "6",
-        "rank_data_loc": "6",
-        "rank_data_loc_group": "6",
-        "rank_loc": "7",
-        "rank_loc_group": "7",
-        "score_data": 0.615,
-        "score_data_group": 0.615,
-        "score_data_loc": 0.322,
-        "score_data_loc_group": 0.322,
-        "score_loc": 0.03,
-        "score_loc_group": 0.03
-      },
-      {
-        "component": "Hogback",
-        "componentData": "Data Complete",
-        "componentID": 25208410,
-        "name": "Hogback",
-        "not_displayed": false,
-        "rank_data": "7",
-        "rank_data_group": "7",
-        "rank_data_loc": "7",
-        "rank_data_loc_group": "7",
-        "rank_loc": "6",
-        "rank_loc_group": "6",
-        "score_data": 0.484,
-        "score_data_group": 0.484,
-        "score_data_loc": 0.257,
-        "score_data_loc_group": 0.257,
-        "score_loc": 0.03,
-        "score_loc_group": 0.03
-      },
-      {
-        "component": "Chesuncook",
-        "componentData": "Data Complete",
-        "componentID": 25209555,
-        "name": "Chesuncook2",
-        "not_displayed": true,
-        "rank_data": "Not Displayed",
-        "rank_data_group": "1",
-        "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "1",
-        "rank_loc": "Not Displayed",
-        "rank_loc_group": "2",
-        "score_data": 0.715,
-        "score_data_group": 0.729,
-        "score_data_loc": 0.496,
-        "score_data_loc_group": 0.503,
-        "score_loc": 0.277,
-        "score_loc_group": 0.277
-      },
-      {
-        "component": "Knob lock",
-        "componentData": "Data Complete",
-        "componentID": 25208412,
-        "name": "Knob lock",
-        "not_displayed": true,
-        "rank_data": "Not Displayed",
-        "rank_data_group": "3",
-        "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "2",
-        "rank_loc": "1",
-        "rank_loc_group": "1",
-        "score_data": 0.558,
-        "score_data_group": 0.667,
-        "score_data_loc": 0.441,
-        "score_data_loc_group": 0.496,
-        "score_loc": 0.325,
-        "score_loc_group": 0.325
-      },
-      {
-        "component": "Knob lock",
-        "componentData": "Data Complete",
-        "componentID": 25209692,
-        "name": "Knob lock3",
-        "not_displayed": true,
-        "rank_data": "Not Displayed",
-        "rank_data_group": "3",
-        "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "2",
-        "rank_loc": "Not Displayed",
-        "rank_loc_group": "1",
-        "score_data": 0.539,
-        "score_data_group": 0.667,
-        "score_data_loc": 0.432,
-        "score_data_loc_group": 0.496,
-        "score_loc": 0.325,
-        "score_loc_group": 0.325
+        "score_data": 0.608,
+        "score_data_group": 0.608,
+        "score_data_loc": 0.34,
+        "score_data_loc_group": 0.34,
+        "score_loc": 0.071,
+        "score_loc_group": 0.071
       },
       {
         "component": "Elliottsville",
         "componentData": "Data Complete",
-        "componentID": 25209694,
+        "componentID": 26560915,
         "name": "Elliottsville2",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "2",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "2",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "3",
+        "score_data": 0.536,
+        "score_data_group": 0.697,
+        "score_data_loc": 0.393,
+        "score_data_loc_group": 0.474,
+        "score_loc": 0.25,
+        "score_loc_group": 0.25
+      },
+      {
+        "component": "Knob lock",
+        "componentData": "Data Complete",
+        "componentID": 26560861,
+        "name": "Knob lock",
         "not_displayed": true,
         "rank_data": "Not Displayed",
         "rank_data_group": "4",
         "rank_data_loc": "Not Displayed",
         "rank_data_loc_group": "3",
-        "rank_loc": "Not Displayed",
-        "rank_loc_group": "3",
-        "score_data": 0.546,
-        "score_data_group": 0.648,
-        "score_data_loc": 0.379,
-        "score_data_loc_group": 0.43,
-        "score_loc": 0.211,
-        "score_loc_group": 0.211
-      },
-      {
-        "component": "Monson",
-        "componentData": "Data Complete",
-        "componentID": 25209693,
-        "name": "Monson2",
-        "not_displayed": true,
-        "rank_data": "Not Displayed",
-        "rank_data_group": "5",
-        "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "4",
-        "rank_loc": "Not Displayed",
-        "rank_loc_group": "4",
-        "score_data": 0.598,
-        "score_data_group": 0.616,
-        "score_data_loc": 0.345,
-        "score_data_loc_group": 0.354,
-        "score_loc": 0.092,
-        "score_loc_group": 0.092
-      },
-      {
-        "component": "Abram",
-        "componentData": "Data Complete",
-        "componentID": 25209690,
-        "name": "Abram2",
-        "not_displayed": true,
-        "rank_data": "Not Displayed",
-        "rank_data_group": "2",
-        "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "5",
-        "rank_loc": "Not Displayed",
-        "rank_loc_group": "5",
-        "score_data": 0.469,
-        "score_data_group": 0.671,
-        "score_data_loc": 0.252,
-        "score_data_loc_group": 0.353,
-        "score_loc": 0.036,
-        "score_loc_group": 0.036
+        "rank_loc": "1",
+        "rank_loc_group": "1",
+        "score_data": 0.406,
+        "score_data_group": 0.475,
+        "score_data_loc": 0.389,
+        "score_data_loc_group": 0.424,
+        "score_loc": 0.372,
+        "score_loc_group": 0.372
       }
     ]
   }

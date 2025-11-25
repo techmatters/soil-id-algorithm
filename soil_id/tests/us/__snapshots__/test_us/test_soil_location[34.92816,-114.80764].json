@@ -1,21 +1,21 @@
 {
   "list": {
-    "AWS_PIW90": 12.66,
+    "AWS_PIW90": 9.72,
     "Soil Data Value": [
       [
         "rfv_class_30",
-        0.5074815208577954
-      ],
-      [
-        "texture_30",
-        0.38007948871089425
+        1.7725548033578953
       ],
       [
         "rfv_class_0",
-        0.3160432490369194
+        1.368995593589281
       ],
       [
         "texture_0",
+        0.0
+      ],
+      [
+        "texture_30",
         0.0
       ]
     ],
@@ -46,10 +46,10 @@
           }
         },
         "id": {
-          "component": "Carrizo",
-          "name": "Carrizo",
+          "component": "Torriorthents",
+          "name": "Torriorthents",
           "rank_loc": "1",
-          "score_loc": 0.269
+          "score_loc": 0.45
         },
         "lab": {},
         "munsell": {},
@@ -58,15 +58,15 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "14185637",
-            "componentKind": "Series",
-            "componentPct": 6,
-            "dataSource": "STATSGO",
+            "componentID": "27420738",
+            "componentKind": "Taxon above family",
+            "componentPct": 45,
+            "dataSource": "SSURGO",
             "distance": 0.0,
-            "irrcapcl": "None",
+            "irrcapcl": "nan",
             "irrcapscl": "None",
             "irrcapunit": "None",
-            "mapunitID": "660587",
+            "mapunitID": "3457453",
             "minCompDistance": 0.0,
             "nirrcapcl": "7",
             "nirrcapscl": "s",
@@ -74,8 +74,8 @@
             "rfvInfill": "No",
             "sdeURL": "",
             "seeURL": "",
-            "slope": 1.0,
-            "taxsubgrp": "Typic Torriorthents",
+            "slope": 3.0,
+            "taxsubgrp": "None",
             "textureInfill": "No"
           },
           "siteDescription": ""
@@ -96,10 +96,10 @@
           }
         },
         "id": {
-          "component": "Gunsight",
-          "name": "Gunsight",
+          "component": "Torripsamments",
+          "name": "Torripsamments",
           "rank_loc": "2",
-          "score_loc": 0.18
+          "score_loc": 0.3
         },
         "lab": {},
         "munsell": {},
@@ -108,24 +108,24 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "14185636",
-            "componentKind": "Series",
-            "componentPct": 27,
-            "dataSource": "STATSGO",
+            "componentID": "27420739",
+            "componentKind": "Taxon above family",
+            "componentPct": 30,
+            "dataSource": "SSURGO",
             "distance": 0.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
+            "irrcapcl": "3",
+            "irrcapscl": "e",
             "irrcapunit": "None",
-            "mapunitID": "660587",
+            "mapunitID": "3457453",
             "minCompDistance": 0.0,
             "nirrcapcl": "7",
-            "nirrcapscl": "s",
+            "nirrcapscl": "c",
             "nirrcapunit": "None",
             "rfvInfill": "No",
             "sdeURL": "",
             "seeURL": "",
-            "slope": 21.0,
-            "taxsubgrp": "Typic Haplocalcids",
+            "slope": 2.0,
+            "taxsubgrp": "None",
             "textureInfill": "No"
           },
           "siteDescription": ""
@@ -146,10 +146,10 @@
           }
         },
         "id": {
-          "component": "Chuckawalla",
-          "name": "Chuckawalla",
+          "component": "Haplargids",
+          "name": "Haplargids",
           "rank_loc": "3",
-          "score_loc": 0.051
+          "score_loc": 0.15
         },
         "lab": {},
         "munsell": {},
@@ -158,474 +158,24 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "14185642",
-            "componentKind": "Series",
-            "componentPct": 8,
-            "dataSource": "STATSGO",
+            "componentID": "27420740",
+            "componentKind": "Taxon above family",
+            "componentPct": 15,
+            "dataSource": "SSURGO",
             "distance": 0.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "660587",
-            "minCompDistance": 0.0,
-            "nirrcapcl": "7",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 15.0,
-            "taxsubgrp": "Typic Calciargids",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
-          "component": "Beeline",
-          "name": "Beeline",
-          "rank_loc": "4",
-          "score_loc": 0.026
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "14185640",
-            "componentKind": "Series",
-            "componentPct": 5,
-            "dataSource": "STATSGO",
-            "distance": 0.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "660587",
-            "minCompDistance": 0.0,
-            "nirrcapcl": "7",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 24.0,
-            "taxsubgrp": "Typic Torriorthents",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
-          "component": "Cipriano",
-          "name": "Cipriano",
-          "rank_loc": "5",
-          "score_loc": 0.026
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "14185643",
-            "componentKind": "Series",
-            "componentPct": 5,
-            "dataSource": "STATSGO",
-            "distance": 0.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "660587",
-            "minCompDistance": 0.0,
-            "nirrcapcl": "7",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 18.0,
-            "taxsubgrp": "Typic Haplodurids",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
-          "component": "Denure",
-          "name": "Denure",
-          "rank_loc": "6",
-          "score_loc": 0.026
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "14185639",
-            "componentKind": "Series",
-            "componentPct": 5,
-            "dataSource": "STATSGO",
-            "distance": 0.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "660587",
-            "minCompDistance": 0.0,
-            "nirrcapcl": "7",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 4.0,
-            "taxsubgrp": "Typic Haplocambids",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
-          "component": "Gilman",
-          "name": "Gilman",
-          "rank_loc": "7",
-          "score_loc": 0.026
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "14185646",
-            "componentKind": "Series",
-            "componentPct": 5,
-            "dataSource": "STATSGO",
-            "distance": 0.0,
-            "irrcapcl": "2",
-            "irrcapscl": "w",
-            "irrcapunit": "None",
-            "mapunitID": "660587",
-            "minCompDistance": 0.0,
-            "nirrcapcl": "7",
-            "nirrcapscl": "w",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 3.0,
-            "taxsubgrp": "Typic Torrifluvents",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
-          "component": "Mohall",
-          "name": "Mohall",
-          "rank_loc": "8",
-          "score_loc": 0.026
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "14185644",
-            "componentKind": "Series",
-            "componentPct": 5,
-            "dataSource": "STATSGO",
-            "distance": 0.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "660587",
-            "minCompDistance": 0.0,
-            "nirrcapcl": "7",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 4.0,
-            "taxsubgrp": "Typic Calciargids",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
-          "component": "Antho",
-          "name": "Antho",
-          "rank_loc": "9",
-          "score_loc": 0.009
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "14185610",
-            "componentKind": "Series",
-            "componentPct": 2,
-            "dataSource": "STATSGO",
-            "distance": 353.554689070506,
-            "irrcapcl": "2",
-            "irrcapscl": "e",
-            "irrcapunit": "None",
-            "mapunitID": "660584",
-            "minCompDistance": 353.554689070506,
-            "nirrcapcl": "7",
-            "nirrcapscl": "w",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 3.0,
-            "taxsubgrp": "Typic Torrifluvents",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
-          "component": "Aco",
-          "name": "Aco",
-          "rank_loc": "10",
-          "score_loc": 0.005
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "14185609",
-            "componentKind": "Series",
-            "componentPct": 1,
-            "dataSource": "STATSGO",
-            "distance": 353.554689070506,
-            "irrcapcl": "2",
-            "irrcapscl": "e",
-            "irrcapunit": "None",
-            "mapunitID": "660584",
-            "minCompDistance": 353.554689070506,
-            "nirrcapcl": "7",
-            "nirrcapscl": "e",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 4.0,
-            "taxsubgrp": "Typic Haplocalcids",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
-          "component": "Indio",
-          "name": "Indio",
-          "rank_loc": "11",
-          "score_loc": 0.005
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "14185607",
-            "componentKind": "Series",
-            "componentPct": 1,
-            "dataSource": "STATSGO",
-            "distance": 353.554689070506,
-            "irrcapcl": "2",
-            "irrcapscl": "e",
-            "irrcapunit": "None",
-            "mapunitID": "660584",
-            "minCompDistance": 353.554689070506,
-            "nirrcapcl": "7",
-            "nirrcapscl": "e",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 3.0,
-            "taxsubgrp": "Typic Torrifluvents",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
-          "component": "Lethent",
-          "name": "Lethent",
-          "rank_loc": "12",
-          "score_loc": 0.005
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "14185608",
-            "componentKind": "Series",
-            "componentPct": 1,
-            "dataSource": "STATSGO",
-            "distance": 353.554689070506,
             "irrcapcl": "3",
             "irrcapscl": "s",
             "irrcapunit": "None",
-            "mapunitID": "660584",
-            "minCompDistance": 353.554689070506,
+            "mapunitID": "3457453",
+            "minCompDistance": 0.0,
             "nirrcapcl": "7",
-            "nirrcapscl": "s",
+            "nirrcapscl": "c",
             "nirrcapunit": "None",
             "rfvInfill": "No",
             "sdeURL": "",
             "seeURL": "",
             "slope": 1.0,
-            "taxsubgrp": "Typic Natrargids",
+            "taxsubgrp": "None",
             "textureInfill": "No"
           },
           "siteDescription": ""
@@ -646,10 +196,10 @@
           }
         },
         "id": {
-          "component": "Carrizo",
-          "name": "Carrizo2",
-          "rank_loc": "Not Displayed",
-          "score_loc": 0.269
+          "component": "Haplocalcids",
+          "name": "Haplocalcids",
+          "rank_loc": "4",
+          "score_loc": 0.1
         },
         "lab": {},
         "munsell": {},
@@ -658,124 +208,24 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "14185597",
-            "componentKind": "Series",
+            "componentID": "27420741",
+            "componentKind": "Taxon above family",
             "componentPct": 10,
-            "dataSource": "STATSGO",
-            "distance": 353.554689070506,
-            "irrcapcl": "6",
-            "irrcapscl": "w",
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "4",
+            "irrcapscl": "s",
             "irrcapunit": "None",
-            "mapunitID": "660584",
+            "mapunitID": "3457453",
             "minCompDistance": 0.0,
             "nirrcapcl": "7",
-            "nirrcapscl": "w",
+            "nirrcapscl": "c",
             "nirrcapunit": "None",
             "rfvInfill": "No",
             "sdeURL": "",
             "seeURL": "",
-            "slope": 1.0,
-            "taxsubgrp": "Typic Torriorthents",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
-          "component": "Carrizo",
-          "name": "Carrizo3",
-          "rank_loc": "Not Displayed",
-          "score_loc": 0.269
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "14185605",
-            "componentKind": "Series",
-            "componentPct": 40,
-            "dataSource": "STATSGO",
-            "distance": 353.554689070506,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "660584",
-            "minCompDistance": 0.0,
-            "nirrcapcl": "7",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 4.0,
-            "taxsubgrp": "Typic Torriorthents",
-            "textureInfill": "No"
-          },
-          "siteDescription": ""
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
-          }
-        },
-        "id": {
-          "component": "Gunsight",
-          "name": "Gunsight2",
-          "rank_loc": "Not Displayed",
-          "score_loc": 0.18
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "14185602",
-            "componentKind": "Series",
-            "componentPct": 8,
-            "dataSource": "STATSGO",
-            "distance": 353.554689070506,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "660584",
-            "minCompDistance": 0.0,
-            "nirrcapcl": "7",
-            "nirrcapscl": "s",
-            "nirrcapunit": "None",
-            "rfvInfill": "Yes",
-            "sdeURL": "",
-            "seeURL": "",
-            "slope": 5.0,
-            "taxsubgrp": "Typic Haplocalcids",
+            "slope": 3.0,
+            "taxsubgrp": "None",
             "textureInfill": "No"
           },
           "siteDescription": ""
@@ -792,289 +242,80 @@
     },
     "soilRank": [
       {
-        "component": "Carrizo",
+        "component": "Torriorthents",
         "componentData": "Missing Data",
-        "componentID": 14185605,
-        "name": "Carrizo3",
+        "componentID": 27420738,
+        "name": "Torriorthents",
         "not_displayed": false,
-        "rank_data": "3",
-        "rank_data_group": "3",
+        "rank_data": "1",
+        "rank_data_group": "1",
         "rank_data_loc": "1",
         "rank_data_loc_group": "1",
-        "rank_loc": "Not Displayed",
-        "rank_loc_group": "1",
-        "score_data": 0.752,
-        "score_data_group": 0.752,
-        "score_data_loc": 0.511,
-        "score_data_loc_group": 0.511,
-        "score_loc": 0.269,
-        "score_loc_group": 0.269
+        "rank_loc": 1,
+        "rank_loc_group": 1,
+        "score_data": 0.5,
+        "score_data_group": 0.5,
+        "score_data_loc": 0.475,
+        "score_data_loc_group": 0.475,
+        "score_loc": 0.45,
+        "score_loc_group": 0.45
       },
       {
-        "component": "Gunsight",
+        "component": "Haplocalcids",
         "componentData": "Missing Data",
-        "componentID": 14185636,
-        "name": "Gunsight",
+        "componentID": 27420741,
+        "name": "Haplocalcids",
         "not_displayed": false,
         "rank_data": "2",
         "rank_data_group": "2",
         "rank_data_loc": "2",
         "rank_data_loc_group": "2",
-        "rank_loc": "2",
-        "rank_loc_group": "2",
-        "score_data": 0.793,
-        "score_data_group": 0.793,
-        "score_data_loc": 0.487,
-        "score_data_loc_group": 0.487,
-        "score_loc": 0.18,
-        "score_loc_group": 0.18
+        "rank_loc": 4,
+        "rank_loc_group": 4,
+        "score_data": 0.373,
+        "score_data_group": 0.373,
+        "score_data_loc": 0.237,
+        "score_data_loc_group": 0.237,
+        "score_loc": 0.1,
+        "score_loc_group": 0.1
       },
       {
-        "component": "Chuckawalla",
+        "component": "Torripsamments",
         "componentData": "Missing Data",
-        "componentID": 14185642,
-        "name": "Chuckawalla",
+        "componentID": 27420739,
+        "name": "Torripsamments",
         "not_displayed": false,
-        "rank_data": "1",
-        "rank_data_group": "1",
+        "rank_data": "3",
+        "rank_data_group": "3",
         "rank_data_loc": "3",
         "rank_data_loc_group": "3",
-        "rank_loc": "3",
-        "rank_loc_group": "3",
-        "score_data": 0.804,
-        "score_data_group": 0.804,
-        "score_data_loc": 0.427,
-        "score_data_loc_group": 0.427,
-        "score_loc": 0.051,
-        "score_loc_group": 0.051
+        "rank_loc": 2,
+        "rank_loc_group": 2,
+        "score_data": 0.064,
+        "score_data_group": 0.064,
+        "score_data_loc": 0.182,
+        "score_data_loc_group": 0.182,
+        "score_loc": 0.3,
+        "score_loc_group": 0.3
       },
       {
-        "component": "Gilman",
+        "component": "Haplargids",
         "componentData": "Missing Data",
-        "componentID": 14185646,
-        "name": "Gilman",
+        "componentID": 27420740,
+        "name": "Haplargids",
         "not_displayed": false,
         "rank_data": "4",
         "rank_data_group": "4",
         "rank_data_loc": "4",
         "rank_data_loc_group": "4",
-        "rank_loc": "7",
-        "rank_loc_group": "7",
-        "score_data": 0.746,
-        "score_data_group": 0.746,
-        "score_data_loc": 0.386,
-        "score_data_loc_group": 0.386,
-        "score_loc": 0.026,
-        "score_loc_group": 0.026
-      },
-      {
-        "component": "Cipriano",
-        "componentData": "Missing Data",
-        "componentID": 14185643,
-        "name": "Cipriano",
-        "not_displayed": false,
-        "rank_data": "6",
-        "rank_data_group": "6",
-        "rank_data_loc": "5",
-        "rank_data_loc_group": "5",
-        "rank_loc": "5",
-        "rank_loc_group": "5",
-        "score_data": 0.733,
-        "score_data_group": 0.733,
-        "score_data_loc": 0.38,
-        "score_data_loc_group": 0.38,
-        "score_loc": 0.026,
-        "score_loc_group": 0.026
-      },
-      {
-        "component": "Antho",
-        "componentData": "Missing Data",
-        "componentID": 14185610,
-        "name": "Antho",
-        "not_displayed": false,
-        "rank_data": "5",
-        "rank_data_group": "5",
-        "rank_data_loc": "6",
-        "rank_data_loc_group": "6",
-        "rank_loc": "9",
-        "rank_loc_group": "9",
-        "score_data": 0.746,
-        "score_data_group": 0.746,
-        "score_data_loc": 0.378,
-        "score_data_loc_group": 0.378,
-        "score_loc": 0.009,
-        "score_loc_group": 0.009
-      },
-      {
-        "component": "Mohall",
-        "componentData": "Missing Data",
-        "componentID": 14185644,
-        "name": "Mohall",
-        "not_displayed": false,
-        "rank_data": "7",
-        "rank_data_group": "7",
-        "rank_data_loc": "7",
-        "rank_data_loc_group": "7",
-        "rank_loc": "8",
-        "rank_loc_group": "8",
-        "score_data": 0.726,
-        "score_data_group": 0.726,
-        "score_data_loc": 0.376,
-        "score_data_loc_group": 0.376,
-        "score_loc": 0.026,
-        "score_loc_group": 0.026
-      },
-      {
-        "component": "Indio",
-        "componentData": "Missing Data",
-        "componentID": 14185607,
-        "name": "Indio",
-        "not_displayed": false,
-        "rank_data": "8",
-        "rank_data_group": "8",
-        "rank_data_loc": "8",
-        "rank_data_loc_group": "8",
-        "rank_loc": "11",
-        "rank_loc_group": "11",
-        "score_data": 0.723,
-        "score_data_group": 0.723,
-        "score_data_loc": 0.364,
-        "score_data_loc_group": 0.364,
-        "score_loc": 0.005,
-        "score_loc_group": 0.005
-      },
-      {
-        "component": "Lethent",
-        "componentData": "Missing Data",
-        "componentID": 14185608,
-        "name": "Lethent",
-        "not_displayed": false,
-        "rank_data": "9",
-        "rank_data_group": "9",
-        "rank_data_loc": "9",
-        "rank_data_loc_group": "9",
-        "rank_loc": "12",
-        "rank_loc_group": "12",
-        "score_data": 0.722,
-        "score_data_group": 0.722,
-        "score_data_loc": 0.364,
-        "score_data_loc_group": 0.364,
-        "score_loc": 0.005,
-        "score_loc_group": 0.005
-      },
-      {
-        "component": "Beeline",
-        "componentData": "Missing Data",
-        "componentID": 14185640,
-        "name": "Beeline",
-        "not_displayed": false,
-        "rank_data": "11",
-        "rank_data_group": "11",
-        "rank_data_loc": "10",
-        "rank_data_loc_group": "10",
-        "rank_loc": "4",
-        "rank_loc_group": "4",
-        "score_data": 0.695,
-        "score_data_group": 0.695,
-        "score_data_loc": 0.36,
-        "score_data_loc_group": 0.36,
-        "score_loc": 0.026,
-        "score_loc_group": 0.026
-      },
-      {
-        "component": "Aco",
-        "componentData": "Missing Data",
-        "componentID": 14185609,
-        "name": "Aco",
-        "not_displayed": false,
-        "rank_data": "10",
-        "rank_data_group": "10",
-        "rank_data_loc": "11",
-        "rank_data_loc_group": "11",
-        "rank_loc": "10",
-        "rank_loc_group": "10",
-        "score_data": 0.715,
-        "score_data_group": 0.715,
-        "score_data_loc": 0.36,
-        "score_data_loc_group": 0.36,
-        "score_loc": 0.005,
-        "score_loc_group": 0.005
-      },
-      {
-        "component": "Denure",
-        "componentData": "Missing Data",
-        "componentID": 14185639,
-        "name": "Denure",
-        "not_displayed": false,
-        "rank_data": "12",
-        "rank_data_group": "12",
-        "rank_data_loc": "12",
-        "rank_data_loc_group": "12",
-        "rank_loc": "6",
-        "rank_loc_group": "6",
-        "score_data": 0.687,
-        "score_data_group": 0.687,
-        "score_data_loc": 0.356,
-        "score_data_loc_group": 0.356,
-        "score_loc": 0.026,
-        "score_loc_group": 0.026
-      },
-      {
-        "component": "Carrizo",
-        "componentData": "Missing Data",
-        "componentID": 14185637,
-        "name": "Carrizo",
-        "not_displayed": true,
-        "rank_data": "Not Displayed",
-        "rank_data_group": "3",
-        "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "1",
-        "rank_loc": "1",
-        "rank_loc_group": "1",
-        "score_data": 0.723,
-        "score_data_group": 0.752,
-        "score_data_loc": 0.496,
-        "score_data_loc_group": 0.511,
-        "score_loc": 0.269,
-        "score_loc_group": 0.269
-      },
-      {
-        "component": "Carrizo",
-        "componentData": "Missing Data",
-        "componentID": 14185597,
-        "name": "Carrizo2",
-        "not_displayed": true,
-        "rank_data": "Not Displayed",
-        "rank_data_group": "3",
-        "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "1",
-        "rank_loc": "Not Displayed",
-        "rank_loc_group": "1",
-        "score_data": 0.681,
-        "score_data_group": 0.752,
-        "score_data_loc": 0.475,
-        "score_data_loc_group": 0.511,
-        "score_loc": 0.269,
-        "score_loc_group": 0.269
-      },
-      {
-        "component": "Gunsight",
-        "componentData": "Missing Data",
-        "componentID": 14185602,
-        "name": "Gunsight2",
-        "not_displayed": true,
-        "rank_data": "Not Displayed",
-        "rank_data_group": "2",
-        "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "2",
-        "rank_loc": "Not Displayed",
-        "rank_loc_group": "2",
-        "score_data": 0.768,
-        "score_data_group": 0.793,
-        "score_data_loc": 0.474,
-        "score_data_loc_group": 0.487,
-        "score_loc": 0.18,
-        "score_loc_group": 0.18
+        "rank_loc": 3,
+        "rank_loc_group": 3,
+        "score_data": 0.001,
+        "score_data_group": 0.001,
+        "score_data_loc": 0.075,
+        "score_data_loc_group": 0.075,
+        "score_loc": 0.15,
+        "score_loc_group": 0.15
       }
     ]
   }

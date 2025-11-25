@@ -665,11 +665,11 @@
         },
         "site": {
           "siteData": {
-            "componentID": 133621,
+            "componentID": 133618,
             "distance": 3154.198,
             "mapunitID": 36084,
             "minCompDistance": 3154.19808851,
-            "share": 10,
+            "share": 20,
             "soilDepth": 40
           },
           "siteDescription": {
@@ -1410,7 +1410,7 @@
       {
         "component": "Dystric leptosols",
         "componentData": "Missing Data",
-        "componentID": 133621,
+        "componentID": 133618,
         "name": "Dystric leptosols",
         "not_displayed": false,
         "rank_data": "7",

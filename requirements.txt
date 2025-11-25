@@ -135,8 +135,8 @@ charset-normalizer==3.4.4 \
 composition-stats==2.0.0 \
     --hash=sha256:d0f741ca968ef45a0c70d7a4ed68f4d140e82fddb4664a33f34ce213ddc66f6c
     # via -r requirements/base.in
-gdal==3.12.0.post1 \
-    --hash=sha256:d2b68361c7cf2ef7caa8cbb8549a315080301564e3f025d1842df71a4e406236
+gdal==3.11.5 \
+    --hash=sha256:20c26a250b0cacfb541779292fcd65169293102c5b96e30fe60e1c4f4afce0b1
     # via -r requirements/base.in
 geopandas==1.1.1 \
     --hash=sha256:1745713f64d095c43e72e08e753dbd271678254b24f2e01db8cdb8debe1d293d \

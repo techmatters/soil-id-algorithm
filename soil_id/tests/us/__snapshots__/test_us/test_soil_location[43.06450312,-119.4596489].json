@@ -64,7 +64,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25442849",
+            "componentID": "27631144",
             "componentKind": "Series",
             "componentPct": 50,
             "dataSource": "SSURGO",
@@ -120,7 +120,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25442848",
+            "componentID": "27631143",
             "componentKind": "Series",
             "componentPct": 35,
             "dataSource": "SSURGO",
@@ -176,7 +176,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25443068",
+            "componentID": "27631363",
             "componentKind": "Series",
             "componentPct": 85,
             "dataSource": "SSURGO",
@@ -232,7 +232,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25442630",
+            "componentID": "27630925",
             "componentKind": "Series",
             "componentPct": 85,
             "dataSource": "SSURGO",
@@ -288,7 +288,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25442616",
+            "componentID": "27630911",
             "componentKind": "Series",
             "componentPct": 85,
             "dataSource": "SSURGO",
@@ -344,7 +344,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25443055",
+            "componentID": "27631350",
             "componentKind": "Series",
             "componentPct": 65,
             "dataSource": "SSURGO",
@@ -400,7 +400,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25442636",
+            "componentID": "27630931",
             "componentKind": "Series",
             "componentPct": 50,
             "dataSource": "SSURGO",
@@ -456,7 +456,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25442637",
+            "componentID": "27630932",
             "componentKind": "Series",
             "componentPct": 35,
             "dataSource": "SSURGO",
@@ -512,7 +512,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25442629",
+            "componentID": "27630924",
             "componentKind": "Series",
             "componentPct": 4,
             "dataSource": "SSURGO",
@@ -548,7 +548,7 @@
       {
         "component": "Lonely",
         "componentData": "Data Complete",
-        "componentID": 25442849,
+        "componentID": 27631144,
         "name": "Lonely",
         "not_displayed": false,
         "rank_data": "6",
@@ -567,7 +567,7 @@
       {
         "component": "Robson",
         "componentData": "Data Complete",
-        "componentID": 25442848,
+        "componentID": 27631143,
         "name": "Robson",
         "not_displayed": false,
         "rank_data": "2",
@@ -586,7 +586,7 @@
       {
         "component": "Actem",
         "componentData": "Data Complete",
-        "componentID": 25443068,
+        "componentID": 27631363,
         "name": "Actem",
         "not_displayed": false,
         "rank_data": "1",
@@ -605,7 +605,7 @@
       {
         "component": "Rinconflat",
         "componentData": "Data Complete",
-        "componentID": 25442616,
+        "componentID": 27630911,
         "name": "Rinconflat",
         "not_displayed": false,
         "rank_data": "5",
@@ -624,7 +624,7 @@
       {
         "component": "Brace",
         "componentData": "Data Complete",
-        "componentID": 25442637,
+        "componentID": 27630932,
         "name": "Brace",
         "not_displayed": false,
         "rank_data": "3",
@@ -643,7 +643,7 @@
       {
         "component": "Raz",
         "componentData": "Data Complete",
-        "componentID": 25442636,
+        "componentID": 27630931,
         "name": "Raz",
         "not_displayed": false,
         "rank_data": "4",
@@ -662,7 +662,7 @@
       {
         "component": "Reallis",
         "componentData": "Data Complete",
-        "componentID": 25442630,
+        "componentID": 27630925,
         "name": "Reallis",
         "not_displayed": false,
         "rank_data": "8",
@@ -681,7 +681,7 @@
       {
         "component": "Ausmus",
         "componentData": "Data Complete",
-        "componentID": 25442629,
+        "componentID": 27630924,
         "name": "Ausmus",
         "not_displayed": false,
         "rank_data": "7",
@@ -700,7 +700,7 @@
       {
         "component": "Lonegrave",
         "componentData": "Data Complete",
-        "componentID": 25443055,
+        "componentID": 27631350,
         "name": "Lonegrave",
         "not_displayed": false,
         "rank_data": "9",

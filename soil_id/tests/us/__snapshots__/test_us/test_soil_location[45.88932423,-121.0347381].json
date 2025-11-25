@@ -47,7 +47,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25483307",
+            "componentID": "26581758",
             "componentKind": "Series",
             "componentPct": 95,
             "dataSource": "SSURGO",
@@ -65,7 +65,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#gunn",
             "slope": 5.0,
             "taxsubgrp": "Ultic Haploxeralfs",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "Landscape--plateaus, hills\nLandform--structural benches, hillslopes, ridgetops\nSlope--0 to 65 percent\nParent material--loess mixed with colluvium and residuum derived from basalt\nMean annual precipitation--about 530 mm\nMean annual air temperature--about 9 degrees C\nDepth class--deep, very deep\nDrainage class--well drained\nSoil moisture regime--xeric\nSoil temperature regime--mesic\nSoil moisture subclass--typic"
         },
@@ -103,7 +103,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25483316",
+            "componentID": "26581766",
             "componentKind": "Series",
             "componentPct": 90,
             "dataSource": "SSURGO",
@@ -139,7 +139,7 @@
       {
         "component": "Gunn",
         "componentData": NaN,
-        "componentID": 25483316,
+        "componentID": 26581766,
         "name": "Gunn2",
         "not_displayed": false,
         "rank_data": "1",
@@ -157,8 +157,8 @@
       },
       {
         "component": "Gunn",
-        "componentData": "Data Complete",
-        "componentID": 25483307,
+        "componentData": NaN,
+        "componentID": 26581758,
         "name": "Gunn",
         "not_displayed": true,
         "rank_data": "Not Displayed",

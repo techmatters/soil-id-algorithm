@@ -41,13 +41,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R236XY109AK"
+              "R236XY107AK"
             ],
             "ecoclassname": [
-              "Subarctic Low Scrub Peat Drainages"
+              "Western Alaska Maritime Scrub Gravelly Drainages"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/R236XY109AK"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/R236XY107AK"
             ]
           }
         },
@@ -64,7 +64,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "26176414",
+            "componentID": "26723599",
             "componentKind": "Taxon above family",
             "componentPct": 24,
             "dataSource": "SSURGO",
@@ -97,13 +97,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R236XY107AK"
+              "R236XY132AK"
             ],
             "ecoclassname": [
-              "Western Alaska Maritime Scrub Gravelly Drainages"
+              "Subarctic Dwarf Scrub Dry Loamy Slopes"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/R236XY107AK"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/R236XY132AK"
             ]
           }
         },
@@ -120,7 +120,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "26176416",
+            "componentID": "26723596",
             "componentKind": "Taxon above family",
             "componentPct": 23,
             "dataSource": "SSURGO",
@@ -153,13 +153,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R236XY140AK"
+              "F236XY139AK"
             ],
             "ecoclassname": [
-              "Subarctic Tussock Tundra Wet Loamy Plains"
+              "Boreal Woodland Loamy Rises"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/R236XY140AK"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/F236XY139AK"
             ]
           }
         },
@@ -176,7 +176,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "26176412",
+            "componentID": "26723600",
             "componentKind": "Taxon above family",
             "componentPct": 20,
             "dataSource": "SSURGO",
@@ -209,13 +209,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "F236XY139AK"
+              "R236XY131AK"
             ],
             "ecoclassname": [
-              "Boreal Woodland Loamy Rises"
+              "Subarctic Tussock-Scrub Frozen Plains"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/F236XY139AK"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/R236XY131AK"
             ]
           }
         },
@@ -232,7 +232,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "26176417",
+            "componentID": "26723598",
             "componentKind": "Taxon above family",
             "componentPct": 17,
             "dataSource": "SSURGO",
@@ -265,13 +265,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R236XY132AK"
+              "R236XY140AK"
             ],
             "ecoclassname": [
-              "Subarctic Dwarf Scrub Dry Loamy Slopes"
+              "Subarctic Tussock Tundra Wet Loamy Plains"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/R236XY132AK"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/R236XY140AK"
             ]
           }
         },
@@ -288,7 +288,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "26176415",
+            "componentID": "26723597",
             "componentKind": "Taxon above family",
             "componentPct": 10,
             "dataSource": "SSURGO",
@@ -321,13 +321,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R236XY131AK"
+              "R236XY109AK"
             ],
             "ecoclassname": [
-              "Subarctic Tussock-Scrub Frozen Plains"
+              "Subarctic Low Scrub Peat Drainages"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/R236XY131AK"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/R236XY109AK"
             ]
           }
         },
@@ -344,7 +344,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "26176413",
+            "componentID": "26723595",
             "componentKind": "Taxon above family",
             "componentPct": 1,
             "dataSource": "SSURGO",
@@ -380,7 +380,7 @@
       {
         "component": "D36-western maritime tussock scrub loamy eolian slopes",
         "componentData": "Missing Data",
-        "componentID": 26176414,
+        "componentID": 26723599,
         "name": "D36-western maritime tussock scrub loamy eolian slopes",
         "not_displayed": false,
         "rank_data": "1",
@@ -399,7 +399,7 @@
       {
         "component": "D36-western maritime dwarf scrub loamy glaciated slopes",
         "componentData": "Missing Data",
-        "componentID": 26176416,
+        "componentID": 26723596,
         "name": "D36-western maritime dwarf scrub loamy glaciated slopes",
         "not_displayed": false,
         "rank_data": "5",
@@ -418,7 +418,7 @@
       {
         "component": "D36-boreal forest loamy eolian slopes",
         "componentData": "Missing Data",
-        "componentID": 26176415,
+        "componentID": 26723597,
         "name": "D36-boreal forest loamy eolian slopes",
         "not_displayed": false,
         "rank_data": "2",
@@ -437,7 +437,7 @@
       {
         "component": "D36-western maritime scrub organic peat mounds",
         "componentData": "Missing Data",
-        "componentID": 26176417,
+        "componentID": 26723598,
         "name": "D36-western maritime scrub organic peat mounds",
         "not_displayed": false,
         "rank_data": "4",
@@ -456,7 +456,7 @@
       {
         "component": "D36-western maritime sedge organic depressions",
         "componentData": "Missing Data",
-        "componentID": 26176412,
+        "componentID": 26723600,
         "name": "D36-western maritime sedge organic depressions",
         "not_displayed": false,
         "rank_data": "6",
@@ -475,7 +475,7 @@
       {
         "component": "D36-western maritime scrub drainageways",
         "componentData": "Missing Data",
-        "componentID": 26176413,
+        "componentID": 26723595,
         "name": "D36-western maritime scrub drainageways",
         "not_displayed": false,
         "rank_data": "3",

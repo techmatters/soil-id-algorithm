@@ -64,7 +64,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25584956",
+            "componentID": "27398757",
             "componentKind": "Series",
             "componentPct": 85,
             "dataSource": "SSURGO",
@@ -120,7 +120,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25584954",
+            "componentID": "27398758",
             "componentKind": "Series",
             "componentPct": 5,
             "dataSource": "SSURGO",
@@ -153,13 +153,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R103XY015MN"
+              "R103XY001MN"
             ],
             "ecoclassname": [
-              "Depressional Marsh"
+              "Loamy Wet Prairies"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/103X/R103XY015MN"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/103X/R103XY001MN"
             ]
           }
         },
@@ -176,7 +176,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25584950",
+            "componentID": "27398759",
             "componentKind": "Taxadjunct",
             "componentPct": 5,
             "dataSource": "SSURGO",
@@ -209,13 +209,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R103XY001MN"
+              "R103XY004MN"
             ],
             "ecoclassname": [
-              "Loamy Wet Prairies"
+              "Loamy Upland Prairies"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/103X/R103XY001MN"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/103X/R103XY004MN"
             ]
           }
         },
@@ -232,7 +232,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25584952",
+            "componentID": "27398760",
             "componentKind": "Series",
             "componentPct": 5,
             "dataSource": "SSURGO",
@@ -265,13 +265,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R103XY004MN"
+              "R103XY015MN"
             ],
             "ecoclassname": [
-              "Loamy Upland Prairies"
+              "Depressional Marsh"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/103X/R103XY004MN"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/103X/R103XY015MN"
             ]
           }
         },
@@ -288,7 +288,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25584960",
+            "componentID": "27398765",
             "componentKind": "Series",
             "componentPct": 3,
             "dataSource": "SSURGO",
@@ -321,13 +321,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R103XY015MN"
+              "R103XY001MN"
             ],
             "ecoclassname": [
-              "Depressional Marsh"
+              "Loamy Wet Prairies"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/103X/R103XY015MN"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/103X/R103XY001MN"
             ]
           }
         },
@@ -344,7 +344,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25584602",
+            "componentID": "27398742",
             "componentKind": "Series",
             "componentPct": 5,
             "dataSource": "SSURGO",
@@ -377,13 +377,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R103XY001MN"
+              "R103XY015MN"
             ],
             "ecoclassname": [
-              "Loamy Wet Prairies"
+              "Depressional Marsh"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/103X/R103XY001MN"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/103X/R103XY015MN"
             ]
           }
         },
@@ -400,7 +400,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25584962",
+            "componentID": "27398763",
             "componentKind": "Series",
             "componentPct": 2,
             "dataSource": "SSURGO",
@@ -434,91 +434,72 @@
     },
     "soilRank": [
       {
-        "component": "Clarion",
-        "componentData": "Data Complete",
-        "componentID": 25584950,
-        "name": "Clarion",
-        "not_displayed": false,
-        "rank_data": "1",
-        "rank_data_group": "1",
-        "rank_data_loc": "1",
-        "rank_data_loc_group": "1",
-        "rank_loc": 3,
-        "rank_loc_group": 3,
-        "score_data": 0.517,
-        "score_data_group": 0.517,
-        "score_data_loc": 0.358,
-        "score_data_loc_group": 0.358,
-        "score_loc": 0.2,
-        "score_loc_group": 0.2
-      },
-      {
         "component": "Nicollet",
         "componentData": "Data Complete",
-        "componentID": 25584956,
+        "componentID": 27398757,
         "name": "Nicollet",
         "not_displayed": false,
-        "rank_data": "7",
-        "rank_data_group": "7",
-        "rank_data_loc": "2",
-        "rank_data_loc_group": "2",
+        "rank_data": "3",
+        "rank_data_group": "3",
+        "rank_data_loc": "1",
+        "rank_data_loc_group": "1",
         "rank_loc": 1,
         "rank_loc_group": 1,
-        "score_data": 0.22,
-        "score_data_group": 0.22,
-        "score_data_loc": 0.311,
-        "score_data_loc_group": 0.311,
+        "score_data": 0.369,
+        "score_data_group": 0.369,
+        "score_data_loc": 0.385,
+        "score_data_loc_group": 0.385,
         "score_loc": 0.402,
         "score_loc_group": 0.402
       },
       {
         "component": "Webster",
         "componentData": "Data Complete",
-        "componentID": 25584954,
+        "componentID": 27398758,
         "name": "Webster",
         "not_displayed": false,
         "rank_data": "6",
         "rank_data_group": "6",
-        "rank_data_loc": "3",
-        "rank_data_loc_group": "3",
+        "rank_data_loc": "2",
+        "rank_data_loc_group": "2",
         "rank_loc": 2,
         "rank_loc_group": 2,
-        "score_data": 0.268,
-        "score_data_group": 0.268,
-        "score_data_loc": 0.299,
-        "score_data_loc_group": 0.299,
+        "score_data": 0.287,
+        "score_data_group": 0.287,
+        "score_data_loc": 0.309,
+        "score_data_loc_group": 0.309,
         "score_loc": 0.331,
         "score_loc_group": 0.331
       },
       {
-        "component": "Glencoe",
+        "component": "Clarion",
         "componentData": "Data Complete",
-        "componentID": 25584960,
-        "name": "Glencoe",
+        "componentID": 27398759,
+        "name": "Clarion",
         "not_displayed": false,
-        "rank_data": "2",
-        "rank_data_group": "2",
-        "rank_data_loc": "4",
-        "rank_data_loc_group": "4",
-        "rank_loc": 5,
-        "rank_loc_group": 5,
-        "score_data": 0.451,
-        "score_data_group": 0.451,
-        "score_data_loc": 0.231,
-        "score_data_loc_group": 0.231,
-        "score_loc": 0.011,
-        "score_loc_group": 0.011
+        "rank_data": "4",
+        "rank_data_group": "4",
+        "rank_data_loc": "3",
+        "rank_data_loc_group": "3",
+        "rank_loc": 3,
+        "rank_loc_group": 3,
+        "score_data": 0.367,
+        "score_data_group": 0.367,
+        "score_data_loc": 0.283,
+        "score_data_loc_group": 0.283,
+        "score_loc": 0.2,
+        "score_loc_group": 0.2
       },
       {
         "component": "Storden",
         "componentData": "Data Complete",
-        "componentID": 25584602,
+        "componentID": 27398742,
         "name": "Storden",
         "not_displayed": false,
-        "rank_data": "3",
-        "rank_data_group": "3",
-        "rank_data_loc": "5",
-        "rank_data_loc_group": "5",
+        "rank_data": "1",
+        "rank_data_group": "1",
+        "rank_data_loc": "4",
+        "rank_data_loc_group": "4",
         "rank_loc": 6,
         "rank_loc_group": 6,
         "score_data": 0.433,
@@ -529,42 +510,61 @@
         "score_loc_group": 0.011
       },
       {
-        "component": "Okoboji",
-        "componentData": "Missing Data",
-        "componentID": 25584952,
-        "name": "Okoboji",
+        "component": "Glencoe",
+        "componentData": "Data Complete",
+        "componentID": 27398765,
+        "name": "Glencoe",
         "not_displayed": false,
-        "rank_data": "4",
-        "rank_data_group": "4",
-        "rank_data_loc": "6",
-        "rank_data_loc_group": "6",
-        "rank_loc": 4,
-        "rank_loc_group": 4,
-        "score_data": 0.303,
-        "score_data_group": 0.303,
-        "score_data_loc": 0.171,
-        "score_data_loc_group": 0.171,
-        "score_loc": 0.04,
-        "score_loc_group": 0.04
+        "rank_data": "2",
+        "rank_data_group": "2",
+        "rank_data_loc": "5",
+        "rank_data_loc_group": "5",
+        "rank_loc": 5,
+        "rank_loc_group": 5,
+        "score_data": 0.433,
+        "score_data_group": 0.433,
+        "score_data_loc": 0.222,
+        "score_data_loc_group": 0.222,
+        "score_loc": 0.011,
+        "score_loc_group": 0.011
       },
       {
         "component": "Canisteo",
         "componentData": "Data Complete",
-        "componentID": 25584962,
+        "componentID": 27398763,
         "name": "Canisteo",
         "not_displayed": false,
         "rank_data": "5",
         "rank_data_group": "5",
-        "rank_data_loc": "7",
-        "rank_data_loc_group": "7",
+        "rank_data_loc": "6",
+        "rank_data_loc_group": "6",
         "rank_loc": 7,
         "rank_loc_group": 7,
-        "score_data": 0.287,
-        "score_data_group": 0.287,
-        "score_data_loc": 0.147,
-        "score_data_loc_group": 0.147,
+        "score_data": 0.336,
+        "score_data_group": 0.336,
+        "score_data_loc": 0.171,
+        "score_data_loc_group": 0.171,
         "score_loc": 0.007,
         "score_loc_group": 0.007
+      },
+      {
+        "component": "Okoboji",
+        "componentData": "Missing Data",
+        "componentID": 27398760,
+        "name": "Okoboji",
+        "not_displayed": false,
+        "rank_data": "7",
+        "rank_data_group": "7",
+        "rank_data_loc": "7",
+        "rank_data_loc_group": "7",
+        "rank_loc": 4,
+        "rank_loc_group": 4,
+        "score_data": 0.253,
+        "score_data_group": 0.253,
+        "score_data_loc": 0.146,
+        "score_data_loc_group": 0.146,
+        "score_loc": 0.04,
+        "score_loc_group": 0.04
       }
     ]
   }

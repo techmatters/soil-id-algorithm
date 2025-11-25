@@ -20,6 +20,12 @@ $ source .venv/bin/activate
 $ make install && make install-dev
 ```
 
+Configure the `.env` file to connect to the local database:
+
+```sh
+$ cp .env.sample .env
+```
+
 ## explanation of algorithm
 
 ### terminology

@@ -766,20 +766,29 @@ def list_soils(lon, lat):
                         lab_lyrs.append(["", "", ""])
                         munsell_lyrs.append("")
                     else:
+                        # Use the horizon bottom depths that match the stored horizon structure
+                        # Convert string values to float, filtering out empty strings
+                        horizon_bottom_depths = [
+                            float(v) if v != "" else np.nan 
+                            for v in hzb_lyrs[index].values()
+                        ]
+                        # Filter out NaN values
+                        horizon_bottom_depths = [d for d in horizon_bottom_depths if not np.isnan(d)]
+
                         # Aggregate data for each color dimension
                         l_d = aggregate_data(
                             data=lab_intpl["l"],
-                            bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
+                            bottom_depths=horizon_bottom_depths,
                             sd=2,
                         ).fillna("")
                         a_d = aggregate_data(
                             data=lab_intpl["a"],
-                            bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
+                            bottom_depths=horizon_bottom_depths,
                             sd=2,
                         ).fillna("")
                         b_d = aggregate_data(
                             data=lab_intpl["b"],
-                            bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
+                            bottom_depths=horizon_bottom_depths,
                             sd=2,
                         ).fillna("")
 
@@ -909,16 +918,25 @@ def list_soils(lon, lat):
 
                         getProfile_cokey[index] = getProfile_mod
 
+                        # Use the horizon bottom depths that match the stored horizon structure
+                        # Convert string values to float, filtering out empty strings
+                        horizon_bottom_depths = [
+                            float(v) if v != "" else np.nan 
+                            for v in hzb_lyrs[index].values()
+                        ]
+                        # Filter out NaN values
+                        horizon_bottom_depths = [d for d in horizon_bottom_depths if not np.isnan(d)]
+
                         # Aggregate sand data
                         snd_d_osd = aggregate_data(
                             data=OSD_sand_intpl.iloc[:, 0],
-                            bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
+                            bottom_depths=horizon_bottom_depths,
                         )
 
                         # Aggregate clay data
                         cly_d_osd = aggregate_data(
                             data=OSD_clay_intpl.iloc[:, 1],
-                            bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
+                            bottom_depths=horizon_bottom_depths,
                         )
 
                         # Calculate texture data based on sand and clay data
@@ -931,7 +949,7 @@ def list_soils(lon, lat):
                         # Aggregate rock fragment data
                         rf_d_osd = aggregate_data(
                             data=OSD_rfv_intpl.c_cfpct_intpl,
-                            bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
+                            bottom_depths=horizon_bottom_depths,
                         )
 
                         # Fill NaN values
@@ -952,9 +970,9 @@ def list_soils(lon, lat):
                         # Update cec, ph, and ec layers if they contain only a single
                         # empty string
                         for lyr in [cec_lyrs, ph_lyrs, ec_lyrs]:
-                            if len(lyr[index]) == 1 and lyr[index][0] == "":
+                            if len(lyr[index]) == 1 and list(lyr[index].values())[0] == "":
                                 empty_values = [""] * len(hzb_lyrs[index])
-                                lyr[index] = dict(zip(hzb_lyrs[index], empty_values))
+                                lyr[index] = dict(zip(hzb_lyrs[index].keys(), empty_values))
 
                 else:
                     OSDhorzdata_group_cokey[index] = group_sorted

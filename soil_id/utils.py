@@ -128,7 +128,7 @@ def getTexture(row=None, sand=None, silt=None, clay=None):
             sand = row.get("sandtotal_r", np.nan)
             silt = row.get("silttotal_r", np.nan)
             clay = row.get("claytotal_r", np.nan)
-    
+
     # Return None if any value is NaN (matches legacy behavior)
     if np.isnan(sand) or np.isnan(silt) or np.isnan(clay):
         return None

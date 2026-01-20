@@ -110,6 +110,7 @@ def silt_calc(row):
 def getTexture(row=None, sand=None, silt=None, clay=None):
     """
     Classify soil texture based on sand, silt, and clay proportions.
+    Matches the legacy gettt function logic.
 
     Parameters:
     - row (dict): Dictionary-like object with 'sandtotal_r', 'silttotal_r', 'claytotal_r' keys.
@@ -118,7 +119,7 @@ def getTexture(row=None, sand=None, silt=None, clay=None):
     - clay (float): Percentage of clay.
 
     Returns:
-    - str: Soil texture classification.
+    - str: Soil texture classification, or None if any input is NaN.
     """
 
     # Handle missing inputs: if not provided individually, try to get from row.
@@ -127,29 +128,31 @@ def getTexture(row=None, sand=None, silt=None, clay=None):
             sand = row.get("sandtotal_r", np.nan)
             silt = row.get("silttotal_r", np.nan)
             clay = row.get("claytotal_r", np.nan)
-
-    # Replace any NaN with 0 for the calculation.
-    sand = np.nan_to_num(sand, nan=0)
-    silt = np.nan_to_num(silt, nan=0)
-    clay = np.nan_to_num(clay, nan=0)
+    
+    # Return None if any value is NaN (matches legacy behavior)
+    if np.isnan(sand) or np.isnan(silt) or np.isnan(clay):
+        return None
 
     # Calculate derived values.
     silt_clay = silt + 1.5 * clay
     silt_2x_clay = silt + 2.0 * clay
 
     # Define conditions and corresponding texture classifications.
+    # These match the legacy gettt function exactly
     conditions = [
         silt_clay < 15,
-        (silt_clay >= 15) & (silt_clay < 30),
-        (((7 <= clay) & (clay <= 20)) & (sand > 52))
+        (silt_clay >= 15) & (silt_2x_clay < 30),  # Fixed: was using silt_clay for both
+        (((clay >= 7) & (clay <= 20)) & (sand > 52) & (silt_2x_clay >= 30))
         | ((clay < 7) & (silt < 50) & (silt_2x_clay >= 30)),
-        (7 <= clay) & (clay <= 27) & (28 <= silt) & (silt < 50) & (sand <= 52),
-        (silt >= 50) & (((12 <= clay) & (clay < 27)) | ((silt < 80) & (clay < 12))),
+        (clay >= 7) & (clay <= 27) & (silt >= 28) & (silt < 50) & (sand <= 52),
+        ((silt >= 50) & (clay >= 12) & (clay < 27)) | ((silt >= 50) & (silt < 80) & (clay < 12)),
         (silt >= 80) & (clay < 12),
-        (20 <= clay) & (clay < 35) & (silt < 28) & (sand > 45),
-        (27 <= clay) & (clay < 40) & (sand <= 45) & (sand > 20),
+        (clay >= 20) & (clay < 35) & (silt < 28) & (sand > 45),
+        (clay >= 27) & (clay < 40) & (sand > 20) & (sand <= 45),
+        (clay >= 27) & (clay < 40) & (sand <= 20),
         (clay >= 35) & (sand >= 45),
-        (clay >= 40) & (silt >= 40) & (sand <= 45),
+        (clay >= 40) & (silt >= 40),
+        (clay >= 40) & (sand <= 45) & (silt < 40),
     ]
 
     choices = [
@@ -161,12 +164,14 @@ def getTexture(row=None, sand=None, silt=None, clay=None):
         "Silt",
         "Sandy clay loam",
         "Clay loam",
+        "Silty clay loam",
         "Sandy clay",
+        "Silty clay",
         "Clay",
     ]
 
     # Compute the texture classification.
-    result = np.select(conditions, choices, default="Unknown")
+    result = np.select(conditions, choices, default=None)
 
     # Ensure that a plain Python string is returned.
     if isinstance(result, np.ndarray):

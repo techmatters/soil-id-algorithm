@@ -64,7 +64,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25623332",
+            "componentID": "27108933",
             "componentKind": "Series",
             "componentPct": 80,
             "dataSource": "SSURGO",
@@ -97,13 +97,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R077CY036TX"
+              "R077CY022TX"
             ],
             "ecoclassname": [
-              "Sandy Loam 16-21 Pz"
+              "Deep Hardland 16-21 Pz"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/077C/R077CY036TX"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/077C/R077CY022TX"
             ]
           }
         },
@@ -120,7 +120,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25623211",
+            "componentID": "27108889",
             "componentKind": "Series",
             "componentPct": 85,
             "dataSource": "SSURGO",
@@ -176,7 +176,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25623299",
+            "componentID": "27108854",
             "componentKind": "Series",
             "componentPct": 85,
             "dataSource": "SSURGO",
@@ -232,7 +232,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25623333",
+            "componentID": "27108934",
             "componentKind": "Series",
             "componentPct": 10,
             "dataSource": "SSURGO",
@@ -265,13 +265,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R077CY022TX"
+              "R077CY036TX"
             ],
             "ecoclassname": [
-              "Deep Hardland 16-21 Pz"
+              "Sandy Loam 16-21 Pz"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/077C/R077CY022TX"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/077C/R077CY036TX"
             ]
           }
         },
@@ -288,7 +288,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25623334",
+            "componentID": "27108935",
             "componentKind": "Series",
             "componentPct": 5,
             "dataSource": "SSURGO",
@@ -344,7 +344,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25623213",
+            "componentID": "27108891",
             "componentKind": "Series",
             "componentPct": 6,
             "dataSource": "SSURGO",
@@ -400,7 +400,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25623214",
+            "componentID": "27108892",
             "componentKind": "Series",
             "componentPct": 5,
             "dataSource": "SSURGO",
@@ -456,7 +456,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25623212",
+            "componentID": "27108890",
             "componentKind": "Series",
             "componentPct": 4,
             "dataSource": "SSURGO",
@@ -512,7 +512,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25623298",
+            "componentID": "27108856",
             "componentKind": "Series",
             "componentPct": 7,
             "dataSource": "SSURGO",
@@ -568,7 +568,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25623297",
+            "componentID": "27108855",
             "componentKind": "Series",
             "componentPct": 5,
             "dataSource": "SSURGO",
@@ -624,7 +624,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25623296",
+            "componentID": "27108857",
             "componentKind": "Series",
             "componentPct": 3,
             "dataSource": "SSURGO",
@@ -660,68 +660,68 @@
       {
         "component": "Randall",
         "componentData": "Missing Data",
-        "componentID": 25623332,
+        "componentID": 27108933,
         "name": "Randall",
         "not_displayed": false,
-        "rank_data": "8",
-        "rank_data_group": "8",
+        "rank_data": "5",
+        "rank_data_group": "5",
         "rank_data_loc": "1",
         "rank_data_loc_group": "1",
         "rank_loc": "1",
         "rank_loc_group": "1",
-        "score_data": 0.427,
-        "score_data_group": 0.427,
-        "score_data_loc": 0.451,
-        "score_data_loc_group": 0.451,
+        "score_data": 0.533,
+        "score_data_group": 0.533,
+        "score_data_loc": 0.504,
+        "score_data_loc_group": 0.504,
         "score_loc": 0.474,
         "score_loc_group": 0.474
       },
       {
         "component": "Acuff",
         "componentData": "Data Complete",
-        "componentID": 25623297,
+        "componentID": 27108855,
         "name": "Acuff2",
         "not_displayed": false,
-        "rank_data": "1",
-        "rank_data_group": "1",
+        "rank_data": "6",
+        "rank_data_group": "6",
         "rank_data_loc": "2",
         "rank_data_loc_group": "2",
         "rank_loc": "Not Displayed",
         "rank_loc_group": "2",
-        "score_data": 0.593,
-        "score_data_group": 0.593,
-        "score_data_loc": 0.423,
-        "score_data_loc_group": 0.423,
+        "score_data": 0.504,
+        "score_data_group": 0.504,
+        "score_data_loc": 0.379,
+        "score_data_loc_group": 0.379,
         "score_loc": 0.253,
         "score_loc_group": 0.253
       },
       {
         "component": "Olton",
         "componentData": "Data Complete",
-        "componentID": 25623299,
+        "componentID": 27108854,
         "name": "Olton",
         "not_displayed": false,
-        "rank_data": "7",
-        "rank_data_group": "7",
+        "rank_data": "4",
+        "rank_data_group": "4",
         "rank_data_loc": "3",
         "rank_data_loc_group": "3",
         "rank_loc": "3",
         "rank_loc_group": "3",
-        "score_data": 0.46,
-        "score_data_group": 0.46,
-        "score_data_loc": 0.293,
-        "score_data_loc_group": 0.293,
+        "score_data": 0.546,
+        "score_data_group": 0.546,
+        "score_data_loc": 0.336,
+        "score_data_loc_group": 0.336,
         "score_loc": 0.126,
         "score_loc_group": 0.126
       },
       {
         "component": "Friona",
         "componentData": "Data Complete",
-        "componentID": 25623214,
+        "componentID": 27108892,
         "name": "Friona",
         "not_displayed": false,
-        "rank_data": "2",
-        "rank_data_group": "2",
+        "rank_data": "1",
+        "rank_data_group": "1",
         "rank_data_loc": "4",
         "rank_data_loc_group": "4",
         "rank_loc": "7",
@@ -734,15 +734,34 @@
         "score_loc_group": 0.014
       },
       {
-        "component": "Amarillo",
+        "component": "Estacado",
         "componentData": "Data Complete",
-        "componentID": 25623212,
-        "name": "Amarillo",
+        "componentID": 27108891,
+        "name": "Estacado",
         "not_displayed": false,
         "rank_data": "3",
         "rank_data_group": "3",
         "rank_data_loc": "5",
         "rank_data_loc_group": "5",
+        "rank_loc": "6",
+        "rank_loc_group": "6",
+        "score_data": 0.548,
+        "score_data_group": 0.548,
+        "score_data_loc": 0.285,
+        "score_data_loc_group": 0.285,
+        "score_loc": 0.021,
+        "score_loc_group": 0.021
+      },
+      {
+        "component": "Amarillo",
+        "componentData": "Data Complete",
+        "componentID": 27108890,
+        "name": "Amarillo",
+        "not_displayed": false,
+        "rank_data": "2",
+        "rank_data_group": "2",
+        "rank_data_loc": "6",
+        "rank_data_loc_group": "6",
         "rank_loc": "8",
         "rank_loc_group": "8",
         "score_data": 0.553,
@@ -753,116 +772,97 @@
         "score_loc_group": 0.011
       },
       {
+        "component": "Mclean",
+        "componentData": "Missing Data",
+        "componentID": 27108934,
+        "name": "Mclean",
+        "not_displayed": false,
+        "rank_data": "7",
+        "rank_data_group": "7",
+        "rank_data_loc": "7",
+        "rank_data_loc_group": "7",
+        "rank_loc": "4",
+        "rank_loc_group": "4",
+        "score_data": 0.5,
+        "score_data_group": 0.5,
+        "score_data_loc": 0.28,
+        "score_data_loc_group": 0.28,
+        "score_loc": 0.059,
+        "score_loc_group": 0.059
+      },
+      {
         "component": "Lockney",
         "componentData": "Missing Data",
-        "componentID": 25623334,
+        "componentID": 27108935,
         "name": "Lockney",
         "not_displayed": false,
-        "rank_data": "5",
-        "rank_data_group": "5",
-        "rank_data_loc": "6",
-        "rank_data_loc_group": "6",
+        "rank_data": "9",
+        "rank_data_group": "9",
+        "rank_data_loc": "8",
+        "rank_data_loc_group": "8",
         "rank_loc": "5",
         "rank_loc_group": "5",
-        "score_data": 0.533,
-        "score_data_group": 0.533,
-        "score_data_loc": 0.281,
-        "score_data_loc_group": 0.281,
+        "score_data": 0.447,
+        "score_data_group": 0.447,
+        "score_data_loc": 0.239,
+        "score_data_loc_group": 0.239,
         "score_loc": 0.03,
         "score_loc_group": 0.03
       },
       {
         "component": "Pullman",
         "componentData": "Data Complete",
-        "componentID": 25623298,
+        "componentID": 27108856,
         "name": "Pullman",
         "not_displayed": false,
-        "rank_data": "4",
-        "rank_data_group": "4",
-        "rank_data_loc": "7",
-        "rank_data_loc_group": "7",
+        "rank_data": "8",
+        "rank_data_group": "8",
+        "rank_data_loc": "9",
+        "rank_data_loc_group": "9",
         "rank_loc": "9",
         "rank_loc_group": "9",
-        "score_data": 0.539,
-        "score_data_group": 0.539,
-        "score_data_loc": 0.275,
-        "score_data_loc_group": 0.275,
+        "score_data": 0.462,
+        "score_data_group": 0.462,
+        "score_data_loc": 0.237,
+        "score_data_loc_group": 0.237,
         "score_loc": 0.011,
         "score_loc_group": 0.011
       },
       {
-        "component": "Estacado",
-        "componentData": "Data Complete",
-        "componentID": 25623213,
-        "name": "Estacado",
-        "not_displayed": false,
-        "rank_data": "6",
-        "rank_data_group": "6",
-        "rank_data_loc": "8",
-        "rank_data_loc_group": "8",
-        "rank_loc": "6",
-        "rank_loc_group": "6",
-        "score_data": 0.492,
-        "score_data_group": 0.492,
-        "score_data_loc": 0.257,
-        "score_data_loc_group": 0.257,
-        "score_loc": 0.021,
-        "score_loc_group": 0.021
-      },
-      {
-        "component": "Mclean",
-        "componentData": "Missing Data",
-        "componentID": 25623333,
-        "name": "Mclean",
-        "not_displayed": false,
-        "rank_data": "9",
-        "rank_data_group": "9",
-        "rank_data_loc": "9",
-        "rank_data_loc_group": "9",
-        "rank_loc": "4",
-        "rank_loc_group": "4",
-        "score_data": 0.411,
-        "score_data_group": 0.411,
-        "score_data_loc": 0.235,
-        "score_data_loc_group": 0.235,
-        "score_loc": 0.059,
-        "score_loc_group": 0.059
-      },
-      {
         "component": "Acuff",
         "componentData": "Data Complete",
-        "componentID": 25623211,
+        "componentID": 27108889,
         "name": "Acuff",
         "not_displayed": true,
         "rank_data": "Not Displayed",
-        "rank_data_group": "1",
+        "rank_data_group": "6",
         "rank_data_loc": "Not Displayed",
         "rank_data_loc_group": "2",
         "rank_loc": "2",
         "rank_loc_group": "2",
-        "score_data": 0.576,
-        "score_data_group": 0.593,
-        "score_data_loc": 0.414,
-        "score_data_loc_group": 0.423,
+        "score_data": 0.49,
+        "score_data_group": 0.504,
+        "score_data_loc": 0.372,
+        "score_data_loc_group": 0.379,
         "score_loc": 0.253,
         "score_loc_group": 0.253
       },
       {
         "component": "Estacado",
         "componentData": "Data Complete",
-        "componentID": 25623296,
+        "componentID": 27108857,
         "name": "Estacado2",
         "not_displayed": true,
         "rank_data": "Not Displayed",
-        "rank_data_group": "6",
+        "rank_data_group": "3",
         "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "8",
+        "rank_data_loc_group": "5",
         "rank_loc": "Not Displayed",
         "rank_loc_group": "6",
         "score_data": 0.441,
-        "score_data_group": 0.492,
+        "score_data_group": 0.548,
         "score_data_loc": 0.231,
-        "score_data_loc_group": 0.257,
+        "score_data_loc_group": 0.285,
         "score_loc": 0.021,
         "score_loc_group": 0.021
       }

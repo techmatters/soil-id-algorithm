@@ -47,7 +47,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25279329",
+            "componentID": "27032519",
             "componentKind": "Series",
             "componentPct": 85,
             "dataSource": "SSURGO",
@@ -103,7 +103,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25279333",
+            "componentID": "27032515",
             "componentKind": "Series",
             "componentPct": 85,
             "dataSource": "SSURGO",
@@ -159,7 +159,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25279330",
+            "componentID": "27032518",
             "componentKind": "Series",
             "componentPct": 85,
             "dataSource": "SSURGO",
@@ -195,7 +195,7 @@
       {
         "component": "Hood",
         "componentData": "Data Complete",
-        "componentID": 25279330,
+        "componentID": 27032518,
         "name": "Hood3",
         "not_displayed": false,
         "rank_data": "1",
@@ -214,7 +214,7 @@
       {
         "component": "Hood",
         "componentData": "Data Complete",
-        "componentID": 25279329,
+        "componentID": 27032519,
         "name": "Hood",
         "not_displayed": true,
         "rank_data": "Not Displayed",
@@ -233,7 +233,7 @@
       {
         "component": "Hood",
         "componentData": "Data Complete",
-        "componentID": 25279333,
+        "componentID": 27032515,
         "name": "Hood2",
         "not_displayed": true,
         "rank_data": "Not Displayed",

@@ -1,13 +1,12 @@
-name: weekly api snapshot test
+name: API snapshot check
 
 on:
   schedule:
     - cron: '0 16 * * 1' # Monday 08:00 PST (UTC-8)
-  pull_request:
   workflow_dispatch:
 
 jobs:
-  test_api_snapshot:
+  check-api-snapshot:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,7 +36,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           make install DC_ENV=ci
-          make install-dev DC_ENV=ci
+          make install_dev DC_ENV=ci
 
       - name: Run API snapshot tests
         run: make test_api_snapshot

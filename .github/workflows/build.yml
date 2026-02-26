@@ -32,7 +32,7 @@ jobs:
           cache-dependency-glob: 'requirements**.txt'
 
       - name: Install Python dependencies
-        run: make install-dev DC_ENV=ci
+        run: make install_dev DC_ENV=ci
 
       - name: Run lint checks
         run: make lint
@@ -68,7 +68,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           make install DC_ENV=ci
-          make install-dev DC_ENV=ci
+          make install_dev DC_ENV=ci
 
       - name: Restore data cache
         uses: actions/cache@v4
@@ -79,7 +79,7 @@ jobs:
 
       - name: Download data
         if: ${{ hashFiles('Data/*') == '' }}
-        run: make download-soil-data
+        run: make download_soil_data
 
       - name: Start soil id DB
         run: docker compose up -d

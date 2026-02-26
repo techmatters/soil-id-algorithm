@@ -24,6 +24,10 @@ extend-ignore = ["E203"]
 [tool.pytest.ini_options]
 log_cli = true
 log_cli_level = "INFO"
+markers = [
+    "integration: runs against live external APIs; does not validate output",
+    "api_snapshot: captures and compares API response snapshots against live APIs",
+]
 
 [tool.setuptools.dynamic]
 dependencies = { file = ["requirements/base.in"] }

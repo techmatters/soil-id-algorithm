@@ -13,27 +13,22 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see https://www.gnu.org/licenses/.
 
-import json
-import pathlib
-from contextlib import contextmanager
-from unittest.mock import patch
-
 import pytest
+from syrupy.extensions.json import JSONSnapshotExtension
 
-SNAPSHOTS_DIR = pathlib.Path(__file__).parent / "__snapshots__" / "test_api_snapshots"
+from soil_id.services import get_elev_data, get_soilweb_data
+from soil_id.tests.us.test_us import test_params
 
 
-@pytest.fixture
-def api_fixtures():
-    @contextmanager
-    def _apply(lon, lat):
-        snapshot_file = SNAPSHOTS_DIR / f"test_api_snapshot[{lat},{lon}].json"
-        data = json.loads(snapshot_file.read_text())
-
-        with (
-            patch("soil_id.us_soil.get_soilweb_data", return_value=data["soilweb"]),
-            patch("soil_id.us_soil.get_elev_data", return_value=data["elev"]),
-        ):
-            yield
-
-    return _apply
+@pytest.mark.api_snapshot
+@pytest.mark.parametrize("location", test_params)
+def test_api_snapshot(location, snapshot):
+    """
+    Fetch live API responses and compare against stored Syrupy snapshots.
+    Run with --snapshot-update to refresh stored responses.
+    """
+    lon, lat = location["lon"], location["lat"]
+    assert snapshot.with_defaults(extension_class=JSONSnapshotExtension) == {
+        "soilweb": get_soilweb_data(lon, lat),
+        "elev": get_elev_data(lon, lat),
+    }

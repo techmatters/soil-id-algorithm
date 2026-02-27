@@ -40,9 +40,15 @@
         "ec": {},
         "esd": {
           "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
+            "ecoclassid": [
+              "F230XY612AK"
+            ],
+            "ecoclassname": [
+              "Boreal Forest Loamy Slopes"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/F230XY612AK"
+            ]
           }
         },
         "id": {
@@ -58,7 +64,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "24913863",
+            "componentID": "27026711",
             "componentKind": "Taxon above family",
             "componentPct": 30,
             "dataSource": "SSURGO",
@@ -90,9 +96,15 @@
         "ec": {},
         "esd": {
           "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
+            "ecoclassid": [
+              ""
+            ],
+            "ecoclassname": [
+              ""
+            ],
+            "edit_url": [
+              ""
+            ]
           }
         },
         "id": {
@@ -108,7 +120,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "24913856",
+            "componentID": "27026717",
             "componentKind": "Taxon above family",
             "componentPct": 29,
             "dataSource": "SSURGO",
@@ -140,9 +152,15 @@
         "ec": {},
         "esd": {
           "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
+            "ecoclassid": [
+              ""
+            ],
+            "ecoclassname": [
+              ""
+            ],
+            "edit_url": [
+              ""
+            ]
           }
         },
         "id": {
@@ -158,7 +176,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "24913864",
+            "componentID": "27026716",
             "componentKind": "Taxon above family",
             "componentPct": 13,
             "dataSource": "SSURGO",
@@ -190,9 +208,15 @@
         "ec": {},
         "esd": {
           "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
+            "ecoclassid": [
+              ""
+            ],
+            "ecoclassname": [
+              ""
+            ],
+            "edit_url": [
+              ""
+            ]
           }
         },
         "id": {
@@ -208,7 +232,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "24913862",
+            "componentID": "27026714",
             "componentKind": "Taxon above family",
             "componentPct": 7,
             "dataSource": "SSURGO",
@@ -240,9 +264,15 @@
         "ec": {},
         "esd": {
           "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
+            "ecoclassid": [
+              ""
+            ],
+            "ecoclassname": [
+              ""
+            ],
+            "edit_url": [
+              ""
+            ]
           }
         },
         "id": {
@@ -258,7 +288,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "24913861",
+            "componentID": "27026715",
             "componentKind": "Taxon above family",
             "componentPct": 6,
             "dataSource": "SSURGO",
@@ -290,9 +320,15 @@
         "ec": {},
         "esd": {
           "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
+            "ecoclassid": [
+              "F230XY611AK"
+            ],
+            "ecoclassname": [
+              "Boreal Forest Loamy Frozen Slopes"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/F230XY611AK"
+            ]
           }
         },
         "id": {
@@ -308,7 +344,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "24913860",
+            "componentID": "27026713",
             "componentKind": "Taxon above family",
             "componentPct": 5,
             "dataSource": "SSURGO",
@@ -340,9 +376,15 @@
         "ec": {},
         "esd": {
           "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
+            "ecoclassid": [
+              "R230XY630AK"
+            ],
+            "ecoclassname": [
+              "Alpine Dwarf Scrub Gravelly Slopes"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/R230XY630AK"
+            ]
           }
         },
         "id": {
@@ -358,7 +400,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "24913859",
+            "componentID": "27026712",
             "componentKind": "Taxon above family",
             "componentPct": 4,
             "dataSource": "SSURGO",
@@ -390,9 +432,15 @@
         "ec": {},
         "esd": {
           "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
+            "ecoclassid": [
+              ""
+            ],
+            "ecoclassname": [
+              ""
+            ],
+            "edit_url": [
+              ""
+            ]
           }
         },
         "id": {
@@ -408,7 +456,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "24913857",
+            "componentID": "27026718",
             "componentKind": "Taxon above family",
             "componentPct": 3,
             "dataSource": "SSURGO",
@@ -440,9 +488,15 @@
         "ec": {},
         "esd": {
           "ESD": {
-            "ecoclassid": "",
-            "ecoclassname": "",
-            "edit_url": ""
+            "ecoclassid": [
+              ""
+            ],
+            "ecoclassname": [
+              ""
+            ],
+            "edit_url": [
+              ""
+            ]
           }
         },
         "id": {
@@ -458,7 +512,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "24913858",
+            "componentID": "27026719",
             "componentKind": "Taxon above family",
             "componentPct": 3,
             "dataSource": "SSURGO",
@@ -494,7 +548,7 @@
       {
         "component": "E30-boreal forest-silty slopes",
         "componentData": "Missing Data",
-        "componentID": 24913863,
+        "componentID": 27026711,
         "name": "E30-boreal forest-silty slopes",
         "not_displayed": false,
         "rank_data": "1",
@@ -513,7 +567,7 @@
       {
         "component": "E30-boreal alpine scrub-gravelly colluvial slopes",
         "componentData": "Missing Data",
-        "componentID": 24913856,
+        "componentID": 27026717,
         "name": "E30-boreal alpine scrub-gravelly colluvial slopes",
         "not_displayed": false,
         "rank_data": "4",
@@ -532,7 +586,7 @@
       {
         "component": "E30-boreal taiga-loamy frozen colluvial slopes",
         "componentData": "Missing Data",
-        "componentID": 24913864,
+        "componentID": 27026716,
         "name": "E30-boreal taiga-loamy frozen colluvial slopes",
         "not_displayed": false,
         "rank_data": "2",
@@ -551,7 +605,7 @@
       {
         "component": "E30-boreal taiga-silty slopes",
         "componentData": "Missing Data",
-        "componentID": 24913862,
+        "componentID": 27026714,
         "name": "E30-boreal taiga-silty slopes",
         "not_displayed": false,
         "rank_data": "3",
@@ -570,7 +624,7 @@
       {
         "component": "E30-boreal taiga/tussock-silty frozen slopes",
         "componentData": "Missing Data",
-        "componentID": 24913861,
+        "componentID": 27026715,
         "name": "E30-boreal taiga/tussock-silty frozen slopes",
         "not_displayed": false,
         "rank_data": "6",
@@ -589,7 +643,7 @@
       {
         "component": "E30-boreal scrub-silty frozen drainageways",
         "componentData": "Missing Data",
-        "componentID": 24913859,
+        "componentID": 27026712,
         "name": "E30-boreal scrub-silty frozen drainageways",
         "not_displayed": false,
         "rank_data": "5",
@@ -608,7 +662,7 @@
       {
         "component": "E30-boreal subalpine woodland-gravelly colluvial slopes",
         "componentData": "Missing Data",
-        "componentID": 24913858,
+        "componentID": 27026719,
         "name": "E30-boreal subalpine woodland-gravelly colluvial slopes",
         "not_displayed": false,
         "rank_data": "7",
@@ -627,7 +681,7 @@
       {
         "component": "E30-boreal alpine dwarf scrub-gravelly colluvial slopes",
         "componentData": "Missing Data",
-        "componentID": 24913857,
+        "componentID": 27026718,
         "name": "E30-boreal alpine dwarf scrub-gravelly colluvial slopes",
         "not_displayed": false,
         "rank_data": "8",
@@ -646,7 +700,7 @@
       {
         "component": "E30-boreal subalpine scrub-loamy colluvial slopes",
         "componentData": "Missing Data",
-        "componentID": 24913860,
+        "componentID": 27026713,
         "name": "E30-boreal subalpine scrub-loamy colluvial slopes",
         "not_displayed": false,
         "rank_data": "9",

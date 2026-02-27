@@ -48,7 +48,7 @@ for idx, coords in enumerate(test_locations):
 
 
 @pytest.mark.parametrize("location", test_params)
-def test_soil_location(location, snapshot):
+def test_soil_location(location, snapshot, api_fixtures):
     # Dummy Soil Profile Data (replicating the structure provided)
     soilHorizon = ["LOAM"] * 7
     topDepth = [0, 1, 10, 20, 50, 70, 100]
@@ -60,23 +60,24 @@ def test_soil_location(location, snapshot):
     pElev = None
     cracks = False
 
-    start_time = time.perf_counter()
-    list_soils_result = list_soils(location["lon"], location["lat"])
-    logging.info(f"...time: {(time.perf_counter() - start_time):.2f}s")
-    rank_result = rank_soils(
-        location["lon"],
-        location["lat"],
-        list_soils_result,
-        soilHorizon,
-        topDepth,
-        bottomDepth,
-        rfvDepth,
-        lab_Color,
-        pSlope,
-        pElev,
-        bedrock,
-        cracks,
-    )
+    with api_fixtures(location["lon"], location["lat"]):
+        start_time = time.perf_counter()
+        list_soils_result = list_soils(location["lon"], location["lat"])
+        logging.info(f"...time: {(time.perf_counter() - start_time):.2f}s")
+        rank_result = rank_soils(
+            location["lon"],
+            location["lat"],
+            list_soils_result,
+            soilHorizon,
+            topDepth,
+            bottomDepth,
+            rfvDepth,
+            lab_Color,
+            pSlope,
+            pElev,
+            bedrock,
+            cracks,
+        )
 
     assert snapshot.with_defaults(extension_class=JSONSnapshotExtension) == {
         "list": clean_soil_list_json(list_soils_result.soil_list_json),
@@ -84,19 +85,20 @@ def test_soil_location(location, snapshot):
     }
 
 
-def test_empty_rank():
-    SoilListOutputData = list_soils(test_locations[0]["lon"], test_locations[0]["lat"])
-    rank_soils(
-        test_locations[0]["lon"],
-        test_locations[0]["lat"],
-        SoilListOutputData,
-        soilHorizon=[],
-        topDepth=[],
-        bottomDepth=[],
-        rfvDepth=[],
-        lab_Color=[],
-        pSlope=None,
-        pElev=None,
-        bedrock=None,
-        cracks=None,
-    )
+def test_empty_rank(api_fixtures):
+    with api_fixtures(test_locations[0]["lon"], test_locations[0]["lat"]):
+        SoilListOutputData = list_soils(test_locations[0]["lon"], test_locations[0]["lat"])
+        rank_soils(
+            test_locations[0]["lon"],
+            test_locations[0]["lat"],
+            SoilListOutputData,
+            soilHorizon=[],
+            topDepth=[],
+            bottomDepth=[],
+            rfvDepth=[],
+            lab_Color=[],
+            pSlope=None,
+            pElev=None,
+            bedrock=None,
+            cracks=None,
+        )

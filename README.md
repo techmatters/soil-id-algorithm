@@ -2,14 +2,14 @@
 
 ## Requirements
 
--   Python: 3.12 or better
+- Python: 3.12 or better
 
 # Contributing
 
 Configure git to automatically lint your code and validate validate your commit messages:
 
 ```sh
-$ make setup-git-hooks
+$ make setup_git_hooks
 ```
 
 Set up a virtual environment and install dependencies:
@@ -17,27 +17,27 @@ Set up a virtual environment and install dependencies:
 ```sh
 $ uv venv
 $ source .venv/bin/activate
-$ make install && make install-dev
+$ make install && make install_dev
 ```
 
 ## explanation of algorithm
 
 ### terminology
 
--   soil map unit: (possibly disjoint) geographic area that is associated with soil component percentage / arial coverage
--   soil series: collection of related soil components
--   soil component: description of various soil properties at specific depth intervals
+- soil map unit: (possibly disjoint) geographic area that is associated with soil component percentage / arial coverage
+- soil series: collection of related soil components
+- soil component: description of various soil properties at specific depth intervals
 
 ### references
 
--   equation 1 in https://landpotential.org/wp-content/uploads/2020/07/sssaj-0-0-sssaj2017.09.0337.pdf
+- equation 1 in https://landpotential.org/wp-content/uploads/2020/07/sssaj-0-0-sssaj2017.09.0337.pdf
 
 ### dependencies
 
--   simple features: https://r-spatial.github.io/sf/index.html
--   well-known geometry: https://paleolimbot.github.io/wk/
--   R package for querying soilDB: https://ncss-tech.github.io/soilDB/
--   dplyr: https://dplyr.tidyverse.org/
+- simple features: https://r-spatial.github.io/sf/index.html
+- well-known geometry: https://paleolimbot.github.io/wk/
+- R package for querying soilDB: https://ncss-tech.github.io/soilDB/
+- dplyr: https://dplyr.tidyverse.org/
 
 ### algorithm
 
@@ -72,19 +72,27 @@ Input: a specific point in lat/lon, and a set of depth intervals.
 
 ### Regular tests
 
-There is a small suite of integration tests which can be run with the `make test` command, and gets run regularly by CI.
+There are several smaller test suites:
+
+- There is a set of "unit" tests, which really are testing the entire codebase more or less, but don't rely on any external API services, instead using snapshotted data from those services. You can run these tests with `make test_unit`.
+    - These tests mostly produce snapshots of algorithm output rather than validating specific properties of the output, so they moreso validate that the algorithm hasn't changed (or how it has changed) rather than that it is correct. If the snapshots have changed in a desirable way, you can update them with `make test_update_unit_snapshots`.
+- For US only, there is a set of "integration" tests which run the algorithm against the live API services, but just confirm that the algorithm doesn't crash, they don't validate the output since it can change over time. These can be run with `make test_integration`.
+- The unit and integration tests can be run together with `make test` for convenience: this is what must pass for a PR to be mergeable.
+- The API snapshots themselves can be checked against the live API for drift using `make test_api_snapshot`. They can be updated to the new live API values using `make test_update_api_snapshots`.
 
 ### Bulk test
 
 There is a large suite of integration tests which takes many hours to run. It comes in the format of two scripts:
 
--   Run `make generate_bulk_test_results` to run the algorithm over a collection of 3000 soil pits, which will accumulate the results in a log file.
--   Run `RESULTS_FILE=$RESULTS_FILE make process_bulk_test_results` to view statistics calculated over that log file.
+- Run `make generate_bulk_test_results_us` or `make generate_bulk_test_results_global` to run the algorithm over a collection of thousands soil pits with soil IDs given by trained data collectors, which will accumulate the results in a log file. This can take several hours or potentially need to run overnight due (especially the US tests are slow due to the speed of external API services).
+- Run `RESULTS_FILE=$RESULTS_FILE make process_bulk_test_results_us` or `RESULTS_FILE=$RESULTS_FILE make process_bulk_test_results_global` to view statistics calculated over that log file. This can be run concurrently with `generate_bulk_test_results` to see statistics over the soil pits which have been run so far.
+- It has been nice to have these as two separate scripts because then you can iterate on the processing and display of statistics without interrupting the data collection.
+- It would be of value to also be able to run these US tests against snapshotted API data, it would just be much more onerous to collect and update the data.
 
 ## Acknowledgements
 
--   Beaudette, D., Roudier, P., Brown, A. (2023). [aqp: Algorithms for Quantitative Pedology](https://CRAN.R-project.org/package=aqp). R package version 2.0.
+- Beaudette, D., Roudier, P., Brown, A. (2023). [aqp: Algorithms for Quantitative Pedology](https://CRAN.R-project.org/package=aqp). R package version 2.0.
 
--   Beaudette, D.E., Roudier, P., O'Geen, A.T. [Algorithms for quantitative pedology: A toolkit for soil scientists, Computers & Geosciences](http://dx.doi.org/10.1016/j.cageo.2012.10.020), Volume 52, March 2013, Pages 258-268, ISSN 0098-3004.
+- Beaudette, D.E., Roudier, P., O'Geen, A.T. [Algorithms for quantitative pedology: A toolkit for soil scientists, Computers & Geosciences](http://dx.doi.org/10.1016/j.cageo.2012.10.020), Volume 52, March 2013, Pages 258-268, ISSN 0098-3004.
 
--   soilDB: Beaudette, D., Skovlin, J., Roecker, S., Brown, A. (2024). [soilDB: Soil Database Interface](https://CRAN.R-project.org/package=soilDB). R package version 2.8.3.
+- soilDB: Beaudette, D., Skovlin, J., Roecker, S., Brown, A. (2024). [soilDB: Soil Database Interface](https://CRAN.R-project.org/package=soilDB). R package version 2.8.3.

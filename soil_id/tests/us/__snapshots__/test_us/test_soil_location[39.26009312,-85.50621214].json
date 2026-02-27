@@ -64,7 +64,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25325347",
+            "componentID": "26772442",
             "componentKind": "Series",
             "componentPct": 5,
             "dataSource": "SSURGO",
@@ -120,7 +120,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25325308",
+            "componentID": "26772402",
             "componentKind": "Series",
             "componentPct": 85,
             "dataSource": "SSURGO",
@@ -176,7 +176,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25325331",
+            "componentID": "26772425",
             "componentKind": "Series",
             "componentPct": 87,
             "dataSource": "SSURGO",
@@ -232,7 +232,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25325341",
+            "componentID": "26772436",
             "componentKind": "Series",
             "componentPct": 9,
             "dataSource": "SSURGO",
@@ -288,7 +288,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25325348",
+            "componentID": "26772441",
             "componentKind": "Series",
             "componentPct": 3,
             "dataSource": "SSURGO",
@@ -321,13 +321,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "F111XA007IN"
+              "F111XA008IN"
             ],
             "ecoclassname": [
-              "Till Depression Flatwood"
+              "Wet Till Ridge"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XA007IN"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XA008IN"
             ]
           }
         },
@@ -344,7 +344,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25325342",
+            "componentID": "26772434",
             "componentKind": "Series",
             "componentPct": 4,
             "dataSource": "SSURGO",
@@ -377,13 +377,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "F111XA009IN"
+              "F111XA007IN"
             ],
             "ecoclassname": [
-              "Till Ridge"
+              "Till Depression Flatwood"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XA009IN"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XA007IN"
             ]
           }
         },
@@ -400,7 +400,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25325406",
+            "componentID": "26772498",
             "componentKind": "Series",
             "componentPct": 5,
             "dataSource": "SSURGO",
@@ -433,13 +433,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "F111XA007IN"
+              "F111XA009IN"
             ],
             "ecoclassname": [
-              "Till Depression Flatwood"
+              "Till Ridge"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XA007IN"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XA009IN"
             ]
           }
         },
@@ -456,7 +456,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25325333",
+            "componentID": "26772424",
             "componentKind": "Series",
             "componentPct": 4,
             "dataSource": "SSURGO",
@@ -512,7 +512,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25325330",
+            "componentID": "26772426",
             "componentKind": "Series",
             "componentPct": 3,
             "dataSource": "SSURGO",
@@ -568,7 +568,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25325332",
+            "componentID": "26772423",
             "componentKind": "Series",
             "componentPct": 2,
             "dataSource": "SSURGO",
@@ -624,7 +624,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25325329",
+            "componentID": "26772427",
             "componentKind": "Series",
             "componentPct": 2,
             "dataSource": "SSURGO",
@@ -680,7 +680,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25325334",
+            "componentID": "26772428",
             "componentKind": "Series",
             "componentPct": 2,
             "dataSource": "SSURGO",
@@ -736,7 +736,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25325325",
+            "componentID": "26772420",
             "componentKind": "Series",
             "componentPct": 90,
             "dataSource": "SSURGO",
@@ -792,7 +792,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25325355",
+            "componentID": "26772448",
             "componentKind": "Series",
             "componentPct": 2,
             "dataSource": "SSURGO",
@@ -848,7 +848,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25325351",
+            "componentID": "26772444",
             "componentKind": "Series",
             "componentPct": 4,
             "dataSource": "SSURGO",
@@ -904,7 +904,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25325353",
+            "componentID": "26772446",
             "componentKind": "Series",
             "componentPct": 7,
             "dataSource": "SSURGO",
@@ -937,13 +937,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "F111XA008IN"
+              "F111XA007IN"
             ],
             "ecoclassname": [
-              "Wet Till Ridge"
+              "Till Depression Flatwood"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XA008IN"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XA007IN"
             ]
           }
         },
@@ -960,7 +960,7 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "25325310",
+            "componentID": "26772403",
             "componentKind": "Series",
             "componentPct": 10,
             "dataSource": "SSURGO",
@@ -996,26 +996,26 @@
       {
         "component": "Fincastle",
         "componentData": "Data Complete",
-        "componentID": 25325308,
+        "componentID": 26772402,
         "name": "Fincastle",
         "not_displayed": false,
-        "rank_data": "1",
-        "rank_data_group": "1",
+        "rank_data": "2",
+        "rank_data_group": "2",
         "rank_data_loc": "1",
         "rank_data_loc_group": "1",
         "rank_loc": "2",
         "rank_loc_group": "2",
-        "score_data": 0.671,
-        "score_data_group": 0.671,
-        "score_data_loc": 0.363,
-        "score_data_loc_group": 0.363,
+        "score_data": 0.653,
+        "score_data_group": 0.653,
+        "score_data_loc": 0.353,
+        "score_data_loc_group": 0.353,
         "score_loc": 0.054,
         "score_loc_group": 0.054
       },
       {
         "component": "Crosby",
         "componentData": "Data Complete",
-        "componentID": 25325341,
+        "componentID": 26772436,
         "name": "Crosby",
         "not_displayed": false,
         "rank_data": "3",
@@ -1024,21 +1024,21 @@
         "rank_data_loc_group": "2",
         "rank_loc": "4",
         "rank_loc_group": "4",
-        "score_data": 0.662,
-        "score_data_group": 0.662,
-        "score_data_loc": 0.355,
-        "score_data_loc_group": 0.355,
+        "score_data": 0.651,
+        "score_data_group": 0.651,
+        "score_data_loc": 0.349,
+        "score_data_loc_group": 0.349,
         "score_loc": 0.048,
         "score_loc_group": 0.048
       },
       {
         "component": "Bonnell",
         "componentData": "Data Complete",
-        "componentID": 25325330,
+        "componentID": 26772426,
         "name": "Bonnell",
         "not_displayed": false,
-        "rank_data": "2",
-        "rank_data_group": "2",
+        "rank_data": "1",
+        "rank_data_group": "1",
         "rank_data_loc": "3",
         "rank_data_loc_group": "3",
         "rank_loc": "9",
@@ -1051,53 +1051,91 @@
         "score_loc_group": 0.002
       },
       {
-        "component": "Holton",
+        "component": "Grayford",
         "componentData": "Data Complete",
-        "componentID": 25325333,
-        "name": "Holton",
+        "componentID": 26772427,
+        "name": "Grayford",
         "not_displayed": false,
         "rank_data": "4",
         "rank_data_group": "4",
         "rank_data_loc": "4",
         "rank_data_loc_group": "4",
-        "rank_loc": "8",
-        "rank_loc_group": "8",
-        "score_data": 0.643,
-        "score_data_group": 0.643,
-        "score_data_loc": 0.323,
-        "score_data_loc_group": 0.323,
-        "score_loc": 0.002,
-        "score_loc_group": 0.002
-      },
-      {
-        "component": "Grayford",
-        "componentData": "Data Complete",
-        "componentID": 25325329,
-        "name": "Grayford",
-        "not_displayed": false,
-        "rank_data": "5",
-        "rank_data_group": "5",
-        "rank_data_loc": "5",
-        "rank_data_loc_group": "5",
         "rank_loc": "11",
         "rank_loc_group": "11",
-        "score_data": 0.637,
-        "score_data_group": 0.637,
-        "score_data_loc": 0.319,
-        "score_data_loc_group": 0.319,
+        "score_data": 0.648,
+        "score_data_group": 0.648,
+        "score_data_loc": 0.325,
+        "score_data_loc_group": 0.325,
         "score_loc": 0.001,
         "score_loc_group": 0.001
       },
       {
-        "component": "Brookston",
+        "component": "Hennepin",
         "componentData": "Data Complete",
-        "componentID": 25325342,
-        "name": "Brookston",
+        "componentID": 26772442,
+        "name": "Hennepin",
+        "not_displayed": false,
+        "rank_data": "9",
+        "rank_data_group": "9",
+        "rank_data_loc": "5",
+        "rank_data_loc_group": "5",
+        "rank_loc": "1",
+        "rank_loc_group": "1",
+        "score_data": 0.582,
+        "score_data_group": 0.582,
+        "score_data_loc": 0.322,
+        "score_data_loc_group": 0.322,
+        "score_loc": 0.061,
+        "score_loc_group": 0.061
+      },
+      {
+        "component": "Holton",
+        "componentData": "Data Complete",
+        "componentID": 26772424,
+        "name": "Holton",
+        "not_displayed": false,
+        "rank_data": "5",
+        "rank_data_group": "5",
+        "rank_data_loc": "6",
+        "rank_data_loc_group": "6",
+        "rank_loc": "8",
+        "rank_loc_group": "8",
+        "score_data": 0.634,
+        "score_data_group": 0.634,
+        "score_data_loc": 0.318,
+        "score_data_loc_group": 0.318,
+        "score_loc": 0.002,
+        "score_loc_group": 0.002
+      },
+      {
+        "component": "Cyclone",
+        "componentData": "Data Complete",
+        "componentID": 26772441,
+        "name": "Cyclone",
         "not_displayed": false,
         "rank_data": "6",
         "rank_data_group": "6",
-        "rank_data_loc": "6",
-        "rank_data_loc_group": "6",
+        "rank_data_loc": "7",
+        "rank_data_loc_group": "7",
+        "rank_loc": "5",
+        "rank_loc_group": "5",
+        "score_data": 0.614,
+        "score_data_group": 0.614,
+        "score_data_loc": 0.312,
+        "score_data_loc_group": 0.312,
+        "score_loc": 0.011,
+        "score_loc_group": 0.011
+      },
+      {
+        "component": "Brookston",
+        "componentData": "Data Complete",
+        "componentID": 26772434,
+        "name": "Brookston",
+        "not_displayed": false,
+        "rank_data": "7",
+        "rank_data_group": "7",
+        "rank_data_loc": "8",
+        "rank_data_loc_group": "8",
         "rank_loc": "6",
         "rank_loc_group": "6",
         "score_data": 0.61,
@@ -1108,47 +1146,9 @@
         "score_loc_group": 0.009
       },
       {
-        "component": "Cyclone",
-        "componentData": "Data Complete",
-        "componentID": 25325348,
-        "name": "Cyclone",
-        "not_displayed": false,
-        "rank_data": "7",
-        "rank_data_group": "7",
-        "rank_data_loc": "7",
-        "rank_data_loc_group": "7",
-        "rank_loc": "5",
-        "rank_loc_group": "5",
-        "score_data": 0.596,
-        "score_data_group": 0.596,
-        "score_data_loc": 0.303,
-        "score_data_loc_group": 0.303,
-        "score_loc": 0.011,
-        "score_loc_group": 0.011
-      },
-      {
-        "component": "Hennepin",
-        "componentData": "Data Complete",
-        "componentID": 25325355,
-        "name": "Hennepin3",
-        "not_displayed": false,
-        "rank_data": "10",
-        "rank_data_group": "10",
-        "rank_data_loc": "8",
-        "rank_data_loc_group": "8",
-        "rank_loc": "Not Displayed",
-        "rank_loc_group": "1",
-        "score_data": 0.54,
-        "score_data_group": 0.54,
-        "score_data_loc": 0.301,
-        "score_data_loc_group": 0.301,
-        "score_loc": 0.061,
-        "score_loc_group": 0.061
-      },
-      {
         "component": "Cincinnati",
         "componentData": "Data Complete",
-        "componentID": 25325332,
+        "componentID": 26772423,
         "name": "Cincinnati",
         "not_displayed": false,
         "rank_data": "8",
@@ -1167,11 +1167,11 @@
       {
         "component": "Celina",
         "componentData": "Data Complete",
-        "componentID": 25325406,
+        "componentID": 26772498,
         "name": "Celina",
         "not_displayed": false,
-        "rank_data": "9",
-        "rank_data_group": "9",
+        "rank_data": "10",
+        "rank_data_group": "10",
         "rank_data_loc": "10",
         "rank_data_loc_group": "10",
         "rank_loc": "7",
@@ -1186,7 +1186,7 @@
       {
         "component": "Hickory",
         "componentData": "Data Complete",
-        "componentID": 25325331,
+        "componentID": 26772425,
         "name": "Hickory",
         "not_displayed": false,
         "rank_data": "12",
@@ -1205,7 +1205,7 @@
       {
         "component": "Jessietown",
         "componentData": "Data Complete",
-        "componentID": 25325334,
+        "componentID": 26772428,
         "name": "Jessietown",
         "not_displayed": false,
         "rank_data": "11",
@@ -1214,36 +1214,17 @@
         "rank_data_loc_group": "12",
         "rank_loc": "12",
         "rank_loc_group": "12",
-        "score_data": 0.522,
-        "score_data_group": 0.522,
-        "score_data_loc": 0.262,
-        "score_data_loc_group": 0.262,
+        "score_data": 0.531,
+        "score_data_group": 0.531,
+        "score_data_loc": 0.266,
+        "score_data_loc_group": 0.266,
         "score_loc": 0.001,
         "score_loc_group": 0.001
       },
       {
         "component": "Crosby",
         "componentData": "Data Complete",
-        "componentID": 25325353,
-        "name": "Crosby3",
-        "not_displayed": true,
-        "rank_data": "Not Displayed",
-        "rank_data_group": "3",
-        "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "2",
-        "rank_loc": "Not Displayed",
-        "rank_loc_group": "4",
-        "score_data": 0.654,
-        "score_data_group": 0.662,
-        "score_data_loc": 0.351,
-        "score_data_loc_group": 0.355,
-        "score_loc": 0.048,
-        "score_loc_group": 0.048
-      },
-      {
-        "component": "Crosby",
-        "componentData": "Data Complete",
-        "componentID": 25325351,
+        "componentID": 26772444,
         "name": "Crosby2",
         "not_displayed": true,
         "rank_data": "Not Displayed",
@@ -1253,66 +1234,85 @@
         "rank_loc": "Not Displayed",
         "rank_loc_group": "4",
         "score_data": 0.609,
-        "score_data_group": 0.662,
+        "score_data_group": 0.651,
         "score_data_loc": 0.328,
-        "score_data_loc_group": 0.355,
+        "score_data_loc_group": 0.349,
+        "score_loc": 0.048,
+        "score_loc_group": 0.048
+      },
+      {
+        "component": "Crosby",
+        "componentData": "Data Complete",
+        "componentID": 26772446,
+        "name": "Crosby3",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "3",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "2",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "4",
+        "score_data": 0.597,
+        "score_data_group": 0.651,
+        "score_data_loc": 0.322,
+        "score_data_loc_group": 0.349,
         "score_loc": 0.048,
         "score_loc_group": 0.048
       },
       {
         "component": "Hennepin",
         "componentData": "Data Complete",
-        "componentID": 25325325,
-        "name": "Hennepin2",
+        "componentID": 26772448,
+        "name": "Hennepin3",
         "not_displayed": true,
         "rank_data": "Not Displayed",
-        "rank_data_group": "10",
+        "rank_data_group": "9",
         "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "8",
+        "rank_data_loc_group": "5",
         "rank_loc": "Not Displayed",
         "rank_loc_group": "1",
-        "score_data": 0.536,
-        "score_data_group": 0.54,
-        "score_data_loc": 0.299,
-        "score_data_loc_group": 0.301,
+        "score_data": 0.54,
+        "score_data_group": 0.582,
+        "score_data_loc": 0.301,
+        "score_data_loc_group": 0.322,
         "score_loc": 0.061,
         "score_loc_group": 0.061
       },
       {
         "component": "Hennepin",
         "componentData": "Data Complete",
-        "componentID": 25325347,
-        "name": "Hennepin",
+        "componentID": 26772420,
+        "name": "Hennepin2",
         "not_displayed": true,
         "rank_data": "Not Displayed",
-        "rank_data_group": "10",
+        "rank_data_group": "9",
         "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "8",
-        "rank_loc": "1",
+        "rank_data_loc_group": "5",
+        "rank_loc": "Not Displayed",
         "rank_loc_group": "1",
-        "score_data": 0.525,
-        "score_data_group": 0.54,
-        "score_data_loc": 0.293,
-        "score_data_loc_group": 0.301,
+        "score_data": 0.536,
+        "score_data_group": 0.582,
+        "score_data_loc": 0.299,
+        "score_data_loc_group": 0.322,
         "score_loc": 0.061,
         "score_loc_group": 0.061
       },
       {
         "component": "Cyclone",
         "componentData": "Data Complete",
-        "componentID": 25325310,
+        "componentID": 26772403,
         "name": "Cyclone2",
         "not_displayed": true,
         "rank_data": "Not Displayed",
-        "rank_data_group": "7",
+        "rank_data_group": "6",
         "rank_data_loc": "Not Displayed",
         "rank_data_loc_group": "7",
         "rank_loc": "Not Displayed",
         "rank_loc_group": "5",
         "score_data": 0.555,
-        "score_data_group": 0.596,
+        "score_data_group": 0.614,
         "score_data_loc": 0.283,
-        "score_data_loc_group": 0.303,
+        "score_data_loc_group": 0.312,
         "score_loc": 0.011,
         "score_loc_group": 0.011
       }

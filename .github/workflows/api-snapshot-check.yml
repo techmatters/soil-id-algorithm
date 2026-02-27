@@ -1,0 +1,42 @@
+name: API snapshot check
+
+on:
+  schedule:
+    - cron: '0 16 * * 1' # Monday 08:00 PST (UTC-8)
+  workflow_dispatch:
+
+jobs:
+  check-api-snapshot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Update and install Linux packages
+        run: |
+          sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+          sudo apt-get update
+          sudo apt-get install libgdal-dev gdal-bin python3-gdal
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13.7'
+          cache-dependency-path: |
+            'requirements.txt'
+            'requirements-dev.txt'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          cache-dependency-glob: 'requirements**.txt'
+
+      - name: Install Python dependencies
+        run: |
+          make install DC_ENV=ci
+          make install_dev DC_ENV=ci
+
+      - name: Run API snapshot tests
+        run: make test_api_snapshot

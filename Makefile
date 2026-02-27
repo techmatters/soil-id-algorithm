@@ -5,10 +5,10 @@ endif
 install:
 	uv pip install -r requirements.txt $(UV_FLAGS)
 
-install-dev:
+install_dev:
 	uv pip install -r requirements-dev.txt $(UV_FLAGS)
 
-setup-git-hooks:
+setup_git_hooks:
 	@pre-commit install
 
 lint:
@@ -22,46 +22,54 @@ format:
 lock:
 	CUSTOM_COMPILE_COMMAND="make lock" uv pip compile --upgrade --generate-hashes requirements/base.in -o requirements.txt
 
-lock-package:
+lock_package:
 	CUSTOM_COMPILE_COMMAND="make lock" uv pip compile --upgrade-package $(PACKAGE) --generate-hashes --emit-build-options requirements/base.in requirements/deploy.in -o requirements.txt
 
-lock-dev:
+lock_dev:
 	CUSTOM_COMPILE_COMMAND="make lock-dev" uv pip compile --upgrade --generate-hashes requirements/dev.in -o requirements-dev.txt
 
-lock-dev-package:
+lock_dev_package:
 	CUSTOM_COMPILE_COMMAND="make lock-dev" uv pip compile --upgrade-package $(PACKAGE) --generate-hashes requirements/dev.in -o requirements-dev.txt
-
-build:
-	echo "Building TK..."
-
-check_rebuild:
-	./scripts/rebuild.sh
 
 clean:
 	@find . -name *.pyc -delete
 	@find . -name __pycache__ -delete
 
-test: clean check_rebuild
+# run the standard test suite (unit + integration, no api_snapshots)
+test:
 	if [ -z "$(PATTERN)" ]; then \
-		$(DC_RUN_CMD) pytest soil_id -vv; \
+		pytest soil_id -m "not api_snapshot"; \
 	else \
-		$(DC_RUN_CMD) pytest soil_id -vv -k "$(PATTERN)"; \
+		pytest soil_id -m "not api_snapshot" -k "$(PATTERN)"; \
 	fi
 
-test_update_snapshots: clean check_rebuild
-	if [ -z "$(PATTERN)" ]; then \
-		$(DC_RUN_CMD) pytest soil_id --snapshot-update; \
-	else \
-		$(DC_RUN_CMD) pytest soil_id --snapshot-update -k "$(PATTERN)"; \
-	fi
+# All tests except api_snapshot and integration (no live external APIs)
+test_unit:
+	pytest soil_id -m "not api_snapshot and not integration"
 
-test-verbose:
+# update the unit test snapshots (but not the API snapshots)
+test_update_unit_snapshots:
+	pytest soil_id -m "not api_snapshot and not integration" --snapshot-update; \
+
+# Integration smoke tests only (full live API run, no output validation)
+test_integration:
+	pytest soil_id -m integration
+
+# API response snapshot tests only (compares live API responses to stored snapshots)
+test_api_snapshot:
+	pytest soil_id -m api_snapshot
+
+# Refresh stored API response snapshots from live APIs
+test_update_api_snapshots:
+	pytest soil_id -m api_snapshot --snapshot-update
+
+test_verbose:
 	pytest soil_id --capture=no
 
-test-profile:
+test_profile:
 	pytest soil_id --profile
 
-test-graphs: test-profile graphs
+test_graphs: test-profile graphs
 
 graphs:
 	# gprof2dot -f pstats  prof/combined.prof | dot -Tsvg -o prof/combined.svg
@@ -96,7 +104,7 @@ process_bulk_test_results_legacy:
 # 1P3xl1YRlfcMjfO_4PM39tkrrlL3hoLzv: gsmsoilmu_a_us.prj
 # 1K0GkqxhZiVUND6yfFmaI7tYanLktekyp: gsmsoilmu_a_us.dbf
 # 1z7foFFHv_mTsuxMYnfOQRvXT5LKYlYFN: SoilID_US_Areas.shz
-download-soil-data:
+download_soil_data:
 	mkdir -p Data
 	cd Data; \
 	gdown 1tN23iVe6X1fcomcfveVp4w3Pwd0HJuTe; \

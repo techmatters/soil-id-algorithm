@@ -725,9 +725,6 @@ def list_soils(lon, lat):
                     comp_max_depths_group = comp_max_depths[
                         comp_max_depths["cokey"].isin(group_sorted["cokey"])
                     ]
-                    muhorzdata_pd_group = muhorzdata_pd[
-                        muhorzdata_pd["cokey"].isin(group_sorted["cokey"])
-                    ]
 
                     # Check if OSD depth adjustment is needed
                     if OSD_max_bottom < comp_max_depths_group["comp_max_bottom"].iloc[0]:
@@ -769,11 +766,12 @@ def list_soils(lon, lat):
                         # Use the horizon bottom depths that match the stored horizon structure
                         # Convert string values to float, filtering out empty strings
                         horizon_bottom_depths = [
-                            float(v) if v != "" else np.nan 
-                            for v in hzb_lyrs[index].values()
+                            float(v) if v != "" else np.nan for v in hzb_lyrs[index].values()
                         ]
                         # Filter out NaN values
-                        horizon_bottom_depths = [d for d in horizon_bottom_depths if not np.isnan(d)]
+                        horizon_bottom_depths = [
+                            d for d in horizon_bottom_depths if not np.isnan(d)
+                        ]
 
                         # Aggregate data for each color dimension
                         l_d = aggregate_data(
@@ -921,11 +919,12 @@ def list_soils(lon, lat):
                         # Use the horizon bottom depths that match the stored horizon structure
                         # Convert string values to float, filtering out empty strings
                         horizon_bottom_depths = [
-                            float(v) if v != "" else np.nan 
-                            for v in hzb_lyrs[index].values()
+                            float(v) if v != "" else np.nan for v in hzb_lyrs[index].values()
                         ]
                         # Filter out NaN values
-                        horizon_bottom_depths = [d for d in horizon_bottom_depths if not np.isnan(d)]
+                        horizon_bottom_depths = [
+                            d for d in horizon_bottom_depths if not np.isnan(d)
+                        ]
 
                         # Aggregate sand data
                         snd_d_osd = aggregate_data(

@@ -81,10 +81,10 @@ class SoilListOutputData:
 #                                   list_soils                                 #
 ############################################################################################
 def list_soils(lon, lat):
-    # Load in LAB to Munsell conversion look-up table
-    color_ref = pd.read_csv(soil_id.config.MUNSELL_RGB_LAB_PATH)
-    LAB_ref = color_ref[["cielab_l", "cielab_a", "cielab_b"]]
-    munsell_ref = color_ref[["hue", "value", "chroma"]]
+    # LAB to Munsell conversion look-up table (loaded once at startup)
+    color_ref = soil_id.config.MUNSELL_COLOR_REF
+    LAB_ref = soil_id.config.MUNSELL_LAB_REF_NP
+    munsell_ref = soil_id.config.MUNSELL_REF
 
     out = get_soilweb_data(lon, lat)
 

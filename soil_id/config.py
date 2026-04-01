@@ -15,6 +15,7 @@
 import os
 import tempfile
 
+import pandas as pd
 from dotenv import load_dotenv
 from platformdirs import user_cache_dir
 
@@ -42,6 +43,12 @@ US_AREA_PATH = f"{DATA_PATH}/SoilID_US_Areas.shz"
 # US Soil ID
 STATSGO_PATH = f"{DATA_PATH}/gsmsoilmu_a_us.shp"
 MUNSELL_RGB_LAB_PATH = f"{DATA_PATH}/LandPKS_munsell_rgb_lab.csv"
+
+# Pre-load Munsell color reference data once at startup
+MUNSELL_COLOR_REF = pd.read_csv(MUNSELL_RGB_LAB_PATH)
+MUNSELL_LAB_REF = MUNSELL_COLOR_REF[["cielab_l", "cielab_a", "cielab_b"]]
+MUNSELL_LAB_REF_NP = MUNSELL_LAB_REF.to_numpy()
+MUNSELL_REF = MUNSELL_COLOR_REF[["hue", "value", "chroma"]]
 
 # Database
 DB_NAME = os.environ.get("DB_NAME", "terraso_backend")

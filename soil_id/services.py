@@ -19,6 +19,8 @@ import re
 import pandas as pd
 import requests
 
+from .config import SOILWEB_URL
+
 
 def get_elev_data(lon, lat):
     """
@@ -153,7 +155,8 @@ def get_soilweb_data(lon, lat):
     Returns:
     dict: A dictionary containing soil data or error information if the request fails.
     """
-    base_url = "https://casoilresource.lawr.ucdavis.edu/api/landPKS.php"
+    base_url = SOILWEB_URL
+
     params = {
         "q": "spn",  # Query type - static for this function's purpose
         "lon": lon,

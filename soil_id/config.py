@@ -43,6 +43,9 @@ US_AREA_PATH = f"{DATA_PATH}/SoilID_US_Areas.shz"
 # US Soil ID
 STATSGO_PATH = f"{DATA_PATH}/gsmsoilmu_a_us.shp"
 MUNSELL_RGB_LAB_PATH = f"{DATA_PATH}/LandPKS_munsell_rgb_lab.csv"
+SOILWEB_URL = os.environ.get(
+    "SOILWEB_URL", "https://casoilresource.lawr.ucdavis.edu/api/landPKS.php"
+)
 
 # Pre-load Munsell color reference data once at startup
 MUNSELL_COLOR_REF = pd.read_csv(MUNSELL_RGB_LAB_PATH)

@@ -97,13 +97,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              ""
+              "R230XY630AK"
             ],
             "ecoclassname": [
-              ""
+              "Alpine Dwarf Scrub Gravelly Slopes"
             ],
             "edit_url": [
-              ""
+              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/R230XY630AK"
             ]
           }
         },
@@ -153,13 +153,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              ""
+              "F230XY611AK"
             ],
             "ecoclassname": [
-              ""
+              "Boreal Forest Loamy Frozen Slopes"
             ],
             "edit_url": [
-              ""
+              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/F230XY611AK"
             ]
           }
         },
@@ -321,13 +321,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "F230XY611AK"
+              ""
             ],
             "ecoclassname": [
-              "Boreal Forest Loamy Frozen Slopes"
+              ""
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/F230XY611AK"
+              ""
             ]
           }
         },
@@ -377,13 +377,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R230XY630AK"
+              ""
             ],
             "ecoclassname": [
-              "Alpine Dwarf Scrub Gravelly Slopes"
+              ""
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/R230XY630AK"
+              ""
             ]
           }
         },

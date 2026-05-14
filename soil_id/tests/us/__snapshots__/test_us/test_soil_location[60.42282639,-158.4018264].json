@@ -41,13 +41,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R236XY107AK"
+              "R236XY140AK"
             ],
             "ecoclassname": [
-              "Western Alaska Maritime Scrub Gravelly Drainages"
+              "Subarctic Tussock Tundra Wet Loamy Plains"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/R236XY107AK"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/R236XY140AK"
             ]
           }
         },
@@ -153,13 +153,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "F236XY139AK"
+              "R236XY109AK"
             ],
             "ecoclassname": [
-              "Boreal Woodland Loamy Rises"
+              "Subarctic Low Scrub Peat Drainages"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/F236XY139AK"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/R236XY109AK"
             ]
           }
         },
@@ -265,13 +265,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R236XY140AK"
+              "F236XY139AK"
             ],
             "ecoclassname": [
-              "Subarctic Tussock Tundra Wet Loamy Plains"
+              "Boreal Woodland Loamy Rises"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/R236XY140AK"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/F236XY139AK"
             ]
           }
         },
@@ -321,13 +321,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R236XY109AK"
+              "R236XY107AK"
             ],
             "ecoclassname": [
-              "Subarctic Low Scrub Peat Drainages"
+              "Western Alaska Maritime Scrub Gravelly Drainages"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/R236XY109AK"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/236X/R236XY107AK"
             ]
           }
         },

@@ -153,13 +153,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "F143XY704ME"
+              "F143XY501ME"
             ],
             "ecoclassname": [
-              "Shallow Organic Rock Pocket"
+              "Loamy Slope"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/143X/F143XY704ME"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/143X/F143XY501ME"
             ]
           }
         },
@@ -265,13 +265,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "F143XY501ME"
+              "F143XY704ME"
             ],
             "ecoclassname": [
-              "Loamy Slope"
+              "Shallow Organic Rock Pocket"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/143X/F143XY501ME"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/143X/F143XY704ME"
             ]
           }
         },
@@ -389,31 +389,12 @@
         "rank_data_loc_group": "1",
         "rank_loc": "2",
         "rank_loc_group": "2",
-        "score_data": 0.682,
-        "score_data_group": 0.682,
-        "score_data_loc": 0.494,
-        "score_data_loc_group": 0.494,
+        "score_data": 0.737,
+        "score_data_group": 0.737,
+        "score_data_loc": 0.521,
+        "score_data_loc_group": 0.521,
         "score_loc": 0.306,
         "score_loc_group": 0.306
-      },
-      {
-        "component": "Knob lock",
-        "componentData": "Data Complete",
-        "componentID": 26560913,
-        "name": "Knob lock2",
-        "not_displayed": false,
-        "rank_data": "4",
-        "rank_data_group": "4",
-        "rank_data_loc": "2",
-        "rank_data_loc_group": "2",
-        "rank_loc": "Not Displayed",
-        "rank_loc_group": "1",
-        "score_data": 0.529,
-        "score_data_group": 0.529,
-        "score_data_loc": 0.451,
-        "score_data_loc_group": 0.451,
-        "score_loc": 0.372,
-        "score_loc_group": 0.372
       },
       {
         "component": "Elliottsville",
@@ -423,16 +404,35 @@
         "not_displayed": false,
         "rank_data": "2",
         "rank_data_group": "2",
-        "rank_data_loc": "3",
-        "rank_data_loc_group": "3",
+        "rank_data_loc": "2",
+        "rank_data_loc_group": "2",
         "rank_loc": "3",
         "rank_loc_group": "3",
-        "score_data": 0.65,
-        "score_data_group": 0.65,
-        "score_data_loc": 0.45,
-        "score_data_loc_group": 0.45,
+        "score_data": 0.697,
+        "score_data_group": 0.697,
+        "score_data_loc": 0.474,
+        "score_data_loc_group": 0.474,
         "score_loc": 0.25,
         "score_loc_group": 0.25
+      },
+      {
+        "component": "Knob lock",
+        "componentData": "Data Complete",
+        "componentID": 26560913,
+        "name": "Knob lock2",
+        "not_displayed": false,
+        "rank_data": "4",
+        "rank_data_group": "4",
+        "rank_data_loc": "3",
+        "rank_data_loc_group": "3",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "1",
+        "score_data": 0.475,
+        "score_data_group": 0.475,
+        "score_data_loc": 0.424,
+        "score_data_loc_group": 0.424,
+        "score_loc": 0.372,
+        "score_loc_group": 0.372
       },
       {
         "component": "Monson",
@@ -462,13 +462,13 @@
         "rank_data": "Not Displayed",
         "rank_data_group": "2",
         "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "3",
+        "rank_data_loc_group": "2",
         "rank_loc": "Not Displayed",
         "rank_loc_group": "3",
-        "score_data": 0.583,
-        "score_data_group": 0.65,
-        "score_data_loc": 0.417,
-        "score_data_loc_group": 0.45,
+        "score_data": 0.536,
+        "score_data_group": 0.697,
+        "score_data_loc": 0.393,
+        "score_data_loc_group": 0.474,
         "score_loc": 0.25,
         "score_loc_group": 0.25
       },
@@ -481,13 +481,13 @@
         "rank_data": "Not Displayed",
         "rank_data_group": "4",
         "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "2",
+        "rank_data_loc_group": "3",
         "rank_loc": "1",
         "rank_loc_group": "1",
         "score_data": 0.406,
-        "score_data_group": 0.529,
+        "score_data_group": 0.475,
         "score_data_loc": 0.389,
-        "score_data_loc_group": 0.451,
+        "score_data_loc_group": 0.424,
         "score_loc": 0.372,
         "score_loc_group": 0.372
       }

@@ -97,13 +97,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R003XN613WA"
+              "F003XA305WA"
             ],
             "ecoclassname": [
-              "Low Mountain Unforested Wetlands"
+              "Low Glacial Trough Valleys Moist Forest Western Hemlock"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/003X/R003XN613WA"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/003X/F003XA305WA"
             ]
           }
         },
@@ -153,13 +153,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "F003XA305WA"
+              "R003XN613WA"
             ],
             "ecoclassname": [
-              "Low Glacial Trough Valleys Moist Forest Western Hemlock"
+              "Low Mountain Unforested Wetlands"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/003X/F003XA305WA"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/003X/R003XN613WA"
             ]
           }
         },

@@ -80,13 +80,15 @@ class SoilListOutputData:
 ############################################################################################
 #                                   list_soils                                 #
 ############################################################################################
-def list_soils(lon, lat):
+def list_soils(lon, lat, sim=True, max_distance_m=1000):
     # Load in LAB to Munsell conversion look-up table
     color_ref = pd.read_csv(soil_id.config.MUNSELL_RGB_LAB_PATH)
     LAB_ref = color_ref[["cielab_l", "cielab_a", "cielab_b"]]
     munsell_ref = color_ref[["hue", "value", "chroma"]]
 
-    out = get_soilweb_data(lon, lat)
+    if max_distance_m is None:
+        max_distance_m = 1000
+    out = get_soilweb_data(lon, lat, radius_m=max_distance_m)
 
     OSD_compkind = ["Series", "Variant", "Family", "Taxadjunct"]
     # Check if point is in a NOTCOM area, and if so then infill with STATSGO from NRCS SDA
@@ -103,8 +105,9 @@ def list_soils(lon, lat):
         mucompdata_pd = pd.json_normalize(out["spn"])
         mucompdata_pd = process_site_data(mucompdata_pd)
 
-        # For SSURGO, filter out data for distances over 1000m
-        mucompdata_pd = mucompdata_pd[mucompdata_pd["distance"] <= 1000]
+        # For SSURGO, filter out data beyond caller-configured max distance.
+        # Keep backward-compatible behavior at 1000 m when no value is provided.
+        mucompdata_pd = mucompdata_pd[mucompdata_pd["distance"] <= float(max_distance_m)]
 
         if mucompdata_pd.empty:
             # Extract STATSGO data at point
@@ -244,6 +247,9 @@ def list_soils(lon, lat):
     mucompdata_pd["compname_grp"] = mucompdata_pd["compname"]
 
     # Extract unique cokeys and create a ranking dictionary
+    muhorzdata_pd["cokey"] = (
+        muhorzdata_pd["cokey"].astype(str).str.strip().str.replace(r"\.0+$", "", regex=True)
+    )
     comp_key = mucompdata_pd["cokey"].unique().tolist()
     cokey_index = {key: index for index, key in enumerate(comp_key)}
 
@@ -665,7 +671,9 @@ def list_soils(lon, lat):
 
         if mucompdata_pd["compkind"].isin(OSD_compkind).any():
             # Group data by cokey
-            OSDhorzdata_group_cokey = [group for _, group in OSDhorzdata_pd.groupby("cokey")]
+            OSDhorzdata_group_cokey = [
+                group for _, group in OSDhorzdata_pd.groupby("cokey", sort=False)
+            ]
 
             # Initialize empty lists
             lab_lyrs = []
@@ -764,20 +772,29 @@ def list_soils(lon, lat):
                         lab_lyrs.append(["", "", ""])
                         munsell_lyrs.append("")
                     else:
+                        # Use the horizon bottom depths that match the stored horizon structure
+                        # Convert string values to float, filtering out empty strings
+                        horizon_bottom_depths = [
+                            float(v) if v != "" else np.nan 
+                            for v in hzb_lyrs[index].values()
+                        ]
+                        # Filter out NaN values
+                        horizon_bottom_depths = [d for d in horizon_bottom_depths if not np.isnan(d)]
+
                         # Aggregate data for each color dimension
                         l_d = aggregate_data(
                             data=lab_intpl["l"],
-                            bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
+                            bottom_depths=horizon_bottom_depths,
                             sd=2,
                         ).fillna("")
                         a_d = aggregate_data(
                             data=lab_intpl["a"],
-                            bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
+                            bottom_depths=horizon_bottom_depths,
                             sd=2,
                         ).fillna("")
                         b_d = aggregate_data(
                             data=lab_intpl["b"],
-                            bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
+                            bottom_depths=horizon_bottom_depths,
                             sd=2,
                         ).fillna("")
 
@@ -907,16 +924,25 @@ def list_soils(lon, lat):
 
                         getProfile_cokey[index] = getProfile_mod
 
+                        # Use the horizon bottom depths that match the stored horizon structure
+                        # Convert string values to float, filtering out empty strings
+                        horizon_bottom_depths = [
+                            float(v) if v != "" else np.nan 
+                            for v in hzb_lyrs[index].values()
+                        ]
+                        # Filter out NaN values
+                        horizon_bottom_depths = [d for d in horizon_bottom_depths if not np.isnan(d)]
+
                         # Aggregate sand data
                         snd_d_osd = aggregate_data(
                             data=OSD_sand_intpl.iloc[:, 0],
-                            bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
+                            bottom_depths=horizon_bottom_depths,
                         )
 
                         # Aggregate clay data
                         cly_d_osd = aggregate_data(
                             data=OSD_clay_intpl.iloc[:, 1],
-                            bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
+                            bottom_depths=horizon_bottom_depths,
                         )
 
                         # Calculate texture data based on sand and clay data
@@ -929,7 +955,7 @@ def list_soils(lon, lat):
                         # Aggregate rock fragment data
                         rf_d_osd = aggregate_data(
                             data=OSD_rfv_intpl.c_cfpct_intpl,
-                            bottom_depths=muhorzdata_pd_group["hzdepb_r"].tolist(),
+                            bottom_depths=horizon_bottom_depths,
                         )
 
                         # Fill NaN values
@@ -950,9 +976,9 @@ def list_soils(lon, lat):
                         # Update cec, ph, and ec layers if they contain only a single
                         # empty string
                         for lyr in [cec_lyrs, ph_lyrs, ec_lyrs]:
-                            if len(lyr[index]) == 1 and lyr[index][0] == "":
+                            if len(lyr[index]) == 1 and list(lyr[index].values())[0] == "":
                                 empty_values = [""] * len(hzb_lyrs[index])
-                                lyr[index] = dict(zip(hzb_lyrs[index], empty_values))
+                                lyr[index] = dict(zip(hzb_lyrs[index].keys(), empty_values))
 
                 else:
                     OSDhorzdata_group_cokey[index] = group_sorted
@@ -1028,9 +1054,8 @@ def list_soils(lon, lat):
                 lab_lyrs.append(dict(zip(keys, lab_dummy)))
                 munsell_lyrs.append(dict(zip(keys, munsell_dummy)))
 
-                # Create empty URLs for each component
-                cokey = mucompdata_pd.iloc[i]["cokey"]
-                cokey_to_urls[cokey] = {"sde": "", "see": ""}
+                ## Create empty URLs keyed by cokey
+                cokey_to_urls[mucompdata_pd.iloc[i]["cokey"]] = {"sde": "", "see": ""}
 
     else:
         # Initialize lists to store data layers and URLs
@@ -1058,9 +1083,8 @@ def list_soils(lon, lat):
             lab_lyrs.append(dict(zip(keys, lab_dummy)))
             munsell_lyrs.append(dict(zip(keys, munsell_dummy)))
 
-            # Create empty URLs for each component
-            cokey = mucompdata_pd.iloc[i]["cokey"]
-            cokey_to_urls[cokey] = {"sde": "", "see": ""}
+            ## Create empty URLs keyed by cokey
+            cokey_to_urls[mucompdata_pd.iloc[i]["cokey"]] = {"sde": "", "see": ""}
 
     # Subset datasets to exclude pedons without any depth information
     cokeys_with_depth = mucompdata_pd[mucompdata_pd["comp_max_bottom"] > 0].cokey.unique()
@@ -1130,7 +1154,22 @@ def list_soils(lon, lat):
     ]
 
     # Run soil simulations: functional similarity calculation and soil information value
-    aws_PIW90, var_imp = soil_sim(muhorzdata_pd)
+    if sim:
+        try:
+            aws_PIW90, var_imp = soil_sim(muhorzdata_pd)
+        except Exception as e:
+            # Log the error but continue with None values
+            import traceback
+            error_details = f"soil_sim failed: {type(e).__name__}: {str(e)}"
+            print(error_details)  # Print to stdout
+            print(traceback.format_exc())  # Print full stack trace
+            logging.warning(error_details)
+            aws_PIW90 = None
+            var_imp = None
+    else:
+        # When sim=False, set default values
+        aws_PIW90 = None
+        var_imp = None
 
     # Create a new column 'soilID_rank' which will be True for the first row in each group sorted
     # by 'distance' and False for other rows
@@ -1169,11 +1208,75 @@ def list_soils(lon, lat):
             else:
                 ESDcompdata_pd = None
 
+        # SDA fallback for SSURGO: SoilWeb ESD coverage has gaps — some cokeys are
+        # present in the map unit but have no ESD row in the SoilWeb response, leaving
+        # ecoclassid as NULL after the left-merge above.  Without a fallback, those
+        # components borrow an ecoclassid from a sibling compname via update_esd_data,
+        # which varies by location and produces inconsistent predictions.
+        # Query SDA for only the cokeys that are still missing ecoclassid so we get
+        # authoritative coecoclass data for every component.
+        missing_cokeys = []
+        if ESDcompdata_pd is not None:
+            null_mask = ESDcompdata_pd["ecoclassid"].isna() | (
+                ESDcompdata_pd["ecoclassid"].astype(str).str.strip().isin(["", "nan", "None"])
+            )
+            missing_cokeys = ESDcompdata_pd.loc[null_mask, "cokey"].unique().tolist()
+        elif comp_key:
+            # ESDcompdata_pd is None means SoilWeb returned no ESD at all
+            missing_cokeys = [str(k) for k in comp_key]
+
+        if missing_cokeys:
+            _sda_eco_qry = (
+                "SELECT cokey, ecoclassid, ecoclassname, "
+                " FROM coecoclass WHERE cokey IN ("
+                + ",".join(str(k) for k in missing_cokeys)
+                + ") ORDER BY cokey, ecoclasstypename, ecoclassid"
+            )
+            _sda_eco_out = sda_return(propQry=_sda_eco_qry)
+            if _sda_eco_out is not None:
+                _sda_rows = _sda_eco_out["Table"].iloc[0]
+                _sda_df = pd.DataFrame(_sda_rows[1:], columns=_sda_rows[0])
+                _sda_df[["cokey", "ecoclassid", "ecoclassname"]] = _sda_df[
+                    ["cokey", "ecoclassid", "ecoclassname"]
+                ].astype(str)
+                _sda_df["edit_url"] = (
+                    NEW_ESD_BASE_URL
+                    + "/"
+                    + _sda_df["ecoclassid"].str[1:5]
+                    + "/"
+                    + _sda_df["ecoclassid"]
+                )
+                if ESDcompdata_pd is not None:
+                    # Drop the null rows and replace with SDA data merged back in
+                    ESDcompdata_pd = ESDcompdata_pd[~null_mask]
+                    _sda_merged = pd.merge(
+                        mucompdata_pd.loc[
+                            mucompdata_pd["cokey"].astype(str).isin(missing_cokeys),
+                            ["mukey", "cokey", "compname"],
+                        ],
+                        _sda_df,
+                        on="cokey",
+                        how="left",
+                    )
+                    ESDcompdata_pd = pd.concat(
+                        [ESDcompdata_pd, _sda_merged], ignore_index=True
+                    )
+                else:
+                    # SoilWeb had no ESD at all; bootstrap from SDA data
+                    if any(_sda_df["cokey"].isin(mucompdata_pd["cokey"])):
+                        ESDcompdata_pd = pd.merge(
+                            mucompdata_pd[["mukey", "cokey", "compname"]],
+                            _sda_df,
+                            on="cokey",
+                            how="left",
+                        )
+
     elif data_source == "STATSGO":
         ESDcompdataQry = (
-            "SELECT cokey,  ecoclassid, ecoclassname FROM coecoclass WHERE cokey IN ("
+            "SELECT cokey, ecoclassid, ecoclassname, ecoclasstypename"
+            " FROM coecoclass WHERE cokey IN ("
             + ",".join(map(str, comp_key))
-            + ") ORDER BY cokey"
+            + ") ORDER BY cokey, ecoclasstypename, ecoclassid"
         )
         ESDcompdata_out = sda_return(propQry=ESDcompdataQry)
 
@@ -1215,18 +1318,58 @@ def list_soils(lon, lat):
     if ESDcompdata_pd is not None:
         # Process DataFrame: cleaning and updating
         ESDcompdata_pd.replace("NULL", np.nan, inplace=True)
+        # Sort by ecoclasstypename priority then ecoclassid before deduplication so that
+        # when a component has multiple coecoclass entries the most authoritative one is
+        # kept consistently regardless of SDA/SoilWeb result ordering.
+        #
+        # Priority rationale:
+        #   1. 'NRCS Rangeland Site' – current national standard (ecoclassid has 'R' prefix)
+        #   2. 'Range Site' / 'Range' – legacy format, superseded by NRCS standard
+        #   3. Other/NULL types – lowest priority, kept only if nothing better exists
+        #
+        # Within each type, the R-prefixed ecoclassid sorts before legacy ones, then
+        # alphabetically, so the selection is fully deterministic.
+        _TYPE_PRIORITY = {"NRCS Rangeland Site": 0}
+        if "ecoclasstypename" in ESDcompdata_pd.columns:
+            ESDcompdata_pd["_type_pri"] = (
+                ESDcompdata_pd["ecoclasstypename"]
+                .map(lambda t: _TYPE_PRIORITY.get(t, 1) if pd.notna(t) else 1)
+            )
+        else:
+            ESDcompdata_pd["_type_pri"] = 1
+        ESDcompdata_pd["_id_pri"] = (
+            ESDcompdata_pd["ecoclassid"]
+            .map(lambda e: 0 if (pd.notna(e) and str(e).upper().startswith("R")) else 1)
+        )
+        ESDcompdata_pd.sort_values(
+            ["cokey", "_type_pri", "_id_pri", "ecoclassid"],
+            ascending=[True, True, True, True],
+            na_position="last",
+            inplace=True,
+        )
+        ESDcompdata_pd.drop(columns=["_type_pri", "_id_pri"], inplace=True)
         ESDcompdata_pd.drop_duplicates(subset=["cokey"], keep="first", inplace=True)
         ESDcompdata_pd = ESDcompdata_pd[ESDcompdata_pd["cokey"].isin(comp_key)]
-        ESDcompdata_pd["Comp_Rank"] = ESDcompdata_pd["cokey"].map(cokey_Index)
-        ESDcompdata_pd.sort_values("Comp_Rank", ascending=True, inplace=True)
-        ESDcompdata_pd.drop(columns="Comp_Rank", inplace=True)
+        # Use the current mucompdata_pd row order (compname_grp sorted) as the reference,
+        # NOT cokey_Index which reflects the original pre-sort order.  This ensures that
+        # esd_comp_list[i] lines up with mucompdata_pd.iloc[i] for the key-based alignment.
+        _mucomp_order = {str(ck): i for i, ck in enumerate(mucompdata_pd["cokey"].tolist())}
+        ESDcompdata_pd["_mucomp_rank"] = ESDcompdata_pd["cokey"].map(_mucomp_order)
+        ESDcompdata_pd.sort_values("_mucomp_rank", ascending=True, na_position="last", inplace=True)
+        ESDcompdata_pd.drop(columns="_mucomp_rank", inplace=True)
         ESDcompdata_pd["ecoclassname"] = ESDcompdata_pd["ecoclassname"].str.title()
 
         # Further processing and checks for missing ESD data
         ESDcompdata_pd = update_esd_data(ESDcompdata_pd)
 
+        # update_esd_data reorders rows by compname_grp; restore mucompdata_pd order so
+        # that esd_comp_list[i] aligns with mucompdata_pd.iloc[i] for key-based reorder.
+        ESDcompdata_pd["_mucomp_rank"] = ESDcompdata_pd["cokey"].map(_mucomp_order)
+        ESDcompdata_pd.sort_values("_mucomp_rank", ascending=True, na_position="last", inplace=True)
+        ESDcompdata_pd.drop(columns="_mucomp_rank", inplace=True)
+
         # Aggregate the ESD components for output
-        for _, group in ESDcompdata_pd.groupby("cokey", sort=True):
+        for _, group in ESDcompdata_pd.groupby("cokey", sort=False):
             esd_data = {
                 "ESD": {
                     "ecoclassid": group["ecoclassid"].tolist(),
@@ -1427,7 +1570,7 @@ def list_soils(lon, lat):
     # Replace NaN values with an empty string
     mucompdata_cond_prob = mucompdata_cond_prob.fillna("")
 
-    # Generate the Site list using cokey-based URL lookup
+    # Generate the Site list
     Site = [
         {
             "siteData": {
@@ -1448,15 +1591,16 @@ def list_soils(lon, lat):
                 "irrcapscl": row["irrcapscl"],
                 "irrcapunit": row["irrcapunit"],
                 "taxsubgrp": row["taxsubgrp"],
-                "sdeURL": cokey_to_urls.get(row["cokey"], {"sde": ""})["sde"],
-                "seeURL": cokey_to_urls.get(row["cokey"], {"see": ""})["see"],
+                "sdeURL": cokey_to_urls.get(row["cokey"], {}).get("sde", ""),
+                "seeURL": cokey_to_urls.get(row["cokey"], {}).get("see", ""),
             },
             "siteDescription": row["brief_narrative"],
         }
         for idx, row in mucompdata_cond_prob.iterrows()
     ]
 
-    # Reordering lists using list comprehension and mucomp_index
+    # Reorder profile lists to match the final sorted component order.
+    # Prefer key-based alignment by cokey (componentID) to avoid positional drift.
     lists_to_reorder = [
         esd_comp_list,
         hzt_lyrs,
@@ -1471,7 +1615,27 @@ def list_soils(lon, lat):
         lab_lyrs,
         munsell_lyrs,
     ]
-    reordered_lists = [[lst[i] for i in mucomp_index] for lst in lists_to_reorder]
+
+    def _norm_cokey(value):
+        return re.sub(r"\.0+$", "", str(value).strip())
+
+    base_order_cokeys = [_norm_cokey(c) for c in mucompdata_pd["cokey"].tolist()]
+    final_order_cokeys = [_norm_cokey(c) for c in mucompdata_cond_prob["cokey"].tolist()]
+
+    can_key_reorder = (
+        len(base_order_cokeys) == len(set(base_order_cokeys))
+        and all(len(lst) == len(base_order_cokeys) for lst in lists_to_reorder)
+    )
+
+    if can_key_reorder:
+        def _reorder_by_cokey(lst):
+            by_cokey = dict(zip(base_order_cokeys, lst))
+            return [by_cokey[c] for c in final_order_cokeys]
+
+        reordered_lists = [_reorder_by_cokey(lst) for lst in lists_to_reorder]
+    else:
+        # Fallback to positional reordering when key-based alignment is not possible.
+        reordered_lists = [[lst[i] for i in mucomp_index] for lst in lists_to_reorder]
 
     # Destructuring reordered lists for clarity
     (

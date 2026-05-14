@@ -41,13 +41,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "F230XY612AK"
+              "F230XY611AK"
             ],
             "ecoclassname": [
-              "Boreal Forest Loamy Slopes"
+              "Boreal Forest Loamy Frozen Slopes"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/F230XY612AK"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/F230XY611AK"
             ]
           }
         },
@@ -97,13 +97,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R230XY610AK"
+              "R230XY601AK"
             ],
             "ecoclassname": [
-              "Boreal Scrub Silty Frozen Drainages"
+              "Boreal Forest Flood Plain Complex"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/R230XY610AK"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/R230XY601AK"
             ]
           }
         },
@@ -321,13 +321,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R230XY620AK"
+              ""
             ],
             "ecoclassname": [
-              "Boreal Peat Frozen Flats Complex"
+              ""
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/R230XY620AK"
+              ""
             ]
           }
         },
@@ -377,13 +377,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              ""
+              "F230XY612AK"
             ],
             "ecoclassname": [
-              ""
+              "Boreal Forest Loamy Slopes"
             ],
             "edit_url": [
-              ""
+              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/F230XY612AK"
             ]
           }
         },
@@ -433,13 +433,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "F230XY611AK"
+              ""
             ],
             "ecoclassname": [
-              "Boreal Forest Loamy Frozen Slopes"
+              ""
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/F230XY611AK"
+              ""
             ]
           }
         },
@@ -489,13 +489,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R230XY601AK"
+              "R230XY620AK"
             ],
             "ecoclassname": [
-              "Boreal Forest Flood Plain Complex"
+              "Boreal Peat Frozen Flats Complex"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/R230XY601AK"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/R230XY620AK"
             ]
           }
         },
@@ -545,13 +545,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              ""
+              "R230XY610AK"
             ],
             "ecoclassname": [
-              ""
+              "Boreal Scrub Silty Frozen Drainages"
             ],
             "edit_url": [
-              ""
+              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/R230XY610AK"
             ]
           }
         },

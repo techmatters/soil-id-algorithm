@@ -1200,7 +1200,7 @@
     "soilRank": [
       {
         "component": "Eutric gleysols",
-        "componentData": "Missing Data",
+        "componentData": "Data Complete",
         "componentID": 134228,
         "name": "Eutric gleysols",
         "not_displayed": false,
@@ -1219,7 +1219,7 @@
       },
       {
         "component": "Dystric gleysols",
-        "componentData": "Missing Data",
+        "componentData": "Data Complete",
         "componentID": 133232,
         "name": "Dystric gleysols",
         "not_displayed": false,
@@ -1257,7 +1257,7 @@
       },
       {
         "component": "Dystric planosols",
-        "componentData": "Missing Data",
+        "componentData": "Data Complete",
         "componentID": 133240,
         "name": "Dystric planosols",
         "not_displayed": false,
@@ -1314,7 +1314,7 @@
       },
       {
         "component": "Ferric acrisols",
-        "componentData": "Missing Data",
+        "componentData": "Data Complete",
         "componentID": 133233,
         "name": "Ferric acrisols",
         "not_displayed": false,
@@ -1390,7 +1390,7 @@
       },
       {
         "component": "Dystric plinthosols",
-        "componentData": "Missing Data",
+        "componentData": "Data Complete",
         "componentID": 133239,
         "name": "Dystric plinthosols",
         "not_displayed": false,

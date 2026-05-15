@@ -3,20 +3,20 @@
     "AWS_PIW90": 4.73,
     "Soil Data Value": [
       [
+        "texture_0",
+        1.824911885818355
+      ],
+      [
         "rfv_class_0",
         1.561554765729544
       ],
       [
-        "rfv_class_30",
+        "texture_30",
         1.543062149933733
       ],
       [
-        "texture_30",
-        0.9908959471041263
-      ],
-      [
-        "texture_0",
-        0.0
+        "rfv_class_30",
+        1.543062149933733
       ]
     ],
     "metadata": {
@@ -138,7 +138,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#chesuncook",
             "slope": 20.0,
             "taxsubgrp": "Aquic Haplorthods",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "The Chesuncook series consists of very deep, moderately well drained soils on till plains, hills, ridges, and mountains. These soils formed in dense glacial till. Saturated hydraulic conductivity is moderately high or high in the solum, and low to moderately high in the dense substratum. Slope ranges from 3 to 45 percent. Mean annual temperature is about 4 degrees C, and mean annual precipitation is about 1092 mm at the type location."
         },
@@ -194,7 +194,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#elliottsville",
             "slope": 25.0,
             "taxsubgrp": "Typic Haplorthods",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "The Elliottsville series consists of moderately deep, well drained soils formed in glacial till on till plains, hills, ridges and mountains.  Permeability is moderate.  Slope ranges from 3 to 65 percent.  Mean annual temperature is about 3 degrees C, and mean annual precipitation is about 970 mm at the type location."
         },
@@ -250,7 +250,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#monson",
             "slope": 40.0,
             "taxsubgrp": "Lithic Haplorthods",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "The Monson series consists of shallow, somewhat excessively drained soils formed in glacial till on knolls of till plains, and on hills, ridges and mountains.  Estimated saturated hydraulic conductivity is moderate or high. Slope ranges from 3 to 60 percent.  Mean annual temperature is about 3 degrees C, and mean annual precipitation is about 965 mm at the type location."
         },
@@ -306,7 +306,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#knob_lock",
             "slope": 50.0,
             "taxsubgrp": "Lithic Udifolists",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "The Knob Lock series consists of very shallow and shallow, well drained through excessively drained organic soils on mountains and hills. They formed in thin organic deposits underlain in most places by a very thin mineral horizon over bedrock. Saturated hydraulic conductivity is moderately high through very high throughout the soil. Slope ranges from 3 through 80 percent. Mean annual precipitation is about 1092 mm and mean annual temperature is about 5 degrees C."
         },
@@ -362,7 +362,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#elliottsville",
             "slope": 40.0,
             "taxsubgrp": "Typic Haplorthods",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "The Elliottsville series consists of moderately deep, well drained soils formed in glacial till on till plains, hills, ridges and mountains.  Permeability is moderate.  Slope ranges from 3 to 65 percent.  Mean annual temperature is about 3 degrees C, and mean annual precipitation is about 970 mm at the type location."
         },
@@ -389,31 +389,12 @@
         "rank_data_loc_group": "1",
         "rank_loc": "2",
         "rank_loc_group": "2",
-        "score_data": 0.737,
-        "score_data_group": 0.737,
-        "score_data_loc": 0.521,
-        "score_data_loc_group": 0.521,
+        "score_data": 0.679,
+        "score_data_group": 0.679,
+        "score_data_loc": 0.492,
+        "score_data_loc_group": 0.492,
         "score_loc": 0.306,
         "score_loc_group": 0.306
-      },
-      {
-        "component": "Elliottsville",
-        "componentData": "Data Complete",
-        "componentID": 26560911,
-        "name": "Elliottsville",
-        "not_displayed": false,
-        "rank_data": "2",
-        "rank_data_group": "2",
-        "rank_data_loc": "2",
-        "rank_data_loc_group": "2",
-        "rank_loc": "3",
-        "rank_loc_group": "3",
-        "score_data": 0.697,
-        "score_data_group": 0.697,
-        "score_data_loc": 0.474,
-        "score_data_loc_group": 0.474,
-        "score_loc": 0.25,
-        "score_loc_group": 0.25
       },
       {
         "component": "Knob lock",
@@ -423,16 +404,35 @@
         "not_displayed": false,
         "rank_data": "4",
         "rank_data_group": "4",
-        "rank_data_loc": "3",
-        "rank_data_loc_group": "3",
+        "rank_data_loc": "2",
+        "rank_data_loc_group": "2",
         "rank_loc": "Not Displayed",
         "rank_loc_group": "1",
-        "score_data": 0.475,
-        "score_data_group": 0.475,
-        "score_data_loc": 0.424,
-        "score_data_loc_group": 0.424,
+        "score_data": 0.532,
+        "score_data_group": 0.532,
+        "score_data_loc": 0.452,
+        "score_data_loc_group": 0.452,
         "score_loc": 0.372,
         "score_loc_group": 0.372
+      },
+      {
+        "component": "Elliottsville",
+        "componentData": "Data Complete",
+        "componentID": 26560911,
+        "name": "Elliottsville",
+        "not_displayed": false,
+        "rank_data": "2",
+        "rank_data_group": "2",
+        "rank_data_loc": "3",
+        "rank_data_loc_group": "3",
+        "rank_loc": "3",
+        "rank_loc_group": "3",
+        "score_data": 0.647,
+        "score_data_group": 0.647,
+        "score_data_loc": 0.449,
+        "score_data_loc_group": 0.449,
+        "score_loc": 0.25,
+        "score_loc_group": 0.25
       },
       {
         "component": "Monson",
@@ -448,8 +448,8 @@
         "rank_loc_group": "4",
         "score_data": 0.608,
         "score_data_group": 0.608,
-        "score_data_loc": 0.34,
-        "score_data_loc_group": 0.34,
+        "score_data_loc": 0.339,
+        "score_data_loc_group": 0.339,
         "score_loc": 0.071,
         "score_loc_group": 0.071
       },
@@ -462,13 +462,13 @@
         "rank_data": "Not Displayed",
         "rank_data_group": "2",
         "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "2",
+        "rank_data_loc_group": "3",
         "rank_loc": "Not Displayed",
         "rank_loc_group": "3",
-        "score_data": 0.536,
-        "score_data_group": 0.697,
-        "score_data_loc": 0.393,
-        "score_data_loc_group": 0.474,
+        "score_data": 0.582,
+        "score_data_group": 0.647,
+        "score_data_loc": 0.416,
+        "score_data_loc_group": 0.449,
         "score_loc": 0.25,
         "score_loc_group": 0.25
       },
@@ -481,13 +481,13 @@
         "rank_data": "Not Displayed",
         "rank_data_group": "4",
         "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "3",
+        "rank_data_loc_group": "2",
         "rank_loc": "1",
         "rank_loc_group": "1",
-        "score_data": 0.406,
-        "score_data_group": 0.475,
-        "score_data_loc": 0.389,
-        "score_data_loc_group": 0.424,
+        "score_data": 0.404,
+        "score_data_group": 0.532,
+        "score_data_loc": 0.388,
+        "score_data_loc_group": 0.452,
         "score_loc": 0.372,
         "score_loc_group": 0.372
       }

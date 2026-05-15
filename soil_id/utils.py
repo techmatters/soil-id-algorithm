@@ -46,6 +46,23 @@ from .services import sda_return
 ###################################################################################################
 
 
+def _normalize_texture_name(field: str) -> str:
+    """Normalize texture labels to canonical lookup keys."""
+    if field is None:
+        return ""
+
+    texture = str(field).strip().lower()
+    texture = re.sub(r"\b(very\s+fine|very\s+coarse|fine|medium|coarse)\s+", "", texture)
+    texture = re.sub(r"\s+", " ", texture).strip()
+
+    # Preserve legacy behavior for labels that collapse to non-standard forms.
+    aliases = {
+        "very sandy loam": "sandy loam",
+        "very sandy clay loam": "sandy clay loam",
+    }
+    return aliases.get(texture, texture)
+
+
 def getSand(field: str) -> float:
     """
     Given a soil texture name (e.g. "loam", "sand", "clay"), return the approximate
@@ -77,8 +94,7 @@ def getSand(field: str) -> float:
     if field is None:
         return np.nan
 
-    # Convert field to lowercase, then do the lookup in the dictionary
-    return sand_percentages.get(field.lower(), np.nan)
+    return sand_percentages.get(_normalize_texture_name(field), np.nan)
 
 
 def getClay(field):
@@ -97,7 +113,9 @@ def getClay(field):
         "clay": 70.0,
     }
 
-    return clay_percentages.get(field.lower() if field else None, np.nan)
+    if field is None:
+        return np.nan
+    return clay_percentages.get(_normalize_texture_name(field), np.nan)
 
 
 def silt_calc(row):
@@ -110,6 +128,7 @@ def silt_calc(row):
 def getTexture(row=None, sand=None, silt=None, clay=None):
     """
     Classify soil texture based on sand, silt, and clay proportions.
+    Matches the legacy gettt function logic.
 
     Parameters:
     - row (dict): Dictionary-like object with 'sandtotal_r', 'silttotal_r', 'claytotal_r' keys.
@@ -118,7 +137,7 @@ def getTexture(row=None, sand=None, silt=None, clay=None):
     - clay (float): Percentage of clay.
 
     Returns:
-    - str: Soil texture classification.
+    - str: Soil texture classification, or None if any input is NaN.
     """
 
     # Handle missing inputs: if not provided individually, try to get from row.
@@ -128,10 +147,9 @@ def getTexture(row=None, sand=None, silt=None, clay=None):
             silt = row.get("silttotal_r", np.nan)
             clay = row.get("claytotal_r", np.nan)
 
-    # Replace any NaN with 0 for the calculation.
-    sand = np.nan_to_num(sand, nan=0)
-    silt = np.nan_to_num(silt, nan=0)
-    clay = np.nan_to_num(clay, nan=0)
+    # Return None if any value is NaN (matches legacy behavior)
+    if np.isnan(sand) or np.isnan(silt) or np.isnan(clay):
+        return None
 
     # Calculate derived values.
     silt_clay = silt + 1.5 * clay
@@ -140,16 +158,18 @@ def getTexture(row=None, sand=None, silt=None, clay=None):
     # Define conditions and corresponding texture classifications.
     conditions = [
         silt_clay < 15,
-        (silt_clay >= 15) & (silt_clay < 30),
-        (((7 <= clay) & (clay <= 20)) & (sand > 52))
+        (silt_clay >= 15) & (silt_2x_clay < 30),  # Fixed: was using silt_clay for both
+        (((clay >= 7) & (clay <= 20)) & (sand > 52) & (silt_2x_clay >= 30))
         | ((clay < 7) & (silt < 50) & (silt_2x_clay >= 30)),
-        (7 <= clay) & (clay <= 27) & (28 <= silt) & (silt < 50) & (sand <= 52),
-        (silt >= 50) & (((12 <= clay) & (clay < 27)) | ((silt < 80) & (clay < 12))),
+        (clay >= 7) & (clay <= 27) & (silt >= 28) & (silt < 50) & (sand <= 52),
+        ((silt >= 50) & (clay >= 12) & (clay < 27)) | ((silt >= 50) & (silt < 80) & (clay < 12)),
         (silt >= 80) & (clay < 12),
-        (20 <= clay) & (clay < 35) & (silt < 28) & (sand > 45),
-        (27 <= clay) & (clay < 40) & (sand <= 45) & (sand > 20),
+        (clay >= 20) & (clay < 35) & (silt < 28) & (sand > 45),
+        (clay >= 27) & (clay < 40) & (sand > 20) & (sand <= 45),
+        (clay >= 27) & (clay < 40) & (sand <= 20),
         (clay >= 35) & (sand >= 45),
-        (clay >= 40) & (silt >= 40) & (sand <= 45),
+        (clay >= 40) & (silt >= 40),
+        (clay >= 40) & (sand <= 45) & (silt < 40),
     ]
 
     choices = [
@@ -161,12 +181,14 @@ def getTexture(row=None, sand=None, silt=None, clay=None):
         "Silt",
         "Sandy clay loam",
         "Clay loam",
+        "Silty clay loam",
         "Sandy clay",
+        "Silty clay",
         "Clay",
     ]
 
     # Compute the texture classification.
-    result = np.select(conditions, choices, default="Unknown")
+    result = np.select(conditions, choices, default=None)
 
     # Ensure that a plain Python string is returned.
     if isinstance(result, np.ndarray):
@@ -1614,10 +1636,10 @@ def process_horizon_data(muhorzdata_pd):
     # Infill missing CEC values with ECEC
     muhorzdata_pd["CEC"] = muhorzdata_pd["cec7_r"].fillna(muhorzdata_pd["ecec_r"])
 
-    # Rename columns for better clarity
-    muhorzdata_pd = muhorzdata_pd.rename(
-        columns={"cec7_r": "CEC", "ph1to1h2o_r": "pH", "ec_r": "EC"}
-    )
+    # Rename columns for better clarity.
+    # Keep the derived CEC column above as the single source of truth to avoid
+    # duplicate "CEC" column labels in downstream operations.
+    muhorzdata_pd = muhorzdata_pd.rename(columns={"ph1to1h2o_r": "pH", "ec_r": "EC"})
 
     # Assign textures
     muhorzdata_pd["texture"] = muhorzdata_pd.apply(getTexture, axis=1)
@@ -2302,16 +2324,23 @@ def information_gain(data, target_col, feature_cols):
         probabilities = value_counts / len(series)
         return entropy(probabilities, base=2)
 
+    # target_col can be passed as ["col"]; normalize to a single column label.
+    target_name = target_col[0] if isinstance(target_col, (list, tuple)) else target_col
+
     # Calculate entropy of the entire dataset based on the target variable
-    total_entropy = entropy_score(data[target_col])
+    total_entropy = entropy_score(data[target_name])
 
     # Calculate information gain for each feature
     information_gains = {}
     for feature_col in feature_cols:
         # Calculate weighted average of entropies for each unique value of the feature
-        feature_entropy = data.groupby(feature_col)[target_col].apply(entropy_score)
+        feature_entropy = data.groupby(feature_col)[target_name].apply(entropy_score)
         feature_counts = data[feature_col].value_counts()
-        weighted_feature_entropy = sum((feature_counts / len(data)) * feature_entropy.fillna(0))
+        # Align on feature values and sum numeric terms (avoid Python sum over Series labels).
+        weighted_terms = (
+            feature_counts.reindex(feature_entropy.index, fill_value=0) / len(data)
+        ) * feature_entropy.astype(float).fillna(0)
+        weighted_feature_entropy = float(weighted_terms.sum())
         information_gain = total_entropy - weighted_feature_entropy
         information_gains[feature_col] = information_gain
 

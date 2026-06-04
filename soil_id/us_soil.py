@@ -804,9 +804,6 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
                     comp_max_depths_group = comp_max_depths[
                         comp_max_depths["cokey"].isin(group_sorted["cokey"])
                     ]
-                    muhorzdata_pd_group = muhorzdata_pd[
-                        muhorzdata_pd["cokey"].isin(group_sorted["cokey"])
-                    ]
 
                     # Check if OSD depth adjustment is needed
                     if OSD_max_bottom < comp_max_depths_group["comp_max_bottom"].iloc[0]:

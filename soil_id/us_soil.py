@@ -459,20 +459,14 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
     def _norm_flag_cokey(value):
         return re.sub(r"\.0+$", "", str(value).strip())
 
-    osd_text_by_cokey = {
-        _norm_flag_cokey(k): v for k, v in osd_text_by_cokey.items()
-    }
-    osd_rfv_by_cokey = {
-        _norm_flag_cokey(k): v for k, v in osd_rfv_by_cokey.items()
-    }
+    osd_text_by_cokey = {_norm_flag_cokey(k): v for k, v in osd_text_by_cokey.items()}
+    osd_rfv_by_cokey = {_norm_flag_cokey(k): v for k, v in osd_rfv_by_cokey.items()}
 
-    mucompdata_pd["OSD_text_int"] = (
-        mucompdata_pd["cokey"]
-        .map(lambda c: osd_text_by_cokey.get(_norm_flag_cokey(c), "No"))
+    mucompdata_pd["OSD_text_int"] = mucompdata_pd["cokey"].map(
+        lambda c: osd_text_by_cokey.get(_norm_flag_cokey(c), "No")
     )
-    mucompdata_pd["OSD_rfv_int"] = (
-        mucompdata_pd["cokey"]
-        .map(lambda c: osd_rfv_by_cokey.get(_norm_flag_cokey(c), "No"))
+    mucompdata_pd["OSD_rfv_int"] = mucompdata_pd["cokey"].map(
+        lambda c: osd_rfv_by_cokey.get(_norm_flag_cokey(c), "No")
     )
 
     # Merge component bottom depth and clay texture information into mucompdata_pd
@@ -732,11 +726,7 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
             for _cokey, _grp in muhorzdata_pd.groupby("cokey", sort=False):
                 _norm = _norm_cokey_local(_cokey)
                 _ordered = _grp.sort_values("hzdept_r").drop_duplicates().reset_index(drop=True)
-                _depths = [
-                    float(v)
-                    for v in _ordered["hzdepb_r"].tolist()
-                    if pd.notnull(v)
-                ]
+                _depths = [float(v) for v in _ordered["hzdepb_r"].tolist() if pd.notnull(v)]
                 raw_bottom_depths_by_cokey[_norm] = _depths
 
             n_profiles = len(getProfile_cokey)
@@ -847,11 +837,13 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
                         horizon_bottom_depths = raw_bottom_depths_by_cokey.get(group_cokey, [])
                         if not horizon_bottom_depths:
                             horizon_bottom_depths = [
-                                float(v) if v != "" else np.nan 
+                                float(v) if v != "" else np.nan
                                 for v in hzb_lyrs[target_idx].values()
                             ]
                         # Filter out NaN values
-                        horizon_bottom_depths = [d for d in horizon_bottom_depths if not np.isnan(d)]
+                        horizon_bottom_depths = [
+                            d for d in horizon_bottom_depths if not np.isnan(d)
+                        ]
 
                         # Aggregate data for each color dimension
                         l_d = aggregate_data(
@@ -942,9 +934,9 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
                         # and component depth is <200cm
                         if OSD_depth_remove:
                             # Remove data based on comp_max_depths
-                            OSD_sand_intpl = OSD_sand_intpl.loc[: comp_max_bottom]
-                            OSD_clay_intpl = OSD_clay_intpl.loc[: comp_max_bottom]
-                            OSD_rfv_intpl = OSD_rfv_intpl.loc[: comp_max_bottom]
+                            OSD_sand_intpl = OSD_sand_intpl.loc[:comp_max_bottom]
+                            OSD_clay_intpl = OSD_clay_intpl.loc[:comp_max_bottom]
+                            OSD_rfv_intpl = OSD_rfv_intpl.loc[:comp_max_bottom]
 
                         # Create the compname and cokey dataframes
                         compname_df = pd.DataFrame(
@@ -1007,11 +999,13 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
                         horizon_bottom_depths = raw_bottom_depths_by_cokey.get(group_cokey, [])
                         if not horizon_bottom_depths:
                             horizon_bottom_depths = [
-                                float(v) if v != "" else np.nan 
+                                float(v) if v != "" else np.nan
                                 for v in hzb_lyrs[target_idx].values()
                             ]
                         # Filter out NaN values
-                        horizon_bottom_depths = [d for d in horizon_bottom_depths if not np.isnan(d)]
+                        horizon_bottom_depths = [
+                            d for d in horizon_bottom_depths if not np.isnan(d)
+                        ]
 
                         # Aggregate sand data
                         snd_d_osd = aggregate_data(
@@ -1057,7 +1051,9 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
                                 existing_val = existing_layer.get(k, np.nan)
                                 osd_val = osd_layer.get(k, np.nan)
                                 merged_layer[k] = (
-                                    osd_val if _is_missing_layer_value(existing_val) else existing_val
+                                    osd_val
+                                    if _is_missing_layer_value(existing_val)
+                                    else existing_val
                                 )
                             return merged_layer
 
@@ -1079,9 +1075,14 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
                         # Update cec, ph, and ec layers if they contain only a single
                         # empty string
                         for lyr in [cec_lyrs, ph_lyrs, ec_lyrs]:
-                            if len(lyr[target_idx]) == 1 and list(lyr[target_idx].values())[0] == "":
+                            if (
+                                len(lyr[target_idx]) == 1
+                                and list(lyr[target_idx].values())[0] == ""
+                            ):
                                 empty_values = [""] * len(hzb_lyrs[target_idx])
-                                lyr[target_idx] = dict(zip(hzb_lyrs[target_idx].keys(), empty_values))
+                                lyr[target_idx] = dict(
+                                    zip(hzb_lyrs[target_idx].keys(), empty_values)
+                                )
 
                 else:
                     # Create an empty dataframe with NaNs for lab_intpl
@@ -1159,9 +1160,7 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
 
             # Initialize fallback layers by profile cokey to avoid positional drift.
             for profile_df, horizon_bottoms in zip(getProfile_cokey, hzb_lyrs):
-                profile_cokey = re.sub(
-                    r"\.0+$", "", str(profile_df["cokey"].iloc[0]).strip()
-                )
+                profile_cokey = re.sub(r"\.0+$", "", str(profile_df["cokey"].iloc[0]).strip())
                 max_bottom = max(comp_max_by_cokey_local.get(profile_cokey, 0), 0)
 
                 # Initialize a DataFrame filled with NaNs
@@ -1198,9 +1197,7 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
 
         # Initialize fallback layers by profile cokey to avoid positional drift.
         for profile_df, horizon_bottoms in zip(getProfile_cokey, hzb_lyrs):
-            profile_cokey = re.sub(
-                r"\.0+$", "", str(profile_df["cokey"].iloc[0]).strip()
-            )
+            profile_cokey = re.sub(r"\.0+$", "", str(profile_df["cokey"].iloc[0]).strip())
             max_bottom = max(comp_max_by_cokey_local.get(profile_cokey, 0), 0)
 
             # Initialize a DataFrame filled with NaNs
@@ -1252,9 +1249,7 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
             _norm_cokey_for_filter(df["cokey"].iloc[0]) if not df.empty else ""
             for df in getProfile_cokey
         ]
-        keep_profile_positions = [
-            i for i, c in enumerate(profile_cokeys) if c in depth_cokey_set
-        ]
+        keep_profile_positions = [i for i, c in enumerate(profile_cokeys) if c in depth_cokey_set]
 
         # Subset layers based on indices with depth
         layer_lists = [
@@ -1307,6 +1302,7 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
         except Exception as e:
             # Log the error but continue with None values
             import traceback
+
             error_details = f"soil_sim failed: {type(e).__name__}: {str(e)}"
             print(error_details)  # Print to stdout
             print(traceback.format_exc())  # Print full stack trace
@@ -1405,9 +1401,7 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
                         on="cokey",
                         how="left",
                     )
-                    ESDcompdata_pd = pd.concat(
-                        [ESDcompdata_pd, _sda_merged], ignore_index=True
-                    )
+                    ESDcompdata_pd = pd.concat([ESDcompdata_pd, _sda_merged], ignore_index=True)
                 else:
                     # SoilWeb had no ESD at all; bootstrap from SDA data
                     if any(_sda_df["cokey"].isin(mucompdata_pd["cokey"])):
@@ -1487,15 +1481,13 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
         # alphabetically, so the selection is fully deterministic.
         _TYPE_PRIORITY = {"NRCS Rangeland Site": 0}
         if "ecoclasstypename" in ESDcompdata_pd.columns:
-            ESDcompdata_pd["_type_pri"] = (
-                ESDcompdata_pd["ecoclasstypename"]
-                .map(lambda t: _TYPE_PRIORITY.get(t, 1) if pd.notna(t) else 1)
+            ESDcompdata_pd["_type_pri"] = ESDcompdata_pd["ecoclasstypename"].map(
+                lambda t: _TYPE_PRIORITY.get(t, 1) if pd.notna(t) else 1
             )
         else:
             ESDcompdata_pd["_type_pri"] = 1
-        ESDcompdata_pd["_id_pri"] = (
-            ESDcompdata_pd["ecoclassid"]
-            .map(lambda e: 0 if (pd.notna(e) and str(e).upper().startswith("R")) else 1)
+        ESDcompdata_pd["_id_pri"] = ESDcompdata_pd["ecoclassid"].map(
+            lambda e: 0 if (pd.notna(e) and str(e).upper().startswith("R")) else 1
         )
         ESDcompdata_pd.sort_values(
             ["cokey", "_type_pri", "_id_pri", "ecoclassid"],
@@ -1630,9 +1622,7 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
                             {
                                 "ESD": {
                                     "ecoclassid": cokey_group["ecoclassid"].tolist(),
-                                    "ecoclassname": cokey_group[
-                                        "ecoclassname"
-                                    ].tolist(),
+                                    "ecoclassname": cokey_group["ecoclassname"].tolist(),
                                     "edit_url": cokey_group["edit_url"].tolist(),
                                 }
                             }
@@ -1840,11 +1830,7 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
     if data_source == "SSURGO" and OSDhorzdata_pd is not None:
         for cokey, grp in OSDhorzdata_pd.groupby("cokey", sort=False):
             g = grp.copy()
-            g = (
-                g.sort_values(["top", "bottom"]) 
-                .drop_duplicates()
-                .reset_index(drop=True)
-            )
+            g = g.sort_values(["top", "bottom"]).drop_duplicates().reset_index(drop=True)
 
             # Keep only valid OSD horizons for interpolation.
             g = g[g["top"] <= g["bottom"]].reset_index(drop=True)
@@ -1895,7 +1881,10 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
                         if not isinstance(layer_dict, dict):
                             return layer_dict
                         ordered_items = sorted(layer_dict.items(), key=lambda kv: int(kv[0]))
-                        return {i: ordered_items[i][1] for i in range(min(depth_len, len(ordered_items)))}
+                        return {
+                            i: ordered_items[i][1]
+                            for i in range(min(depth_len, len(ordered_items)))
+                        }
 
                     sand = _align_layer_dict(sand)
                     clay = _align_layer_dict(clay)
@@ -1938,7 +1927,9 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
                         munsell_values = [
                             (
                                 lab2munsell(color_ref, LAB_ref, lab_triplet)
-                                if lab_triplet[0] != "" and lab_triplet[1] != "" and lab_triplet[2] != ""
+                                if lab_triplet[0] != ""
+                                and lab_triplet[1] != ""
+                                and lab_triplet[2] != ""
                                 else ""
                             )
                             for lab_triplet in lab_parse

@@ -150,7 +150,7 @@ def get_soilweb_data(lon, lat, radius_m=1000):
     lon (float): Longitude of the location for which to fetch soil data.
     lat (float): Latitude of the location for which to fetch soil data.
     radius_m (int, optional): Radius in meters to search for soil data around the specified location. Default is 1000 meters.
-    
+
     Returns:
     dict: A dictionary containing soil data or error information if the request fails.
     """

@@ -1,5 +1,9 @@
 composition_stats
-gdal==3.11.4
+# Any 3.11.x, not an exact pin: the GDAL Python binding must match each
+# consumer's *system* libgdal, which differs by environment (e.g. this repo's
+# CI vs. terraso-backend). Apps pin the exact version; the library declares a
+# compatible range so it doesn't force one version on every consumer.
+gdal==3.11.*
 geopandas
 numpy
 pandas

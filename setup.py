@@ -36,6 +36,9 @@ setup(
     long_description=long_description,
     url="https://github.com/techmatters/soil-id-algorithm",
     packages=["soil_id"],
+    # Ship the small, static Munsell reference table inside the package so it is
+    # always present after install (no data download needed just to import).
+    package_data={"soil_id": ["data/*.csv"]},
     python_requires=">=3.12",
     license="License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
     author="Paul Schreiber",

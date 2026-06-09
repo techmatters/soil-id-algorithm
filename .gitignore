@@ -25,8 +25,9 @@ prof/
 # macOS
 .DS_Store
 
-# reference and output files
-Data/
+# reference and output files (the repo-root download dir; anchored so it does
+# not also match the packaged soil_id/data/ on case-insensitive filesystems)
+/Data/
 bulk_test_result*
 
 get-pip.py*

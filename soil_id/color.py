@@ -59,6 +59,31 @@ def munsell2rgb(color_ref, munsell_ref, munsell):
     return [color_ref.at[idx, col] for col in ["srgb_r", "srgb_g", "srgb_b"]]
 
 
+def munsell_to_lab(color_ref, munsell_ref, munsell):
+    """
+    Looks up CIELAB values for a Munsell color in the reference dataframe.
+
+    The inverse of lab2munsell, but an exact table lookup rather than a
+    nearest-neighbor match (an off-table color returns None).
+
+    Parameters:
+    - color_ref (pd.DataFrame): Reference dataframe with Munsell and CIELAB values.
+    - munsell_ref (pd.DataFrame): Reference dataframe with Munsell hue/value/chroma.
+    - munsell (list): Munsell values [hue, value, chroma], where hue is a string
+      (e.g. "7.5YR", or "N" for a neutral).
+
+    Returns:
+    - list: [L, A, B], or None if the color is not in the reference table.
+    """
+    matches = munsell_ref.query(
+        f'hue == "{munsell[0]}" & value == {int(munsell[1])} & chroma == {int(munsell[2])}'
+    )
+    if matches.empty:
+        return None
+    idx = matches.index[0]
+    return [color_ref.at[idx, col] for col in ["cielab_l", "cielab_a", "cielab_b"]]
+
+
 def convert_rgb_to_lab(row):
     """
     Converts RGB values to LAB.

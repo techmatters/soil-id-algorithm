@@ -65,7 +65,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#hood",
             "slope": 2.0,
             "taxsubgrp": "Ultic Haploxeralfs",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "The Hood series consists of very deep, well drained soils formed in silty or loamy lacustrine deposits. Hood soils are on dissected terraces and terrace escarpments. Slopes are 0 to 65 percent. The mean annual precipitation is 38 inches and mean annual temperature is 50 degrees F."
         },
@@ -121,7 +121,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#hood",
             "slope": 30.0,
             "taxsubgrp": "Ultic Haploxeralfs",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "The Hood series consists of very deep, well drained soils formed in silty or loamy lacustrine deposits. Hood soils are on dissected terraces and terrace escarpments. Slopes are 0 to 65 percent. The mean annual precipitation is 38 inches and mean annual temperature is 50 degrees F."
         },
@@ -177,7 +177,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#hood",
             "slope": 6.0,
             "taxsubgrp": "Ultic Haploxeralfs",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "The Hood series consists of very deep, well drained soils formed in silty or loamy lacustrine deposits. Hood soils are on dissected terraces and terrace escarpments. Slopes are 0 to 65 percent. The mean annual precipitation is 38 inches and mean annual temperature is 50 degrees F."
         },

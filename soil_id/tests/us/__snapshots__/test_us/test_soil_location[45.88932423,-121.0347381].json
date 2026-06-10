@@ -65,7 +65,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#gunn",
             "slope": 5.0,
             "taxsubgrp": "Ultic Haploxeralfs",
-            "textureInfill": "Yes"
+            "textureInfill": "No"
           },
           "siteDescription": "Landscape--plateaus, hills\nLandform--structural benches, hillslopes, ridgetops\nSlope--0 to 65 percent\nParent material--loess mixed with colluvium and residuum derived from basalt\nMean annual precipitation--about 530 mm\nMean annual air temperature--about 9 degrees C\nDepth class--deep, very deep\nDrainage class--well drained\nSoil moisture regime--xeric\nSoil temperature regime--mesic\nSoil moisture subclass--typic"
         },
@@ -121,7 +121,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#gunn",
             "slope": 19.0,
             "taxsubgrp": "Ultic Haploxeralfs",
-            "textureInfill": "Yes"
+            "textureInfill": "No"
           },
           "siteDescription": "Landscape--plateaus, hills\nLandform--structural benches, hillslopes, ridgetops\nSlope--0 to 65 percent\nParent material--loess mixed with colluvium and residuum derived from basalt\nMean annual precipitation--about 530 mm\nMean annual air temperature--about 9 degrees C\nDepth class--deep, very deep\nDrainage class--well drained\nSoil moisture regime--xeric\nSoil temperature regime--mesic\nSoil moisture subclass--typic"
         },
@@ -138,7 +138,7 @@
     "soilRank": [
       {
         "component": "Gunn",
-        "componentData": NaN,
+        "componentData": "Data Complete",
         "componentID": 26581766,
         "name": "Gunn2",
         "not_displayed": false,
@@ -148,16 +148,16 @@
         "rank_data_loc_group": "1",
         "rank_loc": "Not Displayed",
         "rank_loc_group": "1",
-        "score_data": 0.37,
-        "score_data_group": 0.37,
-        "score_data_loc": 0.649,
-        "score_data_loc_group": 0.649,
+        "score_data": 0.443,
+        "score_data_group": 0.443,
+        "score_data_loc": 0.686,
+        "score_data_loc_group": 0.686,
         "score_loc": 0.929,
         "score_loc_group": 0.929
       },
       {
         "component": "Gunn",
-        "componentData": NaN,
+        "componentData": "Data Complete",
         "componentID": 26581758,
         "name": "Gunn",
         "not_displayed": true,
@@ -167,10 +167,10 @@
         "rank_data_loc_group": "1",
         "rank_loc": "1",
         "rank_loc_group": "1",
-        "score_data": 0.312,
-        "score_data_group": 0.37,
-        "score_data_loc": 0.62,
-        "score_data_loc_group": 0.649,
+        "score_data": 0.401,
+        "score_data_group": 0.443,
+        "score_data_loc": 0.665,
+        "score_data_loc_group": 0.686,
         "score_loc": 0.929,
         "score_loc_group": 0.929
       }

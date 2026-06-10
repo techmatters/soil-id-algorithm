@@ -3,20 +3,20 @@
     "AWS_PIW90": 12.07,
     "Soil Data Value": [
       [
+        "texture_0",
+        2.639110609771892
+      ],
+      [
+        "texture_30",
+        2.2589411072908874
+      ],
+      [
         "rfv_class_0",
         1.7621306108711137
       ],
       [
         "rfv_class_30",
         1.6416647689252122
-      ],
-      [
-        "texture_30",
-        0.9858150371789198
-      ],
-      [
-        "texture_0",
-        0.0
       ]
     ],
     "metadata": {
@@ -97,13 +97,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              ""
+              "R230XY630AK"
             ],
             "ecoclassname": [
-              ""
+              "Alpine Dwarf Scrub Gravelly Slopes"
             ],
             "edit_url": [
-              ""
+              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/R230XY630AK"
             ]
           }
         },
@@ -153,13 +153,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              ""
+              "F230XY611AK"
             ],
             "ecoclassname": [
-              ""
+              "Boreal Forest Loamy Frozen Slopes"
             ],
             "edit_url": [
-              ""
+              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/F230XY611AK"
             ]
           }
         },
@@ -321,13 +321,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "F230XY611AK"
+              ""
             ],
             "ecoclassname": [
-              "Boreal Forest Loamy Frozen Slopes"
+              ""
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/F230XY611AK"
+              ""
             ]
           }
         },
@@ -377,13 +377,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R230XY630AK"
+              ""
             ],
             "ecoclassname": [
-              "Alpine Dwarf Scrub Gravelly Slopes"
+              ""
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/230X/R230XY630AK"
+              ""
             ]
           }
         },
@@ -557,10 +557,10 @@
         "rank_data_loc_group": "1",
         "rank_loc": 1,
         "rank_loc_group": 1,
-        "score_data": 0.822,
-        "score_data_group": 0.822,
-        "score_data_loc": 0.561,
-        "score_data_loc_group": 0.561,
+        "score_data": 0.849,
+        "score_data_group": 0.849,
+        "score_data_loc": 0.574,
+        "score_data_loc_group": 0.574,
         "score_loc": 0.3,
         "score_loc_group": 0.3
       },
@@ -576,10 +576,10 @@
         "rank_data_loc_group": "2",
         "rank_loc": 2,
         "rank_loc_group": 2,
-        "score_data": 0.678,
-        "score_data_group": 0.678,
-        "score_data_loc": 0.484,
-        "score_data_loc_group": 0.484,
+        "score_data": 0.706,
+        "score_data_group": 0.706,
+        "score_data_loc": 0.498,
+        "score_data_loc_group": 0.498,
         "score_loc": 0.29,
         "score_loc_group": 0.29
       },
@@ -595,10 +595,10 @@
         "rank_data_loc_group": "3",
         "rank_loc": 3,
         "rank_loc_group": 3,
-        "score_data": 0.771,
-        "score_data_group": 0.771,
-        "score_data_loc": 0.45,
-        "score_data_loc_group": 0.45,
+        "score_data": 0.778,
+        "score_data_group": 0.778,
+        "score_data_loc": 0.454,
+        "score_data_loc_group": 0.454,
         "score_loc": 0.13,
         "score_loc_group": 0.13
       },
@@ -614,31 +614,12 @@
         "rank_data_loc_group": "4",
         "rank_loc": 4,
         "rank_loc_group": 4,
-        "score_data": 0.736,
-        "score_data_group": 0.736,
-        "score_data_loc": 0.403,
-        "score_data_loc_group": 0.403,
+        "score_data": 0.763,
+        "score_data_group": 0.763,
+        "score_data_loc": 0.417,
+        "score_data_loc_group": 0.417,
         "score_loc": 0.07,
         "score_loc_group": 0.07
-      },
-      {
-        "component": "E30-boreal taiga/tussock-silty frozen slopes",
-        "componentData": "Missing Data",
-        "componentID": 27026715,
-        "name": "E30-boreal taiga/tussock-silty frozen slopes",
-        "not_displayed": false,
-        "rank_data": "6",
-        "rank_data_group": "6",
-        "rank_data_loc": "5",
-        "rank_data_loc_group": "5",
-        "rank_loc": 5,
-        "rank_loc_group": 5,
-        "score_data": 0.605,
-        "score_data_group": 0.605,
-        "score_data_loc": 0.332,
-        "score_data_loc_group": 0.332,
-        "score_loc": 0.06,
-        "score_loc_group": 0.06
       },
       {
         "component": "E30-boreal scrub-silty frozen drainageways",
@@ -648,16 +629,35 @@
         "not_displayed": false,
         "rank_data": "5",
         "rank_data_group": "5",
-        "rank_data_loc": "6",
-        "rank_data_loc_group": "6",
+        "rank_data_loc": "5",
+        "rank_data_loc_group": "5",
         "rank_loc": 7,
         "rank_loc_group": 7,
-        "score_data": 0.616,
-        "score_data_group": 0.616,
-        "score_data_loc": 0.328,
-        "score_data_loc_group": 0.328,
+        "score_data": 0.676,
+        "score_data_group": 0.676,
+        "score_data_loc": 0.358,
+        "score_data_loc_group": 0.358,
         "score_loc": 0.04,
         "score_loc_group": 0.04
+      },
+      {
+        "component": "E30-boreal taiga/tussock-silty frozen slopes",
+        "componentData": "Missing Data",
+        "componentID": 27026715,
+        "name": "E30-boreal taiga/tussock-silty frozen slopes",
+        "not_displayed": false,
+        "rank_data": "7",
+        "rank_data_group": "7",
+        "rank_data_loc": "6",
+        "rank_data_loc_group": "6",
+        "rank_loc": 5,
+        "rank_loc_group": 5,
+        "score_data": 0.618,
+        "score_data_group": 0.618,
+        "score_data_loc": 0.339,
+        "score_data_loc_group": 0.339,
+        "score_loc": 0.06,
+        "score_loc_group": 0.06
       },
       {
         "component": "E30-boreal subalpine woodland-gravelly colluvial slopes",
@@ -665,16 +665,16 @@
         "componentID": 27026719,
         "name": "E30-boreal subalpine woodland-gravelly colluvial slopes",
         "not_displayed": false,
-        "rank_data": "7",
-        "rank_data_group": "7",
+        "rank_data": "6",
+        "rank_data_group": "6",
         "rank_data_loc": "7",
         "rank_data_loc_group": "7",
         "rank_loc": 9,
         "rank_loc_group": 9,
-        "score_data": 0.567,
-        "score_data_group": 0.567,
-        "score_data_loc": 0.298,
-        "score_data_loc_group": 0.298,
+        "score_data": 0.646,
+        "score_data_group": 0.646,
+        "score_data_loc": 0.338,
+        "score_data_loc_group": 0.338,
         "score_loc": 0.03,
         "score_loc_group": 0.03
       },
@@ -690,10 +690,10 @@
         "rank_data_loc_group": "8",
         "rank_loc": 8,
         "rank_loc_group": 8,
-        "score_data": 0.565,
-        "score_data_group": 0.565,
-        "score_data_loc": 0.298,
-        "score_data_loc_group": 0.298,
+        "score_data": 0.594,
+        "score_data_group": 0.594,
+        "score_data_loc": 0.312,
+        "score_data_loc_group": 0.312,
         "score_loc": 0.03,
         "score_loc_group": 0.03
       },
@@ -709,10 +709,10 @@
         "rank_data_loc_group": "9",
         "rank_loc": 6,
         "rank_loc_group": 6,
-        "score_data": 0.494,
-        "score_data_group": 0.494,
-        "score_data_loc": 0.272,
-        "score_data_loc_group": 0.272,
+        "score_data": 0.518,
+        "score_data_group": 0.518,
+        "score_data_loc": 0.284,
+        "score_data_loc_group": 0.284,
         "score_loc": 0.05,
         "score_loc_group": 0.05
       }

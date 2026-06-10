@@ -14,6 +14,7 @@
 # along with this program. If not, see https://www.gnu.org/licenses/.
 import os
 import tempfile
+from importlib.resources import files
 
 import pandas as pd
 from dotenv import load_dotenv
@@ -42,7 +43,13 @@ US_AREA_PATH = f"{DATA_PATH}/SoilID_US_Areas.shz"
 
 # US Soil ID
 STATSGO_PATH = f"{DATA_PATH}/gsmsoilmu_a_us.shp"
-MUNSELL_RGB_LAB_PATH = f"{DATA_PATH}/LandPKS_munsell_rgb_lab.csv"
+
+# The Munsell reference table is small, static, and version-controlled, so it
+# ships *inside* the package (soil_id/data/) and is resolved relative to the
+# installed package rather than DATA_PATH. This means it is always present after
+# `pip install` — no data download required just to import soil_id. (The large
+# geospatial datasets above remain DATA_PATH-based downloads.)
+MUNSELL_RGB_LAB_PATH = files("soil_id") / "data" / "LandPKS_munsell_rgb_lab.csv"
 
 # Pre-load Munsell color reference data once at startup
 MUNSELL_COLOR_REF = pd.read_csv(MUNSELL_RGB_LAB_PATH)

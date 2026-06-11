@@ -8,71 +8,46 @@ table. Default mode is a read-only HTML diff; `--write` rebuilds the table from 
 JSON. Full run + deploy instructions are in the **Localization** guide in
 `terraso-wiki` (`docs/development-guide/localization.md`).
 
-Languages are auto-discovered from the translation files. The only special case is a
-column-suffix mismatch, captured in one place:
-
-```python
-DB_SUFFIX_EXCEPTIONS = {"sw": "ks"}  # the DB column suffix for Swahili is "ks"
-```
+Languages are auto-discovered from the translation files, and each language's code is
+its column suffix (`description_<lang>` / `management_<lang>`), so a new language needs
+no edit. The backend reads **only the English columns** (`description_en` /
+`management_en`); the other languages are kept current and staged for a possible
+future multilingual API, but nothing reads them yet.
 
 ---
 
-## Planned migration: rename the Swahili column suffix `ks` → `sw`
+## Deferred cleanup: drop the obsolete `*_ks` columns
 
-The table stores Swahili in `*_ks` columns ("Kiswahili"), but everything else — the
-mobile i18n, ISO 639-1, POEditor, device locales — uses `sw`. In fact `ks` is the ISO
-code for **Kashmiri**, so `ks`-for-Swahili is a latent footgun. The sync tool papers
-over it with the `DB_SUFFIX_EXCEPTIONS` entry above. This runbook removes that
-exception by renaming the DB side to `sw`.
+Historically the table stored Swahili under a `*_ks` suffix ("Kiswahili"), but `ks` is
+the ISO code for **Kashmiri**, not Swahili (`sw`). The sync now writes Swahili to the
+correctly-named `description_sw`/`management_sw`, so the old `description_ks`,
+`management_ks`, and `wrb_tax_ks` columns are **obsolete** — left in place (all `NULL`)
+only so the drop can happen on its own schedule.
 
-**Why it must be coordinated.** The backend selects `Description_ks`/`Management_ks`.
-If the columns are renamed while a deployed backend still reads `_ks` (or vice-versa),
-global soil descriptions break. So the soil-id **code** change and the column
-**rename** must go live together — do this right before / together with a backend
-redeploy.
+This cleanup is **window-free**: the backend reads only `description_en`, so nothing
+references `*_ks`, and they can be dropped at any time.
 
-### 1. soil-id code change (one PR, then tag)
-
-- `soil_id/db.py` — in `get_WRB_descriptions` **and** `getSG_descriptions`, change
-  `Description_ks`/`Management_ks` → `Description_sw`/`Management_sw` (the `SELECT`
-  and the DataFrame column lists).
-- `soil_id/global_soil.py` — change the `siteDescription` dict keys
-  `Description_ks`/`Management_ks` → `_sw` (HWSD path **and** SoilGrids path), plus any
-  `TAXNWRB_pd.get("…_ks")`.
-- `scripts/wrb_descriptions_sync.py` — empty the exception: `DB_SUFFIX_EXCEPTIONS = {}`.
-- Regenerate the global test snapshots (`soil_id/tests/global/__snapshots__/`), which
-  embed the `Description_ks`/`Management_ks` keys, and fix any other `_ks` test refs.
-- Merge, tag a new soil-id release, and bump the backend's `requirements/base.in` pin.
-
-### 2. The schema rename (apply to every database)
-
+### Already done
+The three `*_ks` columns have been relaxed to nullable in local, staging, and prod, so
+the exception-free rebuild can stop populating them:
 ```sql
-ALTER TABLE wrb_fao90_desc RENAME COLUMN description_ks TO description_sw;
-ALTER TABLE wrb_fao90_desc RENAME COLUMN management_ks  TO management_sw;
-ALTER TABLE wrb_fao90_desc RENAME COLUMN wrb_tax_ks     TO wrb_tax_sw;
+ALTER TABLE wrb_fao90_desc
+  ALTER COLUMN description_ks DROP NOT NULL,
+  ALTER COLUMN management_ks  DROP NOT NULL,
+  ALTER COLUMN wrb_tax_ks     DROP NOT NULL;
 ```
 
-`RENAME COLUMN` is metadata-only (fast, preserves data). Apply it to:
+### The drop (run when ready, per database)
+After the exception-free sync has run (Swahili now lives in `description_sw`), the
+`*_ks` columns are all `NULL` and safe to remove:
+```sql
+ALTER TABLE wrb_fao90_desc
+  DROP COLUMN description_ks, DROP COLUMN management_ks, DROP COLUMN wrb_tax_ks;
+```
+Apply to the local `soil-id-db` (then rebuild + push the image) and to the staging then
+production primary databases. `DROP COLUMN` takes any `NOT NULL`/default with it — no
+other constraint changes needed.
 
-- the local `soil-id-db` — then `make dump_soil_id_db` → `make build_docker_image` →
-  `docker push`, so local dev + CI get the renamed image; and
-- the **staging** then **production** primary database (where the soil-id tables
-  actually live in those environments — `SOIL_ID_DATABASE_URL` is unset there).
-
-### 3. Coordinate the cutover
-
-The renamed columns and the `_sw`-reading backend must be live together. Two ways:
-
-- **Simple (brief blip — acceptable for this non-critical field):** apply the rename
-  to the prod DB and ship the backend deploy (new soil-id tag) in the same window.
-  Between the two, the old backend briefly reads a missing `_ks` and global
-  descriptions error — tolerable, since the app falls back to its own i18n.
-- **Zero-downtime (expand / contract):** first add `_sw` as copies
-  (`ADD COLUMN … ; UPDATE … SET description_sw = description_ks; …`), deploy the
-  backend (now reads `_sw`), then `DROP COLUMN … _ks`. No mismatch window, more steps.
-
-### 4. Verify
-
-Run the sync tool's diff (step 1 in the localization guide) against each database.
-With the exception removed and the columns renamed, it should report `changed=0` and
-no `new_lang`, confirming `sw` lines up end to end.
+> `ALTER TABLE` needs a brief `ACCESS EXCLUSIVE` lock. If it hangs, a leaked
+> `idle in transaction` session is holding `wrb_fao90_desc` — terminate it
+> (`SELECT pg_terminate_backend(pid) …`) and re-run with `SET lock_timeout='5s'`.

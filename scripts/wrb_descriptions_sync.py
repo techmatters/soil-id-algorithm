@@ -46,18 +46,8 @@ from pathlib import Path
 
 import psycopg
 
-# A JSON language code is normally also its wrb_fao90_desc column suffix
-# (description_<lang> / management_<lang>). List only the exceptions here; every
-# other language — including any added in future — uses its code as-is, so no
-# edit is needed when a new language appears.
-DB_SUFFIX_EXCEPTIONS = {"sw": "ks"}  # the DB column suffix for Swahili is "ks" (Kiswahili)
-
-
-def db_suffix(lang):
-    """The wrb_fao90_desc column suffix for a JSON language code."""
-    return DB_SUFFIX_EXCEPTIONS.get(lang, lang)
-
-
+# A JSON language code is used directly as its wrb_fao90_desc column suffix
+# (description_<lang> / management_<lang>), so a new language needs no edit here.
 FIELDS = ("description", "management")
 
 _BR_RE = re.compile(r"<br\s*/?>", re.IGNORECASE)
@@ -149,7 +139,7 @@ def compare(translations, db, existing_suffixes):
 
     for soil_key in sorted(json_keys & db_keys):
         for lang in sorted(translations):
-            suffix = db_suffix(lang)
+            suffix = lang
             t = translations[lang].get(soil_key, {})
             for field in FIELDS:
                 json_val = t.get(field)
@@ -201,7 +191,7 @@ def build_write_plan(translations, columns):
     # Widen/add only the description & management columns (names are short varchar).
     alters = []
     for lang in langs:
-        suffix = db_suffix(lang)
+        suffix = lang
         for field in FIELDS:
             col = f"{field}_{suffix}"
             if col in columns:
@@ -215,7 +205,7 @@ def build_write_plan(translations, columns):
     # translated-name column (wrb_tax_<suffix>) is only written where it exists.
     cols, sources = ["wrb_tax"], [("name", "en")]  # wrb_tax (key) = English name
     for lang in langs:
-        suffix = db_suffix(lang)
+        suffix = lang
         if f"wrb_tax_{suffix}" in columns:
             cols.append(f"wrb_tax_{suffix}")
             sources.append(("name", lang))

@@ -454,12 +454,6 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
                 for key in [
                     "Description_en",
                     "Management_en",
-                    "Description_es",
-                    "Management_es",
-                    "Description_ks",
-                    "Management_ks",
-                    "Description_fr",
-                    "Management_fr",
                 ]
             },
         }
@@ -1366,12 +1360,6 @@ def sg_list(connection, lon, lat):
                     "Prob": [""],
                     "Description_en": [""],
                     "Management_en": [""],
-                    "Description_es": [""],
-                    "Management_es": [""],
-                    "Description_ks": [""],
-                    "Management_ks": [""],
-                    "Description_fr": [""],
-                    "Management_fr": [""],
                 }
             )
     else:
@@ -1381,12 +1369,6 @@ def sg_list(connection, lon, lat):
                 "Prob": [""],
                 "Description_en": [""],
                 "Management_en": [""],
-                "Description_es": [""],
-                "Management_es": [""],
-                "Description_ks": [""],
-                "Management_ks": [""],
-                "Description_fr": [""],
-                "Management_fr": [""],
             }
         )
 
@@ -1410,24 +1392,12 @@ def sg_list(connection, lon, lat):
         "probability",
         "descriptionEN",
         "managementEN",
-        "descriptionES",
-        "managementES",
-        "descriptionKS",
-        "managementKS",
-        "descriptionFR",
-        "managementFR",
     ]
     component_values = [
         TAXNWRB_pd["WRB_tax"],
         TAXNWRB_pd["Prob"],
         TAXNWRB_pd.get("Description_en", ""),
         TAXNWRB_pd.get("Management_en", ""),
-        TAXNWRB_pd.get("Description_es", ""),
-        TAXNWRB_pd.get("Management_es", ""),
-        TAXNWRB_pd.get("Description_ks", ""),
-        TAXNWRB_pd.get("Management_ks", ""),
-        TAXNWRB_pd.get("Description_fr", ""),
-        TAXNWRB_pd.get("Management_fr", ""),
     ]
     components_dict = {}
     for k, v in zip(component_keys, component_values):

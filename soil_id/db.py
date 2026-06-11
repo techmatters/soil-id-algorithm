@@ -398,8 +398,7 @@ def get_WRB_descriptions(connection, WRB_Comp_List):
         with connection.cursor() as cur:
             # Create placeholders for the SQL IN clause
             placeholders = ", ".join(["%s"] * len(WRB_Comp_List))
-            sql = f"""SELECT WRB_tax, Description_en, Management_en, Description_es, Management_es,
-                             Description_ks, Management_ks, Description_fr, Management_fr
+            sql = f"""SELECT WRB_tax, Description_en, Management_en
                       FROM wrb_fao90_desc
                       WHERE WRB_tax IN ({placeholders})
                       ORDER BY WRB_tax"""
@@ -415,12 +414,6 @@ def get_WRB_descriptions(connection, WRB_Comp_List):
                 "WRB_tax",
                 "Description_en",
                 "Management_en",
-                "Description_es",
-                "Management_es",
-                "Description_ks",
-                "Management_ks",
-                "Description_fr",
-                "Management_fr",
             ],
         )
 
@@ -435,7 +428,7 @@ def getSG_descriptions(connection, WRB_Comp_List):
     """
     Fetch WRB descriptions from a PostgreSQL database using wrb2006_to_fao90
     and wrb_fao90_desc tables. Returns a pandas DataFrame with columns:
-    [WRB_tax, Description_en, Management_en, Description_es, ...]
+    [WRB_tax, Description_en, Management_en]
 
     Args:
         WRB_Comp_List (list[str]): List of WRB_2006_Full values (e.g. ["Chernozem","Gleysol"]).
@@ -474,12 +467,6 @@ def getSG_descriptions(connection, WRB_Comp_List):
                     "WRB_tax",
                     "Description_en",
                     "Management_en",
-                    "Description_es",
-                    "Management_es",
-                    "Description_ks",
-                    "Management_ks",
-                    "Description_fr",
-                    "Management_fr",
                 ]
             )
 
@@ -487,13 +474,7 @@ def getSG_descriptions(connection, WRB_Comp_List):
         sql2 = """
             SELECT WRB_tax,
                    Description_en,
-                   Management_en,
-                   Description_es,
-                   Management_es,
-                   Description_ks,
-                   Management_ks,
-                   Description_fr,
-                   Management_fr
+                   Management_en
             FROM wrb_fao90_desc
             WHERE WRB_tax = ANY(%s)
             ORDER BY WRB_tax
@@ -507,12 +488,6 @@ def getSG_descriptions(connection, WRB_Comp_List):
                 "WRB_tax",
                 "Description_en",
                 "Management_en",
-                "Description_es",
-                "Management_es",
-                "Description_ks",
-                "Management_ks",
-                "Description_fr",
-                "Management_fr",
             ],
         )
         return data

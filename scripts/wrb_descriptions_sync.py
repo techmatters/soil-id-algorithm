@@ -388,6 +388,9 @@ def main():
                     f"have no JSON entry and would lose their description: {', '.join(missing)}"
                 )
             n_alter, n_insert = apply_write(conn, translations, args.sql_out)
+            with conn.cursor() as cur:
+                cur.execute("SELECT current_database()")
+                db_name = cur.fetchone()[0]
         print(
             f"Rebuilt wrb_fao90_desc from JSON: {n_alter} column op(s), deleted all rows, "
             f"inserted {n_insert} soils across {len(translations)} languages "
@@ -395,7 +398,11 @@ def main():
         )
         if args.sql_out:
             print(f"Wrote SQL to {args.sql_out}")
-        print("Next: regenerate the dump (make dump_soil_id_db) and redistribute it.")
+        # The dump -> soil-id-db image path only applies to the dedicated local soil-id
+        # database (named "soil_id"); a --write against the staging/prod primary DB is
+        # applied directly, so there is nothing to dump or redistribute.
+        if db_name == "soil_id":
+            print("Next: regenerate the dump (make dump_soil_id_db) and redistribute it.")
         return
 
     with psycopg.connect(args.database_url) as conn:

@@ -94,8 +94,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Haplic Andosols form in volcanic materials. <br> These soils are highly erodible and have high P fixation, but most have relatively good water holding capacity and soil fertility. ",
-            "Management_en": "Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover. <br> Because these soils are formed from volcanic materials a part of their soil charge is positive, which means they can ‘fix’ phosphorus, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Agroforestry systems can help minimize erosion. "
+            "Description_en": "Haplic Andosols form in volcanic materials. These soils are highly erodible and have high P fixation, but most have relatively good water holding capacity and soil fertility. ",
+            "Management_en": "Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. Land management practices should maximize soil cover. Because these soils are formed from volcanic materials a part of their soil charge is positive, which means they can ‘fix’ phosphorus, making it unavailable to plants in the cropping season. Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. Agroforestry systems can help minimize erosion. "
           }
         },
         "texture": {
@@ -188,8 +188,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Haplic Phaeozems are fertile and productive soils of grasslands with relatively high organic matter and base saturation. <br> Their occurrence in dry climates means that irrigation is likely needed for production.",
-            "Management_en": "These soils are highly productive and fertile, and make excellent cropland. <br> They are rich in organic matter. <br> However, they are at risk for soil loss through both wind and water erosion. <br> Thus, practices to maintain soil cover (mulches, conservation tillage, windbreaks) are needed."
+            "Description_en": "Haplic Phaeozems are fertile and productive soils of grasslands with relatively high organic matter and base saturation. Their occurrence in dry climates means that irrigation is likely needed for production.",
+            "Management_en": "These soils are highly productive and fertile, and make excellent cropland. They are rich in organic matter. However, they are at risk for soil loss through both wind and water erosion. Thus, practices to maintain soil cover (mulches, conservation tillage, windbreaks) are needed."
           }
         },
         "texture": {
@@ -283,7 +283,7 @@
           },
           "siteDescription": {
             "Description_en": "Haplic Luvisols are productive soils with high base saturation and relatively clayey subsoils.",
-            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops."
+            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. If the soil is already eroded they may best be suited for grazing andtree crops."
           }
         },
         "texture": {
@@ -376,8 +376,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Gleyic Phaeozems are fertile and productive soils of grasslands with relatively high organic matter and base saturation. <br> Their occurrence in dry climates means that irrigation is likely needed for production. <br> Gleyic Phaeozems are saturated with shallow groundwater within one meter of the soil surface.",
-            "Management_en": "These soils are highly productive and fertile, and make excellent cropland. <br> They are rich in organic matter. <br> However, they are at risk for soil loss through both wind and water erosion. <br> Thus, practices to maintain soil cover (mulches, conservation tillage, windbreaks) are needed. <br> Drainage of these soils may be needed. <br> However, since this is saturation via groundwater this may not be possible, and thus shallow-rooted crops must be considered. <br> If fertilized and not drained, loss of applied nitrogen (N) by denitrification or leaching is possible. <br> More efficient crop N use in these soils can be achieved by:  1) drainage, and, 2) use of slow-release N fertilizers (if available). "
+            "Description_en": "Gleyic Phaeozems are fertile and productive soils of grasslands with relatively high organic matter and base saturation. Their occurrence in dry climates means that irrigation is likely needed for production. Gleyic Phaeozems are saturated with shallow groundwater within one meter of the soil surface.",
+            "Management_en": "These soils are highly productive and fertile, and make excellent cropland. They are rich in organic matter. However, they are at risk for soil loss through both wind and water erosion. Thus, practices to maintain soil cover (mulches, conservation tillage, windbreaks) are needed. Drainage of these soils may be needed. However, since this is saturation via groundwater this may not be possible, and thus shallow-rooted crops must be considered. If fertilized and not drained, loss of applied nitrogen (N) by denitrification or leaching is possible. More efficient crop N use in these soils can be achieved by:  1) drainage, and, 2) use of slow-release N fertilizers (if available). "
           }
         },
         "texture": {
@@ -470,8 +470,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Eutric Gleysols have shallow groundwater and are saturated for significant portions of the year. <br> Deep drainage is necessary for cultivation.    <br> Eutric Gleysols are productive soils with high base saturation in the upper portion of soil.",
-            "Management_en": "These soils are saturated, and if they are cultivated significant drainage is required. <br> Once drained, these soils can be highly productive. <br> The water table must be lowered using deep drainage. <br> Once drained, liming may be required as organic matter begins to decompose. "
+            "Description_en": "Eutric Gleysols have shallow groundwater and are saturated for significant portions of the year. Deep drainage is necessary for cultivation. Eutric Gleysols are productive soils with high base saturation in the upper portion of soil.",
+            "Management_en": "These soils are saturated, and if they are cultivated significant drainage is required. Once drained, these soils can be highly productive. The water table must be lowered using deep drainage. Once drained, liming may be required as organic matter begins to decompose. "
           }
         },
         "texture": {
@@ -564,8 +564,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Mollic Gleysols have shallow groundwater and are saturated for significant portions of the year. <br> Deep drainage is necessary for cultivation.   <br> Mollic Gleysols have relatively higher organic matter and nutrients in surface horizons.",
-            "Management_en": "These soils are saturated, and if they are cultivated significant drainage is required. <br> Once drained, these soils can be highly productive. <br> The water table must be lowered using deep drainage. <br> Once drained, liming may be required as organic matter begins to decompose. "
+            "Description_en": "Mollic Gleysols have shallow groundwater and are saturated for significant portions of the year. Deep drainage is necessary for cultivation. Mollic Gleysols have relatively higher organic matter and nutrients in surface horizons.",
+            "Management_en": "These soils are saturated, and if they are cultivated significant drainage is required. Once drained, these soils can be highly productive. The water table must be lowered using deep drainage. Once drained, liming may be required as organic matter begins to decompose. "
           }
         },
         "texture": {
@@ -658,8 +658,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Umbric Andosols form in volcanic materials. <br> These soils are highly erodible and have high P fixation, but most have relatively good water holding capacity and soil fertility. <br> Umbric Andosols have a thick surface horizon but soils are wetter and have fewer nutrients than Mollic Andosols. ",
-            "Management_en": "Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover. <br> Because these soils are formed from volcanic materials a part of their soil charge is positive, which means they can ‘fix’ phosphorus, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Agroforestry systems can help minimize erosion. <br> Additional drainage may make these soils more productive. <br> Fertilization will be essential for effective crop production. "
+            "Description_en": "Umbric Andosols form in volcanic materials. These soils are highly erodible and have high P fixation, but most have relatively good water holding capacity and soil fertility. Umbric Andosols have a thick surface horizon but soils are wetter and have fewer nutrients than Mollic Andosols. ",
+            "Management_en": "Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. Land management practices should maximize soil cover. Because these soils are formed from volcanic materials a part of their soil charge is positive, which means they can ‘fix’ phosphorus, making it unavailable to plants in the cropping season. Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. Additional fertilization and lime application, in addition to P, will also be needed to ensure adequate crop growth and yield. Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. Agroforestry systems can help minimize erosion. Additional drainage may make these soils more productive. Fertilization will be essential for effective crop production. "
           }
         },
         "texture": {

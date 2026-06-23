@@ -94,8 +94,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Calcaric Fluvisols are mostly found in floodplains and coastal areas and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Calcaric Fluvisols have carbonates and high pH in the upper portion of soil.",
-            "Management_en": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered."
+            "Description_en": "Calcaric Fluvisols are mostly found in floodplains and coastal areas and have limited profile development with a range of properties. Hydrological management is essential for production. Calcaric Fluvisols have carbonates and high pH in the upper portion of soil.",
+            "Management_en": "These soils are all naturally fertile and productive. Drainage and management of floodwaters can make them suitable for continuous cultivation. Once under continuous cultivation care should be taken to avoid soil erosion. Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered."
           }
         },
         "texture": {
@@ -188,8 +188,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Chromic Cambisols are widely occurring soils with limited soil development. <br> These are well drained soils, with intense color. <br> When climate and landscape are favorable, they can be productive soils. ",
-            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
+            "Description_en": "Chromic Cambisols are widely occurring soils with limited soil development. These are well drained soils, with intense color. When climate and landscape are favorable, they can be productive soils. ",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. These soils are well suited for crop production, and can be intensively used. Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
           }
         },
         "texture": {
@@ -282,8 +282,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Haplic Calcisols mostly occur in semiarid and arid climates.  They are calcareous soils, with high base saturation, pH, and P fixation. <br> Many have gravelly surface horizons. ",
-            "Management_en": "These soils have low organic matter content, are dry, and often stony. <br> They are calcareous, and will have high base saturation (Ca, Mg and K) and high soil pH. <br> If used, the soils are best suited for grazing or limited use with drought tolerant crops. <br> At best they could be cultivated every-other or every-third year, with fallow in the years in which the soils are not used for crops. <br> If irrigated, care must be taken so that the soils do not become high in salts (saline). High quality irrigation water that is low in salts would be needed to prevent salinization."
+            "Description_en": "Haplic Calcisols mostly occur in semiarid and arid climates.  They are calcareous soils, with high base saturation, pH, and P fixation. Many have gravelly surface horizons. ",
+            "Management_en": "These soils have low organic matter content, are dry, and often stony. They are calcareous, and will have high base saturation (Ca, Mg and K) and high soil pH. If used, the soils are best suited for grazing or limited use with drought tolerant crops. At best they could be cultivated every-other or every-third year, with fallow in the years in which the soils are not used for crops. If irrigated, care must be taken so that the soils do not become high in salts (saline). High quality irrigation water that is low in salts would be needed to prevent salinization."
           }
         },
         "texture": {
@@ -377,7 +377,7 @@
           },
           "siteDescription": {
             "Description_en": "Solonchaks are soils that contain salts at or near the soil surface.  These soils form in either deserts or close to coastlines.",
-            "Management_en": "These soils are typically high in total salts. <br> They have very poor productivity, and cannot be used unless high quality irrigation is available to remove accumulated salts. <br>These soils are not well suited for agriculture and are best used for grazing, or left fallow. "
+            "Management_en": "These soils are typically high in total salts. They have very poor productivity, and cannot be used unless high quality irrigation is available to remove accumulated salts. These soils are not well suited for agriculture and are best used for grazing, or left fallow. "
           }
         },
         "texture": {
@@ -470,8 +470,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Calcaric Regosols are weakly developed soils that commonly are too dry, or are on steeper slopes which limit productivity.<br>Calcaric Regosols are calcareous in the upper portion of the subsoil. ",
-            "Management_en": "These soils have low water holding capacity, and are very sensitive to drought. <br> They are prone to erosion, especially in areas with slope. <br> The combination of drought sensitivity and high erosion potential makes these soils best suited for grazing or other uses with constant soil cover. <br> Even when used for grazing, irrigation will be needed due to the low water holding capacity and high permeability of these soils. "
+            "Description_en": "Calcaric Regosols are weakly developed soils that commonly are too dry, or are on steeper slopes which limit productivity. Calcaric Regosols are calcareous in the upper portion of the subsoil. ",
+            "Management_en": "These soils have low water holding capacity, and are very sensitive to drought. They are prone to erosion, especially in areas with slope. The combination of drought sensitivity and high erosion potential makes these soils best suited for grazing or other uses with constant soil cover. Even when used for grazing, irrigation will be needed due to the low water holding capacity and high permeability of these soils. "
           }
         },
         "texture": {
@@ -536,8 +536,8 @@
             "soilDepth": 20
           },
           "siteDescription": {
-            "Description_en": "Lithic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Lithic Leptosols have hard rock within 10 cm of the soil surface. ",
-            "Management_en": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover. <br> Any agricultural use should be for grazing, with cover continuously maintained. "
+            "Description_en": "Lithic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. Leptosols on steep slopes are highly erodible. Lithic Leptosols have hard rock within 10 cm of the soil surface. ",
+            "Management_en": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. Practices to maintain organic matter and cover should be used. Only uses for grazing or agroforestry should be considered. Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. Land management practices should maximize soil cover. Any agricultural use should be for grazing, with cover continuously maintained. "
           }
         },
         "texture": {

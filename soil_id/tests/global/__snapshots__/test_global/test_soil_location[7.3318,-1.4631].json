@@ -94,8 +94,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Ferric Acrisols are acidic and relatively infertile soils. <br> Supplemental fertilization and liming will be needed to create a productive soil for crop use. <br> These soils are also high in soluble aluminum (Al) which is toxic to plants. <br> These soils are high in iron and iron nodules are commonly present.",
-            "Management_en": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. <br> Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. <br> Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. <br> Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. <br> Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. <br> Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate), which will take Al out of solution, can help to reduce aluminum toxicity. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover, crop rotation and agroforestry. "
+            "Description_en": "Ferric Acrisols are acidic and relatively infertile soils. Supplemental fertilization and liming will be needed to create a productive soil for crop use. These soils are also high in soluble aluminum (Al) which is toxic to plants. These soils are high in iron and iron nodules are commonly present.",
+            "Management_en": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate), which will take Al out of solution, can help to reduce aluminum toxicity. Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. Land management practices should maximize soil cover, crop rotation and agroforestry. "
           }
         },
         "texture": {
@@ -188,8 +188,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Dystric Fluvisols are mostly found in floodplains and coastal areas and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Dystric Fluvisols are less productive soils with low base saturation in the upper portion of soil.",
-            "Management_en": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered. <br> A low base saturation (presence of Ca, Mg, K) indicates that the soil pH may be low, and liming may be warranted. "
+            "Description_en": "Dystric Fluvisols are mostly found in floodplains and coastal areas and have limited profile development with a range of properties. Hydrological management is essential for production. Dystric Fluvisols are less productive soils with low base saturation in the upper portion of soil.",
+            "Management_en": "These soils are all naturally fertile and productive. Drainage and management of floodwaters can make them suitable for continuous cultivation. However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. Once under continuous cultivation care should be taken to avoid soil erosion. Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered. A low base saturation (presence of Ca, Mg, K) indicates that the soil pH may be low, and liming may be warranted. "
           }
         },
         "texture": {
@@ -282,8 +282,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Eutric Gleysols have shallow groundwater and are saturated for significant portions of the year. <br> Deep drainage is necessary for cultivation.    <br> Eutric Gleysols are productive soils with high base saturation in the upper portion of soil.",
-            "Management_en": "These soils are saturated, and if they are cultivated significant drainage is required. <br> Once drained, these soils can be highly productive. <br> The water table must be lowered using deep drainage. <br> Once drained, liming may be required as organic matter begins to decompose. "
+            "Description_en": "Eutric Gleysols have shallow groundwater and are saturated for significant portions of the year. Deep drainage is necessary for cultivation. Eutric Gleysols are productive soils with high base saturation in the upper portion of soil.",
+            "Management_en": "These soils are saturated, and if they are cultivated significant drainage is required. Once drained, these soils can be highly productive. The water table must be lowered using deep drainage. Once drained, liming may be required as organic matter begins to decompose. "
           }
         },
         "texture": {
@@ -376,8 +376,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Dystric Gleysols have shallow groundwater and are saturated for significant portions of the year. <br> Deep drainage is necessary for cultivation.    <br> Dystric Gleysols are less productive soils with low base saturation in the upper portion of soil.",
-            "Management_en": "These soils are saturated, and if they are cultivated significant drainage is required. <br> Once drained, these soils can be highly productive. <br> The water table must be lowered using deep drainage. <br> Once drained, liming may be required as organic matter begins to decompose. <br> These soils have little available calcium, magnesium or other bases in the soil, and may require supplemental fertilization. <br> If needed, liming will supply  the calcium, and possibly the magnesium (dolomitic lime).. "
+            "Description_en": "Dystric Gleysols have shallow groundwater and are saturated for significant portions of the year. Deep drainage is necessary for cultivation. Dystric Gleysols are less productive soils with low base saturation in the upper portion of soil.",
+            "Management_en": "These soils are saturated, and if they are cultivated significant drainage is required. Once drained, these soils can be highly productive. The water table must be lowered using deep drainage. Once drained, liming may be required as organic matter begins to decompose. These soils have little available calcium, magnesium or other bases in the soil, and may require supplemental fertilization. If needed, liming will supply  the calcium, and possibly the magnesium (dolomitic lime).. "
           }
         },
         "texture": {
@@ -470,8 +470,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Ferric Lixisols form in warm climates with relatively clayey subsoils dominated by kaolinite and iron oxides, but relatively high base saturation. <br> Ferric Lixisols have soft and cemented iron concentrations in subsoils, and poorly developed structure between iron concentrations which can be susceptible to compaction. ",
-            "Management_en": "These soils are heavily weathered soils, which means that fertilization (and possibly lime) will be needed for production. <br> Although they do have kaolinite clay and iron oxides, they have fairly low aluminum toxicity. <br> Best production practices for this soil will include regular fertilization, and consistent cropping in perennial crops or forestry. <br> These soils are particularly sensitive to erosion, and so practices that work to maintain surface cover and strong soil structure (such as perennial crops) are needed. "
+            "Description_en": "Ferric Lixisols form in warm climates with relatively clayey subsoils dominated by kaolinite and iron oxides, but relatively high base saturation. Ferric Lixisols have soft and cemented iron concentrations in subsoils, and poorly developed structure between iron concentrations which can be susceptible to compaction. ",
+            "Management_en": "These soils are heavily weathered soils, which means that fertilization (and possibly lime) will be needed for production. Although they do have kaolinite clay and iron oxides, they have fairly low aluminum toxicity. Best production practices for this soil will include regular fertilization, and consistent cropping in perennial crops or forestry. These soils are particularly sensitive to erosion, and so practices that work to maintain surface cover and strong soil structure (such as perennial crops) are needed. "
           }
         },
         "texture": {
@@ -564,8 +564,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Eutric Plinthosols are relatively unproductive soils found in subtropical or tropical regions with high amounts of iron-rich, humus poor concentrations of variable hardness and cementation.<br> Softer iron concentrations irreversibly harden when exposed at the surface.<br> These soils have low rooting volume and are relatively acid, infertile, highly erodible, and often wet.<br> Eutric Plinthosols are have high base saturation in subsoils.",
-            "Management_en": "This soil is not well suited for farming.<br> The combination of hard iron and cementation make this soil most suitable for construction.<br> It has poor soil fertility, which when combined with shallow and rocky soil makes arable farming not possible.<br> These soils should be used for things such as surface materials for roads."
+            "Description_en": "Eutric Plinthosols are relatively unproductive soils found in subtropical or tropical regions with high amounts of iron-rich, humus poor concentrations of variable hardness and cementation. Softer iron concentrations irreversibly harden when exposed at the surface. These soils have low rooting volume and are relatively acid, infertile, highly erodible, and often wet. Eutric Plinthosols are have high base saturation in subsoils.",
+            "Management_en": "This soil is not well suited for farming. The combination of hard iron and cementation make this soil most suitable for construction. It has poor soil fertility, which when combined with shallow and rocky soil makes arable farming not possible. These soils should be used for things such as surface materials for roads."
           }
         },
         "texture": {
@@ -629,16 +629,16 @@
         },
         "site": {
           "siteData": {
-            "componentID": 133621,
+            "componentID": 133618,
             "distance": 3154.198,
             "mapunitID": 36084,
             "minCompDistance": 3154.19808851,
-            "share": 10,
+            "share": 20,
             "soilDepth": 40
           },
           "siteDescription": {
-            "Description_en": "Dystric Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Dystic Leptosols have low base saturation over the shallow root limiting layer. ",
-            "Management_en": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only  uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> This soil has virtually no calcium available for plant use. <br> Any agricultural use should be for grazing or agroforestry, with cover continuously maintained. "
+            "Description_en": "Dystric Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. Leptosols on steep slopes are highly erodible. Dystic Leptosols have low base saturation over the shallow root limiting layer. ",
+            "Management_en": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. Practices to maintain organic matter and cover should be used. Only  uses for grazing or agroforestry should be considered. Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. This soil has virtually no calcium available for plant use. Any agricultural use should be for grazing or agroforestry, with cover continuously maintained. "
           }
         },
         "texture": {
@@ -728,8 +728,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Dystric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil.<br> These soils are prone to compaction and require drainage for crop production.<br> Dystric Planosols are less productive soils with low base saturation in the subsoil.",
-            "Management_en": "Located on flat land, these soils are best suited for paddy rice production.<br> Drainage will be required for production.<br> Highest yields will require additional fertilization.<br> Very low levels of calcium are available in the lower profile of this soil.<br> Supplemental fertilization will be needed."
+            "Description_en": "Dystric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil. These soils are prone to compaction and require drainage for crop production. Dystric Planosols are less productive soils with low base saturation in the subsoil.",
+            "Management_en": "Located on flat land, these soils are best suited for paddy rice production. Drainage will be required for production. Highest yields will require additional fertilization. Very low levels of calcium are available in the lower profile of this soil. Supplemental fertilization will be needed."
           }
         },
         "texture": {
@@ -822,8 +822,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Chromic Luvisols are productive soils with high base saturation and relatively clayey subsoils. <br> Chromic Luvisols have an iron rich subsoil.",
-            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. <br> However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. <br> If the soil is already eroded they may best be suited for grazing andtree crops."
+            "Description_en": "Chromic Luvisols are productive soils with high base saturation and relatively clayey subsoils. Chromic Luvisols have an iron rich subsoil.",
+            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. If the soil is already eroded they may best be suited for grazing andtree crops."
           }
         },
         "texture": {
@@ -916,8 +916,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Dystric Cambisols are widely occurring soils with limited soil development. <br> These are less productive soils with low base saturation in the upper portion of soil.",
-            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> Because this soil has a low base saturation, the application of bases (through fertlization) may be needed for most productive crop yield. <br> If the soil pH is low calcium (and possibly magnesium, if dolomitic lime is used) can be supplied through the addition of lime.<br> If the soil pH is suitable for crop production then gypsum (CaSO4) can be used as the Ca source, if needed, or other sources such as MgSO4 could be applied (if soil test indicates a need). <br> Proper fertilization will also supply potassium, if soil test indicates a need. "
+            "Description_en": "Dystric Cambisols are widely occurring soils with limited soil development. These are less productive soils with low base saturation in the upper portion of soil.",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. Because this soil has a low base saturation, the application of bases (through fertlization) may be needed for most productive crop yield. If the soil pH is low calcium (and possibly magnesium, if dolomitic lime is used) can be supplied through the addition of lime. If the soil pH is suitable for crop production then gypsum (CaSO4) can be used as the Ca source, if needed, or other sources such as MgSO4 could be applied (if soil test indicates a need). Proper fertilization will also supply potassium, if soil test indicates a need. "
           }
         },
         "texture": {
@@ -1010,8 +1010,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Dystric Plinthosols are relatively unproductive soils found in subtropical or tropical regions with high amounts of iron-rich, humus poor concentrations of variable hardness and cementation.<br> Softer iron concentrations irreversibly harden when exposed at the surface.<br> These soils have low rooting volume and are relatively acid, infertile, highly erodible, and often wet.<br>  Dystric Plinthosols are unproductive soils with low base saturation in subsoils.",
-            "Management_en": "This soil is not well suited for farming.<br> The combination of hard iron and cementation make this soil most suitable for construction.<br> It has poor soil fertility, which when combined with shallow and rocky soil makes arable farming not possible.<br> These soils should be used for things such as surface materials for roads.<br> This soil has virtually no available calcium in the subsoil."
+            "Description_en": "Dystric Plinthosols are relatively unproductive soils found in subtropical or tropical regions with high amounts of iron-rich, humus poor concentrations of variable hardness and cementation. Softer iron concentrations irreversibly harden when exposed at the surface. These soils have low rooting volume and are relatively acid, infertile, highly erodible, and often wet. Dystric Plinthosols are unproductive soils with low base saturation in subsoils.",
+            "Management_en": "This soil is not well suited for farming. The combination of hard iron and cementation make this soil most suitable for construction. It has poor soil fertility, which when combined with shallow and rocky soil makes arable farming not possible. These soils should be used for things such as surface materials for roads. This soil has virtually no available calcium in the subsoil."
           }
         },
         "texture": {
@@ -1104,8 +1104,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Eutric Fluvisols are mostly found in floodplains and coastal areas, and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Eutric Fluvisols are productive soils with high base saturation in the upper portion of soil. ",
-            "Management_en": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered."
+            "Description_en": "Eutric Fluvisols are mostly found in floodplains and coastal areas, and have limited profile development with a range of properties. Hydrological management is essential for production. Eutric Fluvisols are productive soils with high base saturation in the upper portion of soil. ",
+            "Management_en": "These soils are all naturally fertile and productive. Drainage and management of floodwaters can make them suitable for continuous cultivation. However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. Once under continuous cultivation care should be taken to avoid soil erosion. Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered."
           }
         },
         "texture": {
@@ -1338,7 +1338,7 @@
       {
         "component": "Dystric leptosols",
         "componentData": "Missing Data",
-        "componentID": 133621,
+        "componentID": 133618,
         "name": "Dystric leptosols",
         "not_displayed": false,
         "rank_data": "7",

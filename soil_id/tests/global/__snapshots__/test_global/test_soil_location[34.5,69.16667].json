@@ -94,8 +94,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Calcaric Cambisols are widely occurring soils with limited soil development. <br> These soils are calcareous in a soil layer below the surface.",
-            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. <br> These soils are well suited for crop production, and can be intensively used. <br> Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
+            "Description_en": "Calcaric Cambisols are widely occurring soils with limited soil development. These soils are calcareous in a soil layer below the surface.",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. These soils are well suited for crop production, and can be intensively used. Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
           }
         },
         "texture": {
@@ -188,8 +188,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Calcaric Regosols are weakly developed soils that commonly are too dry, or are on steeper slopes which limit productivity.<br>Calcaric Regosols are calcareous in the upper portion of the subsoil. ",
-            "Management_en": "These soils have low water holding capacity, and are very sensitive to drought. <br> They are prone to erosion, especially in areas with slope. <br> The combination of drought sensitivity and high erosion potential makes these soils best suited for grazing or other uses with constant soil cover. <br> Even when used for grazing, irrigation will be needed due to the low water holding capacity and high permeability of these soils. "
+            "Description_en": "Calcaric Regosols are weakly developed soils that commonly are too dry, or are on steeper slopes which limit productivity. Calcaric Regosols are calcareous in the upper portion of the subsoil. ",
+            "Management_en": "These soils have low water holding capacity, and are very sensitive to drought. They are prone to erosion, especially in areas with slope. The combination of drought sensitivity and high erosion potential makes these soils best suited for grazing or other uses with constant soil cover. Even when used for grazing, irrigation will be needed due to the low water holding capacity and high permeability of these soils. "
           }
         },
         "texture": {
@@ -254,8 +254,8 @@
             "soilDepth": 20
           },
           "siteDescription": {
-            "Description_en": "Lithic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. <br> Leptosols on steep slopes are highly erodible. <br> Lithic Leptosols have hard rock within 10 cm of the soil surface. ",
-            "Management_en": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. <br> Practices to maintain organic matter and cover should be used. <br> Only uses for grazing or agroforestry should be considered. <br> Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. <br> Land management practices should maximize soil cover. <br> Any agricultural use should be for grazing, with cover continuously maintained. "
+            "Description_en": "Lithic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. Leptosols on steep slopes are highly erodible. Lithic Leptosols have hard rock within 10 cm of the soil surface. ",
+            "Management_en": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. Practices to maintain organic matter and cover should be used. Only uses for grazing or agroforestry should be considered. Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. Land management practices should maximize soil cover. Any agricultural use should be for grazing, with cover continuously maintained. "
           }
         },
         "texture": {
@@ -344,8 +344,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Histosols are organic soils that typically form in wet environments. <br> Their properties are largely dependent on the type and degree of decomposition of the organic soil materials. <br> The soils can be productive with intensive management including soil drainage, but their fragile nature and habitat suggests preservation of these soils is warranted where possible. <br> When cultivated, subsidence and sulfide oxidation present management challenges. ",
-            "Management_en": "These soils can be some of our most productive soils, especially for specialty crops such as vegetables. <br> However, they must be drained for use, and this will lead to subsidence of the soil, as exposed peat is rapidly mineralized, and organic matter content quickly drops. <br> This will lead to increasingly acid soils, and thus regular liming will be needed. <br> These organic soils must be managed differently from mineral soils, and techniques that minimize organic matter degradation are a priority. <br> Maintenance of native vegetation is the best use. "
+            "Description_en": "Histosols are organic soils that typically form in wet environments. Their properties are largely dependent on the type and degree of decomposition of the organic soil materials. The soils can be productive with intensive management including soil drainage, but their fragile nature and habitat suggests preservation of these soils is warranted where possible. When cultivated, subsidence and sulfide oxidation present management challenges. ",
+            "Management_en": "These soils can be some of our most productive soils, especially for specialty crops such as vegetables. However, they must be drained for use, and this will lead to subsidence of the soil, as exposed peat is rapidly mineralized, and organic matter content quickly drops. This will lead to increasingly acid soils, and thus regular liming will be needed. These organic soils must be managed differently from mineral soils, and techniques that minimize organic matter degradation are a priority. Maintenance of native vegetation is the best use. "
           }
         },
         "texture": {

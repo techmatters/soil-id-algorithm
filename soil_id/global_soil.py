@@ -30,7 +30,6 @@ from .db import extract_hwsd2_data, fetch_table_from_db, get_WRB_descriptions, g
 from .rank_utils import finalize_rank_output
 from .services import get_soilgrids_classification_data, get_soilgrids_property_data
 from .utils import (
-    adjust_depth_interval,
     agg_data_layer,
     # assign_max_distance_scores,
     # calculate_location_score,
@@ -634,13 +633,20 @@ def rank_soils_global(
         cpt = [getClay(sh) for sh in soilHorizon]
         p_cfg = [getCF_fromClass(rf) for rf in rfvDepth]
 
-        p_sandpct_intpl = [
-            spt[i] for i in range(len(soilHorizon)) for _ in range(top[i], bottom[i])
-        ]
-        p_claypct_intpl = [
-            cpt[i] for i in range(len(soilHorizon)) for _ in range(top[i], bottom[i])
-        ]
-        p_cfg_intpl = [p_cfg[i] for i in range(len(soilHorizon)) for _ in range(top[i], bottom[i])]
+        # Build depth-indexed property arrays: place each horizon's value at its
+        # TRUE depth (0..199) so that list position == depth. This keeps the
+        # arrays aligned with `pedon_slice_index` when it is applied below.
+        # The previous approach packed values into a contiguous list, which
+        # silently dropped/misaligned data whenever the user's horizons had a
+        # gap or did not start at depth 0 (see issue #368).
+        p_sandpct_intpl = [np.nan] * 200
+        p_claypct_intpl = [np.nan] * 200
+        p_cfg_intpl = [np.nan] * 200
+        for i in range(len(soilHorizon)):
+            for d in range(max(top[i], 0), min(bottom[i], 200)):
+                p_sandpct_intpl[d] = spt[i]
+                p_claypct_intpl[d] = cpt[i]
+                p_cfg_intpl[d] = p_cfg[i]
 
         # Length of interpolated texture and RF depth
         p_bottom_depth = pd.DataFrame([-999, "sample_pedon", soil_df_slice.bottom.iloc[-1]]).T
@@ -667,10 +673,10 @@ def rank_soils_global(
         else:
             cr_df = pd.Series([np.nan])
 
-        # Adjust depth interval for each dataset
-        p_sandpct_intpl = adjust_depth_interval(p_sandpct_intpl)
-        p_claypct_intpl = adjust_depth_interval(p_claypct_intpl)
-        p_cfg_intpl = adjust_depth_interval(p_cfg_intpl)
+        # Convert the depth-indexed arrays (already length 200) to DataFrames.
+        p_sandpct_intpl = pd.DataFrame(p_sandpct_intpl)
+        p_claypct_intpl = pd.DataFrame(p_claypct_intpl)
+        p_cfg_intpl = pd.DataFrame(p_cfg_intpl)
 
         # Construct final dataframe with adjusted data
         p_compname = pd.Series("sample_pedon", index=np.arange(len(p_sandpct_intpl)))

@@ -118,9 +118,12 @@ download_soil_data:
 
 DATABASE_DUMP_FILE ?= Data/soil_id_db.dump
 DOCKER_IMAGE_TAG ?= ghcr.io/techmatters/soil-id-db:latest
+# Build linux/amd64 explicitly: the postgis:16-3.5 base has no arm64 manifest,
+# and CI/prod run the image on amd64 regardless.
 build_docker_image:
 	@echo "Building to tag $(DOCKER_IMAGE_TAG)"
 	docker build \
+	  --platform linux/amd64 \
 	  --build-arg DATABASE_DUMP_FILE=$(DATABASE_DUMP_FILE) \
 	  -t $(DOCKER_IMAGE_TAG) \
 	  .
@@ -138,8 +141,19 @@ stop_db:
 connect_db:
 	docker compose exec db psql -U postgres -d soil_id
 
+# Container running the local soil-id-db (PostgreSQL 16). Override if your
+# compose project names it differently.
+SOIL_ID_DB_CONTAINER ?= terraso-backend-soil-id-db-1
+
+# Dump from *inside* the PG16 container so the archive is always restorable by
+# the PG16 image. A host pg_dump newer than 16 (e.g. 17/18) writes an archive
+# the image's pg_restore 16 cannot read ("unsupported version in file header"),
+# which silently breaks build_docker_image.
 dump_soil_id_db:
-	pg_dump --format=custom $(DATABASE_URL)  -t hwsd2_segment -t hwsd2_data -t landpks_munsell_rgb_lab -t normdist1 -t normdist2 -t wise_soil_data -t wrb2006_to_fao90 -t wrb_fao90_desc -f $(DATABASE_DUMP_FILE)
+	docker exec $(SOIL_ID_DB_CONTAINER) pg_dump --format=custom -U postgres -d soil_id \
+	  -t hwsd2_segment -t hwsd2_data -t landpks_munsell_rgb_lab -t normdist1 -t normdist2 \
+	  -t wise_soil_data -t wrb2006_to_fao90 -t wrb_fao90_desc -f /tmp/soil_id_db.dump
+	docker cp $(SOIL_ID_DB_CONTAINER):/tmp/soil_id_db.dump $(DATABASE_DUMP_FILE)
 
 restore_soil_id_db:
 	pg_restore --dbname=$(DATABASE_URL) --single-transaction --clean --if-exists --no-owner $(DATABASE_DUMP_FILE)

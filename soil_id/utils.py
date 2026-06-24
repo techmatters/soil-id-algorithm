@@ -2335,32 +2335,36 @@ def sg_get_and_agg(variable, sg_data_w, bottom, return_depth=False):
         return pd_lpks.replace(np.nan, "")
 
 
-def adjust_depth_interval(data, target_length=200):
-    """Adjusts the depth interval of user data."""
-
-    # Convert input to a DataFrame
-    if isinstance(data, list):
-        data = pd.DataFrame(data)
-    elif isinstance(data, pd.Series):
-        data = data.to_frame()
-
-    # Ensure data is a DataFrame at this point
-    if not isinstance(data, pd.DataFrame):
-        raise TypeError("Data must be a list, Series, or DataFrame")
-
-    length = len(data)
-
-    if length > target_length:
-        # Truncate data if it exceeds the target length
-        data = data.iloc[:target_length]
-    elif length < target_length:
-        # Extend data if it's shorter than the target length
-        add_length = target_length - length
-        add_data = pd.DataFrame(np.nan, index=np.arange(add_length), columns=data.columns)
-        data = pd.concat([data, add_data])
-
-    data.reset_index(drop=True, inplace=True)
-    return data
+# Unused since the #368 depth-alignment fix removed its callers in
+# rank_soils_global (the user property arrays are now built depth-indexed at a
+# fixed length). Kept commented out rather than deleted in case the fixed-length
+# pad/truncate behaviour is needed again.
+# def adjust_depth_interval(data, target_length=200):
+#     """Adjusts the depth interval of user data."""
+#
+#     # Convert input to a DataFrame
+#     if isinstance(data, list):
+#         data = pd.DataFrame(data)
+#     elif isinstance(data, pd.Series):
+#         data = data.to_frame()
+#
+#     # Ensure data is a DataFrame at this point
+#     if not isinstance(data, pd.DataFrame):
+#         raise TypeError("Data must be a list, Series, or DataFrame")
+#
+#     length = len(data)
+#
+#     if length > target_length:
+#         # Truncate data if it exceeds the target length
+#         data = data.iloc[:target_length]
+#     elif length < target_length:
+#         # Extend data if it's shorter than the target length
+#         add_length = target_length - length
+#         add_data = pd.DataFrame(np.nan, index=np.arange(add_length), columns=data.columns)
+#         data = pd.concat([data, add_data])
+#
+#     data.reset_index(drop=True, inplace=True)
+#     return data
 
 
 # Helper function to update dataframes based on depth conditions

@@ -94,8 +94,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Salic Fluvisols are mostly found in floodplains and coastal areas and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Salic Fluvisols have high salinity in the upper portion of soil.",
-            "Management_en": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered. <br> Leaching with a high quality (low salinity) water source will be needed to move salts out of the rooting zone. <br> Use of salt tolerant crops and varieties is also recommended. <br> Last, management of fertilization programs to avoid overapplication and accumulation of salts is needed. "
+            "Description_en": "Salic Fluvisols are mostly found in floodplains and coastal areas and have limited profile development with a range of properties. Hydrological management is essential for production. Salic Fluvisols have high salinity in the upper portion of soil.",
+            "Management_en": "These soils are all naturally fertile and productive. Drainage and management of floodwaters can make them suitable for continuous cultivation. However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. Once under continuous cultivation care should be taken to avoid soil erosion. Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered. Leaching with a high quality (low salinity) water source will be needed to move salts out of the rooting zone. Use of salt tolerant crops and varieties is also recommended. Last, management of fertilization programs to avoid overapplication and accumulation of salts is needed. "
           }
         },
         "texture": {
@@ -188,8 +188,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Cambic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> Cambic Arenosols have a minimally developed subsoil horizon that can retain slightly higher amounts of nutrients and water.",
-            "Management_en": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. "
+            "Description_en": "Cambic Arenosols are sandy soils with minimal soil development. They are inherently low in nutrients and water holding capacity. Cambic Arenosols have a minimally developed subsoil horizon that can retain slightly higher amounts of nutrients and water.",
+            "Management_en": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. "
           }
         },
         "texture": {
@@ -282,8 +282,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Eutric Fluvisols are mostly found in floodplains and coastal areas, and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Eutric Fluvisols are productive soils with high base saturation in the upper portion of soil. ",
-            "Management_en": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered."
+            "Description_en": "Eutric Fluvisols are mostly found in floodplains and coastal areas, and have limited profile development with a range of properties. Hydrological management is essential for production. Eutric Fluvisols are productive soils with high base saturation in the upper portion of soil. ",
+            "Management_en": "These soils are all naturally fertile and productive. Drainage and management of floodwaters can make them suitable for continuous cultivation. However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. Once under continuous cultivation care should be taken to avoid soil erosion. Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered."
           }
         },
         "texture": {
@@ -376,8 +376,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Haplic Solonetzs have strongly structured clay rich subsoils with high exchangeable sodium. <br> Productivity of these soils depends on the depth of surface horizons above these subsoils.",
-            "Management_en": "These are likely to have high sodium in subsurface horizons which results in poor soil structure and poor infiltration. <br> The soils will appear wet, but plants will wilt. <br> To improve internal drainage, gypsum should be applied to displace the sodium, followed by leaching with higher quality water to move the displaced sodium from the rooting zone. <br> If the soils can be reclaimed by the application of gypsum and leaching of sodium, they may be suitable for grazing or cultivation. <br> Selection of sodium tolerant crops is also an option, and should be used for maintenance.<br> Cultivation is more suited when these soils are located in temperate regions, and the surface soil is higher in organic matter. "
+            "Description_en": "Haplic Solonetzs have strongly structured clay rich subsoils with high exchangeable sodium. Productivity of these soils depends on the depth of surface horizons above these subsoils.",
+            "Management_en": "These are likely to have high sodium in subsurface horizons which results in poor soil structure and poor infiltration. The soils will appear wet, but plants will wilt. To improve internal drainage, gypsum should be applied to displace the sodium, followed by leaching with higher quality water to move the displaced sodium from the rooting zone. If the soils can be reclaimed by the application of gypsum and leaching of sodium, they may be suitable for grazing or cultivation. Selection of sodium tolerant crops is also an option, and should be used for maintenance. Cultivation is more suited when these soils are located in temperate regions, and the surface soil is higher in organic matter. "
           }
         },
         "texture": {
@@ -470,8 +470,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Mollic Fluvisols are mostly found in floodplains and coastal areas and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Mollic Fluvisols have relatively higher organic matter and nutrients in surface horizons.",
-            "Management_en": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered."
+            "Description_en": "Mollic Fluvisols are mostly found in floodplains and coastal areas and have limited profile development with a range of properties. Hydrological management is essential for production. Mollic Fluvisols have relatively higher organic matter and nutrients in surface horizons.",
+            "Management_en": "These soils are all naturally fertile and productive. Drainage and management of floodwaters can make them suitable for continuous cultivation. However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. Once under continuous cultivation care should be taken to avoid soil erosion. Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered."
           }
         },
         "texture": {
@@ -564,8 +564,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Ferralic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are high in iron and have low nutrient retention.",
-            "Management_en": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> Increased attention to the supply of phosphorus may be needed, as excessive iron may increase P fixation in these soils. "
+            "Description_en": "Ferralic Arenosols are sandy soils with minimal soil development. They are inherently low in nutrients and water holding capacity. These soils are high in iron and have low nutrient retention.",
+            "Management_en": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. Increased attention to the supply of phosphorus may be needed, as excessive iron may increase P fixation in these soils. "
           }
         },
         "texture": {
@@ -658,8 +658,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Eutric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil.<br> These soils are prone to compaction and require drainage for crop production.<br> Eutric Planosols are relatively productive soils with high base saturation in the subsoil.",
-            "Management_en": "Located on flat land, these soils are best suited for paddy rice production.<br> Drainage will be required for production.<br> Highest yields will require additional fertilization."
+            "Description_en": "Eutric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil. These soils are prone to compaction and require drainage for crop production. Eutric Planosols are relatively productive soils with high base saturation in the subsoil.",
+            "Management_en": "Located on flat land, these soils are best suited for paddy rice production. Drainage will be required for production. Highest yields will require additional fertilization."
           }
         },
         "texture": {
@@ -752,8 +752,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Gleyic Solonetz have strongly structured clay rich subsoils with high exchangeable sodium. <br> Productivity of these soils depends on the depth of surface horizons above these subsoils.<br> Gleyic Solonetz are saturated with shallow groundwater within one meter of the soil surface.",
-            "Management_en": "These are likely to have high sodium in subsurface horizons which results in poor soil structure and poor infiltration. <br> The soils will appear wet, but plants will wilt. <br> Drainage of these soils will be needed, both to eliminate standing water and remediate sodicity issues. <br> To further improve internal drainage, gypsum should be applied to displace the sodium, followed by leaching with higher quality water to move the displaced sodium from the rooting zone. <br> If the soils can be reclaimed by the application of gypsum and leaching of sodium, they may be suitable for grazing or cultivation. <br> Selection of sodium tolerant crops is also an option, and should be used for maintenance.<br> Cultivation is more suited when these soils are located in temperate regions, and the surface soil is higher in organic matter. "
+            "Description_en": "Gleyic Solonetz have strongly structured clay rich subsoils with high exchangeable sodium. Productivity of these soils depends on the depth of surface horizons above these subsoils. Gleyic Solonetz are saturated with shallow groundwater within one meter of the soil surface.",
+            "Management_en": "These are likely to have high sodium in subsurface horizons which results in poor soil structure and poor infiltration. The soils will appear wet, but plants will wilt. Drainage of these soils will be needed, both to eliminate standing water and remediate sodicity issues. To further improve internal drainage, gypsum should be applied to displace the sodium, followed by leaching with higher quality water to move the displaced sodium from the rooting zone. If the soils can be reclaimed by the application of gypsum and leaching of sodium, they may be suitable for grazing or cultivation. Selection of sodium tolerant crops is also an option, and should be used for maintenance. Cultivation is more suited when these soils are located in temperate regions, and the surface soil is higher in organic matter. "
           }
         },
         "texture": {
@@ -846,8 +846,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Umbric Gleysols have shallow groundwater and are saturated for significant portions of the year. <br> Deep drainage is necessary for cultivation.    <br> Umbric Gleysols have relatively higher organic matter but lower nutrients in surface horizons.",
-            "Management_en": "These soils are saturated, and if they are cultivated significant drainage is required. <br> Once drained, these soils can be highly productive. <br> The water table must be lowered using deep drainage. <br> Once drained, liming may be required as organic matter begins to decompose. <br> The surface soil pH is low in these soils, and liming will likely be required. "
+            "Description_en": "Umbric Gleysols have shallow groundwater and are saturated for significant portions of the year. Deep drainage is necessary for cultivation. Umbric Gleysols have relatively higher organic matter but lower nutrients in surface horizons.",
+            "Management_en": "These soils are saturated, and if they are cultivated significant drainage is required. Once drained, these soils can be highly productive. The water table must be lowered using deep drainage. Once drained, liming may be required as organic matter begins to decompose. The surface soil pH is low in these soils, and liming will likely be required. "
           }
         },
         "texture": {
@@ -940,8 +940,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Gleyic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> These soils are saturated with shallow groundwater above one meter.",
-            "Management_en": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. <br> Drainage of these soils may be needed. <br> However, since this is saturation from groundwater installation of drainage lines may not be possible, and thus shallow-rooted crops should be considered. <br> If fertilized and not drained the loss of applied nitrogen (N) by denitrification or leaching is possible. <br> More efficient crop N use in these soils can be achieved by:  1) drainage, and, 2) use of slow-release N fertilizers (if available). "
+            "Description_en": "Gleyic Arenosols are sandy soils with minimal soil development. They are inherently low in nutrients and water holding capacity. These soils are saturated with shallow groundwater above one meter.",
+            "Management_en": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. Drainage of these soils may be needed. However, since this is saturation from groundwater installation of drainage lines may not be possible, and thus shallow-rooted crops should be considered. If fertilized and not drained the loss of applied nitrogen (N) by denitrification or leaching is possible. More efficient crop N use in these soils can be achieved by:  1) drainage, and, 2) use of slow-release N fertilizers (if available). "
           }
         },
         "texture": {
@@ -1034,8 +1034,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Cambic Arenosols are sandy soils with minimal soil development. <br> They are inherently low in nutrients and water holding capacity. <br> Cambic Arenosols have a minimally developed subsoil horizon that can retain slightly higher amounts of nutrients and water.",
-            "Management_en": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. <br> Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. <br> Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. "
+            "Description_en": "Cambic Arenosols are sandy soils with minimal soil development. They are inherently low in nutrients and water holding capacity. Cambic Arenosols have a minimally developed subsoil horizon that can retain slightly higher amounts of nutrients and water.",
+            "Management_en": "Since these soils have poor water and nutrient retention they must be fertilized and irrigated for optimal productivity. Management practices to improve nutrient supply and water holding capacity include the addition of organic matter, and use of cover crops and crop rotation. Best productivity will be achieved through the use of supplemental irrigation, use of tools such as mulches or covers to preserve soil moisture, and fertilization. "
           }
         },
         "texture": {
@@ -1128,8 +1128,8 @@
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Eutric Fluvisols are mostly found in floodplains and coastal areas, and have limited profile development with a range of properties. <br> Hydrological management is essential for production.   <br> Eutric Fluvisols are productive soils with high base saturation in the upper portion of soil. ",
-            "Management_en": "These soils are all naturally fertile and productive. <br> Drainage andmanagement of floodwaters can make them suitable for continuous cultivation. <br> However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. <br> Once under continuous cultivation care should be taken to avoid soil erosion. <br> Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered."
+            "Description_en": "Eutric Fluvisols are mostly found in floodplains and coastal areas, and have limited profile development with a range of properties. Hydrological management is essential for production. Eutric Fluvisols are productive soils with high base saturation in the upper portion of soil. ",
+            "Management_en": "These soils are all naturally fertile and productive. Drainage and management of floodwaters can make them suitable for continuous cultivation. However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. Once under continuous cultivation care should be taken to avoid soil erosion. Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered."
           }
         },
         "texture": {

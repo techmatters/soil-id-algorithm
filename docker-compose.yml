@@ -2,7 +2,7 @@ name: soil_id
 
 services:
   db:
-    image: ghcr.io/techmatters/soil-id-db:0.3
+    image: ghcr.io/techmatters/soil-id-db:2026-06-23
     ports: 
       - "5432:5432"
     environment:

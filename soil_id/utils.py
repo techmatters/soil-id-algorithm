@@ -724,10 +724,13 @@ def drop_cokey_horz(df):
 
             # Group by the duplicated signature to find which cokeys are duplicates of each other
             for signature, dup_group in duplicated_entries.groupby("_cokey_grouped"):
-                # Sort by distance and keep the one with smallest distance (first after sorting)
-                sorted_by_distance = dup_group.sort_values("distance")
-                # Drop all except the first (smallest distance)
-                cokeys_to_drop = sorted_by_distance.index.tolist()[1:]
+                # Keep the smallest-distance instance; break distance ties by cokey so the
+                # same instance survives regardless of input row order. Without this
+                # tiebreaker the kept cokey depends on Postgres/Pandas row ordering, which
+                # differs across environments and makes the ranking non-deterministic.
+                sorted_by_distance = dup_group.reset_index().sort_values(["distance", "cokey"])
+                # Drop all except the first (smallest distance, then smallest cokey)
+                cokeys_to_drop = sorted_by_distance["cokey"].tolist()[1:]
                 drop_instances.extend(cokeys_to_drop)
 
     # Clean up temporary columns

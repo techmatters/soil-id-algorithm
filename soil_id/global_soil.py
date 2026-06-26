@@ -555,6 +555,27 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
     )
 
 
+def _slice_gower_distance(slice_mat):
+    """Gower distance matrix for a single depth slice.
+
+    A slice can have zero feature columns when a depth has no usable measurements
+    — e.g. the user recorded a depth interval but left texture/rock-fragment/color
+    blank, or (after depth-aligning) the horizon data simply does not reach this
+    depth. ``gower_distances`` would feed a shape ``(n, 0)`` array into its mean
+    imputer and raise "Found array with 0 feature(s)…", failing the whole ranking.
+
+    For such a slice, return an all-NaN ``(n, n)`` matrix instead. Callers treat NaN
+    distances as "no information" (the masked average and NaN-infill steps), so the
+    slice is ignored and components rank on the depths that do have data. Returning a
+    matrix (rather than skipping) keeps the per-slice list aligned with soil_matrix
+    rows.
+    """
+    if slice_mat.shape[1] == 0:
+        n = slice_mat.shape[0]
+        return np.full((n, n), np.nan)
+    return gower_distances(slice_mat)
+
+
 ##############################################################################################
 #                                   rankPredictionGlobal                                     #
 ##############################################################################################
@@ -828,20 +849,11 @@ def rank_soils_global(
             else:
                 slice_mat = slice_df.drop("compname", axis=1)
 
-            # Compute the Gower distance on the prepared slice matrix.
-            # A slice can end up with zero feature columns when this depth has no
-            # usable measurements (e.g. the user recorded a depth interval but left
-            # texture/rock-fragment/color blank). gower_distances would crash its
-            # mean-imputer on a 0-feature array, so emit an all-NaN distance matrix
-            # instead. The masked average below and the NaN-infill loop already treat
-            # NaN distances as "no information", so this slice is simply ignored and
-            # components are ranked on the depths that do have data. An all-NaN matrix
-            # (rather than skipping) keeps dis_mat_list aligned with soil_matrix rows.
-            if slice_mat.shape[1] == 0:
-                n = slice_mat.shape[0]
-                D = np.full((n, n), np.nan)
-            else:
-                D = gower_distances(slice_mat)
+            # Compute the Gower distance on the prepared slice matrix. A slice with
+            # zero usable feature columns is handled inside the helper (see its
+            # docstring) so the per-depth mean imputer can't crash on a 0-feature
+            # array; it returns an all-NaN matrix that the steps below then ignore.
+            D = _slice_gower_distance(slice_mat)
 
             dis_mat_list.append(D)
 

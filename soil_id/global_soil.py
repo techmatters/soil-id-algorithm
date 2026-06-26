@@ -829,7 +829,19 @@ def rank_soils_global(
                 slice_mat = slice_df.drop("compname", axis=1)
 
             # Compute the Gower distance on the prepared slice matrix.
-            D = gower_distances(slice_mat)
+            # A slice can end up with zero feature columns when this depth has no
+            # usable measurements (e.g. the user recorded a depth interval but left
+            # texture/rock-fragment/color blank). gower_distances would crash its
+            # mean-imputer on a 0-feature array, so emit an all-NaN distance matrix
+            # instead. The masked average below and the NaN-infill loop already treat
+            # NaN distances as "no information", so this slice is simply ignored and
+            # components are ranked on the depths that do have data. An all-NaN matrix
+            # (rather than skipping) keeps dis_mat_list aligned with soil_matrix rows.
+            if slice_mat.shape[1] == 0:
+                n = slice_mat.shape[0]
+                D = np.full((n, n), np.nan)
+            else:
+                D = gower_distances(slice_mat)
 
             dis_mat_list.append(D)
 
@@ -840,8 +852,10 @@ def rank_soils_global(
             "Not Ranked" if np.ma.is_masked(x) else "Ranked" for x in D_check[0][1:]
         ]
 
-        # Calculate max dissimilarity per depth slice
-        dis_max = max(map(np.nanmax, dis_mat_list))
+        # Calculate max dissimilarity across all depth slices. Use a single
+        # NaN-aware reduction over the stack so an all-NaN slice (a depth with no
+        # usable data) can't make the result NaN via max()'s ordering.
+        dis_max = np.nanmax(dis_mat_list)
 
         # Apply depth weight
         depth_weight = np.concatenate([np.repeat(0.2, 20), np.repeat(1.0, 180)])

@@ -3,20 +3,20 @@
     "AWS_PIW90": 17.67,
     "Soil Data Value": [
       [
+        "texture_0",
+        1.4521501008635898
+      ],
+      [
+        "texture_30",
+        1.4521501008635898
+      ],
+      [
         "rfv_class_0",
         0.6201391749943385
       ],
       [
         "rfv_class_30",
         0.6201391749943385
-      ],
-      [
-        "texture_0",
-        0.0
-      ],
-      [
-        "texture_30",
-        0.0
       ]
     ],
     "metadata": {
@@ -97,13 +97,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R003XN613WA"
+              "F003XA305WA"
             ],
             "ecoclassname": [
-              "Low Mountain Unforested Wetlands"
+              "Low Glacial Trough Valleys Moist Forest Western Hemlock"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/003X/R003XN613WA"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/003X/F003XA305WA"
             ]
           }
         },
@@ -153,13 +153,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "F003XA305WA"
+              "R003XN613WA"
             ],
             "ecoclassname": [
-              "Low Glacial Trough Valleys Moist Forest Western Hemlock"
+              "Low Mountain Unforested Wetlands"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/003X/F003XA305WA"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/003X/R003XN613WA"
             ]
           }
         },
@@ -221,10 +221,10 @@
         "rank_data_loc_group": "1",
         "rank_loc": 1,
         "rank_loc_group": 1,
-        "score_data": 0.496,
-        "score_data_group": 0.496,
-        "score_data_loc": 0.491,
-        "score_data_loc_group": 0.491,
+        "score_data": 0.525,
+        "score_data_group": 0.525,
+        "score_data_loc": 0.505,
+        "score_data_loc_group": 0.505,
         "score_loc": 0.486,
         "score_loc_group": 0.486
       },
@@ -240,10 +240,10 @@
         "rank_data_loc_group": "2",
         "rank_loc": 2,
         "rank_loc_group": 2,
-        "score_data": 0.229,
-        "score_data_group": 0.229,
-        "score_data_loc": 0.294,
-        "score_data_loc_group": 0.294,
+        "score_data": 0.243,
+        "score_data_group": 0.243,
+        "score_data_loc": 0.301,
+        "score_data_loc_group": 0.301,
         "score_loc": 0.36,
         "score_loc_group": 0.36
       },
@@ -259,10 +259,10 @@
         "rank_data_loc_group": "3",
         "rank_loc": 3,
         "rank_loc_group": 3,
-        "score_data": 0.352,
-        "score_data_group": 0.352,
-        "score_data_loc": 0.253,
-        "score_data_loc_group": 0.253,
+        "score_data": 0.362,
+        "score_data_group": 0.362,
+        "score_data_loc": 0.258,
+        "score_data_loc_group": 0.258,
         "score_loc": 0.154,
         "score_loc_group": 0.154
       }

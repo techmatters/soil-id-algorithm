@@ -3,20 +3,20 @@
     "AWS_PIW90": 11.53,
     "Soil Data Value": [
       [
+        "texture_0",
+        2.8079607337604306
+      ],
+      [
+        "texture_30",
+        2.8079607337604306
+      ],
+      [
         "rfv_class_30",
         1.6875961328426623
       ],
       [
         "rfv_class_0",
         1.304781220223484
-      ],
-      [
-        "texture_30",
-        0.35284738420075
-      ],
-      [
-        "texture_0",
-        0.0
       ]
     ],
     "metadata": {
@@ -82,7 +82,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#lonely",
             "slope": 19.0,
             "taxsubgrp": "Xeric Haplocambids",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "The Lonely series consists of moderately deep, well drained soils that formed in colluvium overlying igneous bedrock.  Lonely soils are on dissected rock pediments and mountain sideslopes and have slopes of 2 to 30 percent.  The mean annual precipitation is about 10 inches and the mean annual temperature is about 43 degrees F."
         },
@@ -97,13 +97,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R024XY003OR"
+              "R023XY220OR"
             ],
             "ecoclassname": [
-              "Sodic Bottom "
+              "Clayey  10-12 Pz"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/024X/R024XY003OR"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/023X/R023XY220OR"
             ]
           }
         },
@@ -153,13 +153,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R023XY212OR"
+              "R023XY220OR"
             ],
             "ecoclassname": [
-              "Loamy  10-12 Pz"
+              "Clayey  10-12 Pz"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/023X/R023XY212OR"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/023X/R023XY220OR"
             ]
           }
         },
@@ -194,7 +194,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#actem",
             "slope": 11.0,
             "taxsubgrp": "Xeric Argidurids",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "The Actem series consists of shallow to a duripan, well drained soils that formed in alluvium and colluvium derived from volcanic rocks. Actem soils are on hills and lava plateaus. Slopes are 2 to 20 percent. The mean annual precipitation is about 250 mm and the mean annual temperature is about 7 degrees C."
         },
@@ -321,13 +321,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R023XY220OR"
+              "R023XY300OR"
             ],
             "ecoclassname": [
-              "Clayey  10-12 Pz"
+              "South Slopes  10-12 Pz"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/023X/R023XY220OR"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/023X/R023XY300OR"
             ]
           }
         },
@@ -362,7 +362,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#lonegrave",
             "slope": 55.0,
             "taxsubgrp": "Xeric Haplocambids",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "The Lonegrave series consists of moderately deep, well drained soils that formed in colluvium derived from volcanic rocks. Lonegrave soils are on plateaus, hills, canyonlands, and mountains. Slopes are 5 to 70 percent. The mean annual precipitation is about 280 mm and the mean annual temperature is about 7 degrees C."
         },
@@ -418,7 +418,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#raz",
             "slope": 11.0,
             "taxsubgrp": "Xeric Haplodurids",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "The Raz series consists of shallow to a duripan, well drained soils that formed in slope alluvium, colluvium and residuum derived from basalt and tuff. Raz soils are on lava plateaus. Slopes are 1 to 20 percent. The mean annual precipitation is about 230 mm and the mean annual temperature is about 7 degrees C."
         },
@@ -433,13 +433,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R023XY300OR"
+              "R023XY212OR"
             ],
             "ecoclassname": [
-              "South Slopes  10-12 Pz"
+              "Loamy  10-12 Pz"
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/023X/R023XY300OR"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/023X/R023XY212OR"
             ]
           }
         },
@@ -474,7 +474,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#brace",
             "slope": 11.0,
             "taxsubgrp": "Xeric Argidurids",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "The Brace series consists of moderately deep to a duripan, well drained soils that formed in slope alluvium, colluvium, and residuum derived from welded rhyolitic tuff and basalt. Brace soils are on structural benches, hills, and lava plateaus. Slopes are 1 to 20 percent. The mean annual precipitation is about 300 mm and the mean annual temperature is about 6 degrees C."
         },
@@ -489,13 +489,13 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              "R023XY220OR"
+              "R024XY003OR"
             ],
             "ecoclassname": [
-              "Clayey  10-12 Pz"
+              "Sodic Bottom "
             ],
             "edit_url": [
-              "https://edit.sc.egov.usda.gov/catalogs/esd/023X/R023XY220OR"
+              "https://edit.sc.egov.usda.gov/catalogs/esd/024X/R024XY003OR"
             ]
           }
         },
@@ -530,7 +530,7 @@
             "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#ausmus",
             "slope": 1.0,
             "taxsubgrp": "Aquic Natrargids",
-            "textureInfill": "No"
+            "textureInfill": "Yes"
           },
           "siteDescription": "The Ausmus series consists of very deep, somewhat poorly drained or moderately well drained soils that formed in alluvium and lacustrine deposits derived from volcanic rocks and volcanic ash.  Ausmus soils are on low lake terraces.  Slopes are 0 to 2 percent.  The mean annual precipitation is about 230 mm and the mean annual temperature is about 6.5 degrees C."
         },
@@ -551,16 +551,16 @@
         "componentID": 27631144,
         "name": "Lonely",
         "not_displayed": false,
-        "rank_data": "6",
-        "rank_data_group": "6",
+        "rank_data": "3",
+        "rank_data_group": "3",
         "rank_data_loc": "1",
         "rank_data_loc_group": "1",
         "rank_loc": 1,
         "rank_loc_group": 1,
-        "score_data": 0.61,
-        "score_data_group": 0.61,
-        "score_data_loc": 0.439,
-        "score_data_loc_group": 0.439,
+        "score_data": 0.682,
+        "score_data_group": 0.682,
+        "score_data_loc": 0.475,
+        "score_data_loc_group": 0.475,
         "score_loc": 0.267,
         "score_loc_group": 0.267
       },
@@ -570,16 +570,16 @@
         "componentID": 27631143,
         "name": "Robson",
         "not_displayed": false,
-        "rank_data": "2",
-        "rank_data_group": "2",
+        "rank_data": "1",
+        "rank_data_group": "1",
         "rank_data_loc": "2",
         "rank_data_loc_group": "2",
         "rank_loc": 2,
         "rank_loc_group": 2,
-        "score_data": 0.69,
-        "score_data_group": 0.69,
-        "score_data_loc": 0.438,
-        "score_data_loc_group": 0.438,
+        "score_data": 0.74,
+        "score_data_group": 0.74,
+        "score_data_loc": 0.464,
+        "score_data_loc_group": 0.464,
         "score_loc": 0.187,
         "score_loc_group": 0.187
       },
@@ -589,16 +589,16 @@
         "componentID": 27631363,
         "name": "Actem",
         "not_displayed": false,
-        "rank_data": "1",
-        "rank_data_group": "1",
+        "rank_data": "2",
+        "rank_data_group": "2",
         "rank_data_loc": "3",
         "rank_data_loc_group": "3",
         "rank_loc": 5,
         "rank_loc_group": 5,
-        "score_data": 0.694,
-        "score_data_group": 0.694,
-        "score_data_loc": 0.404,
-        "score_data_loc_group": 0.404,
+        "score_data": 0.719,
+        "score_data_group": 0.719,
+        "score_data_loc": 0.416,
+        "score_data_loc_group": 0.416,
         "score_loc": 0.113,
         "score_loc_group": 0.113
       },
@@ -608,16 +608,35 @@
         "componentID": 27630911,
         "name": "Rinconflat",
         "not_displayed": false,
-        "rank_data": "5",
-        "rank_data_group": "5",
+        "rank_data": "4",
+        "rank_data_group": "4",
         "rank_data_loc": "4",
         "rank_data_loc_group": "4",
         "rank_loc": 4,
         "rank_loc_group": 4,
-        "score_data": 0.621,
-        "score_data_group": 0.621,
-        "score_data_loc": 0.367,
-        "score_data_loc_group": 0.367,
+        "score_data": 0.667,
+        "score_data_group": 0.667,
+        "score_data_loc": 0.39,
+        "score_data_loc_group": 0.39,
+        "score_loc": 0.113,
+        "score_loc_group": 0.113
+      },
+      {
+        "component": "Reallis",
+        "componentData": "Data Complete",
+        "componentID": 27630925,
+        "name": "Reallis",
+        "not_displayed": false,
+        "rank_data": "5",
+        "rank_data_group": "5",
+        "rank_data_loc": "5",
+        "rank_data_loc_group": "5",
+        "rank_loc": 3,
+        "rank_loc_group": 3,
+        "score_data": 0.653,
+        "score_data_group": 0.653,
+        "score_data_loc": 0.383,
+        "score_data_loc_group": 0.383,
         "score_loc": 0.113,
         "score_loc_group": 0.113
       },
@@ -627,16 +646,16 @@
         "componentID": 27630932,
         "name": "Brace",
         "not_displayed": false,
-        "rank_data": "3",
-        "rank_data_group": "3",
-        "rank_data_loc": "5",
-        "rank_data_loc_group": "5",
+        "rank_data": "6",
+        "rank_data_group": "6",
+        "rank_data_loc": "6",
+        "rank_data_loc_group": "6",
         "rank_loc": 8,
         "rank_loc_group": 8,
-        "score_data": 0.655,
-        "score_data_group": 0.655,
-        "score_data_loc": 0.351,
-        "score_data_loc_group": 0.351,
+        "score_data": 0.65,
+        "score_data_group": 0.65,
+        "score_data_loc": 0.348,
+        "score_data_loc_group": 0.348,
         "score_loc": 0.046,
         "score_loc_group": 0.046
       },
@@ -646,37 +665,18 @@
         "componentID": 27630931,
         "name": "Raz",
         "not_displayed": false,
-        "rank_data": "4",
-        "rank_data_group": "4",
-        "rank_data_loc": "6",
-        "rank_data_loc_group": "6",
-        "rank_loc": 7,
-        "rank_loc_group": 7,
-        "score_data": 0.629,
-        "score_data_group": 0.629,
-        "score_data_loc": 0.348,
-        "score_data_loc_group": 0.348,
-        "score_loc": 0.067,
-        "score_loc_group": 0.067
-      },
-      {
-        "component": "Reallis",
-        "componentData": "Data Complete",
-        "componentID": 27630925,
-        "name": "Reallis",
-        "not_displayed": false,
         "rank_data": "8",
         "rank_data_group": "8",
         "rank_data_loc": "7",
         "rank_data_loc_group": "7",
-        "rank_loc": 3,
-        "rank_loc_group": 3,
-        "score_data": 0.579,
-        "score_data_group": 0.579,
-        "score_data_loc": 0.346,
-        "score_data_loc_group": 0.346,
-        "score_loc": 0.113,
-        "score_loc_group": 0.113
+        "rank_loc": 7,
+        "rank_loc_group": 7,
+        "score_data": 0.623,
+        "score_data_group": 0.623,
+        "score_data_loc": 0.345,
+        "score_data_loc_group": 0.345,
+        "score_loc": 0.067,
+        "score_loc_group": 0.067
       },
       {
         "component": "Ausmus",
@@ -690,10 +690,10 @@
         "rank_data_loc_group": "8",
         "rank_loc": 9,
         "rank_loc_group": 9,
-        "score_data": 0.602,
-        "score_data_group": 0.602,
-        "score_data_loc": 0.303,
-        "score_data_loc_group": 0.303,
+        "score_data": 0.641,
+        "score_data_group": 0.641,
+        "score_data_loc": 0.323,
+        "score_data_loc_group": 0.323,
         "score_loc": 0.005,
         "score_loc_group": 0.005
       },
@@ -709,10 +709,10 @@
         "rank_data_loc_group": "9",
         "rank_loc": 6,
         "rank_loc_group": 6,
-        "score_data": 0.437,
-        "score_data_group": 0.437,
-        "score_data_loc": 0.262,
-        "score_data_loc_group": 0.262,
+        "score_data": 0.531,
+        "score_data_group": 0.531,
+        "score_data_loc": 0.309,
+        "score_data_loc_group": 0.309,
         "score_loc": 0.087,
         "score_loc_group": 0.087
       }

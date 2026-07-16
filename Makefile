@@ -2,6 +2,18 @@ ifeq ($(DC_ENV),ci)
 	UV_FLAGS = "--system"
 endif
 
+# When GDAL isn't importable natively (notably macOS, where it won't build under
+# uv/pip), the test targets below transparently re-run themselves in a
+# GDAL-capable container against the pinned soil-id-db image, so the same
+# `make test*` command works on macOS and on CI alike (see
+# scripts/run_in_container.sh). Set NATIVE=1 to force the native path; it is set
+# automatically inside the runner container to prevent infinite recursion.
+ifeq ($(NATIVE),1)
+	HAVE_GDAL := 1
+else
+	HAVE_GDAL := $(shell python3 -c 'from osgeo import gdal' >/dev/null 2>&1 && echo 1)
+endif
+
 install:
 	uv pip install -r requirements.txt $(UV_FLAGS)
 
@@ -37,6 +49,7 @@ clean:
 
 # run the standard test suite (unit + integration, no api_snapshots)
 test:
+	@if [ "$(HAVE_GDAL)" != "1" ]; then exec ./scripts/run_in_container.sh test; fi; \
 	if [ -z "$(PATTERN)" ]; then \
 		pytest soil_id -m "not api_snapshot"; \
 	else \
@@ -45,11 +58,20 @@ test:
 
 # All tests except api_snapshot and integration (no live external APIs)
 test_unit:
+	@if [ "$(HAVE_GDAL)" != "1" ]; then exec ./scripts/run_in_container.sh test_unit; fi; \
 	pytest soil_id -m "not api_snapshot and not integration"
 
 # update the unit test snapshots (but not the API snapshots)
 test_update_unit_snapshots:
-	pytest soil_id -m "not api_snapshot and not integration" --snapshot-update; \
+	@if [ "$(HAVE_GDAL)" != "1" ]; then exec ./scripts/run_in_container.sh test_update_unit_snapshots; fi; \
+	pytest soil_id -m "not api_snapshot and not integration" --snapshot-update
+
+# Regenerate the unit-test output snapshots reproducibly in a GDAL-capable
+# container, against the pinned soil-id-db image CI uses. Wraps
+# test_update_unit_snapshots for machines where GDAL won't build natively
+# (e.g. macOS). See scripts/regen_snapshots.sh.
+regen_snapshots:
+	./scripts/regen_snapshots.sh
 
 # Integration smoke tests only (full live API run, no output validation)
 test_integration:

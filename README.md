@@ -86,6 +86,14 @@ There are several smaller test suites:
 - The unit and integration tests can be run together with `make test` for convenience: this is what must pass for a PR to be mergeable.
 - The API snapshots themselves can be checked against the live API for drift using `make test_api_snapshot`. They can be updated to the new live API values using `make test_update_api_snapshots`.
 
+> **macOS note:** GDAL doesn't build under uv/pip on macOS, so `make test`,
+> `make test_unit`, and `make test_update_unit_snapshots` automatically re-run
+> themselves in a GDAL-capable container against the pinned `soil-id-db` image
+> (the one CI uses) — the command is the same as on Linux/CI, it just needs
+> Docker. Set `NATIVE=1` to force the local interpreter. To regenerate and
+> verify the output snapshots in one step, use `make regen_snapshots`. See
+> `scripts/README.md`.
+
 ### Bulk test
 
 There is a large suite of integration tests which takes many hours to run. It comes in the format of two scripts:

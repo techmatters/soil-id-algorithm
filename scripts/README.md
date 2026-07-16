@@ -17,10 +17,13 @@ this transparent:
   down afterward.
 
 You don't normally call `run_in_container.sh` directly: the Makefile's `test`,
-`test_unit`, and `test_update_unit_snapshots` targets **auto-detect** when GDAL isn't
-importable and delegate to it, so the same `make …` command works on macOS and CI. Set
-`NATIVE=1` to force the local interpreter (it's set automatically inside the runner to
-avoid recursion).
+`test_unit`, and `test_update_unit_snapshots` targets **auto-detect** whether the local
+interpreter has pytest **and the pinned GDAL version** and, if not, delegate to it — so
+the same `make …` command works on macOS and CI. The version gate matters because
+snapshots are GDAL-version-sensitive: a Homebrew GDAL of a different version is routed to
+the container rather than silently producing snapshots that disagree with CI. Set
+`NATIVE=1` to force the local interpreter (set automatically inside the runner to avoid
+recursion), or `PYTHON=…` to choose the interpreter.
 
 ## `regen_snapshots.sh`
 

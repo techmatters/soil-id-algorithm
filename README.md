@@ -90,7 +90,10 @@ There are several smaller test suites:
 > `make test_unit`, and `make test_update_unit_snapshots` automatically re-run
 > themselves in a GDAL-capable container against the pinned `soil-id-db` image
 > (the one CI uses) — the command is the same as on Linux/CI, it just needs
-> Docker. Set `NATIVE=1` to force the local interpreter. To regenerate and
+> Docker. They run natively only when the local interpreter has pytest **and the
+> pinned GDAL version** (a mismatched Homebrew GDAL would produce snapshots that
+> disagree with CI, so it's routed to the container instead). Set `NATIVE=1` to
+> force the local interpreter, or `PYTHON=…` to pick one. To regenerate and
 > verify the output snapshots in one step, use `make regen_snapshots`. See
 > `scripts/README.md`.
 

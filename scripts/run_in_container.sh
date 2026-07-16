@@ -21,10 +21,10 @@ set -euo pipefail
 # pinned soil-id-db image, on machines where the native env can't run the tests
 # (GDAL doesn't build under uv/pip on macOS).
 #
-# The Makefile's test targets call this automatically when GDAL isn't importable
-# (see the HAVE_GDAL guard in the Makefile), so `make test_unit`,
-# `make test_update_unit_snapshots`, etc. work identically on macOS and CI.
-# You normally don't invoke it directly.
+# The Makefile's test targets call this automatically when the local interpreter
+# doesn't have pytest + the *pinned* GDAL version (see the NATIVE_OK guard in the
+# Makefile), so `make test_unit`, `make test_update_unit_snapshots`, etc. work
+# identically on macOS and CI. You normally don't invoke it directly.
 #
 # It:
 #   1. Builds the CI-faithful runner image (scripts/snapshot-runner.Dockerfile),

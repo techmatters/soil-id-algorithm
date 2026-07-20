@@ -2,6 +2,28 @@ ifeq ($(DC_ENV),ci)
 	UV_FLAGS = "--system"
 endif
 
+PYTHON ?= python3
+
+# The test targets below need pytest + GDAL + the pinned soil-id-db. They run
+# natively only when THIS interpreter ($(PYTHON)) has pytest AND the *pinned*
+# GDAL version (so results match CI and the pinned image); otherwise they
+# transparently re-run themselves in a GDAL-capable container against the pinned
+# soil-id-db image (see scripts/run_in_container.sh), so the same `make test*`
+# command works on macOS and on CI alike.
+#
+# The version gate matters: snapshots are GDAL-version-sensitive, so a native
+# Homebrew GDAL of a *different* version must NOT take the native path — it would
+# produce snapshots that disagree with CI. It also naturally routes macOS to the
+# container, since the interpreter with GDAL (Homebrew) lacks pytest and the
+# venv with pytest lacks GDAL. Set NATIVE=1 to force native (also set inside the
+# runner container, where the versions do match, to prevent infinite recursion).
+GDAL_PIN := $(shell sed -n 's/^gdal==\([0-9.]*\).*/\1/p' requirements.txt)
+ifeq ($(NATIVE),1)
+	NATIVE_OK := 1
+else
+	NATIVE_OK := $(shell $(PYTHON) -c 'import pytest, osgeo.gdal as g; raise SystemExit(g.__version__ != "$(GDAL_PIN)")' >/dev/null 2>&1 && echo 1)
+endif
+
 install:
 	uv pip install -r requirements.txt $(UV_FLAGS)
 
@@ -37,19 +59,29 @@ clean:
 
 # run the standard test suite (unit + integration, no api_snapshots)
 test:
+	@if [ "$(NATIVE_OK)" != "1" ]; then exec ./scripts/run_in_container.sh test; fi; \
 	if [ -z "$(PATTERN)" ]; then \
-		pytest soil_id -m "not api_snapshot"; \
+		$(PYTHON) -m pytest soil_id -m "not api_snapshot"; \
 	else \
-		pytest soil_id -m "not api_snapshot" -k "$(PATTERN)"; \
+		$(PYTHON) -m pytest soil_id -m "not api_snapshot" -k "$(PATTERN)"; \
 	fi
 
 # All tests except api_snapshot and integration (no live external APIs)
 test_unit:
-	pytest soil_id -m "not api_snapshot and not integration"
+	@if [ "$(NATIVE_OK)" != "1" ]; then exec ./scripts/run_in_container.sh test_unit; fi; \
+	$(PYTHON) -m pytest soil_id -m "not api_snapshot and not integration"
 
 # update the unit test snapshots (but not the API snapshots)
 test_update_unit_snapshots:
-	pytest soil_id -m "not api_snapshot and not integration" --snapshot-update; \
+	@if [ "$(NATIVE_OK)" != "1" ]; then exec ./scripts/run_in_container.sh test_update_unit_snapshots; fi; \
+	$(PYTHON) -m pytest soil_id -m "not api_snapshot and not integration" --snapshot-update
+
+# Regenerate the unit-test output snapshots reproducibly in a GDAL-capable
+# container, against the pinned soil-id-db image CI uses. Wraps
+# test_update_unit_snapshots for machines where GDAL won't build natively
+# (e.g. macOS). See scripts/regen_snapshots.sh.
+regen_snapshots:
+	./scripts/regen_snapshots.sh
 
 # Integration smoke tests only (full live API run, no output validation)
 test_integration:

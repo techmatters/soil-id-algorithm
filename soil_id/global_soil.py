@@ -63,6 +63,18 @@ class SoilListOutputData:
 # and regenerate the global snapshots. See #375.
 LEPTOSOL_MAX_BEDROCK_CM = 50
 
+# Fixed "plausible range" (low, high) per numeric property used in the global
+# per-slice Gower distance (#377). Without these, gower_distances normalizes each
+# feature by that slice's own min/max — which includes the user's sample_pedon
+# value — so changing one input rescales every candidate's distance in every
+# slice. Reused from the US path's `global_prop_bounds` (us_soil.py). Confirm the
+# values with a soil scientist if the global data distribution differs.
+GLOBAL_HORIZON_PROP_BOUNDS = {
+    "sandpct_intpl": (10.0, 92.0),
+    "claypct_intpl": (5.0, 70.0),
+    "rfv_intpl": (0.0, 80.0),
+}
+
 
 # entry points
 # getSoilLocationBasedGlobal
@@ -590,7 +602,16 @@ def _slice_gower_distance(slice_mat, return_details=False):
         n = slice_mat.shape[0]
         empty = np.full((n, n), np.nan)
         return (empty, None) if return_details else empty
-    return gower_distances(slice_mat, return_details=return_details)
+    # Pass fixed feature ranges (#377) so normalization doesn't depend on the
+    # user's own value. Columns are a subset of GLOBAL_HORIZON_PROP_BOUNDS and all
+    # numeric, so ranges align 1:1 with the numeric features gower processes.
+    cols = list(slice_mat.columns)
+    ranges = None
+    if all(c in GLOBAL_HORIZON_PROP_BOUNDS for c in cols):
+        ranges = [
+            GLOBAL_HORIZON_PROP_BOUNDS[c][1] - GLOBAL_HORIZON_PROP_BOUNDS[c][0] for c in cols
+        ]
+    return gower_distances(slice_mat, theoretical_ranges=ranges, return_details=return_details)
 
 
 ##############################################################################################

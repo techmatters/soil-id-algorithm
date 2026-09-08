@@ -245,6 +245,7 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
     cec_lyrs = []
     ph_lyrs = []
     ec_lyrs = []
+    lyr_cokeys = []  # cokey per loop iteration, to realign the *_lyrs lists (see #378)
 
     for group_key, group in muhorzdata_group_cokey:
         profile = (
@@ -336,6 +337,7 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
 
         c_bottom_depths.append(c_bottom_temp)
         getProfile_cokey.append(combined_data)
+        lyr_cokeys.append(combined_data["cokey"].iloc[0])
 
         comp_texture_list = [x for x in profile.texture.str.lower() if x]
         clay_val = "Yes" if any("clay" in string for string in comp_texture_list) else "No"
@@ -440,7 +442,6 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
     )
 
     mucompdata_cond_prob = mucompdata_cond_prob.drop_duplicates().reset_index(drop=True)
-    mucomp_index = mucompdata_cond_prob.index
 
     # Extract site information
     Site = [
@@ -464,7 +465,13 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
         for _, row in mucompdata_cond_prob.iterrows()
     ]
 
-    # Reordering lists using list comprehension and mucomp_index
+    # Align the per-component profile lists (built above in cokey-group order)
+    # with mucompdata_cond_prob's final ordering by matching on cokey. The prior
+    # code indexed positionally, which silently paired each soil with a DIFFERENT
+    # component's profile whenever the two orderings differed (#378: e.g. a shallow
+    # Leptosol displayed with a deep soil's 0–120 cm profile). Every cokey in
+    # mucompdata_cond_prob has a list entry (mucompdata was filtered to
+    # c_bottom_depths.cokey above), so the lookup is total and 1:1.
     lists_to_reorder = [
         hz_lyrs,
         snd_lyrs,
@@ -475,12 +482,9 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
         ph_lyrs,
         ec_lyrs,
     ]
-    for idx, lst in enumerate(lists_to_reorder):
-        if len(lst) < max(mucomp_index) + 1:
-            print(
-                f"List at index {idx} is too short: len={len(lst)}, max index in mucomp_index={max(mucomp_index)}"
-            )
-    reordered_lists = [[lst[i] for i in mucomp_index] for lst in lists_to_reorder]
+    cokey_to_pos = {cokey: pos for pos, cokey in enumerate(lyr_cokeys)}
+    reorder_idx = [cokey_to_pos[cokey] for cokey in mucompdata_cond_prob["cokey"]]
+    reordered_lists = [[lst[i] for i in reorder_idx] for lst in lists_to_reorder]
 
     # Destructuring reordered lists for clarity
     (

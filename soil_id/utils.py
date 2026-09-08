@@ -32,7 +32,6 @@ from scipy.interpolate import UnivariateSpline
 from scipy.sparse import issparse
 from scipy.stats import entropy, norm
 from shapely.geometry import Point
-from sklearn.impute import SimpleImputer
 from sklearn.metrics import pairwise
 from sklearn.utils import validation
 
@@ -846,16 +845,20 @@ def check_pairwise_arrays(X, Y, precomputed=False, dtype=None):
     if dtype is None:
         dtype = dtype_float
 
-    # impute missing values
-    imputer = SimpleImputer(missing_values=np.nan, strategy="mean")  # You can change the strategy
-    X = imputer.fit_transform(X)
-
-    # Validate the input arrays
-    X = validation.check_array(X, accept_sparse="csr", dtype=dtype, estimator=estimator)
+    # Keep NaN: a missing value means "no data at this depth" and is meaningful.
+    # gower_distances skips a missing feature per comparison and the callers'
+    # soil-vs-non-soil infill penalizes truly empty comparisons. Previously this
+    # mean-imputed (strategy="mean"), which turned "missing" into "an average
+    # soil" and masked the shallow-soil / missing-data penalty entirely (#377).
+    X = validation.check_array(
+        X, accept_sparse="csr", dtype=dtype, estimator=estimator, ensure_all_finite="allow-nan"
+    )
     if Y is X or Y is None:
         Y = X
     else:
-        Y = validation.check_array(Y, accept_sparse="csr", dtype=dtype, estimator=estimator)
+        Y = validation.check_array(
+            Y, accept_sparse="csr", dtype=dtype, estimator=estimator, ensure_all_finite="allow-nan"
+        )
 
     # Check for valid shapes based on whether distances are precomputed
     if precomputed and X.shape[1] != Y.shape[0]:
@@ -915,11 +918,12 @@ def gower_distances(
             mask[categorical_features] = True
             categorical_features = mask
 
-    # Split data
+    # Split data. Cast numeric to float so NaN (kept, not imputed) flows through
+    # the arithmetic below; the array may be object-typed when NaN is present.
     X_cat = X[:, categorical_features]
-    X_num = X[:, ~categorical_features]
+    X_num = X[:, ~categorical_features].astype(float)
 
-    # Hybrid numeric normalization
+    # Hybrid numeric normalization (NaN-aware: nanmin/nanmax ignore missing values)
     slice_max = np.nanmax(X_num, axis=0)
     slice_min = np.nanmin(X_num, axis=0)
     slice_range = slice_max - slice_min
@@ -943,7 +947,7 @@ def gower_distances(
     # Process Y
     if Y is not None:
         Y_cat = Y[:, categorical_features]
-        Y_num = Y[:, ~categorical_features]
+        Y_num = Y[:, ~categorical_features].astype(float)
         if theoretical_ranges is None:
             Y_num = np.where(denom != 0, (Y_num - slice_min) / denom, Y_num)
         else:
@@ -954,7 +958,6 @@ def gower_distances(
 
     # Compute pairwise distances
     dm = np.zeros((n_rows, Y.shape[0]), dtype=np.float32)
-    total_weight = feature_weight.sum()
     for i in range(n_rows):
         start = i if Y is None else 0
         row = _gower_distance_row(
@@ -964,7 +967,6 @@ def gower_distances(
             Y_num[start:],
             feature_weight_cat,
             feature_weight_num,
-            total_weight,
         )
         dm[i, start:] = row
         if Y is None:
@@ -972,22 +974,38 @@ def gower_distances(
     return dm
 
 
-def _gower_distance_row(
-    xi_cat, xi_num, xj_cat, xj_num, feature_weight_cat, feature_weight_num, feature_weight_sum
-):
+def _gower_distance_row(xi_cat, xi_num, xj_cat, xj_num, feature_weight_cat, feature_weight_num):
     """
-    Compute Gower distance between one row xi and rows xj. xi_num and xj_num
-    are already normalized to [0,1] using the hybrid approach.
+    Gower distance between one row xi and rows xj (xi_num/xj_num already normalized).
+
+    NaN-aware (#377): a feature that is missing on either side of a comparison is
+    skipped, and the distance is the weighted mean over the features actually
+    present. If no feature is present for a pair (e.g. a component with no soil at
+    this depth vs a pedon that has soil), the distance is NaN — which the callers'
+    soil-vs-non-soil infill turns into the max-dissimilarity penalty. With no
+    missing data this reduces to the previous formula (divide by total weight), so
+    complete-data distances are unchanged.
     """
-    # Categorical distance (0 if equal, 1 if not)
-    sij_cat = (xi_cat != xj_cat).astype(int)
-    sum_cat = np.dot(sij_cat, feature_weight_cat)
+    # Numeric: absolute normalized difference; NaN where either side is missing.
+    num_diff = np.abs(xi_num - xj_num)
+    num_present = ~np.isnan(num_diff)
+    num_contrib = np.where(num_present, num_diff, 0.0) * feature_weight_num
+    num_wsum = (num_present * feature_weight_num).sum(axis=1)
 
-    # Numeric distance (absolute difference, already normalized)
-    sum_num = np.dot(np.abs(xi_num - xj_num), feature_weight_num)
+    # Categorical: 0 if equal, 1 if not; skip where either side is missing.
+    if xj_cat.shape[1]:
+        cat_present = ~(pd.isna(xi_cat) | pd.isna(xj_cat))
+        cat_diff = (xi_cat != xj_cat) & cat_present
+        cat_contrib = cat_diff.astype(float) * feature_weight_cat
+        cat_wsum = (cat_present * feature_weight_cat).sum(axis=1)
+    else:
+        cat_contrib = np.zeros((xj_num.shape[0], 0))
+        cat_wsum = np.zeros(xj_num.shape[0])
 
-    # Combined
-    return (sum_cat + sum_num) / feature_weight_sum
+    total = num_contrib.sum(axis=1) + cat_contrib.sum(axis=1)
+    present_weight = num_wsum + cat_wsum
+    with np.errstate(invalid="ignore", divide="ignore"):
+        return np.where(present_weight > 0, total / present_weight, np.nan)
 
 
 def compute_site_similarity(

@@ -45,3 +45,42 @@ def test_fixed_range_floor_only_lifts_small_ranges():
     d_unranged = gower_distances(X)[1, 2]
     d_ranged = gower_distances(X, theoretical_ranges=[80.0])[1, 2]
     assert abs(d_unranged - d_ranged) < 1e-9
+
+
+def test_complete_data_distance_unchanged():
+    """
+    #377 part 2 invariant: with no missing data, the NaN-aware distance is exactly
+    the old weighted mean of |normalized diff| — so complete-data results (and
+    their snapshots) don't move; only missing-data pairs change.
+    """
+    X = np.array([[0.0, 10.0], [1.0, 20.0], [0.5, 30.0]])
+    D = gower_distances(X)
+    assert D.shape == (3, 3)
+    assert np.allclose(np.diag(D), 0.0)
+    assert np.allclose(D, D.T)
+    assert not np.isnan(D).any()
+    # feat0 range 1 -> denom 1; feat1 range 20 -> denom 20; equal weights.
+    # D[0,1] = mean(|0-1|, |0-0.5|) = mean(1.0, 0.5) = 0.75
+    assert abs(D[0, 1] - 0.75) < 1e-6
+
+
+def test_missing_feature_skipped_not_imputed():
+    """A feature missing on one side is skipped; distance uses the present ones."""
+    X = np.array([[0.0, 10.0], [1.0, np.nan]])
+    D = gower_distances(X, theoretical_ranges=[1.0, 100.0])
+    # only feature 0 is shared; normalized diff there is 1.0
+    assert not np.isnan(D[0, 1])
+    assert abs(D[0, 1] - 1.0) < 1e-6
+
+
+def test_all_missing_row_is_nan_for_penalty():
+    """
+    A row with no data at all (a component with no soil at this depth) yields a NaN
+    distance to a pedon that has data — which the callers' infill turns into the
+    max-dissimilarity penalty (instead of the old mean-imputed near-match).
+    """
+    X = np.array([[10.0], [np.nan]])
+    D = gower_distances(X)
+    assert D[0, 0] == 0.0
+    assert np.isnan(D[0, 1])
+    assert np.isnan(D[1, 0])

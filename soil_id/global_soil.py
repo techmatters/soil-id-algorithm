@@ -57,6 +57,13 @@ class SoilListOutputData:
     map_unit_component_data_csv: str
 
 
+# Depth (cm) beyond which a shallow-soil group (leptosols/lithosols/rendzinas/
+# rankers) is considered impossible and demoted. PROVISIONAL — leptosols are
+# defined at ~25-30 cm to rock, so a soil scientist may prefer ~30; change here
+# and regenerate the global snapshots. See #375.
+LEPTOSOL_MAX_BEDROCK_CM = 50
+
+
 # entry points
 # getSoilLocationBasedGlobal
 # list_soils
@@ -619,6 +626,18 @@ def rank_soils_global(
     # Drop rows where all values are NaN
     soil_df.dropna(how="all", inplace=True)
 
+    # #375: "no bedrock provided" must NOT be treated as "bedrock is deep". When
+    # the bedrock field is blank, use the deepest observed user horizon as an
+    # implicit lower bound on bedrock depth (recording soil to depth D means rock
+    # is below D), so shallow soils are demoted only when the profile is actually
+    # known to be deeper than they can be. None => unknown => no demotion.
+    if bedrock is not None:
+        effective_bedrock = bedrock
+    elif not soil_df.empty and soil_df["bottom"].notna().any():
+        effective_bedrock = soil_df["bottom"].max()
+    else:
+        effective_bedrock = None
+
     if explain is not None:
         explain.region = "GLOBAL"
         explain.site = {"lat": lat, "lon": lon}
@@ -635,7 +654,7 @@ def rank_soils_global(
             ],
             "bedrock": bedrock,
             "cracks": cracks,
-            "effective_bedrock_cm": None if bedrock is None else float(bedrock),
+            "effective_bedrock_cm": None if effective_bedrock is None else float(effective_bedrock),
         }
 
     # Replace NaNs with None for consistency
@@ -1286,14 +1305,19 @@ def rank_soils_global(
             D_final_loc.at[i, "Score_Data_Loc"] = 1.001
         elif bedrock is not None and 10 < bedrock <= 30 and "leptosols" in row["compname"].lower():
             D_final_loc.at[i, "Score_Data_Loc"] = 1.001
-        elif (bedrock is None or bedrock > 50) and any(
-            term in row["compname"].lower()
-            for term in ["lithosols", "leptosols", "rendzinas", "rankers"]
+        elif (
+            effective_bedrock is not None
+            and effective_bedrock > LEPTOSOL_MAX_BEDROCK_CM
+            and any(
+                term in row["compname"].lower()
+                for term in ["lithosols", "leptosols", "rendzinas", "rankers"]
+            )
         ):
             D_final_loc.at[i, "Score_Data_Loc"] = 0.001
             if explain is not None:
                 explain.overrides[row["compname"]] = {
-                    "rule": f"demote shallow soil (bedrock {bedrock} > 50)",
+                    "rule": f"demote shallow soil (effective_bedrock "
+                    f"{effective_bedrock} > {LEPTOSOL_MAX_BEDROCK_CM})",
                     "score_before": _pre_override.get(row["compname"]),
                     "score_after": 0.001,
                 }

@@ -56,6 +56,13 @@ class SoilListOutputData:
     map_unit_component_data_csv: str
 
 
+# Depth (cm) beyond which a shallow-soil group (leptosols/lithosols/rendzinas/
+# rankers) is considered impossible and demoted. PROVISIONAL — leptosols are
+# defined at ~25-30 cm to rock, so a soil scientist may prefer ~30; change here
+# and regenerate the global snapshots. See #375.
+LEPTOSOL_MAX_BEDROCK_CM = 50
+
+
 # entry points
 # getSoilLocationBasedGlobal
 # list_soils
@@ -611,6 +618,18 @@ def rank_soils_global(
 
     # Drop rows where all values are NaN
     soil_df.dropna(how="all", inplace=True)
+
+    # #375: "no bedrock provided" must NOT be treated as "bedrock is deep". When
+    # the bedrock field is blank, use the deepest observed user horizon as an
+    # implicit lower bound on bedrock depth (recording soil to depth D means rock
+    # is below D), so shallow soils are demoted only when the profile is actually
+    # known to be deeper than they can be. None => unknown => no demotion.
+    if bedrock is not None:
+        effective_bedrock = bedrock
+    elif not soil_df.empty and soil_df["bottom"].notna().any():
+        effective_bedrock = soil_df["bottom"].max()
+    else:
+        effective_bedrock = None
 
     # Replace NaNs with None for consistency
     # soil_df.fillna(value=None, inplace=True)
@@ -1172,9 +1191,13 @@ def rank_soils_global(
             and "leptosols" in row["compname"].lower()
         ):
             D_final_loc.at[i, "Score_Data_Loc"] = 1.001
-        elif (bedrock is None or bedrock > 50) and any(
-            term in row["compname"].lower()
-            for term in ["lithosols", "leptosols", "rendzinas", "rankers"]
+        elif (
+            effective_bedrock is not None
+            and effective_bedrock > LEPTOSOL_MAX_BEDROCK_CM
+            and any(
+                term in row["compname"].lower()
+                for term in ["lithosols", "leptosols", "rendzinas", "rankers"]
+            )
         ):
             D_final_loc.at[i, "Score_Data_Loc"] = 0.001
 

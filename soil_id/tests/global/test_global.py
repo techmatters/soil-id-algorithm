@@ -240,3 +240,55 @@ def test_shallow_soil_profile_not_padded():
             saw_shallow = True
 
     assert saw_shallow, "expected at least one shallow (<120 cm) soil to guard the regression"
+
+
+def test_shallow_soil_not_zeroed_without_bedrock():
+    """
+    Regression test for #375: with no bedrock provided, shallow-soil groups
+    (leptosols etc.) must NOT be auto-demoted to ~0 — they should be demoted only
+    when the user's OWN data proves the profile is deeper than they can be
+    (deepest observed horizon > LEPTOSOL_MAX_BEDROCK_CM). Previously `bedrock is
+    None` was treated as "bedrock is deep" and forced them to 0.001.
+    """
+    lon, lat = 35.87959, 0.14594  # Kenya: a Lithic Leptosol is a nearby candidate
+
+    def leptosol_score(connection, ls, data):
+        rank = rank_soils_global(
+            connection, lon, lat, list_output_data=ls, **data, bedrock=None, cracks=None
+        )
+        scores = {str(r.get("name", "")).lower(): r.get("score_data_loc") for r in rank["soilRank"]}
+        return scores.get("lithic leptosols")
+
+    with get_datastore_connection() as connection:
+        ls = list_soils_global(connection, lon, lat)
+        shallow = leptosol_score(
+            connection,
+            ls,
+            dict(
+                soilHorizon=["Loam"],
+                topDepth=[0],
+                bottomDepth=[15],
+                rfvDepth=[20],
+                lab_Color=[[41.23035939, 3.623018224, 13.27654356]],
+            ),
+        )
+        deep = leptosol_score(
+            connection,
+            ls,
+            dict(
+                soilHorizon=["Clay", "Clay", "Clay"],
+                topDepth=[0, 50, 100],
+                bottomDepth=[50, 100, 140],
+                rfvDepth=[None, None, None],
+                lab_Color=[[30.7, 19.9, 21.3]] * 3,
+            ),
+        )
+
+    # Shallow user data => leptosol ranks on its merits, not forced to ~0.
+    assert shallow is not None and shallow > 0.01, (
+        f"leptosol wrongly demoted with shallow data (no bedrock): score={shallow}"
+    )
+    # Deep user data (deepest horizon 140 cm > 50) => leptosol correctly demoted.
+    assert deep is not None and deep <= 0.01, (
+        f"leptosol not demoted despite deep (>50 cm) user data: score={deep}"
+    )

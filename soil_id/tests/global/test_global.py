@@ -204,3 +204,39 @@ def test_soil_location(location, snapshot):
             "list": list_soils_result.soil_list_json,
             "rank": rank_result,
         }
+
+
+def test_shallow_soil_profile_not_padded():
+    """
+    Regression test for #378: each component's displayed profile depth must match
+    its OWN soil depth (capped at the 120 cm display limit), not another
+    component's. Before the cokey-alignment fix, the per-component profile lists
+    were paired with components positionally, so a shallow Lithic Leptosol (soil
+    to ~20 cm) was displayed with a deeper soil's full 0-120 cm profile.
+
+    Invariant asserted for every returned soil: max(bottom_depth) == min(soilDepth, 120).
+    """
+    # Kenya point from #378: a nearby Lithic Leptosol ends at 20 cm and several
+    # deep (200 cm) components are also returned, so the two orderings differ —
+    # exactly the condition that triggered the misalignment.
+    with get_datastore_connection() as connection:
+        result = list_soils_global(connection, lon=35.87959, lat=0.14594)
+
+    soils = result.soil_list_json["soilList"]
+    assert soils, "expected at least one soil at this location"
+
+    saw_shallow = False
+    for soil in soils:
+        soil_depth = soil["site"]["siteData"]["soilDepth"]
+        depths = [v for v in soil["bottom_depth"].values() if isinstance(v, (int, float))]
+        assert depths, f"no numeric bottom_depth for {soil['id']['component']}"
+        displayed_max = max(depths)
+        expected = min(soil_depth, 120)
+        assert displayed_max == expected, (
+            f"{soil['id']['component']}: displayed profile to {displayed_max} cm but "
+            f"soilDepth={soil_depth} (expected max {expected}) — profile mis-aligned (#378)"
+        )
+        if soil_depth < 120:
+            saw_shallow = True
+
+    assert saw_shallow, "expected at least one shallow (<120 cm) soil to guard the regression"

@@ -401,6 +401,100 @@
           "sl7": 120
         },
         "cec": {
+          "sl1": 18.0,
+          "sl2": 18.0,
+          "sl3": 18.0,
+          "sl4": 17.4,
+          "sl5": 17.43,
+          "sl6": 17.4,
+          "sl7": 17.0
+        },
+        "clay": {
+          "sl1": 30.0,
+          "sl2": 30.0,
+          "sl3": 30.0,
+          "sl4": 31.8,
+          "sl5": 32.0,
+          "sl6": 31.8,
+          "sl7": 31.17
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 0.8,
+          "sl5": 0.57,
+          "sl6": 0.6,
+          "sl7": 0.83
+        },
+        "id": {
+          "component": "Eutric gleysols",
+          "name": "Eutric gleysols",
+          "rank_loc": "5",
+          "score_loc": 0.055
+        },
+        "ph": {
+          "sl1": 6.3,
+          "sl2": 6.3,
+          "sl3": 6.3,
+          "sl4": 6.5,
+          "sl5": 6.57,
+          "sl6": 6.66,
+          "sl7": 6.75
+        },
+        "rock_fragments": {
+          "sl1": 8.0,
+          "sl2": 8.0,
+          "sl3": 8.0,
+          "sl4": 8.0,
+          "sl5": 8.86,
+          "sl6": 9.0,
+          "sl7": 9.33
+        },
+        "sand": {
+          "sl1": 24.0,
+          "sl2": 24.0,
+          "sl3": 24.0,
+          "sl4": 23.0,
+          "sl5": 23.14,
+          "sl6": 23.2,
+          "sl7": 23.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 104276,
+            "distance": 14827.397,
+            "mapunitID": 11663,
+            "minCompDistance": 14827.39744996,
+            "share": 100,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Eutric Gleysols have shallow groundwater and are saturated for significant portions of the year. Deep drainage is necessary for cultivation. Eutric Gleysols are productive soils with high base saturation in the upper portion of soil.",
+            "Management_en": "These soils are saturated, and if they are cultivated significant drainage is required. Once drained, these soils can be highly productive. The water table must be lowered using deep drainage. Once drained, liming may be required as organic matter begins to decompose. "
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
           "sl1": 35.0,
           "sl2": 35.0,
           "sl3": 35.0,
@@ -428,9 +522,9 @@
           "sl7": 1.33
         },
         "id": {
-          "component": "Eutric gleysols",
-          "name": "Eutric gleysols",
-          "rank_loc": "5",
+          "component": "Mollic gleysols",
+          "name": "Mollic gleysols",
+          "rank_loc": "6",
           "score_loc": 0.055
         },
         "ph": {
@@ -462,15 +556,15 @@
         },
         "site": {
           "siteData": {
-            "componentID": 104276,
-            "distance": 14827.397,
-            "mapunitID": 11663,
-            "minCompDistance": 14827.39744996,
+            "componentID": 104133,
+            "distance": 6486.577,
+            "mapunitID": 11540,
+            "minCompDistance": 6486.5766191,
             "share": 100,
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Eutric Gleysols have shallow groundwater and are saturated for significant portions of the year. Deep drainage is necessary for cultivation. Eutric Gleysols are productive soils with high base saturation in the upper portion of soil.",
+            "Description_en": "Mollic Gleysols have shallow groundwater and are saturated for significant portions of the year. Deep drainage is necessary for cultivation. Mollic Gleysols have relatively higher organic matter and nutrients in surface horizons.",
             "Management_en": "These soils are saturated, and if they are cultivated significant drainage is required. Once drained, these soils can be highly productive. The water table must be lowered using deep drainage. Once drained, liming may be required as organic matter begins to decompose. "
           }
         },
@@ -522,9 +616,9 @@
           "sl7": 0.0
         },
         "id": {
-          "component": "Mollic gleysols",
-          "name": "Mollic gleysols",
-          "rank_loc": "6",
+          "component": "Umbric andosols",
+          "name": "Umbric andosols",
+          "rank_loc": "7",
           "score_loc": 0.055
         },
         "ph": {
@@ -556,100 +650,6 @@
         },
         "site": {
           "siteData": {
-            "componentID": 104133,
-            "distance": 6486.577,
-            "mapunitID": 11540,
-            "minCompDistance": 6486.5766191,
-            "share": 100,
-            "soilDepth": 200
-          },
-          "siteDescription": {
-            "Description_en": "Mollic Gleysols have shallow groundwater and are saturated for significant portions of the year. Deep drainage is necessary for cultivation. Mollic Gleysols have relatively higher organic matter and nutrients in surface horizons.",
-            "Management_en": "These soils are saturated, and if they are cultivated significant drainage is required. Once drained, these soils can be highly productive. The water table must be lowered using deep drainage. Once drained, liming may be required as organic matter begins to decompose. "
-          }
-        },
-        "texture": {
-          "sl1": "Silt loam",
-          "sl2": "Silt loam",
-          "sl3": "Silt loam",
-          "sl4": "Silt loam",
-          "sl5": "Loam",
-          "sl6": "Loam",
-          "sl7": "Loam"
-        }
-      },
-      {
-        "bottom_depth": {
-          "sl1": 1,
-          "sl2": 10,
-          "sl3": 20,
-          "sl4": 50,
-          "sl5": 70,
-          "sl6": 100,
-          "sl7": 120
-        },
-        "cec": {
-          "sl1": 18.0,
-          "sl2": 18.0,
-          "sl3": 18.0,
-          "sl4": 17.4,
-          "sl5": 17.43,
-          "sl6": 17.4,
-          "sl7": 17.0
-        },
-        "clay": {
-          "sl1": 30.0,
-          "sl2": 30.0,
-          "sl3": 30.0,
-          "sl4": 31.8,
-          "sl5": 32.0,
-          "sl6": 31.8,
-          "sl7": 31.17
-        },
-        "ec": {
-          "sl1": 1.0,
-          "sl2": 1.0,
-          "sl3": 1.0,
-          "sl4": 0.8,
-          "sl5": 0.57,
-          "sl6": 0.6,
-          "sl7": 0.83
-        },
-        "id": {
-          "component": "Umbric andosols",
-          "name": "Umbric andosols",
-          "rank_loc": "7",
-          "score_loc": 0.055
-        },
-        "ph": {
-          "sl1": 6.3,
-          "sl2": 6.3,
-          "sl3": 6.3,
-          "sl4": 6.5,
-          "sl5": 6.57,
-          "sl6": 6.66,
-          "sl7": 6.75
-        },
-        "rock_fragments": {
-          "sl1": 8.0,
-          "sl2": 8.0,
-          "sl3": 8.0,
-          "sl4": 8.0,
-          "sl5": 8.86,
-          "sl6": 9.0,
-          "sl7": 9.33
-        },
-        "sand": {
-          "sl1": 24.0,
-          "sl2": 24.0,
-          "sl3": 24.0,
-          "sl4": 23.0,
-          "sl5": 23.14,
-          "sl6": 23.2,
-          "sl7": 23.0
-        },
-        "site": {
-          "siteData": {
             "componentID": 103928,
             "distance": 7836.2,
             "mapunitID": 11371,
@@ -663,13 +663,13 @@
           }
         },
         "texture": {
-          "sl1": "Clay loam",
-          "sl2": "Clay loam",
-          "sl3": "Clay loam",
-          "sl4": "Clay loam",
-          "sl5": "Clay loam",
-          "sl6": "Clay loam",
-          "sl7": "Clay loam"
+          "sl1": "Silt loam",
+          "sl2": "Silt loam",
+          "sl3": "Silt loam",
+          "sl4": "Silt loam",
+          "sl5": "Loam",
+          "sl6": "Loam",
+          "sl7": "Loam"
         }
       }
     ]

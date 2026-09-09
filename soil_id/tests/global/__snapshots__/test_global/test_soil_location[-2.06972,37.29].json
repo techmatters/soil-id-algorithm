@@ -683,100 +683,6 @@
           "sl7": 120
         },
         "cec": {
-          "sl1": 10.0,
-          "sl2": 10.0,
-          "sl3": 10.0,
-          "sl4": 11.8,
-          "sl5": 12.14,
-          "sl6": 12.2,
-          "sl7": 12.17
-        },
-        "clay": {
-          "sl1": 19.0,
-          "sl2": 19.0,
-          "sl3": 19.0,
-          "sl4": 24.2,
-          "sl5": 25.43,
-          "sl6": 26.2,
-          "sl7": 26.0
-        },
-        "ec": {
-          "sl1": 1.0,
-          "sl2": 1.0,
-          "sl3": 1.0,
-          "sl4": 1.0,
-          "sl5": 1.0,
-          "sl6": 1.0,
-          "sl7": 1.0
-        },
-        "id": {
-          "component": "Dystric cambisols",
-          "name": "Dystric cambisols",
-          "rank_loc": "8",
-          "score_loc": 0.034
-        },
-        "ph": {
-          "sl1": 6.5,
-          "sl2": 6.5,
-          "sl3": 6.5,
-          "sl4": 6.62,
-          "sl5": 6.66,
-          "sl6": 6.76,
-          "sl7": 6.83
-        },
-        "rock_fragments": {
-          "sl1": 12.0,
-          "sl2": 12.0,
-          "sl3": 12.0,
-          "sl4": 12.0,
-          "sl5": 12.71,
-          "sl6": 16.0,
-          "sl7": 18.0
-        },
-        "sand": {
-          "sl1": 67.0,
-          "sl2": 67.0,
-          "sl3": 67.0,
-          "sl4": 62.6,
-          "sl5": 61.71,
-          "sl6": 61.0,
-          "sl7": 61.17
-        },
-        "site": {
-          "siteData": {
-            "componentID": 111211,
-            "distance": 4944.944,
-            "mapunitID": 17454,
-            "minCompDistance": 4944.94414068,
-            "share": 30,
-            "soilDepth": 200
-          },
-          "siteDescription": {
-            "Description_en": "Dystric Cambisols are widely occurring soils with limited soil development. These are less productive soils with low base saturation in the upper portion of soil.",
-            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. Because this soil has a low base saturation, the application of bases (through fertlization) may be needed for most productive crop yield. If the soil pH is low calcium (and possibly magnesium, if dolomitic lime is used) can be supplied through the addition of lime. If the soil pH is suitable for crop production then gypsum (CaSO4) can be used as the Ca source, if needed, or other sources such as MgSO4 could be applied (if soil test indicates a need). Proper fertilization will also supply potassium, if soil test indicates a need. "
-          }
-        },
-        "texture": {
-          "sl1": "Sandy loam",
-          "sl2": "Sandy loam",
-          "sl3": "Sandy loam",
-          "sl4": "Sandy clay loam",
-          "sl5": "Sandy clay loam",
-          "sl6": "Sandy clay loam",
-          "sl7": "Sandy clay loam"
-        }
-      },
-      {
-        "bottom_depth": {
-          "sl1": 1,
-          "sl2": 10,
-          "sl3": 20,
-          "sl4": 50,
-          "sl5": 70,
-          "sl6": 100,
-          "sl7": 120
-        },
-        "cec": {
           "sl1": 18.0,
           "sl2": 18.0,
           "sl3": 18.0,
@@ -804,10 +710,10 @@
           "sl7": 0.17
         },
         "id": {
-          "component": "Calcaric cambisols",
-          "name": "Calcaric cambisols",
-          "rank_loc": "9",
-          "score_loc": 0.032
+          "component": "Dystric cambisols",
+          "name": "Dystric cambisols",
+          "rank_loc": "8",
+          "score_loc": 0.034
         },
         "ph": {
           "sl1": 5.2,
@@ -838,16 +744,16 @@
         },
         "site": {
           "siteData": {
-            "componentID": 111282,
-            "distance": 9861.436,
-            "mapunitID": 17486,
-            "minCompDistance": 9861.43578287,
-            "share": 85,
+            "componentID": 111211,
+            "distance": 4944.944,
+            "mapunitID": 17454,
+            "minCompDistance": 4944.94414068,
+            "share": 30,
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Calcaric Cambisols are widely occurring soils with limited soil development. These soils are calcareous in a soil layer below the surface.",
-            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. These soils are well suited for crop production, and can be intensively used. Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
+            "Description_en": "Dystric Cambisols are widely occurring soils with limited soil development. These are less productive soils with low base saturation in the upper portion of soil.",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. Because this soil has a low base saturation, the application of bases (through fertlization) may be needed for most productive crop yield. If the soil pH is low calcium (and possibly magnesium, if dolomitic lime is used) can be supplied through the addition of lime. If the soil pH is suitable for crop production then gypsum (CaSO4) can be used as the Ca source, if needed, or other sources such as MgSO4 could be applied (if soil test indicates a need). Proper fertilization will also supply potassium, if soil test indicates a need. "
           }
         },
         "texture": {
@@ -858,100 +764,6 @@
           "sl5": "Loam",
           "sl6": "Loam",
           "sl7": "Loam"
-        }
-      },
-      {
-        "bottom_depth": {
-          "sl1": 1,
-          "sl2": 10,
-          "sl3": 20,
-          "sl4": 50,
-          "sl5": 70,
-          "sl6": 100,
-          "sl7": 120
-        },
-        "cec": {
-          "sl1": 19.0,
-          "sl2": 19.0,
-          "sl3": 19.0,
-          "sl4": 17.0,
-          "sl5": 16.29,
-          "sl6": 15.6,
-          "sl7": 15.33
-        },
-        "clay": {
-          "sl1": 29.0,
-          "sl2": 29.0,
-          "sl3": 29.0,
-          "sl4": 29.8,
-          "sl5": 30.14,
-          "sl6": 30.0,
-          "sl7": 29.67
-        },
-        "ec": {
-          "sl1": 1.0,
-          "sl2": 1.0,
-          "sl3": 1.0,
-          "sl4": 1.0,
-          "sl5": 0.86,
-          "sl6": 0.6,
-          "sl7": 0.5
-        },
-        "id": {
-          "component": "Calcaric fluvisols",
-          "name": "Calcaric fluvisols",
-          "rank_loc": "10",
-          "score_loc": 0.028
-        },
-        "ph": {
-          "sl1": 5.0,
-          "sl2": 5.0,
-          "sl3": 5.0,
-          "sl4": 5.02,
-          "sl5": 5.06,
-          "sl6": 5.12,
-          "sl7": 5.13
-        },
-        "rock_fragments": {
-          "sl1": 14.0,
-          "sl2": 14.0,
-          "sl3": 14.0,
-          "sl4": 14.4,
-          "sl5": 14.43,
-          "sl6": 15.2,
-          "sl7": 16.67
-        },
-        "sand": {
-          "sl1": 42.0,
-          "sl2": 42.0,
-          "sl3": 42.0,
-          "sl4": 42.6,
-          "sl5": 42.57,
-          "sl6": 42.6,
-          "sl7": 43.0
-        },
-        "site": {
-          "siteData": {
-            "componentID": 111096,
-            "distance": 14199.569,
-            "mapunitID": 17389,
-            "minCompDistance": 14199.56875094,
-            "share": 75,
-            "soilDepth": 200
-          },
-          "siteDescription": {
-            "Description_en": "Calcaric Fluvisols are mostly found in floodplains and coastal areas and have limited profile development with a range of properties. Hydrological management is essential for production. Calcaric Fluvisols have carbonates and high pH in the upper portion of soil.",
-            "Management_en": "These soils are all naturally fertile and productive. Drainage and management of floodwaters can make them suitable for continuous cultivation. Once under continuous cultivation care should be taken to avoid soil erosion. Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered."
-          }
-        },
-        "texture": {
-          "sl1": "Clay loam",
-          "sl2": "Clay loam",
-          "sl3": "Clay loam",
-          "sl4": "Clay loam",
-          "sl5": "Clay loam",
-          "sl6": "Clay loam",
-          "sl7": "Clay loam"
         }
       },
       {
@@ -992,10 +804,10 @@
           "sl7": 0.67
         },
         "id": {
-          "component": "Calcic solonchaks",
-          "name": "Calcic solonchaks",
-          "rank_loc": "11",
-          "score_loc": 0.019
+          "component": "Calcaric cambisols",
+          "name": "Calcaric cambisols",
+          "rank_loc": "9",
+          "score_loc": 0.032
         },
         "ph": {
           "sl1": 7.6,
@@ -1026,16 +838,16 @@
         },
         "site": {
           "siteData": {
-            "componentID": 111008,
-            "distance": 4355.807,
-            "mapunitID": 17338,
-            "minCompDistance": 4355.80730857,
-            "share": 50,
+            "componentID": 111282,
+            "distance": 9861.436,
+            "mapunitID": 17486,
+            "minCompDistance": 9861.43578287,
+            "share": 85,
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Calcic Solonchaks are soils that contain salts at or near the soil surface that form in either deserts or close to coastlines. Calcic Solonchaks are calcareous in a soil layer below the surface.",
-            "Management_en": "These soils are typically high in total salts. They have very poor productivity, and cannot be used unless high quality irrigation is available to remove accumulated salts. These soils are not well suited for agriculture and are best used for grazing, or left fallow. The soil pH in the upper soil layer will be high (> 7.0) "
+            "Description_en": "Calcaric Cambisols are widely occurring soils with limited soil development. These soils are calcareous in a soil layer below the surface.",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. These soils are well suited for crop production, and can be intensively used. Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
           }
         },
         "texture": {
@@ -1086,10 +898,10 @@
           "sl7": 1.67
         },
         "id": {
-          "component": "Eutric fluvisols",
-          "name": "Eutric fluvisols",
-          "rank_loc": "12",
-          "score_loc": 0.015
+          "component": "Calcaric fluvisols",
+          "name": "Calcaric fluvisols",
+          "rank_loc": "10",
+          "score_loc": 0.028
         },
         "ph": {
           "sl1": 8.2,
@@ -1120,16 +932,16 @@
         },
         "site": {
           "siteData": {
-            "componentID": 111317,
-            "distance": 29220.538,
-            "mapunitID": 17506,
-            "minCompDistance": 29220.53821141,
-            "share": 40,
+            "componentID": 111096,
+            "distance": 14199.569,
+            "mapunitID": 17389,
+            "minCompDistance": 14199.56875094,
+            "share": 75,
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Eutric Fluvisols are mostly found in floodplains and coastal areas, and have limited profile development with a range of properties. Hydrological management is essential for production. Eutric Fluvisols are productive soils with high base saturation in the upper portion of soil. ",
-            "Management_en": "These soils are all naturally fertile and productive. Drainage and management of floodwaters can make them suitable for continuous cultivation. However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. Once under continuous cultivation care should be taken to avoid soil erosion. Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered."
+            "Description_en": "Calcaric Fluvisols are mostly found in floodplains and coastal areas and have limited profile development with a range of properties. Hydrological management is essential for production. Calcaric Fluvisols have carbonates and high pH in the upper portion of soil.",
+            "Management_en": "These soils are all naturally fertile and productive. Drainage and management of floodwaters can make them suitable for continuous cultivation. Once under continuous cultivation care should be taken to avoid soil erosion. Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered."
           }
         },
         "texture": {
@@ -1180,10 +992,10 @@
           "sl7": 16.67
         },
         "id": {
-          "component": "Chromic luvisols",
-          "name": "Chromic luvisols2",
-          "rank_loc": "Not Displayed",
-          "score_loc": 0.036
+          "component": "Calcic solonchaks",
+          "name": "Calcic solonchaks",
+          "rank_loc": "11",
+          "score_loc": 0.019
         },
         "ph": {
           "sl1": 8.3,
@@ -1214,16 +1026,16 @@
         },
         "site": {
           "siteData": {
-            "componentID": 111097,
-            "distance": 14199.569,
-            "mapunitID": 17389,
-            "minCompDistance": 4944.94414068,
-            "share": 25,
+            "componentID": 111008,
+            "distance": 4355.807,
+            "mapunitID": 17338,
+            "minCompDistance": 4355.80730857,
+            "share": 50,
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Chromic Luvisols are productive soils with high base saturation and relatively clayey subsoils. Chromic Luvisols have an iron rich subsoil.",
-            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. If the soil is already eroded they may best be suited for grazing andtree crops."
+            "Description_en": "Calcic Solonchaks are soils that contain salts at or near the soil surface that form in either deserts or close to coastlines. Calcic Solonchaks are calcareous in a soil layer below the surface.",
+            "Management_en": "These soils are typically high in total salts. They have very poor productivity, and cannot be used unless high quality irrigation is available to remove accumulated salts. These soils are not well suited for agriculture and are best used for grazing, or left fallow. The soil pH in the upper soil layer will be high (> 7.0) "
           }
         },
         "texture": {
@@ -1274,10 +1086,10 @@
           "sl7": 1.67
         },
         "id": {
-          "component": "Dystric cambisols",
-          "name": "Dystric cambisols2",
-          "rank_loc": "Not Displayed",
-          "score_loc": 0.034
+          "component": "Eutric fluvisols",
+          "name": "Eutric fluvisols",
+          "rank_loc": "12",
+          "score_loc": 0.015
         },
         "ph": {
           "sl1": 6.1,
@@ -1305,6 +1117,194 @@
           "sl5": 36.86,
           "sl6": 38.4,
           "sl7": 38.83
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111317,
+            "distance": 29220.538,
+            "mapunitID": 17506,
+            "minCompDistance": 29220.53821141,
+            "share": 40,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Eutric Fluvisols are mostly found in floodplains and coastal areas, and have limited profile development with a range of properties. Hydrological management is essential for production. Eutric Fluvisols are productive soils with high base saturation in the upper portion of soil. ",
+            "Management_en": "These soils are all naturally fertile and productive. Drainage and management of floodwaters can make them suitable for continuous cultivation. However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. Once under continuous cultivation care should be taken to avoid soil erosion. Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered."
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 10.0,
+          "sl2": 10.0,
+          "sl3": 10.0,
+          "sl4": 11.8,
+          "sl5": 12.14,
+          "sl6": 12.2,
+          "sl7": 12.17
+        },
+        "clay": {
+          "sl1": 19.0,
+          "sl2": 19.0,
+          "sl3": 19.0,
+          "sl4": 24.2,
+          "sl5": 25.43,
+          "sl6": 26.2,
+          "sl7": 26.0
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 1.0,
+          "sl6": 1.0,
+          "sl7": 1.0
+        },
+        "id": {
+          "component": "Chromic luvisols",
+          "name": "Chromic luvisols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.036
+        },
+        "ph": {
+          "sl1": 6.5,
+          "sl2": 6.5,
+          "sl3": 6.5,
+          "sl4": 6.62,
+          "sl5": 6.66,
+          "sl6": 6.76,
+          "sl7": 6.83
+        },
+        "rock_fragments": {
+          "sl1": 12.0,
+          "sl2": 12.0,
+          "sl3": 12.0,
+          "sl4": 12.0,
+          "sl5": 12.71,
+          "sl6": 16.0,
+          "sl7": 18.0
+        },
+        "sand": {
+          "sl1": 67.0,
+          "sl2": 67.0,
+          "sl3": 67.0,
+          "sl4": 62.6,
+          "sl5": 61.71,
+          "sl6": 61.0,
+          "sl7": 61.17
+        },
+        "site": {
+          "siteData": {
+            "componentID": 111097,
+            "distance": 14199.569,
+            "mapunitID": 17389,
+            "minCompDistance": 4944.94414068,
+            "share": 25,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Chromic Luvisols are productive soils with high base saturation and relatively clayey subsoils. Chromic Luvisols have an iron rich subsoil.",
+            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. If the soil is already eroded they may best be suited for grazing andtree crops."
+          }
+        },
+        "texture": {
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy clay loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 19.0,
+          "sl2": 19.0,
+          "sl3": 19.0,
+          "sl4": 17.0,
+          "sl5": 16.29,
+          "sl6": 15.6,
+          "sl7": 15.33
+        },
+        "clay": {
+          "sl1": 29.0,
+          "sl2": 29.0,
+          "sl3": 29.0,
+          "sl4": 29.8,
+          "sl5": 30.14,
+          "sl6": 30.0,
+          "sl7": 29.67
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.0,
+          "sl5": 0.86,
+          "sl6": 0.6,
+          "sl7": 0.5
+        },
+        "id": {
+          "component": "Dystric cambisols",
+          "name": "Dystric cambisols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.034
+        },
+        "ph": {
+          "sl1": 5.0,
+          "sl2": 5.0,
+          "sl3": 5.0,
+          "sl4": 5.02,
+          "sl5": 5.06,
+          "sl6": 5.12,
+          "sl7": 5.13
+        },
+        "rock_fragments": {
+          "sl1": 14.0,
+          "sl2": 14.0,
+          "sl3": 14.0,
+          "sl4": 14.4,
+          "sl5": 14.43,
+          "sl6": 15.2,
+          "sl7": 16.67
+        },
+        "sand": {
+          "sl1": 42.0,
+          "sl2": 42.0,
+          "sl3": 42.0,
+          "sl4": 42.6,
+          "sl5": 42.57,
+          "sl6": 42.6,
+          "sl7": 43.0
         },
         "site": {
           "siteData": {

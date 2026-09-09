@@ -101,56 +101,80 @@ def _decay_multiplier(distance: Optional[float], region: str) -> Optional[float]
     return None  # US decay is captured directly by the US path (added later)
 
 
-def _horizon_segments(slices: list, candidate: str) -> list:
-    """
-    Consolidate the captured per-cm slices into depth bands for one candidate.
+def _compared_by_depth(recorder: Recorder, candidate: str) -> dict:
+    """From the per-slice captures (the compared window), index user values, the
+    per-feature denominator, and the pedon->candidate distance by depth."""
+    out = {}
+    for s in recorder.horizon.get("slices", []):
+        names = s["compnames"]
+        if candidate not in names:
+            continue
+        pi = names.index("sample_pedon") if "sample_pedon" in names else 0
+        ci = names.index(candidate)
+        cols, vals, denom = s["columns"], s["values"], (s.get("denom") or [])
+        out[s["depth"]] = {
+            "user": {c: _num(vals[pi][k]) for k, c in enumerate(cols)},
+            "denom": {c: (denom[k] if k < len(denom) else None) for k, c in enumerate(cols)},
+            "dist": s["dist_from_pedon"][ci],
+        }
+    return out
 
-    Consecutive depths with identical (user value, candidate value) across every
-    feature collapse into a single band. Each feature carries both sides' values
-    (None where absent), the normalized difference, and a status so the report can
-    show whether it was compared, skipped, or a no-soil gap.
+
+def _horizon_segments(recorder: Recorder, candidate: str) -> list:
     """
+    Build depth bands for one candidate over the FULL range (0 .. max(pit,
+    candidate depth)), consolidating consecutive identical depths. Candidate values
+    come from its full profile; the user side is `None` outside the depths you
+    recorded; distance/Δ are only present where the algorithm actually compared
+    (your recorded window). One-sided data shows as `None` with a status.
+    """
+    columns = recorder.horizon.get("columns", [])
+    cand_full = recorder.horizon.get("candidate_full", {}).get(candidate, {})
+    # candidate_full keys may be int (in-process) or str (after a JSON round-trip)
+    cand_at = {int(d): v for d, v in cand_full.items()}
+    compared = _compared_by_depth(recorder, candidate)
+
+    cand_depths = [d for d, v in cand_at.items() if any(x is not None for x in v)]
+    depths = set(compared) | set(cand_depths)
+    if not depths:
+        return []
+    max_d = max(depths) + 1
+
     bands: list = []
     prev_key = None
-    for s in slices:
-        compnames = s["compnames"]
-        if candidate not in compnames:
-            continue
-        ci = compnames.index(candidate)
-        pi = compnames.index("sample_pedon") if "sample_pedon" in compnames else 0
-        cols, vals = s["columns"], s["values"]
-        denom = s.get("denom")
-        depth = s["depth"]
-
+    for d in range(max_d):
+        comp = compared.get(d)
+        cvals = cand_at.get(d)
         features = []
-        for k, col in enumerate(cols):
-            uv, cv = _num(vals[pi][k]), _num(vals[ci][k])
-            rng = None if not denom else round(float(denom[k]), 2)
-            norm_diff = None
-            if uv is not None and cv is not None and rng:
-                norm_diff = round(abs(uv - cv) / rng, 4)
+        for k, col in enumerate(columns):
+            uv = comp["user"].get(col) if comp else None
+            cv = _num(cvals[k]) if cvals is not None and k < len(cvals) else None
+            rng, nd = None, None
+            if comp and comp["denom"].get(col):
+                rng = round(float(comp["denom"][col]), 2)
+                if uv is not None and cv is not None:
+                    nd = round(abs(uv - cv) / rng, 4)
             features.append(
                 {
                     "name": col,
                     "user": uv,
                     "candidate": cv,
                     "range": rng,
-                    "norm_diff": norm_diff,
+                    "norm_diff": nd,
                     "status": _status(uv, cv),
                 }
             )
-
-        dist = s["dist_from_pedon"][ci]
         band = {
-            "top": depth,
-            "bottom": depth + 1,
-            "depth_weight": 0.2 if depth < 20 else 1.0,
+            "top": d,
+            "bottom": d + 1,
+            "depth_weight": 0.2 if d < 20 else 1.0,
+            "compared": comp is not None,
             "features": features,
-            "slice_distance": _num(dist),
+            "slice_distance": _num(comp["dist"]) if comp else None,
         }
-        key = tuple((f["name"], f["user"], f["candidate"]) for f in features)
+        key = (comp is not None,) + tuple((f["name"], f["user"], f["candidate"]) for f in features)
         if prev_key == key and bands:
-            bands[-1]["bottom"] = depth + 1  # extend the current band
+            bands[-1]["bottom"] = d + 1
         else:
             bands.append(band)
             prev_key = key
@@ -179,7 +203,7 @@ def _candidate_trace(name: str, recorder: Recorder) -> dict:
     components.append(
         {
             "type": "horizon",
-            "segments": _horizon_segments(recorder.horizon.get("slices", []), name),
+            "segments": _horizon_segments(recorder, name),
             "score": _num(scores.get("horizon_score")),
         }
     )

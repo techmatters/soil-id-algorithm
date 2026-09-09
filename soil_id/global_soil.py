@@ -805,6 +805,21 @@ def rank_soils_global(
     if soilIDRank_output_pd is not None:
         cokey_groups = [group for _, group in soilIDRank_output_pd.groupby("compname", sort=True)]
 
+        if explain is not None:
+            # Full candidate profiles (every depth, not just the compared window) so
+            # the report can show the whole depth range up to max(pit, candidate).
+            feat_cols = [c for c in p_hz_data_names if c != "compname"]
+            explain.horizon["columns"] = feat_cols
+            # Depth is the row position within each group (the interpolated 0..199
+            # profile), NOT the concatenated frame's index.
+            explain.horizon["candidate_full"] = {
+                sorted(g["compname"].unique())[0]: {
+                    depth: [None if pd.isna(v) else round(float(v), 2) for v in row]
+                    for depth, row in enumerate(g[feat_cols].to_numpy().tolist())
+                }
+                for g in cokey_groups
+            }
+
         # Create lists to store component statuses
         Comp_Rank_Status, Comp_Missing_Status, Comp_name = [], [], []
 

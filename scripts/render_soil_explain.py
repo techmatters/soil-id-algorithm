@@ -113,23 +113,30 @@ def render_horizon(c):
                 f"<td class='{g} gstart'>{fmt(f['user'])}</td>"
                 f"<td class='{g}{one}'>{fmt(f['candidate'])}{nd}</td>"
             )
+        rowcls = "" if s.get("compared", True) else " class='nocompare'"
         rows.append(
-            f"<tr><td class='depth'>{s['top']}–{s['bottom']}cm</td>"
+            f"<tr{rowcls}><td class='depth'>{s['top']}–{s['bottom']}cm</td>"
             f"<td class='w'>×{s['depth_weight']}</td>{''.join(cells)}"
-            f"<td class='dist'>{fmt(s.get('slice_distance'))}</td></tr>"
+            f"<td class='dist distcol'>{fmt(s.get('slice_distance'))}</td></tr>"
         )
-    top = min(s["top"] for s in segs)
-    bottom = max(s["bottom"] for s in segs)
+    compared = [s for s in segs if s.get("compared", True)]
+    win = (
+        f"{min(s['top'] for s in compared)}–{max(s['bottom'] for s in compared)} cm"
+        if compared
+        else "none"
+    )
     return (
         f"<div class='comp'><div class='ctitle'>Horizon (properties) "
         f"<b>{fmt(c.get('score'))}</b></div>"
-        f"<div class='note'>Compared over your recorded depths ({top}–{bottom} cm); "
-        f"depths above your first horizon aren't recorded, so they're not compared. "
-        f"<b>you</b>/<b>candidate</b> are the values at that depth; "
-        f"Δ = normalized difference; <b>slice dist</b> = Gower distance for the band "
-        f"(— means the candidate has no soil there).</div>"
+        f"<div class='note'>Full depth range shown, 0 to max(your pit, this soil). "
+        f"The algorithm only compares your recorded depths ({win}); "
+        f"<span class='nocompare' style='padding:0 4px'>greyed rows</span> are outside "
+        f"that window (not compared). <b>you</b>/<b>candidate</b> = the values at that "
+        f"depth (— = none there); Δ = normalized difference; <b>slice dist</b> = Gower "
+        f"distance for the band.</div>"
         f"<table class='hz'><tr><th rowspan='2'>depth</th><th rowspan='2'>wt</th>{head}"
-        f"<th rowspan='2'>slice&nbsp;dist</th></tr><tr>{sub}</tr>{''.join(rows)}</table></div>"
+        f"<th rowspan='2' class='distcol'>slice&nbsp;dist</th></tr>"
+        f"<tr>{sub}</tr>{''.join(rows)}</table></div>"
     )
 
 
@@ -197,13 +204,16 @@ h1{font-size:18px} .site{color:#666;margin-bottom:14px}
 .formula{color:#555;font-family:ui-monospace,monospace;font-size:12px}
 table.hz{border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums;margin-top:4px}
 table.hz th,table.hz td{border:1px solid #e6e6ee;padding:2px 7px;text-align:right}
-table.hz th{background:#eef} td.depth{text-align:left;font-weight:600} td.w{color:#999}
+table.hz th{background:#eef;text-align:center} /* center all header labels */
+td.depth{text-align:left;font-weight:600} td.w{color:#999;text-align:center}
 td.dist{font-weight:600;background:#fafaff} .na,td.na{color:#bbb}
 /* per-feature column groups: alternating tint + a heavier divider at each group start */
 .g0{background:#eef5ff} .g1{background:#eefaf0}
 th.g0{background:#dbe8ff} th.g1{background:#daf3e1}
 .gstart{border-left:2px solid #9ab!important}
+.distcol{border-left:2px solid #9ab!important} /* separate slice dist */
 td.one{background:#fff3e0!important} /* one-sided value */
+tr.nocompare td{background:#f4f4f6;color:#a8a8a8} tr.nocompare td.depth{color:#888}
 .note{color:#666;font-size:11.5px;margin:2px 0;max-width:760px}
 .legend{color:#444;font-size:12px;background:#fffbe9;border:1px solid #eeddaa;
   border-radius:6px;padding:7px 10px;margin:10px 0;max-width:900px}

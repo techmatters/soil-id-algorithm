@@ -121,6 +121,15 @@ generate_bulk_test_results_global:
 process_bulk_test_results_global:
 	python -m soil_id.tests.global.process_bulk_test_results $(RESULTS_FILE)
 
+# Paired before/after accuracy comparison of two bulk-result files (the reliable
+# way to validate an algorithm change against ground truth). Usage:
+#   make compare_bulk_test_results_us BEFORE=before.jsonl AFTER=after.jsonl
+compare_bulk_test_results_us:
+	python -m soil_id.tests.compare_bulk_test_results $(BEFORE) $(AFTER) --dataset us
+
+compare_bulk_test_results_global:
+	python -m soil_id.tests.compare_bulk_test_results $(BEFORE) $(AFTER) --dataset global
+
 generate_bulk_test_results_legacy:
 	python -m soil_id.tests.legacy.generate_bulk_test_results
 

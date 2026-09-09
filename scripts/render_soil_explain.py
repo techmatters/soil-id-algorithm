@@ -33,6 +33,24 @@ def esc(x):
     return html.escape(str(x))
 
 
+# Human-friendly labels for the internal feature/column names.
+FEATURE_LABELS = {
+    "sandpct_intpl": "sand %",
+    "claypct_intpl": "clay %",
+    "rfv_intpl": "rock fragments %",
+    "l": "color L*",
+    "a": "color a*",
+    "b": "color b*",
+    "slope_r": "slope %",
+    "elev_r": "elevation (m)",
+    "bottom_depth": "depth to bedrock (cm)",
+}
+
+
+def label(name):
+    return FEATURE_LABELS.get(name, name)
+
+
 def fmt(x, pct=False):
     if x is None:
         return "<span class='na'>—</span>"
@@ -70,32 +88,48 @@ def render_horizon(c):
         for f in s["features"]:
             if f["name"] not in feat_names:
                 feat_names.append(f["name"])
-    head = "".join(f"<th colspan='2'>{esc(n)}</th>" for n in feat_names)
-    sub = "".join("<th>you</th><th>candidate</th>" for _ in feat_names)
+    # each feature is a color-grouped pair of sub-columns (you / candidate)
+    head = "".join(
+        f"<th colspan='2' class='g{i % 2} gstart'>{esc(label(n))}</th>"
+        for i, n in enumerate(feat_names)
+    )
+    sub = "".join(
+        f"<th class='g{i % 2} gstart'>you</th><th class='g{i % 2}'>candidate</th>"
+        for i, _ in enumerate(feat_names)
+    )
     rows = []
     for s in segs:
         fmap = {f["name"]: f for f in s["features"]}
         cells = []
-        for n in feat_names:
+        for i, n in enumerate(feat_names):
             f = fmap.get(n)
-            if not f:
-                cells.append("<td class='na'>—</td><td class='na'>—</td>")
+            g = f"g{i % 2}"
+            if not f or f.get("user") is None and f.get("candidate") is None:
+                cells.append(f"<td class='{g} gstart na'>—</td><td class='{g} na'>—</td>")
                 continue
-            cls = "" if f["status"] == "both" else "one"
+            one = "" if f["status"] == "both" else " one"
             nd = "" if f["norm_diff"] is None else f" <small>Δ{f['norm_diff']:.3f}</small>"
             cells.append(
-                f"<td>{fmt(f['user'])}</td><td class='{cls}'>{fmt(f['candidate'])}{nd}</td>"
+                f"<td class='{g} gstart'>{fmt(f['user'])}</td>"
+                f"<td class='{g}{one}'>{fmt(f['candidate'])}{nd}</td>"
             )
         rows.append(
             f"<tr><td class='depth'>{s['top']}–{s['bottom']}cm</td>"
             f"<td class='w'>×{s['depth_weight']}</td>{''.join(cells)}"
             f"<td class='dist'>{fmt(s.get('slice_distance'))}</td></tr>"
         )
+    top = min(s["top"] for s in segs)
+    bottom = max(s["bottom"] for s in segs)
     return (
         f"<div class='comp'><div class='ctitle'>Horizon (properties) "
         f"<b>{fmt(c.get('score'))}</b></div>"
-        f"<table class='hz'><tr><th>depth</th><th>wt</th>{head}<th>slice&nbsp;dist</th></tr>"
-        f"<tr><th></th><th></th>{sub}<th></th></tr>{''.join(rows)}</table></div>"
+        f"<div class='note'>Compared over your recorded depths ({top}–{bottom} cm); "
+        f"depths above your first horizon aren't recorded, so they're not compared. "
+        f"<b>you</b>/<b>candidate</b> are the values at that depth; "
+        f"Δ = normalized difference; <b>slice dist</b> = Gower distance for the band "
+        f"(— means the candidate has no soil there).</div>"
+        f"<table class='hz'><tr><th rowspan='2'>depth</th><th rowspan='2'>wt</th>{head}"
+        f"<th rowspan='2'>slice&nbsp;dist</th></tr><tr>{sub}</tr>{''.join(rows)}</table></div>"
     )
 
 
@@ -111,7 +145,7 @@ def render_color(c):
 
 def render_site(c):  # US site score (slope/elev/depth)
     feats = "".join(
-        f"<tr><td>{esc(f['name'])}</td><td>{fmt(f['user'])}</td>"
+        f"<tr><td>{esc(label(f['name']))}</td><td>{fmt(f['user'])}</td>"
         f"<td class='{'' if f['status'] == 'both' else 'one'}'>{fmt(f['candidate'])}</td>"
         f"<td>{fmt(f.get('norm_diff'))}</td></tr>"
         for f in c.get("features", [])
@@ -161,10 +195,19 @@ h1{font-size:18px} .site{color:#666;margin-bottom:14px}
 .bar>span{display:block;height:100%} .barval{margin-left:6px;font-variant-numeric:tabular-nums}
 .comp{margin:8px 0} .ctitle{font-weight:600;color:#345;margin-bottom:3px}
 .formula{color:#555;font-family:ui-monospace,monospace;font-size:12px}
-table.hz{border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums}
-table.hz th,table.hz td{border:1px solid #e6e6ee;padding:2px 6px;text-align:right}
+table.hz{border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums;margin-top:4px}
+table.hz th,table.hz td{border:1px solid #e6e6ee;padding:2px 7px;text-align:right}
 table.hz th{background:#eef} td.depth{text-align:left;font-weight:600} td.w{color:#999}
-td.dist{font-weight:600;background:#fafaff} td.one{background:#fff3e0} .na,td.na{color:#bbb}
+td.dist{font-weight:600;background:#fafaff} .na,td.na{color:#bbb}
+/* per-feature column groups: alternating tint + a heavier divider at each group start */
+.g0{background:#eef5ff} .g1{background:#eefaf0}
+th.g0{background:#dbe8ff} th.g1{background:#daf3e1}
+.gstart{border-left:2px solid #9ab!important}
+td.one{background:#fff3e0!important} /* one-sided value */
+.note{color:#666;font-size:11.5px;margin:2px 0;max-width:760px}
+.legend{color:#444;font-size:12px;background:#fffbe9;border:1px solid #eeddaa;
+  border-radius:6px;padding:7px 10px;margin:10px 0;max-width:900px}
+.pit{margin-bottom:12px}
 .override{background:#fde;border:1px solid #eab;border-radius:6px;padding:4px 8px;margin:6px 0;color:#933}
 small{color:#999}
 """
@@ -174,19 +217,34 @@ def render_html(trace):
     site = trace.get("site", {})
     inp = trace.get("inputs", {})
     hz = inp.get("horizons", [])
+
+    def rfv(v):
+        return "—" if v is None else esc(v)
+
     hrows = "".join(
-        f"<tr><td>{h.get('top')}–{h.get('bottom')}cm</td><td>{esc(h.get('texture'))}</td>"
-        f"<td>rfv {esc(h.get('rfv'))}</td></tr>"
+        f"<tr><td class='depth'>{h.get('top')}–{h.get('bottom')}cm</td>"
+        f"<td>{esc(h.get('texture'))}</td><td>{rfv(h.get('rfv'))}</td></tr>"
         for h in hz
+    )
+    pit = (
+        f"<table class='hz'><tr><th>depth</th><th>texture</th><th>rock&nbsp;frag&nbsp;%</th></tr>"
+        f"{hrows}</table>"
+    )
+    legend = (
+        "<div class='legend'>Each candidate soil gets a <b>combined score</b> "
+        "≈ (properties + location) ÷ (weight + 1). <b>Location</b> = how likely the "
+        "soil is mapped here (distance-decayed map-unit share). <b>Properties</b> = "
+        "how well its reference profile matches your measurements (Gower distance per "
+        "depth band) plus color. Rule <b>overrides</b> can force a promote/demote.</div>"
     )
     cards = "".join(render_candidate(c) for c in trace.get("candidates", []))
     return (
         f"<!doctype html><meta charset=utf-8><style>{CSS}</style>"
         f"<h1>Soil ID explanation — {esc(trace.get('region'))}</h1>"
-        f"<div class='site'>lat {site.get('lat')}, lon {site.get('lon')} · "
-        f"your pit ({inp.get('effective_bedrock_cm')} cm): "
-        f"<table class='hz' style='display:inline-table'>{hrows}</table></div>"
-        f"{cards}"
+        f"<div class='site'>lat {site.get('lat')}, lon {site.get('lon')}</div>"
+        f"<div class='pit'><div class='ctitle'>Your pit "
+        f"(deepest recorded {inp.get('effective_bedrock_cm')} cm)</div>{pit}</div>"
+        f"{legend}{cards}"
     )
 
 

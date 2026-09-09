@@ -128,6 +128,24 @@ def render_horizon(c):
         if compared
         else "none"
     )
+    # Weighted combine over depths: weight = wt × band thickness (cm). This lands on
+    # the horizon score, making the role of wt explicit.
+    tw = tc = 0.0
+    for s in compared:
+        d = s.get("slice_distance")
+        if d is None:
+            continue
+        w = s["depth_weight"] * (s["bottom"] - s["top"])
+        tw += w
+        tc += w * d
+    hz_dist = tc / tw if tw else None
+    combine = (
+        f"<div class='note'>→ horizon distance = Σ(wt × cm × slice&nbsp;dist) ÷ "
+        f"Σ(wt × cm) = <b>{fmt(hz_dist)}</b>; horizon score = 1 − {fmt(hz_dist)} = "
+        f"<b>{fmt(c.get('score'))}</b></div>"
+        if hz_dist is not None
+        else ""
+    )
     return (
         f"<div class='comp'><div class='ctitle'>Horizon (properties) "
         f"<b>{fmt(c.get('score'))}</b></div>"
@@ -135,11 +153,12 @@ def render_horizon(c):
         f"The algorithm only compares your recorded depths ({win}); "
         f"<span class='nocompare' style='padding:0 4px'>greyed rows</span> are outside "
         f"that window (not compared). <b>you</b>/<b>candidate</b> = the values at that "
-        f"depth (— = none there); Δ = normalized difference; <b>slice dist</b> = Gower "
-        f"distance for the band.</div>"
+        f"depth (— = none there); Δ = normalized difference; <b>slice dist</b> = the "
+        f"<i>average of the Δ's</i> in the band (wt is <i>not</i> applied here — it's "
+        f"applied when combining bands, below).</div>"
         f"<table class='hz'><tr><th rowspan='2'>depth</th><th rowspan='2'>wt</th>{head}"
         f"<th rowspan='2' class='distcol'>slice&nbsp;dist</th></tr>"
-        f"<tr>{sub}</tr>{''.join(rows)}</table></div>"
+        f"<tr>{sub}</tr>{''.join(rows)}</table>{combine}</div>"
     )
 
 

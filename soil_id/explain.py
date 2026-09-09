@@ -32,10 +32,16 @@ the *actual* `gower_distances(..., return_details=True)` output captured during
 ranking, so it can't drift from the algorithm.
 """
 
+import math
 from dataclasses import dataclass, field
 from typing import Any, Optional
 
 TRACE_VERSION = "1"
+
+# Distance-decay coefficient for the global location score (global_soil.py). Used
+# only to *display* the decay multiplier in the trace; the score itself (cond_prob)
+# comes from the ranking code.
+GLOBAL_EXP_COEFF = -0.00036888
 
 
 @dataclass
@@ -86,17 +92,134 @@ def _num(x: Any) -> Optional[float]:
     return None if f != f else round(f, 4)  # f != f  → NaN
 
 
-# NOTE: assembly helpers (Recorder -> trace dict) are added incrementally as each
-# ranking path is instrumented; see build_trace().
+def _decay_multiplier(distance: Optional[float], region: str) -> Optional[float]:
+    """The distance-decay factor shown in the location breakdown (display only)."""
+    if distance is None:
+        return None
+    if region == "GLOBAL":
+        return round(max(math.exp(GLOBAL_EXP_COEFF * distance), 0.25), 4)
+    return None  # US decay is captured directly by the US path (added later)
+
+
+def _horizon_segments(slices: list, candidate: str) -> list:
+    """
+    Consolidate the captured per-cm slices into depth bands for one candidate.
+
+    Consecutive depths with identical (user value, candidate value) across every
+    feature collapse into a single band. Each feature carries both sides' values
+    (None where absent), the normalized difference, and a status so the report can
+    show whether it was compared, skipped, or a no-soil gap.
+    """
+    bands: list = []
+    prev_key = None
+    for s in slices:
+        compnames = s["compnames"]
+        if candidate not in compnames:
+            continue
+        ci = compnames.index(candidate)
+        pi = compnames.index("sample_pedon") if "sample_pedon" in compnames else 0
+        cols, vals = s["columns"], s["values"]
+        denom = s.get("denom")
+        depth = s["depth"]
+
+        features = []
+        for k, col in enumerate(cols):
+            uv, cv = _num(vals[pi][k]), _num(vals[ci][k])
+            rng = None if not denom else round(float(denom[k]), 2)
+            norm_diff = None
+            if uv is not None and cv is not None and rng:
+                norm_diff = round(abs(uv - cv) / rng, 4)
+            features.append(
+                {
+                    "name": col,
+                    "user": uv,
+                    "candidate": cv,
+                    "range": rng,
+                    "norm_diff": norm_diff,
+                    "status": _status(uv, cv),
+                }
+            )
+
+        dist = s["dist_from_pedon"][ci]
+        band = {
+            "top": depth,
+            "bottom": depth + 1,
+            "depth_weight": 0.2 if depth < 20 else 1.0,
+            "features": features,
+            "slice_distance": _num(dist),
+        }
+        key = tuple((f["name"], f["user"], f["candidate"]) for f in features)
+        if prev_key == key and bands:
+            bands[-1]["bottom"] = depth + 1  # extend the current band
+        else:
+            bands.append(band)
+            prev_key = key
+    return bands
+
+
+def _candidate_trace(name: str, recorder: Recorder) -> dict:
+    loc = recorder.location.get(name, {})
+    scores = recorder.scores.get(name, {})
+    components = []
+
+    # Location (both paths)
+    dist = _num(loc.get("distance_m"))
+    components.append(
+        {
+            "type": "location",
+            "distance_m": dist,
+            "share_pct": _num(loc.get("share_pct")),
+            "exp_coeff": GLOBAL_EXP_COEFF if recorder.region == "GLOBAL" else None,
+            "decay_multiplier": _decay_multiplier(dist, recorder.region),
+            "score": _num(loc.get("cond_prob")),
+        }
+    )
+
+    # Horizon (both paths)
+    components.append(
+        {
+            "type": "horizon",
+            "segments": _horizon_segments(recorder.horizon.get("slices", []), name),
+            "score": _num(scores.get("horizon_score")),
+        }
+    )
+
+    # Color (global only, as a separate track)
+    if recorder.color:
+        components.append(
+            {
+                "type": "color",
+                "delta_e": recorder.color.get("delta_e"),
+                "score": _num(recorder.color.get("similarity", {}).get(name)),
+                "weight": recorder.color.get("weight"),
+            }
+        )
+
+    return {
+        "name": name,
+        "component_id": loc.get("cokey"),
+        "combined_score": _num(scores.get("combined_score")),
+        "properties_score": _num(scores.get("properties_score")),
+        "score_components": components,
+        "overrides": [recorder.overrides[name]] if name in recorder.overrides else [],
+    }
 
 
 def build_trace(recorder: Recorder) -> dict:
-    """Assemble the final JSON trace from a filled Recorder. (WIP: fields added as
-    each path is instrumented.)"""
+    """Assemble the final JSON trace from a filled Recorder."""
+    candidates = [_candidate_trace(name, recorder) for name in recorder.order]
+    for rank, cand in enumerate(
+        sorted(
+            candidates, key=lambda c: (c["combined_score"] is None, -(c["combined_score"] or 0))
+        ),
+        start=1,
+    ):
+        cand["rank"] = rank
+    candidates.sort(key=lambda c: c["rank"])
     return {
         "version": TRACE_VERSION,
         "site": recorder.site,
         "region": recorder.region,
         "inputs": recorder.inputs,
-        "candidates": [],  # populated by path-specific assembly (added next)
+        "candidates": candidates,
     }

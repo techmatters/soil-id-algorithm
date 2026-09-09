@@ -676,6 +676,16 @@ def rank_soils_global(
         cpt = [getClay(sh) for sh in soilHorizon]
         p_cfg = [getCF_fromClass(rf) for rf in rfvDepth]
 
+        if explain is not None:
+            # Record the sand/clay/rock-fragment the texture class + rfv class map to
+            # (the numbers the horizon comparison actually uses).
+            def _r(v):
+                return None if v is None or pd.isna(v) else round(float(v), 1)
+
+            for i, h in enumerate(explain.inputs.get("horizons", [])):
+                if i < len(spt):
+                    h["sand"], h["clay"], h["rfv_pct"] = _r(spt[i]), _r(cpt[i]), _r(p_cfg[i])
+
         # Build depth-indexed property arrays: place each horizon's value at its
         # TRUE depth (0..199) so that list position == depth. This keeps the
         # arrays aligned with `pedon_slice_index` when it is applied below.

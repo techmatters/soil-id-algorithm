@@ -172,7 +172,11 @@ def _horizon_segments(recorder: Recorder, candidate: str) -> list:
             "features": features,
             "slice_distance": _num(comp["dist"]) if comp else None,
         }
-        key = (comp is not None,) + tuple((f["name"], f["user"], f["candidate"]) for f in features)
+        # Break bands at the depth-weight boundary (20 cm) too, so the report shows
+        # 0-20 @ ×0.2 and 20-.. @ ×1.0 separately even when values are identical.
+        key = (comp is not None, band["depth_weight"]) + tuple(
+            (f["name"], f["user"], f["candidate"]) for f in features
+        )
         if prev_key == key and bands:
             bands[-1]["bottom"] = d + 1
         else:
@@ -186,15 +190,20 @@ def _candidate_trace(name: str, recorder: Recorder) -> dict:
     scores = recorder.scores.get(name, {})
     components = []
 
-    # Location (both paths)
+    # Location (both paths). cond_prob = location_score (decay × share) normalized
+    # so every candidate's cond_prob sums to ~1 (Fan et al. 2018).
     dist = _num(loc.get("distance_m"))
+    decay = _decay_multiplier(dist, recorder.region)
+    share = _num(loc.get("share_pct"))
+    loc_score = round(decay * share / 100, 4) if decay is not None and share is not None else None
     components.append(
         {
             "type": "location",
             "distance_m": dist,
-            "share_pct": _num(loc.get("share_pct")),
+            "share_pct": share,
             "exp_coeff": GLOBAL_EXP_COEFF if recorder.region == "GLOBAL" else None,
-            "decay_multiplier": _decay_multiplier(dist, recorder.region),
+            "decay_multiplier": decay,
+            "location_score": loc_score,
             "score": _num(loc.get("cond_prob")),
         }
     )

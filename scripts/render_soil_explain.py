@@ -72,10 +72,13 @@ def bar(score, width=120):
 def render_location(c):
     return (
         f"<div class='comp'><div class='ctitle'>Location <b>{fmt(c.get('score'))}</b></div>"
-        f"<div class='formula'>distance {fmt(c.get('distance_m'))} m · "
-        f"share {fmt(c.get('share_pct'))}% · "
-        f"decay max(e<sup>{c.get('exp_coeff')}·dist</sup>, 0.25) = {fmt(c.get('decay_multiplier'))}"
-        f" &rarr; cond_prob <b>{fmt(c.get('score'))}</b></div></div>"
+        f"<div class='formula'>"
+        f"decay = max(e<sup>{c.get('exp_coeff')} × {fmt(c.get('distance_m'))}m</sup>, 0.25) "
+        f"= {fmt(c.get('decay_multiplier'))} · share {fmt(c.get('share_pct'))}% "
+        f"&rarr; location score = decay × share = <b>{fmt(c.get('location_score'))}</b><br>"
+        f"cond_prob = location score ÷ (sum over all candidates) "
+        f"&rarr; <b>{fmt(c.get('score'))}</b> "
+        f"<span class='hint'>(all candidates' cond_prob sum to 1)</span></div></div>"
     )
 
 
@@ -214,6 +217,8 @@ th.g0{background:#dbe8ff} th.g1{background:#daf3e1}
 .distcol{border-left:2px solid #9ab!important} /* separate slice dist */
 td.one{background:#fff3e0!important} /* one-sided value */
 tr.nocompare td{background:#f4f4f6;color:#a8a8a8} tr.nocompare td.depth{color:#888}
+td.deriv{color:#367;font-style:italic} th.deriv{background:#e3edf6;color:#356}
+.hint{color:#999;font-size:11px}
 .note{color:#666;font-size:11.5px;margin:2px 0;max-width:760px}
 .legend{color:#444;font-size:12px;background:#fffbe9;border:1px solid #eeddaa;
   border-radius:6px;padding:7px 10px;margin:10px 0;max-width:900px}
@@ -233,19 +238,28 @@ def render_html(trace):
 
     hrows = "".join(
         f"<tr><td class='depth'>{h.get('top')}–{h.get('bottom')}cm</td>"
-        f"<td>{esc(h.get('texture'))}</td><td>{rfv(h.get('rfv'))}</td></tr>"
+        f"<td>{esc(h.get('texture'))}</td>"
+        f"<td class='deriv'>{fmt(h.get('sand'))}</td><td class='deriv'>{fmt(h.get('clay'))}</td>"
+        f"<td>{rfv(h.get('rfv'))}</td><td class='deriv'>{fmt(h.get('rfv_pct'))}</td></tr>"
         for h in hz
     )
     pit = (
-        f"<table class='hz'><tr><th>depth</th><th>texture</th><th>rock&nbsp;frag&nbsp;%</th></tr>"
-        f"{hrows}</table>"
+        f"<table class='hz'><tr><th rowspan=2>depth</th>"
+        f"<th>texture</th><th class='deriv' colspan=2>→ derived</th>"
+        f"<th>rock frag</th><th class='deriv'>→ derived</th></tr>"
+        f"<tr><th>class</th><th class='deriv'>sand %</th><th class='deriv'>clay %</th>"
+        f"<th>class</th><th class='deriv'>rfv %</th></tr>{hrows}</table>"
     )
     legend = (
-        "<div class='legend'>Each candidate soil gets a <b>combined score</b> "
-        "≈ (properties + location) ÷ (weight + 1). <b>Location</b> = how likely the "
-        "soil is mapped here (distance-decayed map-unit share). <b>Properties</b> = "
-        "how well its reference profile matches your measurements (Gower distance per "
-        "depth band) plus color. Rule <b>overrides</b> can force a promote/demote.</div>"
+        "<div class='legend'>You enter a <b>texture class</b> (e.g. Clay) and a "
+        "<b>rock-fragment class</b>; the algorithm converts them to representative "
+        "<b>sand %</b>, <b>clay %</b>, and <b>rock-fragment %</b> (shown as → above), "
+        "and the horizon tables below compare on <i>those</i> numbers.<br>"
+        "Each candidate's <b>combined score</b> ≈ (properties + location) ÷ (weight + 1): "
+        "<b>Location</b> = how likely the soil is mapped here (distance-decayed share, "
+        "normalized); <b>Properties</b> = how well its profile matches yours (Gower "
+        "distance per depth band) plus color. Rule <b>overrides</b> can force a "
+        "promote/demote.</div>"
     )
     cards = "".join(render_candidate(c) for c in trace.get("candidates", []))
     return (

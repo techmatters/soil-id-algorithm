@@ -36,6 +36,15 @@ def test_names_match_trailing_s():
     assert not names_match("Cambisols", "Leptosols")
 
 
+def test_names_match_dedup_digit_suffix():
+    # list_soils appends a disambiguation digit to duplicate component names;
+    # "Calcaric cambisols2" is still the same soil as ground-truth "Calcaric Cambisol".
+    assert names_match("Calcaric cambisols2", "Calcaric Cambisol")
+    assert best_rank(["Podzols", "Calcaric cambisols2"], ["Calcaric Cambisol"]) == 2
+    # stripping the suffix must not make different soils collide
+    assert not names_match("Calcaric cambisols2", "Haplic Ferralsol")
+
+
 def test_best_rank_first_match_and_alternatives():
     ranked = ["Chromic Cambisols", "Lithic Leptosols", "Eutric Fluvisols"]
     assert best_rank(ranked, ["Lithic Leptosols"]) == 2

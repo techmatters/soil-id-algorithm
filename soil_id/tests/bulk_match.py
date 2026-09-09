@@ -27,6 +27,8 @@ normalized match and compute recall@k so results are comparable across runs.
 Nothing here changes algorithm output — it only scores stored results.
 """
 
+import re
+
 
 def normalize(name):
     """Lowercase, trim, and collapse internal whitespace. '' for missing/NaN."""
@@ -39,13 +41,22 @@ def normalize(name):
 
 
 def _variants(name, lenient):
-    """Comparable forms of a name: exact + trailing-'s' tolerance (+ last word when lenient)."""
+    """
+    Comparable forms of a name: exact + trailing-'s' tolerance, plus the form with
+    a trailing disambiguation digit removed (list_soils appends one to duplicate
+    component names, e.g. "Calcaric cambisols2" -> "Calcaric cambisols"), and the
+    last word when lenient.
+    """
     n = normalize(name)
     if not n:
         return set()
-    forms = {n, n.rstrip("s"), n + "s"}
-    if lenient:
-        forms.add(n.split()[-1])
+    forms = set()
+    for base in {n, re.sub(r"\d+$", "", n).strip()}:
+        if not base:
+            continue
+        forms |= {base, base.rstrip("s"), base + "s"}
+        if lenient:
+            forms.add(re.sub(r"\d+$", "", base.split()[-1]))
     return {f for f in forms if f}
 
 

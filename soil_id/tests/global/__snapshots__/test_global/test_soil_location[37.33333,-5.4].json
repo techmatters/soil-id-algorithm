@@ -213,100 +213,6 @@
           "sl7": 120
         },
         "cec": {
-          "sl1": 17.0,
-          "sl2": 17.0,
-          "sl3": 17.0,
-          "sl4": 16.4,
-          "sl5": 16.29,
-          "sl6": 16.2,
-          "sl7": 16.33
-        },
-        "clay": {
-          "sl1": 29.0,
-          "sl2": 29.0,
-          "sl3": 29.0,
-          "sl4": 30.2,
-          "sl5": 30.14,
-          "sl6": 29.8,
-          "sl7": 30.0
-        },
-        "ec": {
-          "sl1": 1.0,
-          "sl2": 1.0,
-          "sl3": 1.0,
-          "sl4": 0.6,
-          "sl5": 0.57,
-          "sl6": 0.4,
-          "sl7": 0.5
-        },
-        "id": {
-          "component": "Eutric regosols",
-          "name": "Eutric regosols",
-          "rank_loc": "3",
-          "score_loc": 0.078
-        },
-        "ph": {
-          "sl1": 8.0,
-          "sl2": 8.0,
-          "sl3": 8.0,
-          "sl4": 8.06,
-          "sl5": 8.09,
-          "sl6": 8.1,
-          "sl7": 8.1
-        },
-        "rock_fragments": {
-          "sl1": 5.0,
-          "sl2": 5.0,
-          "sl3": 5.0,
-          "sl4": 5.6,
-          "sl5": 6.57,
-          "sl6": 8.8,
-          "sl7": 10.17
-        },
-        "sand": {
-          "sl1": 31.0,
-          "sl2": 31.0,
-          "sl3": 31.0,
-          "sl4": 29.6,
-          "sl5": 29.29,
-          "sl6": 29.2,
-          "sl7": 28.67
-        },
-        "site": {
-          "siteData": {
-            "componentID": 157429,
-            "distance": 0.0,
-            "mapunitID": 9683,
-            "minCompDistance": 0.0,
-            "share": 20,
-            "soilDepth": 200
-          },
-          "siteDescription": {
-            "Description_en": "Eutric Regosols are weakly developed soils that commonly are too dry, or are on steeper slopes which limit productivity. Eutric Regosols have high base saturation in the subsoil. ",
-            "Management_en": "These soils have low water holding capacity, and are very sensitive to drought. This soil can be productive, if irrigation and fertilization are provided. They are prone to erosion, especially in areas with slope. The combination of drought sensitivity and high erosion potential makes these soils best suited for grazing or other uses with constant soil cover. Even when used for grazing, irrigation will be needed due to the low water holding capacity and high permeability of these soils. "
-          }
-        },
-        "texture": {
-          "sl1": "Clay loam",
-          "sl2": "Clay loam",
-          "sl3": "Clay loam",
-          "sl4": "Clay loam",
-          "sl5": "Clay loam",
-          "sl6": "Clay loam",
-          "sl7": "Clay loam"
-        }
-      },
-      {
-        "bottom_depth": {
-          "sl1": 1,
-          "sl2": 10,
-          "sl3": 20,
-          "sl4": 50,
-          "sl5": 70,
-          "sl6": 100,
-          "sl7": 120
-        },
-        "cec": {
           "sl1": 12.0,
           "sl2": 12.0,
           "sl3": 12.0,
@@ -334,10 +240,10 @@
           "sl7": 1.17
         },
         "id": {
-          "component": "Gleyic acrisols",
-          "name": "Gleyic acrisols",
-          "rank_loc": "4",
-          "score_loc": 0.065
+          "component": "Eutric regosols",
+          "name": "Eutric regosols",
+          "rank_loc": "3",
+          "score_loc": 0.078
         },
         "ph": {
           "sl1": 6.6,
@@ -368,16 +274,16 @@
         },
         "site": {
           "siteData": {
-            "componentID": 157547,
-            "distance": 1849.359,
-            "mapunitID": 9723,
-            "minCompDistance": 1849.35910793,
-            "share": 45,
+            "componentID": 157429,
+            "distance": 0.0,
+            "mapunitID": 9683,
+            "minCompDistance": 0.0,
+            "share": 20,
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Gleyic Acrisols are acidic and relatively infertile soils. Supplemental fertilization and liming will be needed to create a productive soil for crop use. These soils are also high in soluble aluminum (Al) which is toxic to plants. Gleyic Acrisols have a seasonal high-water table resulting in saturation during some time of the year.",
-            "Management_en": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate) which will take Al out of solution, can help to reduce aluminum toxicity. Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. Land management practices should maximize soil cover, crop rotation and agroforestry. Periods of saturation limit root growth and increase nitrogen loss. To prevent N loss from leaching anddenitrification consider use of slow-release N fertilizers (sulfur-coated urea (SCU), for example), if those slow-release products are  available, or use manures or other organic wastes for their slow-release properties. Drainage of these soils may be needed, but this can be problematic, as the wetness is due to the high water table. "
+            "Description_en": "Eutric Regosols are weakly developed soils that commonly are too dry, or are on steeper slopes which limit productivity. Eutric Regosols have high base saturation in the subsoil. ",
+            "Management_en": "These soils have low water holding capacity, and are very sensitive to drought. This soil can be productive, if irrigation and fertilization are provided. They are prone to erosion, especially in areas with slope. The combination of drought sensitivity and high erosion potential makes these soils best suited for grazing or other uses with constant soil cover. Even when used for grazing, irrigation will be needed due to the low water holding capacity and high permeability of these soils. "
           }
         },
         "texture": {
@@ -428,10 +334,10 @@
           "sl7": 0.0
         },
         "id": {
-          "component": "Calcaric fluvisols",
-          "name": "Calcaric fluvisols",
-          "rank_loc": "5",
-          "score_loc": 0.057
+          "component": "Gleyic acrisols",
+          "name": "Gleyic acrisols",
+          "rank_loc": "4",
+          "score_loc": 0.065
         },
         "ph": {
           "sl1": 5.2,
@@ -462,6 +368,100 @@
         },
         "site": {
           "siteData": {
+            "componentID": 157547,
+            "distance": 1849.359,
+            "mapunitID": 9723,
+            "minCompDistance": 1849.35910793,
+            "share": 45,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Gleyic Acrisols are acidic and relatively infertile soils. Supplemental fertilization and liming will be needed to create a productive soil for crop use. These soils are also high in soluble aluminum (Al) which is toxic to plants. Gleyic Acrisols have a seasonal high-water table resulting in saturation during some time of the year.",
+            "Management_en": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate) which will take Al out of solution, can help to reduce aluminum toxicity. Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. Land management practices should maximize soil cover, crop rotation and agroforestry. Periods of saturation limit root growth and increase nitrogen loss. To prevent N loss from leaching anddenitrification consider use of slow-release N fertilizers (sulfur-coated urea (SCU), for example), if those slow-release products are  available, or use manures or other organic wastes for their slow-release properties. Drainage of these soils may be needed, but this can be problematic, as the wetness is due to the high water table. "
+          }
+        },
+        "texture": {
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy clay loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 13.0,
+          "sl2": 13.0,
+          "sl3": 13.0,
+          "sl4": 13.6,
+          "sl5": 13.57,
+          "sl6": 13.6,
+          "sl7": 14.0
+        },
+        "clay": {
+          "sl1": 21.0,
+          "sl2": 21.0,
+          "sl3": 21.0,
+          "sl4": 21.2,
+          "sl5": 21.43,
+          "sl6": 21.8,
+          "sl7": 22.0
+        },
+        "ec": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 2.0,
+          "sl5": 2.29,
+          "sl6": 2.4,
+          "sl7": 2.33
+        },
+        "id": {
+          "component": "Calcaric fluvisols",
+          "name": "Calcaric fluvisols",
+          "rank_loc": "5",
+          "score_loc": 0.057
+        },
+        "ph": {
+          "sl1": 7.9,
+          "sl2": 7.9,
+          "sl3": 7.9,
+          "sl4": 8.02,
+          "sl5": 8.04,
+          "sl6": 8.06,
+          "sl7": 8.05
+        },
+        "rock_fragments": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 3.4,
+          "sl5": 3.86,
+          "sl6": 5.0,
+          "sl7": 5.83
+        },
+        "sand": {
+          "sl1": 39.0,
+          "sl2": 39.0,
+          "sl3": 39.0,
+          "sl4": 39.6,
+          "sl5": 39.71,
+          "sl6": 39.4,
+          "sl7": 38.67
+        },
+        "site": {
+          "siteData": {
             "componentID": 157400,
             "distance": 21368.302,
             "mapunitID": 9673,
@@ -475,13 +475,13 @@
           }
         },
         "texture": {
-          "sl1": "Sandy loam",
-          "sl2": "Sandy loam",
-          "sl3": "Sandy loam",
-          "sl4": "Sandy clay loam",
-          "sl5": "Sandy clay loam",
-          "sl6": "Sandy clay loam",
-          "sl7": "Sandy clay loam"
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Loam",
+          "sl5": "Loam",
+          "sl6": "Loam",
+          "sl7": "Loam"
         }
       },
       {
@@ -651,100 +651,6 @@
           "sl7": 120
         },
         "cec": {
-          "sl1": 13.0,
-          "sl2": 13.0,
-          "sl3": 13.0,
-          "sl4": 13.6,
-          "sl5": 13.57,
-          "sl6": 13.6,
-          "sl7": 14.0
-        },
-        "clay": {
-          "sl1": 21.0,
-          "sl2": 21.0,
-          "sl3": 21.0,
-          "sl4": 21.2,
-          "sl5": 21.43,
-          "sl6": 21.8,
-          "sl7": 22.0
-        },
-        "ec": {
-          "sl1": 2.0,
-          "sl2": 2.0,
-          "sl3": 2.0,
-          "sl4": 2.0,
-          "sl5": 2.29,
-          "sl6": 2.4,
-          "sl7": 2.33
-        },
-        "id": {
-          "component": "Gleyic luvisols",
-          "name": "Gleyic luvisols",
-          "rank_loc": "8",
-          "score_loc": 0.05
-        },
-        "ph": {
-          "sl1": 7.9,
-          "sl2": 7.9,
-          "sl3": 7.9,
-          "sl4": 8.02,
-          "sl5": 8.04,
-          "sl6": 8.06,
-          "sl7": 8.05
-        },
-        "rock_fragments": {
-          "sl1": 2.0,
-          "sl2": 2.0,
-          "sl3": 2.0,
-          "sl4": 3.4,
-          "sl5": 3.86,
-          "sl6": 5.0,
-          "sl7": 5.83
-        },
-        "sand": {
-          "sl1": 39.0,
-          "sl2": 39.0,
-          "sl3": 39.0,
-          "sl4": 39.6,
-          "sl5": 39.71,
-          "sl6": 39.4,
-          "sl7": 38.67
-        },
-        "site": {
-          "siteData": {
-            "componentID": 157548,
-            "distance": 1849.359,
-            "mapunitID": 9723,
-            "minCompDistance": 1849.35910793,
-            "share": 35,
-            "soilDepth": 200
-          },
-          "siteDescription": {
-            "Description_en": "Gleyic Luvisols are productive soils with high base saturation and relatively clayey subsoils. Gleyic Luvisols are saturated with shallow groundwater in the upper one meter of the soil profile.",
-            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. If the soil is already eroded they may best be suited for grazing andtree crops. Drainage of these soils may be needed. However, since this is saturation via groundwater this may not be possible, and thus shallow-rooted crops must be considered. If fertilized and not drained, loss of applied nitrogen (N) by denitrification or leaching is possible. More efficient crop N use in these soils can be achieved by:  1) drainage, and, 2) use of slow-release N fertilizers (if available). "
-          }
-        },
-        "texture": {
-          "sl1": "Loam",
-          "sl2": "Loam",
-          "sl3": "Loam",
-          "sl4": "Loam",
-          "sl5": "Loam",
-          "sl6": "Loam",
-          "sl7": "Loam"
-        }
-      },
-      {
-        "bottom_depth": {
-          "sl1": 1,
-          "sl2": 10,
-          "sl3": 20,
-          "sl4": 50,
-          "sl5": 70,
-          "sl6": 100,
-          "sl7": 120
-        },
-        "cec": {
           "sl1": 14.0,
           "sl2": 14.0,
           "sl3": 14.0,
@@ -772,10 +678,10 @@
           "sl7": 1.33
         },
         "id": {
-          "component": "Calcaric regosols",
-          "name": "Calcaric regosols",
-          "rank_loc": "9",
-          "score_loc": 0.043
+          "component": "Gleyic luvisols",
+          "name": "Gleyic luvisols",
+          "rank_loc": "8",
+          "score_loc": 0.05
         },
         "ph": {
           "sl1": 5.7,
@@ -806,16 +712,16 @@
         },
         "site": {
           "siteData": {
-            "componentID": 157495,
-            "distance": 13892.147,
-            "mapunitID": 9703,
-            "minCompDistance": 13892.14700639,
-            "share": 20,
+            "componentID": 157548,
+            "distance": 1849.359,
+            "mapunitID": 9723,
+            "minCompDistance": 1849.35910793,
+            "share": 35,
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Calcaric Regosols are weakly developed soils that commonly are too dry, or are on steeper slopes which limit productivity. Calcaric Regosols are calcareous in the upper portion of the subsoil. ",
-            "Management_en": "These soils have low water holding capacity, and are very sensitive to drought. They are prone to erosion, especially in areas with slope. The combination of drought sensitivity and high erosion potential makes these soils best suited for grazing or other uses with constant soil cover. Even when used for grazing, irrigation will be needed due to the low water holding capacity and high permeability of these soils. "
+            "Description_en": "Gleyic Luvisols are productive soils with high base saturation and relatively clayey subsoils. Gleyic Luvisols are saturated with shallow groundwater in the upper one meter of the soil profile.",
+            "Management_en": "These soils are fertile, and can be used for a wide range of cropping practices. However, they are sensitive to soil loss through erosion, and care must be taken to protect the soil from loss. If the soil is already eroded they may best be suited for grazing andtree crops. Drainage of these soils may be needed. However, since this is saturation via groundwater this may not be possible, and thus shallow-rooted crops must be considered. If fertilized and not drained, loss of applied nitrogen (N) by denitrification or leaching is possible. More efficient crop N use in these soils can be achieved by:  1) drainage, and, 2) use of slow-release N fertilizers (if available). "
           }
         },
         "texture": {
@@ -866,10 +772,10 @@
           "sl7": 1.5
         },
         "id": {
-          "component": "Dystric planosols",
-          "name": "Dystric planosols",
-          "rank_loc": "10",
-          "score_loc": 0.029
+          "component": "Calcaric regosols",
+          "name": "Calcaric regosols",
+          "rank_loc": "9",
+          "score_loc": 0.043
         },
         "ph": {
           "sl1": 7.9,
@@ -900,16 +806,16 @@
         },
         "site": {
           "siteData": {
-            "componentID": 157549,
-            "distance": 1849.359,
-            "mapunitID": 9723,
-            "minCompDistance": 1849.35910793,
+            "componentID": 157495,
+            "distance": 13892.147,
+            "mapunitID": 9703,
+            "minCompDistance": 13892.14700639,
             "share": 20,
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Dystric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil. These soils are prone to compaction and require drainage for crop production. Dystric Planosols are less productive soils with low base saturation in the subsoil.",
-            "Management_en": "Located on flat land, these soils are best suited for paddy rice production. Drainage will be required for production. Highest yields will require additional fertilization. Very low levels of calcium are available in the lower profile of this soil. Supplemental fertilization will be needed."
+            "Description_en": "Calcaric Regosols are weakly developed soils that commonly are too dry, or are on steeper slopes which limit productivity. Calcaric Regosols are calcareous in the upper portion of the subsoil. ",
+            "Management_en": "These soils have low water holding capacity, and are very sensitive to drought. They are prone to erosion, especially in areas with slope. The combination of drought sensitivity and high erosion potential makes these soils best suited for grazing or other uses with constant soil cover. Even when used for grazing, irrigation will be needed due to the low water holding capacity and high permeability of these soils. "
           }
         },
         "texture": {
@@ -920,100 +826,6 @@
           "sl5": "Loam",
           "sl6": "Loam",
           "sl7": "Loam"
-        }
-      },
-      {
-        "bottom_depth": {
-          "sl1": 1,
-          "sl2": 10,
-          "sl3": 20,
-          "sl4": 50,
-          "sl5": 70,
-          "sl6": 100,
-          "sl7": 120
-        },
-        "cec": {
-          "sl1": 14.0,
-          "sl2": 14.0,
-          "sl3": 14.0,
-          "sl4": 13.4,
-          "sl5": 13.29,
-          "sl6": 13.0,
-          "sl7": 12.67
-        },
-        "clay": {
-          "sl1": 15.0,
-          "sl2": 15.0,
-          "sl3": 15.0,
-          "sl4": 15.4,
-          "sl5": 15.43,
-          "sl6": 15.8,
-          "sl7": 16.17
-        },
-        "ec": {
-          "sl1": 1.0,
-          "sl2": 1.0,
-          "sl3": 1.0,
-          "sl4": 1.6,
-          "sl5": 1.71,
-          "sl6": 1.6,
-          "sl7": 1.83
-        },
-        "id": {
-          "component": "Rendzic leptosols",
-          "name": "Rendzic leptosols",
-          "rank_loc": "11",
-          "score_loc": 0.018
-        },
-        "ph": {
-          "sl1": 8.2,
-          "sl2": 8.2,
-          "sl3": 8.2,
-          "sl4": 8.26,
-          "sl5": 8.27,
-          "sl6": 8.28,
-          "sl7": 8.28
-        },
-        "rock_fragments": {
-          "sl1": 9.0,
-          "sl2": 9.0,
-          "sl3": 9.0,
-          "sl4": 9.4,
-          "sl5": 8.0,
-          "sl6": 7.4,
-          "sl7": 7.83
-        },
-        "sand": {
-          "sl1": 55.0,
-          "sl2": 55.0,
-          "sl3": 55.0,
-          "sl4": 54.0,
-          "sl5": 53.71,
-          "sl6": 52.8,
-          "sl7": 52.5
-        },
-        "site": {
-          "siteData": {
-            "componentID": 157494,
-            "distance": 13892.147,
-            "mapunitID": 9703,
-            "minCompDistance": 13892.14700639,
-            "share": 25,
-            "soilDepth": 40
-          },
-          "siteDescription": {
-            "Description_en": "Rendzic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. Leptosols on steep slopes are highly erodible. Rendzic Leptosols are highly calcareous at the soil surface. ",
-            "Management_en": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. Practices to maintain organic matter and cover should be used. Only uses for grazing or agroforestry should be considered. Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. Soil pH will be high (> 7.0) in these soils, and no liming will be needed. Any agricultural use should be for grazing or agroforestry, with cover continuously maintained. "
-          }
-        },
-        "texture": {
-          "sl1": "Sandy loam",
-          "sl2": "Sandy loam",
-          "sl3": "Sandy loam",
-          "sl4": "Sandy loam",
-          "sl5": "Sandy loam",
-          "sl6": "Sandy loam",
-          "sl7": "Sandy loam"
         }
       },
       {
@@ -1054,10 +866,10 @@
           "sl7": 0.0
         },
         "id": {
-          "component": "Calcaric cambisols",
-          "name": "Calcaric cambisols2",
-          "rank_loc": "Not Displayed",
-          "score_loc": 0.268
+          "component": "Dystric planosols",
+          "name": "Dystric planosols",
+          "rank_loc": "10",
+          "score_loc": 0.029
         },
         "ph": {
           "sl1": 4.7,
@@ -1088,16 +900,16 @@
         },
         "site": {
           "siteData": {
-            "componentID": 157493,
-            "distance": 13892.147,
-            "mapunitID": 9703,
-            "minCompDistance": 0.0,
-            "share": 55,
+            "componentID": 157549,
+            "distance": 1849.359,
+            "mapunitID": 9723,
+            "minCompDistance": 1849.35910793,
+            "share": 20,
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Calcaric Cambisols are widely occurring soils with limited soil development. These soils are calcareous in a soil layer below the surface.",
-            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. These soils are well suited for crop production, and can be intensively used. Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
+            "Description_en": "Dystric Planosols are seasonally ponded or saturated with water in the upper portion due to a slowly permeable, clay-rich subsoil. These soils are prone to compaction and require drainage for crop production. Dystric Planosols are less productive soils with low base saturation in the subsoil.",
+            "Management_en": "Located on flat land, these soils are best suited for paddy rice production. Drainage will be required for production. Highest yields will require additional fertilization. Very low levels of calcium are available in the lower profile of this soil. Supplemental fertilization will be needed."
           }
         },
         "texture": {
@@ -1136,10 +948,10 @@
           "sl4": 2.0
         },
         "id": {
-          "component": "Calcaric regosols",
-          "name": "Calcaric regosols2",
-          "rank_loc": "Not Displayed",
-          "score_loc": 0.043
+          "component": "Rendzic leptosols",
+          "name": "Rendzic leptosols",
+          "rank_loc": "11",
+          "score_loc": 0.018
         },
         "ph": {
           "sl1": 7.7,
@@ -1161,6 +973,191 @@
         },
         "site": {
           "siteData": {
+            "componentID": 157494,
+            "distance": 13892.147,
+            "mapunitID": 9703,
+            "minCompDistance": 13892.14700639,
+            "share": 25,
+            "soilDepth": 40
+          },
+          "siteDescription": {
+            "Description_en": "Rendzic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. Leptosols on steep slopes are highly erodible. Rendzic Leptosols are highly calcareous at the soil surface. ",
+            "Management_en": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. Practices to maintain organic matter and cover should be used. Only uses for grazing or agroforestry should be considered. Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. Soil pH will be high (> 7.0) in these soils, and no liming will be needed. Any agricultural use should be for grazing or agroforestry, with cover continuously maintained. "
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam",
+          "sl4": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 17.0,
+          "sl2": 17.0,
+          "sl3": 17.0,
+          "sl4": 16.4,
+          "sl5": 16.29,
+          "sl6": 16.2,
+          "sl7": 16.33
+        },
+        "clay": {
+          "sl1": 29.0,
+          "sl2": 29.0,
+          "sl3": 29.0,
+          "sl4": 30.2,
+          "sl5": 30.14,
+          "sl6": 29.8,
+          "sl7": 30.0
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 0.6,
+          "sl5": 0.57,
+          "sl6": 0.4,
+          "sl7": 0.5
+        },
+        "id": {
+          "component": "Calcaric cambisols",
+          "name": "Calcaric cambisols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.268
+        },
+        "ph": {
+          "sl1": 8.0,
+          "sl2": 8.0,
+          "sl3": 8.0,
+          "sl4": 8.06,
+          "sl5": 8.09,
+          "sl6": 8.1,
+          "sl7": 8.1
+        },
+        "rock_fragments": {
+          "sl1": 5.0,
+          "sl2": 5.0,
+          "sl3": 5.0,
+          "sl4": 5.6,
+          "sl5": 6.57,
+          "sl6": 8.8,
+          "sl7": 10.17
+        },
+        "sand": {
+          "sl1": 31.0,
+          "sl2": 31.0,
+          "sl3": 31.0,
+          "sl4": 29.6,
+          "sl5": 29.29,
+          "sl6": 29.2,
+          "sl7": 28.67
+        },
+        "site": {
+          "siteData": {
+            "componentID": 157493,
+            "distance": 13892.147,
+            "mapunitID": 9703,
+            "minCompDistance": 0.0,
+            "share": 55,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Calcaric Cambisols are widely occurring soils with limited soil development. These soils are calcareous in a soil layer below the surface.",
+            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. These soils are well suited for crop production, and can be intensively used. Fertilization should be used to improve productivity, and irrigation can be included to further boost productivity. "
+          }
+        },
+        "texture": {
+          "sl1": "Clay loam",
+          "sl2": "Clay loam",
+          "sl3": "Clay loam",
+          "sl4": "Clay loam",
+          "sl5": "Clay loam",
+          "sl6": "Clay loam",
+          "sl7": "Clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 14.0,
+          "sl2": 14.0,
+          "sl3": 14.0,
+          "sl4": 13.4,
+          "sl5": 13.29,
+          "sl6": 13.0,
+          "sl7": 12.67
+        },
+        "clay": {
+          "sl1": 15.0,
+          "sl2": 15.0,
+          "sl3": 15.0,
+          "sl4": 15.4,
+          "sl5": 15.43,
+          "sl6": 15.8,
+          "sl7": 16.17
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0,
+          "sl4": 1.6,
+          "sl5": 1.71,
+          "sl6": 1.6,
+          "sl7": 1.83
+        },
+        "id": {
+          "component": "Calcaric regosols",
+          "name": "Calcaric regosols2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.043
+        },
+        "ph": {
+          "sl1": 8.2,
+          "sl2": 8.2,
+          "sl3": 8.2,
+          "sl4": 8.26,
+          "sl5": 8.27,
+          "sl6": 8.28,
+          "sl7": 8.28
+        },
+        "rock_fragments": {
+          "sl1": 9.0,
+          "sl2": 9.0,
+          "sl3": 9.0,
+          "sl4": 9.4,
+          "sl5": 8.0,
+          "sl6": 7.4,
+          "sl7": 7.83
+        },
+        "sand": {
+          "sl1": 55.0,
+          "sl2": 55.0,
+          "sl3": 55.0,
+          "sl4": 54.0,
+          "sl5": 53.71,
+          "sl6": 52.8,
+          "sl7": 52.5
+        },
+        "site": {
+          "siteData": {
             "componentID": 157511,
             "distance": 20400.034,
             "mapunitID": 9708,
@@ -1174,10 +1171,13 @@
           }
         },
         "texture": {
-          "sl1": "Loam",
-          "sl2": "Loam",
-          "sl3": "Loam",
-          "sl4": "Clay loam"
+          "sl1": "Sandy loam",
+          "sl2": "Sandy loam",
+          "sl3": "Sandy loam",
+          "sl4": "Sandy loam",
+          "sl5": "Sandy loam",
+          "sl6": "Sandy loam",
+          "sl7": "Sandy loam"
         }
       }
     ]
@@ -1398,25 +1398,6 @@
         "score_loc_group": 0.018
       },
       {
-        "component": "Calcaric cambisols",
-        "componentData": "Data Complete",
-        "componentID": 157493,
-        "name": "Calcaric cambisols2",
-        "not_displayed": true,
-        "rank_data": "Not Displayed",
-        "rank_data_group": "2",
-        "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "2",
-        "rank_loc": "Not Displayed",
-        "rank_loc_group": "2",
-        "score_data": 0.386,
-        "score_data_group": 0.548,
-        "score_data_loc": 0.327,
-        "score_data_loc_group": 0.408,
-        "score_loc": 0.268,
-        "score_loc_group": 0.268
-      },
-      {
         "component": "Calcaric regosols",
         "componentData": "Data Complete",
         "componentID": 157511,
@@ -1428,12 +1409,31 @@
         "rank_data_loc_group": "1",
         "rank_loc": "Not Displayed",
         "rank_loc_group": "9",
-        "score_data": 0.438,
+        "score_data": 0.48,
         "score_data_group": 1.0,
-        "score_data_loc": 0.24,
+        "score_data_loc": 0.261,
         "score_data_loc_group": 0.521,
         "score_loc": 0.043,
         "score_loc_group": 0.043
+      },
+      {
+        "component": "Calcaric cambisols",
+        "componentData": "Data Complete",
+        "componentID": 157493,
+        "name": "Calcaric cambisols2",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "2",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "2",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "2",
+        "score_data": 0.0,
+        "score_data_group": 0.548,
+        "score_data_loc": 0.134,
+        "score_data_loc_group": 0.408,
+        "score_loc": 0.268,
+        "score_loc_group": 0.268
       }
     ]
   }

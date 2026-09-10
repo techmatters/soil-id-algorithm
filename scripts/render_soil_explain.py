@@ -117,7 +117,7 @@ def render_horizon(c):
         for i, n in enumerate(feat_names)
     )
     sub = "".join(
-        f"<th class='g{i % 2} gstart'>you</th><th class='g{i % 2}'>candidate</th>"
+        f"<th class='g{i % 2} gstart'>soil pit</th><th class='g{i % 2}'>candidate</th>"
         for i, _ in enumerate(feat_names)
     )
     rows = []
@@ -139,10 +139,19 @@ def render_horizon(c):
                 )
                 continue
             one = "" if f["status"] == "both" else " one"
-            nd = "" if f["norm_diff"] is None else f" <small>Δ{f['norm_diff']:.3f}</small>"
+            # Show Δ and, when both values are present, the |pit−cand| ÷ range that
+            # produced it, as a hover title so the normalization is inspectable.
+            nd, title = "", ""
+            if f["norm_diff"] is not None:
+                nd = f" <small>Δ{f['norm_diff']:.3f}</small>"
+                if f.get("user") is not None and f.get("candidate") is not None and f.get("range"):
+                    title = (
+                        f" title='|{f['user']} − {f['candidate']}| ÷ {f['range']} "
+                        f"= {f['norm_diff']:.3f}'"
+                    )
             cells.append(
                 f"<td class='{g} gstart'>{fmt(f['user'])}</td>"
-                f"<td class='{g}{one}'>{fmt(f['candidate'])}{nd}</td>"
+                f"<td class='{g}{one}'{title}>{fmt(f['candidate'])}{nd}</td>"
             )
         rowcls = "" if s.get("compared", True) else " class='nocompare'"
         rows.append(
@@ -175,14 +184,19 @@ def render_horizon(c):
         else ""
     )
     return (
-        f"<div class='comp'><div class='ctitle'>Horizon (properties) "
+        f"<div class='comp'><div class='ctitle'>Soil horizons — depth-layer properties "
         f"<b>{fmt(c.get('score'))}</b></div>"
-        f"<div class='note'>Full depth range shown, 0 to max(your pit, this soil). "
-        f"The algorithm only compares your recorded depths ({win}); "
+        f"<div class='note'>A <i>horizon</i> is a soil depth layer; this scores how well "
+        f"the candidate's layered profile (sand/clay/rock-fragments"
+        f"{', color' if any(fn in ('l', 'a', 'b') for fn in feat_names) else ''} by depth) "
+        f"matches the soil pit's. Full depth range shown, 0 to max(soil pit, this soil). "
+        f"The algorithm only compares the recorded depths ({win}); "
         f"<span class='nocompare' style='padding:0 4px'>greyed rows</span> are outside "
-        f"that window (not compared). <b>you</b>/<b>candidate</b> = the values at that "
-        f"depth (— = none there); Δ = normalized difference; <b>slice dist</b> = the "
-        f"<i>average of the Δ's</i> in the band (wt is <i>not</i> applied here — it's "
+        f"that window (not compared). <b>soil pit</b>/<b>candidate</b> = the values at that "
+        f"depth (— = none there); <b>Δ</b> = |soil pit − candidate| ÷ range, where "
+        f"<i>range</i> is the spread of that property across the soils compared at this "
+        f"depth (0 = identical, 1 = as far apart as any two soils here); <b>slice dist</b> "
+        f"= the <i>average of the Δ's</i> in the band (wt is <i>not</i> applied here — it's "
         f"applied when combining bands, below).</div>"
         f"<table class='hz'><tr><th rowspan='2'>depth</th><th rowspan='2'>wt</th>{head}"
         f"<th rowspan='2' class='distcol'>slice&nbsp;dist</th></tr>"
@@ -209,7 +223,7 @@ def render_site(c):  # US site score (slope/elev/depth)
     )
     return (
         f"<div class='comp'><div class='ctitle'>Site <b>{fmt(c.get('score'))}</b></div>"
-        f"<table class='hz'><tr><th>feature</th><th>you</th><th>candidate</th><th>Δ</th></tr>"
+        f"<table class='hz'><tr><th>feature</th><th>soil pit</th><th>candidate</th><th>Δ</th></tr>"
         f"{feats}</table></div>"
     )
 
@@ -232,7 +246,7 @@ def render_candidate(cand):
         )
     return (
         f"<div class='card'><div class='chead'>"
-        f"<span class='rank'>#{cand.get('rank')}</span>"
+        f"<span class='rank'>Candidate #{cand.get('rank')}</span>"
         f"<span class='name'>{esc(cand['name'])}</span>"
         f"<span class='combined'>combined {bar(cand.get('combined_score'))}</span>"
         f"<span class='props'>properties {fmt(cand.get('properties_score'))}</span></div>"
@@ -300,16 +314,16 @@ def render_html(trace):
         f"<th>class</th><th class='deriv'>rfv %</th></tr>{hrows}</table>"
     )
     legend = (
-        "<div class='legend'>You enter a <b>texture class</b> (e.g. Clay) and a "
-        "<b>rock-fragment class</b>; the algorithm converts them to representative "
-        "<b>sand %</b>, <b>clay %</b>, and <b>rock-fragment %</b> (shown as → above), "
-        "and the horizon tables below compare on <i>those</i> numbers. A property you "
-        "didn't enter (e.g. rock fragments) is shown greyed and marked "
-        "<i>(not entered)</i> — the candidate's values are there for context but it "
-        "takes no part in matching.<br>"
+        "<div class='legend'>The <b>soil pit</b> is the profile you recorded. You enter a "
+        "<b>texture class</b> (e.g. Clay) and a <b>rock-fragment class</b>; the algorithm "
+        "converts them to representative <b>sand %</b>, <b>clay %</b>, and "
+        "<b>rock-fragment %</b> (shown as → above), and the horizon tables below compare "
+        "on <i>those</i> numbers. A property the pit doesn't record (e.g. rock fragments) "
+        "is shown greyed and marked <i>(not entered)</i> — the candidate's values are "
+        "there for context but it takes no part in matching.<br>"
         "Each candidate's <b>combined score</b> ≈ (properties + location) ÷ (weight + 1): "
         "<b>Location</b> = how likely the soil is mapped here (distance-decayed share, "
-        "normalized); <b>Properties</b> = how well its profile matches yours (Gower "
+        "normalized); <b>Properties</b> = how well its profile matches the pit's (Gower "
         "distance per depth band) plus color. Rule <b>overrides</b> can force a "
         "promote/demote.</div>"
     )
@@ -318,7 +332,7 @@ def render_html(trace):
         f"<!doctype html><meta charset=utf-8><style>{CSS}</style>"
         f"<h1>Soil ID explanation — {esc(trace.get('region'))}</h1>"
         f"<div class='site'>lat {site.get('lat')}, lon {site.get('lon')}</div>"
-        f"<div class='pit'><div class='ctitle'>Your pit "
+        f"<div class='pit'><div class='ctitle'>Soil pit "
         f"(deepest recorded {inp.get('effective_bedrock_cm')} cm)</div>{pit}</div>"
         f"{legend}{cards}"
     )

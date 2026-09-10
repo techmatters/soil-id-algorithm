@@ -207,7 +207,7 @@ def test_render_html_smoke(rec_fn):
     # both candidates rendered
     assert "A soil" in html and "B soil" in html
     # core sections present
-    assert "Location" in html and "Horizon" in html
+    assert "Location" in html and "horizon" in html.lower()
     # rfv shown despite not being entered
     assert "not entered" in html
     # the region title made it into the document

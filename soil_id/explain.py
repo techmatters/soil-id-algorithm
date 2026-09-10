@@ -190,12 +190,25 @@ def _candidate_trace(name: str, recorder: Recorder) -> dict:
     scores = recorder.scores.get(name, {})
     components = []
 
-    # Location (both paths). cond_prob = location_score (decay × share) normalized
-    # so every candidate's cond_prob sums to ~1 (Fan et al. 2018).
+    # Location (both paths). The real flow (process_distance_scores, Fan et al.):
+    # per (component, map-unit) distance_score = share × decay; summed over a
+    # component's map units (sum_distance_score); cond_prob = that ÷ the grand
+    # total over all components. decay_multiplier is reconstructed for display only.
     dist = _num(loc.get("distance_m"))
     decay = _decay_multiplier(dist, recorder.region)
     share = _num(loc.get("share_pct"))
-    loc_score = round(decay * share / 100, 4) if decay is not None and share is not None else None
+
+    # Grand total = Σ comp_distance_score over the distinct component groups (the
+    # cond_prob denominator). Not itemized per map unit: a component's
+    # comp_distance_score aggregates all its map-unit occurrences, some of which
+    # get filtered before ranking and so aren't shown as separate candidates.
+    totals = {}
+    for other in recorder.location.values():
+        g = other.get("compname_grp")
+        if g is not None and g not in totals:
+            totals[g] = _num(other.get("sum_distance_score")) or 0.0
+    total = round(sum(totals.values()), 4) if totals else None
+
     components.append(
         {
             "type": "location",
@@ -203,7 +216,11 @@ def _candidate_trace(name: str, recorder: Recorder) -> dict:
             "share_pct": share,
             "exp_coeff": GLOBAL_EXP_COEFF if recorder.region == "GLOBAL" else None,
             "decay_multiplier": decay,
-            "location_score": loc_score,
+            # this map-unit instance's decay×share
+            "distance_score": _num(loc.get("distance_score")),
+            # the component's total across all its map units (cond_prob numerator)
+            "comp_distance_score": _num(loc.get("sum_distance_score")),
+            "total_distance_score": total,
             "score": _num(loc.get("cond_prob")),
         }
     )

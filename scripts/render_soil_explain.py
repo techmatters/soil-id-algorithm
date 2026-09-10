@@ -69,29 +69,84 @@ def bar(score, width=120):
     )
 
 
+def _locbox(title, body):
+    return f"<div class='locbox'><div class='locbt'>{title}</div>{body}</div>"
+
+
+def _dist(x):
+    return "<span class='na'>—</span>" if x is None else f"{x:,.0f} m"
+
+
 def render_location(c):
-    # The decay multiplier is only shown when the path exposes its decay
-    # coefficient (global). For US the coefficient is data-source dependent and
-    # baked into cond_prob upstream, so show distance/share as context only.
+    """Location as an inputs → decayed → [combine] → normalized flow, mirroring
+    process_distance_scores (Fan et al.)."""
+    ds = c.get("distance_score")
+    if ds is None:
+        # No real intermediates available: fall back to a one-line summary.
+        return (
+            f"<div class='comp'><div class='ctitle'>Location <b>{fmt(c.get('score'))}</b></div>"
+            f"<div class='formula'>distance {_dist(c.get('distance_m'))} · share "
+            f"{fmt(c.get('share_pct'))}% &rarr; cond_prob (distance-decayed share, "
+            f"normalized) = <b>{fmt(c.get('score'))}</b></div></div>"
+        )
+
+    total = c.get("total_distance_score")
+    comp = c.get("comp_distance_score")
+    # A component whose total exceeds this one instance also occurs in other map
+    # units (some may be filtered before ranking, so we don't itemize them).
+    multi = comp is not None and ds is not None and (comp - ds) > 0.0005
+
+    # inputs
+    inputs = (
+        f"<table class='lt'><tr><td>distance</td><td>{_dist(c.get('distance_m'))}</td></tr>"
+        f"<tr><td>share</td><td>{fmt(c.get('share_pct'))}%</td></tr></table>"
+    )
+
+    # decayed (distance score = share × decay). The decay factor is shown only for
+    # the global path (its coefficient is known); US bakes it in upstream.
     if c.get("decay_multiplier") is not None:
-        detail = (
-            f"decay = max(e<sup>{c.get('exp_coeff')} × {fmt(c.get('distance_m'))}m</sup>, 0.25) "
-            f"= {fmt(c.get('decay_multiplier'))} · share {fmt(c.get('share_pct'))}% "
-            f"&rarr; location score = decay × share = <b>{fmt(c.get('location_score'))}</b><br>"
-            f"cond_prob = location score ÷ (sum over all candidates) "
-            f"&rarr; <b>{fmt(c.get('score'))}</b> "
-            f"<span class='hint'>(all candidates' cond_prob sum to 1)</span>"
+        decayed = (
+            f"<div class='lf'>decay = max(0.25, e<sup>{c.get('exp_coeff')}·d</sup>) "
+            f"= {fmt(c.get('decay_multiplier'))}</div>"
+            f"<div class='lf'>score = share × decay</div>"
+            f"<div class='lf'>= <b>{fmt(ds)}</b></div>"
         )
     else:
-        detail = (
-            f"distance {fmt(c.get('distance_m'))} m · share {fmt(c.get('share_pct'))}% "
-            f"&rarr; cond_prob = distance-decayed share, normalized across all "
-            f"candidates = <b>{fmt(c.get('score'))}</b> "
-            f"<span class='hint'>(all candidates' cond_prob sum to 1)</span>"
+        decayed = f"<div class='lf'>distance score<br>= <b>{fmt(ds)}</b></div>"
+
+    dlabel = "decayed (this map unit)" if multi else "decayed"
+    boxes = [
+        _locbox("inputs", inputs),
+        "<div class='locarrow'>&rarr;</div>",
+        _locbox(dlabel, decayed),
+    ]
+
+    # component total (only when the component spans more than this one map unit)
+    if multi:
+        combine = (
+            f"<div class='lf'>sum over this</div><div class='lf'>component's map units</div>"
+            f"<div class='lf'>= <b>{fmt(comp)}</b></div>"
         )
+        boxes += ["<div class='locarrow'>&rarr;</div>", _locbox("component total", combine)]
+
+    # normalized
+    num = comp if multi else ds
+    normalized = (
+        f"<div class='lf'>cond_prob =</div>"
+        f"<div class='lf'>{fmt(num)} ÷ {fmt(total)}</div>"
+        f"<div class='lf'>= <b>{fmt(c.get('score'))}</b></div>"
+    )
+    boxes += ["<div class='locarrow'>&rarr;</div>", _locbox("normalized", normalized)]
+
+    note = (
+        "<div class='note'>distance = nearest map-unit edge (0 if inside); "
+        "share = component %. A soil's <b>cond_prob</b> = its total distance score "
+        "across all the map units it occurs in ÷ the total over all candidates "
+        "(they sum to 1).</div>"
+    )
     return (
         f"<div class='comp'><div class='ctitle'>Location <b>{fmt(c.get('score'))}</b></div>"
-        f"<div class='formula'>{detail}</div></div>"
+        f"<div class='locflow'>{''.join(boxes)}</div>{note}</div>"
     )
 
 
@@ -268,6 +323,17 @@ h1{font-size:18px} .site{color:#666;margin-bottom:14px}
 .bar>span{display:block;height:100%} .barval{margin-left:6px;font-variant-numeric:tabular-nums}
 .comp{margin:8px 0} .ctitle{font-weight:600;color:#345;margin-bottom:3px}
 .formula{color:#555;font-family:ui-monospace,monospace;font-size:12px}
+/* location inputs -> decayed -> [combine] -> normalized flow */
+.locflow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:4px 0}
+.locbox{border:1px solid #cdd6e6;border-radius:7px;padding:5px 9px;background:#fbfcff;
+  font-size:12px;font-variant-numeric:tabular-nums}
+.locbt{font-weight:700;font-size:10px;color:#678;text-transform:uppercase;letter-spacing:.04em;
+  margin-bottom:3px}
+.locarrow{color:#89a;font-size:20px;flex:0 0 auto}
+.lf{color:#445;font-family:ui-monospace,monospace;font-size:12px;white-space:nowrap}
+table.lt{border-collapse:collapse;font-size:11.5px}
+table.lt td,table.lt th{padding:1px 6px 1px 0;text-align:left;color:#445}
+table.lt th{color:#789;font-weight:600}
 table.hz{border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums;margin-top:4px}
 table.hz th,table.hz td{border:1px solid #e6e6ee;padding:2px 7px;text-align:right}
 table.hz th{background:#eef;text-align:center} /* center all header labels */

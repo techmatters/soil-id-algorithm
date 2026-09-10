@@ -1347,6 +1347,12 @@ def rank_soils_global(
                 "share_pct": r.get("comppct_r"),
                 "cond_prob": r.get("cond_prob"),
                 "cokey": r.get("cokey"),
+                # Real intermediates from process_distance_scores (Fan et al.), so
+                # the report can show the true decay -> combine -> normalize flow.
+                "distance_score": r.get("distance_score"),
+                "sum_distance_score": r.get("comp_distance_score"),
+                "compname_grp": r.get("compname_grp"),
+                "mukey": r.get("mukey"),
             }
             for r in mucompdata_pd.to_dict("records")
         }

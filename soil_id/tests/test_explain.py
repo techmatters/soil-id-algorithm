@@ -48,8 +48,26 @@ def _global_recorder():
     }
     rec.order = ["A soil", "B soil"]
     rec.location = {
-        "A soil": {"distance_m": 0.0, "share_pct": 60.0, "cond_prob": 0.6, "cokey": "1"},
-        "B soil": {"distance_m": 100.0, "share_pct": 40.0, "cond_prob": 0.4, "cokey": "2"},
+        "A soil": {
+            "distance_m": 0.0,
+            "share_pct": 60.0,
+            "cond_prob": 0.6,
+            "cokey": "1",
+            "distance_score": 0.6,
+            "sum_distance_score": 0.6,
+            "compname_grp": "A soil",
+            "mukey": "10",
+        },
+        "B soil": {
+            "distance_m": 100.0,
+            "share_pct": 40.0,
+            "cond_prob": 0.4,
+            "cokey": "2",
+            "distance_score": 0.4,
+            "sum_distance_score": 0.4,
+            "compname_grp": "B soil",
+            "mukey": "20",
+        },
     }
     rec.scores = {
         "A soil": {"horizon_score": 0.80, "properties_score": 0.80, "combined_score": 0.70},
@@ -157,8 +175,10 @@ def test_location_component_decay_and_score():
     loc = next(c for c in a["score_components"] if c["type"] == "location")
     assert loc["distance_m"] == 0.0
     assert loc["decay_multiplier"] == 1.0  # exp(0) = 1
-    # location_score = decay * share/100
-    assert loc["location_score"] == pytest.approx(0.6, abs=1e-4)
+    assert loc["distance_score"] == pytest.approx(0.6, abs=1e-4)  # this map unit
+    assert loc["comp_distance_score"] == pytest.approx(0.6, abs=1e-4)  # component total
+    # grand total = Σ comp_distance_score over the distinct components (0.6 + 0.4)
+    assert loc["total_distance_score"] == pytest.approx(1.0, abs=1e-4)
     assert loc["score"] == pytest.approx(0.6, abs=1e-4)  # cond_prob
 
 

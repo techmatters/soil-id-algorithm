@@ -110,6 +110,7 @@ def render_location(c):
             f"<div class='lf'>decay = max(0.25,</div>"
             f"<div class='lf'>&nbsp; e<sup>{c.get('exp_coeff')} × {dstr}</sup>)"
             f" = {fmt(c.get('decay_multiplier'))}</div>"
+            f"<div class='lf'><span class='hint'>(floors at 0.25 by ~3.8 km)</span></div>"
             f"<div class='lf'>score = share × decay</div>"
             f"<div class='lf'>= <b>{fmt(ds)}</b></div>"
         )
@@ -288,16 +289,39 @@ def render_color(c):
 
 
 def render_site(c):  # US site score (slope/elev/depth)
+    features = c.get("features", [])
     feats = "".join(
         f"<tr><td>{esc(label(f['name']))}</td><td>{fmt(f['user'])}</td>"
         f"<td class='{'' if f['status'] == 'both' else 'one'}'>{fmt(f['candidate'])}</td>"
-        f"<td>{fmt(f.get('norm_diff'))}</td></tr>"
-        for f in c.get("features", [])
+        f"<td>{fmt(f.get('norm_diff'))}</td><td>{fmt(f.get('weight'))}</td></tr>"
+        for f in features
     )
+    site_wt = c.get("weight")
+    # site distance = Σ(Δ × weight) ÷ Σweight; similarity = 1 − that; score = ×site_wt.
+    num = sum(
+        f["norm_diff"] * f["weight"]
+        for f in features
+        if f.get("norm_diff") is not None and f.get("weight") is not None
+    )
+    wsum = sum(f["weight"] for f in features if f.get("weight") is not None)
+    combine = ""
+    if wsum:
+        d = num / wsum
+        sim = 1 - d
+        combine = (
+            f"<div class='lf'>site distance = Σ(Δ × weight) ÷ Σweight = {fmt(d)}</div>"
+            f"<div class='lf'>similarity = 1 − {fmt(d)} = {fmt(sim)}</div>"
+            f"<div class='lf'>site score = {fmt(sim)} × {fmt(site_wt)} "
+            f"<span class='hint'>(site weight)</span> = <b>{fmt(c.get('score'))}</b></div>"
+        )
     return (
         f"<div class='comp'><div class='ctitle blue'>Site <b>{fmt(c.get('score'))}</b></div>"
-        f"<table class='hz'><tr><th>feature</th><th>soil pit</th><th>candidate</th><th>Δ</th></tr>"
-        f"{feats}</table></div>"
+        f"<table class='hz'><tr><th>feature</th><th>soil pit</th><th>candidate</th>"
+        f"<th>Δ</th><th>weight</th></tr>{feats}</table>{combine}"
+        f"<div class='note'>Δ = |soil pit − candidate| ÷ range (same normalization as "
+        f"the horizon). Features are weighted (slope 1, elevation 0.5, depth-to-bedrock "
+        f"1.5); the site score is then scaled by the {fmt(site_wt)} site weight used in "
+        f"the properties roll-up.</div></div>"
     )
 
 

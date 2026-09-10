@@ -251,6 +251,7 @@ def _candidate_trace(name: str, recorder: Recorder) -> dict:
         cand = ss.get("candidates", {}).get(name)
         if cand is not None:
             denom = ss.get("denom", {})
+            weights = ss.get("weights", {})
             feats = []
             for fn in ss.get("features", []):
                 uv = _num(ss.get("pedon", {}).get(fn))
@@ -267,6 +268,9 @@ def _candidate_trace(name: str, recorder: Recorder) -> dict:
                         "user": uv,
                         "candidate": cv,
                         "norm_diff": nd,
+                        # Gower feature weight in the site distance (slope 1.0,
+                        # elev 0.5, depth-to-bedrock 1.5).
+                        "weight": _num(weights.get(fn)),
                         "status": _status(uv, cv),
                     }
                 )

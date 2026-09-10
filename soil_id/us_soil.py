@@ -2220,6 +2220,15 @@ def rank_soils(
     soilIDRank_output_pd = pd.read_csv(io.StringIO(list_output_data.rank_data_csv))
     mucompdata_pd = pd.read_csv(io.StringIO(list_output_data.map_unit_component_data_csv))
 
+    # Align candidate ordering across the horizon + site calculations. soil_matrix,
+    # the site distance matrix, and the final compname labels are built positionally
+    # from mucompdata order, but the per-slice Gower matrices come from
+    # groupby("compname", sort=True) — a DIFFERENT order. Positionally combining them
+    # applied each candidate's depth (no-soil) mask, its site distance, and its
+    # horizon score to the WRONG component. Sort mucompdata by compname so every
+    # positional combine lines up.
+    mucompdata_pd = mucompdata_pd.sort_values("compname").reset_index(drop=True)
+
     # Modify mucompdata_pd DataFrame
     # mucompdata_pd = process_site_data(mucompdata_pd)
 

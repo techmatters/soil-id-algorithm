@@ -834,6 +834,15 @@ def rank_soils_global(
     soilIDRank_output_pd = pd.read_csv(io.StringIO(list_output_data.rank_data_csv))
     mucompdata_pd = pd.read_csv(io.StringIO(list_output_data.map_unit_component_data_csv))
 
+    # Align candidate ordering across the horizon calculation. The soil-vs-non-soil
+    # matrix (soil_matrix) and the final compname labels are built positionally from
+    # mucompdata order, but the per-slice Gower matrices are built from
+    # groupby("compname", sort=True) — a DIFFERENT order. Positionally combining the
+    # two applied each candidate's depth (no-soil) mask, and later its horizon score,
+    # to the WRONG component. Sorting mucompdata by compname here makes all three
+    # orderings identical so the positional combines line up.
+    mucompdata_pd = mucompdata_pd.sort_values("compname").reset_index(drop=True)
+
     # Create soil depth DataFrame and subset component depths based on max user depth
     # if no bedrock specified
     c_bottom_depths = mucompdata_pd[["compname", "c_very_bottom"]].rename(

@@ -228,6 +228,40 @@ def _candidate_trace(name: str, recorder: Recorder) -> dict:
             }
         )
 
+    # Site (US only, as a separate track): slope / elevation / depth-to-bedrock.
+    if recorder.site_score:
+        ss = recorder.site_score
+        cand = ss.get("candidates", {}).get(name)
+        if cand is not None:
+            denom = ss.get("denom", {})
+            feats = []
+            for fn in ss.get("features", []):
+                uv = _num(ss.get("pedon", {}).get(fn))
+                cv = _num(cand.get("values", {}).get(fn))
+                rng = denom.get(fn)
+                nd = (
+                    round(abs(uv - cv) / rng, 4)
+                    if uv is not None and cv is not None and rng
+                    else None
+                )
+                feats.append(
+                    {
+                        "name": fn,
+                        "user": uv,
+                        "candidate": cv,
+                        "norm_diff": nd,
+                        "status": _status(uv, cv),
+                    }
+                )
+            components.append(
+                {
+                    "type": "site",
+                    "features": feats,
+                    "weight": ss.get("site_wt"),
+                    "score": _num(cand.get("score")),
+                }
+            )
+
     return {
         "name": name,
         "component_id": loc.get("cokey"),

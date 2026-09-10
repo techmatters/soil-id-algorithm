@@ -70,15 +70,28 @@ def bar(score, width=120):
 
 
 def render_location(c):
+    # The decay multiplier is only shown when the path exposes its decay
+    # coefficient (global). For US the coefficient is data-source dependent and
+    # baked into cond_prob upstream, so show distance/share as context only.
+    if c.get("decay_multiplier") is not None:
+        detail = (
+            f"decay = max(e<sup>{c.get('exp_coeff')} × {fmt(c.get('distance_m'))}m</sup>, 0.25) "
+            f"= {fmt(c.get('decay_multiplier'))} · share {fmt(c.get('share_pct'))}% "
+            f"&rarr; location score = decay × share = <b>{fmt(c.get('location_score'))}</b><br>"
+            f"cond_prob = location score ÷ (sum over all candidates) "
+            f"&rarr; <b>{fmt(c.get('score'))}</b> "
+            f"<span class='hint'>(all candidates' cond_prob sum to 1)</span>"
+        )
+    else:
+        detail = (
+            f"distance {fmt(c.get('distance_m'))} m · share {fmt(c.get('share_pct'))}% "
+            f"&rarr; cond_prob = distance-decayed share, normalized across all "
+            f"candidates = <b>{fmt(c.get('score'))}</b> "
+            f"<span class='hint'>(all candidates' cond_prob sum to 1)</span>"
+        )
     return (
         f"<div class='comp'><div class='ctitle'>Location <b>{fmt(c.get('score'))}</b></div>"
-        f"<div class='formula'>"
-        f"decay = max(e<sup>{c.get('exp_coeff')} × {fmt(c.get('distance_m'))}m</sup>, 0.25) "
-        f"= {fmt(c.get('decay_multiplier'))} · share {fmt(c.get('share_pct'))}% "
-        f"&rarr; location score = decay × share = <b>{fmt(c.get('location_score'))}</b><br>"
-        f"cond_prob = location score ÷ (sum over all candidates) "
-        f"&rarr; <b>{fmt(c.get('score'))}</b> "
-        f"<span class='hint'>(all candidates' cond_prob sum to 1)</span></div></div>"
+        f"<div class='formula'>{detail}</div></div>"
     )
 
 

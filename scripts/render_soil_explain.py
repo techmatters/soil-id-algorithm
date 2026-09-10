@@ -182,10 +182,34 @@ def render_horizon(c):
         n: any(fm.get("user") is not None for s in segs for fm in s["features"] if fm["name"] == n)
         for n in feat_names
     }
+
+    # The Δ denominator (range) per feature across the compared bands. If it's the
+    # same at every depth, show it once in the header; otherwise it's shown per
+    # cell (and the header shows the min–max span).
+    def _ranges(n):
+        return sorted(
+            {
+                f["range"]
+                for s in segs
+                if s.get("compared", True)
+                for f in s["features"]
+                if f["name"] == n and f.get("range") is not None
+            }
+        )
+
+    feat_ranges = {n: _ranges(n) for n in feat_names}
+
+    def _range_hdr(n):
+        rs = feat_ranges[n]
+        if not entered[n] or not rs:
+            return ""
+        span = f"{rs[0]:g}" if len(rs) == 1 else f"{rs[0]:g}–{rs[-1]:g}"
+        return f"<br><small class='rng'>Δ ÷ [{span}]</small>"
+
     # each feature is a color-grouped pair of sub-columns (you / candidate)
     head = "".join(
         f"<th colspan='2' class='g{i % 2} gstart{'' if entered[n] else ' notentered'}'>"
-        f"{esc(label(n))}{'' if entered[n] else ' <small>(not entered)</small>'}</th>"
+        f"{esc(label(n))}{'' if entered[n] else ' <small>(not entered)</small>'}{_range_hdr(n)}</th>"
         for i, n in enumerate(feat_names)
     )
     sub = "".join(
@@ -215,7 +239,15 @@ def render_horizon(c):
             # produced it, as a hover title so the normalization is inspectable.
             nd, title = "", ""
             if f["norm_diff"] is not None:
-                nd = f" <small>Δ{f['norm_diff']:.3f}</small>"
+                # When the range varies across depths, show this band's range next
+                # to Δ; when constant it's already in the column header.
+                rng = f.get("range")
+                per_cell = (
+                    f" <span class='rng'>[{rng:g}]</span>"
+                    if (rng is not None and len(feat_ranges.get(n, [])) > 1)
+                    else ""
+                )
+                nd = f" <small>Δ{f['norm_diff']:.3f}{per_cell}</small>"
                 if f.get("user") is not None and f.get("candidate") is not None and f.get("range"):
                     title = (
                         f" title='|{f['user']} − {f['candidate']}| ÷ {f['range']} "
@@ -268,7 +300,11 @@ def render_horizon(c):
         f"depth (— = none there); <b>Δ</b> = |soil pit − candidate| ÷ range, where "
         f"<i>range</i> is the spread of that property across the soils compared at this "
         f"depth, but never less than 10% of the property's fixed plausible range (a "
-        f"floor so a near-constant property can't inflate tiny differences); "
+        f"floor so a near-constant property can't inflate tiny differences). The "
+        f"<span class='rng'>Δ ÷ [range]</span> shown in each column header is that "
+        f"denominator when it's the same at every depth; when it varies with depth "
+        f"the header shows its <span class='rng'>[min–max]</span> span and each cell "
+        f"shows its own <span class='rng'>[range]</span>. "
         f"<b>slice dist</b> = the <i>equal-weighted average of the Δ's</i> present in "
         f"the band (wt is <i>not</i> applied here — it's applied when combining bands, "
         f"below).</div>"
@@ -446,6 +482,7 @@ th.notentered{font-weight:500}
 tr.nocompare td{background:#f4f4f6;color:#a8a8a8} tr.nocompare td.depth{color:#888}
 td.deriv{color:#367;font-style:italic} th.deriv{background:#e3edf6;color:#356}
 .hint{color:#999;font-size:11px}
+.rng{color:#9178a8;font-weight:400} th .rng{color:#7a6a90}
 .note{color:#666;font-size:11.5px;margin:2px 0;max-width:760px}
 .legend{color:#444;font-size:12px;background:#fffbe9;border:1px solid #eeddaa;
   border-radius:6px;padding:7px 10px;margin:10px 0;max-width:900px}

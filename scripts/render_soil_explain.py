@@ -84,7 +84,7 @@ def render_location(c):
     if ds is None:
         # No real intermediates available: fall back to a one-line summary.
         return (
-            f"<div class='comp'><div class='ctitle'>Location <b>{fmt(c.get('score'))}</b></div>"
+            f"<div class='comp'><div class='ctitle blue'>Location <b>{fmt(c.get('score'))}</b></div>"
             f"<div class='formula'>distance {_dist(c.get('distance_m'))} · share "
             f"{fmt(c.get('share_pct'))}% &rarr; cond_prob (distance-decayed share, "
             f"normalized) = <b>{fmt(c.get('score'))}</b></div></div>"
@@ -105,9 +105,11 @@ def render_location(c):
     # decayed (distance score = share × decay). The decay factor is shown only for
     # the global path (its coefficient is known); US bakes it in upstream.
     if c.get("decay_multiplier") is not None:
+        dstr = _dist(c.get("distance_m")).replace(" m", "")
         decayed = (
-            f"<div class='lf'>decay = max(0.25, e<sup>{c.get('exp_coeff')}·d</sup>) "
-            f"= {fmt(c.get('decay_multiplier'))}</div>"
+            f"<div class='lf'>decay = max(0.25,</div>"
+            f"<div class='lf'>&nbsp; e<sup>{c.get('exp_coeff')} × {dstr}</sup>)"
+            f" = {fmt(c.get('decay_multiplier'))}</div>"
             f"<div class='lf'>score = share × decay</div>"
             f"<div class='lf'>= <b>{fmt(ds)}</b></div>"
         )
@@ -138,14 +140,21 @@ def render_location(c):
     )
     boxes += ["<div class='locarrow'>&rarr;</div>", _locbox("normalized", normalized)]
 
+    decay_note = (
+        "<b>decay</b> = max(0.25, e<sup>−0.00036888 × distance_m</sup>) — an "
+        "exponential fall-off with distance, floored at 0.25 (it reaches 0.25 at "
+        "~10 km and stays there). "
+        if c.get("decay_multiplier") is not None
+        else ""
+    )
     note = (
-        "<div class='note'>distance = nearest map-unit edge (0 if inside); "
-        "share = component %. A soil's <b>cond_prob</b> = its total distance score "
-        "across all the map units it occurs in ÷ the total over all candidates "
-        "(they sum to 1).</div>"
+        f"<div class='note'>distance = nearest map-unit edge (0 if inside); "
+        f"share = component %. {decay_note}A soil's <b>cond_prob</b> = its total "
+        f"distance score across all the map units it occurs in ÷ the total over all "
+        f"candidates (they sum to 1).</div>"
     )
     return (
-        f"<div class='comp'><div class='ctitle'>Location <b>{fmt(c.get('score'))}</b></div>"
+        f"<div class='comp'><div class='ctitle blue'>Location <b>{fmt(c.get('score'))}</b></div>"
         f"<div class='locflow'>{''.join(boxes)}</div>{note}</div>"
     )
 
@@ -239,7 +248,7 @@ def render_horizon(c):
         else ""
     )
     return (
-        f"<div class='comp'><div class='ctitle'>Soil horizons — depth-layer properties "
+        f"<div class='comp'><div class='ctitle blue'>Soil horizons — depth-layer properties "
         f"<b>{fmt(c.get('score'))}</b></div>"
         f"<div class='note'>A <i>horizon</i> is a soil depth layer; this scores how well "
         f"the candidate's layered profile (sand/clay/rock-fragments"
@@ -265,7 +274,7 @@ def render_color(c):
     de = c.get("delta_e")
     de_s = ", ".join(f"{x:.1f}" for x in de) if de else "—"
     return (
-        f"<div class='comp'><div class='ctitle'>Color <b>{fmt(c.get('score'))}</b></div>"
+        f"<div class='comp'><div class='ctitle blue'>Color <b>{fmt(c.get('score'))}</b></div>"
         f"<div class='formula'>ΔE2000 vs white/red/yellow = [{de_s}] · "
         f"weight {c.get('weight')} &rarr; similarity <b>{fmt(c.get('score'))}</b></div></div>"
     )
@@ -279,7 +288,7 @@ def render_site(c):  # US site score (slope/elev/depth)
         for f in c.get("features", [])
     )
     return (
-        f"<div class='comp'><div class='ctitle'>Site <b>{fmt(c.get('score'))}</b></div>"
+        f"<div class='comp'><div class='ctitle blue'>Site <b>{fmt(c.get('score'))}</b></div>"
         f"<table class='hz'><tr><th>feature</th><th>soil pit</th><th>candidate</th><th>Δ</th></tr>"
         f"{feats}</table></div>"
     )
@@ -291,6 +300,55 @@ RENDERERS = {
     "color": render_color,
     "site": render_site,
 }
+
+
+def render_combined(cand):
+    """Roll-up shown at the bottom: how the blue scores combine.
+    properties = weighted avg(horizon, site|color); combined = (properties + location) ÷ 2."""
+    comps = {c["type"]: c for c in cand["score_components"]}
+    hz = comps.get("horizon", {}).get("score")
+    loc = comps.get("location", {}).get("score")
+    props = cand.get("properties_score")
+    combined = cand.get("combined_score")
+    site, color = comps.get("site"), comps.get("color")
+
+    if site is not None:
+        s = site.get("score")
+        props_line = (
+            f"<b class='blue'>properties</b> = (<b class='blue'>horizon</b> {fmt(hz)} + "
+            f"<b class='blue'>site</b> {fmt(s)}) ÷ 1.5 = <b>{fmt(props)}</b>"
+        )
+        inputs = "horizon (wt 1), site (wt 0.5)"
+    elif color is not None:
+        cc, w = color.get("score"), color.get("weight", 0.3)
+        props_line = (
+            f"<b class='blue'>properties</b> = (<b class='blue'>horizon</b> {fmt(hz)} + "
+            f"{w} × <b class='blue'>color</b> {fmt(cc)}) ÷ {round(1 + w, 3)} = <b>{fmt(props)}</b>"
+        )
+        inputs = f"horizon (wt 1), color (wt {w})"
+    else:
+        props_line = f"<b class='blue'>properties</b> = <b class='blue'>horizon</b> {fmt(hz)}"
+        inputs = "horizon"
+
+    combined_line = (
+        f"<b class='blue'>combined</b> = (properties {fmt(props)} + "
+        f"<b class='blue'>location</b> {fmt(loc)}) ÷ 2 = <b class='blue'>{fmt(combined)}</b>"
+    )
+    ov_line = ""
+    for o in cand.get("overrides", []):
+        ov_line = (
+            f"<div class='lf'>⚑ a rule then overrides combined "
+            f"{fmt(o.get('score_before'))} &rarr; <b>{fmt(o.get('score_after'))}</b> "
+            f"— {esc(o.get('rule', ''))}</div>"
+        )
+    return (
+        f"<div class='combinedbox'><div class='ctitle blue'>Combined score "
+        f"<b>{fmt(combined)}</b></div>"
+        f"<div class='lf'>{props_line}</div>"
+        f"<div class='lf'>{combined_line}</div>{ov_line}"
+        f"<div class='note'>The blue scores combine into <b>combined</b> — "
+        f"properties folds {inputs}; then properties + location (each wt 1).</div></div>"
+    )
 
 
 def render_candidate(cand):
@@ -307,7 +365,7 @@ def render_candidate(cand):
         f"<span class='name'>{esc(cand['name'])}</span>"
         f"<span class='combined'>combined {bar(cand.get('combined_score'))}</span>"
         f"<span class='props'>properties {fmt(cand.get('properties_score'))}</span></div>"
-        f"{ov}{comps}</div>"
+        f"{ov}{comps}{render_combined(cand)}</div>"
     )
 
 
@@ -322,6 +380,9 @@ h1{font-size:18px} .site{color:#666;margin-bottom:14px}
 .bar{display:inline-block;height:11px;background:#eee;border-radius:6px;vertical-align:middle;overflow:hidden}
 .bar>span{display:block;height:100%} .barval{margin-left:6px;font-variant-numeric:tabular-nums}
 .comp{margin:8px 0} .ctitle{font-weight:600;color:#345;margin-bottom:3px}
+.ctitle.blue{color:#1560c4} .blue{color:#1560c4}
+.combinedbox{margin-top:10px;border-top:2px solid #cdd6e6;padding-top:8px}
+.combinedbox .lf{margin:2px 0}
 .formula{color:#555;font-family:ui-monospace,monospace;font-size:12px}
 /* location inputs -> decayed -> [combine] -> normalized flow */
 .locflow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:4px 0}

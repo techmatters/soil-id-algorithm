@@ -114,7 +114,14 @@ def render_location(c):
             f"<div class='lf'>= <b>{fmt(ds)}</b></div>"
         )
     else:
-        decayed = f"<div class='lf'>distance score<br>= <b>{fmt(ds)}</b></div>"
+        # US decay coefficient is data-source-dependent and not exposed, but the
+        # effective decay = distance_score ÷ share is recoverable for display.
+        sp = c.get("share_pct")
+        eff = f" (decay ≈ {ds / (sp / 100):.3f})" if sp else ""
+        decayed = (
+            f"<div class='lf'>score = share × decay{esc(eff)}</div>"
+            f"<div class='lf'>= <b>{fmt(ds)}</b></div>"
+        )
 
     dlabel = "decayed (this map unit)" if multi else "decayed"
     boxes = [
@@ -142,8 +149,8 @@ def render_location(c):
 
     decay_note = (
         "<b>decay</b> = max(0.25, e<sup>−0.00036888 × distance_m</sup>) — an "
-        "exponential fall-off with distance, floored at 0.25 (it reaches 0.25 at "
-        "~10 km and stays there). "
+        "exponential fall-off with distance, floored at 0.25 (which it reaches at "
+        "~3.8 km, then stays flat; the 0.00036888 rate ≈ a halving every ~1.9 km). "
         if c.get("decay_multiplier") is not None
         else ""
     )
@@ -346,8 +353,12 @@ def render_combined(cand):
         f"<b>{fmt(combined)}</b></div>"
         f"<div class='lf'>{props_line}</div>"
         f"<div class='lf'>{combined_line}</div>{ov_line}"
-        f"<div class='note'>The blue scores combine into <b>combined</b> — "
-        f"properties folds {inputs}; then properties + location (each wt 1).</div></div>"
+        f"<div class='lf' style='margin-top:4px'><b>weights</b> → {inputs}; then "
+        f"<b class='blue'>properties</b> and <b class='blue'>location</b> equally "
+        f"(1 each) — so <b class='blue'>location</b> is ~half the final score.</div>"
+        f"<div class='note'>Every score is normalized to 0–1 by these "
+        f"weighted-average denominators, so combined stays ≤ 1 (the only exception "
+        f"is a rule override, which force-sets it to 1.001 / 0.001).</div></div>"
     )
 
 

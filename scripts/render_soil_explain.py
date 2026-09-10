@@ -104,9 +104,16 @@ def render_horizon(c):
         for f in s["features"]:
             if f["name"] not in feat_names:
                 feat_names.append(f["name"])
+    # Properties the user never entered anywhere: shown for context (candidate
+    # values) but greyed and flagged, since they don't take part in matching.
+    entered = {
+        n: any(fm.get("user") is not None for s in segs for fm in s["features"] if fm["name"] == n)
+        for n in feat_names
+    }
     # each feature is a color-grouped pair of sub-columns (you / candidate)
     head = "".join(
-        f"<th colspan='2' class='g{i % 2} gstart'>{esc(label(n))}</th>"
+        f"<th colspan='2' class='g{i % 2} gstart{'' if entered[n] else ' notentered'}'>"
+        f"{esc(label(n))}{'' if entered[n] else ' <small>(not entered)</small>'}</th>"
         for i, n in enumerate(feat_names)
     )
     sub = "".join(
@@ -122,6 +129,14 @@ def render_horizon(c):
             g = f"g{i % 2}"
             if not f or f.get("user") is None and f.get("candidate") is None:
                 cells.append(f"<td class='{g} gstart na'>—</td><td class='{g} na'>—</td>")
+                continue
+            # A property the user never entered is informational, not a one-sided
+            # mismatch — mute it rather than flagging it orange.
+            if not entered[n]:
+                cells.append(
+                    f"<td class='{g} gstart na'>—</td>"
+                    f"<td class='{g} notentered'>{fmt(f['candidate'])}</td>"
+                )
                 continue
             one = "" if f["status"] == "both" else " one"
             nd = "" if f["norm_diff"] is None else f" <small>Δ{f['norm_diff']:.3f}</small>"
@@ -248,6 +263,8 @@ th.g0{background:#dbe8ff} th.g1{background:#daf3e1}
 .gstart{border-left:2px solid #9ab!important}
 .distcol{border-left:2px solid #9ab!important} /* separate slice dist */
 td.one{background:#fff3e0!important} /* one-sided value */
+td.notentered{color:#8890a0;font-style:italic} /* property user didn't enter — context only */
+th.notentered{font-weight:500}
 tr.nocompare td{background:#f4f4f6;color:#a8a8a8} tr.nocompare td.depth{color:#888}
 td.deriv{color:#367;font-style:italic} th.deriv{background:#e3edf6;color:#356}
 .hint{color:#999;font-size:11px}
@@ -286,7 +303,10 @@ def render_html(trace):
         "<div class='legend'>You enter a <b>texture class</b> (e.g. Clay) and a "
         "<b>rock-fragment class</b>; the algorithm converts them to representative "
         "<b>sand %</b>, <b>clay %</b>, and <b>rock-fragment %</b> (shown as → above), "
-        "and the horizon tables below compare on <i>those</i> numbers.<br>"
+        "and the horizon tables below compare on <i>those</i> numbers. A property you "
+        "didn't enter (e.g. rock fragments) is shown greyed and marked "
+        "<i>(not entered)</i> — the candidate's values are there for context but it "
+        "takes no part in matching.<br>"
         "Each candidate's <b>combined score</b> ≈ (properties + location) ÷ (weight + 1): "
         "<b>Location</b> = how likely the soil is mapped here (distance-decayed share, "
         "normalized); <b>Properties</b> = how well its profile matches yours (Gower "

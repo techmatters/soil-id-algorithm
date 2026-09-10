@@ -805,6 +805,11 @@ def rank_soils_global(
     if p_hz_data is None or p_hz_data.empty or p_bottom_depth.bottom_depth.le(0).any():
         soilIDRank_output_pd = None
     else:
+        # Keep the un-subset frame so the report can still show a property the user
+        # didn't enter (e.g. rock fragments): it's dropped from the comparison
+        # (all-NaN) but the candidate has values worth showing.
+        soilIDRank_output_full = soilIDRank_output_pd
+
         # Subset component soil properties to match user measured properties
         soilIDRank_output_pd = soilIDRank_output_pd[p_hz_data_names]
 
@@ -816,18 +821,21 @@ def rank_soils_global(
         cokey_groups = [group for _, group in soilIDRank_output_pd.groupby("compname", sort=True)]
 
         if explain is not None:
-            # Full candidate profiles (every depth, not just the compared window) so
-            # the report can show the whole depth range up to max(pit, candidate).
-            feat_cols = [c for c in p_hz_data_names if c != "compname"]
-            explain.horizon["columns"] = feat_cols
+            # Full candidate profiles over the CANONICAL property set (not just the
+            # user-entered subset), so the report always shows sand/clay/rfv — with
+            # "—" on the user side and no Δ for any property the user skipped.
+            full_cols = [
+                c for c in GLOBAL_HORIZON_PROP_BOUNDS if c in soilIDRank_output_full.columns
+            ]
+            explain.horizon["columns"] = full_cols
             # Depth is the row position within each group (the interpolated 0..199
             # profile), NOT the concatenated frame's index.
             explain.horizon["candidate_full"] = {
                 sorted(g["compname"].unique())[0]: {
                     depth: [None if pd.isna(v) else round(float(v), 2) for v in row]
-                    for depth, row in enumerate(g[feat_cols].to_numpy().tolist())
+                    for depth, row in enumerate(g[full_cols].to_numpy().tolist())
                 }
-                for g in cokey_groups
+                for _, g in soilIDRank_output_full.groupby("compname", sort=True)
             }
 
         # Create lists to store component statuses

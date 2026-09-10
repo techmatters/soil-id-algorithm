@@ -105,7 +105,11 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
     # weight and the max distance score for each component group is assigned to all component
     # instances.
     ##############################################################################################
-    ExpCoeff = -0.00036888  # Decays to 0.25 @ 10km
+    # Distance-decay rate for the location score: decay = max(0.25, exp(ExpCoeff *
+    # distance_m)). The 0.25 floor is reached at ~3.8 km (exp hits 0.25 there);
+    # beyond that the decay stays flat at 0.25. (The old "0.25 @ 10km" comment was
+    # imprecise — at 10 km exp is ~0.025, already floored to 0.25 since ~3.8 km.)
+    ExpCoeff = -0.00036888
     mucompdata_pd = process_distance_scores(
         mucompdata_pd,
         ExpCoeff,

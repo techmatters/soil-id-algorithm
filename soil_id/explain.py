@@ -38,10 +38,20 @@ from typing import Any, Optional
 
 TRACE_VERSION = "1"
 
-# Distance-decay coefficient for the global location score (global_soil.py). Used
-# only to *display* the decay multiplier in the trace; the score itself (cond_prob)
-# comes from the ranking code.
-GLOBAL_EXP_COEFF = -0.00036888
+# Distance-decay coefficients per data source (used only to *display* the decay
+# multiplier + formula in the trace; the score itself comes from the ranking
+# code). The coefficient is steeper for finer-resolution sources — SSURGO map
+# units are small so distance discriminates strongly; STATSGO/HWSD2 are coarse.
+GLOBAL_EXP_COEFF = -0.00036888  # HWSD2 (global)
+US_EXP_COEFF = {"SSURGO": -0.008, "STATSGO": -0.0002772}
+
+
+def _exp_coeff(region: str, data_source: Optional[str]) -> Optional[float]:
+    if region == "GLOBAL":
+        return GLOBAL_EXP_COEFF
+    if region == "US":
+        return US_EXP_COEFF.get(data_source)
+    return None
 
 
 @dataclass
@@ -195,8 +205,17 @@ def _candidate_trace(name: str, recorder: Recorder) -> dict:
     # component's map units (sum_distance_score); cond_prob = that ÷ the grand
     # total over all components. decay_multiplier is reconstructed for display only.
     dist = _num(loc.get("distance_m"))
-    decay = _decay_multiplier(dist, recorder.region)
     share = _num(loc.get("share_pct"))
+    data_source = loc.get("data_source") or ("HWSD2" if recorder.region == "GLOBAL" else None)
+
+    # Reconstruct the decay factor + the distance where it hits the 0.25 floor,
+    # using the per-source coefficient (display only).
+    coeff = _exp_coeff(recorder.region, data_source)
+    decay, floor_m = None, None
+    if coeff:
+        if dist is not None:
+            decay = round(max(math.exp(coeff * dist), 0.25), 4)
+        floor_m = round(math.log(0.25) / coeff)  # distance where exp == 0.25
 
     # Grand total = Σ comp_distance_score over the distinct component groups (the
     # cond_prob denominator). Not itemized per map unit: a component's
@@ -214,8 +233,10 @@ def _candidate_trace(name: str, recorder: Recorder) -> dict:
             "type": "location",
             "distance_m": dist,
             "share_pct": share,
-            "exp_coeff": GLOBAL_EXP_COEFF if recorder.region == "GLOBAL" else None,
+            "data_source": data_source,
+            "exp_coeff": coeff,
             "decay_multiplier": decay,
+            "floor_m": floor_m,  # distance (m) at which decay reaches the 0.25 floor
             # this map-unit instance's decay×share
             "distance_score": _num(loc.get("distance_score")),
             # the component's total across all its map units (cond_prob numerator)

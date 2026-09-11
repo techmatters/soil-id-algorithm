@@ -2788,6 +2788,7 @@ def rank_soils(
                 "sum_distance_score": r.get("comp_distance_score"),
                 "compname_grp": r.get("compname_grp"),
                 "mukey": r.get("mukey"),
+                "data_source": r.get("data_source"),  # SSURGO | STATSGO (sets decay coeff)
             }
             for r in mucompdata_pd.to_dict("records")
         }

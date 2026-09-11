@@ -108,9 +108,8 @@ def render_location(c):
         dstr = _dist(c.get("distance_m")).replace(" m", "")
         decayed = (
             f"<div class='lf'>decay = max(0.25,</div>"
-            f"<div class='lf'>&nbsp; e<sup>{c.get('exp_coeff')} × {dstr}</sup>)"
+            f"<div class='lf'>&nbsp; e<sup>{c.get('exp_coeff'):g} × {dstr}</sup>)"
             f" = {fmt(c.get('decay_multiplier'))}</div>"
-            f"<div class='lf'><span class='hint'>(floors at 0.25 by ~3.8 km)</span></div>"
             f"<div class='lf'>score = share × decay</div>"
             f"<div class='lf'>= <b>{fmt(ds)}</b></div>"
         )
@@ -148,22 +147,26 @@ def render_location(c):
     )
     boxes += ["<div class='locarrow'>&rarr;</div>", _locbox("normalized", normalized)]
 
-    if c.get("decay_multiplier") is not None:  # global — coefficient known
+    src = c.get("data_source")
+    coeff = c.get("exp_coeff")
+    floor_m = c.get("floor_m")
+    if floor_m is None:
+        floor_txt = "?"
+    elif floor_m < 1000:
+        floor_txt = f"~{floor_m:.0f} m"
+    else:
+        floor_txt = f"~{floor_m / 1000:.1f} km"
+    if coeff is not None:
         decay_note = (
-            "<b>decay = max(0.25, e<sup>−0.00036888 × distance_m</sup>)</b> — an "
-            "exponential fall-off floored at 0.25. The −0.00036888 rate = ln(0.025) ÷ "
-            "10&nbsp;000, i.e. it's set so the raw exponential reaches ~0.025 (2.5%) at "
-            "10&nbsp;km; but the 0.25 floor takes over first (the exponential crosses "
-            "0.25 at ~3.8&nbsp;km), so anything beyond ~3.8&nbsp;km sits at the 0.25 "
-            "(25%) floor — including at 10&nbsp;km. "
+            f"<b>decay = max(0.25, e<sup>{coeff:g} × distance_m</sup>)</b> — an "
+            f"exponential fall-off, floored at 0.25 (25%). The coefficient <b>{coeff:g}</b> "
+            f"is set for the <b>{esc(str(src))}</b> data source (finer sources decay "
+            f"faster: SSURGO −0.008, HWSD2 −0.00036888, STATSGO −0.0002772). The 0.25 "
+            f"floor is reached at <b>{floor_txt}</b>; beyond that every candidate sits at "
+            f"the floor. "
         )
-    else:  # US — data-source-dependent coefficient, not exposed
-        decay_note = (
-            "<b>decay = max(0.25, e<sup>coeff × distance_m</sup>)</b> — an exponential "
-            "fall-off floored at 0.25 (25%). The coefficient is data-source-specific "
-            "(SSURGO vs STATSGO) and not exposed here; the effective decay for this "
-            "candidate is shown above. "
-        )
+    else:
+        decay_note = "<b>decay</b> = distance-decayed factor, floored at 0.25 (25%). "
     note = (
         f"<div class='note'>distance = nearest map-unit edge (0 if inside); "
         f"share = component %. {decay_note}A soil's <b>cond_prob</b> = its total "

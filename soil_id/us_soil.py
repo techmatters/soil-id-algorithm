@@ -2178,6 +2178,21 @@ def rank_soils(
             "b",
         ]
 
+        if explain is not None:
+            # The pit's FULL recorded profile (every property at every recorded
+            # depth), captured before the comparison drops uncompared columns, so
+            # the report can always show what the user entered — even a property a
+            # given candidate can't be compared against.
+            _pcols = [c for c in p_hz_data.columns if c != "compname"]
+            _recorded = set(pedon_slice_index)
+            explain.horizon["pedon_full"] = {
+                depth: {
+                    col: (None if pd.isna(v) else round(float(v), 2)) for col, v in zip(_pcols, row)
+                }
+                for depth, row in enumerate(p_hz_data[_pcols].to_numpy().tolist())
+                if depth in _recorded
+            }
+
         # Clean up the final data
         p_hz_data = p_hz_data.loc[:, ~p_hz_data.isnull().all()]
         p_hz_data = p_hz_data[p_hz_data.index.isin(pedon_slice_index)]

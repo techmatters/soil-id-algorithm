@@ -142,10 +142,13 @@ def _horizon_segments(recorder: Recorder, candidate: str) -> list:
     cand_full = recorder.horizon.get("candidate_full", {}).get(candidate, {})
     # candidate_full keys may be int (in-process) or str (after a JSON round-trip)
     cand_at = {int(d): v for d, v in cand_full.items()}
+    # The pit's full recorded profile (per depth -> {col: value}), so the user
+    # column always shows what was entered — even where it wasn't compared.
+    pedon_at = {int(d): v for d, v in recorder.horizon.get("pedon_full", {}).items()}
     compared = _compared_by_depth(recorder, candidate)
 
     cand_depths = [d for d, v in cand_at.items() if any(x is not None for x in v)]
-    depths = set(compared) | set(cand_depths)
+    depths = set(compared) | set(cand_depths) | set(pedon_at)
     if not depths:
         return []
     max_d = max(depths) + 1
@@ -155,9 +158,12 @@ def _horizon_segments(recorder: Recorder, candidate: str) -> list:
     for d in range(max_d):
         comp = compared.get(d)
         cvals = cand_at.get(d)
+        prow = pedon_at.get(d)
         features = []
         for k, col in enumerate(columns):
-            uv = comp["user"].get(col) if comp else None
+            # User value from the pit's recorded profile; fall back to the compared
+            # slice (older traces without pedon_full).
+            uv = prow.get(col) if prow else (comp["user"].get(col) if comp else None)
             cv = _num(cvals[k]) if cvals is not None and k < len(cvals) else None
             rng, nd = None, None
             if comp and comp["denom"].get(col):

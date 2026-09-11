@@ -148,13 +148,22 @@ def render_location(c):
     )
     boxes += ["<div class='locarrow'>&rarr;</div>", _locbox("normalized", normalized)]
 
-    decay_note = (
-        "<b>decay</b> = max(0.25, e<sup>−0.00036888 × distance_m</sup>) — an "
-        "exponential fall-off with distance, floored at 0.25 (which it reaches at "
-        "~3.8 km, then stays flat; the 0.00036888 rate ≈ a halving every ~1.9 km). "
-        if c.get("decay_multiplier") is not None
-        else ""
-    )
+    if c.get("decay_multiplier") is not None:  # global — coefficient known
+        decay_note = (
+            "<b>decay = max(0.25, e<sup>−0.00036888 × distance_m</sup>)</b> — an "
+            "exponential fall-off floored at 0.25. The −0.00036888 rate = ln(0.025) ÷ "
+            "10&nbsp;000, i.e. it's set so the raw exponential reaches ~0.025 (2.5%) at "
+            "10&nbsp;km; but the 0.25 floor takes over first (the exponential crosses "
+            "0.25 at ~3.8&nbsp;km), so anything beyond ~3.8&nbsp;km sits at the 0.25 "
+            "(25%) floor — including at 10&nbsp;km. "
+        )
+    else:  # US — data-source-dependent coefficient, not exposed
+        decay_note = (
+            "<b>decay = max(0.25, e<sup>coeff × distance_m</sup>)</b> — an exponential "
+            "fall-off floored at 0.25 (25%). The coefficient is data-source-specific "
+            "(SSURGO vs STATSGO) and not exposed here; the effective decay for this "
+            "candidate is shown above. "
+        )
     note = (
         f"<div class='note'>distance = nearest map-unit edge (0 if inside); "
         f"share = component %. {decay_note}A soil's <b>cond_prob</b> = its total "
@@ -333,7 +342,9 @@ def render_site(c):  # US site score (slope/elev/depth)
         for f in features
     )
     site_wt = c.get("weight")
-    # site distance = Σ(Δ × weight) ÷ Σweight; similarity = 1 − that; score = ×site_wt.
+    # Headline is the RAW site similarity (1 − site distance); the 0.5 site weight
+    # is applied in the Combined roll-up, not baked in here.
+    sim = (c.get("score") / site_wt) if site_wt else c.get("score")
     num = sum(
         f["norm_diff"] * f["weight"]
         for f in features
@@ -343,21 +354,18 @@ def render_site(c):  # US site score (slope/elev/depth)
     combine = ""
     if wsum:
         d = num / wsum
-        sim = 1 - d
         combine = (
             f"<div class='lf'>site distance = Σ(Δ × weight) ÷ Σweight = {fmt(d)}</div>"
-            f"<div class='lf'>similarity = 1 − {fmt(d)} = {fmt(sim)}</div>"
-            f"<div class='lf'>site score = {fmt(sim)} × {fmt(site_wt)} "
-            f"<span class='hint'>(site weight)</span> = <b>{fmt(c.get('score'))}</b></div>"
+            f"<div class='lf'>site similarity = 1 − {fmt(d)} = <b>{fmt(sim)}</b></div>"
         )
     return (
-        f"<div class='comp'><div class='ctitle blue'>Site <b>{fmt(c.get('score'))}</b></div>"
+        f"<div class='comp'><div class='ctitle blue'>Site <b>{fmt(sim)}</b></div>"
         f"<table class='hz'><tr><th>feature</th><th>soil pit</th><th>candidate</th>"
         f"<th>Δ</th><th>weight</th></tr>{feats}</table>{combine}"
         f"<div class='note'>Δ = |soil pit − candidate| ÷ range (same normalization as "
         f"the horizon). Features are weighted (slope 1, elevation 0.5, depth-to-bedrock "
-        f"1.5); the site score is then scaled by the {fmt(site_wt)} site weight used in "
-        f"the properties roll-up.</div></div>"
+        f"1.5). This is the raw site similarity; it counts toward the combined score at "
+        f"weight {fmt(site_wt)} (folded into the % in the roll-up below).</div></div>"
     )
 
 
@@ -370,8 +378,8 @@ RENDERERS = {
 
 
 def render_combined(cand):
-    """Roll-up shown at the bottom: how the blue scores combine.
-    properties = weighted avg(horizon, site|color); combined = (properties + location) ÷ 2."""
+    """Bottom roll-up: the combined score as a flat weighted sum of the base
+    scores (a re-expression of the nested properties/combined math)."""
     comps = {c["type"]: c for c in cand["score_components"]}
     hz = comps.get("horizon", {}).get("score")
     loc = comps.get("location", {}).get("score")
@@ -379,28 +387,40 @@ def render_combined(cand):
     combined = cand.get("combined_score")
     site, color = comps.get("site"), comps.get("color")
 
+    # The "properties" partner of horizon (site for US, color for global) and its
+    # weight. Site is stored pre-scaled by its weight, so recover the raw value.
     if site is not None:
-        s = site.get("score")
-        props_line = (
-            f"<b class='blue'>properties</b> = (<b class='blue'>horizon</b> {fmt(hz)} + "
-            f"<b class='blue'>site</b> {fmt(s)}) ÷ 1.5 = <b>{fmt(props)}</b>"
-        )
-        inputs = "horizon (wt 1), site (wt 0.5)"
+        pw = site.get("weight") or 0.5
+        praw = (site.get("score") / pw) if pw else site.get("score")
+        plabel = "site"
     elif color is not None:
-        cc, w = color.get("score"), color.get("weight", 0.3)
-        props_line = (
-            f"<b class='blue'>properties</b> = (<b class='blue'>horizon</b> {fmt(hz)} + "
-            f"{w} × <b class='blue'>color</b> {fmt(cc)}) ÷ {round(1 + w, 3)} = <b>{fmt(props)}</b>"
-        )
-        inputs = f"horizon (wt 1), color (wt {w})"
+        pw = color.get("weight", 0.3)
+        praw = color.get("score")  # colour similarity is already raw
+        plabel = "color"
     else:
-        props_line = f"<b class='blue'>properties</b> = <b class='blue'>horizon</b> {fmt(hz)}"
-        inputs = "horizon"
+        pw, praw, plabel = 0.0, None, None
 
-    combined_line = (
-        f"<b class='blue'>combined</b> = (properties {fmt(props)} + "
-        f"<b class='blue'>location</b> {fmt(loc)}) ÷ 2 = <b class='blue'>{fmt(combined)}</b>"
+    # Flatten the nested weights into each base score's share of the final:
+    #   location: 1/2; horizon: 1/2 · 1/(1+pw); partner: 1/2 · pw/(1+pw).
+    wl = 0.5
+    wh = 0.5 * (1 / (1 + pw))
+    wp = 0.5 * (pw / (1 + pw)) if plabel else 0.0
+
+    def row(name, val, w):
+        contrib = val * w if val is not None else None
+        return (
+            f"<tr><td><b class='blue'>{name}</b></td>"
+            f"<td>{fmt(val)}</td><td>× {w * 100:.1f}%</td><td>= {fmt(contrib)}</td></tr>"
+        )
+
+    body = row("location", loc, wl) + row("horizon", hz, wh)
+    if plabel:
+        body += row(plabel, praw, wp)
+    body += (
+        f"<tr class='ctot'><td><b class='blue'>combined</b></td><td></td><td></td>"
+        f"<td>= <b class='blue'>{fmt(combined)}</b></td></tr>"
     )
+
     ov_line = ""
     for o in cand.get("overrides", []):
         ov_line = (
@@ -408,17 +428,22 @@ def render_combined(cand):
             f"{fmt(o.get('score_before'))} &rarr; <b>{fmt(o.get('score_after'))}</b> "
             f"— {esc(o.get('rule', ''))}</div>"
         )
+
+    exact = (
+        f"exact (nested): properties = (horizon + {pw:g} × {plabel}) ÷ {1 + pw:g}; "
+        f"combined = (properties {fmt(props)} + location) ÷ 2"
+        if plabel
+        else f"exact: combined = (horizon {fmt(props)} + location) ÷ 2"
+    )
     return (
         f"<div class='combinedbox'><div class='ctitle blue'>Combined score "
         f"<b>{fmt(combined)}</b></div>"
-        f"<div class='lf'>{props_line}</div>"
-        f"<div class='lf'>{combined_line}</div>{ov_line}"
-        f"<div class='lf' style='margin-top:4px'><b>weights</b> → {inputs}; then "
-        f"<b class='blue'>properties</b> and <b class='blue'>location</b> equally "
-        f"(1 each) — so <b class='blue'>location</b> is ~half the final score.</div>"
-        f"<div class='note'>Every score is normalized to 0–1 by these "
-        f"weighted-average denominators, so combined stays ≤ 1 (the only exception "
-        f"is a rule override, which force-sets it to 1.001 / 0.001).</div></div>"
+        f"<table class='lt ctbl'>{body}</table>{ov_line}"
+        f"<div class='note'><b class='blue'>location</b> is always half the score; the "
+        f"other half is properties, split between <b class='blue'>horizon</b> and "
+        f"<b class='blue'>{plabel or '—'}</b> (so {plabel or 'the partner'} is the "
+        f"smallest share). The percentages shift if a component is absent. "
+        f"<span class='hint'>{exact}</span></div></div>"
     )
 
 
@@ -466,6 +491,8 @@ h1{font-size:18px} .site{color:#666;margin-bottom:14px}
 table.lt{border-collapse:collapse;font-size:11.5px}
 table.lt td,table.lt th{padding:1px 6px 1px 0;text-align:left;color:#445}
 table.lt th{color:#789;font-weight:600}
+table.ctbl{font-size:12.5px;margin:2px 0} table.ctbl td{padding:1px 10px 1px 0}
+table.ctbl .ctot td{border-top:1px solid #cdd6e6;padding-top:3px}
 table.hz{border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums;margin-top:4px}
 table.hz th,table.hz td{border:1px solid #e6e6ee;padding:2px 7px;text-align:right}
 table.hz th{background:#eef;text-align:center} /* center all header labels */

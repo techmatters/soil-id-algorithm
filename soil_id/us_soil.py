@@ -2432,8 +2432,13 @@ def rank_soils(
                         dis_mat[pedon_idx, j] = dis_max
                         dis_mat[j, pedon_idx] = dis_max
 
-            # 2) Every other NaN (component–component or missing–missing) → zero
-            dis_mat[np.isnan(dis_mat)] = 0.0
+            # 2) Remaining NaN → 0, EXCEPT where both sides have soil but nothing was
+            #    comparable (disjoint recorded properties). Those carry no
+            #    information, so leave them NaN to be masked out of the weighted
+            #    average below rather than counted as a 0 (perfect-match) — matching
+            #    the global path. See soil-id-algorithm#389.
+            both_soil = soil_slice[:, np.newaxis] & soil_slice[np.newaxis, :]
+            dis_mat[np.isnan(dis_mat) & ~both_soil] = 0.0
 
             dis_mat_list[i] = dis_mat
 

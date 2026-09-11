@@ -218,15 +218,27 @@ def _candidate_trace(name: str, recorder: Recorder) -> dict:
         floor_m = round(math.log(0.25) / coeff)  # distance where exp == 0.25
 
     # Grand total = Σ comp_distance_score over the distinct component groups (the
-    # cond_prob denominator). Not itemized per map unit: a component's
-    # comp_distance_score aggregates all its map-unit occurrences, some of which
-    # get filtered before ranking and so aren't shown as separate candidates.
+    # cond_prob denominator).
     totals = {}
     for other in recorder.location.values():
         g = other.get("compname_grp")
         if g is not None and g not in totals:
             totals[g] = _num(other.get("sum_distance_score")) or 0.0
     total = round(sum(totals.values()), 4) if totals else None
+
+    # This series' visible map-unit occurrences (the candidates sharing its group),
+    # deduped by map unit. Their distance_scores are what sum toward
+    # comp_distance_score — though some occurrences are filtered before ranking, so
+    # they may not fully add up (the renderer shows any remainder).
+    grp = loc.get("compname_grp")
+    occ, seen_mukeys = [], set()
+    for other_name, other in recorder.location.items():
+        if grp is not None and other.get("compname_grp") == grp:
+            mukey = other.get("mukey")
+            if mukey in seen_mukeys:
+                continue
+            seen_mukeys.add(mukey)
+            occ.append({"name": other_name, "distance_score": _num(other.get("distance_score"))})
 
     components.append(
         {
@@ -241,6 +253,7 @@ def _candidate_trace(name: str, recorder: Recorder) -> dict:
             "distance_score": _num(loc.get("distance_score")),
             # the component's total across all its map units (cond_prob numerator)
             "comp_distance_score": _num(loc.get("sum_distance_score")),
+            "occurrences": occ,
             "total_distance_score": total,
             "score": _num(loc.get("cond_prob")),
         }
@@ -307,6 +320,7 @@ def _candidate_trace(name: str, recorder: Recorder) -> dict:
     return {
         "name": name,
         "component_id": loc.get("cokey"),
+        "compname_grp": loc.get("compname_grp"),
         "combined_score": _num(scores.get("combined_score")),
         "properties_score": _num(scores.get("properties_score")),
         "score_components": components,
@@ -325,6 +339,22 @@ def build_trace(recorder: Recorder) -> dict:
     ):
         cand["rank"] = rank
     candidates.sort(key=lambda c: c["rank"])
+
+    # The application shows one entry per component group (the best-scoring one).
+    # Mark each candidate's app rank; a lower-scoring duplicate of the same series
+    # points at the representative that stands in for it.
+    reps: dict = {}  # compname_grp -> (representative name, app rank)
+    app_n = 0
+    for cand in candidates:  # rank order
+        grp = cand.get("compname_grp") or cand["name"]
+        if grp not in reps:
+            app_n += 1
+            reps[grp] = (cand["name"], app_n)
+            cand["app_rank"], cand["app_repr"] = app_n, None
+        else:
+            cand["app_rank"] = None
+            cand["app_repr"] = {"name": reps[grp][0], "app_rank": reps[grp][1]}
+
     return {
         "version": TRACE_VERSION,
         "site": recorder.site,

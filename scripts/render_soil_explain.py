@@ -130,11 +130,21 @@ def render_location(c):
         _locbox(dlabel, decayed),
     ]
 
-    # component total (only when the component spans more than this one map unit)
+    # component total (only when the component spans more than this one map unit).
+    # Itemize the visible map-unit occurrences (candidates of the same series) that
+    # sum toward it; note any remainder from occurrences filtered before ranking.
     if multi:
+        occ = sorted(
+            (o for o in (c.get("occurrences") or []) if o.get("distance_score") is not None),
+            key=lambda o: -o["distance_score"],
+        )
+        parts = " + ".join(f"{esc(o['name'])} {o['distance_score']:.3f}" for o in occ)
+        shown = sum(o["distance_score"] for o in occ)
+        rem = (comp - shown) if comp is not None else 0.0
+        extra = f" + {rem:.3f} <span class='hint'>(other map units)</span>" if rem > 0.005 else ""
         combine = (
-            f"<div class='lf'>sum over this</div><div class='lf'>component's map units</div>"
-            f"<div class='lf'>= <b>{fmt(comp)}</b></div>"
+            f"<div class='lf lfwrap'>sum over this series' map units:</div>"
+            f"<div class='lf lfwrap'>{parts}{extra} = <b>{fmt(comp)}</b></div>"
         )
         boxes += ["<div class='locarrow'>&rarr;</div>", _locbox("component total", combine)]
 
@@ -458,10 +468,21 @@ def render_candidate(cand):
             f"<div class='override'>⚑ override: <b>{esc(o['rule'])}</b> — "
             f"score {fmt(o.get('score_before'))} &rarr; {fmt(o.get('score_after'))}</div>"
         )
+    # App visibility: the app shows one entry per series (the best-scoring one).
+    ar, rep = cand.get("app_rank"), cand.get("app_repr")
+    if ar is not None:
+        appnote = f"<span class='appnote'>shown in the app as #{ar}</span>"
+    elif rep:
+        appnote = (
+            f"<span class='appnote dup'>duplicate of this series — not shown "
+            f"separately in the app; folded into {esc(rep['name'])} (app #{rep['app_rank']})</span>"
+        )
+    else:
+        appnote = ""
     return (
         f"<div class='card'><div class='chead'>"
         f"<span class='rank'>Candidate #{cand.get('rank')}</span>"
-        f"<span class='name'>{esc(cand['name'])}</span>"
+        f"<span class='name'>{esc(cand['name'])}</span>{appnote}"
         f"<span class='combined'>combined {bar(cand.get('combined_score'))}</span>"
         f"<span class='props'>properties {fmt(cand.get('properties_score'))}</span></div>"
         f"{ov}{comps}{render_combined(cand)}</div>"
@@ -475,7 +496,9 @@ h1{font-size:18px} .site{color:#666;margin-bottom:14px}
   box-shadow:0 1px 2px rgba(0,0,0,.05)}
 .chead{display:flex;align-items:center;gap:14px;border-bottom:1px solid #eee;padding-bottom:6px;margin-bottom:8px}
 .rank{font-weight:700;color:#fff;background:#456;border-radius:12px;padding:1px 9px}
-.name{font-weight:700;font-size:15px;flex:1} .props{color:#666}
+.name{font-weight:700;font-size:15px} .props{color:#666}
+.appnote{flex:1;font-size:11px;color:#3a7a3a;font-weight:600}
+.appnote.dup{color:#98812e;font-weight:500;font-style:italic}
 .bar{display:inline-block;height:11px;background:#eee;border-radius:6px;vertical-align:middle;overflow:hidden}
 .bar>span{display:block;height:100%} .barval{margin-left:6px;font-variant-numeric:tabular-nums}
 .comp{margin:8px 0} .ctitle{font-weight:600;color:#345;margin-bottom:3px}

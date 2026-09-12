@@ -2358,12 +2358,16 @@ def rank_soils(
         D_horz = None
 
     # ---Site Data Similarity---
+    # Only look up elevation when the caller didn't supply one; otherwise use the
+    # caller-provided pElev as-is. Previously the parse ran unconditionally and
+    # referenced pElev_dict even when pElev was passed in, raising UnboundLocalError
+    # (which the except below doesn't catch).
     if pElev is None:
         pElev_dict = get_elev_data(lon, lat)
-    try:
-        pElev = float(pElev_dict["value"])
-    except (KeyError, TypeError, ValueError):
-        pElev = None  # or some default
+        try:
+            pElev = float(pElev_dict["value"])
+        except (KeyError, TypeError, ValueError):
+            pElev = None  # or some default
 
     # 1) “Raw” guard on the three possible site inputs:
     provided = {

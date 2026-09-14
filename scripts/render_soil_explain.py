@@ -291,21 +291,19 @@ def render_horizon(c):
         if compared
         else "none"
     )
-    # Weighted combine over depths: weight = wt × band thickness (cm). This lands on
-    # the horizon score, making the role of wt explicit.
-    tw = tc = 0.0
-    for s in compared:
-        d = s.get("slice_distance")
-        if d is None:
-            continue
-        w = s["depth_weight"] * (s["bottom"] - s["top"])
-        tw += w
-        tc += w * d
-    hz_dist = tc / tw if tw else None
+    # The algorithm's horizon score is 1 − D_sum, where D_sum is the depth-weighted
+    # mean of the per-slice distances (weight = depth_weight per cm), masking depths
+    # with no comparable property (soil-id-algorithm#389). So the authoritative
+    # distance is 1 − score; we take it straight from the score rather than
+    # re-deriving it from the bands below (band grouping + masking don't reproduce
+    # it exactly). The per-depth table below shows the slice distances that feed it.
+    hz_score = c.get("score")
+    hz_dist = None if hz_score is None else 1 - hz_score
     combine = (
-        f"<div class='note'>→ horizon distance = Σ(wt × cm × slice&nbsp;dist) ÷ "
-        f"Σ(wt × cm) = <b>{fmt(hz_dist)}</b>; horizon score = 1 − {fmt(hz_dist)} = "
-        f"<b>{fmt(c.get('score'))}</b></div>"
+        f"<div class='note'>→ horizon distance (depth-weighted mean of the per-slice "
+        f"distances below, masking depths with no comparable property) = "
+        f"<b>{fmt(hz_dist)}</b>; horizon score = 1 − {fmt(hz_dist)} = "
+        f"<b>{fmt(hz_score)}</b></div>"
         if hz_dist is not None
         else ""
     )

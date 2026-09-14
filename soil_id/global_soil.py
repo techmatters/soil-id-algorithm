@@ -57,6 +57,25 @@ class SoilListOutputData:
     map_unit_component_data_csv: str
 
 
+# Depth (cm) beyond which a shallow-soil group (leptosols/lithosols/rendzinas/
+# rankers) is considered impossible and demoted. PROVISIONAL — leptosols are
+# defined at ~25-30 cm to rock, so a soil scientist may prefer ~30; change here
+# and regenerate the global snapshots. See #375.
+LEPTOSOL_MAX_BEDROCK_CM = 50
+
+# Fixed "plausible range" (low, high) per numeric property used in the global
+# per-slice Gower distance (#377). Without these, gower_distances normalizes each
+# feature by that slice's own min/max — which includes the user's sample_pedon
+# value — so changing one input rescales every candidate's distance in every
+# slice. Reused from the US path's `global_prop_bounds` (us_soil.py). Confirm the
+# values with a soil scientist if the global data distribution differs.
+GLOBAL_HORIZON_PROP_BOUNDS = {
+    "sandpct_intpl": (10.0, 92.0),
+    "claypct_intpl": (5.0, 70.0),
+    "rfv_intpl": (0.0, 80.0),
+}
+
+
 # entry points
 # getSoilLocationBasedGlobal
 # list_soils
@@ -245,6 +264,7 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
     cec_lyrs = []
     ph_lyrs = []
     ec_lyrs = []
+    lyr_cokeys = []  # cokey per loop iteration, to realign the *_lyrs lists (see #378)
 
     for group_key, group in muhorzdata_group_cokey:
         profile = (
@@ -336,6 +356,7 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
 
         c_bottom_depths.append(c_bottom_temp)
         getProfile_cokey.append(combined_data)
+        lyr_cokeys.append(combined_data["cokey"].iloc[0])
 
         comp_texture_list = [x for x in profile.texture.str.lower() if x]
         clay_val = "Yes" if any("clay" in string for string in comp_texture_list) else "No"
@@ -440,7 +461,6 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
     )
 
     mucompdata_cond_prob = mucompdata_cond_prob.drop_duplicates().reset_index(drop=True)
-    mucomp_index = mucompdata_cond_prob.index
 
     # Extract site information
     Site = [
@@ -464,7 +484,13 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
         for _, row in mucompdata_cond_prob.iterrows()
     ]
 
-    # Reordering lists using list comprehension and mucomp_index
+    # Align the per-component profile lists (built above in cokey-group order)
+    # with mucompdata_cond_prob's final ordering by matching on cokey. The prior
+    # code indexed positionally, which silently paired each soil with a DIFFERENT
+    # component's profile whenever the two orderings differed (#378: e.g. a shallow
+    # Leptosol displayed with a deep soil's 0–120 cm profile). Every cokey in
+    # mucompdata_cond_prob has a list entry (mucompdata was filtered to
+    # c_bottom_depths.cokey above), so the lookup is total and 1:1.
     lists_to_reorder = [
         hz_lyrs,
         snd_lyrs,
@@ -475,12 +501,9 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
         ph_lyrs,
         ec_lyrs,
     ]
-    for idx, lst in enumerate(lists_to_reorder):
-        if len(lst) < max(mucomp_index) + 1:
-            print(
-                f"List at index {idx} is too short: len={len(lst)}, max index in mucomp_index={max(mucomp_index)}"
-            )
-    reordered_lists = [[lst[i] for i in mucomp_index] for lst in lists_to_reorder]
+    cokey_to_pos = {cokey: pos for pos, cokey in enumerate(lyr_cokeys)}
+    reorder_idx = [cokey_to_pos[cokey] for cokey in mucompdata_cond_prob["cokey"]]
+    reordered_lists = [[lst[i] for i in reorder_idx] for lst in lists_to_reorder]
 
     # Destructuring reordered lists for clarity
     (
@@ -579,7 +602,16 @@ def _slice_gower_distance(slice_mat, return_details=False):
         n = slice_mat.shape[0]
         empty = np.full((n, n), np.nan)
         return (empty, None) if return_details else empty
-    return gower_distances(slice_mat, return_details=return_details)
+    # Pass fixed feature ranges (#377) so normalization doesn't depend on the
+    # user's own value. Columns are a subset of GLOBAL_HORIZON_PROP_BOUNDS and all
+    # numeric, so ranges align 1:1 with the numeric features gower processes.
+    cols = list(slice_mat.columns)
+    ranges = None
+    if all(c in GLOBAL_HORIZON_PROP_BOUNDS for c in cols):
+        ranges = [
+            GLOBAL_HORIZON_PROP_BOUNDS[c][1] - GLOBAL_HORIZON_PROP_BOUNDS[c][0] for c in cols
+        ]
+    return gower_distances(slice_mat, theoretical_ranges=ranges, return_details=return_details)
 
 
 ##############################################################################################
@@ -615,6 +647,18 @@ def rank_soils_global(
     # Drop rows where all values are NaN
     soil_df.dropna(how="all", inplace=True)
 
+    # #375: "no bedrock provided" must NOT be treated as "bedrock is deep". When
+    # the bedrock field is blank, use the deepest observed user horizon as an
+    # implicit lower bound on bedrock depth (recording soil to depth D means rock
+    # is below D), so shallow soils are demoted only when the profile is actually
+    # known to be deeper than they can be. None => unknown => no demotion.
+    if bedrock is not None:
+        effective_bedrock = bedrock
+    elif not soil_df.empty and soil_df["bottom"].notna().any():
+        effective_bedrock = soil_df["bottom"].max()
+    else:
+        effective_bedrock = None
+
     if explain is not None:
         explain.region = "GLOBAL"
         explain.site = {"lat": lat, "lon": lon}
@@ -631,7 +675,7 @@ def rank_soils_global(
             ],
             "bedrock": bedrock,
             "cracks": cracks,
-            "effective_bedrock_cm": None if bedrock is None else float(bedrock),
+            "effective_bedrock_cm": None if effective_bedrock is None else float(effective_bedrock),
         }
 
     # Replace NaNs with None for consistency
@@ -789,6 +833,15 @@ def rank_soils_global(
     # Load in component data from soilIDList
     soilIDRank_output_pd = pd.read_csv(io.StringIO(list_output_data.rank_data_csv))
     mucompdata_pd = pd.read_csv(io.StringIO(list_output_data.map_unit_component_data_csv))
+
+    # Align candidate ordering across the horizon calculation. The soil-vs-non-soil
+    # matrix (soil_matrix) and the final compname labels are built positionally from
+    # mucompdata order, but the per-slice Gower matrices are built from
+    # groupby("compname", sort=True) — a DIFFERENT order. Positionally combining the
+    # two applied each candidate's depth (no-soil) mask, and later its horizon score,
+    # to the WRONG component. Sorting mucompdata by compname here makes all three
+    # orderings identical so the positional combines line up.
+    mucompdata_pd = mucompdata_pd.sort_values("compname").reset_index(drop=True)
 
     # Create soil depth DataFrame and subset component depths based on max user depth
     # if no bedrock specified
@@ -1282,14 +1335,19 @@ def rank_soils_global(
             D_final_loc.at[i, "Score_Data_Loc"] = 1.001
         elif bedrock is not None and 10 < bedrock <= 30 and "leptosols" in row["compname"].lower():
             D_final_loc.at[i, "Score_Data_Loc"] = 1.001
-        elif (bedrock is None or bedrock > 50) and any(
-            term in row["compname"].lower()
-            for term in ["lithosols", "leptosols", "rendzinas", "rankers"]
+        elif (
+            effective_bedrock is not None
+            and effective_bedrock > LEPTOSOL_MAX_BEDROCK_CM
+            and any(
+                term in row["compname"].lower()
+                for term in ["lithosols", "leptosols", "rendzinas", "rankers"]
+            )
         ):
             D_final_loc.at[i, "Score_Data_Loc"] = 0.001
             if explain is not None:
                 explain.overrides[row["compname"]] = {
-                    "rule": f"demote shallow soil (bedrock {bedrock} > 50)",
+                    "rule": f"demote shallow soil (effective_bedrock "
+                    f"{effective_bedrock} > {LEPTOSOL_MAX_BEDROCK_CM})",
                     "score_before": _pre_override.get(row["compname"]),
                     "score_after": 0.001,
                 }

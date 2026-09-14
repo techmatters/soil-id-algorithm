@@ -873,7 +873,12 @@ def check_pairwise_arrays(X, Y, precomputed=False, dtype=None):
 
 
 def gower_distances(
-    X, Y=None, feature_weight=None, categorical_features=None, theoretical_ranges=None
+    X,
+    Y=None,
+    feature_weight=None,
+    categorical_features=None,
+    theoretical_ranges=None,
+    return_details=False,
 ):
     """
     Computes the Gower distances between X and Y using mixed-type data,
@@ -969,6 +974,20 @@ def gower_distances(
         dm[i, start:] = row
         if Y is None:
             dm[start:, i] = row
+
+    if return_details:
+        # Expose the normalization so an explain/report layer can show exactly how
+        # each numeric feature contributed, without re-deriving the math. Arrays are
+        # in numeric-feature order (i.e. the input columns where categorical is
+        # False); the caller knows the column names.
+        details = {
+            "numeric_mask": ~categorical_features,
+            "slice_min": slice_min,
+            "denom": denom,
+            "x_num_normalized": X_num,
+            "feature_weight_num": feature_weight_num,
+        }
+        return dm, details
     return dm
 
 

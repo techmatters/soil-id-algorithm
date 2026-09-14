@@ -29,6 +29,7 @@ from pandas import json_normalize
 import soil_id.config
 
 from .color import getProfileLAB, lab2munsell, munsell2rgb
+from .explain import Recorder, build_trace
 from .rank_utils import finalize_rank_output
 from .services import get_elev_data, get_soil_series_data, get_soilweb_data, sda_return
 from .soil_sim import soil_sim
@@ -1997,6 +1998,7 @@ def rank_soils(
     pElev,
     bedrock,
     cracks,
+    explain: "Recorder | None" = None,
 ):
     """
     TODO: Future testing to see if deltaE2000 values should be incorporated
@@ -2006,6 +2008,29 @@ def rank_soils(
     # Check if list_output_data is a string (error message) instead of expected object
     if isinstance(list_output_data, str):
         return {"error": f"Cannot rank soils: {list_output_data}"}
+
+    if explain is not None:
+        explain.region = "US"
+        explain.site = {"lat": lat, "lon": lon}
+        explain.inputs = {
+            "horizons": [
+                {
+                    "top": t,
+                    "bottom": b,
+                    "texture": h,
+                    "rfv": rf,
+                    "lab": list(c) if c is not None else None,
+                }
+                for h, t, b, rf, c in zip(soilHorizon, topDepth, bottomDepth, rfvDepth, lab_Color)
+            ],
+            "bedrock": bedrock,
+            "cracks": cracks,
+            "slope": pSlope,
+            "elev": pElev,
+            # US has no "implicit bedrock from deepest horizon" concept; show the
+            # deepest recorded depth for the pit header.
+            "effective_bedrock_cm": (float(max(bottomDepth)) if bottomDepth else None),
+        }
 
     # ---------------------------------------------------------------------------------------
     # ------ Load in user data --------#
@@ -2075,6 +2100,16 @@ def rank_soils(
         cpt = [getClay(sh) for sh in soilHorizon]
         p_cfg = [getCF_fromClass(rf) for rf in rfvDepth]
 
+        if explain is not None:
+            # Record the sand/clay/rock-fragment the texture class + rfv class map to
+            # (the numbers the horizon comparison actually uses).
+            def _r(v):
+                return None if v is None or pd.isna(v) else round(float(v), 1)
+
+            for i, h in enumerate(explain.inputs.get("horizons", [])):
+                if i < len(spt):
+                    h["sand"], h["clay"], h["rfv_pct"] = _r(spt[i]), _r(cpt[i]), _r(p_cfg[i])
+
         # Initialize full-length property arrays with NaNs
         sand_array = [np.nan] * max_user_depth
         clay_array = [np.nan] * max_user_depth
@@ -2142,6 +2177,21 @@ def rank_soils(
             "a",
             "b",
         ]
+
+        if explain is not None:
+            # The pit's FULL recorded profile (every property at every recorded
+            # depth), captured before the comparison drops uncompared columns, so
+            # the report can always show what the user entered — even a property a
+            # given candidate can't be compared against.
+            _pcols = [c for c in p_hz_data.columns if c != "compname"]
+            _recorded = set(pedon_slice_index)
+            explain.horizon["pedon_full"] = {
+                depth: {
+                    col: (None if pd.isna(v) else round(float(v), 2)) for col, v in zip(_pcols, row)
+                }
+                for depth, row in enumerate(p_hz_data[_pcols].to_numpy().tolist())
+                if depth in _recorded
+            }
 
         # Clean up the final data
         p_hz_data = p_hz_data.loc[:, ~p_hz_data.isnull().all()]
@@ -2215,6 +2265,11 @@ def rank_soils(
     if p_hz_data is None or p_hz_data.empty or p_bottom_depth.bottom_depth.le(0).any():
         soilIDRank_output_pd = None
     else:
+        # Keep the un-subset frame so the report can still show a property the user
+        # didn't enter (e.g. rock fragments): it's dropped from the comparison
+        # (all-NaN) but the candidate has values worth showing.
+        soilIDRank_output_full = soilIDRank_output_pd
+
         # Subset component soil properties to match user measured properties
         soilIDRank_output_pd = soilIDRank_output_pd[p_hz_data_names]
 
@@ -2224,6 +2279,23 @@ def rank_soils(
     # Horizon Data Similarity
     if soilIDRank_output_pd is not None:
         groups = [group for _, group in soilIDRank_output_pd.groupby(["compname"], sort=True)]
+
+        if explain is not None:
+            # Full candidate profiles over the CANONICAL property set (not just the
+            # user-entered subset), so the report always shows sand/clay/rfv + color
+            # — with "—" on the user side and no Δ for any property the user skipped.
+            # Depth is the row position within each group (the interpolated 0..199
+            # profile), NOT the concatenated frame's index.
+            canonical = ["sandpct_intpl", "claypct_intpl", "rfv_intpl", "l", "a", "b"]
+            full_cols = [c for c in canonical if c in soilIDRank_output_full.columns]
+            explain.horizon["columns"] = full_cols
+            explain.horizon["candidate_full"] = {
+                sorted(g["compname"].unique())[0]: {
+                    depth: [None if pd.isna(v) else round(float(v), 2) for v in row]
+                    for depth, row in enumerate(g[full_cols].to_numpy().tolist())
+                }
+                for _, g in soilIDRank_output_full.groupby("compname", sort=True)
+            }
 
         Comp_Rank_Status = []
         Comp_Missing_Status = []
@@ -2283,6 +2355,7 @@ def rank_soils(
             # 100-120cm data, then i = 100:120
             slice_data = [horz.loc[i] for horz in horz_vars]
             sliceT = pd.concat(slice_data, axis=1).T
+            slice_compnames = sliceT["compname"].tolist()  # row 0 = sample_pedon
             """
             Not all depth slices have the same user recorded data. Here we filter out data columns
             with missing data and use that to subset the component data.
@@ -2305,9 +2378,24 @@ def rank_soils(
             sliceT = sliceT[sample_pedon_slice_vars]
 
             theoretical_prop_ranges = [global_prop_ranges[c] for c in sample_pedon_slice_vars]
-            D = gower_distances(
-                sliceT, theoretical_ranges=theoretical_prop_ranges
-            )  # Equal weighting given to all soil variables
+            if explain is not None:
+                D, details = gower_distances(
+                    sliceT, theoretical_ranges=theoretical_prop_ranges, return_details=True
+                )
+                explain.horizon.setdefault("slices", []).append(
+                    {
+                        "depth": int(i),
+                        "compnames": slice_compnames,
+                        "columns": list(sliceT.columns),
+                        "values": sliceT.to_numpy(dtype=float).tolist(),
+                        "slice_min": None if details is None else details["slice_min"].tolist(),
+                        "denom": None if details is None else details["denom"].tolist(),
+                    }
+                )
+            else:
+                D = gower_distances(
+                    sliceT, theoretical_ranges=theoretical_prop_ranges
+                )  # Equal weighting given to all soil variables
 
             dis_mat_list.append(D)
 
@@ -2343,6 +2431,14 @@ def rank_soils(
             dis_mat[np.isnan(dis_mat)] = 0.0
 
             dis_mat_list[i] = dis_mat
+
+        # Capture the POST-infill pedon-to-candidate distance per slice (so the trace
+        # reflects the no-soil penalty, not the pre-infill NaN). Aligns with the
+        # slices recorded in the loop above.
+        if explain is not None:
+            for idx, dis_mat in enumerate(dis_mat_list):
+                explain.horizon["slices"][idx]["dist_from_pedon"] = [float(x) for x in dis_mat[0]]
+            explain.horizon["dis_max"] = float(dis_max)
 
         # Weighted average of depth-wise dissimilarity matrices
         dis_mat_list = np.ma.MaskedArray(dis_mat_list, mask=np.isnan(dis_mat_list))
@@ -2414,13 +2510,54 @@ def rank_soils(
 
         # 9) Compute Gower distances on exactly those feature columns
         site_mat = full_df.set_index("compname")[features]
-        D_raw = gower_distances(site_mat, feature_weight=weights)
+        if explain is not None:
+            D_raw, site_details = gower_distances(
+                site_mat, feature_weight=weights, return_details=True
+            )
+        else:
+            D_raw = gower_distances(site_mat, feature_weight=weights)
 
         # 10 Replace any NaNs with the max distance, then (optionally) convert to similarity
         D_site = np.where(np.isnan(D_raw), np.nanmax(D_raw), D_raw)
 
         site_wt = 0.5
         D_site = (1 - D_site) * site_wt
+
+        if explain is not None:
+            # Per-candidate site breakdown. Row 0 of site_mat is the pedon; rows 1..
+            # are the candidates in mucompdata order. D_site[0][j] is the pedon↔
+            # candidate site similarity contribution.
+            site_names = full_df["compname"].tolist()
+            # `denom` is aligned to the NUMERIC feature columns only (a site feature
+            # such as slope_r is categorical when passed as a string), so walk the
+            # numeric mask to map each denominator back to its feature name.
+            site_denom = {}
+            if site_details is not None:
+                nmask = site_details["numeric_mask"]
+                dvals = site_details["denom"]
+                di = 0
+                for k, f in enumerate(features):
+                    if k < len(nmask) and nmask[k]:
+                        site_denom[f] = float(dvals[di])
+                        di += 1
+
+            def _sv(v):
+                return None if v is None or pd.isna(v) else float(v)
+
+            explain.site_score = {
+                "features": list(features),
+                "weights": {f: float(w) for f, w in zip(features, weights)},
+                "site_wt": site_wt,
+                "denom": site_denom,
+                "pedon": {f: _sv(site_mat.iloc[0][f]) for f in features},
+                "candidates": {
+                    site_names[j]: {
+                        "values": {f: _sv(site_mat.iloc[j][f]) for f in features},
+                        "score": float(D_site[0][j]),
+                    }
+                    for j in range(1, len(site_names))
+                },
+            }
 
     # Create the D_final dataframe based on the availability of D_horz and D_site data
 
@@ -2651,4 +2788,34 @@ def rank_soils(
         ]
     ].fillna(0.0)
 
-    return finalize_rank_output(D_final_loc, location="us")
+    result = finalize_rank_output(D_final_loc, location="us")
+
+    if explain is not None:
+        explain.location = {
+            r["compname"]: {
+                "distance_m": r.get("distance"),
+                "share_pct": r.get("comppct_r"),
+                "cond_prob": r.get("cond_prob"),
+                "cokey": r.get("cokey"),
+                # Real intermediates from process_distance_scores (Fan et al.), so
+                # the report can show the true decay -> combine -> normalize flow.
+                "distance_score": r.get("distance_score"),
+                "sum_distance_score": r.get("comp_distance_score"),
+                "compname_grp": r.get("compname_grp"),
+                "mukey": r.get("mukey"),
+                "data_source": r.get("data_source"),  # SSURGO | STATSGO (sets decay coeff)
+            }
+            for r in mucompdata_pd.to_dict("records")
+        }
+        explain.scores = {
+            r["compname"]: {
+                "horizon_score": r.get("D_horz"),
+                "properties_score": r.get("Score_Data"),
+                "combined_score": r.get("Score_Data_Loc"),
+            }
+            for r in D_final_loc.to_dict("records")
+        }
+        explain.order = list(dict.fromkeys(D_final_loc["compname"].tolist()))
+        result["explanation"] = build_trace(explain)
+
+    return result

@@ -842,9 +842,9 @@ def rank_soils_global(
             # Full candidate profiles over the CANONICAL property set (not just the
             # user-entered subset), so the report always shows sand/clay/rfv — with
             # "—" on the user side and no Δ for any property the user skipped.
-            full_cols = [
-                c for c in GLOBAL_HORIZON_PROP_BOUNDS if c in soilIDRank_output_full.columns
-            ]
+            # Pre-#377 fallback: no GLOBAL_HORIZON_PROP_BOUNDS canonical set yet, so
+            # use the columns actually present. (#377 restores the canonical set on top.)
+            full_cols = list(soilIDRank_output_full.columns)
             explain.horizon["columns"] = full_cols
             # Depth is the row position within each group (the interpolated 0..199
             # profile), NOT the concatenated frame's index.
@@ -1286,8 +1286,7 @@ def rank_soils_global(
             D_final_loc.at[i, "Score_Data_Loc"] = 0.001
             if explain is not None:
                 explain.overrides[row["compname"]] = {
-                    "rule": f"demote shallow soil (effective_bedrock "
-                    f"{effective_bedrock} > {LEPTOSOL_MAX_BEDROCK_CM})",
+                    "rule": f"demote shallow soil (bedrock {bedrock} > 50)",
                     "score_before": _pre_override.get(row["compname"]),
                     "score_after": 0.001,
                 }

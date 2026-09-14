@@ -354,20 +354,20 @@ def render_site(c):  # US site score (slope/elev/depth)
     )
     site_wt = c.get("weight")
     # Headline is the RAW site similarity (1 − site distance); the 0.5 site weight
-    # is applied in the Combined roll-up, not baked in here.
+    # is applied in the Combined roll-up, not baked in here. The authoritative site
+    # distance is 1 − similarity (taken straight from the score), NOT the
+    # Σ(Δ×weight)÷Σweight recompute over the rows below: the algorithm's site
+    # distance can include an elevation comparison against a server-fetched
+    # elevation (fetched when elevation isn't entered), which the per-feature rows
+    # here don't capture. The table below shows the entered features that feed it.
     sim = (c.get("score") / site_wt) if site_wt else c.get("score")
-    num = sum(
-        f["norm_diff"] * f["weight"]
-        for f in features
-        if f.get("norm_diff") is not None and f.get("weight") is not None
-    )
-    wsum = sum(f["weight"] for f in features if f.get("weight") is not None)
+    site_dist = None if sim is None else 1 - sim
     combine = ""
-    if wsum:
-        d = num / wsum
+    if site_dist is not None:
         combine = (
-            f"<div class='lf'>site distance = Σ(Δ × weight) ÷ Σweight = {fmt(d)}</div>"
-            f"<div class='lf'>site similarity = 1 − {fmt(d)} = <b>{fmt(sim)}</b></div>"
+            f"<div class='lf'>site distance (weighted mean of the Δ's below, plus a "
+            f"server-fetched elevation when elevation isn't entered) = {fmt(site_dist)}</div>"
+            f"<div class='lf'>site similarity = 1 − {fmt(site_dist)} = <b>{fmt(sim)}</b></div>"
         )
     return (
         f"<div class='comp'><div class='ctitle blue'>Site <b>{fmt(sim)}</b></div>"

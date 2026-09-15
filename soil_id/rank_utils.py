@@ -1,5 +1,11 @@
 import pandas as pd
 
+from soil_id.__version__ import __version__
+
+# The legacy `model` metadata is the algorithm's MAJOR version ("v2"), derived
+# from __version__ so it stays in lockstep (see soil_id/__version__.py).
+MODEL_VERSION = f"v{__version__.split('.', 1)[0]}"
+
 
 def finalize_rank_output(D_final_loc: pd.DataFrame, location: str):
     # Calculate minimum rank values per compname_grp for each rank field
@@ -73,7 +79,7 @@ def finalize_rank_output(D_final_loc: pd.DataFrame, location: str):
     output_data = {
         "metadata": {
             "location": location,
-            "model": "v2",
+            "model": MODEL_VERSION,
         },
         "soilRank": Rank,
     }

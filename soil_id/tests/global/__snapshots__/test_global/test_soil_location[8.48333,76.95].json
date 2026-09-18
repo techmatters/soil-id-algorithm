@@ -1226,10 +1226,10 @@
         "rank_data_loc_group": "11",
         "rank_loc": 11,
         "rank_loc_group": 11,
-        "score_data": 0.125,
-        "score_data_group": 0.125,
-        "score_data_loc": 0.001,
-        "score_data_loc_group": 0.001,
+        "score_data": 0.087,
+        "score_data_group": 0.087,
+        "score_data_loc": 0.054,
+        "score_data_loc_group": 0.054,
         "score_loc": 0.022,
         "score_loc_group": 0.022
       }

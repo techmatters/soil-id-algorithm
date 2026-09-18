@@ -608,9 +608,7 @@ def _slice_gower_distance(slice_mat, return_details=False):
     cols = list(slice_mat.columns)
     ranges = None
     if all(c in GLOBAL_HORIZON_PROP_BOUNDS for c in cols):
-        ranges = [
-            GLOBAL_HORIZON_PROP_BOUNDS[c][1] - GLOBAL_HORIZON_PROP_BOUNDS[c][0] for c in cols
-        ]
+        ranges = [GLOBAL_HORIZON_PROP_BOUNDS[c][1] - GLOBAL_HORIZON_PROP_BOUNDS[c][0] for c in cols]
     return gower_distances(slice_mat, theoretical_ranges=ranges, return_details=return_details)
 
 
@@ -1227,6 +1225,27 @@ def rank_soils_global(
                 ),
             }
 
+    # Rule-based demotion, applied to the HORIZON score (not the combined score):
+    # a shallow-soil group whose profile is known to be deeper than the shallow-soil
+    # ceiling can't match at depth, so we zero its horizon score. Location (and color)
+    # still count, so the candidate is demoted *softly* and can rank on those merits,
+    # rather than being forced to ~0 at the combined level. The promote rules stay at
+    # the combined level (below), since they intentionally force a candidate to the top.
+    if effective_bedrock is not None and effective_bedrock > LEPTOSOL_MAX_BEDROCK_CM:
+        shallow_terms = ["lithosols", "leptosols", "rendzinas", "rankers"]
+        for i, row in D_final_horz.iterrows():
+            if any(term in row["compname"].lower() for term in shallow_terms):
+                earned = row["horz_score"]
+                D_final_horz.at[i, "horz_score"] = 0.0
+                if explain is not None:
+                    explain.overrides[row["compname"]] = {
+                        "target": "horizon",
+                        "rule": f"demote shallow soil (effective_bedrock "
+                        f"{effective_bedrock} > {LEPTOSOL_MAX_BEDROCK_CM})",
+                        "score_before": None if earned is None else float(earned),
+                        "score_after": 0.0,
+                    }
+
     # Calculate Data score
     global color_weight
     color_weight = 0.3
@@ -1317,12 +1336,15 @@ def rank_soils_global(
         dict(zip(D_final_loc.compname, D_final_loc.Score_Data_Loc)) if explain is not None else None
     )
 
-    # Rule-based final score adjustment
+    # Rule-based final score adjustment. These are combined-level *promotes* that
+    # intentionally force a candidate to the top. (The shallow-soil *demote* is
+    # applied earlier, to the horizon score.)
     for i, row in D_final_loc.iterrows():
         if cracks and row["clay"] == "Yes" and "vert" in row["compname"].lower():
             D_final_loc.at[i, "Score_Data_Loc"] = 1.001
             if explain is not None:
                 explain.overrides[row["compname"]] = {
+                    "target": "combined",
                     "rule": "promote (vertisol+cracks / shallow-bedrock leptosol)",
                     "score_before": _pre_override.get(row["compname"]),
                     "score_after": 1.001,
@@ -1335,22 +1357,6 @@ def rank_soils_global(
             D_final_loc.at[i, "Score_Data_Loc"] = 1.001
         elif bedrock is not None and 10 < bedrock <= 30 and "leptosols" in row["compname"].lower():
             D_final_loc.at[i, "Score_Data_Loc"] = 1.001
-        elif (
-            effective_bedrock is not None
-            and effective_bedrock > LEPTOSOL_MAX_BEDROCK_CM
-            and any(
-                term in row["compname"].lower()
-                for term in ["lithosols", "leptosols", "rendzinas", "rankers"]
-            )
-        ):
-            D_final_loc.at[i, "Score_Data_Loc"] = 0.001
-            if explain is not None:
-                explain.overrides[row["compname"]] = {
-                    "rule": f"demote shallow soil (effective_bedrock "
-                    f"{effective_bedrock} > {LEPTOSOL_MAX_BEDROCK_CM})",
-                    "score_before": _pre_override.get(row["compname"]),
-                    "score_after": 0.001,
-                }
 
     D_final_loc = D_final_loc.sort_values(["Score_Data_Loc", "compname"], ascending=[False, True])
 

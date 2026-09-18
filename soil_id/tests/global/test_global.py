@@ -284,11 +284,15 @@ def test_shallow_soil_not_zeroed_without_bedrock():
             ),
         )
 
-    # Shallow user data => leptosol ranks on its merits, not forced to ~0.
+    # Shallow user data => leptosol ranks on its merits, not demoted.
     assert shallow is not None and shallow > 0.01, (
         f"leptosol wrongly demoted with shallow data (no bedrock): score={shallow}"
     )
-    # Deep user data (deepest horizon 140 cm > 50) => leptosol correctly demoted.
-    assert deep is not None and deep <= 0.01, (
-        f"leptosol not demoted despite deep (>50 cm) user data: score={deep}"
+    # Deep user data (deepest horizon 140 cm > 50) => leptosol's horizon score is
+    # zeroed, so it is demoted *below* the shallow case. Under the soft-demotion
+    # model (v2.2.0) the demote applies to the horizon score, not the combined
+    # score, so location still counts and it is no longer forced to ~0 — we assert
+    # the relative demotion rather than an absolute floor.
+    assert deep is not None and deep < shallow, (
+        f"leptosol not demoted with deep (>50 cm) user data: deep={deep}, shallow={shallow}"
     )

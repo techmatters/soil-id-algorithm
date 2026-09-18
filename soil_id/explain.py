@@ -36,7 +36,9 @@ import math
 from dataclasses import dataclass, field
 from typing import Any, Optional
 
-TRACE_VERSION = "1"
+# v2: rule overrides carry a `target` ("horizon" | "combined"); the shallow-soil
+# demote now applies to the horizon score rather than forcing combined to ~0.
+TRACE_VERSION = "2"
 
 # Distance-decay coefficients per data source (used only to *display* the decay
 # multiplier + formula in the trace; the score itself comes from the ranking

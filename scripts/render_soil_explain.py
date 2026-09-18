@@ -204,10 +204,13 @@ def render_location(c):
     )
 
 
-def render_horizon(c):
+def render_horizon(c, overrides=None):
     segs = c.get("segments", [])
     if not segs:
         return ""
+    # A horizon-targeted override (e.g. the shallow-soil demote) zeroes the horizon
+    # score; show it inline here rather than at the combined roll-up.
+    override = (overrides or [None])[0]
     feat_names = []
     for s in segs:
         for f in s["features"]:
@@ -313,18 +316,40 @@ def render_horizon(c):
     # re-deriving it from the bands below (band grouping + masking don't reproduce
     # it exactly). The per-depth table below shows the slice distances that feed it.
     hz_score = c.get("score")
-    hz_dist = None if hz_score is None else 1 - hz_score
+    # When overridden, the component score is the post-override value (0). The
+    # per-slice table and the combine note below still describe how the *earned*
+    # horizon score was computed, so base that math on score_before and then note
+    # the override.
+    earned = (
+        override["score_before"]
+        if override and override.get("score_before") is not None
+        else hz_score
+    )
+    hz_dist = None if earned is None else 1 - earned
+    override_note = (
+        f"; then <b>overridden to {fmt(override['score_after'])}</b> "
+        f"(shallow soil can't match at this depth)"
+        if override
+        else ""
+    )
     combine = (
         f"<div class='note'>→ horizon distance (depth-weighted mean of the per-slice "
         f"distances below, masking depths with no comparable property) = "
         f"<b>{fmt(hz_dist)}</b>; horizon score = 1 − {fmt(hz_dist)} = "
-        f"<b>{fmt(hz_score)}</b></div>"
+        f"<b>{fmt(earned)}</b>{override_note}</div>"
         if hz_dist is not None
         else ""
     )
+    ov_html = ""
+    if override:
+        ov_html = (
+            f"<div class='override'>⚑ override: <b>{esc(override['rule'])}</b> — "
+            f"horizon score {fmt(override.get('score_before'))} &rarr; "
+            f"<b>{fmt(override.get('score_after'))}</b></div>"
+        )
     return (
         f"<div class='comp'><div class='ctitle blue'>Soil horizons — depth-layer properties "
-        f"<b>{fmt(c.get('score'))}</b></div>"
+        f"<b>{fmt(hz_score)}</b></div>{ov_html}"
         f"<div class='note'>A <i>horizon</i> is a soil depth layer; this scores how well "
         f"the candidate's layered profile (sand/clay/rock-fragments"
         f"{', color' if any(fn in ('l', 'a', 'b') for fn in feat_names) else ''} by depth) "
@@ -449,6 +474,8 @@ def render_combined(cand):
 
     ov_line = ""
     for o in cand.get("overrides", []):
+        if _ov_target(o) != "combined":
+            continue
         ov_line = (
             f"<div class='lf'>⚑ a rule then overrides combined "
             f"{fmt(o.get('score_before'))} &rarr; <b>{fmt(o.get('score_after'))}</b> "
@@ -473,10 +500,24 @@ def render_combined(cand):
     )
 
 
+def _ov_target(o):
+    # v1 traces have no `target`; those overrides were all combined-level.
+    return o.get("target", "combined")
+
+
 def render_candidate(cand):
-    comps = "".join(RENDERERS.get(c["type"], lambda _: "")(c) for c in cand["score_components"])
+    overrides = cand.get("overrides", [])
+    horizon_ovs = [o for o in overrides if _ov_target(o) == "horizon"]
+    combined_ovs = [o for o in overrides if _ov_target(o) == "combined"]
+    parts = []
+    for c in cand["score_components"]:
+        if c["type"] == "horizon":
+            parts.append(render_horizon(c, horizon_ovs))
+        else:
+            parts.append(RENDERERS.get(c["type"], lambda _: "")(c))
+    comps = "".join(parts)
     ov = ""
-    for o in cand.get("overrides", []):
+    for o in combined_ovs:
         ov = (
             f"<div class='override'>⚑ override: <b>{esc(o['rule'])}</b> — "
             f"score {fmt(o.get('score_before'))} &rarr; {fmt(o.get('score_after'))}</div>"

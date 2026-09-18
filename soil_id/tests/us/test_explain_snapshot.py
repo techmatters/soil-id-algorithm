@@ -22,8 +22,8 @@ consumes that trace without error. Refresh with --snapshot-update (via
 
 from syrupy.extensions.json import JSONSnapshotExtension
 
-from scripts.render_soil_explain import render_html
 from soil_id.explain import Recorder
+from soil_id.render_explain import render_html
 from soil_id.us_soil import list_soils, rank_soils
 
 LOCATION = {"lon": -101.9733687, "lat": 33.81246789}

@@ -67,8 +67,10 @@ LEPTOSOL_MAX_BEDROCK_CM = 50
 # per-slice Gower distance (#377). Without these, gower_distances normalizes each
 # feature by that slice's own min/max — which includes the user's sample_pedon
 # value — so changing one input rescales every candidate's distance in every
-# slice. Reused from the US path's `global_prop_bounds` (us_soil.py). Confirm the
-# values with a soil scientist if the global data distribution differs.
+# slice. Reused from the US path's `global_prop_bounds` (us_soil.py) — these
+# sand/clay/rfv values are duplicated there; keep the two in sync (the US copy also
+# has l/a/b, which global doesn't use because it scores color separately). Confirm
+# the values with a soil scientist if the global data distribution differs.
 GLOBAL_HORIZON_PROP_BOUNDS = {
     "sandpct_intpl": (10.0, 92.0),
     "claypct_intpl": (5.0, 70.0),
@@ -1004,13 +1006,21 @@ def rank_soils_global(
             "Not Ranked" if np.ma.is_masked(x) else "Ranked" for x in D_check[0][1:]
         ]
 
-        # Calculate max dissimilarity across all depth slices. Use a single
-        # NaN-aware reduction over the stack so an all-NaN slice (a depth with no
-        # usable data) can't make the result NaN via max()'s ordering.
-        dis_max = np.nanmax(dis_mat_list)
+        # Maximum dissimilarity used to penalize a candidate that has no soil where
+        # the pedon does. Fixed at 1.0 to match the US path (us_soil.py) — Gower
+        # distances are already normalized to ~[0, 1], so a fixed, interpretable,
+        # query-independent penalty is preferable to the previous empirical
+        # np.nanmax(dis_mat_list). Effect on accuracy is negligible (evaluated:
+        # Δtop1 ≈ -0.04 global); the change is purely for US/global consistency.
+        # See SOILID_TUNING.md (§7, "dis_max").
+        dis_max = 1.0
 
-        # Apply depth weight
-        depth_weight = np.concatenate([np.repeat(0.2, 20), np.repeat(1.0, 180)])
+        # Apply depth weight (per-cm weight applied to each depth slice in the
+        # horizon distance average). Surface 0-20 cm weight was 0.2; set to 1.0
+        # (uniform) to match the US path — tuning found the surface de-weighting
+        # slightly hurt accuracy (uniform ≈ +0.3 pt top1). Kept as an explicit
+        # two-part concat so the surface band stays an easy knob. See SOILID_TUNING.md.
+        depth_weight = np.concatenate([np.repeat(1.0, 20), np.repeat(1.0, 180)])
         depth_weight = depth_weight[soil_matrix.index]
 
         # Infill NaN data

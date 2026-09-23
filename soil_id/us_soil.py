@@ -2338,6 +2338,11 @@ def rank_soils(
         horz_vars = [p_hz_data]
         horz_vars.extend([group.reset_index(drop=True).loc[pedon_slice_index] for group in groups])
 
+        # Fixed "plausible range" (low, high) per numeric horizon property, used as
+        # the floor for the per-slice Gower normalization (#377). NOTE: the
+        # sand/clay/rfv entries are duplicated in global_soil.py
+        # (GLOBAL_HORIZON_PROP_BOUNDS); keep the two in sync. The global copy omits
+        # l/a/b because global scores color separately (not as Gower features).
         global_prop_bounds = {
             "sandpct_intpl": (10.0, 92.0),
             "claypct_intpl": (5.0, 70.0),
@@ -2414,8 +2419,12 @@ def rank_soils(
         # Maximum dissimilarity
         dis_max = 1.0
 
-        # Apply depth weight
-        depth_weight = np.concatenate((np.repeat(0.2, 20), np.repeat(1.0, 180)), axis=0)
+        # Apply depth weight (per-cm weight applied to each depth slice in the
+        # horizon distance average). Surface 0-20 cm weight was 0.2; set to 1.0
+        # (uniform) — tuning found the surface de-weighting slightly hurt accuracy
+        # (uniform ≈ +0.3 pt top1). Kept as an explicit two-part concat so the
+        # surface band stays an easy knob to re-tune. See SOILID_TUNING.md (§3, §7).
+        depth_weight = np.concatenate((np.repeat(1.0, 20), np.repeat(1.0, 180)), axis=0)
         depth_weight = depth_weight[pedon_slice_index]
 
         # Infill Nan data: soil vs non‑soil logic

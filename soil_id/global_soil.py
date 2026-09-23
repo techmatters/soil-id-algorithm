@@ -296,7 +296,15 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
             [
                 sand_pct_intpl[["c_sandpct_intpl_grp"]],
                 clay_pct_intpl[["c_claypct_intpl_grp"]],
-                cf_pct_intpl[["c_cfpct_intpl_grp"]],
+                # Rock fragment: use the RAW % (not the binned class midpoint
+                # c_cfpct_intpl_grp). Binning both sides to 5 class midpoints
+                # (0/8/25/48/80 via getCF) put a cliff at every class boundary —
+                # 15% vs 16% scored 8 vs 25 (near-total mismatch) while 16% vs 35%
+                # scored identical. The raw value removes the cliff and the
+                # within-class flattening, and matches what the display already
+                # shows (rf_lyrs is built from the raw column). The pit stays a
+                # class midpoint (getCF_fromClass) since the user only reports a class.
+                cf_pct_intpl[["c_cfpct_intpl"]],
                 pd.DataFrame({"compname": [sorted(profile.compname.unique())[0]] * n_rows}),
                 pd.DataFrame({"cokey": [sorted(profile.cokey.unique())[0]] * n_rows}),
                 pd.DataFrame({"comppct": [sorted(profile.comppct_r.unique())[0]] * n_rows}),

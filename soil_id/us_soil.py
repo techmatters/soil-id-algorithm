@@ -428,7 +428,10 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
             [
                 sand_pct_intpl[["c_sandpct_intpl_grp"]],
                 clay_pct_intpl[["c_claypct_intpl_grp"]],
-                cf_pct_intpl[["c_cfpct_intpl_grp"]],
+                # Rock fragment: use the RAW % (not the binned class midpoint) so a
+                # small real difference isn't turned into a class-boundary cliff.
+                # See the matching change/comment in global_soil.py.
+                cf_pct_intpl[["c_cfpct_intpl"]],
                 compname,
                 cokey,
                 comppct,
@@ -950,7 +953,9 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
                             [
                                 OSD_sand_intpl[["c_sandpct_intpl_grp"]],
                                 OSD_clay_intpl[["c_claypct_intpl_grp"]],
-                                OSD_rfv_intpl[["c_cfpct_intpl_grp"]],
+                                # Rock fragment: raw % (not binned) — same rationale
+                                # as the main path above / global_soil.py.
+                                OSD_rfv_intpl[["c_cfpct_intpl"]],
                                 compname_df,
                                 cokey_df,
                             ],

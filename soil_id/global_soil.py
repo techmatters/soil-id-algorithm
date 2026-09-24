@@ -58,10 +58,10 @@ class SoilListOutputData:
 
 
 # Depth (cm) beyond which a shallow-soil group (leptosols/lithosols/rendzinas/
-# rankers) is considered impossible and demoted. PROVISIONAL — leptosols are
-# defined at ~25-30 cm to rock, so a soil scientist may prefer ~30; change here
-# and regenerate the global snapshots. See #375.
-LEPTOSOL_MAX_BEDROCK_CM = 50
+# rankers) is considered impossible and demoted. Set to 35 (was 50 in #375):
+# leptosols are defined at ~25-30 cm to rock, so a lower ceiling is closer to the
+# taxonomic definition while leaving a small margin. See #375.
+LEPTOSOL_MAX_BEDROCK_CM = 35
 
 # Fixed "plausible range" (low, high) per numeric property used in the global
 # per-slice Gower distance (#377). Without these, gower_distances normalizes each

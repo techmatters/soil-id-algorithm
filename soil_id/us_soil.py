@@ -2552,7 +2552,11 @@ def rank_soils(
         # 10 Replace any NaNs with the max distance, then (optionally) convert to similarity
         D_site = np.where(np.isnan(D_raw), np.nanmax(D_raw), D_raw)
 
-        site_wt = 0.5
+        # Weight of the site (slope/elev) score relative to the horizon score.
+        # 0.5 -> 0.25: the site signal was over-weighted; tuning against the US
+        # bulk test gives +0.34 pt top1 at 0.25 (confirmed real run 61.56 -> 61.90).
+        # See SOILID_TUNING.md.
+        site_wt = 0.25
         D_site = (1 - D_site) * site_wt
 
         if explain is not None:

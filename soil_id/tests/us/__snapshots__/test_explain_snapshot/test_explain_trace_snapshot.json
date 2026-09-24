@@ -3,13 +3,530 @@
     {
       "app_rank": 1,
       "app_repr": null,
-      "combined_score": 0.4219,
+      "combined_score": 0.4487,
+      "compname_grp": "randall",
+      "component_id": 27108933,
+      "name": "randall",
+      "overrides": [],
+      "properties_score": 0.4229,
+      "rank": 1,
+      "score_components": [
+        {
+          "comp_distance_score": 0.8,
+          "data_source": "SSURGO",
+          "decay_multiplier": 1.0,
+          "distance_m": 0.0,
+          "distance_score": 0.8,
+          "exp_coeff": -0.008,
+          "floor_m": 173,
+          "occurrences": [
+            {
+              "distance_score": 0.8,
+              "name": "randall"
+            }
+          ],
+          "score": 0.4745,
+          "share_pct": 80.0,
+          "total_distance_score": 1.686,
+          "type": "location"
+        },
+        {
+          "score": 0.5094,
+          "segments": [
+            {
+              "bottom": 20,
+              "compared": true,
+              "depth_weight": 0.2,
+              "features": [
+                {
+                  "candidate": 22.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.2564,
+                  "range": 39.0,
+                  "status": "both",
+                  "user": 32.5
+                },
+                {
+                  "candidate": 70.0,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.6083,
+                  "range": 60.0,
+                  "status": "both",
+                  "user": 33.5
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 0.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 0.0
+                },
+                {
+                  "candidate": 40.89,
+                  "name": "l",
+                  "norm_diff": 0.0318,
+                  "range": 11.0,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 1.44,
+                  "name": "a",
+                  "norm_diff": 0.1187,
+                  "range": 9.27,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 6.13,
+                  "name": "b",
+                  "norm_diff": 0.8704,
+                  "range": 17.28,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.3143,
+              "top": 0
+            },
+            {
+              "bottom": 23,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 22.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.1905,
+                  "range": 52.5,
+                  "status": "both",
+                  "user": 32.5
+                },
+                {
+                  "candidate": 70.0,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.6083,
+                  "range": 60.0,
+                  "status": "both",
+                  "user": 33.5
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 0.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 0.0
+                },
+                {
+                  "candidate": 40.89,
+                  "name": "l",
+                  "norm_diff": 0.0412,
+                  "range": 8.5,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 1.44,
+                  "name": "a",
+                  "norm_diff": 0.1187,
+                  "range": 9.27,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 6.13,
+                  "name": "b",
+                  "norm_diff": 0.8704,
+                  "range": 17.28,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.3049,
+              "top": 20
+            },
+            {
+              "bottom": 30,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 22.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.1905,
+                  "range": 52.5,
+                  "status": "both",
+                  "user": 32.5
+                },
+                {
+                  "candidate": 70.0,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.6083,
+                  "range": 60.0,
+                  "status": "both",
+                  "user": 33.5
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 0.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 0.0
+                },
+                {
+                  "candidate": 51.37,
+                  "name": "l",
+                  "norm_diff": 0.9666,
+                  "range": 10.48,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 1.83,
+                  "name": "a",
+                  "norm_diff": 0.0766,
+                  "range": 9.27,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 6.76,
+                  "name": "b",
+                  "norm_diff": 0.8339,
+                  "range": 17.28,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.446,
+              "top": 23
+            },
+            {
+              "bottom": 60,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 22.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.0,
+                  "range": 52.5,
+                  "status": "both",
+                  "user": 22.5
+                },
+                {
+                  "candidate": 70.0,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.0,
+                  "range": 42.5,
+                  "status": "both",
+                  "user": 70.0
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 1.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 8.0
+                },
+                {
+                  "candidate": 51.37,
+                  "name": "l",
+                  "norm_diff": 0.9657,
+                  "range": 10.49,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 1.83,
+                  "name": "a",
+                  "norm_diff": 0.0599,
+                  "range": 11.85,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 6.76,
+                  "name": "b",
+                  "norm_diff": 0.9581,
+                  "range": 15.04,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.4972,
+              "top": 30
+            },
+            {
+              "bottom": 97,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 22.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.7619,
+                  "range": 52.5,
+                  "status": "both",
+                  "user": 62.5
+                },
+                {
+                  "candidate": 70.0,
+                  "name": "claypct_intpl",
+                  "norm_diff": 1.0,
+                  "range": 42.5,
+                  "status": "both",
+                  "user": 27.5
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 1.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 8.0
+                },
+                {
+                  "candidate": 51.37,
+                  "name": "l",
+                  "norm_diff": 0.9657,
+                  "range": 10.49,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 1.83,
+                  "name": "a",
+                  "norm_diff": 0.0432,
+                  "range": 16.45,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 6.76,
+                  "name": "b",
+                  "norm_diff": 0.5808,
+                  "range": 24.81,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.7251,
+              "top": 60
+            },
+            {
+              "bottom": 100,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 22.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 1.0,
+                  "range": 40.0,
+                  "status": "both",
+                  "user": 62.5
+                },
+                {
+                  "candidate": 70.0,
+                  "name": "claypct_intpl",
+                  "norm_diff": 1.0,
+                  "range": 42.5,
+                  "status": "both",
+                  "user": 27.5
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 0.5714,
+                  "range": 14.0,
+                  "status": "both",
+                  "user": 8.0
+                },
+                {
+                  "candidate": 51.37,
+                  "name": "l",
+                  "norm_diff": 0.2507,
+                  "range": 40.4,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 0.83,
+                  "name": "a",
+                  "norm_diff": 0.1002,
+                  "range": 17.06,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 7.41,
+                  "name": "b",
+                  "norm_diff": 0.5093,
+                  "range": 27.02,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.572,
+              "top": 97
+            },
+            {
+              "bottom": 157,
+              "compared": false,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 22.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 70.0,
+                  "name": "claypct_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 51.37,
+                  "name": "l",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 0.83,
+                  "name": "a",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 7.41,
+                  "name": "b",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                }
+              ],
+              "slice_distance": null,
+              "top": 100
+            },
+            {
+              "bottom": 200,
+              "compared": false,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 22.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 70.0,
+                  "name": "claypct_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 51.38,
+                  "name": "l",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 1.26,
+                  "name": "a",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 13.7,
+                  "name": "b",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                }
+              ],
+              "slice_distance": null,
+              "top": 157
+            }
+          ],
+          "type": "horizon"
+        },
+        {
+          "features": [
+            {
+              "candidate": 0.5,
+              "name": "slope_r",
+              "norm_diff": 0.9615,
+              "status": "both",
+              "user": 3.0,
+              "weight": 1.0
+            },
+            {
+              "candidate": 1189.0,
+              "name": "elev_r",
+              "norm_diff": 0.8466,
+              "status": "both",
+              "user": 1023.4199,
+              "weight": 0.5
+            }
+          ],
+          "score": 0.0192,
+          "type": "site",
+          "weight": 0.25
+        }
+      ]
+    },
+    {
+      "app_rank": 2,
+      "app_repr": null,
+      "combined_score": 0.4191,
       "compname_grp": "acuff",
       "component_id": 27108889,
       "name": "acuff",
       "overrides": [],
-      "properties_score": 0.5905,
-      "rank": 1,
+      "properties_score": 0.5849,
+      "rank": 2,
       "score_components": [
         {
           "comp_distance_score": 0.427,
@@ -572,541 +1089,24 @@
               "weight": 0.5
             }
           ],
-          "score": 0.3091,
+          "score": 0.1545,
           "type": "site",
-          "weight": 0.5
-        }
-      ]
-    },
-    {
-      "app_rank": 2,
-      "app_repr": null,
-      "combined_score": 0.4198,
-      "compname_grp": "randall",
-      "component_id": 27108933,
-      "name": "randall",
-      "overrides": [],
-      "properties_score": 0.3652,
-      "rank": 2,
-      "score_components": [
-        {
-          "comp_distance_score": 0.8,
-          "data_source": "SSURGO",
-          "decay_multiplier": 1.0,
-          "distance_m": 0.0,
-          "distance_score": 0.8,
-          "exp_coeff": -0.008,
-          "floor_m": 173,
-          "occurrences": [
-            {
-              "distance_score": 0.8,
-              "name": "randall"
-            }
-          ],
-          "score": 0.4745,
-          "share_pct": 80.0,
-          "total_distance_score": 1.686,
-          "type": "location"
-        },
-        {
-          "score": 0.5094,
-          "segments": [
-            {
-              "bottom": 20,
-              "compared": true,
-              "depth_weight": 0.2,
-              "features": [
-                {
-                  "candidate": 22.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.2564,
-                  "range": 39.0,
-                  "status": "both",
-                  "user": 32.5
-                },
-                {
-                  "candidate": 70.0,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.6083,
-                  "range": 60.0,
-                  "status": "both",
-                  "user": 33.5
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 0.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 0.0
-                },
-                {
-                  "candidate": 40.89,
-                  "name": "l",
-                  "norm_diff": 0.0318,
-                  "range": 11.0,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 1.44,
-                  "name": "a",
-                  "norm_diff": 0.1187,
-                  "range": 9.27,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 6.13,
-                  "name": "b",
-                  "norm_diff": 0.8704,
-                  "range": 17.28,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.3143,
-              "top": 0
-            },
-            {
-              "bottom": 23,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 22.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.1905,
-                  "range": 52.5,
-                  "status": "both",
-                  "user": 32.5
-                },
-                {
-                  "candidate": 70.0,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.6083,
-                  "range": 60.0,
-                  "status": "both",
-                  "user": 33.5
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 0.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 0.0
-                },
-                {
-                  "candidate": 40.89,
-                  "name": "l",
-                  "norm_diff": 0.0412,
-                  "range": 8.5,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 1.44,
-                  "name": "a",
-                  "norm_diff": 0.1187,
-                  "range": 9.27,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 6.13,
-                  "name": "b",
-                  "norm_diff": 0.8704,
-                  "range": 17.28,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.3049,
-              "top": 20
-            },
-            {
-              "bottom": 30,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 22.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.1905,
-                  "range": 52.5,
-                  "status": "both",
-                  "user": 32.5
-                },
-                {
-                  "candidate": 70.0,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.6083,
-                  "range": 60.0,
-                  "status": "both",
-                  "user": 33.5
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 0.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 0.0
-                },
-                {
-                  "candidate": 51.37,
-                  "name": "l",
-                  "norm_diff": 0.9666,
-                  "range": 10.48,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 1.83,
-                  "name": "a",
-                  "norm_diff": 0.0766,
-                  "range": 9.27,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 6.76,
-                  "name": "b",
-                  "norm_diff": 0.8339,
-                  "range": 17.28,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.446,
-              "top": 23
-            },
-            {
-              "bottom": 60,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 22.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.0,
-                  "range": 52.5,
-                  "status": "both",
-                  "user": 22.5
-                },
-                {
-                  "candidate": 70.0,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.0,
-                  "range": 42.5,
-                  "status": "both",
-                  "user": 70.0
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 1.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 8.0
-                },
-                {
-                  "candidate": 51.37,
-                  "name": "l",
-                  "norm_diff": 0.9657,
-                  "range": 10.49,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 1.83,
-                  "name": "a",
-                  "norm_diff": 0.0599,
-                  "range": 11.85,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 6.76,
-                  "name": "b",
-                  "norm_diff": 0.9581,
-                  "range": 15.04,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.4972,
-              "top": 30
-            },
-            {
-              "bottom": 97,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 22.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.7619,
-                  "range": 52.5,
-                  "status": "both",
-                  "user": 62.5
-                },
-                {
-                  "candidate": 70.0,
-                  "name": "claypct_intpl",
-                  "norm_diff": 1.0,
-                  "range": 42.5,
-                  "status": "both",
-                  "user": 27.5
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 1.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 8.0
-                },
-                {
-                  "candidate": 51.37,
-                  "name": "l",
-                  "norm_diff": 0.9657,
-                  "range": 10.49,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 1.83,
-                  "name": "a",
-                  "norm_diff": 0.0432,
-                  "range": 16.45,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 6.76,
-                  "name": "b",
-                  "norm_diff": 0.5808,
-                  "range": 24.81,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.7251,
-              "top": 60
-            },
-            {
-              "bottom": 100,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 22.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 1.0,
-                  "range": 40.0,
-                  "status": "both",
-                  "user": 62.5
-                },
-                {
-                  "candidate": 70.0,
-                  "name": "claypct_intpl",
-                  "norm_diff": 1.0,
-                  "range": 42.5,
-                  "status": "both",
-                  "user": 27.5
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 0.5714,
-                  "range": 14.0,
-                  "status": "both",
-                  "user": 8.0
-                },
-                {
-                  "candidate": 51.37,
-                  "name": "l",
-                  "norm_diff": 0.2507,
-                  "range": 40.4,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 0.83,
-                  "name": "a",
-                  "norm_diff": 0.1002,
-                  "range": 17.06,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 7.41,
-                  "name": "b",
-                  "norm_diff": 0.5093,
-                  "range": 27.02,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.572,
-              "top": 97
-            },
-            {
-              "bottom": 157,
-              "compared": false,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 22.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 70.0,
-                  "name": "claypct_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 51.37,
-                  "name": "l",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 0.83,
-                  "name": "a",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 7.41,
-                  "name": "b",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                }
-              ],
-              "slice_distance": null,
-              "top": 100
-            },
-            {
-              "bottom": 200,
-              "compared": false,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 22.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 70.0,
-                  "name": "claypct_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 51.38,
-                  "name": "l",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 1.26,
-                  "name": "a",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 13.7,
-                  "name": "b",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                }
-              ],
-              "slice_distance": null,
-              "top": 157
-            }
-          ],
-          "type": "horizon"
-        },
-        {
-          "features": [
-            {
-              "candidate": 0.5,
-              "name": "slope_r",
-              "norm_diff": 0.9615,
-              "status": "both",
-              "user": 3.0,
-              "weight": 1.0
-            },
-            {
-              "candidate": 1189.0,
-              "name": "elev_r",
-              "norm_diff": 0.8466,
-              "status": "both",
-              "user": 1023.4199,
-              "weight": 0.5
-            }
-          ],
-          "score": 0.0384,
-          "type": "site",
-          "weight": 0.5
+          "weight": 0.25
         }
       ]
     },
     {
       "app_rank": null,
       "app_repr": {
-        "app_rank": 1,
+        "app_rank": 2,
         "name": "acuff"
       },
-      "combined_score": 0.3578,
+      "combined_score": 0.3806,
       "compname_grp": "acuff",
       "component_id": 27108855,
       "name": "acuff2",
       "overrides": [],
-      "properties_score": 0.4623,
+      "properties_score": 0.508,
       "rank": 3,
       "score_components": [
         {
@@ -1670,21 +1670,21 @@
               "weight": 0.5
             }
           ],
-          "score": 0.1168,
+          "score": 0.0584,
           "type": "site",
-          "weight": 0.5
+          "weight": 0.25
         }
       ]
     },
     {
       "app_rank": 3,
       "app_repr": null,
-      "combined_score": 0.3354,
+      "combined_score": 0.3438,
       "compname_grp": "estacado",
       "component_id": 27108891,
       "name": "estacado",
       "overrides": [],
-      "properties_score": 0.6494,
+      "properties_score": 0.6662,
       "rank": 4,
       "score_components": [
         {
@@ -2419,22 +2419,1177 @@
               "weight": 0.5
             }
           ],
-          "score": 0.2827,
+          "score": 0.1413,
           "type": "site",
-          "weight": 0.5
+          "weight": 0.25
         }
       ]
     },
     {
       "app_rank": 4,
       "app_repr": null,
-      "combined_score": 0.2952,
+      "combined_score": 0.3186,
+      "compname_grp": "olton",
+      "component_id": 27108854,
+      "name": "olton",
+      "overrides": [],
+      "properties_score": 0.5114,
+      "rank": 5,
+      "score_components": [
+        {
+          "comp_distance_score": 0.212,
+          "data_source": "SSURGO",
+          "decay_multiplier": 0.25,
+          "distance_m": 204.0,
+          "distance_score": 0.212,
+          "exp_coeff": -0.008,
+          "floor_m": 173,
+          "occurrences": [
+            {
+              "distance_score": 0.212,
+              "name": "olton"
+            }
+          ],
+          "score": 0.1257,
+          "share_pct": 85.0,
+          "total_distance_score": 1.686,
+          "type": "location"
+        },
+        {
+          "score": 0.5971,
+          "segments": [
+            {
+              "bottom": 20,
+              "compared": true,
+              "depth_weight": 0.2,
+              "features": [
+                {
+                  "candidate": 32.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.0,
+                  "range": 39.0,
+                  "status": "both",
+                  "user": 32.5
+                },
+                {
+                  "candidate": 33.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.0,
+                  "range": 60.0,
+                  "status": "both",
+                  "user": 33.5
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 0.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 0.0
+                },
+                {
+                  "candidate": 40.89,
+                  "name": "l",
+                  "norm_diff": 0.0318,
+                  "range": 11.0,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 5.7,
+                  "name": "a",
+                  "norm_diff": 0.3409,
+                  "range": 9.27,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 11.64,
+                  "name": "b",
+                  "norm_diff": 0.5515,
+                  "range": 17.28,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.154,
+              "top": 0
+            },
+            {
+              "bottom": 30,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 32.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.0,
+                  "range": 52.5,
+                  "status": "both",
+                  "user": 32.5
+                },
+                {
+                  "candidate": 33.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.0,
+                  "range": 60.0,
+                  "status": "both",
+                  "user": 33.5
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 0.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 0.0
+                },
+                {
+                  "candidate": 40.89,
+                  "name": "l",
+                  "norm_diff": 0.0412,
+                  "range": 8.5,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 5.7,
+                  "name": "a",
+                  "norm_diff": 0.3409,
+                  "range": 9.27,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 11.64,
+                  "name": "b",
+                  "norm_diff": 0.5515,
+                  "range": 17.28,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.1555,
+              "top": 20
+            },
+            {
+              "bottom": 38,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 32.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.1905,
+                  "range": 52.5,
+                  "status": "both",
+                  "user": 22.5
+                },
+                {
+                  "candidate": 33.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.8588,
+                  "range": 42.5,
+                  "status": "both",
+                  "user": 70.0
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 1.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 8.0
+                },
+                {
+                  "candidate": 40.89,
+                  "name": "l",
+                  "norm_diff": 0.0334,
+                  "range": 10.49,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 5.7,
+                  "name": "a",
+                  "norm_diff": 0.2667,
+                  "range": 11.85,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 11.64,
+                  "name": "b",
+                  "norm_diff": 0.6336,
+                  "range": 15.04,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.4971,
+              "top": 30
+            },
+            {
+              "bottom": 60,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 32.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.1905,
+                  "range": 52.5,
+                  "status": "both",
+                  "user": 22.5
+                },
+                {
+                  "candidate": 33.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.8588,
+                  "range": 42.5,
+                  "status": "both",
+                  "user": 70.0
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 1.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 8.0
+                },
+                {
+                  "candidate": 51.36,
+                  "name": "l",
+                  "norm_diff": 0.9647,
+                  "range": 10.49,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 11.93,
+                  "name": "a",
+                  "norm_diff": 0.5708,
+                  "range": 16.45,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 20.03,
+                  "name": "b",
+                  "norm_diff": 0.0459,
+                  "range": 24.81,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.6051,
+              "top": 38
+            },
+            {
+              "bottom": 79,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 32.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.5714,
+                  "range": 52.5,
+                  "status": "both",
+                  "user": 62.5
+                },
+                {
+                  "candidate": 33.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.1412,
+                  "range": 42.5,
+                  "status": "both",
+                  "user": 27.5
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 1.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 8.0
+                },
+                {
+                  "candidate": 51.36,
+                  "name": "l",
+                  "norm_diff": 0.9647,
+                  "range": 10.49,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 11.93,
+                  "name": "a",
+                  "norm_diff": 0.5708,
+                  "range": 16.45,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 20.03,
+                  "name": "b",
+                  "norm_diff": 0.0459,
+                  "range": 24.81,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.5489,
+              "top": 60
+            },
+            {
+              "bottom": 100,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 32.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.3659,
+                  "range": 82.0,
+                  "status": "both",
+                  "user": 62.5
+                },
+                {
+                  "candidate": 33.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.0923,
+                  "range": 65.0,
+                  "status": "both",
+                  "user": 27.5
+                },
+                {
+                  "candidate": 1.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 0.875,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 8.0
+                },
+                {
+                  "candidate": 51.36,
+                  "name": "l",
+                  "norm_diff": 0.2504,
+                  "range": 40.42,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 11.93,
+                  "name": "a",
+                  "norm_diff": 0.5708,
+                  "range": 16.45,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 20.03,
+                  "name": "b",
+                  "norm_diff": 0.0459,
+                  "range": 24.81,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.3667,
+              "top": 79
+            },
+            {
+              "bottom": 122,
+              "compared": false,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 32.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 33.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 1.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 51.36,
+                  "name": "l",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 11.93,
+                  "name": "a",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 20.03,
+                  "name": "b",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                }
+              ],
+              "slice_distance": null,
+              "top": 100
+            },
+            {
+              "bottom": 191,
+              "compared": false,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 32.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 33.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 8.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 71.51,
+                  "name": "l",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 8.2,
+                  "name": "a",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 14.83,
+                  "name": "b",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                }
+              ],
+              "slice_distance": null,
+              "top": 122
+            },
+            {
+              "bottom": 200,
+              "compared": false,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 32.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 33.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 8.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 51.34,
+                  "name": "l",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 21.28,
+                  "name": "a",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 26.17,
+                  "name": "b",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                }
+              ],
+              "slice_distance": null,
+              "top": 191
+            }
+          ],
+          "type": "horizon"
+        },
+        {
+          "features": [
+            {
+              "candidate": 0.4,
+              "name": "slope_r",
+              "norm_diff": 1.0,
+              "status": "both",
+              "user": 3.0,
+              "weight": 1.0
+            },
+            {
+              "candidate": 1120.0,
+              "name": "elev_r",
+              "norm_diff": 0.4938,
+              "status": "both",
+              "user": 1023.4199,
+              "weight": 0.5
+            }
+          ],
+          "score": 0.0422,
+          "type": "site",
+          "weight": 0.25
+        }
+      ]
+    },
+    {
+      "app_rank": null,
+      "app_repr": {
+        "app_rank": 3,
+        "name": "estacado"
+      },
+      "combined_score": 0.308,
+      "compname_grp": "estacado",
+      "component_id": 27108857,
+      "name": "estacado2",
+      "overrides": [],
+      "properties_score": 0.5946,
+      "rank": 6,
+      "score_components": [
+        {
+          "comp_distance_score": 0.036,
+          "data_source": "SSURGO",
+          "decay_multiplier": 0.25,
+          "distance_m": 204.0,
+          "distance_score": 0.007,
+          "exp_coeff": -0.008,
+          "floor_m": 173,
+          "occurrences": [
+            {
+              "distance_score": 0.029,
+              "name": "estacado"
+            },
+            {
+              "distance_score": 0.007,
+              "name": "estacado2"
+            }
+          ],
+          "score": 0.0214,
+          "share_pct": 3.0,
+          "total_distance_score": 1.686,
+          "type": "location"
+        },
+        {
+          "score": 0.698,
+          "segments": [
+            {
+              "bottom": 15,
+              "compared": true,
+              "depth_weight": 0.2,
+              "features": [
+                {
+                  "candidate": 32.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.0,
+                  "range": 39.0,
+                  "status": "both",
+                  "user": 32.5
+                },
+                {
+                  "candidate": 33.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.0,
+                  "range": 60.0,
+                  "status": "both",
+                  "user": 33.5
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 0.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 0.0
+                },
+                {
+                  "candidate": 40.9,
+                  "name": "l",
+                  "norm_diff": 0.0309,
+                  "range": 11.0,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 3.6,
+                  "name": "a",
+                  "norm_diff": 0.1143,
+                  "range": 9.27,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 13.2,
+                  "name": "b",
+                  "norm_diff": 0.4612,
+                  "range": 17.28,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.1012,
+              "top": 0
+            },
+            {
+              "bottom": 20,
+              "compared": true,
+              "depth_weight": 0.2,
+              "features": [
+                {
+                  "candidate": 32.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.0,
+                  "range": 51.5,
+                  "status": "both",
+                  "user": 32.5
+                },
+                {
+                  "candidate": 33.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.0,
+                  "range": 60.0,
+                  "status": "both",
+                  "user": 33.5
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 0.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 0.0
+                },
+                {
+                  "candidate": 40.9,
+                  "name": "l",
+                  "norm_diff": 0.04,
+                  "range": 8.5,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 5.52,
+                  "name": "a",
+                  "norm_diff": 0.3215,
+                  "range": 9.27,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 19.7,
+                  "name": "b",
+                  "norm_diff": 0.0851,
+                  "range": 17.28,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.0744,
+              "top": 15
+            },
+            {
+              "bottom": 30,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 32.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.0,
+                  "range": 52.5,
+                  "status": "both",
+                  "user": 32.5
+                },
+                {
+                  "candidate": 33.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.0,
+                  "range": 60.0,
+                  "status": "both",
+                  "user": 33.5
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 0.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 0.0
+                },
+                {
+                  "candidate": 40.9,
+                  "name": "l",
+                  "norm_diff": 0.04,
+                  "range": 8.5,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 5.52,
+                  "name": "a",
+                  "norm_diff": 0.3215,
+                  "range": 9.27,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 19.7,
+                  "name": "b",
+                  "norm_diff": 0.0851,
+                  "range": 17.28,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.0744,
+              "top": 20
+            },
+            {
+              "bottom": 48,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 32.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.1905,
+                  "range": 52.5,
+                  "status": "both",
+                  "user": 22.5
+                },
+                {
+                  "candidate": 33.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.8588,
+                  "range": 42.5,
+                  "status": "both",
+                  "user": 70.0
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 1.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 8.0
+                },
+                {
+                  "candidate": 40.9,
+                  "name": "l",
+                  "norm_diff": 0.0324,
+                  "range": 10.49,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 5.52,
+                  "name": "a",
+                  "norm_diff": 0.2515,
+                  "range": 11.85,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 19.7,
+                  "name": "b",
+                  "norm_diff": 0.0977,
+                  "range": 15.04,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.4051,
+              "top": 30
+            },
+            {
+              "bottom": 60,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 32.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.1905,
+                  "range": 52.5,
+                  "status": "both",
+                  "user": 22.5
+                },
+                {
+                  "candidate": 33.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.8588,
+                  "range": 42.5,
+                  "status": "both",
+                  "user": 70.0
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 1.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 8.0
+                },
+                {
+                  "candidate": 40.89,
+                  "name": "l",
+                  "norm_diff": 0.0334,
+                  "range": 10.49,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 10.71,
+                  "name": "a",
+                  "norm_diff": 0.4967,
+                  "range": 16.45,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 23.41,
+                  "name": "b",
+                  "norm_diff": 0.0903,
+                  "range": 24.81,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.4449,
+              "top": 48
+            },
+            {
+              "bottom": 97,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 32.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.5714,
+                  "range": 52.5,
+                  "status": "both",
+                  "user": 62.5
+                },
+                {
+                  "candidate": 33.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.1412,
+                  "range": 42.5,
+                  "status": "both",
+                  "user": 27.5
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 1.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 8.0
+                },
+                {
+                  "candidate": 40.89,
+                  "name": "l",
+                  "norm_diff": 0.0334,
+                  "range": 10.49,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 10.71,
+                  "name": "a",
+                  "norm_diff": 0.4967,
+                  "range": 16.45,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 23.41,
+                  "name": "b",
+                  "norm_diff": 0.0903,
+                  "range": 24.81,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.3888,
+              "top": 60
+            },
+            {
+              "bottom": 100,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 32.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.75,
+                  "range": 40.0,
+                  "status": "both",
+                  "user": 62.5
+                },
+                {
+                  "candidate": 33.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.1412,
+                  "range": 42.5,
+                  "status": "both",
+                  "user": 27.5
+                },
+                {
+                  "candidate": 6.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 0.1429,
+                  "range": 14.0,
+                  "status": "both",
+                  "user": 8.0
+                },
+                {
+                  "candidate": 71.52,
+                  "name": "l",
+                  "norm_diff": 0.7495,
+                  "range": 40.4,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 12.82,
+                  "name": "a",
+                  "norm_diff": 0.6026,
+                  "range": 17.06,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 34.42,
+                  "name": "b",
+                  "norm_diff": 0.4904,
+                  "range": 27.02,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.4794,
+              "top": 97
+            },
+            {
+              "bottom": 127,
+              "compared": false,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 32.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 33.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 6.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 71.52,
+                  "name": "l",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 12.82,
+                  "name": "a",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 34.42,
+                  "name": "b",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                }
+              ],
+              "slice_distance": null,
+              "top": 100
+            },
+            {
+              "bottom": 200,
+              "compared": false,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 32.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 33.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 5.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 81.31,
+                  "name": "l",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 3.8,
+                  "name": "a",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 11.54,
+                  "name": "b",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                }
+              ],
+              "slice_distance": null,
+              "top": 127
+            }
+          ],
+          "type": "horizon"
+        },
+        {
+          "features": [
+            {
+              "candidate": 0.5,
+              "name": "slope_r",
+              "norm_diff": 0.9615,
+              "status": "both",
+              "user": 3.0,
+              "weight": 1.0
+            },
+            {
+              "candidate": 1128.0,
+              "name": "elev_r",
+              "norm_diff": 0.5347,
+              "status": "both",
+              "user": 1023.4199,
+              "weight": 0.5
+            }
+          ],
+          "score": 0.0452,
+          "type": "site",
+          "weight": 0.25
+        }
+      ]
+    },
+    {
+      "app_rank": 5,
+      "app_repr": null,
+      "combined_score": 0.2913,
       "compname_grp": "amarillo",
       "component_id": 27108890,
       "name": "amarillo",
       "overrides": [],
-      "properties_score": 0.5791,
-      "rank": 5,
+      "properties_score": 0.5713,
+      "rank": 7,
       "score_components": [
         {
           "comp_distance_score": 0.019,
@@ -3107,1176 +4262,21 @@
               "weight": 0.5
             }
           ],
-          "score": 0.3091,
+          "score": 0.1545,
           "type": "site",
-          "weight": 0.5
-        }
-      ]
-    },
-    {
-      "app_rank": 5,
-      "app_repr": null,
-      "combined_score": 0.29,
-      "compname_grp": "olton",
-      "component_id": 27108854,
-      "name": "olton",
-      "overrides": [],
-      "properties_score": 0.4543,
-      "rank": 6,
-      "score_components": [
-        {
-          "comp_distance_score": 0.212,
-          "data_source": "SSURGO",
-          "decay_multiplier": 0.25,
-          "distance_m": 204.0,
-          "distance_score": 0.212,
-          "exp_coeff": -0.008,
-          "floor_m": 173,
-          "occurrences": [
-            {
-              "distance_score": 0.212,
-              "name": "olton"
-            }
-          ],
-          "score": 0.1257,
-          "share_pct": 85.0,
-          "total_distance_score": 1.686,
-          "type": "location"
-        },
-        {
-          "score": 0.5971,
-          "segments": [
-            {
-              "bottom": 20,
-              "compared": true,
-              "depth_weight": 0.2,
-              "features": [
-                {
-                  "candidate": 32.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.0,
-                  "range": 39.0,
-                  "status": "both",
-                  "user": 32.5
-                },
-                {
-                  "candidate": 33.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.0,
-                  "range": 60.0,
-                  "status": "both",
-                  "user": 33.5
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 0.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 0.0
-                },
-                {
-                  "candidate": 40.89,
-                  "name": "l",
-                  "norm_diff": 0.0318,
-                  "range": 11.0,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 5.7,
-                  "name": "a",
-                  "norm_diff": 0.3409,
-                  "range": 9.27,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 11.64,
-                  "name": "b",
-                  "norm_diff": 0.5515,
-                  "range": 17.28,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.154,
-              "top": 0
-            },
-            {
-              "bottom": 30,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 32.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.0,
-                  "range": 52.5,
-                  "status": "both",
-                  "user": 32.5
-                },
-                {
-                  "candidate": 33.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.0,
-                  "range": 60.0,
-                  "status": "both",
-                  "user": 33.5
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 0.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 0.0
-                },
-                {
-                  "candidate": 40.89,
-                  "name": "l",
-                  "norm_diff": 0.0412,
-                  "range": 8.5,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 5.7,
-                  "name": "a",
-                  "norm_diff": 0.3409,
-                  "range": 9.27,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 11.64,
-                  "name": "b",
-                  "norm_diff": 0.5515,
-                  "range": 17.28,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.1555,
-              "top": 20
-            },
-            {
-              "bottom": 38,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 32.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.1905,
-                  "range": 52.5,
-                  "status": "both",
-                  "user": 22.5
-                },
-                {
-                  "candidate": 33.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.8588,
-                  "range": 42.5,
-                  "status": "both",
-                  "user": 70.0
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 1.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 8.0
-                },
-                {
-                  "candidate": 40.89,
-                  "name": "l",
-                  "norm_diff": 0.0334,
-                  "range": 10.49,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 5.7,
-                  "name": "a",
-                  "norm_diff": 0.2667,
-                  "range": 11.85,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 11.64,
-                  "name": "b",
-                  "norm_diff": 0.6336,
-                  "range": 15.04,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.4971,
-              "top": 30
-            },
-            {
-              "bottom": 60,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 32.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.1905,
-                  "range": 52.5,
-                  "status": "both",
-                  "user": 22.5
-                },
-                {
-                  "candidate": 33.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.8588,
-                  "range": 42.5,
-                  "status": "both",
-                  "user": 70.0
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 1.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 8.0
-                },
-                {
-                  "candidate": 51.36,
-                  "name": "l",
-                  "norm_diff": 0.9647,
-                  "range": 10.49,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 11.93,
-                  "name": "a",
-                  "norm_diff": 0.5708,
-                  "range": 16.45,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 20.03,
-                  "name": "b",
-                  "norm_diff": 0.0459,
-                  "range": 24.81,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.6051,
-              "top": 38
-            },
-            {
-              "bottom": 79,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 32.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.5714,
-                  "range": 52.5,
-                  "status": "both",
-                  "user": 62.5
-                },
-                {
-                  "candidate": 33.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.1412,
-                  "range": 42.5,
-                  "status": "both",
-                  "user": 27.5
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 1.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 8.0
-                },
-                {
-                  "candidate": 51.36,
-                  "name": "l",
-                  "norm_diff": 0.9647,
-                  "range": 10.49,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 11.93,
-                  "name": "a",
-                  "norm_diff": 0.5708,
-                  "range": 16.45,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 20.03,
-                  "name": "b",
-                  "norm_diff": 0.0459,
-                  "range": 24.81,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.5489,
-              "top": 60
-            },
-            {
-              "bottom": 100,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 32.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.3659,
-                  "range": 82.0,
-                  "status": "both",
-                  "user": 62.5
-                },
-                {
-                  "candidate": 33.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.0923,
-                  "range": 65.0,
-                  "status": "both",
-                  "user": 27.5
-                },
-                {
-                  "candidate": 1.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 0.875,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 8.0
-                },
-                {
-                  "candidate": 51.36,
-                  "name": "l",
-                  "norm_diff": 0.2504,
-                  "range": 40.42,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 11.93,
-                  "name": "a",
-                  "norm_diff": 0.5708,
-                  "range": 16.45,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 20.03,
-                  "name": "b",
-                  "norm_diff": 0.0459,
-                  "range": 24.81,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.3667,
-              "top": 79
-            },
-            {
-              "bottom": 122,
-              "compared": false,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 32.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 33.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 1.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 51.36,
-                  "name": "l",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 11.93,
-                  "name": "a",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 20.03,
-                  "name": "b",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                }
-              ],
-              "slice_distance": null,
-              "top": 100
-            },
-            {
-              "bottom": 191,
-              "compared": false,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 32.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 33.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 8.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 71.51,
-                  "name": "l",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 8.2,
-                  "name": "a",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 14.83,
-                  "name": "b",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                }
-              ],
-              "slice_distance": null,
-              "top": 122
-            },
-            {
-              "bottom": 200,
-              "compared": false,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 32.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 33.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 8.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 51.34,
-                  "name": "l",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 21.28,
-                  "name": "a",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 26.17,
-                  "name": "b",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                }
-              ],
-              "slice_distance": null,
-              "top": 191
-            }
-          ],
-          "type": "horizon"
-        },
-        {
-          "features": [
-            {
-              "candidate": 0.4,
-              "name": "slope_r",
-              "norm_diff": 1.0,
-              "status": "both",
-              "user": 3.0,
-              "weight": 1.0
-            },
-            {
-              "candidate": 1120.0,
-              "name": "elev_r",
-              "norm_diff": 0.4938,
-              "status": "both",
-              "user": 1023.4199,
-              "weight": 0.5
-            }
-          ],
-          "score": 0.0844,
-          "type": "site",
-          "weight": 0.5
-        }
-      ]
-    },
-    {
-      "app_rank": null,
-      "app_repr": {
-        "app_rank": 3,
-        "name": "estacado"
-      },
-      "combined_score": 0.2735,
-      "compname_grp": "estacado",
-      "component_id": 27108857,
-      "name": "estacado2",
-      "overrides": [],
-      "properties_score": 0.5256,
-      "rank": 7,
-      "score_components": [
-        {
-          "comp_distance_score": 0.036,
-          "data_source": "SSURGO",
-          "decay_multiplier": 0.25,
-          "distance_m": 204.0,
-          "distance_score": 0.007,
-          "exp_coeff": -0.008,
-          "floor_m": 173,
-          "occurrences": [
-            {
-              "distance_score": 0.029,
-              "name": "estacado"
-            },
-            {
-              "distance_score": 0.007,
-              "name": "estacado2"
-            }
-          ],
-          "score": 0.0214,
-          "share_pct": 3.0,
-          "total_distance_score": 1.686,
-          "type": "location"
-        },
-        {
-          "score": 0.698,
-          "segments": [
-            {
-              "bottom": 15,
-              "compared": true,
-              "depth_weight": 0.2,
-              "features": [
-                {
-                  "candidate": 32.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.0,
-                  "range": 39.0,
-                  "status": "both",
-                  "user": 32.5
-                },
-                {
-                  "candidate": 33.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.0,
-                  "range": 60.0,
-                  "status": "both",
-                  "user": 33.5
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 0.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 0.0
-                },
-                {
-                  "candidate": 40.9,
-                  "name": "l",
-                  "norm_diff": 0.0309,
-                  "range": 11.0,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 3.6,
-                  "name": "a",
-                  "norm_diff": 0.1143,
-                  "range": 9.27,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 13.2,
-                  "name": "b",
-                  "norm_diff": 0.4612,
-                  "range": 17.28,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.1012,
-              "top": 0
-            },
-            {
-              "bottom": 20,
-              "compared": true,
-              "depth_weight": 0.2,
-              "features": [
-                {
-                  "candidate": 32.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.0,
-                  "range": 51.5,
-                  "status": "both",
-                  "user": 32.5
-                },
-                {
-                  "candidate": 33.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.0,
-                  "range": 60.0,
-                  "status": "both",
-                  "user": 33.5
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 0.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 0.0
-                },
-                {
-                  "candidate": 40.9,
-                  "name": "l",
-                  "norm_diff": 0.04,
-                  "range": 8.5,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 5.52,
-                  "name": "a",
-                  "norm_diff": 0.3215,
-                  "range": 9.27,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 19.7,
-                  "name": "b",
-                  "norm_diff": 0.0851,
-                  "range": 17.28,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.0744,
-              "top": 15
-            },
-            {
-              "bottom": 30,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 32.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.0,
-                  "range": 52.5,
-                  "status": "both",
-                  "user": 32.5
-                },
-                {
-                  "candidate": 33.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.0,
-                  "range": 60.0,
-                  "status": "both",
-                  "user": 33.5
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 0.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 0.0
-                },
-                {
-                  "candidate": 40.9,
-                  "name": "l",
-                  "norm_diff": 0.04,
-                  "range": 8.5,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 5.52,
-                  "name": "a",
-                  "norm_diff": 0.3215,
-                  "range": 9.27,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 19.7,
-                  "name": "b",
-                  "norm_diff": 0.0851,
-                  "range": 17.28,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.0744,
-              "top": 20
-            },
-            {
-              "bottom": 48,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 32.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.1905,
-                  "range": 52.5,
-                  "status": "both",
-                  "user": 22.5
-                },
-                {
-                  "candidate": 33.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.8588,
-                  "range": 42.5,
-                  "status": "both",
-                  "user": 70.0
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 1.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 8.0
-                },
-                {
-                  "candidate": 40.9,
-                  "name": "l",
-                  "norm_diff": 0.0324,
-                  "range": 10.49,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 5.52,
-                  "name": "a",
-                  "norm_diff": 0.2515,
-                  "range": 11.85,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 19.7,
-                  "name": "b",
-                  "norm_diff": 0.0977,
-                  "range": 15.04,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.4051,
-              "top": 30
-            },
-            {
-              "bottom": 60,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 32.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.1905,
-                  "range": 52.5,
-                  "status": "both",
-                  "user": 22.5
-                },
-                {
-                  "candidate": 33.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.8588,
-                  "range": 42.5,
-                  "status": "both",
-                  "user": 70.0
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 1.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 8.0
-                },
-                {
-                  "candidate": 40.89,
-                  "name": "l",
-                  "norm_diff": 0.0334,
-                  "range": 10.49,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 10.71,
-                  "name": "a",
-                  "norm_diff": 0.4967,
-                  "range": 16.45,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 23.41,
-                  "name": "b",
-                  "norm_diff": 0.0903,
-                  "range": 24.81,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.4449,
-              "top": 48
-            },
-            {
-              "bottom": 97,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 32.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.5714,
-                  "range": 52.5,
-                  "status": "both",
-                  "user": 62.5
-                },
-                {
-                  "candidate": 33.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.1412,
-                  "range": 42.5,
-                  "status": "both",
-                  "user": 27.5
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 1.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 8.0
-                },
-                {
-                  "candidate": 40.89,
-                  "name": "l",
-                  "norm_diff": 0.0334,
-                  "range": 10.49,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 10.71,
-                  "name": "a",
-                  "norm_diff": 0.4967,
-                  "range": 16.45,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 23.41,
-                  "name": "b",
-                  "norm_diff": 0.0903,
-                  "range": 24.81,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.3888,
-              "top": 60
-            },
-            {
-              "bottom": 100,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 32.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.75,
-                  "range": 40.0,
-                  "status": "both",
-                  "user": 62.5
-                },
-                {
-                  "candidate": 33.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.1412,
-                  "range": 42.5,
-                  "status": "both",
-                  "user": 27.5
-                },
-                {
-                  "candidate": 6.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 0.1429,
-                  "range": 14.0,
-                  "status": "both",
-                  "user": 8.0
-                },
-                {
-                  "candidate": 71.52,
-                  "name": "l",
-                  "norm_diff": 0.7495,
-                  "range": 40.4,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 12.82,
-                  "name": "a",
-                  "norm_diff": 0.6026,
-                  "range": 17.06,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 34.42,
-                  "name": "b",
-                  "norm_diff": 0.4904,
-                  "range": 27.02,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.4794,
-              "top": 97
-            },
-            {
-              "bottom": 127,
-              "compared": false,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 32.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 33.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 6.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 71.52,
-                  "name": "l",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 12.82,
-                  "name": "a",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 34.42,
-                  "name": "b",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                }
-              ],
-              "slice_distance": null,
-              "top": 100
-            },
-            {
-              "bottom": 200,
-              "compared": false,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 32.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 33.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 5.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 81.31,
-                  "name": "l",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 3.8,
-                  "name": "a",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 11.54,
-                  "name": "b",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                }
-              ],
-              "slice_distance": null,
-              "top": 127
-            }
-          ],
-          "type": "horizon"
-        },
-        {
-          "features": [
-            {
-              "candidate": 0.5,
-              "name": "slope_r",
-              "norm_diff": 0.9615,
-              "status": "both",
-              "user": 3.0,
-              "weight": 1.0
-            },
-            {
-              "candidate": 1128.0,
-              "name": "elev_r",
-              "norm_diff": 0.5347,
-              "status": "both",
-              "user": 1023.4199,
-              "weight": 0.5
-            }
-          ],
-          "score": 0.0904,
-          "type": "site",
-          "weight": 0.5
+          "weight": 0.25
         }
       ]
     },
     {
       "app_rank": 6,
       "app_repr": null,
-      "combined_score": 0.2429,
+      "combined_score": 0.2778,
       "compname_grp": "mclean",
       "component_id": 27108934,
       "name": "mclean",
       "overrides": [],
-      "properties_score": 0.4264,
+      "properties_score": 0.4963,
       "rank": 8,
       "score_components": [
         {
@@ -4722,653 +4722,22 @@
               "weight": 0.5
             }
           ],
-          "score": 0.0384,
+          "score": 0.0192,
           "type": "site",
-          "weight": 0.5
+          "weight": 0.25
         }
       ]
     },
     {
       "app_rank": 7,
       "app_repr": null,
-      "combined_score": 0.2427,
-      "compname_grp": "friona",
-      "component_id": 27108892,
-      "name": "friona",
-      "overrides": [],
-      "properties_score": 0.4712,
-      "rank": 9,
-      "score_components": [
-        {
-          "comp_distance_score": 0.024,
-          "data_source": "SSURGO",
-          "decay_multiplier": 0.4868,
-          "distance_m": 90.0,
-          "distance_score": 0.024,
-          "exp_coeff": -0.008,
-          "floor_m": 173,
-          "occurrences": [
-            {
-              "distance_score": 0.024,
-              "name": "friona"
-            }
-          ],
-          "score": 0.0142,
-          "share_pct": 5.0,
-          "total_distance_score": 1.686,
-          "type": "location"
-        },
-        {
-          "score": 0.5016,
-          "segments": [
-            {
-              "bottom": 18,
-              "compared": true,
-              "depth_weight": 0.2,
-              "features": [
-                {
-                  "candidate": 37.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.1282,
-                  "range": 39.0,
-                  "status": "both",
-                  "user": 32.5
-                },
-                {
-                  "candidate": 17.0,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.275,
-                  "range": 60.0,
-                  "status": "both",
-                  "user": 33.5
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 0.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 0.0
-                },
-                {
-                  "candidate": 40.89,
-                  "name": "l",
-                  "norm_diff": 0.0318,
-                  "range": 11.0,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 5.7,
-                  "name": "a",
-                  "norm_diff": 0.3409,
-                  "range": 9.27,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 11.64,
-                  "name": "b",
-                  "norm_diff": 0.5515,
-                  "range": 17.28,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.2212,
-              "top": 0
-            },
-            {
-              "bottom": 20,
-              "compared": true,
-              "depth_weight": 0.2,
-              "features": [
-                {
-                  "candidate": 62.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.5714,
-                  "range": 52.5,
-                  "status": "both",
-                  "user": 32.5
-                },
-                {
-                  "candidate": 27.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.1,
-                  "range": 60.0,
-                  "status": "both",
-                  "user": 33.5
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 0.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 0.0
-                },
-                {
-                  "candidate": 40.89,
-                  "name": "l",
-                  "norm_diff": 0.0412,
-                  "range": 8.5,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 5.7,
-                  "name": "a",
-                  "norm_diff": 0.3409,
-                  "range": 9.27,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 11.64,
-                  "name": "b",
-                  "norm_diff": 0.5515,
-                  "range": 17.28,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.2674,
-              "top": 18
-            },
-            {
-              "bottom": 30,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 62.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.5714,
-                  "range": 52.5,
-                  "status": "both",
-                  "user": 32.5
-                },
-                {
-                  "candidate": 27.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.1,
-                  "range": 60.0,
-                  "status": "both",
-                  "user": 33.5
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 0.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 0.0
-                },
-                {
-                  "candidate": 40.89,
-                  "name": "l",
-                  "norm_diff": 0.0412,
-                  "range": 8.5,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 5.7,
-                  "name": "a",
-                  "norm_diff": 0.3409,
-                  "range": 9.27,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 11.64,
-                  "name": "b",
-                  "norm_diff": 0.5515,
-                  "range": 17.28,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.2674,
-              "top": 20
-            },
-            {
-              "bottom": 38,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 62.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.7619,
-                  "range": 52.5,
-                  "status": "both",
-                  "user": 22.5
-                },
-                {
-                  "candidate": 27.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": 1.0,
-                  "range": 42.5,
-                  "status": "both",
-                  "user": 70.0
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 1.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 8.0
-                },
-                {
-                  "candidate": 40.89,
-                  "name": "l",
-                  "norm_diff": 0.0334,
-                  "range": 10.49,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 5.7,
-                  "name": "a",
-                  "norm_diff": 0.2667,
-                  "range": 11.85,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 11.64,
-                  "name": "b",
-                  "norm_diff": 0.6336,
-                  "range": 15.04,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.6159,
-              "top": 30
-            },
-            {
-              "bottom": 60,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 62.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.7619,
-                  "range": 52.5,
-                  "status": "both",
-                  "user": 22.5
-                },
-                {
-                  "candidate": 27.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": 1.0,
-                  "range": 42.5,
-                  "status": "both",
-                  "user": 70.0
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 1.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 8.0
-                },
-                {
-                  "candidate": 51.36,
-                  "name": "l",
-                  "norm_diff": 0.9647,
-                  "range": 10.49,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 17.89,
-                  "name": "a",
-                  "norm_diff": 0.9331,
-                  "range": 16.45,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 30.94,
-                  "name": "b",
-                  "norm_diff": 0.3938,
-                  "range": 24.81,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.8422,
-              "top": 38
-            },
-            {
-              "bottom": 79,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 62.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.0,
-                  "range": 52.5,
-                  "status": "both",
-                  "user": 62.5
-                },
-                {
-                  "candidate": 27.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.0,
-                  "range": 42.5,
-                  "status": "both",
-                  "user": 27.5
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 1.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 8.0
-                },
-                {
-                  "candidate": 51.36,
-                  "name": "l",
-                  "norm_diff": 0.9647,
-                  "range": 10.49,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 17.89,
-                  "name": "a",
-                  "norm_diff": 0.9331,
-                  "range": 16.45,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 30.94,
-                  "name": "b",
-                  "norm_diff": 0.3938,
-                  "range": 24.81,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.5485,
-              "top": 60
-            },
-            {
-              "bottom": 89,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 92.0,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.3598,
-                  "range": 82.0,
-                  "status": "both",
-                  "user": 62.5
-                },
-                {
-                  "candidate": 5.0,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.3462,
-                  "range": 65.0,
-                  "status": "both",
-                  "user": 27.5
-                },
-                {
-                  "candidate": 0.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 1.0,
-                  "range": 8.0,
-                  "status": "both",
-                  "user": 8.0
-                },
-                {
-                  "candidate": 81.31,
-                  "name": "l",
-                  "norm_diff": 0.9913,
-                  "range": 40.42,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 3.8,
-                  "name": "a",
-                  "norm_diff": 0.0766,
-                  "range": 16.45,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 11.54,
-                  "name": "b",
-                  "norm_diff": 0.3881,
-                  "range": 24.81,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.527,
-              "top": 79
-            },
-            {
-              "bottom": 100,
-              "compared": true,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 62.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": 0.0,
-                  "range": 40.0,
-                  "status": "both",
-                  "user": 62.5
-                },
-                {
-                  "candidate": 27.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": 0.0,
-                  "range": 42.5,
-                  "status": "both",
-                  "user": 27.5
-                },
-                {
-                  "candidate": 14.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": 0.4286,
-                  "range": 14.0,
-                  "status": "both",
-                  "user": 8.0
-                },
-                {
-                  "candidate": 81.31,
-                  "name": "l",
-                  "norm_diff": 0.9913,
-                  "range": 40.42,
-                  "status": "both",
-                  "user": 41.24
-                },
-                {
-                  "candidate": 3.8,
-                  "name": "a",
-                  "norm_diff": 0.0766,
-                  "range": 16.45,
-                  "status": "both",
-                  "user": 2.54
-                },
-                {
-                  "candidate": 11.54,
-                  "name": "b",
-                  "norm_diff": 0.3881,
-                  "range": 24.81,
-                  "status": "both",
-                  "user": 21.17
-                }
-              ],
-              "slice_distance": 0.3141,
-              "top": 89
-            },
-            {
-              "bottom": 150,
-              "compared": false,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 62.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 27.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 14.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 81.31,
-                  "name": "l",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 3.8,
-                  "name": "a",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 11.54,
-                  "name": "b",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                }
-              ],
-              "slice_distance": null,
-              "top": 100
-            },
-            {
-              "bottom": 200,
-              "compared": false,
-              "depth_weight": 1.0,
-              "features": [
-                {
-                  "candidate": 62.5,
-                  "name": "sandpct_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 27.5,
-                  "name": "claypct_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 14.0,
-                  "name": "rfv_intpl",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 71.51,
-                  "name": "l",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 10.97,
-                  "name": "a",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                },
-                {
-                  "candidate": 20.03,
-                  "name": "b",
-                  "norm_diff": null,
-                  "range": null,
-                  "status": "candidate_only",
-                  "user": null
-                }
-              ],
-              "slice_distance": null,
-              "top": 150
-            }
-          ],
-          "type": "horizon"
-        },
-        {
-          "features": [
-            {
-              "candidate": 2.0,
-              "name": "slope_r",
-              "norm_diff": 0.3846,
-              "status": "both",
-              "user": 3.0,
-              "weight": 1.0
-            },
-            {
-              "candidate": 1219.0,
-              "name": "elev_r",
-              "norm_diff": 1.0,
-              "status": "both",
-              "user": 1023.4199,
-              "weight": 0.5
-            }
-          ],
-          "score": 0.2051,
-          "type": "site",
-          "weight": 0.5
-        }
-      ]
-    },
-    {
-      "app_rank": 8,
-      "app_repr": null,
-      "combined_score": 0.2283,
+      "combined_score": 0.2677,
       "compname_grp": "pullman",
       "component_id": 27108856,
       "name": "pullman",
       "overrides": [],
-      "properties_score": 0.4458,
-      "rank": 10,
+      "properties_score": 0.5248,
+      "rank": 9,
       "score_components": [
         {
           "comp_distance_score": 0.018,
@@ -5984,22 +5353,22 @@
               "weight": 0.5
             }
           ],
-          "score": 0.0256,
+          "score": 0.0128,
           "type": "site",
-          "weight": 0.5
+          "weight": 0.25
         }
       ]
     },
     {
-      "app_rank": 9,
+      "app_rank": 8,
       "app_repr": null,
-      "combined_score": 0.2187,
+      "combined_score": 0.2518,
       "compname_grp": "lockney",
       "component_id": 27108935,
       "name": "lockney",
       "overrides": [],
-      "properties_score": 0.4077,
-      "rank": 11,
+      "properties_score": 0.4739,
+      "rank": 10,
       "score_components": [
         {
           "comp_distance_score": 0.05,
@@ -6501,9 +5870,640 @@
               "weight": 0.5
             }
           ],
-          "score": 0.0384,
+          "score": 0.0192,
           "type": "site",
-          "weight": 0.5
+          "weight": 0.25
+        }
+      ]
+    },
+    {
+      "app_rank": 9,
+      "app_repr": null,
+      "combined_score": 0.2488,
+      "compname_grp": "friona",
+      "component_id": 27108892,
+      "name": "friona",
+      "overrides": [],
+      "properties_score": 0.4834,
+      "rank": 11,
+      "score_components": [
+        {
+          "comp_distance_score": 0.024,
+          "data_source": "SSURGO",
+          "decay_multiplier": 0.4868,
+          "distance_m": 90.0,
+          "distance_score": 0.024,
+          "exp_coeff": -0.008,
+          "floor_m": 173,
+          "occurrences": [
+            {
+              "distance_score": 0.024,
+              "name": "friona"
+            }
+          ],
+          "score": 0.0142,
+          "share_pct": 5.0,
+          "total_distance_score": 1.686,
+          "type": "location"
+        },
+        {
+          "score": 0.5016,
+          "segments": [
+            {
+              "bottom": 18,
+              "compared": true,
+              "depth_weight": 0.2,
+              "features": [
+                {
+                  "candidate": 37.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.1282,
+                  "range": 39.0,
+                  "status": "both",
+                  "user": 32.5
+                },
+                {
+                  "candidate": 17.0,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.275,
+                  "range": 60.0,
+                  "status": "both",
+                  "user": 33.5
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 0.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 0.0
+                },
+                {
+                  "candidate": 40.89,
+                  "name": "l",
+                  "norm_diff": 0.0318,
+                  "range": 11.0,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 5.7,
+                  "name": "a",
+                  "norm_diff": 0.3409,
+                  "range": 9.27,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 11.64,
+                  "name": "b",
+                  "norm_diff": 0.5515,
+                  "range": 17.28,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.2212,
+              "top": 0
+            },
+            {
+              "bottom": 20,
+              "compared": true,
+              "depth_weight": 0.2,
+              "features": [
+                {
+                  "candidate": 62.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.5714,
+                  "range": 52.5,
+                  "status": "both",
+                  "user": 32.5
+                },
+                {
+                  "candidate": 27.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.1,
+                  "range": 60.0,
+                  "status": "both",
+                  "user": 33.5
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 0.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 0.0
+                },
+                {
+                  "candidate": 40.89,
+                  "name": "l",
+                  "norm_diff": 0.0412,
+                  "range": 8.5,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 5.7,
+                  "name": "a",
+                  "norm_diff": 0.3409,
+                  "range": 9.27,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 11.64,
+                  "name": "b",
+                  "norm_diff": 0.5515,
+                  "range": 17.28,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.2674,
+              "top": 18
+            },
+            {
+              "bottom": 30,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 62.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.5714,
+                  "range": 52.5,
+                  "status": "both",
+                  "user": 32.5
+                },
+                {
+                  "candidate": 27.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.1,
+                  "range": 60.0,
+                  "status": "both",
+                  "user": 33.5
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 0.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 0.0
+                },
+                {
+                  "candidate": 40.89,
+                  "name": "l",
+                  "norm_diff": 0.0412,
+                  "range": 8.5,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 5.7,
+                  "name": "a",
+                  "norm_diff": 0.3409,
+                  "range": 9.27,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 11.64,
+                  "name": "b",
+                  "norm_diff": 0.5515,
+                  "range": 17.28,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.2674,
+              "top": 20
+            },
+            {
+              "bottom": 38,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 62.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.7619,
+                  "range": 52.5,
+                  "status": "both",
+                  "user": 22.5
+                },
+                {
+                  "candidate": 27.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": 1.0,
+                  "range": 42.5,
+                  "status": "both",
+                  "user": 70.0
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 1.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 8.0
+                },
+                {
+                  "candidate": 40.89,
+                  "name": "l",
+                  "norm_diff": 0.0334,
+                  "range": 10.49,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 5.7,
+                  "name": "a",
+                  "norm_diff": 0.2667,
+                  "range": 11.85,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 11.64,
+                  "name": "b",
+                  "norm_diff": 0.6336,
+                  "range": 15.04,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.6159,
+              "top": 30
+            },
+            {
+              "bottom": 60,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 62.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.7619,
+                  "range": 52.5,
+                  "status": "both",
+                  "user": 22.5
+                },
+                {
+                  "candidate": 27.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": 1.0,
+                  "range": 42.5,
+                  "status": "both",
+                  "user": 70.0
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 1.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 8.0
+                },
+                {
+                  "candidate": 51.36,
+                  "name": "l",
+                  "norm_diff": 0.9647,
+                  "range": 10.49,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 17.89,
+                  "name": "a",
+                  "norm_diff": 0.9331,
+                  "range": 16.45,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 30.94,
+                  "name": "b",
+                  "norm_diff": 0.3938,
+                  "range": 24.81,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.8422,
+              "top": 38
+            },
+            {
+              "bottom": 79,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 62.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.0,
+                  "range": 52.5,
+                  "status": "both",
+                  "user": 62.5
+                },
+                {
+                  "candidate": 27.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.0,
+                  "range": 42.5,
+                  "status": "both",
+                  "user": 27.5
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 1.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 8.0
+                },
+                {
+                  "candidate": 51.36,
+                  "name": "l",
+                  "norm_diff": 0.9647,
+                  "range": 10.49,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 17.89,
+                  "name": "a",
+                  "norm_diff": 0.9331,
+                  "range": 16.45,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 30.94,
+                  "name": "b",
+                  "norm_diff": 0.3938,
+                  "range": 24.81,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.5485,
+              "top": 60
+            },
+            {
+              "bottom": 89,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 92.0,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.3598,
+                  "range": 82.0,
+                  "status": "both",
+                  "user": 62.5
+                },
+                {
+                  "candidate": 5.0,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.3462,
+                  "range": 65.0,
+                  "status": "both",
+                  "user": 27.5
+                },
+                {
+                  "candidate": 0.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 1.0,
+                  "range": 8.0,
+                  "status": "both",
+                  "user": 8.0
+                },
+                {
+                  "candidate": 81.31,
+                  "name": "l",
+                  "norm_diff": 0.9913,
+                  "range": 40.42,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 3.8,
+                  "name": "a",
+                  "norm_diff": 0.0766,
+                  "range": 16.45,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 11.54,
+                  "name": "b",
+                  "norm_diff": 0.3881,
+                  "range": 24.81,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.527,
+              "top": 79
+            },
+            {
+              "bottom": 100,
+              "compared": true,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 62.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": 0.0,
+                  "range": 40.0,
+                  "status": "both",
+                  "user": 62.5
+                },
+                {
+                  "candidate": 27.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": 0.0,
+                  "range": 42.5,
+                  "status": "both",
+                  "user": 27.5
+                },
+                {
+                  "candidate": 14.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": 0.4286,
+                  "range": 14.0,
+                  "status": "both",
+                  "user": 8.0
+                },
+                {
+                  "candidate": 81.31,
+                  "name": "l",
+                  "norm_diff": 0.9913,
+                  "range": 40.42,
+                  "status": "both",
+                  "user": 41.24
+                },
+                {
+                  "candidate": 3.8,
+                  "name": "a",
+                  "norm_diff": 0.0766,
+                  "range": 16.45,
+                  "status": "both",
+                  "user": 2.54
+                },
+                {
+                  "candidate": 11.54,
+                  "name": "b",
+                  "norm_diff": 0.3881,
+                  "range": 24.81,
+                  "status": "both",
+                  "user": 21.17
+                }
+              ],
+              "slice_distance": 0.3141,
+              "top": 89
+            },
+            {
+              "bottom": 150,
+              "compared": false,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 62.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 27.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 14.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 81.31,
+                  "name": "l",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 3.8,
+                  "name": "a",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 11.54,
+                  "name": "b",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                }
+              ],
+              "slice_distance": null,
+              "top": 100
+            },
+            {
+              "bottom": 200,
+              "compared": false,
+              "depth_weight": 1.0,
+              "features": [
+                {
+                  "candidate": 62.5,
+                  "name": "sandpct_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 27.5,
+                  "name": "claypct_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 14.0,
+                  "name": "rfv_intpl",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 71.51,
+                  "name": "l",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 10.97,
+                  "name": "a",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                },
+                {
+                  "candidate": 20.03,
+                  "name": "b",
+                  "norm_diff": null,
+                  "range": null,
+                  "status": "candidate_only",
+                  "user": null
+                }
+              ],
+              "slice_distance": null,
+              "top": 150
+            }
+          ],
+          "type": "horizon"
+        },
+        {
+          "features": [
+            {
+              "candidate": 2.0,
+              "name": "slope_r",
+              "norm_diff": 0.3846,
+              "status": "both",
+              "user": 3.0,
+              "weight": 1.0
+            },
+            {
+              "candidate": 1219.0,
+              "name": "elev_r",
+              "norm_diff": 1.0,
+              "status": "both",
+              "user": 1023.4199,
+              "weight": 0.5
+            }
+          ],
+          "score": 0.1026,
+          "type": "site",
+          "weight": 0.25
         }
       ]
     }

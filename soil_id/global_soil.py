@@ -1023,12 +1023,12 @@ def rank_soils_global(
         # See SOILID_TUNING.md (§7, "dis_max").
         dis_max = 1.0
 
-        # Apply depth weight (per-cm weight applied to each depth slice in the
-        # horizon distance average). Surface 0-20 cm weight was 0.2; set to 1.0
-        # (uniform) to match the US path — tuning found the surface de-weighting
-        # slightly hurt accuracy (uniform ≈ +0.3 pt top1). Kept as an explicit
-        # two-part concat so the surface band stays an easy knob. See SOILID_TUNING.md.
-        depth_weight = np.concatenate([np.repeat(1.0, 20), np.repeat(1.0, 180)])
+        # Apply depth weight: surface 0-20 cm slices count 0.2x, deeper 1.0x (same
+        # as the US path). Rationale: the topsoil is the most disturbed/managed
+        # layer and less taxonomically diagnostic. (Uniform 1.0x was net ~0 on the
+        # bulk test; a data-presence-aware weight would be the principled fix — see
+        # JOHANNES_NOTES_2026 "Potential future changes".)
+        depth_weight = np.concatenate([np.repeat(0.2, 20), np.repeat(1.0, 180)])
         depth_weight = depth_weight[soil_matrix.index]
 
         # Infill NaN data

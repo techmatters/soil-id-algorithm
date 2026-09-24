@@ -2424,12 +2424,14 @@ def rank_soils(
         # Maximum dissimilarity
         dis_max = 1.0
 
-        # Apply depth weight (per-cm weight applied to each depth slice in the
-        # horizon distance average). Surface 0-20 cm weight was 0.2; set to 1.0
-        # (uniform) — tuning found the surface de-weighting slightly hurt accuracy
-        # (uniform ≈ +0.3 pt top1). Kept as an explicit two-part concat so the
-        # surface band stays an easy knob to re-tune. See SOILID_TUNING.md (§3, §7).
-        depth_weight = np.concatenate((np.repeat(1.0, 20), np.repeat(1.0, 180)), axis=0)
+        # Apply depth weight: the surface 0-20 cm slices count 0.2x in the horizon
+        # distance average, deeper slices 1.0x. Rationale: the topsoil is the most
+        # disturbed/managed layer and less taxonomically diagnostic than subsurface
+        # horizons. (Tried uniform 1.0x — net ~0 on the bulk test: it helps
+        # surface-heavy pits but slightly hurts deep pits, which cancel. The
+        # principled improvement would be data-presence-aware weighting, not a
+        # constant — see JOHANNES_NOTES_2026 "Potential future changes".)
+        depth_weight = np.concatenate((np.repeat(0.2, 20), np.repeat(1.0, 180)), axis=0)
         depth_weight = depth_weight[pedon_slice_index]
 
         # Infill Nan data: soil vs non‑soil logic

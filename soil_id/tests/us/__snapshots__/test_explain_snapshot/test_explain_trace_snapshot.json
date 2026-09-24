@@ -3,12 +3,12 @@
     {
       "app_rank": 1,
       "app_repr": null,
-      "combined_score": 0.4487,
+      "combined_score": 0.435,
       "compname_grp": "randall",
       "component_id": 27108933,
       "name": "randall",
       "overrides": [],
-      "properties_score": 0.4229,
+      "properties_score": 0.3955,
       "rank": 1,
       "score_components": [
         {
@@ -31,7 +31,7 @@
           "type": "location"
         },
         {
-          "score": 0.5094,
+          "score": 0.4752,
           "segments": [
             {
               "bottom": 20,
@@ -520,12 +520,12 @@
     {
       "app_rank": 2,
       "app_repr": null,
-      "combined_score": 0.4191,
+      "combined_score": 0.4027,
       "compname_grp": "acuff",
       "component_id": 27108889,
       "name": "acuff",
       "overrides": [],
-      "properties_score": 0.5849,
+      "properties_score": 0.5522,
       "rank": 2,
       "score_components": [
         {
@@ -552,7 +552,7 @@
           "type": "location"
         },
         {
-          "score": 0.5766,
+          "score": 0.5357,
           "segments": [
             {
               "bottom": 20,
@@ -1101,12 +1101,12 @@
         "app_rank": 2,
         "name": "acuff"
       },
-      "combined_score": 0.3806,
+      "combined_score": 0.3643,
       "compname_grp": "acuff",
       "component_id": 27108855,
       "name": "acuff2",
       "overrides": [],
-      "properties_score": 0.508,
+      "properties_score": 0.4753,
       "rank": 3,
       "score_components": [
         {
@@ -1133,7 +1133,7 @@
           "type": "location"
         },
         {
-          "score": 0.5766,
+          "score": 0.5357,
           "segments": [
             {
               "bottom": 20,
@@ -1679,12 +1679,12 @@
     {
       "app_rank": 3,
       "app_repr": null,
-      "combined_score": 0.3438,
+      "combined_score": 0.3306,
       "compname_grp": "estacado",
       "component_id": 27108891,
       "name": "estacado",
       "overrides": [],
-      "properties_score": 0.6662,
+      "properties_score": 0.6397,
       "rank": 4,
       "score_components": [
         {
@@ -1711,7 +1711,7 @@
           "type": "location"
         },
         {
-          "score": 0.6914,
+          "score": 0.6583,
           "segments": [
             {
               "bottom": 12,
@@ -2428,12 +2428,12 @@
     {
       "app_rank": 4,
       "app_repr": null,
-      "combined_score": 0.3186,
+      "combined_score": 0.2997,
       "compname_grp": "olton",
       "component_id": 27108854,
       "name": "olton",
       "overrides": [],
-      "properties_score": 0.5114,
+      "properties_score": 0.4736,
       "rank": 5,
       "score_components": [
         {
@@ -2456,7 +2456,7 @@
           "type": "location"
         },
         {
-          "score": 0.5971,
+          "score": 0.5498,
           "segments": [
             {
               "bottom": 20,
@@ -3005,12 +3005,12 @@
         "app_rank": 3,
         "name": "estacado"
       },
-      "combined_score": 0.308,
+      "combined_score": 0.2922,
       "compname_grp": "estacado",
       "component_id": 27108857,
       "name": "estacado2",
       "overrides": [],
-      "properties_score": 0.5946,
+      "properties_score": 0.563,
       "rank": 6,
       "score_components": [
         {
@@ -3037,7 +3037,7 @@
           "type": "location"
         },
         {
-          "score": 0.698,
+          "score": 0.6586,
           "segments": [
             {
               "bottom": 15,
@@ -3583,12 +3583,12 @@
     {
       "app_rank": 5,
       "app_repr": null,
-      "combined_score": 0.2913,
+      "combined_score": 0.2846,
       "compname_grp": "amarillo",
       "component_id": 27108890,
       "name": "amarillo",
       "overrides": [],
-      "properties_score": 0.5713,
+      "properties_score": 0.558,
       "rank": 7,
       "score_components": [
         {
@@ -3611,7 +3611,7 @@
           "type": "location"
         },
         {
-          "score": 0.5596,
+          "score": 0.543,
           "segments": [
             {
               "bottom": 20,
@@ -4271,12 +4271,12 @@
     {
       "app_rank": 6,
       "app_repr": null,
-      "combined_score": 0.2778,
+      "combined_score": 0.2712,
       "compname_grp": "mclean",
       "component_id": 27108934,
       "name": "mclean",
       "overrides": [],
-      "properties_score": 0.4963,
+      "properties_score": 0.483,
       "rank": 8,
       "score_components": [
         {
@@ -4299,7 +4299,7 @@
           "type": "location"
         },
         {
-          "score": 0.6012,
+          "score": 0.5846,
           "segments": [
             {
               "bottom": 20,
@@ -4731,12 +4731,12 @@
     {
       "app_rank": 7,
       "app_repr": null,
-      "combined_score": 0.2677,
+      "combined_score": 0.2543,
       "compname_grp": "pullman",
       "component_id": 27108856,
       "name": "pullman",
       "overrides": [],
-      "properties_score": 0.5248,
+      "properties_score": 0.4978,
       "rank": 9,
       "score_components": [
         {
@@ -4759,7 +4759,7 @@
           "type": "location"
         },
         {
-          "score": 0.6432,
+          "score": 0.6095,
           "segments": [
             {
               "bottom": 13,
@@ -5362,12 +5362,12 @@
     {
       "app_rank": 8,
       "app_repr": null,
-      "combined_score": 0.2518,
+      "combined_score": 0.2445,
       "compname_grp": "lockney",
       "component_id": 27108935,
       "name": "lockney",
       "overrides": [],
-      "properties_score": 0.4739,
+      "properties_score": 0.4593,
       "rank": 10,
       "score_components": [
         {
@@ -5390,7 +5390,7 @@
           "type": "location"
         },
         {
-          "score": 0.5732,
+          "score": 0.5549,
           "segments": [
             {
               "bottom": 10,
@@ -5879,12 +5879,12 @@
     {
       "app_rank": 9,
       "app_repr": null,
-      "combined_score": 0.2488,
+      "combined_score": 0.228,
       "compname_grp": "friona",
       "component_id": 27108892,
       "name": "friona",
       "overrides": [],
-      "properties_score": 0.4834,
+      "properties_score": 0.4417,
       "rank": 11,
       "score_components": [
         {
@@ -5907,7 +5907,7 @@
           "type": "location"
         },
         {
-          "score": 0.5016,
+          "score": 0.4496,
           "segments": [
             {
               "bottom": 18,

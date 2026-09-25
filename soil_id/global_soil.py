@@ -608,9 +608,7 @@ def _slice_gower_distance(slice_mat, return_details=False):
     cols = list(slice_mat.columns)
     ranges = None
     if all(c in GLOBAL_HORIZON_PROP_BOUNDS for c in cols):
-        ranges = [
-            GLOBAL_HORIZON_PROP_BOUNDS[c][1] - GLOBAL_HORIZON_PROP_BOUNDS[c][0] for c in cols
-        ]
+        ranges = [GLOBAL_HORIZON_PROP_BOUNDS[c][1] - GLOBAL_HORIZON_PROP_BOUNDS[c][0] for c in cols]
     return gower_distances(slice_mat, theoretical_ranges=ranges, return_details=return_details)
 
 

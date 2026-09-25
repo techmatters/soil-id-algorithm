@@ -102,3 +102,29 @@ def test_empty_rank(api_fixtures):
             bedrock=None,
             cracks=None,
         )
+
+
+def test_rank_soils_accepts_caller_supplied_elevation(api_fixtures):
+    # Regression: when the caller passes pElev (not None), rank_soils must use it
+    # directly and must NOT look it up. Previously pElev_dict was only assigned in
+    # the `pElev is None` branch but dereferenced unconditionally, so a caller-
+    # supplied pElev raised UnboundLocalError (not caught by the surrounding except).
+    lon, lat = test_locations[0]["lon"], test_locations[0]["lat"]
+    with api_fixtures(lon, lat):
+        SoilListOutputData = list_soils(lon, lat)
+        result = rank_soils(
+            lon,
+            lat,
+            SoilListOutputData,
+            soilHorizon=[],
+            topDepth=[],
+            bottomDepth=[],
+            rfvDepth=[],
+            lab_Color=[],
+            pSlope=None,
+            pElev=1500.0,  # caller-supplied elevation (meters); skips get_elev_data
+            bedrock=None,
+            cracks=None,
+        )
+    # Reaching here without UnboundLocalError is the regression check.
+    assert result is not None

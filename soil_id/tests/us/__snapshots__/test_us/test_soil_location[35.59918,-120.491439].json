@@ -1,22 +1,22 @@
 {
   "list": {
-    "AWS_PIW90": 3.72,
+    "AWS_PIW90": 5.44,
     "Soil Data Value": [
       [
         "texture_0",
-        0.9165173278449512
+        1.5088436399637513
       ],
       [
         "texture_30",
-        0.9165173278449512
+        1.5088436399637513
       ],
       [
         "rfv_class_0",
-        0.0
+        0.007439560078327467
       ],
       [
         "rfv_class_30",
-        0.0
+        0.007439560078327467
       ]
     ],
     "metadata": {
@@ -41,6 +41,62 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
+              "R015XE020CA"
+            ],
+            "ecoclassname": [
+              "Fine Loamy 9-13"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/015X/R015XE020CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Nacimiento",
+          "name": "Nacimiento",
+          "rank_loc": "1",
+          "score_loc": 0.283
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26735233",
+            "componentKind": "Series",
+            "componentPct": 30,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "6",
+            "irrcapscl": "e",
+            "irrcapunit": "nan",
+            "mapunitID": "457283",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "nan",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=nacimiento",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#nacimiento",
+            "slope": 40.0,
+            "taxsubgrp": "Calcic Haploxerolls",
+            "textureInfill": "Yes"
+          },
+          "siteDescription": "The Nacimiento series consists of moderately deep, well drained soils that formed in material weathered from calcareous shale and sandstone.  Nacimiento soils are on rolling uplands and have mostly complex slopes of 9 to 75 percent. The mean annual precipitation is about 16 inches and the mean annual air temperature is about 60 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
               "R015XE082CA"
             ],
             "ecoclassname": [
@@ -54,7 +110,7 @@
         "id": {
           "component": "Balcom",
           "name": "Balcom2",
-          "rank_loc": "1",
+          "rank_loc": "2",
           "score_loc": 0.252
         },
         "lab": {},
@@ -110,7 +166,7 @@
         "id": {
           "component": "Los osos",
           "name": "Los osos",
-          "rank_loc": "2",
+          "rank_loc": "3",
           "score_loc": 0.125
         },
         "lab": {},
@@ -141,6 +197,62 @@
             "textureInfill": "Yes"
           },
           "siteDescription": "The Los Osos series consists of moderately deep, well drained soils that formed in material weathered from sandstone and shale.  Los Osos soils are on uplands and have slopes of 5 to 75 percent.  The mean annual precipitation is about 25 inches and the mean annual air temperature is about 60 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "R015XE020CA"
+            ],
+            "ecoclassname": [
+              "Fine Loamy 9-13"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/015X/R015XE020CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Nacimiento",
+          "name": "Nacimiento2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.283
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26735226",
+            "componentKind": "Series",
+            "componentPct": 30,
+            "dataSource": "SSURGO",
+            "distance": 385.0,
+            "irrcapcl": "4",
+            "irrcapscl": "e",
+            "irrcapunit": "1.0",
+            "mapunitID": "457282",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "4",
+            "nirrcapscl": "e",
+            "nirrcapunit": "1.0",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=nacimiento",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#nacimiento",
+            "slope": 20.0,
+            "taxsubgrp": "Calcic Haploxerolls",
+            "textureInfill": "Yes"
+          },
+          "siteDescription": "The Nacimiento series consists of moderately deep, well drained soils that formed in material weathered from calcareous shale and sandstone.  Nacimiento soils are on rolling uplands and have mostly complex slopes of 9 to 75 percent. The mean annual precipitation is about 16 inches and the mean annual air temperature is about 60 degrees F."
         },
         "texture": {},
         "top_depth": {}
@@ -276,13 +388,32 @@
         "rank_data_loc": "1",
         "rank_data_loc_group": "1",
         "rank_loc": "Not Displayed",
-        "rank_loc_group": "1",
-        "score_data": 0.361,
-        "score_data_group": 0.361,
-        "score_data_loc": 0.307,
-        "score_data_loc_group": 0.307,
+        "rank_loc_group": "2",
+        "score_data": 0.382,
+        "score_data_group": 0.382,
+        "score_data_loc": 0.317,
+        "score_data_loc_group": 0.317,
         "score_loc": 0.252,
         "score_loc_group": 0.252
+      },
+      {
+        "component": "Nacimiento",
+        "componentData": "Data Complete",
+        "componentID": 26735226,
+        "name": "Nacimiento2",
+        "not_displayed": false,
+        "rank_data": "3",
+        "rank_data_group": "3",
+        "rank_data_loc": "2",
+        "rank_data_loc_group": "2",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "1",
+        "score_data": 0.296,
+        "score_data_group": 0.296,
+        "score_data_loc": 0.29,
+        "score_data_loc_group": 0.29,
+        "score_loc": 0.283,
+        "score_loc_group": 0.283
       },
       {
         "component": "Los osos",
@@ -292,14 +423,14 @@
         "not_displayed": false,
         "rank_data": "1",
         "rank_data_group": "1",
-        "rank_data_loc": "2",
-        "rank_data_loc_group": "2",
+        "rank_data_loc": "3",
+        "rank_data_loc_group": "3",
         "rank_loc": "Not Displayed",
-        "rank_loc_group": "2",
-        "score_data": 0.389,
-        "score_data_group": 0.389,
-        "score_data_loc": 0.257,
-        "score_data_loc_group": 0.257,
+        "rank_loc_group": "3",
+        "score_data": 0.414,
+        "score_data_group": 0.414,
+        "score_data_loc": 0.269,
+        "score_data_loc_group": 0.269,
         "score_loc": 0.125,
         "score_loc_group": 0.125
       },
@@ -313,14 +444,33 @@
         "rank_data_group": "2",
         "rank_data_loc": "Not Displayed",
         "rank_data_loc_group": "1",
-        "rank_loc": "1",
-        "rank_loc_group": "1",
-        "score_data": 0.255,
-        "score_data_group": 0.361,
-        "score_data_loc": 0.253,
-        "score_data_loc_group": 0.307,
+        "rank_loc": "2",
+        "rank_loc_group": "2",
+        "score_data": 0.275,
+        "score_data_group": 0.382,
+        "score_data_loc": 0.264,
+        "score_data_loc_group": 0.317,
         "score_loc": 0.252,
         "score_loc_group": 0.252
+      },
+      {
+        "component": "Nacimiento",
+        "componentData": "Data Complete",
+        "componentID": 26735233,
+        "name": "Nacimiento",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "3",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "2",
+        "rank_loc": "1",
+        "rank_loc_group": "1",
+        "score_data": 0.19,
+        "score_data_group": 0.296,
+        "score_data_loc": 0.236,
+        "score_data_loc_group": 0.29,
+        "score_loc": 0.283,
+        "score_loc_group": 0.283
       },
       {
         "component": "Los osos",
@@ -331,13 +481,13 @@
         "rank_data": "Not Displayed",
         "rank_data_group": "1",
         "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "2",
-        "rank_loc": "2",
-        "rank_loc_group": "2",
-        "score_data": 0.282,
-        "score_data_group": 0.389,
-        "score_data_loc": 0.203,
-        "score_data_loc_group": 0.257,
+        "rank_data_loc_group": "3",
+        "rank_loc": "3",
+        "rank_loc_group": "3",
+        "score_data": 0.307,
+        "score_data_group": 0.414,
+        "score_data_loc": 0.216,
+        "score_data_loc_group": 0.269,
         "score_loc": 0.125,
         "score_loc_group": 0.125
       }

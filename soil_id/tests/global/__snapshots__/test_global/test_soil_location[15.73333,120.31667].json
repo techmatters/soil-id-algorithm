@@ -589,6 +589,100 @@
           "sl7": 120
         },
         "cec": {
+          "sl1": 14.0,
+          "sl2": 14.0,
+          "sl3": 14.0,
+          "sl4": 12.8,
+          "sl5": 12.57,
+          "sl6": 12.2,
+          "sl7": 11.83
+        },
+        "clay": {
+          "sl1": 43.0,
+          "sl2": 43.0,
+          "sl3": 43.0,
+          "sl4": 50.4,
+          "sl5": 52.86,
+          "sl6": 55.2,
+          "sl7": 56.17
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Rhodic nitisols",
+          "name": "Rhodic nitisols",
+          "rank_loc": "7",
+          "score_loc": 0.08
+        },
+        "ph": {
+          "sl1": 5.7,
+          "sl2": 5.7,
+          "sl3": 5.7,
+          "sl4": 5.64,
+          "sl5": 5.63,
+          "sl6": 5.64,
+          "sl7": 5.65
+        },
+        "rock_fragments": {
+          "sl1": 2.0,
+          "sl2": 2.0,
+          "sl3": 2.0,
+          "sl4": 2.2,
+          "sl5": 2.86,
+          "sl6": 3.4,
+          "sl7": 3.67
+        },
+        "sand": {
+          "sl1": 32.0,
+          "sl2": 32.0,
+          "sl3": 32.0,
+          "sl4": 27.0,
+          "sl5": 25.71,
+          "sl6": 24.6,
+          "sl7": 24.17
+        },
+        "site": {
+          "siteData": {
+            "componentID": 141608,
+            "distance": 0.357,
+            "mapunitID": 4413,
+            "minCompDistance": 0.35725062,
+            "share": 20,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Rhodic Nitisols are the most productive humid subtropical and tropical soils. They have well developed structure with relatively clayey and iron enriched subsoils which retain water and nutrients. Rhodic Nitisols have dark red subsoils with high P sorption.",
+            "Management_en": "These are productive soils, and can be used for crop production. They have excellent internal drainage and good water holding capacity. These soils do have a high degree of phosphorus sorption, and will fix phosphorus, making it unavailable for plant uptake during the cropping season. Phosphorus fertilization will be needed for best productivity. Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. It is especially important that P fertilization be used on these soils, which are specifically noted for having high P sorption. "
+          }
+        },
+        "texture": {
+          "sl1": "Clay",
+          "sl2": "Clay",
+          "sl3": "Clay",
+          "sl4": "Clay",
+          "sl5": "Clay",
+          "sl6": "Clay",
+          "sl7": "Clay"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
           "sl1": 19.0,
           "sl2": 19.0,
           "sl3": 19.0,
@@ -618,7 +712,7 @@
         "id": {
           "component": "Eutric fluvisols",
           "name": "Eutric fluvisols",
-          "rank_loc": "7",
+          "rank_loc": "8",
           "score_loc": 0.07
         },
         "ph": {
@@ -712,7 +806,7 @@
         "id": {
           "component": "Haplic luvisols",
           "name": "Haplic luvisols",
-          "rank_loc": "8",
+          "rank_loc": "9",
           "score_loc": 0.04
         },
         "ph": {
@@ -806,7 +900,7 @@
         "id": {
           "component": "Eutric gleysols",
           "name": "Eutric gleysols",
-          "rank_loc": "9",
+          "rank_loc": "10",
           "score_loc": 0.03
         },
         "ph": {
@@ -900,7 +994,7 @@
         "id": {
           "component": "Gleysols",
           "name": "Gleysols",
-          "rank_loc": "10",
+          "rank_loc": "11",
           "score_loc": 0.02
         },
         "ph": {
@@ -978,7 +1072,7 @@
         "id": {
           "component": "Lithic leptosols",
           "name": "Lithic leptosols",
-          "rank_loc": "11",
+          "rank_loc": "12",
           "score_loc": 0.02
         },
         "ph": {
@@ -1015,100 +1109,6 @@
           "sl2": "Loam",
           "sl3": "Loam"
         }
-      },
-      {
-        "bottom_depth": {
-          "sl1": 1,
-          "sl2": 10,
-          "sl3": 20,
-          "sl4": 50,
-          "sl5": 70,
-          "sl6": 100,
-          "sl7": 120
-        },
-        "cec": {
-          "sl1": 15.0,
-          "sl2": 15.0,
-          "sl3": 15.0,
-          "sl4": 12.4,
-          "sl5": 11.71,
-          "sl6": 11.2,
-          "sl7": 10.83
-        },
-        "clay": {
-          "sl1": 41.0,
-          "sl2": 41.0,
-          "sl3": 41.0,
-          "sl4": 45.4,
-          "sl5": 47.14,
-          "sl6": 48.4,
-          "sl7": 49.0
-        },
-        "ec": {
-          "sl1": 0.0,
-          "sl2": 0.0,
-          "sl3": 0.0,
-          "sl4": 0.0,
-          "sl5": 0.0,
-          "sl6": 0.0,
-          "sl7": 0.0
-        },
-        "id": {
-          "component": "Humic acrisols",
-          "name": "Humic acrisols",
-          "rank_loc": "12",
-          "score_loc": 0.01
-        },
-        "ph": {
-          "sl1": 4.9,
-          "sl2": 4.9,
-          "sl3": 4.9,
-          "sl4": 4.9,
-          "sl5": 4.91,
-          "sl6": 4.92,
-          "sl7": 4.93
-        },
-        "rock_fragments": {
-          "sl1": 15.0,
-          "sl2": 15.0,
-          "sl3": 15.0,
-          "sl4": 19.4,
-          "sl5": 21.0,
-          "sl6": 22.2,
-          "sl7": 23.0
-        },
-        "sand": {
-          "sl1": 36.0,
-          "sl2": 36.0,
-          "sl3": 36.0,
-          "sl4": 33.6,
-          "sl5": 32.43,
-          "sl6": 31.4,
-          "sl7": 31.0
-        },
-        "site": {
-          "siteData": {
-            "componentID": 142155,
-            "distance": 9267.434,
-            "mapunitID": 4465,
-            "minCompDistance": 9267.43362967,
-            "share": 10,
-            "soilDepth": 200
-          },
-          "siteDescription": {
-            "Description_en": "Humic Acrisols are acidic and relatively infertile soils. Supplemental fertilization and liming will be needed to create a productive soil for crop use. These soils are also high in soluble aluminum (Al) which is toxic to plants. Humic Acrisols contain large amounts of organic matter in the upper soil layer. They often have poor structure, but will become more productive in systems that include crop rotations, cover crops or green manures. ",
-            "Management_en": "Because the soil tends to be acidic (has a low soil pH) and high in Al, phosphorus fertilizer is quickly “fixed” by the soil, making it unavailable to plants in the cropping season. Well documented practices such as band application (either directly on the seed or to the side and down from the seed) of phosphate fertilizers will help to reduce P fixation. Application of nitrogen (N) is essential, and this can be accomplished either through application of correct rates of fertilizer (such as urea), or through use of cover crops, green manures and rotations. Cover crops and rotations that include legumes and inclusion of crops with high biomass would be beneficial, adding organic matter and nitrogen for the subsequent crop. Even with cover crops or similar practices, supplemental N fertilization will likely be needed as organic N will not be converted to the crop-needed inorganic N in sufficient quantities in the cropping year. Application of lime (which both increases soil pH and ties up soluble aluminum) or gypsum (calcium sulfate) which will take Al out of solution, can help to reduce aluminum toxicity. Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. Land management practices should maximize soil cover, crop rotation and agroforestry. "
-          }
-        },
-        "texture": {
-          "sl1": "Clay",
-          "sl2": "Clay",
-          "sl3": "Clay",
-          "sl4": "Clay",
-          "sl5": "Clay",
-          "sl6": "Clay",
-          "sl7": "Clay"
-        }
       }
     ]
   },
@@ -1128,8 +1128,8 @@
         "rank_data_group": "1",
         "rank_data_loc": "1",
         "rank_data_loc_group": "1",
-        "rank_loc": 10,
-        "rank_loc_group": 10,
+        "rank_loc": 11,
+        "rank_loc_group": 11,
         "score_data": 0.806,
         "score_data_group": 0.806,
         "score_data_loc": 0.413,
@@ -1204,8 +1204,8 @@
         "rank_data_group": "5",
         "rank_data_loc": "5",
         "rank_data_loc_group": "5",
-        "rank_loc": 9,
-        "rank_loc_group": 9,
+        "rank_loc": 10,
+        "rank_loc_group": 10,
         "score_data": 0.679,
         "score_data_group": 0.679,
         "score_data_loc": 0.355,
@@ -1223,8 +1223,8 @@
         "rank_data_group": "6",
         "rank_data_loc": "6",
         "rank_data_loc_group": "6",
-        "rank_loc": 7,
-        "rank_loc_group": 7,
+        "rank_loc": 8,
+        "rank_loc_group": 8,
         "score_data": 0.636,
         "score_data_group": 0.636,
         "score_data_loc": 0.353,
@@ -1242,8 +1242,8 @@
         "rank_data_group": "7",
         "rank_data_loc": "7",
         "rank_data_loc_group": "7",
-        "rank_loc": 8,
-        "rank_loc_group": 8,
+        "rank_loc": 9,
+        "rank_loc_group": 9,
         "score_data": 0.626,
         "score_data_group": 0.626,
         "score_data_loc": 0.333,
@@ -1257,8 +1257,8 @@
         "componentID": 141607,
         "name": "Haplic nitisols",
         "not_displayed": false,
-        "rank_data": "8",
-        "rank_data_group": "8",
+        "rank_data": "9",
+        "rank_data_group": "9",
         "rank_data_loc": "8",
         "rank_data_loc_group": "8",
         "rank_loc": 1,
@@ -1271,15 +1271,34 @@
         "score_loc_group": 0.17
       },
       {
+        "component": "Rhodic nitisols",
+        "componentData": "Data Complete",
+        "componentID": 141608,
+        "name": "Rhodic nitisols",
+        "not_displayed": false,
+        "rank_data": "8",
+        "rank_data_group": "8",
+        "rank_data_loc": "9",
+        "rank_data_loc_group": "9",
+        "rank_loc": 7,
+        "rank_loc_group": 7,
+        "score_data": 0.447,
+        "score_data_group": 0.447,
+        "score_data_loc": 0.264,
+        "score_data_loc_group": 0.264,
+        "score_loc": 0.08,
+        "score_loc_group": 0.08
+      },
+      {
         "component": "Gleyic luvisols",
         "componentData": "Data Complete",
         "componentID": 142289,
         "name": "Gleyic luvisols",
         "not_displayed": false,
-        "rank_data": "9",
-        "rank_data_group": "9",
-        "rank_data_loc": "9",
-        "rank_data_loc_group": "9",
+        "rank_data": "10",
+        "rank_data_group": "10",
+        "rank_data_loc": "10",
+        "rank_data_loc_group": "10",
         "rank_loc": 6,
         "rank_loc_group": 6,
         "score_data": 0.379,
@@ -1297,8 +1316,8 @@
         "not_displayed": false,
         "rank_data": "11",
         "rank_data_group": "11",
-        "rank_data_loc": "10",
-        "rank_data_loc_group": "10",
+        "rank_data_loc": "11",
+        "rank_data_loc_group": "11",
         "rank_loc": 3,
         "rank_loc_group": 3,
         "score_data": 0.322,
@@ -1307,25 +1326,6 @@
         "score_data_loc_group": 0.221,
         "score_loc": 0.12,
         "score_loc_group": 0.12
-      },
-      {
-        "component": "Humic acrisols",
-        "componentData": "Data Complete",
-        "componentID": 142155,
-        "name": "Humic acrisols",
-        "not_displayed": false,
-        "rank_data": "10",
-        "rank_data_group": "10",
-        "rank_data_loc": "11",
-        "rank_data_loc_group": "11",
-        "rank_loc": 12,
-        "rank_loc_group": 12,
-        "score_data": 0.374,
-        "score_data_group": 0.374,
-        "score_data_loc": 0.192,
-        "score_data_loc_group": 0.192,
-        "score_loc": 0.01,
-        "score_loc_group": 0.01
       },
       {
         "component": "Lithic leptosols",
@@ -1337,8 +1337,8 @@
         "rank_data_group": "12",
         "rank_data_loc": "12",
         "rank_data_loc_group": "12",
-        "rank_loc": 11,
-        "rank_loc_group": 11,
+        "rank_loc": 12,
+        "rank_loc_group": 12,
         "score_data": 0.097,
         "score_data_group": 0.097,
         "score_data_loc": 0.059,

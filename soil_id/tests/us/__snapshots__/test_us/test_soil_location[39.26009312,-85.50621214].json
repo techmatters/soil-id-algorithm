@@ -1,22 +1,22 @@
 {
   "list": {
-    "AWS_PIW90": 5.16,
+    "AWS_PIW90": 3.64,
     "Soil Data Value": [
       [
         "texture_0",
-        3.4119924578614564
+        2.4797731441831736
       ],
       [
         "texture_30",
-        3.4119924578614564
-      ],
-      [
-        "rfv_class_30",
-        1.0417872772025576
+        2.4797731441831736
       ],
       [
         "rfv_class_0",
-        1.0174644063857206
+        0.5854430407856115
+      ],
+      [
+        "rfv_class_30",
+        0.4363100902160024
       ]
     ],
     "metadata": {
@@ -52,9 +52,121 @@
           }
         },
         "id": {
+          "component": "Miami",
+          "name": "Miami",
+          "rank_loc": "1",
+          "score_loc": 0.557
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26772435",
+            "componentKind": "Series",
+            "componentPct": 85,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162394",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=miami",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#miami",
+            "slope": 4.0,
+            "taxsubgrp": "Oxyaquic Hapludalfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Miami series consists of very deep, moderately well drained soils that are moderately deep to dense till. Miami soils formed in as much as 46 cm (18 inches) of loess or silty material and in the underlying loamy till. They are on till plains. Slope ranges from 0 to 60 percent. Mean annual precipitation is 1016 mm (40 inches), and mean annual temperature is 11.1 degrees C (52 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XA009IN"
+            ],
+            "ecoclassname": [
+              "Till Ridge"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XA009IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Williamstown",
+          "name": "Williamstown",
+          "rank_loc": "2",
+          "score_loc": 0.128
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26772496",
+            "componentKind": "Series",
+            "componentPct": 85,
+            "dataSource": "SSURGO",
+            "distance": 59.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162415",
+            "minCompDistance": 59.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=williamstown",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#williamstown",
+            "slope": 3.0,
+            "taxsubgrp": "Aquic Hapludalfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Williamstown series consists of very deep, moderately well drained soils that are moderately deep to dense till. The soils formed in as much as 56 cm (22 inches) of loess and in the underlying loamy till. They are on till plains. Slope ranges from 0 to 12 percent. Mean annual precipitation is about 1016 mm (40 inches), and mean annual air temperature is about 11.1 degrees C (52 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XA009IN"
+            ],
+            "ecoclassname": [
+              "Till Ridge"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XA009IN"
+            ]
+          }
+        },
+        "id": {
           "component": "Hennepin",
           "name": "Hennepin",
-          "rank_loc": "1",
+          "rank_loc": "3",
           "score_loc": 0.061
         },
         "lab": {},
@@ -110,7 +222,7 @@
         "id": {
           "component": "Fincastle",
           "name": "Fincastle",
-          "rank_loc": "2",
+          "rank_loc": "4",
           "score_loc": 0.054
         },
         "lab": {},
@@ -166,7 +278,7 @@
         "id": {
           "component": "Hickory",
           "name": "Hickory",
-          "rank_loc": "3",
+          "rank_loc": "5",
           "score_loc": 0.051
         },
         "lab": {},
@@ -209,6 +321,62 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
+              "F111XD010IN"
+            ],
+            "ecoclassname": [
+              "Till Ridge"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XD010IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Xenia",
+          "name": "Xenia",
+          "rank_loc": "6",
+          "score_loc": 0.05
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26772497",
+            "componentKind": "Series",
+            "componentPct": 85,
+            "dataSource": "SSURGO",
+            "distance": 193.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162416",
+            "minCompDistance": 193.0,
+            "nirrcapcl": "1",
+            "nirrcapscl": "None",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=xenia",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#xenia",
+            "slope": 1.0,
+            "taxsubgrp": "Aquic Hapludalfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Xenia series consists of very deep, moderately well drained soils that are deep or very deep to dense till. Xenia soils formed in loess or other silty material and in the underlying loamy till on till plains. Slope ranges from 0 to 12 percent. Mean annual precipitation is about 1067 mm (42 inches), and mean annual temperature is about 11.1 degrees C (52 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
               "F111XA008IN"
             ],
             "ecoclassname": [
@@ -222,7 +390,7 @@
         "id": {
           "component": "Crosby",
           "name": "Crosby",
-          "rank_loc": "4",
+          "rank_loc": "7",
           "score_loc": 0.048
         },
         "lab": {},
@@ -276,9 +444,65 @@
           }
         },
         "id": {
+          "component": "Treaty",
+          "name": "Treaty",
+          "rank_loc": "8",
+          "score_loc": 0.018
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26772433",
+            "componentKind": "Series",
+            "componentPct": 2,
+            "dataSource": "SSURGO",
+            "distance": 0.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162394",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=treaty",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#treaty",
+            "slope": 0.5,
+            "taxsubgrp": "Typic Argiaquolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Treaty series consists of very deep, poorly drained soils that formed in loess and in the underlying loamy till. The Treaty soils are in depressions on till plains. Slope ranges from 0 to 2 percent. Mean annual precipitation is about 965 mm (38 inches), and mean annual air temperature is about 11 degrees C (51 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XA007IN"
+            ],
+            "ecoclassname": [
+              "Till Depression Flatwood"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XA007IN"
+            ]
+          }
+        },
+        "id": {
           "component": "Cyclone",
           "name": "Cyclone",
-          "rank_loc": "5",
+          "rank_loc": "9",
           "score_loc": 0.011
         },
         "lab": {},
@@ -334,7 +558,7 @@
         "id": {
           "component": "Brookston",
           "name": "Brookston",
-          "rank_loc": "6",
+          "rank_loc": "10",
           "score_loc": 0.009
         },
         "lab": {},
@@ -390,7 +614,7 @@
         "id": {
           "component": "Celina",
           "name": "Celina",
-          "rank_loc": "7",
+          "rank_loc": "11",
           "score_loc": 0.003
         },
         "lab": {},
@@ -433,21 +657,21 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              ""
+              "F111XA009IN"
             ],
             "ecoclassname": [
-              ""
+              "Till Ridge"
             ],
             "edit_url": [
-              ""
+              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XA009IN"
             ]
           }
         },
         "id": {
-          "component": "Holton",
-          "name": "Holton",
-          "rank_loc": "8",
-          "score_loc": 0.002
+          "component": "Rainsville",
+          "name": "Rainsville",
+          "rank_loc": "12",
+          "score_loc": 0.003
         },
         "lab": {},
         "munsell": {},
@@ -456,139 +680,27 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "26772424",
+            "componentID": "26772440",
             "componentKind": "Series",
-            "componentPct": 4,
+            "componentPct": 5,
             "dataSource": "SSURGO",
-            "distance": 936.0,
+            "distance": 980.0,
             "irrcapcl": "None",
             "irrcapscl": "None",
             "irrcapunit": "None",
-            "mapunitID": "162389",
-            "minCompDistance": 936.0,
-            "nirrcapcl": "2",
-            "nirrcapscl": "w",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=holton",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#holton",
-            "slope": 0.5,
-            "taxsubgrp": "Aeric Endoaquepts",
-            "textureInfill": "No"
-          },
-          "siteDescription": "The Holton Series consists of very deep, somewhat poorly drained soils formed in loamy alluvium on flood plains. Slope ranges from 0 to 2 percent. Mean annual precipitation is about 1067 mm (42 inches), and mean annual temperature is about 11 degrees C (52 degrees F)."
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": [
-              ""
-            ],
-            "ecoclassname": [
-              ""
-            ],
-            "edit_url": [
-              ""
-            ]
-          }
-        },
-        "id": {
-          "component": "Bonnell",
-          "name": "Bonnell",
-          "rank_loc": "9",
-          "score_loc": 0.002
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "26772426",
-            "componentKind": "Series",
-            "componentPct": 3,
-            "dataSource": "SSURGO",
-            "distance": 936.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "162389",
-            "minCompDistance": 936.0,
-            "nirrcapcl": "6",
-            "nirrcapscl": "e",
-            "nirrcapunit": "None",
-            "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=bonnell",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#bonnell",
-            "slope": 21.0,
-            "taxsubgrp": "Typic Hapludalfs",
-            "textureInfill": "No"
-          },
-          "siteDescription": "The Bonnell series consists of very deep, well drained soils that formed in less than 46 cm (18 inches) of loess or loamy materials and the underlying till. These soils are on dissected till plains. Slope ranges from 6 to 60 percent. Mean annual precipitation is about 1067 mm (42 inches), and mean annual temperature is about 12 degrees C (54 degrees F)."
-        },
-        "texture": {},
-        "top_depth": {}
-      },
-      {
-        "bottom_depth": {},
-        "cec": {},
-        "clay": {},
-        "ec": {},
-        "esd": {
-          "ESD": {
-            "ecoclassid": [
-              ""
-            ],
-            "ecoclassname": [
-              ""
-            ],
-            "edit_url": [
-              ""
-            ]
-          }
-        },
-        "id": {
-          "component": "Cincinnati",
-          "name": "Cincinnati",
-          "rank_loc": "10",
-          "score_loc": 0.001
-        },
-        "lab": {},
-        "munsell": {},
-        "ph": {},
-        "rock_fragments": {},
-        "sand": {},
-        "site": {
-          "siteData": {
-            "componentID": "26772423",
-            "componentKind": "Series",
-            "componentPct": 2,
-            "dataSource": "SSURGO",
-            "distance": 936.0,
-            "irrcapcl": "None",
-            "irrcapscl": "None",
-            "irrcapunit": "None",
-            "mapunitID": "162389",
-            "minCompDistance": 936.0,
+            "mapunitID": "162395",
+            "minCompDistance": 980.0,
             "nirrcapcl": "3",
             "nirrcapscl": "e",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=cincinnati",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#cincinnati",
-            "slope": 9.0,
-            "taxsubgrp": "Oxyaquic Fragiudalfs",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=rainsville",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#rainsville",
+            "slope": 8.0,
+            "taxsubgrp": "Oxyaquic Hapludalfs",
             "textureInfill": "No"
           },
-          "siteDescription": "The Cincinnati series consists of very deep, well drained soils that are moderately deep to a fragipan. These soils formed in a mantle of loess, a thin layer of pedisediment, and a paleosol formed in the underlying till. They are on till plains. Slope ranges from 1 to 18 percent. Mean annual precipitation is about 1016 mm (40 inches), and mean annual air temperature is about 12 degrees C (54 degrees F)."
+          "siteDescription": "The Rainsville series consists of very deep, moderately well drained soils that are deep or very deep to dense till. The Rainsville soils formed in as much as 51 cm (20 inches) of loess or other silty material and in the underlying loamy outwash and till. They are on ground moraines and end moraines. Slope ranges from 0 to 12 percent. Mean annual precipitation is about 940 mm (37 inches), and mean annual air temperature is about 11 degrees C (51 degrees F)."
         },
         "texture": {},
         "top_depth": {}
@@ -601,21 +713,21 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              ""
+              "F111XA009IN"
             ],
             "ecoclassname": [
-              ""
+              "Till Ridge"
             ],
             "edit_url": [
-              ""
+              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XA009IN"
             ]
           }
         },
         "id": {
-          "component": "Grayford",
-          "name": "Grayford",
-          "rank_loc": "11",
-          "score_loc": 0.001
+          "component": "Miami",
+          "name": "Miami2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.557
         },
         "lab": {},
         "munsell": {},
@@ -624,27 +736,27 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "26772427",
-            "componentKind": "Series",
-            "componentPct": 2,
+            "componentID": "26772443",
+            "componentKind": "Taxadjunct",
+            "componentPct": 92,
             "dataSource": "SSURGO",
-            "distance": 936.0,
+            "distance": 59.0,
             "irrcapcl": "None",
             "irrcapscl": "None",
             "irrcapunit": "None",
-            "mapunitID": "162389",
-            "minCompDistance": 936.0,
+            "mapunitID": "162396",
+            "minCompDistance": 0.0,
             "nirrcapcl": "4",
             "nirrcapscl": "e",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=grayford",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#grayford",
-            "slope": 17.0,
-            "taxsubgrp": "Ultic Hapludalfs",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=miami",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#miami",
+            "slope": 15.0,
+            "taxsubgrp": "Typic Hapludalfs",
             "textureInfill": "No"
           },
-          "siteDescription": "The Grayford series consists of deep, well drained soils formed in less than 56 cm (22 inches) of loess and in the underlying till of Illinoian age and residuum from limestone. They are on dissected till plains and sinkholes. Slope ranges from 2 to 35 percent. Mean annual precipitation is about 1016 mm (40 inches), and mean annual temperature is about 13 degrees C (55 degrees F)."
+          "siteDescription": "The Miami series consists of very deep, moderately well drained soils that are moderately deep to dense till. Miami soils formed in as much as 46 cm (18 inches) of loess or silty material and in the underlying loamy till. They are on till plains. Slope ranges from 0 to 60 percent. Mean annual precipitation is 1016 mm (40 inches), and mean annual temperature is 11.1 degrees C (52 degrees F)."
         },
         "texture": {},
         "top_depth": {}
@@ -657,21 +769,21 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
-              ""
+              "F111XA009IN"
             ],
             "ecoclassname": [
-              ""
+              "Till Ridge"
             ],
             "edit_url": [
-              ""
+              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XA009IN"
             ]
           }
         },
         "id": {
-          "component": "Jessietown",
-          "name": "Jessietown",
-          "rank_loc": "12",
-          "score_loc": 0.001
+          "component": "Miami",
+          "name": "Miami3",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.557
         },
         "lab": {},
         "munsell": {},
@@ -680,27 +792,307 @@
         "sand": {},
         "site": {
           "siteData": {
-            "componentID": "26772428",
+            "componentID": "26772445",
             "componentKind": "Series",
-            "componentPct": 2,
+            "componentPct": 96,
             "dataSource": "SSURGO",
-            "distance": 936.0,
+            "distance": 85.0,
             "irrcapcl": "None",
             "irrcapscl": "None",
             "irrcapunit": "None",
-            "mapunitID": "162389",
-            "minCompDistance": 936.0,
-            "nirrcapcl": "7",
+            "mapunitID": "162397",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "4",
             "nirrcapscl": "e",
             "nirrcapunit": "None",
             "rfvInfill": "No",
-            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=jessietown",
-            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#jessietown",
-            "slope": 38.0,
-            "taxsubgrp": "Typic Hapludults",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=miami",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#miami",
+            "slope": 9.0,
+            "taxsubgrp": "Oxyaquic Hapludalfs",
             "textureInfill": "No"
           },
-          "siteDescription": "The Jessietown series consists of moderately deep, well drained soils formed in a thin mantle of silty material and residuum weathered from black fissile shale.  Permeability is moderate.  These gently sloping to steep soils are on upland ridges, side slopes, and toe slopes.  Slopes range from 2 to 30 percent.  The mean annual temperature is about 57 degrees F, and the mean annual precipitation is about 46 inches."
+          "siteDescription": "The Miami series consists of very deep, moderately well drained soils that are moderately deep to dense till. Miami soils formed in as much as 46 cm (18 inches) of loess or silty material and in the underlying loamy till. They are on till plains. Slope ranges from 0 to 60 percent. Mean annual precipitation is 1016 mm (40 inches), and mean annual temperature is 11.1 degrees C (52 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XD010IN"
+            ],
+            "ecoclassname": [
+              "Till Ridge"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XD010IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Miami",
+          "name": "Miami4",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.557
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26772419",
+            "componentKind": "Series",
+            "componentPct": 10,
+            "dataSource": "SSURGO",
+            "distance": 175.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162386",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=miami",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#miami",
+            "slope": 4.0,
+            "taxsubgrp": "Oxyaquic Hapludalfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Miami series consists of very deep, moderately well drained soils that are moderately deep to dense till. Miami soils formed in as much as 46 cm (18 inches) of loess or silty material and in the underlying loamy till. They are on till plains. Slope ranges from 0 to 60 percent. Mean annual precipitation is 1016 mm (40 inches), and mean annual temperature is 11.1 degrees C (52 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XD010IN"
+            ],
+            "ecoclassname": [
+              "Till Ridge"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XD010IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Miami",
+          "name": "Miami5",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.557
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26772447",
+            "componentKind": "Series",
+            "componentPct": 90,
+            "dataSource": "SSURGO",
+            "distance": 502.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162398",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=miami",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#miami",
+            "slope": 15.0,
+            "taxsubgrp": "Oxyaquic Hapludalfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Miami series consists of very deep, moderately well drained soils that are moderately deep to dense till. Miami soils formed in as much as 46 cm (18 inches) of loess or silty material and in the underlying loamy till. They are on till plains. Slope ranges from 0 to 60 percent. Mean annual precipitation is 1016 mm (40 inches), and mean annual temperature is 11.1 degrees C (52 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XA009IN"
+            ],
+            "ecoclassname": [
+              "Till Ridge"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XA009IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Miami",
+          "name": "Miami6",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.557
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26772437",
+            "componentKind": "Series",
+            "componentPct": 85,
+            "dataSource": "SSURGO",
+            "distance": 980.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162395",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "3",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=miami",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#miami",
+            "slope": 8.0,
+            "taxsubgrp": "Oxyaquic Hapludalfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Miami series consists of very deep, moderately well drained soils that are moderately deep to dense till. Miami soils formed in as much as 46 cm (18 inches) of loess or silty material and in the underlying loamy till. They are on till plains. Slope ranges from 0 to 60 percent. Mean annual precipitation is 1016 mm (40 inches), and mean annual temperature is 11.1 degrees C (52 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XA009IN"
+            ],
+            "ecoclassname": [
+              "Till Ridge"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XA009IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Williamstown",
+          "name": "Williamstown2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.128
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26772404",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "SSURGO",
+            "distance": 170.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162380",
+            "minCompDistance": 59.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=williamstown",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#williamstown",
+            "slope": 4.0,
+            "taxsubgrp": "Aquic Hapludalfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Williamstown series consists of very deep, moderately well drained soils that are moderately deep to dense till. The soils formed in as much as 56 cm (22 inches) of loess and in the underlying loamy till. They are on till plains. Slope ranges from 0 to 12 percent. Mean annual precipitation is about 1016 mm (40 inches), and mean annual air temperature is about 11.1 degrees C (52 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XA009IN"
+            ],
+            "ecoclassname": [
+              "Till Ridge"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XA009IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Williamstown",
+          "name": "Williamstown3",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.128
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26772449",
+            "componentKind": "Series",
+            "componentPct": 1,
+            "dataSource": "SSURGO",
+            "distance": 502.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162398",
+            "minCompDistance": 59.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=williamstown",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#williamstown",
+            "slope": 1.0,
+            "taxsubgrp": "Aquic Hapludalfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Williamstown series consists of very deep, moderately well drained soils that are moderately deep to dense till. The soils formed in as much as 56 cm (22 inches) of loess and in the underlying loamy till. They are on till plains. Slope ranges from 0 to 12 percent. Mean annual precipitation is about 1016 mm (40 inches), and mean annual air temperature is about 11.1 degrees C (52 degrees F)."
         },
         "texture": {},
         "top_depth": {}
@@ -937,6 +1329,174 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
+              "F111XD008IN"
+            ],
+            "ecoclassname": [
+              "Till Depression Flatwood"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XD008IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Treaty",
+          "name": "Treaty2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.018
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26772494",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "SSURGO",
+            "distance": 59.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162415",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=treaty",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#treaty",
+            "slope": 0.5,
+            "taxsubgrp": "Typic Argiaquolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Treaty series consists of very deep, poorly drained soils that formed in loess and in the underlying loamy till. The Treaty soils are in depressions on till plains. Slope ranges from 0 to 2 percent. Mean annual precipitation is about 965 mm (38 inches), and mean annual air temperature is about 11 degrees C (51 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XD008IN"
+            ],
+            "ecoclassname": [
+              "Till Depression Flatwood"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XD008IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Treaty",
+          "name": "Treaty3",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.018
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26772500",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "SSURGO",
+            "distance": 193.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162416",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=treaty",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#treaty",
+            "slope": 0.5,
+            "taxsubgrp": "Typic Argiaquolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Treaty series consists of very deep, poorly drained soils that formed in loess and in the underlying loamy till. The Treaty soils are in depressions on till plains. Slope ranges from 0 to 2 percent. Mean annual precipitation is about 965 mm (38 inches), and mean annual air temperature is about 11 degrees C (51 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F111XA007IN"
+            ],
+            "ecoclassname": [
+              "Till Depression Flatwood"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/111X/F111XA007IN"
+            ]
+          }
+        },
+        "id": {
+          "component": "Treaty",
+          "name": "Treaty4",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.018
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "26772439",
+            "componentKind": "Series",
+            "componentPct": 5,
+            "dataSource": "SSURGO",
+            "distance": 980.0,
+            "irrcapcl": "None",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "162395",
+            "minCompDistance": 0.0,
+            "nirrcapcl": "2",
+            "nirrcapscl": "w",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=treaty",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#treaty",
+            "slope": 0.5,
+            "taxsubgrp": "Typic Argiaquolls",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Treaty series consists of very deep, poorly drained soils that formed in loess and in the underlying loamy till. The Treaty soils are in depressions on till plains. Slope ranges from 0 to 2 percent. Mean annual precipitation is about 965 mm (38 inches), and mean annual air temperature is about 11 degrees C (51 degrees F)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
               "F111XA006IN"
             ],
             "ecoclassname": [
@@ -994,42 +1554,80 @@
     },
     "soilRank": [
       {
-        "component": "Fincastle",
+        "component": "Miami",
         "componentData": "Data Complete",
-        "componentID": 26772402,
-        "name": "Fincastle",
+        "componentID": 26772443,
+        "name": "Miami2",
         "not_displayed": false,
         "rank_data": "1",
         "rank_data_group": "1",
         "rank_data_loc": "1",
         "rank_data_loc_group": "1",
-        "rank_loc": "2",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "1",
+        "score_data": 0.694,
+        "score_data_group": 0.694,
+        "score_data_loc": 0.625,
+        "score_data_loc_group": 0.625,
+        "score_loc": 0.557,
+        "score_loc_group": 0.557
+      },
+      {
+        "component": "Williamstown",
+        "componentData": "Data Complete",
+        "componentID": 26772404,
+        "name": "Williamstown2",
+        "not_displayed": false,
+        "rank_data": "9",
+        "rank_data_group": "9",
+        "rank_data_loc": "2",
+        "rank_data_loc_group": "2",
+        "rank_loc": "Not Displayed",
         "rank_loc_group": "2",
-        "score_data": 0.672,
-        "score_data_group": 0.672,
-        "score_data_loc": 0.363,
-        "score_data_loc_group": 0.363,
-        "score_loc": 0.054,
-        "score_loc_group": 0.054
+        "score_data": 0.58,
+        "score_data_group": 0.58,
+        "score_data_loc": 0.354,
+        "score_data_loc_group": 0.354,
+        "score_loc": 0.128,
+        "score_loc_group": 0.128
       },
       {
         "component": "Hennepin",
         "componentData": "Data Complete",
-        "componentID": 26772448,
-        "name": "Hennepin3",
+        "componentID": 26772420,
+        "name": "Hennepin2",
         "not_displayed": false,
         "rank_data": "5",
         "rank_data_group": "5",
-        "rank_data_loc": "2",
-        "rank_data_loc_group": "2",
+        "rank_data_loc": "3",
+        "rank_data_loc_group": "3",
         "rank_loc": "Not Displayed",
-        "rank_loc_group": "1",
-        "score_data": 0.65,
-        "score_data_group": 0.65,
-        "score_data_loc": 0.356,
-        "score_data_loc_group": 0.356,
+        "rank_loc_group": "3",
+        "score_data": 0.599,
+        "score_data_group": 0.599,
+        "score_data_loc": 0.33,
+        "score_data_loc_group": 0.33,
         "score_loc": 0.061,
         "score_loc_group": 0.061
+      },
+      {
+        "component": "Fincastle",
+        "componentData": "Data Complete",
+        "componentID": 26772402,
+        "name": "Fincastle",
+        "not_displayed": false,
+        "rank_data": "6",
+        "rank_data_group": "6",
+        "rank_data_loc": "4",
+        "rank_data_loc_group": "4",
+        "rank_loc": "4",
+        "rank_loc_group": "4",
+        "score_data": 0.588,
+        "score_data_group": 0.588,
+        "score_data_loc": 0.321,
+        "score_data_loc_group": 0.321,
+        "score_loc": 0.054,
+        "score_loc_group": 0.054
       },
       {
         "component": "Crosby",
@@ -1037,37 +1635,56 @@
         "componentID": 26772436,
         "name": "Crosby",
         "not_displayed": false,
-        "rank_data": "4",
-        "rank_data_group": "4",
-        "rank_data_loc": "3",
-        "rank_data_loc_group": "3",
-        "rank_loc": "4",
-        "rank_loc_group": "4",
-        "score_data": 0.652,
-        "score_data_group": 0.652,
-        "score_data_loc": 0.35,
-        "score_data_loc_group": 0.35,
+        "rank_data": "7",
+        "rank_data_group": "7",
+        "rank_data_loc": "5",
+        "rank_data_loc_group": "5",
+        "rank_loc": "7",
+        "rank_loc_group": "7",
+        "score_data": 0.587,
+        "score_data_group": 0.587,
+        "score_data_loc": 0.318,
+        "score_data_loc_group": 0.318,
         "score_loc": 0.048,
         "score_loc_group": 0.048
       },
       {
-        "component": "Cincinnati",
+        "component": "Rainsville",
         "componentData": "Data Complete",
-        "componentID": 26772423,
-        "name": "Cincinnati",
+        "componentID": 26772440,
+        "name": "Rainsville",
         "not_displayed": false,
         "rank_data": "2",
         "rank_data_group": "2",
-        "rank_data_loc": "4",
-        "rank_data_loc_group": "4",
-        "rank_loc": "10",
-        "rank_loc_group": "10",
-        "score_data": 0.662,
-        "score_data_group": 0.662,
-        "score_data_loc": 0.332,
-        "score_data_loc_group": 0.332,
-        "score_loc": 0.001,
-        "score_loc_group": 0.001
+        "rank_data_loc": "6",
+        "rank_data_loc_group": "6",
+        "rank_loc": "12",
+        "rank_loc_group": "12",
+        "score_data": 0.631,
+        "score_data_group": 0.631,
+        "score_data_loc": 0.317,
+        "score_data_loc_group": 0.317,
+        "score_loc": 0.003,
+        "score_loc_group": 0.003
+      },
+      {
+        "component": "Treaty",
+        "componentData": "Data Complete",
+        "componentID": 26772433,
+        "name": "Treaty",
+        "not_displayed": false,
+        "rank_data": "4",
+        "rank_data_group": "4",
+        "rank_data_loc": "7",
+        "rank_data_loc_group": "7",
+        "rank_loc": "8",
+        "rank_loc_group": "8",
+        "score_data": 0.602,
+        "score_data_group": 0.602,
+        "score_data_loc": 0.31,
+        "score_data_loc_group": 0.31,
+        "score_loc": 0.018,
+        "score_loc_group": 0.018
       },
       {
         "component": "Brookston",
@@ -1077,14 +1694,14 @@
         "not_displayed": false,
         "rank_data": "3",
         "rank_data_group": "3",
-        "rank_data_loc": "5",
-        "rank_data_loc_group": "5",
-        "rank_loc": "6",
-        "rank_loc_group": "6",
-        "score_data": 0.653,
-        "score_data_group": 0.653,
-        "score_data_loc": 0.331,
-        "score_data_loc_group": 0.331,
+        "rank_data_loc": "8",
+        "rank_data_loc_group": "8",
+        "rank_loc": "10",
+        "rank_loc_group": "10",
+        "score_data": 0.603,
+        "score_data_group": 0.603,
+        "score_data_loc": 0.306,
+        "score_data_loc_group": 0.306,
         "score_loc": 0.009,
         "score_loc_group": 0.009
       },
@@ -1094,56 +1711,18 @@
         "componentID": 26772498,
         "name": "Celina",
         "not_displayed": false,
-        "rank_data": "6",
-        "rank_data_group": "6",
-        "rank_data_loc": "6",
-        "rank_data_loc_group": "6",
-        "rank_loc": "7",
-        "rank_loc_group": "7",
-        "score_data": 0.638,
-        "score_data_group": 0.638,
-        "score_data_loc": 0.32,
-        "score_data_loc_group": 0.32,
-        "score_loc": 0.003,
-        "score_loc_group": 0.003
-      },
-      {
-        "component": "Cyclone",
-        "componentData": "Data Complete",
-        "componentID": 26772403,
-        "name": "Cyclone2",
-        "not_displayed": false,
         "rank_data": "8",
         "rank_data_group": "8",
-        "rank_data_loc": "7",
-        "rank_data_loc_group": "7",
-        "rank_loc": "Not Displayed",
-        "rank_loc_group": "5",
-        "score_data": 0.63,
-        "score_data_group": 0.63,
-        "score_data_loc": 0.32,
-        "score_data_loc_group": 0.32,
-        "score_loc": 0.011,
-        "score_loc_group": 0.011
-      },
-      {
-        "component": "Holton",
-        "componentData": "Data Complete",
-        "componentID": 26772424,
-        "name": "Holton",
-        "not_displayed": false,
-        "rank_data": "7",
-        "rank_data_group": "7",
-        "rank_data_loc": "8",
-        "rank_data_loc_group": "8",
-        "rank_loc": "8",
-        "rank_loc_group": "8",
-        "score_data": 0.637,
-        "score_data_group": 0.637,
-        "score_data_loc": 0.32,
-        "score_data_loc_group": 0.32,
-        "score_loc": 0.002,
-        "score_loc_group": 0.002
+        "rank_data_loc": "9",
+        "rank_data_loc_group": "9",
+        "rank_loc": "11",
+        "rank_loc_group": "11",
+        "score_data": 0.583,
+        "score_data_group": 0.583,
+        "score_data_loc": 0.293,
+        "score_data_loc_group": 0.293,
+        "score_loc": 0.003,
+        "score_loc_group": 0.003
       },
       {
         "component": "Hickory",
@@ -1151,92 +1730,206 @@
         "componentID": 26772425,
         "name": "Hickory",
         "not_displayed": false,
-        "rank_data": "9",
-        "rank_data_group": "9",
-        "rank_data_loc": "9",
-        "rank_data_loc_group": "9",
-        "rank_loc": "3",
-        "rank_loc_group": "3",
-        "score_data": 0.588,
-        "score_data_group": 0.588,
-        "score_data_loc": 0.32,
-        "score_data_loc_group": 0.32,
+        "rank_data": "11",
+        "rank_data_group": "11",
+        "rank_data_loc": "10",
+        "rank_data_loc_group": "10",
+        "rank_loc": "5",
+        "rank_loc_group": "5",
+        "score_data": 0.529,
+        "score_data_group": 0.529,
+        "score_data_loc": 0.29,
+        "score_data_loc_group": 0.29,
         "score_loc": 0.051,
         "score_loc_group": 0.051
       },
       {
-        "component": "Grayford",
+        "component": "Xenia",
         "componentData": "Data Complete",
-        "componentID": 26772427,
-        "name": "Grayford",
-        "not_displayed": false,
-        "rank_data": "10",
-        "rank_data_group": "10",
-        "rank_data_loc": "10",
-        "rank_data_loc_group": "10",
-        "rank_loc": "11",
-        "rank_loc_group": "11",
-        "score_data": 0.566,
-        "score_data_group": 0.566,
-        "score_data_loc": 0.283,
-        "score_data_loc_group": 0.283,
-        "score_loc": 0.001,
-        "score_loc_group": 0.001
-      },
-      {
-        "component": "Bonnell",
-        "componentData": "Data Complete",
-        "componentID": 26772426,
-        "name": "Bonnell",
-        "not_displayed": false,
-        "rank_data": "11",
-        "rank_data_group": "11",
-        "rank_data_loc": "11",
-        "rank_data_loc_group": "11",
-        "rank_loc": "9",
-        "rank_loc_group": "9",
-        "score_data": 0.559,
-        "score_data_group": 0.559,
-        "score_data_loc": 0.28,
-        "score_data_loc_group": 0.28,
-        "score_loc": 0.002,
-        "score_loc_group": 0.002
-      },
-      {
-        "component": "Jessietown",
-        "componentData": "Data Complete",
-        "componentID": 26772428,
-        "name": "Jessietown",
+        "componentID": 26772497,
+        "name": "Xenia",
         "not_displayed": false,
         "rank_data": "12",
         "rank_data_group": "12",
+        "rank_data_loc": "11",
+        "rank_data_loc_group": "11",
+        "rank_loc": "6",
+        "rank_loc_group": "6",
+        "score_data": 0.497,
+        "score_data_group": 0.497,
+        "score_data_loc": 0.273,
+        "score_data_loc_group": 0.273,
+        "score_loc": 0.05,
+        "score_loc_group": 0.05
+      },
+      {
+        "component": "Cyclone",
+        "componentData": "Data Complete",
+        "componentID": 26772403,
+        "name": "Cyclone2",
+        "not_displayed": false,
+        "rank_data": "10",
+        "rank_data_group": "10",
         "rank_data_loc": "12",
         "rank_data_loc_group": "12",
-        "rank_loc": "12",
-        "rank_loc_group": "12",
-        "score_data": 0.275,
-        "score_data_group": 0.275,
-        "score_data_loc": 0.138,
-        "score_data_loc_group": 0.138,
-        "score_loc": 0.001,
-        "score_loc_group": 0.001
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "9",
+        "score_data": 0.531,
+        "score_data_group": 0.531,
+        "score_data_loc": 0.271,
+        "score_data_loc_group": 0.271,
+        "score_loc": 0.011,
+        "score_loc_group": 0.011
+      },
+      {
+        "component": "Miami",
+        "componentData": "Data Complete",
+        "componentID": 26772447,
+        "name": "Miami5",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "1",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "1",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "1",
+        "score_data": 0.686,
+        "score_data_group": 0.694,
+        "score_data_loc": 0.621,
+        "score_data_loc_group": 0.625,
+        "score_loc": 0.557,
+        "score_loc_group": 0.557
+      },
+      {
+        "component": "Miami",
+        "componentData": "Data Complete",
+        "componentID": 26772435,
+        "name": "Miami",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "1",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "1",
+        "rank_loc": "1",
+        "rank_loc_group": "1",
+        "score_data": 0.671,
+        "score_data_group": 0.694,
+        "score_data_loc": 0.614,
+        "score_data_loc_group": 0.625,
+        "score_loc": 0.557,
+        "score_loc_group": 0.557
+      },
+      {
+        "component": "Miami",
+        "componentData": "Data Complete",
+        "componentID": 26772445,
+        "name": "Miami3",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "1",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "1",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "1",
+        "score_data": 0.67,
+        "score_data_group": 0.694,
+        "score_data_loc": 0.613,
+        "score_data_loc_group": 0.625,
+        "score_loc": 0.557,
+        "score_loc_group": 0.557
+      },
+      {
+        "component": "Miami",
+        "componentData": "Data Complete",
+        "componentID": 26772437,
+        "name": "Miami6",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "1",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "1",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "1",
+        "score_data": 0.666,
+        "score_data_group": 0.694,
+        "score_data_loc": 0.611,
+        "score_data_loc_group": 0.625,
+        "score_loc": 0.557,
+        "score_loc_group": 0.557
+      },
+      {
+        "component": "Miami",
+        "componentData": "Data Complete",
+        "componentID": 26772419,
+        "name": "Miami4",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "1",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "1",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "1",
+        "score_data": 0.633,
+        "score_data_group": 0.694,
+        "score_data_loc": 0.595,
+        "score_data_loc_group": 0.625,
+        "score_loc": 0.557,
+        "score_loc_group": 0.557
+      },
+      {
+        "component": "Williamstown",
+        "componentData": "Data Complete",
+        "componentID": 26772496,
+        "name": "Williamstown",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "9",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "2",
+        "rank_loc": "2",
+        "rank_loc_group": "2",
+        "score_data": 0.557,
+        "score_data_group": 0.58,
+        "score_data_loc": 0.343,
+        "score_data_loc_group": 0.354,
+        "score_loc": 0.128,
+        "score_loc_group": 0.128
+      },
+      {
+        "component": "Williamstown",
+        "componentData": "Data Complete",
+        "componentID": 26772449,
+        "name": "Williamstown3",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "9",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "2",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "2",
+        "score_data": 0.542,
+        "score_data_group": 0.58,
+        "score_data_loc": 0.335,
+        "score_data_loc_group": 0.354,
+        "score_loc": 0.128,
+        "score_loc_group": 0.128
       },
       {
         "component": "Hennepin",
         "componentData": "Data Complete",
-        "componentID": 26772420,
-        "name": "Hennepin2",
+        "componentID": 26772448,
+        "name": "Hennepin3",
         "not_displayed": true,
         "rank_data": "Not Displayed",
         "rank_data_group": "5",
         "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "2",
+        "rank_data_loc_group": "3",
         "rank_loc": "Not Displayed",
-        "rank_loc_group": "1",
-        "score_data": 0.635,
-        "score_data_group": 0.65,
-        "score_data_loc": 0.348,
-        "score_data_loc_group": 0.356,
+        "rank_loc_group": "3",
+        "score_data": 0.596,
+        "score_data_group": 0.599,
+        "score_data_loc": 0.329,
+        "score_data_loc_group": 0.33,
         "score_loc": 0.061,
         "score_loc_group": 0.061
       },
@@ -1249,34 +1942,15 @@
         "rank_data": "Not Displayed",
         "rank_data_group": "5",
         "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "2",
-        "rank_loc": "1",
-        "rank_loc_group": "1",
-        "score_data": 0.632,
-        "score_data_group": 0.65,
-        "score_data_loc": 0.347,
-        "score_data_loc_group": 0.356,
+        "rank_data_loc_group": "3",
+        "rank_loc": "3",
+        "rank_loc_group": "3",
+        "score_data": 0.588,
+        "score_data_group": 0.599,
+        "score_data_loc": 0.325,
+        "score_data_loc_group": 0.33,
         "score_loc": 0.061,
         "score_loc_group": 0.061
-      },
-      {
-        "component": "Crosby",
-        "componentData": "Data Complete",
-        "componentID": 26772444,
-        "name": "Crosby2",
-        "not_displayed": true,
-        "rank_data": "Not Displayed",
-        "rank_data_group": "4",
-        "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "3",
-        "rank_loc": "Not Displayed",
-        "rank_loc_group": "4",
-        "score_data": 0.631,
-        "score_data_group": 0.652,
-        "score_data_loc": 0.339,
-        "score_data_loc_group": 0.35,
-        "score_loc": 0.048,
-        "score_loc_group": 0.048
       },
       {
         "component": "Crosby",
@@ -1285,17 +1959,93 @@
         "name": "Crosby3",
         "not_displayed": true,
         "rank_data": "Not Displayed",
-        "rank_data_group": "4",
+        "rank_data_group": "7",
         "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "3",
+        "rank_data_loc_group": "5",
         "rank_loc": "Not Displayed",
-        "rank_loc_group": "4",
-        "score_data": 0.631,
-        "score_data_group": 0.652,
-        "score_data_loc": 0.339,
-        "score_data_loc_group": 0.35,
+        "rank_loc_group": "7",
+        "score_data": 0.569,
+        "score_data_group": 0.587,
+        "score_data_loc": 0.308,
+        "score_data_loc_group": 0.318,
         "score_loc": 0.048,
         "score_loc_group": 0.048
+      },
+      {
+        "component": "Crosby",
+        "componentData": "Data Complete",
+        "componentID": 26772444,
+        "name": "Crosby2",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "7",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "5",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "7",
+        "score_data": 0.568,
+        "score_data_group": 0.587,
+        "score_data_loc": 0.308,
+        "score_data_loc_group": 0.318,
+        "score_loc": 0.048,
+        "score_loc_group": 0.048
+      },
+      {
+        "component": "Treaty",
+        "componentData": "Data Complete",
+        "componentID": 26772439,
+        "name": "Treaty4",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "4",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "7",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "8",
+        "score_data": 0.571,
+        "score_data_group": 0.602,
+        "score_data_loc": 0.294,
+        "score_data_loc_group": 0.31,
+        "score_loc": 0.018,
+        "score_loc_group": 0.018
+      },
+      {
+        "component": "Treaty",
+        "componentData": "Data Complete",
+        "componentID": 26772494,
+        "name": "Treaty2",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "4",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "7",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "8",
+        "score_data": 0.564,
+        "score_data_group": 0.602,
+        "score_data_loc": 0.291,
+        "score_data_loc_group": 0.31,
+        "score_loc": 0.018,
+        "score_loc_group": 0.018
+      },
+      {
+        "component": "Treaty",
+        "componentData": "Data Complete",
+        "componentID": 26772500,
+        "name": "Treaty3",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "4",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "7",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "8",
+        "score_data": 0.53,
+        "score_data_group": 0.602,
+        "score_data_loc": 0.274,
+        "score_data_loc_group": 0.31,
+        "score_loc": 0.018,
+        "score_loc_group": 0.018
       },
       {
         "component": "Cyclone",
@@ -1304,15 +2054,15 @@
         "name": "Cyclone",
         "not_displayed": true,
         "rank_data": "Not Displayed",
-        "rank_data_group": "8",
+        "rank_data_group": "10",
         "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "7",
-        "rank_loc": "5",
-        "rank_loc_group": "5",
-        "score_data": 0.613,
-        "score_data_group": 0.63,
-        "score_data_loc": 0.312,
-        "score_data_loc_group": 0.32,
+        "rank_data_loc_group": "12",
+        "rank_loc": "9",
+        "rank_loc_group": "9",
+        "score_data": 0.516,
+        "score_data_group": 0.531,
+        "score_data_loc": 0.263,
+        "score_data_loc_group": 0.271,
         "score_loc": 0.011,
         "score_loc_group": 0.011
       }

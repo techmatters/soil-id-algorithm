@@ -2110,18 +2110,19 @@ def rank_soils(
                 if i < len(spt):
                     h["sand"], h["clay"], h["rfv_pct"] = _r(spt[i]), _r(cpt[i]), _r(p_cfg[i])
 
-        # Initialize full-length property arrays with NaNs
-        sand_array = [np.nan] * max_user_depth
-        clay_array = [np.nan] * max_user_depth
-        cfg_array = [np.nan] * max_user_depth
+        # Build depth-indexed property arrays: place each horizon's value at its
+        # TRUE depth (0..199) so that list position == depth. Fixed-length 200
+        # arrays keep them aligned with `pedon_slice_index`, which extends past
+        # max_user_depth to 200 whenever bedrock is set. The previous
+        # max_user_depth-length arrays raised a KeyError as soon as a slice index
+        # exceeded the user's deepest horizon (same class of bug as #368 in the
+        # global path).
+        sand_array = [np.nan] * 200
+        clay_array = [np.nan] * 200
+        cfg_array = [np.nan] * 200
 
         for i in range(len(soilHorizon)):
-            t = horizonDepthT[i]
-            b = horizonDepthB[i]
-            if t >= max_user_depth:
-                continue
-            b = min(b, max_user_depth)
-            for d in range(t, b):
+            for d in range(max(horizonDepthT[i], 0), min(horizonDepthB[i], 200)):
                 sand_array[d] = spt[i]
                 clay_array[d] = cpt[i]
                 cfg_array[d] = p_cfg[i]
@@ -2134,8 +2135,8 @@ def rank_soils(
         p_bottom_depth = pd.DataFrame([-999, "sample_pedon", max_user_depth]).T
         p_bottom_depth.columns = ["cokey", "compname", "bottom_depth"]
 
-        # Pedon color data
-        lab_array = [[np.nan, np.nan, np.nan] for _ in range(max_user_depth)]
+        # Pedon color data (same fixed-length 200 depth-indexing as above)
+        lab_array = [[np.nan, np.nan, np.nan] for _ in range(200)]
 
         # Force correct structure
         lab_cleaned = [
@@ -2148,17 +2149,12 @@ def rank_soils(
 
         # Interpolate colors across depth
         for i in range(len(lab_Color)):
-            t = horizonDepthT[i]
-            b = horizonDepthB[i]
-            if t >= max_user_depth:
-                continue
-            b = min(b, max_user_depth)
             color_val = (
                 lab_Color.iloc[i].tolist()
                 if not pd.isnull(lab_Color.iloc[i]).all()
                 else [np.nan, np.nan, np.nan]
             )
-            for d in range(t, b):
+            for d in range(max(horizonDepthT[i], 0), min(horizonDepthB[i], 200)):
                 lab_array[d] = color_val
 
         p_lab_intpl = pd.DataFrame(lab_array, columns=["L", "A", "B"]).reset_index(drop=True)
@@ -2223,6 +2219,15 @@ def rank_soils(
     # Load in component data from soilIDList
     soilIDRank_output_pd = pd.read_csv(io.StringIO(list_output_data.rank_data_csv))
     mucompdata_pd = pd.read_csv(io.StringIO(list_output_data.map_unit_component_data_csv))
+
+    # Align candidate ordering across the horizon + site calculations. soil_matrix,
+    # the site distance matrix, and the final compname labels are built positionally
+    # from mucompdata order, but the per-slice Gower matrices come from
+    # groupby("compname", sort=True) — a DIFFERENT order. Positionally combining them
+    # applied each candidate's depth (no-soil) mask, its site distance, and its
+    # horizon score to the WRONG component. Sort mucompdata by compname so every
+    # positional combine lines up.
+    mucompdata_pd = mucompdata_pd.sort_values("compname").reset_index(drop=True)
 
     # Modify mucompdata_pd DataFrame
     # mucompdata_pd = process_site_data(mucompdata_pd)
@@ -2427,8 +2432,13 @@ def rank_soils(
                         dis_mat[pedon_idx, j] = dis_max
                         dis_mat[j, pedon_idx] = dis_max
 
-            # 2) Every other NaN (component–component or missing–missing) → zero
-            dis_mat[np.isnan(dis_mat)] = 0.0
+            # 2) Remaining NaN → 0, EXCEPT where both sides have soil but nothing was
+            #    comparable (disjoint recorded properties). Those carry no
+            #    information, so leave them NaN to be masked out of the weighted
+            #    average below rather than counted as a 0 (perfect-match) — matching
+            #    the global path. See soil-id-algorithm#389.
+            both_soil = soil_slice[:, np.newaxis] & soil_slice[np.newaxis, :]
+            dis_mat[np.isnan(dis_mat) & ~both_soil] = 0.0
 
             dis_mat_list[i] = dis_mat
 
@@ -2464,6 +2474,14 @@ def rank_soils(
             pElev = float(pElev_dict["value"])
         except (KeyError, TypeError, ValueError):
             pElev = None  # or some default
+
+    # Slope arrives as a string from the API; coerce to float so the site Gower
+    # distance treats it as a scaled numeric feature rather than a categorical
+    # (exact-match) one. A non-numeric/blank slope becomes None (feature skipped).
+    try:
+        pSlope = float(pSlope) if pSlope is not None else None
+    except (TypeError, ValueError):
+        pSlope = None
 
     # 1) “Raw” guard on the three possible site inputs:
     provided = {

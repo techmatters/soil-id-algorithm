@@ -58,17 +58,19 @@ class SoilListOutputData:
 
 
 # Depth (cm) beyond which a shallow-soil group (leptosols/lithosols/rendzinas/
-# rankers) is considered impossible and demoted. PROVISIONAL — leptosols are
-# defined at ~25-30 cm to rock, so a soil scientist may prefer ~30; change here
-# and regenerate the global snapshots. See #375.
-LEPTOSOL_MAX_BEDROCK_CM = 50
+# rankers) is considered impossible and demoted. Set to 35 (was 50 in #375):
+# leptosols are defined at ~25-30 cm to rock, so a lower ceiling is closer to the
+# taxonomic definition while leaving a small margin. See #375.
+LEPTOSOL_MAX_BEDROCK_CM = 35
 
 # Fixed "plausible range" (low, high) per numeric property used in the global
 # per-slice Gower distance (#377). Without these, gower_distances normalizes each
 # feature by that slice's own min/max — which includes the user's sample_pedon
 # value — so changing one input rescales every candidate's distance in every
-# slice. Reused from the US path's `global_prop_bounds` (us_soil.py). Confirm the
-# values with a soil scientist if the global data distribution differs.
+# slice. Reused from the US path's `global_prop_bounds` (us_soil.py) — these
+# sand/clay/rfv values are duplicated there; keep the two in sync (the US copy also
+# has l/a/b, which global doesn't use because it scores color separately). Confirm
+# the values with a soil scientist if the global data distribution differs.
 GLOBAL_HORIZON_PROP_BOUNDS = {
     "sandpct_intpl": (10.0, 92.0),
     "claypct_intpl": (5.0, 70.0),
@@ -294,7 +296,15 @@ def list_soils_global(connection, lon, lat, buffer_dist=30000):
             [
                 sand_pct_intpl[["c_sandpct_intpl_grp"]],
                 clay_pct_intpl[["c_claypct_intpl_grp"]],
-                cf_pct_intpl[["c_cfpct_intpl_grp"]],
+                # Rock fragment: use the RAW % (not the binned class midpoint
+                # c_cfpct_intpl_grp). Binning both sides to 5 class midpoints
+                # (0/8/25/48/80 via getCF) put a cliff at every class boundary —
+                # 15% vs 16% scored 8 vs 25 (near-total mismatch) while 16% vs 35%
+                # scored identical. The raw value removes the cliff and the
+                # within-class flattening, and matches what the display already
+                # shows (rf_lyrs is built from the raw column). The pit stays a
+                # class midpoint (getCF_fromClass) since the user only reports a class.
+                cf_pct_intpl[["c_cfpct_intpl"]],
                 pd.DataFrame({"compname": [sorted(profile.compname.unique())[0]] * n_rows}),
                 pd.DataFrame({"cokey": [sorted(profile.cokey.unique())[0]] * n_rows}),
                 pd.DataFrame({"comppct": [sorted(profile.comppct_r.unique())[0]] * n_rows}),
@@ -1004,12 +1014,20 @@ def rank_soils_global(
             "Not Ranked" if np.ma.is_masked(x) else "Ranked" for x in D_check[0][1:]
         ]
 
-        # Calculate max dissimilarity across all depth slices. Use a single
-        # NaN-aware reduction over the stack so an all-NaN slice (a depth with no
-        # usable data) can't make the result NaN via max()'s ordering.
-        dis_max = np.nanmax(dis_mat_list)
+        # Maximum dissimilarity used to penalize a candidate that has no soil where
+        # the pedon does. Fixed at 1.0 to match the US path (us_soil.py) — Gower
+        # distances are already normalized to ~[0, 1], so a fixed, interpretable,
+        # query-independent penalty is preferable to the previous empirical
+        # np.nanmax(dis_mat_list). Effect on accuracy is negligible (evaluated:
+        # Δtop1 ≈ -0.04 global); the change is purely for US/global consistency.
+        # See SOILID_TUNING.md (§7, "dis_max").
+        dis_max = 1.0
 
-        # Apply depth weight
+        # Apply depth weight: surface 0-20 cm slices count 0.2x, deeper 1.0x (same
+        # as the US path). Rationale: the topsoil is the most disturbed/managed
+        # layer and less taxonomically diagnostic. (Uniform 1.0x was net ~0 on the
+        # bulk test; a data-presence-aware weight would be the principled fix — see
+        # JOHANNES_NOTES_2026 "Potential future changes".)
         depth_weight = np.concatenate([np.repeat(0.2, 20), np.repeat(1.0, 180)])
         depth_weight = depth_weight[soil_matrix.index]
 

@@ -10,4 +10,11 @@
 # 2.1.0 = model gen 2 + the global/US correctness fixes (#375/#377/#378/#389 ...).
 # 2.2.0 = shallow-soil demote applied to the horizon score (soft demotion) instead
 #         of forcing the combined score to ~0.
-__version__ = "2.2.0"
+# 2.3.0 = rock fragment ranked on the candidate's raw % instead of the binned class
+#         midpoint (removes the class-boundary cliff + within-class flattening).
+# 2.4.0 = US site weight (slope/elev vs horizon) 0.5 -> 0.25 (+0.34 pt top1).
+# 2.5.0 = global LEPTOSOL_MAX_BEDROCK_CM 50 -> 35 (shallow-soil demote ceiling;
+#         result-affecting for pits with effective bedrock 35-50 cm).
+# 2.6.0 = fix top-12 component-group selection (#398): pick the 12 highest-cond_prob
+#         groups, not the 12 alphabetically-first (US + global; when >12 groups).
+__version__ = "2.6.0"

@@ -1,22 +1,22 @@
 {
   "list": {
-    "AWS_PIW90": 10.16,
+    "AWS_PIW90": 9.7,
     "Soil Data Value": [
       [
         "texture_0",
-        2.5494767523009707
+        2.9961447762156546
       ],
       [
         "texture_30",
-        2.5494767523009707
+        2.9961447762156546
       ],
       [
         "rfv_class_30",
-        1.4893140246267844
+        1.4052032072004275
       ],
       [
         "rfv_class_0",
-        0.8825277371828062
+        1.371160496334868
       ]
     ],
     "metadata": {
@@ -97,6 +97,62 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
+              "F005XZ014CA"
+            ],
+            "ecoclassname": [
+              "Mesic Mountains <40Ppt"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/005X/F005XZ014CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Vannoy",
+          "name": "Vannoy",
+          "rank_loc": "2",
+          "score_loc": 0.252
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "27529282",
+            "componentKind": "Series",
+            "componentPct": 80,
+            "dataSource": "SSURGO",
+            "distance": 51.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "469685",
+            "minCompDistance": 51.0,
+            "nirrcapcl": "4",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=vannoy",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#vannoy",
+            "slope": 24.0,
+            "taxsubgrp": "Mollic Haploxeralfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Vannoy series consists of moderately deep, well drained soils that formed in colluvium weathered from metamorphic and sedimentary rocks.  Vannoy soils are on uplands and have slopes of 2 to 60 percent.  The mean annual precipitation is about 30 inches.  The mean annual temperature is about 50 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
               "F005XZ024CA"
             ],
             "ecoclassname": [
@@ -110,7 +166,7 @@
         "id": {
           "component": "Josephine",
           "name": "Josephine",
-          "rank_loc": "2",
+          "rank_loc": "3",
           "score_loc": 0.125
         },
         "lab": {},
@@ -166,7 +222,7 @@
         "id": {
           "component": "Abegg",
           "name": "Abegg",
-          "rank_loc": "3",
+          "rank_loc": "4",
           "score_loc": 0.069
         },
         "lab": {},
@@ -209,6 +265,62 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
+              "F005XZ007CA"
+            ],
+            "ecoclassname": [
+              "Moderately Deep Mesic Hills 40-60Ppt"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/005X/F005XZ007CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Speaker",
+          "name": "Speaker",
+          "rank_loc": "5",
+          "score_loc": 0.063
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "27529335",
+            "componentKind": "Series",
+            "componentPct": 45,
+            "dataSource": "SSURGO",
+            "distance": 712.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "469660",
+            "minCompDistance": 712.0,
+            "nirrcapcl": "6",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=speaker",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#speaker",
+            "slope": 45.0,
+            "taxsubgrp": "Ultic Haploxeralfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Speaker series consists of moderately deep, well drained soils that formed in colluvium weathered from sedimentary and metamorphic rocks.  Speaker soils are on low rolling foot slopes and side slopes and have gradients of 2 to 75 percent.  The mean annual precipitation is about 45 inches (1140 mm) and the mean annual temperature is about 50 degrees F (10 degrees C)."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
               "F005XZ014CA"
             ],
             "ecoclassname": [
@@ -222,7 +334,7 @@
         "id": {
           "component": "Caris",
           "name": "Caris",
-          "rank_loc": "4",
+          "rank_loc": "6",
           "score_loc": 0.05
         },
         "lab": {},
@@ -278,7 +390,7 @@
         "id": {
           "component": "Beekman",
           "name": "Beekman",
-          "rank_loc": "5",
+          "rank_loc": "7",
           "score_loc": 0.046
         },
         "lab": {},
@@ -321,6 +433,62 @@
         "esd": {
           "ESD": {
             "ecoclassid": [
+              "F005XZ014CA"
+            ],
+            "ecoclassname": [
+              "Mesic Mountains <40Ppt"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/005X/F005XZ014CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Voorhies",
+          "name": "Voorhies",
+          "rank_loc": "8",
+          "score_loc": 0.045
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "27529280",
+            "componentKind": "Series",
+            "componentPct": 30,
+            "dataSource": "SSURGO",
+            "distance": 100.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "469686",
+            "minCompDistance": 100.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "s",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=voorhies",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#voorhies",
+            "slope": 45.0,
+            "taxsubgrp": "Mollic Haploxeralfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Voorhies series consists of moderately deep, well drained soils that formed in colluvium weathered from altered sedimentary and extrusive igneous rocks.  Voorhies soils are on mountain slopes and have slopes of 35 to 55 percent.  Mean annual precipitation is about 30 inches and mean annual temperature is about 50 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
               "F005XZ018CA"
             ],
             "ecoclassname": [
@@ -334,7 +502,7 @@
         "id": {
           "component": "Colestine",
           "name": "Colestine",
-          "rank_loc": "6",
+          "rank_loc": "9",
           "score_loc": 0.025
         },
         "lab": {},
@@ -390,7 +558,7 @@
         "id": {
           "component": "Pollard",
           "name": "Pollard",
-          "rank_loc": "7",
+          "rank_loc": "10",
           "score_loc": 0.025
         },
         "lab": {},
@@ -446,7 +614,7 @@
         "id": {
           "component": "Offenbacher",
           "name": "Offenbacher",
-          "rank_loc": "8",
+          "rank_loc": "11",
           "score_loc": 0.017
         },
         "lab": {},
@@ -502,7 +670,7 @@
         "id": {
           "component": "Gregory",
           "name": "Gregory",
-          "rank_loc": "9",
+          "rank_loc": "12",
           "score_loc": 0.007
         },
         "lab": {},
@@ -533,6 +701,62 @@
             "textureInfill": "Yes"
           },
           "siteDescription": "The Gregory series consists of deep, poorly drained soils on terraces.  They formed in recent alluvium dominantly from sedimentary and metamorphic rocks.  Slopes are 0 to 3 percent.  The mean annual precipitation is about 24 inches and the mean annual temperature is about 52 degrees F."
+        },
+        "texture": {},
+        "top_depth": {}
+      },
+      {
+        "bottom_depth": {},
+        "cec": {},
+        "clay": {},
+        "ec": {},
+        "esd": {
+          "ESD": {
+            "ecoclassid": [
+              "F005XZ014CA"
+            ],
+            "ecoclassname": [
+              "Mesic Mountains <40Ppt"
+            ],
+            "edit_url": [
+              "https://edit.sc.egov.usda.gov/catalogs/esd/005X/F005XZ014CA"
+            ]
+          }
+        },
+        "id": {
+          "component": "Vannoy",
+          "name": "Vannoy2",
+          "rank_loc": "Not Displayed",
+          "score_loc": 0.252
+        },
+        "lab": {},
+        "munsell": {},
+        "ph": {},
+        "rock_fragments": {},
+        "sand": {},
+        "site": {
+          "siteData": {
+            "componentID": "27529279",
+            "componentKind": "Series",
+            "componentPct": 50,
+            "dataSource": "SSURGO",
+            "distance": 100.0,
+            "irrcapcl": "nan",
+            "irrcapscl": "None",
+            "irrcapunit": "None",
+            "mapunitID": "469686",
+            "minCompDistance": 51.0,
+            "nirrcapcl": "7",
+            "nirrcapscl": "e",
+            "nirrcapunit": "None",
+            "rfvInfill": "No",
+            "sdeURL": "https://casoilresource.lawr.ucdavis.edu/sde/?series=vannoy",
+            "seeURL": "https://casoilresource.lawr.ucdavis.edu/see/#vannoy",
+            "slope": 45.0,
+            "taxsubgrp": "Mollic Haploxeralfs",
+            "textureInfill": "No"
+          },
+          "siteDescription": "The Vannoy series consists of moderately deep, well drained soils that formed in colluvium weathered from metamorphic and sedimentary rocks.  Vannoy soils are on uplands and have slopes of 2 to 60 percent.  The mean annual precipitation is about 30 inches.  The mean annual temperature is about 50 degrees F."
         },
         "texture": {},
         "top_depth": {}
@@ -613,31 +837,31 @@
         "rank_data_loc_group": "1",
         "rank_loc": "1",
         "rank_loc_group": "1",
-        "score_data": 0.746,
-        "score_data_group": 0.746,
-        "score_data_loc": 0.506,
-        "score_data_loc_group": 0.506,
+        "score_data": 0.712,
+        "score_data_group": 0.712,
+        "score_data_loc": 0.489,
+        "score_data_loc_group": 0.489,
         "score_loc": 0.266,
         "score_loc_group": 0.266
       },
       {
-        "component": "Abegg",
+        "component": "Vannoy",
         "componentData": "Data Complete",
-        "componentID": 27529265,
-        "name": "Abegg",
+        "componentID": 27529282,
+        "name": "Vannoy",
         "not_displayed": false,
-        "rank_data": "3",
-        "rank_data_group": "3",
+        "rank_data": "6",
+        "rank_data_group": "6",
         "rank_data_loc": "2",
         "rank_data_loc_group": "2",
-        "rank_loc": "3",
-        "rank_loc_group": "3",
-        "score_data": 0.684,
-        "score_data_group": 0.684,
-        "score_data_loc": 0.376,
-        "score_data_loc_group": 0.376,
-        "score_loc": 0.069,
-        "score_loc_group": 0.069
+        "rank_loc": "2",
+        "rank_loc_group": "2",
+        "score_data": 0.487,
+        "score_data_group": 0.487,
+        "score_data_loc": 0.369,
+        "score_data_loc_group": 0.369,
+        "score_loc": 0.252,
+        "score_loc_group": 0.252
       },
       {
         "component": "Pollard",
@@ -649,14 +873,33 @@
         "rank_data_group": "2",
         "rank_data_loc": "3",
         "rank_data_loc_group": "3",
-        "rank_loc": "7",
-        "rank_loc_group": "7",
-        "score_data": 0.691,
-        "score_data_group": 0.691,
-        "score_data_loc": 0.358,
-        "score_data_loc_group": 0.358,
+        "rank_loc": "10",
+        "rank_loc_group": "10",
+        "score_data": 0.708,
+        "score_data_group": 0.708,
+        "score_data_loc": 0.366,
+        "score_data_loc_group": 0.366,
         "score_loc": 0.025,
         "score_loc_group": 0.025
+      },
+      {
+        "component": "Abegg",
+        "componentData": "Data Complete",
+        "componentID": 27529265,
+        "name": "Abegg",
+        "not_displayed": false,
+        "rank_data": "3",
+        "rank_data_group": "3",
+        "rank_data_loc": "4",
+        "rank_data_loc_group": "4",
+        "rank_loc": "4",
+        "rank_loc_group": "4",
+        "score_data": 0.651,
+        "score_data_group": 0.651,
+        "score_data_loc": 0.36,
+        "score_data_loc_group": 0.36,
+        "score_loc": 0.069,
+        "score_loc_group": 0.069
       },
       {
         "component": "Josephine",
@@ -664,16 +907,16 @@
         "componentID": 27529612,
         "name": "Josephine2",
         "not_displayed": false,
-        "rank_data": "5",
-        "rank_data_group": "5",
-        "rank_data_loc": "4",
-        "rank_data_loc_group": "4",
+        "rank_data": "4",
+        "rank_data_group": "4",
+        "rank_data_loc": "5",
+        "rank_data_loc_group": "5",
         "rank_loc": "Not Displayed",
-        "rank_loc_group": "2",
-        "score_data": 0.574,
-        "score_data_group": 0.574,
-        "score_data_loc": 0.35,
-        "score_data_loc_group": 0.35,
+        "rank_loc_group": "3",
+        "score_data": 0.567,
+        "score_data_group": 0.567,
+        "score_data_loc": 0.346,
+        "score_data_loc_group": 0.346,
         "score_loc": 0.125,
         "score_loc_group": 0.125
       },
@@ -683,16 +926,16 @@
         "componentID": 27529400,
         "name": "Gregory",
         "not_displayed": false,
-        "rank_data": "4",
-        "rank_data_group": "4",
-        "rank_data_loc": "5",
-        "rank_data_loc_group": "5",
-        "rank_loc": "9",
-        "rank_loc_group": "9",
-        "score_data": 0.606,
-        "score_data_group": 0.606,
-        "score_data_loc": 0.306,
-        "score_data_loc_group": 0.306,
+        "rank_data": "5",
+        "rank_data_group": "5",
+        "rank_data_loc": "6",
+        "rank_data_loc_group": "6",
+        "rank_loc": "12",
+        "rank_loc_group": "12",
+        "score_data": 0.557,
+        "score_data_group": 0.557,
+        "score_data_loc": 0.282,
+        "score_data_loc_group": 0.282,
         "score_loc": 0.007,
         "score_loc_group": 0.007
       },
@@ -702,18 +945,37 @@
         "componentID": 27529224,
         "name": "Offenbacher",
         "not_displayed": false,
-        "rank_data": "6",
-        "rank_data_group": "6",
-        "rank_data_loc": "6",
-        "rank_data_loc_group": "6",
-        "rank_loc": "8",
-        "rank_loc_group": "8",
-        "score_data": 0.444,
-        "score_data_group": 0.444,
-        "score_data_loc": 0.23,
-        "score_data_loc_group": 0.23,
+        "rank_data": "7",
+        "rank_data_group": "7",
+        "rank_data_loc": "7",
+        "rank_data_loc_group": "7",
+        "rank_loc": "11",
+        "rank_loc_group": "11",
+        "score_data": 0.48,
+        "score_data_group": 0.48,
+        "score_data_loc": 0.248,
+        "score_data_loc_group": 0.248,
         "score_loc": 0.017,
         "score_loc_group": 0.017
+      },
+      {
+        "component": "Speaker",
+        "componentData": "Data Complete",
+        "componentID": 27529335,
+        "name": "Speaker",
+        "not_displayed": false,
+        "rank_data": "9",
+        "rank_data_group": "9",
+        "rank_data_loc": "8",
+        "rank_data_loc_group": "8",
+        "rank_loc": "5",
+        "rank_loc_group": "5",
+        "score_data": 0.42,
+        "score_data_group": 0.42,
+        "score_data_loc": 0.241,
+        "score_data_loc_group": 0.241,
+        "score_loc": 0.063,
+        "score_loc_group": 0.063
       },
       {
         "component": "Colestine",
@@ -721,18 +983,37 @@
         "componentID": 27529517,
         "name": "Colestine",
         "not_displayed": false,
-        "rank_data": "7",
-        "rank_data_group": "7",
-        "rank_data_loc": "7",
-        "rank_data_loc_group": "7",
-        "rank_loc": "6",
-        "rank_loc_group": "6",
-        "score_data": 0.401,
-        "score_data_group": 0.401,
-        "score_data_loc": 0.213,
-        "score_data_loc_group": 0.213,
+        "rank_data": "8",
+        "rank_data_group": "8",
+        "rank_data_loc": "9",
+        "rank_data_loc_group": "9",
+        "rank_loc": "9",
+        "rank_loc_group": "9",
+        "score_data": 0.445,
+        "score_data_group": 0.445,
+        "score_data_loc": 0.235,
+        "score_data_loc_group": 0.235,
         "score_loc": 0.025,
         "score_loc_group": 0.025
+      },
+      {
+        "component": "Voorhies",
+        "componentData": "Data Complete",
+        "componentID": 27529280,
+        "name": "Voorhies",
+        "not_displayed": false,
+        "rank_data": "10",
+        "rank_data_group": "10",
+        "rank_data_loc": "10",
+        "rank_data_loc_group": "10",
+        "rank_loc": "8",
+        "rank_loc_group": "8",
+        "score_data": 0.403,
+        "score_data_group": 0.403,
+        "score_data_loc": 0.224,
+        "score_data_loc_group": 0.224,
+        "score_loc": 0.045,
+        "score_loc_group": 0.045
       },
       {
         "component": "Caris",
@@ -740,16 +1021,16 @@
         "componentID": 27529223,
         "name": "Caris",
         "not_displayed": false,
-        "rank_data": "8",
-        "rank_data_group": "8",
-        "rank_data_loc": "8",
-        "rank_data_loc_group": "8",
-        "rank_loc": "4",
-        "rank_loc_group": "4",
-        "score_data": 0.327,
-        "score_data_group": 0.327,
-        "score_data_loc": 0.189,
-        "score_data_loc_group": 0.189,
+        "rank_data": "11",
+        "rank_data_group": "11",
+        "rank_data_loc": "11",
+        "rank_data_loc_group": "11",
+        "rank_loc": "6",
+        "rank_loc_group": "6",
+        "score_data": 0.345,
+        "score_data_group": 0.345,
+        "score_data_loc": 0.198,
+        "score_data_loc_group": 0.198,
         "score_loc": 0.05,
         "score_loc_group": 0.05
       },
@@ -759,18 +1040,37 @@
         "componentID": 27529518,
         "name": "Beekman",
         "not_displayed": false,
-        "rank_data": "9",
-        "rank_data_group": "9",
-        "rank_data_loc": "9",
-        "rank_data_loc_group": "9",
-        "rank_loc": "5",
-        "rank_loc_group": "5",
-        "score_data": 0.306,
-        "score_data_group": 0.306,
-        "score_data_loc": 0.176,
-        "score_data_loc_group": 0.176,
+        "rank_data": "12",
+        "rank_data_group": "12",
+        "rank_data_loc": "12",
+        "rank_data_loc_group": "12",
+        "rank_loc": "7",
+        "rank_loc_group": "7",
+        "score_data": 0.338,
+        "score_data_group": 0.338,
+        "score_data_loc": 0.192,
+        "score_data_loc_group": 0.192,
         "score_loc": 0.046,
         "score_loc_group": 0.046
+      },
+      {
+        "component": "Vannoy",
+        "componentData": "Data Complete",
+        "componentID": 27529279,
+        "name": "Vannoy2",
+        "not_displayed": true,
+        "rank_data": "Not Displayed",
+        "rank_data_group": "6",
+        "rank_data_loc": "Not Displayed",
+        "rank_data_loc_group": "2",
+        "rank_loc": "Not Displayed",
+        "rank_loc_group": "2",
+        "score_data": 0.445,
+        "score_data_group": 0.487,
+        "score_data_loc": 0.349,
+        "score_data_loc_group": 0.369,
+        "score_loc": 0.252,
+        "score_loc_group": 0.252
       },
       {
         "component": "Josephine",
@@ -779,15 +1079,15 @@
         "name": "Josephine",
         "not_displayed": true,
         "rank_data": "Not Displayed",
-        "rank_data_group": "5",
+        "rank_data_group": "4",
         "rank_data_loc": "Not Displayed",
-        "rank_data_loc_group": "4",
-        "rank_loc": "2",
-        "rank_loc_group": "2",
-        "score_data": 0.5,
-        "score_data_group": 0.574,
-        "score_data_loc": 0.313,
-        "score_data_loc_group": 0.35,
+        "rank_data_loc_group": "5",
+        "rank_loc": "3",
+        "rank_loc_group": "3",
+        "score_data": 0.523,
+        "score_data_group": 0.567,
+        "score_data_loc": 0.324,
+        "score_data_loc_group": 0.346,
         "score_loc": 0.125,
         "score_loc_group": 0.125
       }

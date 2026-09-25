@@ -1855,15 +1855,22 @@ def process_distance_scores(
 
     mucompdata_pd = mucompdata_pd.reset_index(drop=True)
 
-    # Create a list of component groups
-    mucompdata_comp_grps = [g for _, g in mucompdata_pd.groupby([comp_name_col], sort=True)]
+    # Create a list of component groups. Use sort=False so groups come out in
+    # first-appearance order, which — because the frame is pre-sorted by cond_prob
+    # desc above — is highest-cond_prob first. sort=True would re-order the groups
+    # alphabetically by compname, so the top-12 truncation below would keep the 12
+    # alphabetically-first groups instead of the 12 most probable (see #398).
+    mucompdata_comp_grps = [g for _, g in mucompdata_pd.groupby([comp_name_col], sort=False)]
     mucompdata_comp_grps = mucompdata_comp_grps[: min(12, len(mucompdata_comp_grps))]
 
-    # Assign group-level values to all members of the group
-    for group in mucompdata_comp_grps:
+    # Assign group-level values to all members of the group. Write the transformed
+    # group back into the list (the previous version rebound a local `group` and the
+    # sort / min_dist were silently discarded — #398).
+    for i, group in enumerate(mucompdata_comp_grps):
         # distance_score is already set to sum value for the group
         group = group.sort_values(distance_col).reset_index(drop=True)
         group["min_dist"] = group[distance_col].iloc[0]
+        mucompdata_comp_grps[i] = group
 
     # Concatenate the list of dataframes
     if mucompdata_comp_grps:

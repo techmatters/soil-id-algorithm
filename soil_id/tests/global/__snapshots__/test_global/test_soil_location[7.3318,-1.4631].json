@@ -29,6 +29,100 @@
           "sl2": 8.0,
           "sl3": 8.0,
           "sl4": 6.8,
+          "sl5": 6.71,
+          "sl6": 6.8,
+          "sl7": 6.83
+        },
+        "clay": {
+          "sl1": 21.0,
+          "sl2": 21.0,
+          "sl3": 21.0,
+          "sl4": 27.2,
+          "sl5": 30.29,
+          "sl6": 33.2,
+          "sl7": 34.33
+        },
+        "ec": {
+          "sl1": 0.0,
+          "sl2": 0.0,
+          "sl3": 0.0,
+          "sl4": 0.0,
+          "sl5": 0.0,
+          "sl6": 0.0,
+          "sl7": 0.0
+        },
+        "id": {
+          "component": "Haplic lixisols",
+          "name": "Haplic lixisols",
+          "rank_loc": "1",
+          "score_loc": 0.124
+        },
+        "ph": {
+          "sl1": 6.2,
+          "sl2": 6.2,
+          "sl3": 6.2,
+          "sl4": 6.12,
+          "sl5": 6.07,
+          "sl6": 6.02,
+          "sl7": 6.02
+        },
+        "rock_fragments": {
+          "sl1": 6.0,
+          "sl2": 6.0,
+          "sl3": 6.0,
+          "sl4": 9.8,
+          "sl5": 10.43,
+          "sl6": 10.6,
+          "sl7": 10.5
+        },
+        "sand": {
+          "sl1": 65.0,
+          "sl2": 65.0,
+          "sl3": 65.0,
+          "sl4": 60.2,
+          "sl5": 57.57,
+          "sl6": 54.8,
+          "sl7": 53.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 133495,
+            "distance": 2595.2,
+            "mapunitID": 36052,
+            "minCompDistance": 2595.20044162,
+            "share": 60,
+            "soilDepth": 200
+          },
+          "siteDescription": {
+            "Description_en": "Haplic Lixisols form in warm climates with relatively clayey subsoils dominated by kaolinite and iron oxides, but relatively high base saturation. ",
+            "Management_en": "These soils are heavily weathered soils, which means that fertilization (and possibly lime) will be needed for production. Although they do have kaolinite clay and iron oxides, they have fairly low aluminum toxicity. Best production practices for this soil will include regular fertilization, and consistent cropping in perennial crops or forestry. The soils are sensitive to erosion, and so practices that maintain surface cover are important. "
+          }
+        },
+        "texture": {
+          "sl1": "Sandy clay loam",
+          "sl2": "Sandy clay loam",
+          "sl3": "Sandy clay loam",
+          "sl4": "Sandy clay loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
+          "sl3": 20,
+          "sl4": 50,
+          "sl5": 70,
+          "sl6": 100,
+          "sl7": 120
+        },
+        "cec": {
+          "sl1": 8.0,
+          "sl2": 8.0,
+          "sl3": 8.0,
+          "sl4": 6.8,
           "sl5": 6.57,
           "sl6": 6.4,
           "sl7": 6.33
@@ -54,7 +148,7 @@
         "id": {
           "component": "Ferric acrisols",
           "name": "Ferric acrisols",
-          "rank_loc": "1",
+          "rank_loc": "2",
           "score_loc": 0.124
         },
         "ph": {
@@ -148,7 +242,7 @@
         "id": {
           "component": "Dystric fluvisols",
           "name": "Dystric fluvisols",
-          "rank_loc": "2",
+          "rank_loc": "3",
           "score_loc": 0.116
         },
         "ph": {
@@ -242,7 +336,7 @@
         "id": {
           "component": "Eutric gleysols",
           "name": "Eutric gleysols",
-          "rank_loc": "3",
+          "rank_loc": "4",
           "score_loc": 0.083
         },
         "ph": {
@@ -336,7 +430,7 @@
         "id": {
           "component": "Dystric gleysols",
           "name": "Dystric gleysols",
-          "rank_loc": "4",
+          "rank_loc": "5",
           "score_loc": 0.08
         },
         "ph": {
@@ -430,7 +524,7 @@
         "id": {
           "component": "Ferric lixisols",
           "name": "Ferric lixisols",
-          "rank_loc": "5",
+          "rank_loc": "6",
           "score_loc": 0.072
         },
         "ph": {
@@ -488,6 +582,68 @@
         "bottom_depth": {
           "sl1": 1,
           "sl2": 10,
+          "sl3": 20
+        },
+        "cec": {
+          "sl1": 16.0,
+          "sl2": 16.0,
+          "sl3": 16.0
+        },
+        "clay": {
+          "sl1": 20.0,
+          "sl2": 20.0,
+          "sl3": 20.0
+        },
+        "ec": {
+          "sl1": 1.0,
+          "sl2": 1.0,
+          "sl3": 1.0
+        },
+        "id": {
+          "component": "Lithic leptosols",
+          "name": "Lithic leptosols",
+          "rank_loc": "7",
+          "score_loc": 0.069
+        },
+        "ph": {
+          "sl1": 6.7,
+          "sl2": 6.7,
+          "sl3": 6.7
+        },
+        "rock_fragments": {
+          "sl1": 36.0,
+          "sl2": 36.0,
+          "sl3": 36.0
+        },
+        "sand": {
+          "sl1": 51.0,
+          "sl2": 51.0,
+          "sl3": 51.0
+        },
+        "site": {
+          "siteData": {
+            "componentID": 134322,
+            "distance": 9933.452,
+            "mapunitID": 36261,
+            "minCompDistance": 9933.45223009,
+            "share": 100,
+            "soilDepth": 20
+          },
+          "siteDescription": {
+            "Description_en": "Lithic Leptosols have very limited rooting volume due to continuous rock, highly calcareous material, cemented horizons, or many rocks and coarse fragments in the upper portion of the soil. Leptosols on steep slopes are highly erodible. Lithic Leptosols have hard rock within 10 cm of the soil surface. ",
+            "Management_en": "Because these soils are shallow, rocky and erodible they should be used for perennial crops, and not tilled. Practices to maintain organic matter and cover should be used. Only uses for grazing or agroforestry should be considered. Preservation of the surface soil with its organic matter is important, and erosion prevention is critical. Land management practices should maximize soil cover. Any agricultural use should be for grazing, with cover continuously maintained. "
+          }
+        },
+        "texture": {
+          "sl1": "Loam",
+          "sl2": "Loam",
+          "sl3": "Loam"
+        }
+      },
+      {
+        "bottom_depth": {
+          "sl1": 1,
+          "sl2": 10,
           "sl3": 20,
           "sl4": 50,
           "sl5": 70,
@@ -524,7 +680,7 @@
         "id": {
           "component": "Eutric plinthosols",
           "name": "Eutric plinthosols",
-          "rank_loc": "6",
+          "rank_loc": "8",
           "score_loc": 0.062
         },
         "ph": {
@@ -606,7 +762,7 @@
         "id": {
           "component": "Dystric leptosols",
           "name": "Dystric leptosols",
-          "rank_loc": "7",
+          "rank_loc": "9",
           "score_loc": 0.05
         },
         "ph": {
@@ -688,7 +844,7 @@
         "id": {
           "component": "Dystric planosols",
           "name": "Dystric planosols",
-          "rank_loc": "8",
+          "rank_loc": "10",
           "score_loc": 0.045
         },
         "ph": {
@@ -782,7 +938,7 @@
         "id": {
           "component": "Chromic luvisols",
           "name": "Chromic luvisols",
-          "rank_loc": "9",
+          "rank_loc": "11",
           "score_loc": 0.042
         },
         "ph": {
@@ -847,116 +1003,22 @@
           "sl7": 120
         },
         "cec": {
-          "sl1": 19.0,
-          "sl2": 19.0,
-          "sl3": 19.0,
-          "sl4": 17.0,
-          "sl5": 16.29,
-          "sl6": 15.6,
-          "sl7": 15.33
-        },
-        "clay": {
-          "sl1": 29.0,
-          "sl2": 29.0,
-          "sl3": 29.0,
-          "sl4": 29.8,
-          "sl5": 30.14,
-          "sl6": 30.0,
-          "sl7": 29.67
-        },
-        "ec": {
-          "sl1": 1.0,
-          "sl2": 1.0,
-          "sl3": 1.0,
-          "sl4": 1.0,
-          "sl5": 0.86,
-          "sl6": 0.6,
-          "sl7": 0.5
-        },
-        "id": {
-          "component": "Dystric cambisols",
-          "name": "Dystric cambisols",
-          "rank_loc": "10",
-          "score_loc": 0.018
-        },
-        "ph": {
           "sl1": 5.0,
           "sl2": 5.0,
           "sl3": 5.0,
-          "sl4": 5.02,
-          "sl5": 5.06,
-          "sl6": 5.12,
-          "sl7": 5.13
+          "sl4": 4.6,
+          "sl5": 4.86,
+          "sl6": 5.2,
+          "sl7": 5.33
         },
-        "rock_fragments": {
+        "clay": {
           "sl1": 14.0,
           "sl2": 14.0,
           "sl3": 14.0,
-          "sl4": 14.4,
-          "sl5": 14.43,
-          "sl6": 15.2,
-          "sl7": 16.67
-        },
-        "sand": {
-          "sl1": 42.0,
-          "sl2": 42.0,
-          "sl3": 42.0,
-          "sl4": 42.6,
-          "sl5": 42.57,
-          "sl6": 42.6,
-          "sl7": 43.0
-        },
-        "site": {
-          "siteData": {
-            "componentID": 133494,
-            "distance": 15267.702,
-            "mapunitID": 36051,
-            "minCompDistance": 15267.70170318,
-            "share": 5,
-            "soilDepth": 200
-          },
-          "siteDescription": {
-            "Description_en": "Dystric Cambisols are widely occurring soils with limited soil development. These are less productive soils with low base saturation in the upper portion of soil.",
-            "Management_en": "In temperate regions the soils will have a high content of basic cations (potassium, calcium and magnesium), while in more humid regions they may have lower levels of soil nutrients. Because this soil has a low base saturation, the application of bases (through fertlization) may be needed for most productive crop yield. If the soil pH is low calcium (and possibly magnesium, if dolomitic lime is used) can be supplied through the addition of lime. If the soil pH is suitable for crop production then gypsum (CaSO4) can be used as the Ca source, if needed, or other sources such as MgSO4 could be applied (if soil test indicates a need). Proper fertilization will also supply potassium, if soil test indicates a need. "
-          }
-        },
-        "texture": {
-          "sl1": "Clay loam",
-          "sl2": "Clay loam",
-          "sl3": "Clay loam",
-          "sl4": "Clay loam",
-          "sl5": "Clay loam",
-          "sl6": "Clay loam",
-          "sl7": "Clay loam"
-        }
-      },
-      {
-        "bottom_depth": {
-          "sl1": 1,
-          "sl2": 10,
-          "sl3": 20,
-          "sl4": 50,
-          "sl5": 70,
-          "sl6": 100,
-          "sl7": 120
-        },
-        "cec": {
-          "sl1": 5.0,
-          "sl2": 5.0,
-          "sl3": 5.0,
-          "sl4": 5.6,
-          "sl5": 6.0,
-          "sl6": 6.4,
-          "sl7": 6.67
-        },
-        "clay": {
-          "sl1": 20.0,
-          "sl2": 20.0,
-          "sl3": 20.0,
-          "sl4": 26.4,
-          "sl5": 29.0,
-          "sl6": 31.6,
-          "sl7": 33.17
+          "sl4": 18.4,
+          "sl5": 20.86,
+          "sl6": 23.0,
+          "sl7": 23.83
         },
         "ec": {
           "sl1": 0.0,
@@ -968,154 +1030,60 @@
           "sl7": 0.0
         },
         "id": {
-          "component": "Dystric plinthosols",
-          "name": "Dystric plinthosols",
-          "rank_loc": "11",
-          "score_loc": 0.018
+          "component": "Plinthic lixisols",
+          "name": "Plinthic lixisols",
+          "rank_loc": "12",
+          "score_loc": 0.04
         },
         "ph": {
-          "sl1": 5.2,
-          "sl2": 5.2,
-          "sl3": 5.2,
-          "sl4": 5.16,
-          "sl5": 5.17,
-          "sl6": 5.18,
-          "sl7": 5.18
+          "sl1": 6.2,
+          "sl2": 6.2,
+          "sl3": 6.2,
+          "sl4": 6.0,
+          "sl5": 5.94,
+          "sl6": 5.9,
+          "sl7": 5.88
         },
         "rock_fragments": {
-          "sl1": 20.0,
-          "sl2": 20.0,
-          "sl3": 20.0,
-          "sl4": 20.2,
-          "sl5": 20.71,
-          "sl6": 21.4,
-          "sl7": 20.33
+          "sl1": 9.0,
+          "sl2": 9.0,
+          "sl3": 9.0,
+          "sl4": 25.4,
+          "sl5": 33.29,
+          "sl6": 36.8,
+          "sl7": 35.67
         },
         "sand": {
-          "sl1": 53.0,
-          "sl2": 53.0,
-          "sl3": 53.0,
-          "sl4": 47.2,
-          "sl5": 44.86,
-          "sl6": 42.4,
-          "sl7": 40.83
+          "sl1": 64.0,
+          "sl2": 64.0,
+          "sl3": 64.0,
+          "sl4": 60.4,
+          "sl5": 58.29,
+          "sl6": 56.0,
+          "sl7": 54.83
         },
         "site": {
           "siteData": {
-            "componentID": 133239,
+            "componentID": 133235,
             "distance": 0.0,
             "mapunitID": 36001,
             "minCompDistance": 0.0,
-            "share": 5,
+            "share": 10,
             "soilDepth": 200
           },
           "siteDescription": {
-            "Description_en": "Dystric Plinthosols are relatively unproductive soils found in subtropical or tropical regions with high amounts of iron-rich, humus poor concentrations of variable hardness and cementation. Softer iron concentrations irreversibly harden when exposed at the surface. These soils have low rooting volume and are relatively acid, infertile, highly erodible, and often wet. Dystric Plinthosols are unproductive soils with low base saturation in subsoils.",
-            "Management_en": "This soil is not well suited for farming. The combination of hard iron and cementation make this soil most suitable for construction. It has poor soil fertility, which when combined with shallow and rocky soil makes arable farming not possible. These soils should be used for things such as surface materials for roads. This soil has virtually no available calcium in the subsoil."
+            "Description_en": "Plinthic Lixisols form in warm climates with relatively clayey subsoils dominated by kaolinite and iron oxides, but relatively high base saturation. Plinthic Lixisols have iron rich, humus poor concentrations of iron in subsoils that irreversibly harden when exposed at the surface. ",
+            "Management_en": "These soils are heavily weathered soils, which means that fertilization (and possibly lime) will be needed for production. Although they do have kaolinite clay and iron oxides, they have fairly low aluminum toxicity. Best production practices for this soil will include regular fertilization, and consistent cropping in perennial crops or forestry. The soils are sensitive to erosion, and so practices that maintain surface cover are important. Agronomic practices that protect the soil surface and avoid erosion, so that the iron rich clay layer is not exposed, are critical. Use of rotations and inclusion of deep-rooted crops is also recommended, to help penetrate the clay layer. "
           }
         },
         "texture": {
           "sl1": "Sandy loam",
           "sl2": "Sandy loam",
           "sl3": "Sandy loam",
-          "sl4": "Sandy clay loam",
-          "sl5": "Clay loam",
-          "sl6": "Clay loam",
-          "sl7": "Clay loam"
-        }
-      },
-      {
-        "bottom_depth": {
-          "sl1": 1,
-          "sl2": 10,
-          "sl3": 20,
-          "sl4": 50,
-          "sl5": 70,
-          "sl6": 100,
-          "sl7": 120
-        },
-        "cec": {
-          "sl1": 19.0,
-          "sl2": 19.0,
-          "sl3": 19.0,
-          "sl4": 18.4,
-          "sl5": 18.14,
-          "sl6": 17.6,
-          "sl7": 17.5
-        },
-        "clay": {
-          "sl1": 31.0,
-          "sl2": 31.0,
-          "sl3": 31.0,
-          "sl4": 32.2,
-          "sl5": 32.14,
-          "sl6": 31.6,
-          "sl7": 31.33
-        },
-        "ec": {
-          "sl1": 2.0,
-          "sl2": 2.0,
-          "sl3": 2.0,
-          "sl4": 1.4,
-          "sl5": 1.43,
-          "sl6": 1.6,
-          "sl7": 1.67
-        },
-        "id": {
-          "component": "Eutric fluvisols",
-          "name": "Eutric fluvisols",
-          "rank_loc": "12",
-          "score_loc": 0.002
-        },
-        "ph": {
-          "sl1": 6.1,
-          "sl2": 6.1,
-          "sl3": 6.1,
-          "sl4": 6.24,
-          "sl5": 6.3,
-          "sl6": 6.38,
-          "sl7": 6.43
-        },
-        "rock_fragments": {
-          "sl1": 19.0,
-          "sl2": 19.0,
-          "sl3": 19.0,
-          "sl4": 11.6,
-          "sl5": 9.86,
-          "sl6": 10.2,
-          "sl7": 10.33
-        },
-        "sand": {
-          "sl1": 37.0,
-          "sl2": 37.0,
-          "sl3": 37.0,
-          "sl4": 36.2,
-          "sl5": 36.86,
-          "sl6": 38.4,
-          "sl7": 38.83
-        },
-        "site": {
-          "siteData": {
-            "componentID": 133913,
-            "distance": 26374.257,
-            "mapunitID": 36150,
-            "minCompDistance": 26374.25651323,
-            "share": 5,
-            "soilDepth": 200
-          },
-          "siteDescription": {
-            "Description_en": "Eutric Fluvisols are mostly found in floodplains and coastal areas, and have limited profile development with a range of properties. Hydrological management is essential for production. Eutric Fluvisols are productive soils with high base saturation in the upper portion of soil. ",
-            "Management_en": "These soils are all naturally fertile and productive. Drainage and management of floodwaters can make them suitable for continuous cultivation. However, drainage may affect soil pH, and so sampling should be done to evaluate the need for lime. Once under continuous cultivation care should be taken to avoid soil erosion. Production methods that protect the soil surface (mulches, cover crops), improve water infiltration, or provide a route for water movement from the field in a non-erosive velocity (terraces, drainage ways) should be considered."
-          }
-        },
-        "texture": {
-          "sl1": "Clay loam",
-          "sl2": "Clay loam",
-          "sl3": "Clay loam",
-          "sl4": "Clay loam",
-          "sl5": "Clay loam",
-          "sl6": "Clay loam",
-          "sl7": "Clay loam"
+          "sl4": "Sandy loam",
+          "sl5": "Sandy clay loam",
+          "sl6": "Sandy clay loam",
+          "sl7": "Sandy clay loam"
         }
       }
     ]
@@ -1136,8 +1104,8 @@
         "rank_data_group": "1",
         "rank_data_loc": "1",
         "rank_data_loc_group": "1",
-        "rank_loc": 2,
-        "rank_loc_group": 2,
+        "rank_loc": 3,
+        "rank_loc_group": 3,
         "score_data": 1.0,
         "score_data_group": 1.0,
         "score_data_loc": 0.558,
@@ -1155,8 +1123,8 @@
         "rank_data_group": "2",
         "rank_data_loc": "2",
         "rank_data_loc_group": "2",
-        "rank_loc": 4,
-        "rank_loc_group": 4,
+        "rank_loc": 5,
+        "rank_loc_group": 5,
         "score_data": 1.0,
         "score_data_group": 1.0,
         "score_data_loc": 0.54,
@@ -1165,17 +1133,36 @@
         "score_loc_group": 0.08
       },
       {
+        "component": "Lithic leptosols",
+        "componentData": "Missing Data",
+        "componentID": 134322,
+        "name": "Lithic leptosols",
+        "not_displayed": false,
+        "rank_data": "3",
+        "rank_data_group": "3",
+        "rank_data_loc": "3",
+        "rank_data_loc_group": "3",
+        "rank_loc": 7,
+        "rank_loc_group": 7,
+        "score_data": 1.0,
+        "score_data_group": 1.0,
+        "score_data_loc": 0.535,
+        "score_data_loc_group": 0.535,
+        "score_loc": 0.069,
+        "score_loc_group": 0.069
+      },
+      {
         "component": "Eutric gleysols",
         "componentData": "Data Complete",
         "componentID": 134228,
         "name": "Eutric gleysols",
         "not_displayed": false,
-        "rank_data": "5",
-        "rank_data_group": "5",
-        "rank_data_loc": "3",
-        "rank_data_loc_group": "3",
-        "rank_loc": 3,
-        "rank_loc_group": 3,
+        "rank_data": "4",
+        "rank_data_group": "4",
+        "rank_data_loc": "4",
+        "rank_data_loc_group": "4",
+        "rank_loc": 4,
+        "rank_loc_group": 4,
         "score_data": 0.566,
         "score_data_group": 0.566,
         "score_data_loc": 0.324,
@@ -1184,55 +1171,17 @@
         "score_loc_group": 0.083
       },
       {
-        "component": "Dystric cambisols",
-        "componentData": "Data Complete",
-        "componentID": 133494,
-        "name": "Dystric cambisols",
-        "not_displayed": false,
-        "rank_data": "3",
-        "rank_data_group": "3",
-        "rank_data_loc": "4",
-        "rank_data_loc_group": "4",
-        "rank_loc": 10,
-        "rank_loc_group": 10,
-        "score_data": 0.566,
-        "score_data_group": 0.566,
-        "score_data_loc": 0.292,
-        "score_data_loc_group": 0.292,
-        "score_loc": 0.018,
-        "score_loc_group": 0.018
-      },
-      {
-        "component": "Eutric fluvisols",
-        "componentData": "Data Complete",
-        "componentID": 133913,
-        "name": "Eutric fluvisols",
-        "not_displayed": false,
-        "rank_data": "4",
-        "rank_data_group": "4",
-        "rank_data_loc": "5",
-        "rank_data_loc_group": "5",
-        "rank_loc": 12,
-        "rank_loc_group": 12,
-        "score_data": 0.566,
-        "score_data_group": 0.566,
-        "score_data_loc": 0.284,
-        "score_data_loc_group": 0.284,
-        "score_loc": 0.002,
-        "score_loc_group": 0.002
-      },
-      {
         "component": "Ferric lixisols",
         "componentData": "Data Complete",
         "componentID": 133617,
         "name": "Ferric lixisols",
         "not_displayed": false,
-        "rank_data": "9",
-        "rank_data_group": "9",
-        "rank_data_loc": "6",
-        "rank_data_loc_group": "6",
-        "rank_loc": 5,
-        "rank_loc_group": 5,
+        "rank_data": "7",
+        "rank_data_group": "7",
+        "rank_data_loc": "5",
+        "rank_data_loc_group": "5",
+        "rank_loc": 6,
+        "rank_loc_group": 6,
         "score_data": 0.451,
         "score_data_group": 0.451,
         "score_data_loc": 0.262,
@@ -1246,12 +1195,12 @@
         "componentID": 133231,
         "name": "Eutric plinthosols",
         "not_displayed": false,
-        "rank_data": "8",
-        "rank_data_group": "8",
-        "rank_data_loc": "7",
-        "rank_data_loc_group": "7",
-        "rank_loc": 6,
-        "rank_loc_group": 6,
+        "rank_data": "6",
+        "rank_data_group": "6",
+        "rank_data_loc": "6",
+        "rank_data_loc_group": "6",
+        "rank_loc": 8,
+        "rank_loc_group": 8,
         "score_data": 0.451,
         "score_data_group": 0.451,
         "score_data_loc": 0.257,
@@ -1265,12 +1214,12 @@
         "componentID": 133240,
         "name": "Dystric planosols",
         "not_displayed": false,
-        "rank_data": "6",
-        "rank_data_group": "6",
-        "rank_data_loc": "8",
-        "rank_data_loc_group": "8",
-        "rank_loc": 8,
-        "rank_loc_group": 8,
+        "rank_data": "5",
+        "rank_data_group": "5",
+        "rank_data_loc": "7",
+        "rank_data_loc_group": "7",
+        "rank_loc": 10,
+        "rank_loc_group": 10,
         "score_data": 0.451,
         "score_data_group": 0.451,
         "score_data_loc": 0.248,
@@ -1279,10 +1228,29 @@
         "score_loc_group": 0.045
       },
       {
-        "component": "Ferric acrisols",
+        "component": "Plinthic lixisols",
         "componentData": "Data Complete",
-        "componentID": 133233,
-        "name": "Ferric acrisols",
+        "componentID": 133235,
+        "name": "Plinthic lixisols",
+        "not_displayed": false,
+        "rank_data": "8",
+        "rank_data_group": "8",
+        "rank_data_loc": "8",
+        "rank_data_loc_group": "8",
+        "rank_loc": 12,
+        "rank_loc_group": 12,
+        "score_data": 0.451,
+        "score_data_group": 0.451,
+        "score_data_loc": 0.246,
+        "score_data_loc_group": 0.246,
+        "score_loc": 0.04,
+        "score_loc_group": 0.04
+      },
+      {
+        "component": "Haplic lixisols",
+        "componentData": "Data Complete",
+        "componentID": 133495,
+        "name": "Haplic lixisols",
         "not_displayed": false,
         "rank_data": "12",
         "rank_data_group": "12",
@@ -1298,23 +1266,23 @@
         "score_loc_group": 0.124
       },
       {
-        "component": "Dystric plinthosols",
+        "component": "Ferric acrisols",
         "componentData": "Data Complete",
-        "componentID": 133239,
-        "name": "Dystric plinthosols",
+        "componentID": 133233,
+        "name": "Ferric acrisols",
         "not_displayed": false,
-        "rank_data": "7",
-        "rank_data_group": "7",
+        "rank_data": "11",
+        "rank_data_group": "11",
         "rank_data_loc": "10",
         "rank_data_loc_group": "10",
-        "rank_loc": 11,
-        "rank_loc_group": 11,
-        "score_data": 0.451,
-        "score_data_group": 0.451,
-        "score_data_loc": 0.234,
-        "score_data_loc_group": 0.234,
-        "score_loc": 0.018,
-        "score_loc_group": 0.018
+        "rank_loc": 2,
+        "rank_loc_group": 2,
+        "score_data": 0.36,
+        "score_data_group": 0.36,
+        "score_data_loc": 0.242,
+        "score_data_loc_group": 0.242,
+        "score_loc": 0.124,
+        "score_loc_group": 0.124
       },
       {
         "component": "Dystric leptosols",
@@ -1322,12 +1290,12 @@
         "componentID": 133618,
         "name": "Dystric leptosols",
         "not_displayed": false,
-        "rank_data": "11",
-        "rank_data_group": "11",
+        "rank_data": "10",
+        "rank_data_group": "10",
         "rank_data_loc": "11",
         "rank_data_loc_group": "11",
-        "rank_loc": 7,
-        "rank_loc_group": 7,
+        "rank_loc": 9,
+        "rank_loc_group": 9,
         "score_data": 0.36,
         "score_data_group": 0.36,
         "score_data_loc": 0.205,
@@ -1341,12 +1309,12 @@
         "componentID": 133685,
         "name": "Chromic luvisols",
         "not_displayed": false,
-        "rank_data": "10",
-        "rank_data_group": "10",
+        "rank_data": "9",
+        "rank_data_group": "9",
         "rank_data_loc": "12",
         "rank_data_loc_group": "12",
-        "rank_loc": 9,
-        "rank_loc_group": 9,
+        "rank_loc": 11,
+        "rank_loc_group": 11,
         "score_data": 0.36,
         "score_data_group": 0.36,
         "score_data_loc": 0.201,

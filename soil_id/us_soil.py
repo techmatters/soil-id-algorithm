@@ -428,7 +428,10 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
             [
                 sand_pct_intpl[["c_sandpct_intpl_grp"]],
                 clay_pct_intpl[["c_claypct_intpl_grp"]],
-                cf_pct_intpl[["c_cfpct_intpl_grp"]],
+                # Rock fragment: use the RAW % (not the binned class midpoint) so a
+                # small real difference isn't turned into a class-boundary cliff.
+                # See the matching change/comment in global_soil.py.
+                cf_pct_intpl[["c_cfpct_intpl"]],
                 compname,
                 cokey,
                 comppct,
@@ -950,7 +953,9 @@ def list_soils(lon, lat, sim=True, max_distance_m=1000):
                             [
                                 OSD_sand_intpl[["c_sandpct_intpl_grp"]],
                                 OSD_clay_intpl[["c_claypct_intpl_grp"]],
-                                OSD_rfv_intpl[["c_cfpct_intpl_grp"]],
+                                # Rock fragment: raw % (not binned) — same rationale
+                                # as the main path above / global_soil.py.
+                                OSD_rfv_intpl[["c_cfpct_intpl"]],
                                 compname_df,
                                 cokey_df,
                             ],
@@ -2338,6 +2343,11 @@ def rank_soils(
         horz_vars = [p_hz_data]
         horz_vars.extend([group.reset_index(drop=True).loc[pedon_slice_index] for group in groups])
 
+        # Fixed "plausible range" (low, high) per numeric horizon property, used as
+        # the floor for the per-slice Gower normalization (#377). NOTE: the
+        # sand/clay/rfv entries are duplicated in global_soil.py
+        # (GLOBAL_HORIZON_PROP_BOUNDS); keep the two in sync. The global copy omits
+        # l/a/b because global scores color separately (not as Gower features).
         global_prop_bounds = {
             "sandpct_intpl": (10.0, 92.0),
             "claypct_intpl": (5.0, 70.0),
@@ -2414,7 +2424,13 @@ def rank_soils(
         # Maximum dissimilarity
         dis_max = 1.0
 
-        # Apply depth weight
+        # Apply depth weight: the surface 0-20 cm slices count 0.2x in the horizon
+        # distance average, deeper slices 1.0x. Rationale: the topsoil is the most
+        # disturbed/managed layer and less taxonomically diagnostic than subsurface
+        # horizons. (Tried uniform 1.0x — net ~0 on the bulk test: it helps
+        # surface-heavy pits but slightly hurts deep pits, which cancel. The
+        # principled improvement would be data-presence-aware weighting, not a
+        # constant — see JOHANNES_NOTES_2026 "Potential future changes".)
         depth_weight = np.concatenate((np.repeat(0.2, 20), np.repeat(1.0, 180)), axis=0)
         depth_weight = depth_weight[pedon_slice_index]
 
@@ -2538,7 +2554,11 @@ def rank_soils(
         # 10 Replace any NaNs with the max distance, then (optionally) convert to similarity
         D_site = np.where(np.isnan(D_raw), np.nanmax(D_raw), D_raw)
 
-        site_wt = 0.5
+        # Weight of the site (slope/elev) score relative to the horizon score.
+        # 0.5 -> 0.25: the site signal was over-weighted; tuning against the US
+        # bulk test gives +0.34 pt top1 at 0.25 (confirmed real run 61.56 -> 61.90).
+        # See SOILID_TUNING.md.
+        site_wt = 0.25
         D_site = (1 - D_site) * site_wt
 
         if explain is not None:

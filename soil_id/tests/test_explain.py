@@ -236,3 +236,45 @@ def test_render_html_smoke(rec_fn):
 
 def test_render_html_us_has_site_section():
     assert "Site" in render_html(build_trace(_us_recorder()))
+
+
+def test_horizon_override_renders_at_horizon_not_combined():
+    """The shallow-soil demote (v2.2.0) zeroes the horizon score and records a
+    horizon-targeted override; the red text renders next to the horizon score, not
+    at the combined roll-up."""
+    rec = _global_recorder()
+    rec.scores["B soil"]["horizon_score"] = 0.0  # post-override, as the algorithm sets it
+    rec.overrides = {
+        "B soil": {
+            "target": "horizon",
+            "rule": "demote shallow soil (effective_bedrock 60 > 50)",
+            "score_before": 0.30,
+            "score_after": 0.0,
+        }
+    }
+    trace = build_trace(rec)
+    b = next(c for c in trace["candidates"] if c["name"] == "B soil")
+    assert b["overrides"][0]["target"] == "horizon"
+
+    html = render_html(trace)
+    assert "demote shallow soil" in html
+    # shown as a horizon-score change (earned -> 0) ...
+    assert "horizon score 0.300" in html
+    # ... and NOT as a combined-score override in the roll-up
+    assert "overrides combined" not in html
+
+
+def test_v1_override_without_target_renders_as_combined():
+    """Back-compat: a v1 override entry (no `target`) still renders at the combined
+    roll-up, so older traces are unaffected."""
+    rec = _global_recorder()
+    rec.overrides = {
+        "B soil": {
+            "rule": "promote (vertisol+cracks / shallow-bedrock leptosol)",
+            "score_before": 0.35,
+            "score_after": 1.001,
+        }
+    }
+    html = render_html(build_trace(rec))
+    assert "overrides combined" in html
+    assert "promote" in html

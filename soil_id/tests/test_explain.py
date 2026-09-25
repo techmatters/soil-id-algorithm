@@ -15,7 +15,7 @@
 
 """
 Unit tests for the explain/trace layer (soil_id/explain.py) and the HTML
-renderer (scripts/render_soil_explain.py).
+renderer (soil_id/render_explain.py).
 
 These are pure/synthetic — they build a Recorder by hand and never touch the
 DB or live APIs — so they pin the trace schema and renderer behaviour
@@ -26,7 +26,6 @@ import math
 
 import pytest
 
-from scripts.render_soil_explain import render_html
 from soil_id.explain import (
     Recorder,
     _decay_multiplier,
@@ -34,6 +33,7 @@ from soil_id.explain import (
     _status,
     build_trace,
 )
+from soil_id.render_explain import render_html
 
 
 def _global_recorder():

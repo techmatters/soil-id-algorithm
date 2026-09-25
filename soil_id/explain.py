@@ -75,9 +75,6 @@ class Recorder:
     overrides: dict = field(default_factory=dict)
     order: list = field(default_factory=list)  # candidate keys in final rank order
 
-    def enabled(self) -> bool:
-        return True
-
 
 def _status(user: Optional[float], cand: Optional[float]) -> str:
     u = user is not None

@@ -15,42 +15,57 @@
 
 import argparse
 import json
+import os
 
 import pandas
 
+from soil_id.tests.bulk_match import recall_summary, score_record
+
 parser = argparse.ArgumentParser("process_bulk_test_results")
 parser.add_argument("file", type=argparse.FileType())
+parser.add_argument(
+    "--lenient",
+    action="store_true",
+    help="also match on the last word of the taxon name (looser, less noisy)",
+)
 args = parser.parse_args()
 
-result_lines = args.file.readlines()
-result_dicts = [json.loads(line) for line in result_lines]
+# Ground-truth augmentation: the historical classifications (th_taxonname_1..5)
+# for each pedon, so the match isn't limited to a single taxonname.
+_csv = os.path.join(os.path.dirname(__file__), "US_SoilID_KSSL_LPKS_Testing.csv")
+_gt = pandas.read_csv(_csv)
+_th_cols = [c for c in _gt.columns if c.startswith("th_taxonname_")]
+extra_truths = {}
+for pedon_key, group in _gt.groupby("pedon_key"):
+    names = set()
+    for c in _th_cols:
+        names.update(str(v) for v in group[c].dropna().unique())
+    extra_truths[pedon_key] = [n for n in names if n and n != "nan"]
 
-for result_record in result_dicts:
-    if "rank_result" in result_record:
-        matches = result_record["rank_result"]["soilRank"]
-        index = [
-            i
-            for i, match in enumerate(matches)
-            if match["component"].lower() == result_record["pedon_name"].lower()
-            or match["component"].lower() == (result_record["pedon_name"].lower() + "s")
-        ]
-        if len(index) == 0:
-            result_record["result"] = "missing"
-        else:
-            result_record["result"] = index[0] + 1
+result_dicts = [json.loads(line) for line in args.file.readlines()]
 
-        result_record["all_soils"] = json.dumps([match["component"] for match in matches])
-    else:
-        result_record["result"] = "crash"
-
+for record in result_dicts:
+    rank, ranked = score_record(
+        record, extra_truths.get(record.get("pedon_key"), []), lenient=args.lenient
+    )
+    record["result"] = rank
+    record["all_soils"] = json.dumps(ranked)
 
 df = pandas.DataFrame.from_records(result_dicts)
 
-result_groups = df.groupby(by=["result"])
-
 print(f"# Total results: {len(df)}\n")
-print("# Result proportions:\n")
-print(result_groups.count()["pedon_key"] / len(df) * 100)
+
+# Headline accuracy: recall@k against ground truth (+ historical names).
+summary = recall_summary(df["result"].tolist())
+print("# Accuracy (recall@k vs ground truth):\n")
+for k in (1, 3, 5):
+    print(f"  recall@{k}: {summary.get(f'recall@{k}', 0) * 100:.1f}%")
+print(f"  found (any rank): {summary.get('found', 0) * 100:.1f}%")
+print(f"  missing:          {summary.get('missing', 0) * 100:.1f}%")
+print(f"  crash:            {summary.get('crash', 0) * 100:.1f}%")
+
+print("\n# Result proportions (rank position / missing / crash):\n")
+print(df.groupby(by=["result"]).count()["pedon_key"] / len(df) * 100)
 
 if len(df) < 11:
     print("\n# Execution times:\n")
@@ -62,7 +77,7 @@ else:
     print("99th percentile execution time:", df["execution_time_s"].quantile(0.99))
     print("99.9th percentile execution time:", df["execution_time_s"].quantile(0.999))
 
-
+result_groups = df.groupby(by=["result"])
 if "crash" in result_groups.groups:
     crashes = result_groups.get_group(("crash",))
     counts = df.value_counts(subset="traceback").sort_values(ascending=False)
@@ -72,7 +87,8 @@ if "crash" in result_groups.groups:
     for idx, (traceback, count) in enumerate(counts.to_dict().items()):
         example = crashes.loc[crashes["traceback"] == traceback].iloc[0]
         print(
-            f"Traceback #{idx + 1}, occurred {count} times. Example pedon: {example['pedon_key']}, lat: {example['lat']}, lon: {example['lon']}"
+            f"Traceback #{idx + 1}, occurred {count} times. Example pedon: "
+            f"{example['pedon_key']}, lat: {example['lat']}, lon: {example['lon']}"
         )
         lines = traceback.splitlines()
         indented_lines = ["  " + line for line in lines]

@@ -18,65 +18,38 @@ import json
 
 import pandas
 
+from soil_id.tests.bulk_match import recall_summary, score_record
+
 parser = argparse.ArgumentParser("process_bulk_test_results")
 parser.add_argument("file", type=argparse.FileType())
 args = parser.parse_args()
 
-result_lines = args.file.readlines()
-result_dicts = [json.loads(line) for line in result_lines]
+result_dicts = [json.loads(line) for line in args.file.readlines()]
 
-for result_record in result_dicts:
-    if "result" in result_record and result_record["result"] == "unknown":
+for record in result_dicts:
+    if record.get("result") == "unknown":
         continue
-
-    if "rank_result" in result_record:
-        matches = result_record["rank_result"]["soilRank"]
-        index = [
-            i
-            for i, match in enumerate(matches)
-            if match["component"].lower() == result_record["pedon_name"].lower()
-            or match["component"].lower() == (result_record["pedon_name"].lower() + "s")
-        ]
-        if len(index) == 0:
-            result_record["result"] = "missing"
-        else:
-            result_record["result"] = index[0] + 1
-
-        def last_word(s):
-            return s.split()[-1].lower()
-
-        secondary_index = [
-            i
-            for i, match in enumerate(matches)
-            if last_word(match["component"]) == last_word(result_record["pedon_name"])
-            or last_word(match["component"]) == (last_word(result_record["pedon_name"]) + "s")
-        ]
-
-        if len(secondary_index) == 0:
-            result_record["secondary_result"] = "missing"
-        else:
-            result_record["secondary_result"] = secondary_index[0] + 1
-
-        result_record["all_soils"] = json.dumps([match["component"] for match in matches])
-    else:
-        result_record["result"] = "crash"
-
+    # strict = normalized exact match; lenient = also match on the taxon's last word
+    # (e.g. "Lithic Leptosols" -> "Leptosols"), the looser WRB-group-level signal.
+    strict, ranked = score_record(record, lenient=False)
+    lenient, _ = score_record(record, lenient=True)
+    record["result"] = strict
+    record["secondary_result"] = lenient
+    record["all_soils"] = json.dumps(ranked)
 
 df = pandas.DataFrame.from_records(result_dicts)
 
-result_groups = df.groupby(by=["result"])
-secondary_result_groups = df.groupby(by=["secondary_result"])
-
 print(f"# Total results: {len(df)}\n")
-print("# Result proportions:\n")
-print(result_groups.count()["pedon_key"] / len(df) * 100)
 
-print("# Secondary result proportions:\n")
-print(
-    secondary_result_groups.count()["pedon_key"]
-    / (len(df) - df["secondary_result"].isnull().sum())
-    * 100
-)
+strict_summary = recall_summary(df["result"].tolist())
+lenient_summary = recall_summary(df["secondary_result"].tolist())
+print("# Accuracy (recall@k vs ground truth):\n")
+for label, summary in (("strict", strict_summary), ("lenient/last-word", lenient_summary)):
+    line = "  ".join(f"recall@{k}={summary.get(f'recall@{k}', 0) * 100:.1f}%" for k in (1, 3, 5))
+    print(f"  {label:18} {line}  found={summary.get('found', 0) * 100:.1f}%")
+
+print("\n# Result proportions (strict, rank / missing / crash):\n")
+print(df.groupby(by=["result"]).count()["pedon_key"] / len(df) * 100)
 
 if len(df) < 11:
     print("\n# Execution times:\n")
@@ -88,7 +61,7 @@ else:
     print("99th percentile execution time:", df["execution_time_s"].quantile(0.99))
     print("99.9th percentile execution time:", df["execution_time_s"].quantile(0.999))
 
-
+result_groups = df.groupby(by=["result"])
 if "crash" in result_groups.groups:
     crashes = result_groups.get_group(("crash",))
     counts = df.value_counts(subset="traceback").sort_values(ascending=False)
@@ -98,7 +71,8 @@ if "crash" in result_groups.groups:
     for idx, (traceback, count) in enumerate(counts.to_dict().items()):
         example = crashes.loc[crashes["traceback"] == traceback].iloc[0]
         print(
-            f"Traceback #{idx + 1}, occurred {count} times. Example pedon: {example['pedon_key']}, lat: {example['lat']}, lon: {example['lon']}"
+            f"Traceback #{idx + 1}, occurred {count} times. Example pedon: "
+            f"{example['pedon_key']}, lat: {example['lat']}, lon: {example['lon']}"
         )
         lines = traceback.splitlines()
         indented_lines = ["  " + line for line in lines]

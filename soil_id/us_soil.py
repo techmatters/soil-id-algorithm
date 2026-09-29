@@ -2344,8 +2344,9 @@ def rank_soils(
         horz_vars.extend([group.reset_index(drop=True).loc[pedon_slice_index] for group in groups])
 
         # Fixed "plausible range" (low, high) per numeric horizon property, used as
-        # the floor for the per-slice Gower normalization (#377). NOTE: the
-        # sand/clay/rfv entries are duplicated in global_soil.py
+        # the fixed DENOMINATOR for the per-slice Gower normalization (supersedes the
+        # #377 floor — normalize by this span, not the per-slice data spread). NOTE:
+        # the sand/clay/rfv entries are duplicated in global_soil.py
         # (GLOBAL_HORIZON_PROP_BOUNDS); keep the two in sync. The global copy omits
         # l/a/b because global scores color separately (not as Gower features).
         global_prop_bounds = {

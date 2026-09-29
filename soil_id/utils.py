@@ -884,9 +884,7 @@ def gower_distances(
     return_details=False,
 ):
     """
-    Computes the Gower distances between X and Y using mixed-type data,
-    with optional hybrid normalization: per-slice min/max with a floor
-    based on theoretical feature ranges.
+    Computes the Gower distances between X and Y using mixed-type data.
 
     Parameters:
     ----------
@@ -895,8 +893,9 @@ def gower_distances(
     feature_weight : array-like, shape (n_features,), optional
     categorical_features : array-like of bools or indices, optional
     theoretical_ranges : array-like, shape (n_numeric_features,), optional
-        If provided, the floor for each numeric feature's denominator is
-        set to 10%% of its theoretical span.
+        If provided, each numeric feature is normalized by this fixed
+        theoretical span (fixed-range normalization). If omitted, the
+        per-slice min/max spread is used instead.
     """
     # Reject sparse inputs
     if issparse(X) or (Y is not None and issparse(Y)):
@@ -934,12 +933,19 @@ def gower_distances(
     slice_range = slice_max - slice_min
 
     if theoretical_ranges is None:
+        # No known scale: fall back to the per-slice min/max spread.
         # avoid division by zero
         denom = np.where(slice_range == 0, 1.0, slice_range)
     else:
+        # Fixed-range normalization: soil properties have known physical spans,
+        # so normalize each numeric feature by its fixed plausible range rather
+        # than the per-slice data spread. This makes a candidate's distance a
+        # stable, local property of (candidate, pit) — independent of which other
+        # candidates happen to be in the pool (so a distant outlier can't rescale
+        # everyone) and constant across depths. Supersedes the earlier #377
+        # "per-slice spread, floored at 10% of the theoretical span" hybrid.
         theo = np.array(theoretical_ranges, dtype=float)
-        floor = 0.1 * theo
-        denom = np.maximum(slice_range, floor)
+        denom = np.where(theo == 0, 1.0, theo)
 
     X_num = (X_num - slice_min) / denom
 

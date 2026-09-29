@@ -63,14 +63,15 @@ class SoilListOutputData:
 # taxonomic definition while leaving a small margin. See #375.
 LEPTOSOL_MAX_BEDROCK_CM = 35
 
-# Fixed "plausible range" (low, high) per numeric property used in the global
-# per-slice Gower distance (#377). Without these, gower_distances normalizes each
-# feature by that slice's own min/max — which includes the user's sample_pedon
-# value — so changing one input rescales every candidate's distance in every
-# slice. Reused from the US path's `global_prop_bounds` (us_soil.py) — these
+# Fixed "plausible range" (low, high) per numeric property. Each numeric horizon
+# feature's Gower distance is normalized by this fixed span (the DENOMINATOR — see
+# gower_distances), NOT by the per-slice data spread. This keeps a candidate's
+# distance a stable, local function of (candidate, pit): changing one input, or a
+# distant outlier candidate, no longer rescales everyone, and the scale is constant
+# across depths. Reused from the US path's `global_prop_bounds` (us_soil.py) — these
 # sand/clay/rfv values are duplicated there; keep the two in sync (the US copy also
 # has l/a/b, which global doesn't use because it scores color separately). Confirm
-# the values with a soil scientist if the global data distribution differs.
+# the values with a soil scientist (they are now the full denominator, not a floor).
 GLOBAL_HORIZON_PROP_BOUNDS = {
     "sandpct_intpl": (10.0, 92.0),
     "claypct_intpl": (5.0, 70.0),

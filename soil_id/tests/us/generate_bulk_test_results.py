@@ -49,6 +49,25 @@ with open(result_file_name, "w", buffering=1) as result_file:
             "lon": lon,
         }
 
+        # Pass the pedon's measured elevation when present (~76% of cases) so the US
+        # site score (slope + elevation; the Gower site score only activates with
+        # >=2 non-null site features, and bedrock/cracks aren't in this dataset) can
+        # use it. When elevation is absent we pass None and rank_soils falls back to
+        # its internal EPQS (National Map) lookup -- which for this dataset resolves
+        # only ~6% of the time (the service times out on the rest), so those pedons
+        # usually get no site score.
+        #
+        # TODO (future -- not yet): consider filling in elevation for the ~24% of
+        # pedons that are missing it (e.g. a reliable DEM lookup) so the site score
+        # is exercised across the whole set rather than only ~76%.
+        pElev = None
+        try:
+            _elev = float(pedon["elev"].values[0])
+            if _elev == _elev:  # exclude NaN
+                pElev = _elev
+        except (TypeError, ValueError):
+            pElev = None
+
         start_time = time.perf_counter()
         try:
             list_result = list_soils(lat=lat, lon=lon)
@@ -64,7 +83,7 @@ with open(result_file_name, "w", buffering=1) as result_file:
                 rfvDepth=pedon["fragvoltot"].values.tolist(),
                 lab_Color=pedon[["L", "a", "b"]].values.tolist(),
                 pSlope=pedon["slope"].values[0],
-                pElev=None,
+                pElev=pElev,
                 bedrock=None,
                 cracks=None,
             )

@@ -582,7 +582,13 @@ small{color:#999}
 """
 
 
-def render_html(trace):
+def render_html(trace, site_name=None):
+    """Render an explain trace to a self-contained HTML report.
+
+    site_name, if given, is shown as the report title (e.g. the export/site name).
+    It's a caller-supplied display string (not part of the trace), so it's
+    HTML-escaped here before rendering.
+    """
     site = trace.get("site", {})
     inp = trace.get("inputs", {})
     hz = inp.get("horizons", [])
@@ -621,7 +627,12 @@ def render_html(trace):
     cards = "".join(render_candidate(c) for c in trace.get("candidates", []))
     return (
         f"<!doctype html><meta charset=utf-8><style>{CSS}</style>"
-        f"<h1>Soil ID explanation — {esc(trace.get('region'))}</h1>"
+        + (
+            f"<div style='font-size:1.3em;font-weight:600;margin:0 0 2px'>{esc(site_name)}</div>"
+            if site_name
+            else ""
+        )
+        + f"<h1>Soil ID explanation — {esc(trace.get('region'))}</h1>"
         f"<div class='site'>lat {site.get('lat')}, lon {site.get('lon')}</div>"
         f"<div class='pit'><div class='ctitle'>Soil pit "
         f"(deepest recorded {inp.get('effective_bedrock_cm')} cm)</div>{pit}</div>"

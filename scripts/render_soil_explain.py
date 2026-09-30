@@ -114,7 +114,7 @@ def main():
     )
     args = ap.parse_args()
     trace, label = load_source(args.source)
-    report = render_html(trace)
+    report = render_html(trace, site_name=label)
     if is_url(args.source):
         open_in_browser(report, label)
     else:

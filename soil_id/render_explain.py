@@ -343,13 +343,11 @@ def render_horizon(c, overrides=None):
         f"<span class='nocompare' style='padding:0 4px'>greyed rows</span> are outside "
         f"that window (not compared). <b>soil pit</b>/<b>candidate</b> = the values at that "
         f"depth (— = none there); <b>Δ</b> = |soil pit − candidate| ÷ range, where "
-        f"<i>range</i> is the spread of that property across the soils compared at this "
-        f"depth, but never less than 10% of the property's fixed plausible range (a "
-        f"floor so a near-constant property can't inflate tiny differences). The "
-        f"<span class='rng'>Δ ÷ [range]</span> shown in each column header is that "
-        f"denominator when it's the same at every depth; when it varies with depth "
-        f"the header shows its <span class='rng'>[min–max]</span> span and each cell "
-        f"shows its own <span class='rng'>[range]</span>. "
+        f"<i>range</i> is the property's <b>fixed plausible span</b> (e.g. rock fragments "
+        f"0–80%) — the same denominator at every depth and for every candidate, so a "
+        f"soil's distance depends only on it vs the pit, not on the other candidates in "
+        f"the pool. The <span class='rng'>Δ ÷ [range]</span> shown in the column header "
+        f"is that fixed denominator. "
         f"<b>slice dist</b> = the <i>equal-weighted average of the Δ's</i> present in "
         f"the band (wt is <i>not</i> applied here — it's applied when combining bands, "
         f"below).</div>"
@@ -584,7 +582,13 @@ small{color:#999}
 """
 
 
-def render_html(trace):
+def render_html(trace, site_name=None):
+    """Render an explain trace to a self-contained HTML report.
+
+    site_name, if given, is shown as the report title (e.g. the export/site name).
+    It's a caller-supplied display string (not part of the trace), so it's
+    HTML-escaped here before rendering.
+    """
     site = trace.get("site", {})
     inp = trace.get("inputs", {})
     hz = inp.get("horizons", [])
@@ -623,7 +627,12 @@ def render_html(trace):
     cards = "".join(render_candidate(c) for c in trace.get("candidates", []))
     return (
         f"<!doctype html><meta charset=utf-8><style>{CSS}</style>"
-        f"<h1>Soil ID explanation — {esc(trace.get('region'))}</h1>"
+        + (
+            f"<div style='font-size:1.3em;font-weight:600;margin:0 0 2px'>{esc(site_name)}</div>"
+            if site_name
+            else ""
+        )
+        + f"<h1>Soil ID explanation — {esc(trace.get('region'))}</h1>"
         f"<div class='site'>lat {site.get('lat')}, lon {site.get('lon')}</div>"
         f"<div class='pit'><div class='ctitle'>Soil pit "
         f"(deepest recorded {inp.get('effective_bedrock_cm')} cm)</div>{pit}</div>"

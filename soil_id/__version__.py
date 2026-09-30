@@ -17,4 +17,8 @@
 #         result-affecting for pits with effective bedrock 35-50 cm).
 # 2.6.0 = fix top-12 component-group selection (#398): pick the 12 highest-cond_prob
 #         groups, not the 12 alphabetically-first (US + global; when >12 groups).
-__version__ = "2.6.0"
+# 2.7.0 = fixed-range horizon Gower normalization (US + global): normalize each
+#         numeric feature by its fixed plausible span instead of the per-slice data
+#         spread (supersedes the #377 floor). Distances no longer depend on which
+#         other candidates are in the pool or vary by depth.
+__version__ = "2.7.0"

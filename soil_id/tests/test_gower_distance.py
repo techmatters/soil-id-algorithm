@@ -20,31 +20,38 @@ from soil_id.utils import gower_distances
 
 def test_fixed_ranges_dampen_clustered_slices():
     """
-    #377: when candidates are tightly clustered, the un-ranged normalization
-    divides by the slice's own (tiny) min-max range, so a small real difference is
-    amplified to a near-maximal distance (the "rubber ruler"). Passing fixed
-    theoretical_ranges floors the denominator (max(slice_range, 0.1*span)), so the
-    same small difference stays a small distance.
+    When candidates are tightly clustered, the un-ranged normalization divides by the
+    slice's own (tiny) min-max range, so a small real difference is amplified to a
+    near-maximal distance (the "rubber ruler"). Passing fixed theoretical_ranges
+    normalizes by the fixed span instead, so the same small difference stays small.
     """
     # rows: [pedon, candidate A, candidate B]; one numeric feature, all near 10.
     X = np.array([[10.5], [10.0], [11.0]])
 
     d_unranged = gower_distances(X)[1, 2]  # A vs B, data-derived denom (=1)
-    d_ranged = gower_distances(X, theoretical_ranges=[80.0])[1, 2]  # denom floored to 8
+    d_ranged = gower_distances(X, theoretical_ranges=[80.0])[1, 2]  # denom = fixed span 80
 
     assert d_unranged > 0.9, f"expected rubber-ruler amplification, got {d_unranged}"
     assert d_ranged < 0.2, f"expected fixed-range damping, got {d_ranged}"
 
 
-def test_fixed_range_floor_only_lifts_small_ranges():
+def test_fixed_range_denominator_is_independent_of_slice_spread():
     """
-    The floor is max(slice_range, 0.1*span): when the slice already spans more than
-    10% of the theoretical range, the fixed range must not change anything.
+    Fixed-range normalization divides by the theoretical span, NOT the per-slice data
+    spread — so a pit/candidate distance is identical regardless of what OTHER
+    candidates are in the slice. (Supersedes the old #377 floor max(slice_range,
+    0.1*span), which still tracked the slice spread whenever it exceeded the floor.)
     """
-    X = np.array([[50.0], [10.0], [90.0]])  # slice_range = 80 >> 0.1*80 = 8
-    d_unranged = gower_distances(X)[1, 2]
-    d_ranged = gower_distances(X, theoretical_ranges=[80.0])[1, 2]
-    assert abs(d_unranged - d_ranged) < 1e-9
+    span = 80.0
+    # Same pit (0) and candidate-of-interest (16); the third row changes the spread.
+    tight = np.array([[0.0], [16.0], [20.0]])  # slice spread 20
+    wide = np.array([[0.0], [16.0], [80.0]])  # slice spread 80
+    d_tight = gower_distances(tight, theoretical_ranges=[span])[0, 1]
+    d_wide = gower_distances(wide, theoretical_ranges=[span])[0, 1]
+    # denom is the fixed span in both -> |0-16|/80 = 0.2, unaffected by the third row.
+    assert abs(d_tight - 0.2) < 1e-9, d_tight
+    assert abs(d_wide - 0.2) < 1e-9, d_wide
+    assert abs(d_tight - d_wide) < 1e-9
 
 
 def test_complete_data_distance_unchanged():
